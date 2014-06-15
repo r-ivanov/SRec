@@ -680,10 +680,10 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 				new CuadroVisibilidad(dtb);
 			}
 			
-			// Filtrado > Nodos históricos...
+			// Filtrado > Llamadas terminadas...
 			else if ( textoFuente.equals(textos[44]) )
 			{
-				if (Conf.fichero_log) log_write("Filtrado y selección > Llamadas internas...");
+				if (Conf.fichero_log) log_write("Filtrado y selección > Llamadas terminadas...");
 				new CuadroElegirHistorico();
 			}
 			
