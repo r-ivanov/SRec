@@ -62,12 +62,12 @@ public class VentanaVerCodigo extends Thread implements ActionListener, KeyListe
 	String[] fichero=new String[2];
 
 	// Botones de la ventana
-	Boton abrir;
-	Boton guardar;
-	Boton compilar;
-	Boton cortar;
-	Boton copiar;
-	Boton pegar;
+	BotonIcono abrir;
+	BotonIcono guardar;
+	BotonIcono compilar;
+	BotonIcono cortar;
+	BotonIcono copiar;
+	BotonIcono pegar;
 	JPanel panelb;
 
 	JScrollPane panelScroll;
@@ -170,12 +170,12 @@ public class VentanaVerCodigo extends Thread implements ActionListener, KeyListe
 
 		panelb = new JPanel();
 		
-		abrir = 	new Boton( new ImageIcon("./imagenes/icono_editornuevo.gif"),Conf.anchoBoton/3,Conf.altoBoton );
-		guardar = 	new Boton( new ImageIcon("./imagenes/icono_editorguardar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
-		compilar = 	new Boton( new ImageIcon("./imagenes/icono_editorcompilar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
-		cortar = 	new Boton( new ImageIcon("./imagenes/icono_editorcortar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
-		copiar = 	new Boton( new ImageIcon("./imagenes/icono_editorcopiar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
-		pegar = 	new Boton( new ImageIcon("./imagenes/icono_editorpegar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
+		abrir = 	new BotonIcono( new ImageIcon("./imagenes/icono_editornuevo.gif"),Conf.anchoBoton/3,Conf.altoBoton );
+		guardar = 	new BotonIcono( new ImageIcon("./imagenes/icono_editorguardar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
+		compilar = 	new BotonIcono( new ImageIcon("./imagenes/icono_editorcompilar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
+		cortar = 	new BotonIcono( new ImageIcon("./imagenes/icono_editorcortar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
+		copiar = 	new BotonIcono( new ImageIcon("./imagenes/icono_editorcopiar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
+		pegar = 	new BotonIcono( new ImageIcon("./imagenes/icono_editorpegar.gif"),Conf.anchoBoton/3,Conf.altoBoton );
 
 		/*abrir = new Boton("imagenes/boton_abrirfichero_verde.gif","imagenes/boton_abrirfichero_naranja.gif",
 						"imagenes/boton_abrirfichero_rojo.gif", Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
@@ -420,13 +420,7 @@ public class VentanaVerCodigo extends Thread implements ActionListener, KeyListe
 	*/	
 	public void mouseEntered(MouseEvent e) 
 	{
-		if 	( (e.getSource()) instanceof Boton)
-			((Boton)(e.getSource())).setNaranja();
-		/*if 	( (e.getSource()) instanceof JTextArea)
-		{
-			System.out.println("getSelectionStart="+areatexto.getSelectionStart()+
-								"  getSelectionEnd="+areatexto.getSelectionEnd());
-		}*/
+		
 	}
 	
 	/**

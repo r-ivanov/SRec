@@ -55,7 +55,7 @@ public class CuadroNuevaClase extends Thread implements KeyListener, MouseListen
 	
 	JLabel etiqueta;
 
-	Boton examinar;
+	BotonTexto examinar;
 	BotonAceptar aceptar;
 	BotonCancelar cancelar;
 	JPanel panel, panelBoton, panelpanelElementos, panelElementos;
@@ -108,7 +108,7 @@ public class CuadroNuevaClase extends Thread implements KeyListener, MouseListen
 		// Panel nombre nueva clase
 		JPanel panelDirectorio=new JPanel();
 		panelDirectorio.setLayout(new BorderLayout());
-		examinar=new Boton(Texto.get("BOTONEXAMINAR",Conf.idioma));
+		examinar=new BotonTexto(Texto.get("BOTONEXAMINAR",Conf.idioma));
 		examinar.addMouseListener(this);
 		examinar.addKeyListener(this);
 		panelDirectorio.add(examinar,BorderLayout.EAST);

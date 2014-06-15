@@ -43,9 +43,9 @@ public class VisorAyuda extends Thread implements ActionListener, MouseListener,
 	private String fichero;
 	private String index;
 
-	private Boton atras;
-	private Boton adelante;
-	private Boton indice;
+	private BotonImagen atras;
+	private BotonImagen adelante;
+	private BotonImagen indice;
 	
 	String pilaAt[]=new String[0];	// Pila para ir hacia atrás
 	String pilaAd[]=new String[0];	// Pila para ir hacia adelante
@@ -72,11 +72,11 @@ public class VisorAyuda extends Thread implements ActionListener, MouseListener,
 		frame=new JFrame(Texto.get("VA_AYUDA",Conf.idioma));
 		
 		//Botones
-		atras = new Boton("imagenes/boton_atrasayuda_verde.gif","imagenes/boton_atrasayuda_naranja.gif",
+		atras = new BotonImagen("imagenes/boton_atrasayuda_verde.gif","imagenes/boton_atrasayuda_naranja.gif",
 					"imagenes/boton_atrasayuda_rojo.gif", Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
-		adelante = new Boton("imagenes/boton_adelanteayuda_verde.gif","imagenes/boton_adelanteayuda_naranja.gif",
+		adelante = new BotonImagen("imagenes/boton_adelanteayuda_verde.gif","imagenes/boton_adelanteayuda_naranja.gif",
 					"imagenes/boton_adelanteayuda_rojo.gif", Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
-		indice = new Boton("imagenes/boton_indice_verde.gif","imagenes/boton_indice_naranja.gif",
+		indice = new BotonImagen("imagenes/boton_indice_verde.gif","imagenes/boton_indice_naranja.gif",
 					"imagenes/boton_indice_rojo.gif",Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 
 		atras.addMouseListener(this);
@@ -120,8 +120,8 @@ public class VisorAyuda extends Thread implements ActionListener, MouseListener,
 		//mostrar(pilaAt,"\n\npilaAt");
 		//mostrar(pilaAd,"\n\npilaAd");
 		
-		adelante.setRojo();
-		atras.setRojo();
+		adelante.deshabilitar();
+		atras.deshabilitar();
 			
 		frame.setIconImage( new ImageIcon("./imagenes/icono_ayuda.gif").getImage() );
 		frame.setVisible(true);
@@ -192,9 +192,8 @@ public class VisorAyuda extends Thread implements ActionListener, MouseListener,
 	*/			
 	public void mouseEntered(MouseEvent e) 
 	{
-		if (e.getSource() instanceof Boton)
-			((Boton)(e.getSource())).setNaranja();
-		
+		if (e.getSource() instanceof BotonImagen)
+			((BotonImagen)(e.getSource())).mostrarPulsado();		
 	}
 
 	/**
@@ -205,7 +204,7 @@ public class VisorAyuda extends Thread implements ActionListener, MouseListener,
 	public void mouseExited(MouseEvent e) 
 	{
 		if (e.getSource()==indice)
-			indice.setVerde();
+			indice.habilitar();
 		colorearBotonesAdelanteAtras();
 	}
 
@@ -399,14 +398,14 @@ public class VisorAyuda extends Thread implements ActionListener, MouseListener,
 	private void colorearBotonesAdelanteAtras()
 	{
 		if (pilaAt.length>0)
-			atras.setVerde();
+			atras.habilitar();
 		else
-			atras.setRojo();
+			atras.deshabilitar();
 
 		if (pilaAd.length>0)
-			adelante.setVerde();
+			adelante.habilitar();
 		else
-			adelante.setRojo();
+			adelante.deshabilitar();
 	}
 }
 

@@ -53,7 +53,7 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener, KeyLis
 
 	JLabel etiqueta;
 	JTextField campoDireccion;
-	Boton examinar;
+	BotonTexto examinar;
 	BotonAceptar aceptar;
 	BotonCancelar cancelar;
 	JPanel panel, panelBoton, panelpanelElementos, panelElementos;
@@ -112,7 +112,7 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener, KeyLis
 		campoDireccion.addKeyListener(this);
 		campoDireccion.setToolTipText(Texto.get("COMVJ_ESCRDIRVAL",Conf.idioma));
 		
-		examinar = new Boton(Texto.get("BOTONEXAMINAR",Conf.idioma));
+		examinar = new BotonTexto(Texto.get("BOTONEXAMINAR",Conf.idioma));
 		//examinar.addActionListener(this);
 		examinar.addKeyListener(this);
 		examinar.addMouseListener(this);
@@ -137,7 +137,7 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener, KeyLis
 		aceptar.addKeyListener(this);
 		aceptar.addMouseListener(this);
 		if (!valorarSeleccion(false))
-			aceptar.setRojo();
+			aceptar.setEnabled(false);
 		
 		// Botón Cancelar
 		cancelar=new BotonCancelar();
@@ -187,7 +187,7 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener, KeyLis
 		omvj.setDir(campoDireccion.getText());
 		if (omvj.getValida())
 		{
-			aceptar.setVerde();
+			aceptar.setEnabled(true);
 			if (aceptarPulsado)
 			{
 				gOpciones.setOpcion(omvj,2);
@@ -198,7 +198,7 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener, KeyLis
 		}
 		else
 		{
-			aceptar.setRojo();
+			aceptar.setEnabled(false);
 			if(aceptarPulsado)
 				new CuadroError(dialogo,Texto.get("ERROR_MVJAVA",Conf.idioma),Texto.get("ERROR_NOMVJ",Conf.idioma));
 			return false; 		// No es válida la dirección de la MV

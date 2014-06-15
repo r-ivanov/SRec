@@ -754,13 +754,10 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener, Ke
 				public synchronized void run()
 				{
 					try { wait (100); } catch (InterruptedException ie) {System.out.println("Error de delay");};
-					boolean teniaRatonAceptar=aceptar.tieneRaton();
 					if (comprobarValores())
-						aceptar.setVerde();
+						aceptar.setEnabled(true);
 					else 
-						aceptar.setRojo();
-					if (teniaRatonAceptar)
-						aceptar.setNaranja();
+						aceptar.setEnabled(false);
 				}
 			}.start();
 		}
@@ -787,13 +784,10 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener, Ke
 				public synchronized void run()
 				{
 					try { wait (10); } catch (InterruptedException ie) {System.out.println("Error de delay");};
-					boolean teniaRatonAceptar=aceptar.tieneRaton();
 					if (comprobarValores())
-						aceptar.setVerde();
+						aceptar.setEnabled(true);
 					else 
-						aceptar.setRojo();
-					if (teniaRatonAceptar)
-						aceptar.setNaranja();
+						aceptar.setEnabled(false);
 				}
 			}.start();
 		}
@@ -894,13 +888,10 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener, Ke
 			public synchronized void run()
 			{
 				try { wait (10); } catch (InterruptedException ie) {System.out.println("Error de delay");};
-				boolean teniaRatonAceptar=aceptar.tieneRaton();
 				if (comprobarValores())
-					aceptar.setVerde();
+					aceptar.setEnabled(true);
 				else 
-					aceptar.setRojo();
-				if (teniaRatonAceptar)
-					aceptar.setNaranja();
+					aceptar.setEnabled(false);
 			}
 		}.start();
 	}
@@ -921,10 +912,7 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener, Ke
 	*/		
 	public void mouseEntered(MouseEvent e) 
 	{
-		if (e.getComponent().equals(aceptar))
-			aceptar.setNaranja();
-		else if (e.getComponent().equals(cancelar))
-			cancelar.setNaranja();
+		
 	}
 
 	/**
@@ -935,10 +923,10 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener, Ke
 	public void mouseExited(MouseEvent e) 
 	{
 		if (comprobarValores())
-			aceptar.setVerde();
+			aceptar.setEnabled(true);
 		else
-			aceptar.setRojo();
-		cancelar.setVerde();
+			aceptar.setEnabled(false);
+		cancelar.setEnabled(true);
 	}
 	
 	/**

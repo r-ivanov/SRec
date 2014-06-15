@@ -18,7 +18,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -29,17 +28,16 @@ import java.awt.event.MouseListener;
 import javax.swing.border.TitledBorder;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-
 import javax.swing.JTabbedPane;
+
 
 
 import conf.*;
@@ -116,7 +114,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements ActionListe
 	JPanel panelesColores2[]=new JPanel[numSelectores2];
 	JPanel panelesColores3[]=new JPanel[numSelectores3];
 	
-	Boton asignar1, resetear1,asignar2,resetear2,asignar3,resetear3;
+	BotonTexto asignar1, resetear1,asignar2,resetear2,asignar3,resetear3;
 	
 	static String creandoPanel=Texto.get("CP_CREARPAN",Conf.idioma);
 	static String marcarPanel=Texto.get("COCV_MARCAR",Conf.idioma);
@@ -275,8 +273,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements ActionListe
 		
 			// Panel Botones Asignar y Borrar
 			JPanel panelBotonesDerecha=new JPanel();
-			asignar1 = new Boton(textos[15]);
-			resetear1 = new Boton(textos[16]);
+			asignar1 = new BotonTexto(textos[15]);
+			resetear1 = new BotonTexto(textos[16]);
 			
 			panelBotonesDerecha.add(asignar1);
 			panelBotonesDerecha.add(resetear1);
@@ -387,8 +385,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements ActionListe
 		
 			// Panel Botones Asignar y Borrar
 			JPanel panelBotonesDerecha2=new JPanel();
-			asignar2 = new Boton(textos[15]);
-			resetear2 = new Boton(textos[16]);
+			asignar2 = new BotonTexto(textos[15]);
+			resetear2 = new BotonTexto(textos[16]);
 			
 			panelBotonesDerecha2.add(asignar2);
 			panelBotonesDerecha2.add(resetear2);
@@ -492,8 +490,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements ActionListe
 		
 			// Panel Botones Asignar y Borrar
 			JPanel panelBotonesDerecha3=new JPanel();
-			asignar3 = new Boton(textos[15]);
-			resetear3 = new Boton(textos[16]);
+			asignar3 = new BotonTexto(textos[15]);
+			resetear3 = new BotonTexto(textos[16]);
 			
 			panelBotonesDerecha3.add(asignar3);
 			panelBotonesDerecha3.add(resetear3);
@@ -1417,7 +1415,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements ActionListe
 			this.dialogo.setVisible(false);
 			guardadoRecarga();
 		}
-		else if (e.getComponent().getClass().getCanonicalName().contains("Boton"))
+		else if (e.getComponent() instanceof JButton)
 		{
 			if (e.getComponent()==aceptar)		
 				this.dialogo.setVisible(false);

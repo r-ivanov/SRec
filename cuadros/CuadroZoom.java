@@ -85,13 +85,13 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener, M
 	static JLabel etiqPorcentaje[];
 	static JSlider barras[];
 	static JTextField cuadros[];
-	Boton zoommas[];
-	Boton zoommenos[];
-	Boton zoomajuste[];
+	BotonIcono zoommas[];
+	BotonIcono zoommenos[];
+	BotonIcono zoomajuste[];
 	
 	BotonAceptar aceptar;
 	BotonCancelar cancelar;
-	Boton inicializar;
+	BotonTexto inicializar;
 	
 	static OpcionConfVisualizacion ocv=null;
 	static GestorOpciones gOpciones=new GestorOpciones();
@@ -159,9 +159,9 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener, M
 		etiqPorcentaje=new JLabel[numVistas];
 		barras=new JSlider[numVistas];
 		cuadros=new JTextField[numVistas];
-		zoommenos=new Boton[numVistas];
-		zoommas=new Boton[numVistas];
-		zoomajuste=new Boton[numVistas];
+		zoommenos=new BotonIcono[numVistas];
+		zoommas=new BotonIcono[numVistas];
+		zoomajuste=new BotonIcono[numVistas];
 		
 		// Panel superior
 		JPanel panelSuperior=new JPanel();
@@ -196,7 +196,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener, M
 		JPanel panelBoton =new JPanel();
 		aceptar = new BotonAceptar();
 		cancelar = new BotonCancelar();
-		inicializar = new Boton(Texto.get("BOTONINIC",Conf.idioma));
+		inicializar = new BotonTexto(Texto.get("BOTONINIC",Conf.idioma));
 		aceptar.addMouseListener(this);
 		cancelar.addMouseListener(this);
 		inicializar.addMouseListener(this);
@@ -261,15 +261,15 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener, M
 		cuadros[indice].setHorizontalAlignment(JTextField.TRAILING  );
 		cuadros[indice].setToolTipText(Texto.get("CZ_REG100",Conf.idioma));
 		
-		zoommas[indice]=new Boton( new ImageIcon("./imagenes/icono_zoommas.gif"),tamBotones,tamBotones);
+		zoommas[indice]=new BotonIcono( new ImageIcon("./imagenes/icono_zoommas.gif"),tamBotones,tamBotones);
 		zoommas[indice].addActionListener(this);
 		zoommas[indice].setToolTipText(Texto.get("CZ_MAS5",Conf.idioma));
 		
-		zoommenos[indice]=new Boton( new ImageIcon("./imagenes/icono_zoommenos.gif"),tamBotones,tamBotones );
+		zoommenos[indice]=new BotonIcono( new ImageIcon("./imagenes/icono_zoommenos.gif"),tamBotones,tamBotones );
 		zoommenos[indice].addActionListener(this);
 		zoommenos[indice].setToolTipText(Texto.get("CZ_MENS5",Conf.idioma));
 		
-		zoomajuste[indice]=new Boton( new ImageIcon("./imagenes/icono_zoomajuste.gif"),tamBotones,tamBotones );
+		zoomajuste[indice]=new BotonIcono( new ImageIcon("./imagenes/icono_zoomajuste.gif"),tamBotones,tamBotones );
 		zoomajuste[indice].addActionListener(this);
 		zoomajuste[indice].setToolTipText(Texto.get("CZ_AJUST",Conf.idioma));
 		
@@ -328,7 +328,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener, M
 	*/	
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource().getClass().getCanonicalName().contains("Boton"))
+		if (e.getSource() instanceof JButton)
 		{
 			for (int i=0; i<zoommas.length; i++)
 				if (zoommas[i]!=null && zoommas[i]==e.getSource())

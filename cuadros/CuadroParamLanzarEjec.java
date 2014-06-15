@@ -12,7 +12,6 @@ package cuadros;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-
 import java.awt.AWTEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,18 +19,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import java.util.ArrayList;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.ComboBoxEditor;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import javax.swing.text.JTextComponent;
 
 import conf.*;
@@ -58,9 +56,9 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener, Key
 	
 	BotonAceptar aceptar;
 	BotonCancelar cancelar;
-	Boton generar;
-	Boton cargar;
-	Boton guardar;
+	BotonTexto generar;
+	BotonTexto cargar;
+	BotonTexto guardar;
 	
 	JPanel panel, panelBoton, panelParam;
 	int numero;
@@ -239,19 +237,19 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener, Key
 			cancelar.addMouseListener(this);
 	
 			// Botón Generar
-			generar = new Boton(Texto.get("BOTONGENERAR",Conf.idioma));
+			generar = new BotonTexto(Texto.get("BOTONGENERAR",Conf.idioma));
 			generar.addActionListener(this);
 			generar.addKeyListener(this);
 			generar.addMouseListener(this);
 
 			// Botón Cargar
-			cargar = new Boton(Texto.get("BOTONCARGAR",Conf.idioma));
+			cargar = new BotonTexto(Texto.get("BOTONCARGAR",Conf.idioma));
 			cargar.addActionListener(this);
 			cargar.addKeyListener(this);
 			cargar.addMouseListener(this);	
 
 			// Botón Almacenar
-			guardar = new Boton(Texto.get("BOTONGUARDAR",Conf.idioma));
+			guardar = new BotonTexto(Texto.get("BOTONGUARDAR",Conf.idioma));
 			guardar.addActionListener(this);
 			guardar.addKeyListener(this);
 			guardar.addMouseListener(this);
@@ -452,9 +450,9 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener, Key
 					//cuadrosvalores[i].setText(this.valores[i]);
 				}
 				if (recogerValores(false))
-					aceptar.setVerde();
+					aceptar.setEnabled(true);
 				else
-					aceptar.setRojo();
+					aceptar.setEnabled(false);
 			}
 			else
 			{
@@ -469,7 +467,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener, Key
 				valores[i]=(String)(cuadrosvalores[i].getSelectedItem());
 				//valores[i]=cuadrosvalores[i].getText();
 			almacenValores.guardar(valores, this.metodo);
-			guardar.setVerde();
+			guardar.setEnabled(true);
 		}
 	}
 	
@@ -553,7 +551,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener, Key
 				recogerValores(true);
 			estamosCargando=false;
 		}
-		else if (e.getSource().getClass().getName().contains("Boton") && code==KeyEvent.VK_SPACE)
+		else if ((e.getSource() instanceof JButton) && code==KeyEvent.VK_SPACE)
 			gestionEventoBotones(e);
 		
 		
@@ -659,7 +657,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener, Key
 	*/		
 	public void mouseReleased(MouseEvent e)
 	{
-		if (e.getSource().getClass().getName().contains("Boton"))
+		if (e.getSource() instanceof JButton)
 			gestionEventoBotones(e);
 		if (e.getSource() instanceof JCheckBox)
 			comprobarVisibilidadCorrecta();

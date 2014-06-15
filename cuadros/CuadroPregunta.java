@@ -47,7 +47,7 @@ public abstract class CuadroPregunta extends Thread implements ActionListener, K
 	JLabel etiqueta, imagen;
 	BotonAceptar aceptar;
 	BotonCancelar cancelar;
-	Boton ignorar;
+	BotonTexto ignorar;
 	
 	JButton botonComando;
 	JPanel panel, panelBoton, panelImagen, panelDerecha, panelEtiqueta;
@@ -156,7 +156,7 @@ public abstract class CuadroPregunta extends Thread implements ActionListener, K
 		if (n==3)
 		{
 			// Botón Ignorar
-			ignorar=new Boton(Texto.get("IGNORAR",Conf.idioma),130);
+			ignorar=new BotonTexto(Texto.get("IGNORAR",Conf.idioma),130);
 			ignorar.addActionListener(this);
 			ignorar.addKeyListener(this);
 		}

@@ -61,7 +61,7 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener, KeyLi
 	
 	BotonAceptar aceptar;
 	BotonCancelar cancelar;
-	Boton restaurar;
+	BotonTexto restaurar;
 
 	
 	JPanel panel, panelBoton, panelSelecMetodo, panelContenedorValores;
@@ -170,7 +170,7 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener, KeyLi
 			//aceptar.setRojo();
 			
 			// Botón Restaurar
-			restaurar=new Boton(Texto.get("PARB_RESTAURAR",Conf.idioma));
+			restaurar=new BotonTexto(Texto.get("PARB_RESTAURAR",Conf.idioma));
 			restaurar.setPreferredSize(new Dimension(95,23));
 			restaurar.addActionListener(this);
 			restaurar.addKeyListener(this);

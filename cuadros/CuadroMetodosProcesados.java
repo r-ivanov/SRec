@@ -75,7 +75,7 @@ public class CuadroMetodosProcesados extends Thread implements ActionListener, K
 	ButtonGroup grupoBotones;
 	JRadioButton[] botonesRadio;
 	JCheckBox[] botonesCheck;
-	Boton botonesOpcionesMetodo[];
+	BotonTexto botonesOpcionesMetodo[];
 
 	String [] valores;
 	
@@ -148,7 +148,7 @@ public class CuadroMetodosProcesados extends Thread implements ActionListener, K
 			grupoBotones = new ButtonGroup();
 			botonesRadio = new JRadioButton[this.numero];
 			botonesCheck = new JCheckBox[this.numero];
-			botonesOpcionesMetodo = new Boton[this.numero];
+			botonesOpcionesMetodo = new BotonTexto[this.numero];
 			
 			
 			
@@ -200,7 +200,7 @@ public class CuadroMetodosProcesados extends Thread implements ActionListener, K
 				panelIzquierda.setPreferredSize(new Dimension(465,28));
 				
 				JPanel panelDerecha=new JPanel();	// Panel que tiene el botón de opciones
-				botonesOpcionesMetodo[i]=new Boton(textoBoton);
+				botonesOpcionesMetodo[i]=new BotonTexto(textoBoton);
 				botonesOpcionesMetodo[i].addMouseListener(this);
 				botonesOpcionesMetodo[i].addKeyListener(this);
 				botonesOpcionesMetodo[i].setPreferredSize(new Dimension(90,23));
@@ -549,7 +549,7 @@ public class CuadroMetodosProcesados extends Thread implements ActionListener, K
 			for (int i=0; i<this.numero; i++)
 				botonesOpcionesMetodo[i].setEnabled( botonesCheck[i].isSelected());
 		}
-		else if (e.getSource().getClass().getName().contains("JRadioButton"))
+		else if (e.getSource() instanceof JRadioButton)
 		{
 			for (int i=0; i<this.numero; i++)
 			{
@@ -560,7 +560,7 @@ public class CuadroMetodosProcesados extends Thread implements ActionListener, K
 				}
 			}
 		}
-		else if (e.getSource().getClass().getName().contains("JCheckBox"))
+		else if (e.getSource() instanceof JCheckBox)
 		{
 			// Hacemos que si se intenta hacer que el método principal no sea visible, se vuelva a marcar como visible
 			for (int i=0; i<this.numero; i++)
@@ -581,9 +581,9 @@ public class CuadroMetodosProcesados extends Thread implements ActionListener, K
 			
 			
 		}
-		else if (e.getSource().getClass().getName().contains("Boton"))
+		else if (e.getSource() instanceof JButton)
 		{
-			Boton b=(Boton)e.getSource();
+			JButton b = (JButton) e.getSource();
 			for (int i=0; i<this.numero; i++)
 			{
 				if (b==botonesOpcionesMetodo[i])

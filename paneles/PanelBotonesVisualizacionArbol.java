@@ -42,37 +42,37 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 	
 
 	// Botones manuales de retroceso
-	private Boton retrocM = new Boton("imagenes/ba_salto_at_v.gif","imagenes/ba_salto_at_n.gif","imagenes/ba_salto_at_r.gif", 
+	private BotonImagen retrocM = new BotonImagen("imagenes/ba_salto_at_v.gif","imagenes/ba_salto_at_n.gif","imagenes/ba_salto_at_r.gif", 
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 
-	private Boton retrocF = new Boton("imagenes/ba_extr_at_v.gif","imagenes/ba_extr_at_n.gif","imagenes/ba_extr_at_r.gif", 
+	private BotonImagen retrocF = new BotonImagen("imagenes/ba_extr_at_v.gif","imagenes/ba_extr_at_n.gif","imagenes/ba_extr_at_r.gif", 
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 
-	private Boton retroc = new Boton("imagenes/ba_paso_at_v.gif","imagenes/ba_paso_at_n.gif","imagenes/ba_paso_at_r.gif", 
+	private BotonImagen retroc = new BotonImagen("imagenes/ba_paso_at_v.gif","imagenes/ba_paso_at_n.gif","imagenes/ba_paso_at_r.gif", 
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 
 	// Botones de animacion
-	private Boton aat = new Boton("imagenes/ba_anim_at_v.gif","imagenes/ba_anim_at_n.gif","imagenes/ba_anim_at_r.gif", 
+	private BotonImagen aat = new BotonImagen("imagenes/ba_anim_at_v.gif","imagenes/ba_anim_at_n.gif","imagenes/ba_anim_at_r.gif", 
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 									
-	private Boton parar = new Boton("imagenes/ba_pausa_v.gif","imagenes/ba_pausa_n.gif","imagenes/ba_pausa_r.gif", 
+	private BotonImagen parar = new BotonImagen("imagenes/ba_pausa_v.gif","imagenes/ba_pausa_n.gif","imagenes/ba_pausa_r.gif", 
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 										
-	private Boton aad = new Boton("imagenes/ba_anim_ad_v.gif","imagenes/ba_anim_ad_n.gif","imagenes/ba_anim_ad_r.gif",  
+	private BotonImagen aad = new BotonImagen("imagenes/ba_anim_ad_v.gif","imagenes/ba_anim_ad_n.gif","imagenes/ba_anim_ad_r.gif",  
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 	
 	// Botones manuales de avance
-	private Boton avance = new Boton("imagenes/ba_paso_ad_v.gif","imagenes/ba_paso_ad_n.gif","imagenes/ba_paso_ad_r.gif", 
+	private BotonImagen avance = new BotonImagen("imagenes/ba_paso_ad_v.gif","imagenes/ba_paso_ad_n.gif","imagenes/ba_paso_ad_r.gif", 
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 
-	private Boton avanceF = new Boton("imagenes/ba_extr_ad_v.gif","imagenes/ba_extr_ad_n.gif","imagenes/ba_extr_ad_r.gif", 
+	private BotonImagen avanceF = new BotonImagen("imagenes/ba_extr_ad_v.gif","imagenes/ba_extr_ad_n.gif","imagenes/ba_extr_ad_r.gif", 
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 	
-	private Boton avanceM = new Boton("imagenes/ba_salto_ad_v.gif","imagenes/ba_salto_ad_n.gif","imagenes/ba_salto_ad_r.gif", 
+	private BotonImagen avanceM = new BotonImagen("imagenes/ba_salto_ad_v.gif","imagenes/ba_salto_ad_n.gif","imagenes/ba_salto_ad_r.gif", 
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 
 	// Botón de cierre
-	private Boton cerrar = new Boton("imagenes/ba_cerrar_v.gif","imagenes/ba_cerrar_n.gif","imagenes/ba_cerrar_r.gif", 
+	private BotonImagen cerrar = new BotonImagen("imagenes/ba_cerrar_v.gif","imagenes/ba_cerrar_n.gif","imagenes/ba_cerrar_r.gif", 
 										Conf.botonVisualizacionAncho,Conf.botonVisualizacionAlto);
 	
 	
@@ -112,35 +112,35 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		{
 			if (Ventana.thisventana.traza.vacioVisible() || Ventana.thisventana.traza.raizInicio())
 			{
-				retrocF.setRojo();
-				retroc.setRojo();
-				aat.setRojo();
+				retrocF.deshabilitar();
+				retroc.deshabilitar();
+				aat.deshabilitar();
 			}
 			if (Ventana.thisventana.traza.enteroVisible())
 			{
-				avance.setRojo();
-				avanceF.setRojo();
-				aad.setRojo();
+				avance.deshabilitar();
+				avanceF.deshabilitar();
+				aad.deshabilitar();
 			}
 			if (Ventana.thisventana.traza.nodoActualCompleto())
-				avanceM.setRojo();
+				avanceM.deshabilitar();
 			else
-				retrocM.setRojo();
+				retrocM.deshabilitar();
 			
-			parar.setRojo();
+			parar.deshabilitar();
 		}
 		else
 		{
-			retrocM.setRojo();
-			retrocF.setRojo();
-			retroc.setRojo();
-			aat.setRojo();
-			parar.setRojo();
-			aad.setRojo();
-			avance.setRojo();
-			avanceF.setRojo();
-			avanceM.setRojo();
-			cerrar.setRojo();
+			retrocM.deshabilitar();
+			retrocF.deshabilitar();
+			retroc.deshabilitar();
+			aat.deshabilitar();
+			parar.deshabilitar();
+			aad.deshabilitar();
+			avance.deshabilitar();
+			avanceF.deshabilitar();
+			avanceM.deshabilitar();
+			cerrar.deshabilitar();
 		}
 
 		
@@ -252,52 +252,52 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 	
 		if (Ventana.thisventana.traza!=null)
 		{
-			retrocM.setVerde();
-			retrocF.setVerde();
-			retroc.setVerde();
-			aat.setVerde();
-			parar.setVerde();
-			aad.setVerde();
-			avance.setVerde();
-			avanceF.setVerde();
-			avanceM.setVerde();
-			cerrar.setVerde();
+			retrocM.habilitar();
+			retrocF.habilitar();
+			retroc.habilitar();
+			aat.habilitar();
+			parar.habilitar();
+			aad.habilitar();
+			avance.habilitar();
+			avanceF.habilitar();
+			avanceM.habilitar();
+			cerrar.habilitar();
 		
 			if (Ventana.thisventana.traza.vacioVisible() || Ventana.thisventana.traza.raizInicio())
 			{
-				retrocF.setRojo();
-				retroc.setRojo();
-				aat.setRojo();
+				retrocF.deshabilitar();
+				retroc.deshabilitar();
+				aat.deshabilitar();
 			}
 			if (Ventana.thisventana.traza.enteroVisible())
 			{
-				avance.setRojo();
-				avanceF.setRojo();
-				aad.setRojo();
+				avance.deshabilitar();
+				avanceF.deshabilitar();
+				aad.deshabilitar();
 			}
 			if (Ventana.thisventana.traza.nodoActualCompleto())
-				avanceM.setRojo();
+				avanceM.deshabilitar();
 			else
-				retrocM.setRojo();
+				retrocM.deshabilitar();
 			
-			parar.setRojo();
+			parar.deshabilitar();
 		}
 		else
 		{
-			retrocM.setRojo();
-			retrocF.setRojo();
-			retroc.setRojo();
-			aat.setRojo();
-			parar.setRojo();
-			aad.setRojo();
-			avance.setRojo();
-			avanceF.setRojo();
-			avanceM.setRojo();
+			retrocM.deshabilitar();
+			retrocF.deshabilitar();
+			retroc.deshabilitar();
+			aat.deshabilitar();
+			parar.deshabilitar();
+			aad.deshabilitar();
+			avance.deshabilitar();
+			avanceF.deshabilitar();
+			avanceM.deshabilitar();
 			
 			if (Ventana.thisventana.panelOcupado())
-				cerrar.setVerde();
+				cerrar.habilitar();
 			else
-				cerrar.setRojo();
+				cerrar.deshabilitar();
 		}
 		this.updateUI();
 		
@@ -340,36 +340,36 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 	// Se empla sólo al redibujar árbol
 	public void visualizar()
 	{
-		retrocM.setVerde();
-		retrocF.setVerde();
-		retroc.setVerde();
-		aat.setVerde();
-		parar.setVerde();
-		aad.setVerde();
-		avance.setVerde();
-		avanceF.setVerde();
-		avanceM.setVerde();
-		cerrar.setVerde();
+		retrocM.habilitar();
+		retrocF.habilitar();
+		retroc.habilitar();
+		aat.habilitar();
+		parar.habilitar();
+		aad.habilitar();
+		avance.habilitar();
+		avanceF.habilitar();
+		avanceM.habilitar();
+		cerrar.habilitar();
 	
 		if (Ventana.thisventana.traza==null || Ventana.thisventana.traza.vacioVisible() || Ventana.thisventana.traza.raizInicio())
 		{
-			retrocF.setRojo();
-			retroc.setRojo();
-			aat.setRojo();
+			retrocF.deshabilitar();
+			retroc.deshabilitar();
+			aat.deshabilitar();
 		}
 		if (Ventana.thisventana.traza==null || Ventana.thisventana.traza.enteroVisible())
 		{
-			avance.setRojo();
-			avanceF.setRojo();
-			aad.setRojo();
+			avance.deshabilitar();
+			avanceF.deshabilitar();
+			aad.deshabilitar();
 		}
 		if (Ventana.thisventana.traza==null || Ventana.thisventana.traza.nodoActualCompleto())
-			avanceM.setRojo();
+			avanceM.deshabilitar();
 		else
-			retrocM.setRojo();
+			retrocM.deshabilitar();
 		
 		if (hayAnimacion==0)	// Si no hay animación
-			parar.setRojo();
+			parar.deshabilitar();
 		
 		//this.setBorder(new  BorderUIResource.MatteBorderUIResource(1, 1, 2, 2, new Color(130,130,130)));	// líneas de grosor configurable
 	}
@@ -388,34 +388,34 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 			this.hayAnimacion=valor;
 			if (valor==0)
 			{
-				parar.setRojo();
+				parar.deshabilitar();
 				if (Ventana.thisventana.traza.raizInicio())
 				{
-					aad.setVerde();
-					aat.setRojo();
+					aad.habilitar();
+					aat.deshabilitar();
 				}
 				else if (Ventana.thisventana.traza.enteroVisible())
 				{
-					aad.setRojo();
-					aat.setVerde();
+					aad.deshabilitar();
+					aat.habilitar();
 				}
 				else
 				{
-					aad.setVerde();
-					aat.setVerde();
+					aad.habilitar();
+					aat.habilitar();
 				}
 			}
 			else if (valor==1)
 			{
-				aad.setNaranja();
-				aat.setVerde();
-				parar.setVerde();
+				aad.mostrarPulsado();
+				aat.habilitar();
+				parar.habilitar();
 			}
 			else if (valor==2)
 			{
-				aad.setVerde();
-				aat.setNaranja();
-				parar.setVerde();
+				aad.habilitar();
+				aat.mostrarPulsado();
+				parar.habilitar();
 			}
 		}
 	}
@@ -445,16 +445,16 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 			Ventana.thisventana.traza.nadaVisible();
 			actualizar();
 		}
-		avance.setVerde();
-		avanceF.setVerde();
-		avanceM.setVerde();
-		retroc.setRojo();
-		retrocF.setRojo();
-		retrocM.setRojo();
-		aat.setRojo();
+		avance.habilitar();
+		avanceF.habilitar();
+		avanceM.habilitar();
+		retroc.deshabilitar();
+		retrocF.deshabilitar();
+		retrocM.deshabilitar();
+		aat.deshabilitar();
 		setAnimacion(0);
 
-		//avanceM.setRojo();
+		//avanceM.deshabilitar();
 		
 
 	}
@@ -467,10 +467,10 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		if (Ventana.thisventana.traza==null)
 			return;
 			
-		avance.setVerde();
-		avanceF.setVerde();
-		avanceM.setVerde();
-		aad.setVerde();
+		avance.habilitar();
+		avanceF.habilitar();
+		avanceM.habilitar();
+		aad.habilitar();
 
 		try {
 			Ventana.thisventana.traza.anteriorMultipleVisible();
@@ -485,29 +485,29 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		
 		if (Ventana.thisventana.traza.vacioVisible())
 		{
-			retroc.setRojo();
-			retrocF.setRojo();
+			retroc.deshabilitar();
+			retrocF.deshabilitar();
 			setAnimacion(0);
 		}
 		if (Ventana.thisventana.traza.nodoActualCompleto())
 		{
-			avanceM.setRojo();
+			avanceM.deshabilitar();
 			if (Ventana.thisventana.traza.vacioVisible())
-				retrocM.setRojo();
+				retrocM.deshabilitar();
 			else
-				retrocM.setVerde();
+				retrocM.habilitar();
 		}
 		else
 		{
-			avanceM.setVerde();
-			retrocM.setRojo();
+			avanceM.habilitar();
+			retrocM.deshabilitar();
 		}
 		if (Ventana.thisventana.traza.getRaiz().getEsNodoActual())
 		{
-			retroc.setRojo();
-			retrocF.setRojo();
-			retrocM.setRojo();
-			aat.setRojo();
+			retroc.deshabilitar();
+			retrocF.deshabilitar();
+			retrocM.deshabilitar();
+			aat.deshabilitar();
 		}
 	}
 	
@@ -519,10 +519,10 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		if (Ventana.thisventana.traza==null)
 			return;
 			
-		avance.setVerde();
-		avanceF.setVerde();
-		avanceM.setVerde();
-		aad.setVerde();
+		avance.habilitar();
+		avanceF.habilitar();
+		avanceM.habilitar();
+		aad.habilitar();
 
 		try {
 			if (!Ventana.thisventana.traza.raizInicio())
@@ -542,32 +542,32 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		{
 			//traza.siguienteVisible();
 			setAnimacion(0);
-			retroc.setRojo();
-			retrocF.setRojo();
-			retrocM.setRojo();
-			aat.setRojo();
+			retroc.deshabilitar();
+			retrocF.deshabilitar();
+			retrocM.deshabilitar();
+			aat.deshabilitar();
 		}
 		if (Ventana.thisventana.traza.nodoActualCompleto())
 		{
-			avanceM.setRojo();
+			avanceM.deshabilitar();
 			if (Ventana.thisventana.traza.vacioVisible())
-				retrocM.setRojo();
+				retrocM.deshabilitar();
 			else
-				retrocM.setVerde();
+				retrocM.habilitar();
 		}
 		else
 		{
-			avanceM.setVerde();
-			retrocM.setRojo();
+			avanceM.habilitar();
+			retrocM.deshabilitar();
 		}
 		if (Ventana.thisventana.traza.getRaiz().getEsNodoActual())
 		{
 			if (!Ventana.thisventana.traza.getRaiz().esMostradoEntero())
 			{
-				retrocM.setRojo();
-				retrocF.setRojo();
-				retroc.setRojo();
-				aat.setRojo();
+				retrocM.deshabilitar();
+				retrocF.deshabilitar();
+				retroc.deshabilitar();
+				aat.deshabilitar();
 			}
 		}
 	}
@@ -582,10 +582,10 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 	
 		//Ventana.thisventana.getTraza().verArbol();
 		
-		avanceM.setVerde();
-		retroc.setVerde();
-		retrocF.setVerde();
-		aat.setVerde();
+		avanceM.habilitar();
+		retroc.habilitar();
+		retrocF.habilitar();
+		aat.habilitar();
 		try {
 			Ventana.thisventana.traza.siguienteVisible();
 			actualizar();
@@ -600,32 +600,32 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 
 		if (Ventana.thisventana.traza.enteroVisible())
 		{
-			avance.setRojo();
-			avanceF.setRojo();
+			avance.deshabilitar();
+			avanceF.deshabilitar();
 			setAnimacion(0);
 		}
 		if (Ventana.thisventana.traza.nodoActualCompleto())
 		{
-			avanceM.setRojo();
-			retrocM.setVerde();
+			avanceM.deshabilitar();
+			retrocM.habilitar();
 		}
 		else
 		{
-			avanceM.setVerde();
-			retrocM.setRojo();
+			avanceM.habilitar();
+			retrocM.deshabilitar();
 		}
 		if (!habilitado)	// Éste es el único método que se ejecuta con habilitado=false, mantenemos colores
 		{
-			retrocM.setRojo();
-			retrocF.setRojo();
-			retroc.setRojo();
-			aat.setRojo();
-			parar.setRojo();
-			aad.setRojo();
-			avance.setRojo();
-			avanceF.setRojo();
-			avanceM.setRojo();
-			cerrar.setRojo();
+			retrocM.deshabilitar();
+			retrocF.deshabilitar();
+			retroc.deshabilitar();
+			aat.deshabilitar();
+			parar.deshabilitar();
+			aad.deshabilitar();
+			avance.deshabilitar();
+			avanceF.deshabilitar();
+			avanceM.deshabilitar();
+			cerrar.deshabilitar();
 		}
 	}
 	
@@ -637,9 +637,9 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		if (Ventana.thisventana.traza==null)
 			return;
 			
-		retroc.setVerde();
-		retrocF.setVerde();
-		aat.setVerde();
+		retroc.habilitar();
+		retrocF.habilitar();
+		aat.habilitar();
 		try {
 			Ventana.thisventana.traza.siguienteMultipleVisible();
 			actualizar();
@@ -653,27 +653,27 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 
 		if (Ventana.thisventana.traza.enteroVisible())
 		{
-			avance.setRojo();
-			avanceF.setRojo();
-			avanceM.setRojo();
+			avance.deshabilitar();
+			avanceF.deshabilitar();
+			avanceM.deshabilitar();
 			setAnimacion(0);
 		}
 		if (Ventana.thisventana.traza.nodoActualCompleto())
 		{
-			avanceM.setRojo();
-			retrocM.setVerde();
+			avanceM.deshabilitar();
+			retrocM.habilitar();
 		}
 		else
 		{
-			avanceM.setVerde();
-			retrocM.setRojo();
+			avanceM.habilitar();
+			retrocM.deshabilitar();
 		}
 		if (Ventana.thisventana.traza.getRaiz().getEsNodoActual())
 		{
-			avance.setRojo();
-			avanceF.setRojo();
-			avanceM.setRojo();
-			aad.setRojo();
+			avance.deshabilitar();
+			avanceF.deshabilitar();
+			avanceM.deshabilitar();
+			aad.deshabilitar();
 		}
 	}
 	
@@ -699,12 +699,12 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 				pAlgoritmo.cerrar();
 			}
 		}
-		retrocM.setVerde();
-		retrocF.setVerde();
-		retroc.setVerde();
-		avance.setRojo();
-		avanceF.setRojo();
-		avanceM.setRojo();
+		retrocM.habilitar();
+		retrocF.habilitar();
+		retroc.habilitar();
+		avance.deshabilitar();
+		avanceF.deshabilitar();
+		avanceM.deshabilitar();
 		setAnimacion(0);
 	}
 
@@ -727,15 +727,15 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		}
 		if (this.hayAnimacion==1)
 		{
-			aat.setVerde();
-			aad.setNaranja();
+			aat.habilitar();
+			aad.mostrarPulsado();
 		}
 		else if (this.hayAnimacion==2)
 		{
-			aat.setNaranja();
-			aad.setVerde();
+			aat.mostrarPulsado();
+			aad.habilitar();
 		}
-		parar.setVerde();
+		parar.habilitar();
 	}
 	
 	/**
@@ -821,13 +821,10 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		
 		@param e evento de ratón
 	*/
-	public void mouseEntered(MouseEvent e) 
-	{
-		if (e.getComponent() instanceof Boton)
-		{
-			Boton b=(Boton)e.getComponent();
-			b.setNaranja();
-			b.tieneRaton(true);
+	public void mouseEntered(MouseEvent e) {
+		if (e.getComponent() instanceof BotonImagen) {
+			BotonImagen b = (BotonImagen)e.getComponent();
+			b.ratonEstaSobreBoton();
 		}
 	}
 	
@@ -836,21 +833,11 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		
 		@param e evento de ratón
 	*/
-	public void mouseExited(MouseEvent e) 
-	{
-		if (e.getComponent() instanceof Boton)
-		{
-			Boton b=(Boton)e.getComponent();
-			b.tieneRaton(false);
-			b.setColorEstado();
+	public void mouseExited(MouseEvent e) {
+		if (e.getComponent() instanceof BotonImagen) {
+			BotonImagen b = (BotonImagen) e.getComponent();
+			b.ratonNoEstaSobreBoton();
 		}
-	
-		if (hayAnimacion==1)
-			aad.setNaranja();
-		if (hayAnimacion==2)
-			aat.setNaranja();
-
-
 	}
 	
 	/**
@@ -865,9 +852,9 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 			
 		//VentanaVisualizador.memoria();
 		
-		if (e.getSource() instanceof Boton)
+		if (e.getSource() instanceof BotonImagen)
 		{
-			Boton b=(Boton)e.getSource();
+			BotonImagen b = (BotonImagen)e.getSource();
 			if (habilitado && b.isEnabled())
 			{
 				if (e.getSource()==retrocM)
@@ -953,16 +940,16 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 	{
 		this.habilitado=false;
 		
-		retrocM.setRojo();
-		retrocF.setRojo();
-		retroc.setRojo();
-		aat.setRojo();
-		parar.setRojo();
-		aad.setRojo();
-		avance.setRojo();
-		avanceF.setRojo();
-		avanceM.setRojo();
-		cerrar.setRojo();
+		retrocM.deshabilitar();
+		retrocF.deshabilitar();
+		retroc.deshabilitar();
+		aat.deshabilitar();
+		parar.deshabilitar();
+		aad.deshabilitar();
+		avance.deshabilitar();
+		avanceF.deshabilitar();
+		avanceM.deshabilitar();
+		cerrar.deshabilitar();
 		
 		campoSeg.setEnabled(false);
 		barraSeg.setEnabled(false);
@@ -977,48 +964,46 @@ public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
 		
 		if (Ventana.thisventana.traza.raizInicio())
 		{
-			retrocF.setRojo();
-			retroc.setRojo();
-			aat.setRojo();
+			retrocF.deshabilitar();
+			retroc.deshabilitar();
+			aat.deshabilitar();
 		}
 		else 
 		{
-			retrocM.setVerde();
-			retrocF.setVerde();
-			retroc.setVerde();
-			aat.setVerde();
+			retrocM.habilitar();
+			retrocF.habilitar();
+			retroc.habilitar();
+			aat.habilitar();
 		}
 		
-		parar.setRojo();
+		parar.deshabilitar();
 		
 		if (Ventana.thisventana.traza.enteroVisible())
 		{
-			aad.setRojo();
-			avance.setRojo();
-			avanceF.setRojo();
+			aad.deshabilitar();
+			avance.deshabilitar();
+			avanceF.deshabilitar();
 		}
 		else
 		{
-			aad.setVerde();
-			avance.setVerde();
-			avanceF.setVerde();
+			aad.habilitar();
+			avance.habilitar();
+			avanceF.habilitar();
 		}
 		
 		if (Ventana.thisventana.traza.nodoActualCompleto())
 		{
-			avanceM.setRojo();
-			retrocM.setVerde();
+			avanceM.deshabilitar();
+			retrocM.habilitar();
 		}
 		else
 		{
-			avanceM.setVerde();
-			retrocM.setRojo();
+			avanceM.habilitar();
+			retrocM.deshabilitar();
 		}
 		
-		cerrar.setVerde();
-	}
-	
-	
+		cerrar.habilitar();
+	}	
 }
 
 
