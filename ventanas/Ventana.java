@@ -670,7 +670,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[42]) )
 			{
 				if (Conf.fichero_log) log_write("Filtrado y selección > Datos de entrada y salida...");
-				new CuadroElegirES();
+				new CuadroElegirES(this);
 			}
 			
 			// Filtrado > Métodos y parámetros...
@@ -1152,7 +1152,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if(fuente==botones[10])		// Visualización > Datos de entrada y salida...
 			{
 				if (Conf.fichero_log) log_write("Botón: Datos de Entrada y Salida...");
-				new CuadroElegirES();
+				new CuadroElegirES(this);
 			}
 			
 			else if(fuente==botones[11])		// Visualización > Visibilidad de métodos y parámetros
