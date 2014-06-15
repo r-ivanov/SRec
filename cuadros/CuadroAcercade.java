@@ -43,7 +43,7 @@ public class CuadroAcercade extends Thread implements ActionListener,
 	 * Genera un nuevo cuadro de identifiación del programa.
 	 * 
 	 * @param ventana
-	 *            ventana a la que quedará asociado el cuadro
+	 *            ventana a la que quedará asociado el cuadro.
 	 */
 	public CuadroAcercade(Ventana ventana) {
 		dialogo = new JDialog(ventana, true);
