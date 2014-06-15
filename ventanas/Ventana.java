@@ -1013,7 +1013,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[36]) )
 			{
 				if (Conf.fichero_log) log_write("Ayuda > Sobre SRec");
-				new CuadroAcercade();
+				new CuadroAcercade(this);
 			}
 
 			// JMenuItem no reconocido
