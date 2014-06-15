@@ -1,0 +1,68 @@
+Actualizado: 17/05/2014
+**************************************
+*     HISTORIAL DE MODIFICACIONES    *
+**************************************
+
+- Este documento recoge las modificaciones que se han ido realizando a la herramienta SRec -
+
+** PROBLEMAS CON JAVA 7
+ * No se queda bloqueado al compilar clases con JDK 7.
+ * Solucionados porblemas al seleccionar colores en JDK 7.
+ * Visualización correcta del panel de personalización de colores en JDK 7.
+ * No se queda bloqueado al seleccionar NO en activar la vista DYV con JDK 7.
+
+** PROBLEMAS PUNTUALES
+ * Solucionado problema de codificación de archivos XML. Admite ficheros y directorios con tildes o ñ.
+ * Solucionado problema de "CLASE VACIA" con la clase "RecursivosPD.java". [Problema de atributos entre métodos].
+ * Solucionado problema con la clase "AlineacionSecuencias.java". Ya se pueden declarar variables del tipo "int a, b, c;"
+ * Solucionado problema al generar parámetros aleatorios. Se han activado por defecto.
+ * Solucionado problema que impedia seleccionar algunas opciones después de cambiar el idioma.
+
+** ENTRADA DE DATOS
+ * Modificada la asignación de parámetros para admitir unicamente char de la forma 'a' y String de la forma "abc" (comillas simples y dobles).
+ * Modificada la generación de parámetros aleatorios para crearlos de la forma 'a' y String de la forma "abc" (comillas simples y dobles).
+ * Vista de árbol, de pila y de traza muestran las comillas en los caracteres y strings tal y como se introducen.
+
+** NUEVA ANIMACIÓN
+ * Se ha separado en dos funciones distintas la selección del método a ejecutar y la asignación de parámetros para lanzar animaciones.
+ * Antes de seleccionar método, comprueba si la clase ha sido modificada, y en caso afirmativo, ofrece guardar y procesar. 
+ * Solucionado el error que desactiva la opción para procesar clases cuando no debe. 
+
+** BOTONES DEL RATÓN
+ * Se ha añadido la opción "Resaltar nodo" haciendo click derecho sobre un nodo en la vista de árbol.
+ * Ahora se puede cambiar el color para la opción "Resaltar nodo".
+ * Se han añadido las mismas opciones del botón derecho del ratón para la vista de pila. 
+
+** ESTRUCTURA DE MENÚS
+ * Nueva estructuración de los menús "Filtrado y Selección", "Árbol" y "Traza".
+ * Nueva opción de "Sangrado" en el menú de "Traza".
+ * Nueva opción de "Identificador de método" en el menú de "Traza".
+ * Nueva opción de "Solo estructura de datos en DYV" en el menú de "Traza".
+ * Nueva opción "Arrancar animación en estado inicial".
+ * La opción "Identificardor de método" ahora es común para las vistas de árbol, pila y traza, mostrando los mismos prefijos.
+ * Las opciones específicas de DYV aparecen deshabilitadas cuando las vistas de DYV no están activadas.
+ * Atenuación de las opciones de menú desactivadas.
+++++++++[NUEVO] * Se ha modificado la barra de herramientas para adaptarla a la nueva estructura de menus.
+
+** FUSIÓN ANIMACIONES DE TRAZA Y CRONOLÓGICA
+ * Se han fusionado las vistas de traza y cronológica, de modo que la primera aparece si DYV no está activado, y la segunda en el caso contrario.
+ * Ahora la opción de "Orden Cronólogico" se aplica a ambas modalidades de vista.
+
+** VISUALIZACIÓN
+ * La vista global del árbol se ajusta de manerá dinámica al espacio disponible.
+ * El ajuste de la vista global se controla desde una nueva opción del menú "Árbol".
+ * Nueva opción del menú árbol para desplazar dinamicamente la visualización del mismo hacia el último nodo creado.
+++++++++[NUEVO] * Solucionado el problema que provocaba que el visor "saltara" hacia la posición inicial cuando se movia fuera del árbol.
+++++++++[NUEVO] * Solucionado problema que provocaba comportamientos extraños durante el desplazamiento automático del visor cuando estaba activado el ancho dinámico del árbol.
+
+** DIÁLOGO ACTIVACIÓN DIVIDE Y VENCERAS
+ * Cuando el número de parámetros del método a activar sea menor que diez (y se introduzca un numero -no letras-), el cursor irá saltando automaticamente de una caja de texto a la siguiente, haciendo este proceso más dinámico.
+ * Se puede saltar de un campo de texto a otro utilizando las teclas arriba y abajo. 
+
+** OTROS DIÁLOGOS
+++++++++[NUEVO] * Se han añadido botones de cancelar en todos los diálogos para dar homogeneidad al programa.
+++++++++[NUEVO] * Se ha añadido un diálogo de información cuando la Máquina virtual de Java se configura correctamente.
+++++++++[NUEVO] * Se ha suprimido el diálogo de error para configurar la JVM en la primera ejecución de SRec.
+
+** EXPORTAR CAPTURAS
+++++++++[NUEVO] * Ahora se pueden hacer exportaciones sin problemas para las vistas de Árbol, Pila y Traza (solo en DYV). Estructura solo se permiten capturas del estado actual.

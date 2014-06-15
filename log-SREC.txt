@@ -1,0 +1,2780 @@
+15/05/2014 19:59:55 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:01:39 | Menú seleccionado: Árbol
+15/05/2014 20:01:48 | Menú deseleccionado: Árbol
+15/05/2014 20:01:50 | Menú seleccionado: Árbol
+15/05/2014 20:01:51 | Menú deseleccionado: Árbol
+15/05/2014 20:02:04 | Menú seleccionado: Filtrado y selección
+15/05/2014 20:02:04 | Menú deseleccionado: Filtrado y selección
+15/05/2014 20:02:04 | Menú seleccionado: Árbol
+15/05/2014 20:02:05 | Menú deseleccionado: Árbol
+15/05/2014 20:02:05 | Menú seleccionado: Árbol
+15/05/2014 20:02:06 | Menú deseleccionado: Árbol
+15/05/2014 20:05:11 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:05:17 | Archivo > Cargar y procesar clase...
+15/05/2014 20:05:21 | ¿Habilitar vistas para DYV? Sí
+15/05/2014 20:05:26 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:05:27 | Archivo > Seleccionar método...
+15/05/2014 20:05:33 | Método seleccionado: fibMemo ( int , int[] )  [ void ]
+15/05/2014 20:05:35 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:05:41 | Lanzar ejecución: fibMemo(2, {-1,-1,-1});
+15/05/2014 20:05:43 | Visualización: [ >> ]
+15/05/2014 20:05:45 | Botón > Estructura de datos en DYV
+15/05/2014 20:05:45 | Botón > Estructura de datos en DYV: false
+15/05/2014 20:05:47 | Menú seleccionado: Árbol
+15/05/2014 20:05:48 | Menú deseleccionado: Árbol
+15/05/2014 20:05:48 | Menú seleccionado: Traza
+15/05/2014 20:05:48 | Menú deseleccionado: Traza
+15/05/2014 20:05:48 | Menú seleccionado: Información
+15/05/2014 20:05:49 | Menú deseleccionado: Información
+15/05/2014 20:05:49 | Menú seleccionado: Árbol
+15/05/2014 20:05:49 | Menú deseleccionado: Árbol
+15/05/2014 20:05:49 | Árbol de recursión > Estructura de datos en DYV
+15/05/2014 20:05:49 | Árbol de recursión > Estructura de datos en DYV: true
+15/05/2014 20:05:52 | Botón > Estructura de datos en DYV
+15/05/2014 20:05:52 | Botón > Estructura de datos en DYV: false
+15/05/2014 20:05:53 | Menú seleccionado: Árbol
+15/05/2014 20:05:54 | Menú deseleccionado: Árbol
+15/05/2014 20:05:54 | Menú seleccionado: Traza
+15/05/2014 20:05:54 | Menú deseleccionado: Traza
+15/05/2014 20:05:55 | Botón > Estructura de datos en DYV
+15/05/2014 20:05:55 | Botón > Estructura de datos en DYV: true
+15/05/2014 20:05:57 | Menú seleccionado: Árbol
+15/05/2014 20:05:58 | Menú deseleccionado: Árbol
+15/05/2014 20:05:58 | Menú seleccionado: Traza
+15/05/2014 20:05:59 | Menú deseleccionado: Traza
+15/05/2014 20:05:59 | Menú seleccionado: Árbol
+15/05/2014 20:06:01 | Menú deseleccionado: Árbol
+15/05/2014 20:06:02 | Archivo > Cargar y procesar clase...
+15/05/2014 20:06:08 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:06:09 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:06:17 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:06:23 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:06:57 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:07:01 | Archivo > Cargar y procesar clase...
+15/05/2014 20:07:06 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:07:07 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:07:12 | Menú seleccionado: Árbol
+15/05/2014 20:07:12 | Menú deseleccionado: Árbol
+15/05/2014 20:07:12 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:07:12 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:07:14 | Archivo > Seleccionar método...
+15/05/2014 20:07:14 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:07:15 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:07:18 | Lanzar ejecución: fib1(8);
+15/05/2014 20:07:19 | Visualización: [ >| ]
+15/05/2014 20:07:20 | Visualización: [ >| ]
+15/05/2014 20:07:21 | Visualización: [ >| ]
+15/05/2014 20:07:21 | Visualización: [ >| ]
+15/05/2014 20:07:22 | Visualización: [ >| ]
+15/05/2014 20:07:24 | Visualización: [ >| ]
+15/05/2014 20:07:25 | Visualización: [ >| ]
+15/05/2014 20:07:26 | Visualización: [ >| ]
+15/05/2014 20:07:27 | Visualización: [ >| ]
+15/05/2014 20:07:27 | Visualización: [ >| ]
+15/05/2014 20:07:28 | Visualización: [ >| ]
+15/05/2014 20:07:29 | Visualización: [ >| ]
+15/05/2014 20:07:29 | Visualización: [ >| ]
+15/05/2014 20:07:30 | Visualización: [ >| ]
+15/05/2014 20:07:30 | Visualización: [ >| ]
+15/05/2014 20:07:31 | Visualización: [ >| ]
+15/05/2014 20:07:31 | Visualización: [ >| ]
+15/05/2014 20:07:31 | Visualización: [ >| ]
+15/05/2014 20:07:32 | Visualización: [ >| ]
+15/05/2014 20:07:32 | Visualización: [ >| ]
+15/05/2014 20:07:32 | Visualización: [ >| ]
+15/05/2014 20:07:32 | Visualización: [ >| ]
+15/05/2014 20:07:33 | Visualización: [ >| ]
+15/05/2014 20:07:33 | Visualización: [ >| ]
+15/05/2014 20:07:33 | Visualización: [ >| ]
+15/05/2014 20:07:33 | Visualización: [ >| ]
+15/05/2014 20:07:34 | Visualización: [ >| ]
+15/05/2014 20:07:34 | Visualización: [ >| ]
+15/05/2014 20:07:34 | Visualización: [ >| ]
+15/05/2014 20:07:34 | Visualización: [ >| ]
+15/05/2014 20:07:34 | Visualización: [ >| ]
+15/05/2014 20:07:35 | Visualización: [ >| ]
+15/05/2014 20:07:35 | Visualización: [ >| ]
+15/05/2014 20:07:35 | Visualización: [ >| ]
+15/05/2014 20:07:35 | Visualización: [ >| ]
+15/05/2014 20:07:35 | Visualización: [ >| ]
+15/05/2014 20:07:36 | Visualización: [ >| ]
+15/05/2014 20:07:36 | Visualización: [ >| ]
+15/05/2014 20:07:36 | Visualización: [ >| ]
+15/05/2014 20:07:36 | Visualización: [ >| ]
+15/05/2014 20:07:36 | Visualización: [ >| ]
+15/05/2014 20:07:36 | Visualización: [ >| ]
+15/05/2014 20:07:36 | Visualización: [ >| ]
+15/05/2014 20:07:37 | Visualización: [ >| ]
+15/05/2014 20:07:37 | Visualización: [ >| ]
+15/05/2014 20:07:37 | Visualización: [ >| ]
+15/05/2014 20:07:37 | Visualización: [ >| ]
+15/05/2014 20:07:38 | Visualización: [ << ]
+15/05/2014 20:07:39 | Visualización: [ >| ]
+15/05/2014 20:07:40 | Visualización: [ >| ]
+15/05/2014 20:07:40 | Visualización: [ >| ]
+15/05/2014 20:07:43 | Visualización: [ >| ]
+15/05/2014 20:07:44 | Visualización: [ >| ]
+15/05/2014 20:07:45 | Visualización: [ >| ]
+15/05/2014 20:07:46 | Visualización: [ >| ]
+15/05/2014 20:07:47 | Visualización: [ << ]
+15/05/2014 20:08:23 | Visualización: [ >| ]
+15/05/2014 20:08:24 | Visualización: [ >| ]
+15/05/2014 20:08:24 | Visualización: [ >| ]
+15/05/2014 20:08:25 | Visualización: [ >| ]
+15/05/2014 20:08:25 | Visualización: [ >| ]
+15/05/2014 20:08:26 | Visualización: [ >| ]
+15/05/2014 20:08:27 | Visualización: [ >| ]
+15/05/2014 20:08:27 | Visualización: [ >| ]
+15/05/2014 20:08:28 | Visualización: [ >| ]
+15/05/2014 20:08:28 | Visualización: [ >| ]
+15/05/2014 20:08:29 | Visualización: [ >| ]
+15/05/2014 20:08:29 | Visualización: [ >| ]
+15/05/2014 20:08:31 | Visualización: [ << ]
+15/05/2014 20:08:32 | Visualización: [ >| ]
+15/05/2014 20:08:33 | Visualización: [ >| ]
+15/05/2014 20:08:33 | Visualización: [ >| ]
+15/05/2014 20:08:34 | Visualización: [ >| ]
+15/05/2014 20:08:35 | Visualización: [ >| ]
+15/05/2014 20:08:38 | Visualización: [ << ]
+15/05/2014 20:08:39 | Visualización: [ >| ]
+15/05/2014 20:08:40 | Visualización: [ >| ]
+15/05/2014 20:08:40 | Visualización: [ >| ]
+15/05/2014 20:08:41 | Visualización: [ >| ]
+15/05/2014 20:08:41 | Visualización: [ >| ]
+15/05/2014 20:08:42 | Visualización: [ >| ]
+15/05/2014 20:08:42 | Visualización: [ >| ]
+15/05/2014 20:08:43 | Visualización: [ >| ]
+15/05/2014 20:08:43 | Visualización: [ >| ]
+15/05/2014 20:08:43 | Visualización: [ >| ]
+15/05/2014 20:08:44 | Visualización: [ >| ]
+15/05/2014 20:08:47 | Visualización: [ << ]
+15/05/2014 20:08:48 | Visualización: [ >| ]
+15/05/2014 20:08:49 | Visualización: [ >| ]
+15/05/2014 20:08:50 | Visualización: [ >| ]
+15/05/2014 20:08:50 | Visualización: [ >| ]
+15/05/2014 20:08:51 | Visualización: [ >| ]
+15/05/2014 20:08:51 | Visualización: [ >| ]
+15/05/2014 20:08:52 | Visualización: [ >| ]
+15/05/2014 20:08:52 | Visualización: [ >| ]
+15/05/2014 20:08:52 | Visualización: [ >| ]
+15/05/2014 20:08:53 | Visualización: [ >| ]
+15/05/2014 20:08:53 | Visualización: [ >| ]
+15/05/2014 20:08:53 | Visualización: [ >| ]
+15/05/2014 20:08:53 | Visualización: [ >| ]
+15/05/2014 20:08:53 | Visualización: [ >| ]
+15/05/2014 20:08:55 | Visualización: [ << ]
+15/05/2014 20:09:52 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:09:56 | Archivo > Cargar y procesar clase...
+15/05/2014 20:10:01 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:10:02 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:10:02 | Archivo > Seleccionar método...
+15/05/2014 20:10:04 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:10:05 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:10:07 | Lanzar ejecución: fib1(8);
+15/05/2014 20:10:10 | Menú seleccionado: Árbol
+15/05/2014 20:10:11 | Menú deseleccionado: Árbol
+15/05/2014 20:10:11 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:10:11 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:10:14 | Visualización: [ >| ]
+15/05/2014 20:10:15 | Visualización: [ >| ]
+15/05/2014 20:10:15 | Visualización: [ >| ]
+15/05/2014 20:10:16 | Visualización: [ >| ]
+15/05/2014 20:10:16 | Visualización: [ >| ]
+15/05/2014 20:10:17 | Visualización: [ >| ]
+15/05/2014 20:10:17 | Visualización: [ >| ]
+15/05/2014 20:10:18 | Visualización: [ >| ]
+15/05/2014 20:10:18 | Visualización: [ >| ]
+15/05/2014 20:10:19 | Visualización: [ >| ]
+15/05/2014 20:10:19 | Visualización: [ >| ]
+15/05/2014 20:10:19 | Visualización: [ >| ]
+15/05/2014 20:10:20 | Visualización: [ >| ]
+15/05/2014 20:10:20 | Visualización: [ >| ]
+15/05/2014 20:10:21 | Visualización: [ >| ]
+15/05/2014 20:10:21 | Visualización: [ >| ]
+15/05/2014 20:10:22 | Visualización: [ >| ]
+15/05/2014 20:10:22 | Visualización: [ >| ]
+15/05/2014 20:10:23 | Visualización: [ >| ]
+15/05/2014 20:10:23 | Visualización: [ >| ]
+15/05/2014 20:10:23 | Visualización: [ >| ]
+15/05/2014 20:10:24 | Visualización: [ >| ]
+15/05/2014 20:10:24 | Visualización: [ >| ]
+15/05/2014 20:10:25 | Visualización: [ >| ]
+15/05/2014 20:10:25 | Visualización: [ >| ]
+15/05/2014 20:10:26 | Visualización: [ >| ]
+15/05/2014 20:10:26 | Visualización: [ >| ]
+15/05/2014 20:10:26 | Visualización: [ >| ]
+15/05/2014 20:10:27 | Visualización: [ >| ]
+15/05/2014 20:10:27 | Visualización: [ >| ]
+15/05/2014 20:10:28 | Visualización: [ >| ]
+15/05/2014 20:10:28 | Visualización: [ >| ]
+15/05/2014 20:10:29 | Visualización: [ >| ]
+15/05/2014 20:10:29 | Visualización: [ >| ]
+15/05/2014 20:10:29 | Visualización: [ >| ]
+15/05/2014 20:10:30 | Visualización: [ >| ]
+15/05/2014 20:10:30 | Visualización: [ >| ]
+15/05/2014 20:10:31 | Visualización: [ >| ]
+15/05/2014 20:10:31 | Visualización: [ >| ]
+15/05/2014 20:10:31 | Visualización: [ >| ]
+15/05/2014 20:10:31 | Visualización: [ >| ]
+15/05/2014 20:10:32 | Visualización: [ >| ]
+15/05/2014 20:10:32 | Visualización: [ >| ]
+15/05/2014 20:10:32 | Visualización: [ >| ]
+15/05/2014 20:10:32 | Visualización: [ >| ]
+15/05/2014 20:10:33 | Visualización: [ >| ]
+15/05/2014 20:10:33 | Visualización: [ >| ]
+15/05/2014 20:10:33 | Visualización: [ >| ]
+15/05/2014 20:10:33 | Visualización: [ >| ]
+15/05/2014 20:10:33 | Visualización: [ >| ]
+15/05/2014 20:10:33 | Visualización: [ >| ]
+15/05/2014 20:10:34 | Visualización: [ >| ]
+15/05/2014 20:10:34 | Visualización: [ >| ]
+15/05/2014 20:10:34 | Visualización: [ >| ]
+15/05/2014 20:10:34 | Visualización: [ >| ]
+15/05/2014 20:10:34 | Visualización: [ >| ]
+15/05/2014 20:10:35 | Visualización: [ >| ]
+15/05/2014 20:10:35 | Visualización: [ >| ]
+15/05/2014 20:10:35 | Visualización: [ >| ]
+15/05/2014 20:10:35 | Visualización: [ >| ]
+15/05/2014 20:10:35 | Visualización: [ >| ]
+15/05/2014 20:10:35 | Visualización: [ >| ]
+15/05/2014 20:10:36 | Visualización: [ >| ]
+15/05/2014 20:10:36 | Visualización: [ >| ]
+15/05/2014 20:10:36 | Visualización: [ >| ]
+15/05/2014 20:10:36 | Visualización: [ >| ]
+15/05/2014 20:10:36 | Visualización: [ >| ]
+15/05/2014 20:10:36 | Visualización: [ >| ]
+15/05/2014 20:10:37 | Visualización: [ >| ]
+15/05/2014 20:10:37 | Visualización: [ >| ]
+15/05/2014 20:10:37 | Visualización: [ >| ]
+15/05/2014 20:10:37 | Visualización: [ >| ]
+15/05/2014 20:10:38 | Visualización: [ >| ]
+15/05/2014 20:10:38 | Visualización: [ >| ]
+15/05/2014 20:10:38 | Visualización: [ >| ]
+15/05/2014 20:10:38 | Visualización: [ >| ]
+15/05/2014 20:10:38 | Visualización: [ >| ]
+15/05/2014 20:10:39 | Visualización: [ << ]
+15/05/2014 20:10:40 | Visualización: [ >> ]
+15/05/2014 20:10:42 | Visualización: [ << ]
+15/05/2014 20:10:43 | Visualización: [ >| ]
+15/05/2014 20:10:44 | Visualización: [ >| ]
+15/05/2014 20:10:44 | Visualización: [ >| ]
+15/05/2014 20:10:44 | Visualización: [ >| ]
+15/05/2014 20:10:45 | Visualización: [ >| ]
+15/05/2014 20:10:45 | Visualización: [ >| ]
+15/05/2014 20:10:46 | Visualización: [ >| ]
+15/05/2014 20:10:46 | Visualización: [ >| ]
+15/05/2014 20:10:46 | Visualización: [ >| ]
+15/05/2014 20:10:47 | Visualización: [ >| ]
+15/05/2014 20:10:47 | Visualización: [ >| ]
+15/05/2014 20:10:48 | Visualización: [ >| ]
+15/05/2014 20:10:48 | Visualización: [ >| ]
+15/05/2014 20:10:48 | Visualización: [ >| ]
+15/05/2014 20:10:49 | Visualización: [ >| ]
+15/05/2014 20:10:49 | Visualización: [ >| ]
+15/05/2014 20:10:50 | Visualización: [ >| ]
+15/05/2014 20:10:50 | Visualización: [ >| ]
+15/05/2014 20:10:50 | Visualización: [ >| ]
+15/05/2014 20:10:51 | Visualización: [ >| ]
+15/05/2014 20:10:53 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:11:24 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:11:26 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:11:30 | Archivo > Cargar y procesar clase...
+15/05/2014 20:11:34 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:11:35 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:11:38 | Menú seleccionado: Árbol
+15/05/2014 20:11:39 | Menú deseleccionado: Árbol
+15/05/2014 20:11:39 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:11:39 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:11:40 | Archivo > Seleccionar método...
+15/05/2014 20:11:42 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:11:43 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:11:45 | Lanzar ejecución: fib1(8);
+15/05/2014 20:11:47 | Visualización: [ >| ]
+15/05/2014 20:11:47 | Visualización: [ >| ]
+15/05/2014 20:11:47 | Visualización: [ >| ]
+15/05/2014 20:11:48 | Visualización: [ >| ]
+15/05/2014 20:11:48 | Visualización: [ >| ]
+15/05/2014 20:11:51 | Visualización: [ >| ]
+15/05/2014 20:11:51 | Visualización: [ >| ]
+15/05/2014 20:11:52 | Visualización: [ >| ]
+15/05/2014 20:11:52 | Visualización: [ >| ]
+15/05/2014 20:11:53 | Visualización: [ >| ]
+15/05/2014 20:11:53 | Visualización: [ >| ]
+15/05/2014 20:11:54 | Visualización: [ >| ]
+15/05/2014 20:11:54 | Visualización: [ >| ]
+15/05/2014 20:11:54 | Visualización: [ >| ]
+15/05/2014 20:11:55 | Visualización: [ >| ]
+15/05/2014 20:11:55 | Visualización: [ >| ]
+15/05/2014 20:11:56 | Visualización: [ >| ]
+15/05/2014 20:11:56 | Visualización: [ >| ]
+15/05/2014 20:11:57 | Visualización: [ >| ]
+15/05/2014 20:11:57 | Visualización: [ >| ]
+15/05/2014 20:11:57 | Visualización: [ >| ]
+15/05/2014 20:11:58 | Visualización: [ >| ]
+15/05/2014 20:11:58 | Visualización: [ >| ]
+15/05/2014 20:11:58 | Visualización: [ >| ]
+15/05/2014 20:11:58 | Visualización: [ >| ]
+15/05/2014 20:11:58 | Visualización: [ >| ]
+15/05/2014 20:11:59 | Visualización: [ >| ]
+15/05/2014 20:11:59 | Visualización: [ >| ]
+15/05/2014 20:11:59 | Visualización: [ >| ]
+15/05/2014 20:12:00 | Visualización: [ << ]
+15/05/2014 20:12:02 | Visualización: [ >| ]
+15/05/2014 20:12:02 | Visualización: [ >| ]
+15/05/2014 20:12:02 | Visualización: [ >| ]
+15/05/2014 20:12:03 | Visualización: [ >| ]
+15/05/2014 20:12:03 | Visualización: [ >| ]
+15/05/2014 20:12:04 | Visualización: [ >| ]
+15/05/2014 20:12:04 | Visualización: [ >| ]
+15/05/2014 20:12:04 | Visualización: [ >| ]
+15/05/2014 20:12:04 | Visualización: [ >| ]
+15/05/2014 20:12:04 | Visualización: [ >| ]
+15/05/2014 20:12:05 | Visualización: [ >| ]
+15/05/2014 20:12:05 | Visualización: [ >| ]
+15/05/2014 20:12:05 | Visualización: [ >| ]
+15/05/2014 20:12:05 | Visualización: [ >| ]
+15/05/2014 20:12:05 | Visualización: [ >| ]
+15/05/2014 20:12:05 | Visualización: [ >| ]
+15/05/2014 20:12:06 | Visualización: [ >| ]
+15/05/2014 20:12:06 | Visualización: [ >> ]
+15/05/2014 20:12:08 | Visualización: [ << ]
+15/05/2014 20:12:11 | Visualización: [ >| ]
+15/05/2014 20:12:12 | Visualización: [ >| ]
+15/05/2014 20:12:12 | Visualización: [ >| ]
+15/05/2014 20:12:13 | Visualización: [ >| ]
+15/05/2014 20:12:13 | Visualización: [ >| ]
+15/05/2014 20:12:14 | Visualización: [ >| ]
+15/05/2014 20:12:14 | Visualización: [ >| ]
+15/05/2014 20:12:14 | Visualización: [ >| ]
+15/05/2014 20:12:15 | Visualización: [ >| ]
+15/05/2014 20:12:15 | Visualización: [ >| ]
+15/05/2014 20:12:17 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:12:37 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:12:46 | Archivo > Cargar y procesar clase...
+15/05/2014 20:12:52 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:12:53 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:12:54 | Archivo > Seleccionar método...
+15/05/2014 20:12:56 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:12:56 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:12:59 | Lanzar ejecución: fib1(8);
+15/05/2014 20:13:01 | Menú seleccionado: Árbol
+15/05/2014 20:13:02 | Menú deseleccionado: Árbol
+15/05/2014 20:13:02 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:13:02 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:13:03 | Visualización: [ >| ]
+15/05/2014 20:13:04 | Visualización: [ >| ]
+15/05/2014 20:13:04 | Visualización: [ >| ]
+15/05/2014 20:13:05 | Visualización: [ >| ]
+15/05/2014 20:13:05 | Visualización: [ >| ]
+15/05/2014 20:13:08 | Visualización: [ >| ]
+15/05/2014 20:13:09 | Visualización: [ >| ]
+15/05/2014 20:13:09 | Visualización: [ >| ]
+15/05/2014 20:13:11 | Visualización: [ >| ]
+15/05/2014 20:13:12 | Visualización: [ >| ]
+15/05/2014 20:13:12 | Visualización: [ >| ]
+15/05/2014 20:13:13 | Visualización: [ >| ]
+15/05/2014 20:13:14 | Visualización: [ << ]
+15/05/2014 20:13:16 | Visualización: [ >| ]
+15/05/2014 20:13:16 | Visualización: [ >| ]
+15/05/2014 20:13:17 | Visualización: [ >| ]
+15/05/2014 20:13:17 | Visualización: [ >| ]
+15/05/2014 20:13:18 | Visualización: [ >| ]
+15/05/2014 20:13:19 | Visualización: [ >| ]
+15/05/2014 20:13:19 | Visualización: [ >| ]
+15/05/2014 20:13:20 | Visualización: [ >| ]
+15/05/2014 20:13:20 | Visualización: [ >| ]
+15/05/2014 20:13:21 | Visualización: [ >| ]
+15/05/2014 20:13:23 | Visualización: [ << ]
+15/05/2014 20:13:25 | Visualización: [ >| ]
+15/05/2014 20:13:25 | Visualización: [ >| ]
+15/05/2014 20:13:26 | Visualización: [ >| ]
+15/05/2014 20:13:32 | Visualización: [ >| ]
+15/05/2014 20:13:33 | Visualización: [ >| ]
+15/05/2014 20:13:34 | Visualización: [ >| ]
+15/05/2014 20:13:35 | Visualización: [ << ]
+15/05/2014 20:13:36 | Visualización: [ >| ]
+15/05/2014 20:13:36 | Visualización: [ >| ]
+15/05/2014 20:13:37 | Visualización: [ >| ]
+15/05/2014 20:13:38 | Visualización: [ >| ]
+15/05/2014 20:13:38 | Visualización: [ >| ]
+15/05/2014 20:13:39 | Visualización: [ >| ]
+15/05/2014 20:13:39 | Visualización: [ >| ]
+15/05/2014 20:13:40 | Menú seleccionado: Árbol
+15/05/2014 20:13:40 | Menú deseleccionado: Árbol
+15/05/2014 20:13:40 | Menú seleccionado: Traza
+15/05/2014 20:13:41 | Menú deseleccionado: Traza
+15/05/2014 20:13:41 | Menú seleccionado: Árbol
+15/05/2014 20:13:41 | Menú deseleccionado: Árbol
+15/05/2014 20:13:41 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:13:42 | Árbol de recursión > Árboles dinámicos: false
+15/05/2014 20:13:43 | Visualización: [ << ]
+15/05/2014 20:13:45 | Visualización: [ >| ]
+15/05/2014 20:13:46 | Visualización: [ >| ]
+15/05/2014 20:13:46 | Visualización: [ >| ]
+15/05/2014 20:13:47 | Visualización: [ >| ]
+15/05/2014 20:13:47 | Visualización: [ >| ]
+15/05/2014 20:13:48 | Visualización: [ >| ]
+15/05/2014 20:13:48 | Visualización: [ >| ]
+15/05/2014 20:13:49 | Visualización: [ >| ]
+15/05/2014 20:13:49 | Visualización: [ >| ]
+15/05/2014 20:13:49 | Visualización: [ >| ]
+15/05/2014 20:13:50 | Visualización: [ >| ]
+15/05/2014 20:13:50 | Visualización: [ >| ]
+15/05/2014 20:13:50 | Visualización: [ >| ]
+15/05/2014 20:13:50 | Visualización: [ >| ]
+15/05/2014 20:13:51 | Visualización: [ >| ]
+15/05/2014 20:13:51 | Visualización: [ >| ]
+15/05/2014 20:13:51 | Visualización: [ >| ]
+15/05/2014 20:13:51 | Visualización: [ >| ]
+15/05/2014 20:13:51 | Visualización: [ >| ]
+15/05/2014 20:13:52 | Visualización: [ >| ]
+15/05/2014 20:13:52 | Visualización: [ >| ]
+15/05/2014 20:13:52 | Visualización: [ >| ]
+15/05/2014 20:13:52 | Visualización: [ >| ]
+15/05/2014 20:13:54 | Visualización: [ >| ]
+15/05/2014 20:13:54 | Visualización: [ >| ]
+15/05/2014 20:13:54 | Visualización: [ >| ]
+15/05/2014 20:13:54 | Visualización: [ >| ]
+15/05/2014 20:13:55 | Visualización: [ >| ]
+15/05/2014 20:13:55 | Visualización: [ >| ]
+15/05/2014 20:13:55 | Visualización: [ >| ]
+15/05/2014 20:13:57 | Menú seleccionado: Árbol
+15/05/2014 20:14:03 | Menú deseleccionado: Árbol
+15/05/2014 20:14:03 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:14:03 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:14:04 | Visualización: [ << ]
+15/05/2014 20:14:05 | Visualización: [ >| ]
+15/05/2014 20:14:06 | Visualización: [ >| ]
+15/05/2014 20:14:06 | Visualización: [ >| ]
+15/05/2014 20:14:07 | Visualización: [ >| ]
+15/05/2014 20:14:07 | Visualización: [ >| ]
+15/05/2014 20:14:08 | Visualización: [ >| ]
+15/05/2014 20:14:08 | Visualización: [ >| ]
+15/05/2014 20:14:09 | Visualización: [ >| ]
+15/05/2014 20:14:09 | Visualización: [ >| ]
+15/05/2014 20:14:10 | Visualización: [ << ]
+15/05/2014 20:14:11 | Visualización: [ >| ]
+15/05/2014 20:14:11 | Visualización: [ >| ]
+15/05/2014 20:14:11 | Visualización: [ >| ]
+15/05/2014 20:14:12 | Visualización: [ >| ]
+15/05/2014 20:14:12 | Visualización: [ >| ]
+15/05/2014 20:14:12 | Visualización: [ >| ]
+15/05/2014 20:14:12 | Visualización: [ >| ]
+15/05/2014 20:14:12 | Visualización: [ >| ]
+15/05/2014 20:14:13 | Visualización: [ >| ]
+15/05/2014 20:14:13 | Visualización: [ >| ]
+15/05/2014 20:14:15 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:14:26 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:14:31 | Archivo > Cargar y procesar clase...
+15/05/2014 20:14:36 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:14:37 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:14:39 | Archivo > Seleccionar método...
+15/05/2014 20:14:40 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:14:41 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:14:43 | Lanzar ejecución: fib1(8);
+15/05/2014 20:14:45 | Menú seleccionado: Árbol
+15/05/2014 20:14:46 | Menú deseleccionado: Árbol
+15/05/2014 20:14:46 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:14:46 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:14:47 | Visualización: [ >| ]
+15/05/2014 20:14:47 | Visualización: [ >| ]
+15/05/2014 20:14:48 | Visualización: [ >| ]
+15/05/2014 20:14:48 | Visualización: [ >| ]
+15/05/2014 20:14:49 | Visualización: [ >| ]
+15/05/2014 20:14:49 | Visualización: [ >| ]
+15/05/2014 20:14:49 | Visualización: [ >| ]
+15/05/2014 20:14:50 | Visualización: [ >| ]
+15/05/2014 20:14:50 | Visualización: [ >| ]
+15/05/2014 20:14:51 | Visualización: [ >| ]
+15/05/2014 20:14:52 | Visualización: [ << ]
+15/05/2014 20:14:53 | Visualización: [ >| ]
+15/05/2014 20:14:53 | Visualización: [ >| ]
+15/05/2014 20:14:54 | Visualización: [ >| ]
+15/05/2014 20:14:55 | Visualización: [ >| ]
+15/05/2014 20:14:55 | Visualización: [ >| ]
+15/05/2014 20:14:55 | Visualización: [ >| ]
+15/05/2014 20:14:58 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:15:24 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:15:28 | Archivo > Cargar y procesar clase...
+15/05/2014 20:15:33 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:15:34 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:15:35 | Archivo > Seleccionar método...
+15/05/2014 20:15:36 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:15:37 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:15:39 | Lanzar ejecución: fib1(8);
+15/05/2014 20:15:40 | Menú seleccionado: Árbol
+15/05/2014 20:15:41 | Menú deseleccionado: Árbol
+15/05/2014 20:15:41 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:15:41 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:15:44 | Visualización: [ >| ]
+15/05/2014 20:15:45 | Visualización: [ >| ]
+15/05/2014 20:15:45 | Visualización: [ >| ]
+15/05/2014 20:15:46 | Visualización: [ >| ]
+15/05/2014 20:15:46 | Visualización: [ >| ]
+15/05/2014 20:15:47 | Visualización: [ >| ]
+15/05/2014 20:15:48 | Visualización: [ >| ]
+15/05/2014 20:15:48 | Visualización: [ >| ]
+15/05/2014 20:15:49 | Visualización: [ >| ]
+15/05/2014 20:15:50 | Visualización: [ >| ]
+15/05/2014 20:15:50 | Visualización: [ >| ]
+15/05/2014 20:15:51 | Visualización: [ >| ]
+15/05/2014 20:15:51 | Visualización: [ >| ]
+15/05/2014 20:15:51 | Visualización: [ >| ]
+15/05/2014 20:15:54 | Visualización: [ << ]
+15/05/2014 20:15:54 | Visualización: [ >| ]
+15/05/2014 20:15:55 | Visualización: [ >| ]
+15/05/2014 20:15:56 | Visualización: [ >| ]
+15/05/2014 20:15:56 | Visualización: [ >| ]
+15/05/2014 20:15:57 | Visualización: [ >| ]
+15/05/2014 20:15:57 | Visualización: [ >| ]
+15/05/2014 20:15:58 | Visualización: [ >| ]
+15/05/2014 20:15:59 | Visualización: [ >| ]
+15/05/2014 20:15:59 | Visualización: [ >| ]
+15/05/2014 20:16:03 | Visualización: [ << ]
+15/05/2014 20:16:04 | Visualización: [ >| ]
+15/05/2014 20:16:05 | Visualización: [ >| ]
+15/05/2014 20:16:06 | Visualización: [ >| ]
+15/05/2014 20:16:06 | Visualización: [ >| ]
+15/05/2014 20:16:08 | Visualización: [ >| ]
+15/05/2014 20:16:13 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:16:23 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:16:29 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:16:36 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:16:40 | Archivo > Cargar y procesar clase...
+15/05/2014 20:16:45 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:16:46 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:16:46 | Archivo > Seleccionar método...
+15/05/2014 20:16:48 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:16:51 | Archivo > Seleccionar método...
+15/05/2014 20:16:53 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:16:54 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:16:56 | Lanzar ejecución: fib1(8);
+15/05/2014 20:16:58 | Menú seleccionado: Árbol
+15/05/2014 20:16:58 | Menú deseleccionado: Árbol
+15/05/2014 20:16:59 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:16:59 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:17:02 | Visualización: [ >| ]
+15/05/2014 20:17:02 | Visualización: [ >| ]
+15/05/2014 20:17:02 | Visualización: [ >| ]
+15/05/2014 20:17:03 | Visualización: [ >| ]
+15/05/2014 20:17:03 | Visualización: [ >| ]
+15/05/2014 20:17:09 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:17:13 | Archivo > Cargar y procesar clase...
+15/05/2014 20:17:18 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:17:19 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:17:20 | Archivo > Seleccionar método...
+15/05/2014 20:17:21 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:17:22 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:17:24 | Lanzar ejecución: fib1(8);
+15/05/2014 20:17:26 | Menú seleccionado: Árbol
+15/05/2014 20:17:27 | Menú deseleccionado: Árbol
+15/05/2014 20:17:27 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:17:27 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:17:30 | Visualización: [ >| ]
+15/05/2014 20:17:31 | Visualización: [ >| ]
+15/05/2014 20:17:34 | Visualización: [ >| ]
+15/05/2014 20:17:35 | Visualización: [ >| ]
+15/05/2014 20:17:35 | Visualización: [ >| ]
+15/05/2014 20:17:36 | Visualización: [ >| ]
+15/05/2014 20:17:37 | Visualización: [ >| ]
+15/05/2014 20:17:37 | Visualización: [ >| ]
+15/05/2014 20:17:38 | Visualización: [ >| ]
+15/05/2014 20:17:40 | Visualización: [ << ]
+15/05/2014 20:17:42 | Visualización: [ >| ]
+15/05/2014 20:17:42 | Visualización: [ >| ]
+15/05/2014 20:17:42 | Visualización: [ >| ]
+15/05/2014 20:17:43 | Visualización: [ >| ]
+15/05/2014 20:17:45 | Visualización: [ >| ]
+15/05/2014 20:17:45 | Visualización: [ >| ]
+15/05/2014 20:17:46 | Visualización: [ >| ]
+15/05/2014 20:17:47 | Visualización: [ << ]
+15/05/2014 20:17:48 | Visualización: [ >| ]
+15/05/2014 20:17:48 | Visualización: [ >| ]
+15/05/2014 20:17:49 | Visualización: [ >| ]
+15/05/2014 20:17:49 | Visualización: [ >| ]
+15/05/2014 20:18:03 | Visualización: [ |< ]
+15/05/2014 20:18:04 | Visualización: [ |< ]
+15/05/2014 20:18:04 | Visualización: [ |< ]
+15/05/2014 20:18:04 | Visualización: [ |< ]
+15/05/2014 20:18:05 | Visualización: [ |< ]
+15/05/2014 20:18:06 | Visualización: [ >| ]
+15/05/2014 20:18:07 | Visualización: [ >| ]
+15/05/2014 20:18:07 | Visualización: [ >| ]
+15/05/2014 20:18:08 | Visualización: [ >| ]
+15/05/2014 20:18:37 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:18:39 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:18:43 | Archivo > Cargar y procesar clase...
+15/05/2014 20:18:47 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:18:48 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:18:49 | Archivo > Seleccionar método...
+15/05/2014 20:18:50 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:18:51 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:18:54 | Lanzar ejecución: fib1(8);
+15/05/2014 20:18:57 | Menú seleccionado: Árbol
+15/05/2014 20:18:58 | Menú deseleccionado: Árbol
+15/05/2014 20:18:58 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:18:58 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:19:00 | Visualización: [ >| ]
+15/05/2014 20:19:01 | Visualización: [ >| ]
+15/05/2014 20:19:02 | Visualización: [ >| ]
+15/05/2014 20:19:03 | Visualización: [ >| ]
+15/05/2014 20:19:03 | Visualización: [ >| ]
+15/05/2014 20:19:04 | Visualización: [ >| ]
+15/05/2014 20:19:04 | Visualización: [ >| ]
+15/05/2014 20:19:05 | Visualización: [ >| ]
+15/05/2014 20:19:05 | Visualización: [ >| ]
+15/05/2014 20:19:06 | Visualización: [ >| ]
+15/05/2014 20:19:10 | Visualización: [ << ]
+15/05/2014 20:19:12 | Visualización: [ >| ]
+15/05/2014 20:19:12 | Visualización: [ >| ]
+15/05/2014 20:19:13 | Visualización: [ >| ]
+15/05/2014 20:19:13 | Visualización: [ >| ]
+15/05/2014 20:19:13 | Visualización: [ >| ]
+15/05/2014 20:19:14 | Visualización: [ >| ]
+15/05/2014 20:19:14 | Visualización: [ >| ]
+15/05/2014 20:19:14 | Visualización: [ >| ]
+15/05/2014 20:19:14 | Visualización: [ >| ]
+15/05/2014 20:19:15 | Visualización: [ >| ]
+15/05/2014 20:19:15 | Visualización: [ >| ]
+15/05/2014 20:19:16 | Visualización: [ << ]
+15/05/2014 20:19:19 | Visualización: [ >| ]
+15/05/2014 20:19:19 | Visualización: [ >| ]
+15/05/2014 20:19:20 | Visualización: [ >| ]
+15/05/2014 20:19:21 | Visualización: [ >| ]
+15/05/2014 20:19:24 | Visualización: [ << ]
+15/05/2014 20:19:26 | Visualización: [ >| ]
+15/05/2014 20:19:26 | Visualización: [ >| ]
+15/05/2014 20:19:26 | Visualización: [ >| ]
+15/05/2014 20:19:26 | Visualización: [ >| ]
+15/05/2014 20:19:30 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:21:10 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:21:15 | Archivo > Cargar y procesar clase...
+15/05/2014 20:21:21 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:21:21 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:21:25 | Archivo > Seleccionar método...
+15/05/2014 20:21:26 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:21:27 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:21:29 | Lanzar ejecución: fib1(8);
+15/05/2014 20:21:31 | Menú seleccionado: Árbol
+15/05/2014 20:21:32 | Menú deseleccionado: Árbol
+15/05/2014 20:21:32 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:21:32 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:21:34 | Visualización: [ >| ]
+15/05/2014 20:21:35 | Visualización: [ >| ]
+15/05/2014 20:21:36 | Visualización: [ >| ]
+15/05/2014 20:21:36 | Visualización: [ >| ]
+15/05/2014 20:21:37 | Visualización: [ >| ]
+15/05/2014 20:21:38 | Visualización: [ >| ]
+15/05/2014 20:21:38 | Visualización: [ >| ]
+15/05/2014 20:21:39 | Visualización: [ >| ]
+15/05/2014 20:21:39 | Visualización: [ >| ]
+15/05/2014 20:21:42 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:22:50 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:22:54 | Archivo > Cargar y procesar clase...
+15/05/2014 20:22:59 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:23:00 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:23:01 | Archivo > Seleccionar método...
+15/05/2014 20:23:03 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:23:04 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:23:06 | Lanzar ejecución: fib1(8);
+15/05/2014 20:23:10 | Menú seleccionado: Árbol
+15/05/2014 20:23:10 | Menú deseleccionado: Árbol
+15/05/2014 20:23:10 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:23:10 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:23:13 | Visualización: [ >| ]
+15/05/2014 20:23:14 | Visualización: [ >| ]
+15/05/2014 20:23:14 | Visualización: [ >| ]
+15/05/2014 20:23:15 | Visualización: [ >| ]
+15/05/2014 20:23:16 | Visualización: [ >| ]
+15/05/2014 20:23:16 | Visualización: [ >| ]
+15/05/2014 20:23:17 | Visualización: [ >| ]
+15/05/2014 20:23:17 | Visualización: [ >| ]
+15/05/2014 20:23:18 | Visualización: [ >| ]
+15/05/2014 20:23:18 | Visualización: [ >| ]
+15/05/2014 20:23:18 | Visualización: [ >| ]
+15/05/2014 20:23:18 | Visualización: [ >| ]
+15/05/2014 20:23:18 | Visualización: [ >| ]
+15/05/2014 20:23:20 | Visualización: [ << ]
+15/05/2014 20:23:20 | Visualización: [ >| ]
+15/05/2014 20:23:20 | Visualización: [ >| ]
+15/05/2014 20:23:21 | Visualización: [ >| ]
+15/05/2014 20:23:21 | Visualización: [ >| ]
+15/05/2014 20:23:21 | Visualización: [ >| ]
+15/05/2014 20:23:21 | Visualización: [ >| ]
+15/05/2014 20:23:21 | Visualización: [ >| ]
+15/05/2014 20:23:21 | Visualización: [ >| ]
+15/05/2014 20:23:22 | Visualización: [ >| ]
+15/05/2014 20:23:22 | Visualización: [ >| ]
+15/05/2014 20:23:24 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:23:36 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:23:40 | Archivo > Cargar y procesar clase...
+15/05/2014 20:23:45 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:23:46 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:23:48 | Archivo > Seleccionar método...
+15/05/2014 20:23:49 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:23:51 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:23:53 | Lanzar ejecución: fib1(8);
+15/05/2014 20:23:59 | Menú seleccionado: Árbol
+15/05/2014 20:24:00 | Menú deseleccionado: Árbol
+15/05/2014 20:24:00 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:24:00 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:24:02 | Visualización: [ >| ]
+15/05/2014 20:24:03 | Visualización: [ >| ]
+15/05/2014 20:24:04 | Visualización: [ >| ]
+15/05/2014 20:24:05 | Visualización: [ >| ]
+15/05/2014 20:24:05 | Visualización: [ >| ]
+15/05/2014 20:24:05 | Visualización: [ >| ]
+15/05/2014 20:24:06 | Visualización: [ >| ]
+15/05/2014 20:24:06 | Visualización: [ >| ]
+15/05/2014 20:24:07 | Visualización: [ >| ]
+15/05/2014 20:24:08 | Visualización: [ >| ]
+15/05/2014 20:24:08 | Visualización: [ >| ]
+15/05/2014 20:24:08 | Visualización: [ >| ]
+15/05/2014 20:24:09 | Visualización: [ >| ]
+15/05/2014 20:24:09 | Visualización: [ >| ]
+15/05/2014 20:24:09 | Visualización: [ >| ]
+15/05/2014 20:24:10 | Visualización: [ >| ]
+15/05/2014 20:24:10 | Visualización: [ >| ]
+15/05/2014 20:24:10 | Visualización: [ >| ]
+15/05/2014 20:24:11 | Visualización: [ << ]
+15/05/2014 20:24:12 | Visualización: [ >| ]
+15/05/2014 20:24:12 | Visualización: [ >| ]
+15/05/2014 20:24:12 | Visualización: [ >| ]
+15/05/2014 20:24:12 | Visualización: [ >| ]
+15/05/2014 20:24:13 | Visualización: [ >| ]
+15/05/2014 20:24:14 | Visualización: [ << ]
+15/05/2014 20:24:15 | Visualización: [ >| ]
+15/05/2014 20:24:15 | Visualización: [ >| ]
+15/05/2014 20:24:15 | Visualización: [ >| ]
+15/05/2014 20:24:15 | Visualización: [ >| ]
+15/05/2014 20:24:16 | Visualización: [ >| ]
+15/05/2014 20:24:16 | Visualización: [ >| ]
+15/05/2014 20:24:16 | Visualización: [ >| ]
+15/05/2014 20:24:16 | Visualización: [ >| ]
+15/05/2014 20:24:16 | Visualización: [ >| ]
+15/05/2014 20:24:17 | Visualización: [ >| ]
+15/05/2014 20:24:17 | Visualización: [ >| ]
+15/05/2014 20:24:17 | Visualización: [ >| ]
+15/05/2014 20:24:17 | Visualización: [ >| ]
+15/05/2014 20:24:18 | Visualización: [ >| ]
+15/05/2014 20:24:18 | Visualización: [ >| ]
+15/05/2014 20:24:18 | Visualización: [ << ]
+15/05/2014 20:24:19 | Visualización: [ >| ]
+15/05/2014 20:24:20 | Visualización: [ >| ]
+15/05/2014 20:24:20 | Visualización: [ >| ]
+15/05/2014 20:24:20 | Visualización: [ >| ]
+15/05/2014 20:24:20 | Visualización: [ >| ]
+15/05/2014 20:24:20 | Visualización: [ >| ]
+15/05/2014 20:24:20 | Visualización: [ >| ]
+15/05/2014 20:24:21 | Visualización: [ >| ]
+15/05/2014 20:24:21 | Visualización: [ >| ]
+15/05/2014 20:24:21 | Visualización: [ >| ]
+15/05/2014 20:24:21 | Visualización: [ >| ]
+15/05/2014 20:24:22 | Visualización: [ << ]
+15/05/2014 20:24:23 | Visualización: [ >| ]
+15/05/2014 20:24:23 | Visualización: [ >| ]
+15/05/2014 20:24:23 | Visualización: [ >| ]
+15/05/2014 20:24:23 | Visualización: [ >| ]
+15/05/2014 20:24:23 | Visualización: [ >| ]
+15/05/2014 20:24:23 | Visualización: [ >| ]
+15/05/2014 20:24:24 | Visualización: [ >| ]
+15/05/2014 20:24:24 | Visualización: [ >| ]
+15/05/2014 20:24:24 | Visualización: [ >| ]
+15/05/2014 20:24:24 | Visualización: [ >| ]
+15/05/2014 20:24:25 | Visualización: [ >| ]
+15/05/2014 20:24:25 | Visualización: [ >| ]
+15/05/2014 20:24:25 | Visualización: [ >| ]
+15/05/2014 20:24:26 | Visualización: [ >| ]
+15/05/2014 20:24:26 | Visualización: [ >| ]
+15/05/2014 20:24:28 | Visualización: [ << ]
+15/05/2014 20:24:29 | Visualización: [ >| ]
+15/05/2014 20:24:29 | Visualización: [ >| ]
+15/05/2014 20:24:29 | Visualización: [ >| ]
+15/05/2014 20:24:30 | Visualización: [ >| ]
+15/05/2014 20:24:30 | Visualización: [ >| ]
+15/05/2014 20:24:30 | Visualización: [ >| ]
+15/05/2014 20:24:30 | Visualización: [ >| ]
+15/05/2014 20:24:31 | Visualización: [ >| ]
+15/05/2014 20:24:31 | Visualización: [ >| ]
+15/05/2014 20:24:31 | Visualización: [ >| ]
+15/05/2014 20:24:32 | Visualización: [ >| ]
+15/05/2014 20:24:32 | Visualización: [ >| ]
+15/05/2014 20:24:33 | Visualización: [ >| ]
+15/05/2014 20:24:33 | Visualización: [ >| ]
+15/05/2014 20:24:33 | Visualización: [ >| ]
+15/05/2014 20:24:34 | Visualización: [ >| ]
+15/05/2014 20:24:34 | Visualización: [ >| ]
+15/05/2014 20:24:34 | Visualización: [ >| ]
+15/05/2014 20:24:34 | Visualización: [ >| ]
+15/05/2014 20:24:35 | Visualización: [ >| ]
+15/05/2014 20:24:35 | Visualización: [ >| ]
+15/05/2014 20:24:36 | Visualización: [ << ]
+15/05/2014 20:24:37 | Visualización: [ >| ]
+15/05/2014 20:24:37 | Visualización: [ >| ]
+15/05/2014 20:24:37 | Visualización: [ >| ]
+15/05/2014 20:24:37 | Visualización: [ >| ]
+15/05/2014 20:24:38 | Visualización: [ >| ]
+15/05/2014 20:24:39 | Visualización: [ |< ]
+15/05/2014 20:24:39 | Visualización: [ |< ]
+15/05/2014 20:24:40 | Visualización: [ |< ]
+15/05/2014 20:24:40 | Visualización: [ |< ]
+15/05/2014 20:24:40 | Visualización: [ |< ]
+15/05/2014 20:24:46 | Visualización: [ >| ]
+15/05/2014 20:24:46 | Visualización: [ >| ]
+15/05/2014 20:24:46 | Visualización: [ >| ]
+15/05/2014 20:24:47 | Visualización: [ >| ]
+15/05/2014 20:24:47 | Visualización: [ >| ]
+15/05/2014 20:24:47 | Visualización: [ >| ]
+15/05/2014 20:24:50 | Visualización: [ << ]
+15/05/2014 20:24:51 | Visualización: [ >| ]
+15/05/2014 20:24:51 | Visualización: [ >| ]
+15/05/2014 20:24:51 | Visualización: [ >| ]
+15/05/2014 20:25:14 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:25:45 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:25:49 | Archivo > Cargar y procesar clase...
+15/05/2014 20:25:54 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:25:55 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:25:57 | Archivo > Seleccionar método...
+15/05/2014 20:25:58 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:25:59 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:26:01 | Lanzar ejecución: fib1(8);
+15/05/2014 20:26:08 | Menú seleccionado: Traza
+15/05/2014 20:26:08 | Menú deseleccionado: Traza
+15/05/2014 20:26:08 | Menú seleccionado: Árbol
+15/05/2014 20:26:09 | Menú deseleccionado: Árbol
+15/05/2014 20:26:09 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:26:09 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:26:11 | Visualización: [ > ]
+15/05/2014 20:26:13 | Visualización: [ || ]
+15/05/2014 20:26:15 | Visualización: [ << ]
+15/05/2014 20:26:16 | Visualización: [ >| ]
+15/05/2014 20:26:17 | Visualización: [ >| ]
+15/05/2014 20:26:17 | Visualización: [ >| ]
+15/05/2014 20:26:17 | Visualización: [ >| ]
+15/05/2014 20:26:17 | Visualización: [ >| ]
+15/05/2014 20:26:18 | Visualización: [ >| ]
+15/05/2014 20:26:18 | Visualización: [ >| ]
+15/05/2014 20:26:18 | Visualización: [ >| ]
+15/05/2014 20:26:18 | Visualización: [ >| ]
+15/05/2014 20:26:18 | Visualización: [ >| ]
+15/05/2014 20:26:19 | Visualización: [ >| ]
+15/05/2014 20:26:20 | Visualización: [ << ]
+15/05/2014 20:26:20 | Visualización: [ > ]
+15/05/2014 20:26:31 | Visualización: [ || ]
+15/05/2014 20:26:33 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:28:16 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:28:23 | Archivo > Cargar y procesar clase...
+15/05/2014 20:28:28 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:28:29 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:28:30 | Archivo > Seleccionar método...
+15/05/2014 20:28:31 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:28:33 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:28:35 | Lanzar ejecución: fib1(8);
+15/05/2014 20:28:36 | Menú seleccionado: Árbol
+15/05/2014 20:28:37 | Menú deseleccionado: Árbol
+15/05/2014 20:28:37 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:28:37 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:28:40 | Visualización: [ >| ]
+15/05/2014 20:28:43 | Visualización: [ >| ]
+15/05/2014 20:28:56 | Visualización: [ << ]
+15/05/2014 20:29:21 | Visualización: [ >| ]
+15/05/2014 20:29:39 | Visualización: [ >| ]
+15/05/2014 20:30:10 | Visualización: [ >| ]
+15/05/2014 20:31:35 | Visualización: [ >| ]
+15/05/2014 20:32:02 | Visualización: [ >| ]
+15/05/2014 20:33:02 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:34:55 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:35:00 | Archivo > Cargar y procesar clase...
+15/05/2014 20:35:06 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:35:07 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:35:11 | Archivo > Seleccionar método...
+15/05/2014 20:35:13 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:35:14 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:35:17 | Lanzar ejecución: fib1(8);
+15/05/2014 20:35:19 | Menú seleccionado: Árbol
+15/05/2014 20:35:20 | Menú deseleccionado: Árbol
+15/05/2014 20:35:20 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:35:20 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:35:21 | Visualización: [ >| ]
+15/05/2014 20:35:22 | Visualización: [ >| ]
+15/05/2014 20:35:22 | Visualización: [ >| ]
+15/05/2014 20:35:23 | Visualización: [ >| ]
+15/05/2014 20:35:23 | Visualización: [ >| ]
+15/05/2014 20:35:24 | Visualización: [ >| ]
+15/05/2014 20:35:24 | Visualización: [ >| ]
+15/05/2014 20:35:25 | Visualización: [ >| ]
+15/05/2014 20:35:25 | Visualización: [ >| ]
+15/05/2014 20:35:25 | Visualización: [ >| ]
+15/05/2014 20:35:26 | Visualización: [ >| ]
+15/05/2014 20:35:26 | Visualización: [ >| ]
+15/05/2014 20:35:26 | Visualización: [ >| ]
+15/05/2014 20:35:27 | Visualización: [ >| ]
+15/05/2014 20:35:27 | Visualización: [ >| ]
+15/05/2014 20:35:27 | Visualización: [ >| ]
+15/05/2014 20:35:28 | Visualización: [ >| ]
+15/05/2014 20:35:28 | Visualización: [ >| ]
+15/05/2014 20:35:28 | Visualización: [ >| ]
+15/05/2014 20:35:29 | Visualización: [ >| ]
+15/05/2014 20:35:29 | Visualización: [ >| ]
+15/05/2014 20:35:29 | Visualización: [ >| ]
+15/05/2014 20:35:29 | Visualización: [ >| ]
+15/05/2014 20:35:30 | Visualización: [ >| ]
+15/05/2014 20:35:30 | Visualización: [ >| ]
+15/05/2014 20:35:30 | Visualización: [ >| ]
+15/05/2014 20:35:31 | Visualización: [ >| ]
+15/05/2014 20:35:31 | Visualización: [ >| ]
+15/05/2014 20:35:31 | Visualización: [ >| ]
+15/05/2014 20:35:34 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:36:21 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:36:25 | Archivo > Cargar y procesar clase...
+15/05/2014 20:36:30 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:36:30 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:36:32 | Archivo > Seleccionar método...
+15/05/2014 20:36:34 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:36:34 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:36:38 | Lanzar ejecución: fib1(8);
+15/05/2014 20:36:40 | Menú seleccionado: Árbol
+15/05/2014 20:36:41 | Menú deseleccionado: Árbol
+15/05/2014 20:36:41 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:36:41 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:36:43 | Visualización: [ >| ]
+15/05/2014 20:36:43 | Visualización: [ >| ]
+15/05/2014 20:36:44 | Visualización: [ >| ]
+15/05/2014 20:36:44 | Visualización: [ >| ]
+15/05/2014 20:36:45 | Visualización: [ >| ]
+15/05/2014 20:36:45 | Visualización: [ >| ]
+15/05/2014 20:36:46 | Visualización: [ >| ]
+15/05/2014 20:36:46 | Visualización: [ >| ]
+15/05/2014 20:36:47 | Visualización: [ >| ]
+15/05/2014 20:36:47 | Visualización: [ >| ]
+15/05/2014 20:36:47 | Visualización: [ >| ]
+15/05/2014 20:36:47 | Visualización: [ >| ]
+15/05/2014 20:36:48 | Visualización: [ >| ]
+15/05/2014 20:36:48 | Visualización: [ >| ]
+15/05/2014 20:36:48 | Visualización: [ >| ]
+15/05/2014 20:36:48 | Visualización: [ >| ]
+15/05/2014 20:36:49 | Visualización: [ >| ]
+15/05/2014 20:36:49 | Visualización: [ >| ]
+15/05/2014 20:36:49 | Visualización: [ >| ]
+15/05/2014 20:36:49 | Visualización: [ >| ]
+15/05/2014 20:36:50 | Visualización: [ >| ]
+15/05/2014 20:36:50 | Visualización: [ >| ]
+15/05/2014 20:36:50 | Visualización: [ >| ]
+15/05/2014 20:36:50 | Visualización: [ >| ]
+15/05/2014 20:36:50 | Visualización: [ >| ]
+15/05/2014 20:36:50 | Visualización: [ >| ]
+15/05/2014 20:36:51 | Visualización: [ >| ]
+15/05/2014 20:36:51 | Visualización: [ >| ]
+15/05/2014 20:36:51 | Visualización: [ >| ]
+15/05/2014 20:36:51 | Visualización: [ >| ]
+15/05/2014 20:36:51 | Visualización: [ >| ]
+15/05/2014 20:36:51 | Visualización: [ >| ]
+15/05/2014 20:36:52 | Visualización: [ >| ]
+15/05/2014 20:36:52 | Visualización: [ >| ]
+15/05/2014 20:36:52 | Visualización: [ >| ]
+15/05/2014 20:36:52 | Visualización: [ >| ]
+15/05/2014 20:36:52 | Visualización: [ >| ]
+15/05/2014 20:36:53 | Visualización: [ >| ]
+15/05/2014 20:36:53 | Visualización: [ >| ]
+15/05/2014 20:36:53 | Visualización: [ >| ]
+15/05/2014 20:36:56 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:37:33 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:37:38 | Archivo > Cargar y procesar clase...
+15/05/2014 20:37:43 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:37:44 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:37:46 | Archivo > Seleccionar método...
+15/05/2014 20:37:47 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:37:51 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:37:54 | Lanzar ejecución: fib1(8);
+15/05/2014 20:37:58 | Menú seleccionado: Traza
+15/05/2014 20:38:00 | Menú deseleccionado: Traza
+15/05/2014 20:38:00 | Menú seleccionado: Árbol
+15/05/2014 20:38:00 | Menú deseleccionado: Árbol
+15/05/2014 20:38:00 | Menú seleccionado: Filtrado y selección
+15/05/2014 20:38:00 | Menú deseleccionado: Filtrado y selección
+15/05/2014 20:38:00 | Menú seleccionado: Árbol
+15/05/2014 20:38:01 | Menú deseleccionado: Árbol
+15/05/2014 20:38:01 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:38:01 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:38:03 | Visualización: [ >| ]
+15/05/2014 20:38:04 | Visualización: [ >| ]
+15/05/2014 20:38:04 | Visualización: [ >| ]
+15/05/2014 20:38:05 | Visualización: [ >| ]
+15/05/2014 20:38:05 | Visualización: [ >| ]
+15/05/2014 20:38:05 | Visualización: [ >| ]
+15/05/2014 20:38:06 | Visualización: [ >| ]
+15/05/2014 20:38:06 | Visualización: [ >| ]
+15/05/2014 20:38:06 | Visualización: [ >| ]
+15/05/2014 20:38:07 | Visualización: [ >| ]
+15/05/2014 20:38:07 | Visualización: [ >| ]
+15/05/2014 20:38:07 | Visualización: [ >| ]
+15/05/2014 20:38:07 | Visualización: [ >| ]
+15/05/2014 20:38:08 | Visualización: [ << ]
+15/05/2014 20:38:09 | Visualización: [ >| ]
+15/05/2014 20:38:09 | Visualización: [ >| ]
+15/05/2014 20:38:09 | Visualización: [ >| ]
+15/05/2014 20:38:09 | Visualización: [ >| ]
+15/05/2014 20:38:10 | Visualización: [ >| ]
+15/05/2014 20:38:10 | Visualización: [ >| ]
+15/05/2014 20:38:10 | Visualización: [ >| ]
+15/05/2014 20:38:13 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:39:02 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:39:06 | Archivo > Cargar y procesar clase...
+15/05/2014 20:39:11 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:39:12 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:39:18 | Archivo > Seleccionar método...
+15/05/2014 20:39:19 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:39:20 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:39:22 | Lanzar ejecución: fib1(8);
+15/05/2014 20:39:38 | Archivo > Seleccionar método...
+15/05/2014 20:39:39 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:39:40 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:39:42 | Lanzar ejecución: fib1(8);
+15/05/2014 20:39:46 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:40:00 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:40:03 | Archivo > Cargar y procesar clase...
+15/05/2014 20:40:08 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:40:09 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:40:12 | Archivo > Seleccionar método...
+15/05/2014 20:40:13 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:40:14 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:40:18 | Lanzar ejecución: fib1(8);
+15/05/2014 20:40:20 | Menú seleccionado: Árbol
+15/05/2014 20:40:21 | Menú deseleccionado: Árbol
+15/05/2014 20:40:21 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:40:21 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:40:24 | Visualización: [ >| ]
+15/05/2014 20:40:24 | Visualización: [ >| ]
+15/05/2014 20:40:24 | Visualización: [ >| ]
+15/05/2014 20:40:25 | Visualización: [ >| ]
+15/05/2014 20:40:25 | Visualización: [ >| ]
+15/05/2014 20:40:25 | Visualización: [ >| ]
+15/05/2014 20:40:25 | Visualización: [ >| ]
+15/05/2014 20:40:25 | Visualización: [ >| ]
+15/05/2014 20:40:26 | Visualización: [ >| ]
+15/05/2014 20:40:26 | Visualización: [ >| ]
+15/05/2014 20:40:26 | Visualización: [ >| ]
+15/05/2014 20:40:26 | Visualización: [ >| ]
+15/05/2014 20:40:26 | Visualización: [ >| ]
+15/05/2014 20:40:26 | Visualización: [ >| ]
+15/05/2014 20:40:27 | Visualización: [ >| ]
+15/05/2014 20:40:28 | Visualización: [ << ]
+15/05/2014 20:40:31 | Visualización: [ >| ]
+15/05/2014 20:40:32 | Visualización: [ >| ]
+15/05/2014 20:40:32 | Visualización: [ >| ]
+15/05/2014 20:40:32 | Visualización: [ >| ]
+15/05/2014 20:40:32 | Visualización: [ >| ]
+15/05/2014 20:40:32 | Visualización: [ >| ]
+15/05/2014 20:40:32 | Visualización: [ >| ]
+15/05/2014 20:40:33 | Visualización: [ >| ]
+15/05/2014 20:40:33 | Visualización: [ >| ]
+15/05/2014 20:40:33 | Visualización: [ >| ]
+15/05/2014 20:40:34 | Visualización: [ << ]
+15/05/2014 20:40:36 | Visualización: [ >| ]
+15/05/2014 20:40:39 | Visualización: [ << ]
+15/05/2014 20:40:41 | Visualización: [ >| ]
+15/05/2014 20:40:41 | Visualización: [ >| ]
+15/05/2014 20:40:42 | Visualización: [ >| ]
+15/05/2014 20:40:42 | Visualización: [ >| ]
+15/05/2014 20:40:42 | Visualización: [ >| ]
+15/05/2014 20:40:43 | Visualización: [ >| ]
+15/05/2014 20:40:44 | Visualización: [ << ]
+15/05/2014 20:40:44 | Visualización: [ >| ]
+15/05/2014 20:40:45 | Visualización: [ >| ]
+15/05/2014 20:40:45 | Visualización: [ >| ]
+15/05/2014 20:40:45 | Visualización: [ >| ]
+15/05/2014 20:40:49 | Visualización: [ |< ]
+15/05/2014 20:40:51 | Visualización: [ >| ]
+15/05/2014 20:40:51 | Visualización: [ >| ]
+15/05/2014 20:40:52 | Visualización: [ >| ]
+15/05/2014 20:40:52 | Visualización: [ >| ]
+15/05/2014 20:40:54 | Visualización: [ << ]
+15/05/2014 20:40:54 | Visualización: [ >| ]
+15/05/2014 20:40:54 | Visualización: [ >| ]
+15/05/2014 20:40:55 | Visualización: [ >| ]
+15/05/2014 20:40:55 | Visualización: [ >| ]
+15/05/2014 20:40:55 | Visualización: [ >| ]
+15/05/2014 20:40:55 | Visualización: [ >| ]
+15/05/2014 20:40:55 | Visualización: [ >| ]
+15/05/2014 20:40:55 | Visualización: [ >| ]
+15/05/2014 20:40:56 | Visualización: [ >| ]
+15/05/2014 20:40:56 | Visualización: [ << ]
+15/05/2014 20:40:58 | Visualización: [ >| ]
+15/05/2014 20:40:58 | Visualización: [ >| ]
+15/05/2014 20:40:58 | Visualización: [ >| ]
+15/05/2014 20:40:58 | Visualización: [ >| ]
+15/05/2014 20:40:58 | Visualización: [ >| ]
+15/05/2014 20:40:58 | Visualización: [ >| ]
+15/05/2014 20:40:59 | Visualización: [ >| ]
+15/05/2014 20:40:59 | Visualización: [ >| ]
+15/05/2014 20:40:59 | Visualización: [ >| ]
+15/05/2014 20:41:00 | Visualización: [ |< ]
+15/05/2014 20:41:01 | Visualización: [ >| ]
+15/05/2014 20:41:02 | Visualización: [ << ]
+15/05/2014 20:41:03 | Visualización: [ >| ]
+15/05/2014 20:41:03 | Visualización: [ >| ]
+15/05/2014 20:41:04 | Visualización: [ >| ]
+15/05/2014 20:41:04 | Visualización: [ >| ]
+15/05/2014 20:41:04 | Visualización: [ >| ]
+15/05/2014 20:41:05 | Visualización: [ >| ]
+15/05/2014 20:41:05 | Visualización: [ >| ]
+15/05/2014 20:41:05 | Visualización: [ >| ]
+15/05/2014 20:41:05 | Visualización: [ >| ]
+15/05/2014 20:41:05 | Visualización: [ >| ]
+15/05/2014 20:41:06 | Visualización: [ >| ]
+15/05/2014 20:41:06 | Visualización: [ >| ]
+15/05/2014 20:41:07 | Visualización: [ << ]
+15/05/2014 20:41:08 | Visualización: [ >| ]
+15/05/2014 20:41:08 | Visualización: [ >| ]
+15/05/2014 20:41:09 | Visualización: [ >| ]
+15/05/2014 20:41:09 | Visualización: [ >| ]
+15/05/2014 20:41:10 | Visualización: [ >| ]
+15/05/2014 20:41:10 | Visualización: [ >| ]
+15/05/2014 20:41:10 | Visualización: [ >| ]
+15/05/2014 20:41:10 | Visualización: [ >| ]
+15/05/2014 20:41:11 | Visualización: [ << ]
+15/05/2014 20:41:12 | Visualización: [ >| ]
+15/05/2014 20:41:12 | Visualización: [ >| ]
+15/05/2014 20:41:13 | Visualización: [ >| ]
+15/05/2014 20:41:13 | Visualización: [ >| ]
+15/05/2014 20:41:13 | Visualización: [ >| ]
+15/05/2014 20:41:13 | Visualización: [ >| ]
+15/05/2014 20:41:14 | Visualización: [ >| ]
+15/05/2014 20:41:14 | Visualización: [ >| ]
+15/05/2014 20:41:14 | Visualización: [ >| ]
+15/05/2014 20:41:14 | Visualización: [ >| ]
+15/05/2014 20:41:15 | Visualización: [ >| ]
+15/05/2014 20:41:16 | Visualización: [ |< ]
+15/05/2014 20:41:16 | Visualización: [ << ]
+15/05/2014 20:41:17 | Visualización: [ >| ]
+15/05/2014 20:41:17 | Visualización: [ >| ]
+15/05/2014 20:41:18 | Visualización: [ >| ]
+15/05/2014 20:41:18 | Visualización: [ >| ]
+15/05/2014 20:41:18 | Visualización: [ >| ]
+15/05/2014 20:41:18 | Visualización: [ >| ]
+15/05/2014 20:41:21 | Visualización: [ |< ]
+15/05/2014 20:41:21 | Visualización: [ |< ]
+15/05/2014 20:41:22 | Visualización: [ |< ]
+15/05/2014 20:41:22 | Visualización: [ |< ]
+15/05/2014 20:41:22 | Visualización: [ |< ]
+15/05/2014 20:41:22 | Visualización: [ |< ]
+15/05/2014 20:41:24 | Visualización: [ >| ]
+15/05/2014 20:41:24 | Visualización: [ >| ]
+15/05/2014 20:41:24 | Visualización: [ >| ]
+15/05/2014 20:41:24 | Visualización: [ >| ]
+15/05/2014 20:41:24 | Visualización: [ >| ]
+15/05/2014 20:41:25 | Visualización: [ >| ]
+15/05/2014 20:41:28 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:42:29 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:42:36 | Archivo > Cargar y procesar clase...
+15/05/2014 20:42:40 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:42:41 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:42:43 | Archivo > Seleccionar método...
+15/05/2014 20:42:46 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:42:46 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:42:49 | Lanzar ejecución: fib1(8);
+15/05/2014 20:42:51 | Visualización: [ >| ]
+15/05/2014 20:42:53 | Visualización: [ >| ]
+15/05/2014 20:42:54 | Visualización: [ << ]
+15/05/2014 20:42:55 | Menú seleccionado: Árbol
+15/05/2014 20:42:56 | Menú deseleccionado: Árbol
+15/05/2014 20:42:56 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:42:56 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:42:57 | Visualización: [ >| ]
+15/05/2014 20:42:58 | Visualización: [ >| ]
+15/05/2014 20:42:58 | Visualización: [ >| ]
+15/05/2014 20:42:58 | Visualización: [ >| ]
+15/05/2014 20:42:59 | Visualización: [ >| ]
+15/05/2014 20:42:59 | Visualización: [ >| ]
+15/05/2014 20:43:00 | Visualización: [ >| ]
+15/05/2014 20:43:00 | Visualización: [ >| ]
+15/05/2014 20:43:00 | Visualización: [ >| ]
+15/05/2014 20:43:00 | Visualización: [ >| ]
+15/05/2014 20:43:02 | Visualización: [ << ]
+15/05/2014 20:43:02 | Visualización: [ >| ]
+15/05/2014 20:43:03 | Visualización: [ >| ]
+15/05/2014 20:43:03 | Visualización: [ >| ]
+15/05/2014 20:43:03 | Visualización: [ >| ]
+15/05/2014 20:43:03 | Visualización: [ >| ]
+15/05/2014 20:43:04 | Visualización: [ >| ]
+15/05/2014 20:43:04 | Visualización: [ >| ]
+15/05/2014 20:43:04 | Visualización: [ >| ]
+15/05/2014 20:43:04 | Visualización: [ >| ]
+15/05/2014 20:43:04 | Visualización: [ >| ]
+15/05/2014 20:43:04 | Visualización: [ >| ]
+15/05/2014 20:43:05 | Visualización: [ >| ]
+15/05/2014 20:43:05 | Visualización: [ << ]
+15/05/2014 20:43:07 | Visualización: [ >| ]
+15/05/2014 20:43:07 | Visualización: [ >| ]
+15/05/2014 20:43:07 | Visualización: [ >| ]
+15/05/2014 20:43:09 | Visualización: [ << ]
+15/05/2014 20:43:10 | Visualización: [ >| ]
+15/05/2014 20:43:10 | Visualización: [ >| ]
+15/05/2014 20:43:10 | Visualización: [ >| ]
+15/05/2014 20:43:11 | Visualización: [ << ]
+15/05/2014 20:43:13 | Visualización: [ >| ]
+15/05/2014 20:43:13 | Visualización: [ >| ]
+15/05/2014 20:43:13 | Visualización: [ >| ]
+15/05/2014 20:43:13 | Visualización: [ >| ]
+15/05/2014 20:43:14 | Visualización: [ >| ]
+15/05/2014 20:43:14 | Visualización: [ >| ]
+15/05/2014 20:43:14 | Visualización: [ >| ]
+15/05/2014 20:43:14 | Visualización: [ >| ]
+15/05/2014 20:43:14 | Visualización: [ >| ]
+15/05/2014 20:43:14 | Visualización: [ >| ]
+15/05/2014 20:43:15 | Visualización: [ >| ]
+15/05/2014 20:43:15 | Visualización: [ >| ]
+15/05/2014 20:43:15 | Visualización: [ >| ]
+15/05/2014 20:43:18 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:44:25 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:44:33 | Archivo > Cargar y procesar clase...
+15/05/2014 20:44:38 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:44:39 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:44:41 | Archivo > Seleccionar método...
+15/05/2014 20:44:42 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:44:42 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:44:45 | Lanzar ejecución: fib1(8);
+15/05/2014 20:44:50 | Visualización: [ >| ]
+15/05/2014 20:44:52 | Menú seleccionado: Árbol
+15/05/2014 20:44:53 | Menú deseleccionado: Árbol
+15/05/2014 20:44:53 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:44:53 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:44:54 | Visualización: [ << ]
+15/05/2014 20:44:57 | Visualización: [ >| ]
+15/05/2014 20:45:00 | Visualización: [ >| ]
+15/05/2014 20:45:12 | Visualización: [ >| ]
+15/05/2014 20:45:13 | Visualización: [ >| ]
+15/05/2014 20:45:14 | Visualización: [ >| ]
+15/05/2014 20:45:14 | Visualización: [ >| ]
+15/05/2014 20:45:16 | Visualización: [ >| ]
+15/05/2014 20:45:16 | Visualización: [ >| ]
+15/05/2014 20:45:17 | Visualización: [ >| ]
+15/05/2014 20:45:17 | Visualización: [ >| ]
+15/05/2014 20:45:18 | Visualización: [ >| ]
+15/05/2014 20:45:22 | Visualización: [ << ]
+15/05/2014 20:45:39 | Visualización: [ > ]
+15/05/2014 20:45:41 | Visualización: [ || ]
+15/05/2014 20:45:42 | Visualización: [ << ]
+15/05/2014 20:45:44 | Visualización: [ >| ]
+15/05/2014 20:45:44 | Visualización: [ >| ]
+15/05/2014 20:45:44 | Visualización: [ >| ]
+15/05/2014 20:45:45 | Visualización: [ >| ]
+15/05/2014 20:45:45 | Visualización: [ >| ]
+15/05/2014 20:45:45 | Visualización: [ >| ]
+15/05/2014 20:45:46 | Visualización: [ << ]
+15/05/2014 20:45:47 | Visualización: [ >| ]
+15/05/2014 20:45:47 | Visualización: [ >| ]
+15/05/2014 20:45:47 | Visualización: [ >| ]
+15/05/2014 20:46:07 | Visualización: [ << ]
+15/05/2014 20:46:09 | Visualización: [ >| ]
+15/05/2014 20:46:10 | Visualización: [ >| ]
+15/05/2014 20:46:10 | Visualización: [ >| ]
+15/05/2014 20:46:10 | Visualización: [ >| ]
+15/05/2014 20:46:11 | Visualización: [ >| ]
+15/05/2014 20:46:11 | Visualización: [ >| ]
+15/05/2014 20:46:12 | Visualización: [ << ]
+15/05/2014 20:46:13 | Visualización: [ >| ]
+15/05/2014 20:46:13 | Visualización: [ >| ]
+15/05/2014 20:46:15 | Visualización: [ >| ]
+15/05/2014 20:46:15 | Visualización: [ >| ]
+15/05/2014 20:46:15 | Visualización: [ >| ]
+15/05/2014 20:46:15 | Visualización: [ >| ]
+15/05/2014 20:46:16 | Visualización: [ << ]
+15/05/2014 20:46:17 | Visualización: [ >| ]
+15/05/2014 20:46:17 | Visualización: [ >| ]
+15/05/2014 20:46:18 | Visualización: [ >| ]
+15/05/2014 20:46:18 | Visualización: [ >| ]
+15/05/2014 20:46:18 | Visualización: [ >| ]
+15/05/2014 20:46:18 | Visualización: [ >| ]
+15/05/2014 20:46:19 | Visualización: [ |< ]
+15/05/2014 20:46:20 | Visualización: [ << ]
+15/05/2014 20:46:22 | Visualización: [ >| ]
+15/05/2014 20:46:23 | Visualización: [ >| ]
+15/05/2014 20:46:23 | Visualización: [ >| ]
+15/05/2014 20:46:23 | Visualización: [ >| ]
+15/05/2014 20:46:23 | Visualización: [ >| ]
+15/05/2014 20:46:24 | Visualización: [ >| ]
+15/05/2014 20:46:24 | Visualización: [ >| ]
+15/05/2014 20:46:25 | Visualización: [ << ]
+15/05/2014 20:46:25 | Visualización: [ > ]
+15/05/2014 20:46:26 | Visualización: [ > ]
+15/05/2014 20:46:26 | Visualización: [ >| ]
+15/05/2014 20:46:26 | Visualización: [ >| ]
+15/05/2014 20:46:26 | Visualización: [ >| ]
+15/05/2014 20:46:26 | Visualización: [ >| ]
+15/05/2014 20:46:27 | Visualización: [ >| ]
+15/05/2014 20:46:28 | Visualización: [ << ]
+15/05/2014 20:46:28 | Visualización: [ >| ]
+15/05/2014 20:46:29 | Visualización: [ >| ]
+15/05/2014 20:46:29 | Visualización: [ >| ]
+15/05/2014 20:46:29 | Visualización: [ >| ]
+15/05/2014 20:46:29 | Visualización: [ >| ]
+15/05/2014 20:46:29 | Visualización: [ >| ]
+15/05/2014 20:46:30 | Visualización: [ >| ]
+15/05/2014 20:46:30 | Visualización: [ >| ]
+15/05/2014 20:46:31 | Visualización: [ << ]
+15/05/2014 20:46:32 | Visualización: [ >| ]
+15/05/2014 20:46:32 | Visualización: [ >| ]
+15/05/2014 20:46:33 | Visualización: [ >| ]
+15/05/2014 20:46:33 | Visualización: [ >| ]
+15/05/2014 20:46:33 | Visualización: [ >| ]
+15/05/2014 20:46:33 | Visualización: [ >| ]
+15/05/2014 20:46:33 | Visualización: [ >| ]
+15/05/2014 20:46:33 | Visualización: [ >| ]
+15/05/2014 20:46:34 | Visualización: [ << ]
+15/05/2014 20:46:35 | Visualización: [ > ]
+15/05/2014 20:46:36 | Visualización: [ >| ]
+15/05/2014 20:46:36 | Visualización: [ >| ]
+15/05/2014 20:46:36 | Visualización: [ >| ]
+15/05/2014 20:46:36 | Visualización: [ >| ]
+15/05/2014 20:46:37 | Visualización: [ >| ]
+15/05/2014 20:46:38 | Visualización: [ || ]
+15/05/2014 20:46:39 | Visualización: [ << ]
+15/05/2014 20:46:40 | Visualización: [ >| ]
+15/05/2014 20:46:40 | Visualización: [ >| ]
+15/05/2014 20:46:40 | Visualización: [ >| ]
+15/05/2014 20:46:40 | Visualización: [ >| ]
+15/05/2014 20:46:40 | Visualización: [ >| ]
+15/05/2014 20:46:40 | Visualización: [ >| ]
+15/05/2014 20:46:41 | Visualización: [ >| ]
+15/05/2014 20:46:41 | Visualización: [ >| ]
+15/05/2014 20:46:41 | Visualización: [ >| ]
+15/05/2014 20:46:42 | Visualización: [ << ]
+15/05/2014 20:46:43 | Visualización: [ >| ]
+15/05/2014 20:46:43 | Visualización: [ >| ]
+15/05/2014 20:46:43 | Visualización: [ >| ]
+15/05/2014 20:46:43 | Visualización: [ >| ]
+15/05/2014 20:46:43 | Visualización: [ >| ]
+15/05/2014 20:46:44 | Visualización: [ >| ]
+15/05/2014 20:46:44 | Visualización: [ >| ]
+15/05/2014 20:46:44 | Visualización: [ >| ]
+15/05/2014 20:46:44 | Visualización: [ >| ]
+15/05/2014 20:46:44 | Visualización: [ >| ]
+15/05/2014 20:46:44 | Visualización: [ >| ]
+15/05/2014 20:46:45 | Visualización: [ >| ]
+15/05/2014 20:46:45 | Visualización: [ >| ]
+15/05/2014 20:46:45 | Visualización: [ >| ]
+15/05/2014 20:46:45 | Visualización: [ >| ]
+15/05/2014 20:46:45 | Visualización: [ >| ]
+15/05/2014 20:46:45 | Visualización: [ >| ]
+15/05/2014 20:46:45 | Visualización: [ >| ]
+15/05/2014 20:46:46 | Visualización: [ >| ]
+15/05/2014 20:46:48 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:47:24 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:47:32 | Archivo > Cargar y procesar clase...
+15/05/2014 20:47:36 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:47:37 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:47:39 | Archivo > Seleccionar método...
+15/05/2014 20:47:40 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:47:41 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:47:43 | Lanzar ejecución: fib1(8);
+15/05/2014 20:47:45 | Menú seleccionado: Árbol
+15/05/2014 20:47:46 | Menú deseleccionado: Árbol
+15/05/2014 20:47:46 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:47:46 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:47:47 | Visualización: [ >| ]
+15/05/2014 20:47:48 | Visualización: [ >| ]
+15/05/2014 20:47:48 | Visualización: [ >| ]
+15/05/2014 20:47:49 | Visualización: [ >| ]
+15/05/2014 20:47:50 | Visualización: [ >| ]
+15/05/2014 20:47:50 | Visualización: [ >| ]
+15/05/2014 20:47:50 | Visualización: [ >| ]
+15/05/2014 20:47:51 | Visualización: [ >| ]
+15/05/2014 20:47:51 | Visualización: [ >| ]
+15/05/2014 20:47:51 | Visualización: [ >| ]
+15/05/2014 20:47:51 | Visualización: [ >| ]
+15/05/2014 20:47:51 | Visualización: [ >| ]
+15/05/2014 20:47:51 | Visualización: [ >| ]
+15/05/2014 20:47:53 | Visualización: [ << ]
+15/05/2014 20:47:54 | Visualización: [ >| ]
+15/05/2014 20:47:54 | Visualización: [ >| ]
+15/05/2014 20:47:55 | Visualización: [ >| ]
+15/05/2014 20:47:55 | Visualización: [ >| ]
+15/05/2014 20:47:56 | Visualización: [ >| ]
+15/05/2014 20:47:56 | Visualización: [ >| ]
+15/05/2014 20:47:56 | Visualización: [ >| ]
+15/05/2014 20:47:56 | Visualización: [ >| ]
+15/05/2014 20:47:56 | Visualización: [ >| ]
+15/05/2014 20:47:56 | Visualización: [ >| ]
+15/05/2014 20:47:57 | Visualización: [ >| ]
+15/05/2014 20:47:57 | Visualización: [ >| ]
+15/05/2014 20:47:58 | Visualización: [ << ]
+15/05/2014 20:47:59 | Visualización: [ >| ]
+15/05/2014 20:48:00 | Visualización: [ >| ]
+15/05/2014 20:48:00 | Visualización: [ >| ]
+15/05/2014 20:48:00 | Visualización: [ >| ]
+15/05/2014 20:48:00 | Visualización: [ >| ]
+15/05/2014 20:48:01 | Visualización: [ > ]
+15/05/2014 20:48:01 | Visualización: [ >| ]
+15/05/2014 20:48:02 | Visualización: [ >| ]
+15/05/2014 20:48:02 | Visualización: [ >| ]
+15/05/2014 20:48:02 | Visualización: [ >| ]
+15/05/2014 20:48:02 | Visualización: [ >| ]
+15/05/2014 20:48:02 | Visualización: [ >| ]
+15/05/2014 20:48:02 | Visualización: [ >| ]
+15/05/2014 20:48:03 | Visualización: [ << ]
+15/05/2014 20:48:05 | Visualización: [ >| ]
+15/05/2014 20:48:05 | Visualización: [ >| ]
+15/05/2014 20:48:05 | Visualización: [ >| ]
+15/05/2014 20:48:16 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:50:00 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:50:08 | Archivo > Cargar y procesar clase...
+15/05/2014 20:50:13 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:50:14 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:50:18 | Archivo > Seleccionar método...
+15/05/2014 20:50:19 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:50:20 | Menú seleccionado: Árbol
+15/05/2014 20:50:21 | Menú deseleccionado: Árbol
+15/05/2014 20:50:21 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:50:21 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:50:22 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:50:24 | Lanzar ejecución: fib1(8);
+15/05/2014 20:50:49 | Visualización: [ >| ]
+15/05/2014 20:50:50 | Visualización: [ >| ]
+15/05/2014 20:51:08 | Visualización: [ >| ]
+15/05/2014 20:51:09 | Visualización: [ >| ]
+15/05/2014 20:51:10 | Visualización: [ >| ]
+15/05/2014 20:51:10 | Visualización: [ >| ]
+15/05/2014 20:51:11 | Visualización: [ >| ]
+15/05/2014 20:51:11 | Visualización: [ >| ]
+15/05/2014 20:51:12 | Visualización: [ >| ]
+15/05/2014 20:51:13 | Visualización: [ |< ]
+15/05/2014 20:51:15 | Visualización: [ << ]
+15/05/2014 20:51:16 | Visualización: [ >| ]
+15/05/2014 20:51:16 | Visualización: [ >| ]
+15/05/2014 20:51:17 | Visualización: [ >| ]
+15/05/2014 20:51:17 | Visualización: [ >| ]
+15/05/2014 20:51:17 | Visualización: [ >| ]
+15/05/2014 20:51:17 | Visualización: [ >| ]
+15/05/2014 20:51:18 | Visualización: [ >| ]
+15/05/2014 20:51:18 | Visualización: [ >| ]
+15/05/2014 20:51:18 | Visualización: [ >| ]
+15/05/2014 20:51:18 | Visualización: [ >| ]
+15/05/2014 20:51:19 | Visualización: [ << ]
+15/05/2014 20:51:20 | Visualización: [ >| ]
+15/05/2014 20:51:20 | Visualización: [ >| ]
+15/05/2014 20:51:20 | Visualización: [ >| ]
+15/05/2014 20:51:20 | Visualización: [ >| ]
+15/05/2014 20:51:20 | Visualización: [ >| ]
+15/05/2014 20:51:20 | Visualización: [ >| ]
+15/05/2014 20:51:21 | Visualización: [ >| ]
+15/05/2014 20:51:22 | Visualización: [ << ]
+15/05/2014 20:51:22 | Visualización: [ >| ]
+15/05/2014 20:51:22 | Visualización: [ >| ]
+15/05/2014 20:51:23 | Visualización: [ >| ]
+15/05/2014 20:51:23 | Visualización: [ >| ]
+15/05/2014 20:51:23 | Visualización: [ >| ]
+15/05/2014 20:51:23 | Visualización: [ >| ]
+15/05/2014 20:51:23 | Visualización: [ >| ]
+15/05/2014 20:51:23 | Visualización: [ >| ]
+15/05/2014 20:51:23 | Visualización: [ >| ]
+15/05/2014 20:51:24 | Visualización: [ >| ]
+15/05/2014 20:51:24 | Visualización: [ >| ]
+15/05/2014 20:51:24 | Visualización: [ >| ]
+15/05/2014 20:51:25 | Visualización: [ << ]
+15/05/2014 20:51:25 | Visualización: [ >| ]
+15/05/2014 20:51:25 | Visualización: [ >| ]
+15/05/2014 20:51:25 | Visualización: [ >| ]
+15/05/2014 20:51:52 | Visualización: [ << ]
+15/05/2014 20:51:55 | Visualización: [ >| ]
+15/05/2014 20:51:55 | Visualización: [ >| ]
+15/05/2014 20:52:01 | Visualización: [ >| ]
+15/05/2014 20:52:01 | Visualización: [ >| ]
+15/05/2014 20:52:01 | Visualización: [ >| ]
+15/05/2014 20:52:02 | Visualización: [ >| ]
+15/05/2014 20:52:02 | Visualización: [ >| ]
+15/05/2014 20:52:02 | Visualización: [ >| ]
+15/05/2014 20:52:02 | Visualización: [ >| ]
+15/05/2014 20:52:04 | Visualización: [ >| ]
+15/05/2014 20:52:05 | Visualización: [ >| ]
+15/05/2014 20:52:05 | Visualización: [ >| ]
+15/05/2014 20:52:05 | Visualización: [ >| ]
+15/05/2014 20:52:05 | Visualización: [ >| ]
+15/05/2014 20:52:06 | Visualización: [ >| ]
+15/05/2014 20:52:06 | Visualización: [ >| ]
+15/05/2014 20:52:06 | Visualización: [ >| ]
+15/05/2014 20:52:11 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:53:23 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:53:31 | Menú seleccionado: Árbol
+15/05/2014 20:53:32 | Menú deseleccionado: Árbol
+15/05/2014 20:53:32 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:53:32 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:53:33 | Archivo > Cargar y procesar clase...
+15/05/2014 20:53:38 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:53:39 | Archivo > Seleccionar método...
+15/05/2014 20:53:39 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:53:40 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:53:41 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:53:43 | Lanzar ejecución: fib1(8);
+15/05/2014 20:53:56 | Visualización: [ >| ]
+15/05/2014 20:53:57 | Visualización: [ >| ]
+15/05/2014 20:53:58 | Visualización: [ >| ]
+15/05/2014 20:53:59 | Visualización: [ >| ]
+15/05/2014 20:54:00 | Visualización: [ >| ]
+15/05/2014 20:54:01 | Visualización: [ >| ]
+15/05/2014 20:54:02 | Visualización: [ >| ]
+15/05/2014 20:54:06 | Visualización: [ >| ]
+15/05/2014 20:54:06 | Visualización: [ >| ]
+15/05/2014 20:54:07 | Visualización: [ >| ]
+15/05/2014 20:54:07 | Visualización: [ >| ]
+15/05/2014 20:54:07 | Visualización: [ >| ]
+15/05/2014 20:54:07 | Visualización: [ >| ]
+15/05/2014 20:54:07 | Visualización: [ >| ]
+15/05/2014 20:54:08 | Visualización: [ >| ]
+15/05/2014 20:54:08 | Visualización: [ >| ]
+15/05/2014 20:54:08 | Visualización: [ >| ]
+15/05/2014 20:54:09 | Visualización: [ << ]
+15/05/2014 20:54:10 | Visualización: [ >| ]
+15/05/2014 20:54:10 | Visualización: [ >| ]
+15/05/2014 20:54:10 | Visualización: [ >| ]
+15/05/2014 20:54:10 | Visualización: [ >| ]
+15/05/2014 20:54:10 | Visualización: [ >| ]
+15/05/2014 20:54:11 | Visualización: [ << ]
+15/05/2014 20:54:12 | Visualización: [ >| ]
+15/05/2014 20:54:12 | Visualización: [ >| ]
+15/05/2014 20:54:23 | Visualización: [ |< ]
+15/05/2014 20:54:27 | Visualización: [ >| ]
+15/05/2014 20:54:28 | Visualización: [ >| ]
+15/05/2014 20:54:29 | Visualización: [ >| ]
+15/05/2014 20:54:29 | Visualización: [ >| ]
+15/05/2014 20:54:29 | Visualización: [ >| ]
+15/05/2014 20:54:30 | Visualización: [ >| ]
+15/05/2014 20:54:30 | Visualización: [ >| ]
+15/05/2014 20:54:31 | Visualización: [ >| ]
+15/05/2014 20:54:31 | Visualización: [ >| ]
+15/05/2014 20:54:32 | Visualización: [ << ]
+15/05/2014 20:54:33 | Visualización: [ >| ]
+15/05/2014 20:54:34 | Visualización: [ >| ]
+15/05/2014 20:54:34 | Visualización: [ >| ]
+15/05/2014 20:54:34 | Visualización: [ >| ]
+15/05/2014 20:54:35 | Visualización: [ << ]
+15/05/2014 20:54:36 | Visualización: [ >| ]
+15/05/2014 20:54:36 | Visualización: [ >| ]
+15/05/2014 20:54:36 | Visualización: [ >| ]
+15/05/2014 20:54:37 | Visualización: [ >| ]
+15/05/2014 20:54:37 | Visualización: [ >| ]
+15/05/2014 20:54:37 | Visualización: [ >| ]
+15/05/2014 20:54:38 | Visualización: [ << ]
+15/05/2014 20:54:38 | Visualización: [ >| ]
+15/05/2014 20:54:39 | Visualización: [ >| ]
+15/05/2014 20:54:39 | Visualización: [ >| ]
+15/05/2014 20:54:39 | Visualización: [ >| ]
+15/05/2014 20:54:39 | Visualización: [ >| ]
+15/05/2014 20:54:39 | Visualización: [ >| ]
+15/05/2014 20:54:39 | Visualización: [ >| ]
+15/05/2014 20:54:41 | Visualización: [ << ]
+15/05/2014 20:54:42 | Visualización: [ >| ]
+15/05/2014 20:54:42 | Visualización: [ >| ]
+15/05/2014 20:54:50 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 20:56:28 | ----------------- INICIO DE SESION 192.168.0.128
+15/05/2014 20:56:35 | Archivo > Cargar y procesar clase...
+15/05/2014 20:56:41 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:56:42 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:56:47 | Archivo > Seleccionar método...
+15/05/2014 20:56:48 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:56:49 | Menú seleccionado: Árbol
+15/05/2014 20:56:50 | Menú deseleccionado: Árbol
+15/05/2014 20:56:51 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:56:52 | Lanzar ejecución: fib1(8);
+15/05/2014 20:57:04 | Visualización: [ >| ]
+15/05/2014 20:57:05 | Visualización: [ >| ]
+15/05/2014 20:57:05 | Visualización: [ >| ]
+15/05/2014 20:57:06 | Visualización: [ >| ]
+15/05/2014 20:57:06 | Visualización: [ >| ]
+15/05/2014 20:57:07 | Visualización: [ >| ]
+15/05/2014 20:57:07 | Visualización: [ >| ]
+15/05/2014 20:57:07 | Visualización: [ >| ]
+15/05/2014 20:57:10 | Visualización: [ << ]
+15/05/2014 20:57:11 | Menú seleccionado: Árbol
+15/05/2014 20:57:12 | Menú deseleccionado: Árbol
+15/05/2014 20:57:12 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:57:12 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:57:14 | Visualización: [ >| ]
+15/05/2014 20:57:15 | Visualización: [ >| ]
+15/05/2014 20:57:15 | Visualización: [ >| ]
+15/05/2014 20:57:15 | Visualización: [ >| ]
+15/05/2014 20:57:16 | Visualización: [ >| ]
+15/05/2014 20:57:16 | Visualización: [ >| ]
+15/05/2014 20:57:16 | Visualización: [ >| ]
+15/05/2014 20:57:16 | Visualización: [ >| ]
+15/05/2014 20:57:16 | Visualización: [ >| ]
+15/05/2014 20:57:16 | Visualización: [ >| ]
+15/05/2014 20:57:17 | Visualización: [ >| ]
+15/05/2014 20:57:17 | Visualización: [ >| ]
+15/05/2014 20:57:17 | Visualización: [ >| ]
+15/05/2014 20:57:17 | Visualización: [ >| ]
+15/05/2014 20:57:17 | Visualización: [ >| ]
+15/05/2014 20:57:18 | Visualización: [ << ]
+15/05/2014 20:57:20 | Visualización: [ >| ]
+15/05/2014 20:57:20 | Visualización: [ >| ]
+15/05/2014 20:57:20 | Visualización: [ >| ]
+15/05/2014 20:57:21 | Visualización: [ >| ]
+15/05/2014 20:57:21 | Visualización: [ >| ]
+15/05/2014 20:57:21 | Visualización: [ >| ]
+15/05/2014 20:57:21 | Visualización: [ >| ]
+15/05/2014 20:57:21 | Visualización: [ >| ]
+15/05/2014 20:57:21 | Visualización: [ >| ]
+15/05/2014 20:57:21 | Visualización: [ >| ]
+15/05/2014 20:57:22 | Visualización: [ >| ]
+15/05/2014 20:57:22 | Visualización: [ >| ]
+15/05/2014 20:57:23 | Visualización: [ << ]
+15/05/2014 20:57:24 | Visualización: [ >| ]
+15/05/2014 20:57:24 | Visualización: [ >| ]
+15/05/2014 20:57:24 | Visualización: [ >| ]
+15/05/2014 20:57:24 | Visualización: [ >| ]
+15/05/2014 20:57:24 | Visualización: [ >| ]
+15/05/2014 20:57:25 | Visualización: [ >| ]
+15/05/2014 20:57:25 | Visualización: [ >| ]
+15/05/2014 20:57:25 | Visualización: [ >| ]
+15/05/2014 20:57:25 | Visualización: [ >| ]
+15/05/2014 20:57:25 | Visualización: [ >| ]
+15/05/2014 20:57:25 | Visualización: [ >| ]
+15/05/2014 20:57:26 | Visualización: [ >| ]
+15/05/2014 20:57:26 | Visualización: [ >| ]
+15/05/2014 20:57:26 | Visualización: [ >| ]
+15/05/2014 20:57:27 | Visualización: [ << ]
+15/05/2014 20:57:31 | Visualización: [ >| ]
+15/05/2014 20:57:31 | Visualización: [ >| ]
+15/05/2014 20:57:31 | Visualización: [ >| ]
+15/05/2014 20:57:31 | Visualización: [ >| ]
+15/05/2014 20:57:32 | Visualización: [ >| ]
+15/05/2014 20:57:32 | Visualización: [ >| ]
+15/05/2014 20:57:32 | Visualización: [ >| ]
+15/05/2014 20:57:32 | Visualización: [ >| ]
+15/05/2014 20:57:32 | Visualización: [ >| ]
+15/05/2014 20:57:32 | Visualización: [ >| ]
+15/05/2014 20:57:32 | Visualización: [ >| ]
+15/05/2014 20:57:33 | Visualización: [ >| ]
+15/05/2014 20:57:33 | Visualización: [ >| ]
+15/05/2014 20:57:33 | Visualización: [ >| ]
+15/05/2014 20:57:34 | Visualización: [ << ]
+15/05/2014 20:57:35 | Visualización: [ >| ]
+15/05/2014 20:57:35 | Visualización: [ >| ]
+15/05/2014 20:57:35 | Visualización: [ >| ]
+15/05/2014 20:57:36 | Visualización: [ >| ]
+15/05/2014 20:57:36 | Visualización: [ >| ]
+15/05/2014 20:57:36 | Visualización: [ >| ]
+15/05/2014 20:57:36 | Visualización: [ >| ]
+15/05/2014 20:57:36 | Visualización: [ >| ]
+15/05/2014 20:57:36 | Visualización: [ >| ]
+15/05/2014 20:57:37 | Visualización: [ >| ]
+15/05/2014 20:57:37 | Visualización: [ >| ]
+15/05/2014 20:57:37 | Visualización: [ >| ]
+15/05/2014 20:57:38 | Visualización: [ << ]
+15/05/2014 20:57:39 | Visualización: [ >| ]
+15/05/2014 20:57:39 | Visualización: [ >| ]
+15/05/2014 20:57:39 | Visualización: [ >| ]
+15/05/2014 20:57:39 | Visualización: [ >| ]
+15/05/2014 20:57:39 | Visualización: [ >| ]
+15/05/2014 20:57:40 | Visualización: [ >| ]
+15/05/2014 20:57:40 | Visualización: [ >| ]
+15/05/2014 20:57:41 | Visualización: [ << ]
+15/05/2014 20:57:42 | Archivo > Cargar y procesar clase...
+15/05/2014 20:57:48 | ¿Habilitar vistas para DYV? No
+15/05/2014 20:57:49 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+15/05/2014 20:57:49 | Archivo > Seleccionar método...
+15/05/2014 20:57:50 | Método seleccionado: fib1 ( int )  [ int ]
+15/05/2014 20:57:51 | Archivo > Asignar parámetros y lanzar animación.
+15/05/2014 20:57:54 | Lanzar ejecución: fib1(9);
+15/05/2014 20:57:57 | Visualización: [ >| ]
+15/05/2014 20:57:57 | Visualización: [ >| ]
+15/05/2014 20:57:57 | Visualización: [ >| ]
+15/05/2014 20:57:57 | Visualización: [ >| ]
+15/05/2014 20:57:58 | Visualización: [ >| ]
+15/05/2014 20:57:58 | Visualización: [ >| ]
+15/05/2014 20:57:58 | Visualización: [ >| ]
+15/05/2014 20:57:58 | Visualización: [ >| ]
+15/05/2014 20:57:58 | Visualización: [ >| ]
+15/05/2014 20:57:58 | Visualización: [ >| ]
+15/05/2014 20:57:59 | Visualización: [ >| ]
+15/05/2014 20:57:59 | Visualización: [ >| ]
+15/05/2014 20:57:59 | Visualización: [ >| ]
+15/05/2014 20:57:59 | Visualización: [ >| ]
+15/05/2014 20:57:59 | Visualización: [ >| ]
+15/05/2014 20:57:59 | Visualización: [ >| ]
+15/05/2014 20:58:00 | Visualización: [ >| ]
+15/05/2014 20:58:00 | Visualización: [ >| ]
+15/05/2014 20:58:00 | Visualización: [ >| ]
+15/05/2014 20:58:00 | Visualización: [ >| ]
+15/05/2014 20:58:00 | Visualización: [ >| ]
+15/05/2014 20:58:01 | Visualización: [ << ]
+15/05/2014 20:58:02 | Visualización: [ >| ]
+15/05/2014 20:58:03 | Visualización: [ >| ]
+15/05/2014 20:58:03 | Visualización: [ >| ]
+15/05/2014 20:58:03 | Visualización: [ >| ]
+15/05/2014 20:58:03 | Visualización: [ >| ]
+15/05/2014 20:58:03 | Visualización: [ >| ]
+15/05/2014 20:58:03 | Visualización: [ >| ]
+15/05/2014 20:58:03 | Visualización: [ >| ]
+15/05/2014 20:58:04 | Visualización: [ >| ]
+15/05/2014 20:58:04 | Visualización: [ >| ]
+15/05/2014 20:58:04 | Visualización: [ >| ]
+15/05/2014 20:58:04 | Visualización: [ >| ]
+15/05/2014 20:58:05 | Visualización: [ << ]
+15/05/2014 20:58:06 | Visualización: [ >| ]
+15/05/2014 20:58:06 | Visualización: [ >| ]
+15/05/2014 20:58:07 | Visualización: [ >| ]
+15/05/2014 20:58:07 | Visualización: [ >| ]
+15/05/2014 20:58:07 | Visualización: [ >| ]
+15/05/2014 20:58:07 | Visualización: [ >| ]
+15/05/2014 20:58:07 | Visualización: [ >| ]
+15/05/2014 20:58:07 | Visualización: [ >| ]
+15/05/2014 20:58:08 | Visualización: [ << ]
+15/05/2014 20:58:10 | Menú seleccionado: Árbol
+15/05/2014 20:58:11 | Menú deseleccionado: Árbol
+15/05/2014 20:58:11 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:58:11 | Árbol de recursión > Árboles dinámicos: false
+15/05/2014 20:58:12 | Visualización: [ >| ]
+15/05/2014 20:58:13 | Visualización: [ >| ]
+15/05/2014 20:58:13 | Visualización: [ >| ]
+15/05/2014 20:58:14 | Visualización: [ >| ]
+15/05/2014 20:58:14 | Visualización: [ >| ]
+15/05/2014 20:58:14 | Visualización: [ >| ]
+15/05/2014 20:58:15 | Visualización: [ >| ]
+15/05/2014 20:58:15 | Visualización: [ >| ]
+15/05/2014 20:58:15 | Visualización: [ >| ]
+15/05/2014 20:58:16 | Visualización: [ >| ]
+15/05/2014 20:58:16 | Visualización: [ >| ]
+15/05/2014 20:58:16 | Visualización: [ >| ]
+15/05/2014 20:58:16 | Visualización: [ >| ]
+15/05/2014 20:58:17 | Visualización: [ >| ]
+15/05/2014 20:58:17 | Visualización: [ >| ]
+15/05/2014 20:58:17 | Visualización: [ >| ]
+15/05/2014 20:58:17 | Visualización: [ >| ]
+15/05/2014 20:58:17 | Visualización: [ >| ]
+15/05/2014 20:58:17 | Visualización: [ >| ]
+15/05/2014 20:58:18 | Visualización: [ >| ]
+15/05/2014 20:58:18 | Visualización: [ >| ]
+15/05/2014 20:58:18 | Visualización: [ >| ]
+15/05/2014 20:58:18 | Visualización: [ >| ]
+15/05/2014 20:58:18 | Visualización: [ >| ]
+15/05/2014 20:58:18 | Visualización: [ >| ]
+15/05/2014 20:58:18 | Visualización: [ >| ]
+15/05/2014 20:58:19 | Visualización: [ >| ]
+15/05/2014 20:58:19 | Visualización: [ >| ]
+15/05/2014 20:58:19 | Visualización: [ >| ]
+15/05/2014 20:58:19 | Visualización: [ >| ]
+15/05/2014 20:58:19 | Visualización: [ >| ]
+15/05/2014 20:58:19 | Visualización: [ >| ]
+15/05/2014 20:58:20 | Visualización: [ >| ]
+15/05/2014 20:58:20 | Visualización: [ >| ]
+15/05/2014 20:58:20 | Visualización: [ >| ]
+15/05/2014 20:58:20 | Visualización: [ >| ]
+15/05/2014 20:58:20 | Visualización: [ >| ]
+15/05/2014 20:58:20 | Visualización: [ >| ]
+15/05/2014 20:58:21 | Visualización: [ >| ]
+15/05/2014 20:58:21 | Visualización: [ >| ]
+15/05/2014 20:58:21 | Visualización: [ >| ]
+15/05/2014 20:58:21 | Visualización: [ >| ]
+15/05/2014 20:58:21 | Visualización: [ >| ]
+15/05/2014 20:58:22 | Visualización: [ >| ]
+15/05/2014 20:58:22 | Visualización: [ >| ]
+15/05/2014 20:58:22 | Visualización: [ >| ]
+15/05/2014 20:58:22 | Visualización: [ >| ]
+15/05/2014 20:58:22 | Visualización: [ >| ]
+15/05/2014 20:58:22 | Visualización: [ >| ]
+15/05/2014 20:58:23 | Visualización: [ >| ]
+15/05/2014 20:58:23 | Visualización: [ >| ]
+15/05/2014 20:58:23 | Visualización: [ >| ]
+15/05/2014 20:58:23 | Visualización: [ >| ]
+15/05/2014 20:58:24 | Visualización: [ >| ]
+15/05/2014 20:58:24 | Visualización: [ >| ]
+15/05/2014 20:58:24 | Visualización: [ >| ]
+15/05/2014 20:58:24 | Visualización: [ >| ]
+15/05/2014 20:58:25 | Visualización: [ >| ]
+15/05/2014 20:58:25 | Visualización: [ >| ]
+15/05/2014 20:58:25 | Visualización: [ >| ]
+15/05/2014 20:58:25 | Visualización: [ >| ]
+15/05/2014 20:58:25 | Visualización: [ >| ]
+15/05/2014 20:58:25 | Visualización: [ >| ]
+15/05/2014 20:58:26 | Visualización: [ >| ]
+15/05/2014 20:58:31 | Visualización: [ << ]
+15/05/2014 20:58:33 | Menú seleccionado: Árbol
+15/05/2014 20:58:34 | Menú deseleccionado: Árbol
+15/05/2014 20:58:34 | Árbol de recursión > Árboles dinámicos
+15/05/2014 20:58:34 | Árbol de recursión > Árboles dinámicos: true
+15/05/2014 20:58:36 | Visualización: [ >| ]
+15/05/2014 20:58:36 | Visualización: [ >| ]
+15/05/2014 20:58:36 | Visualización: [ >| ]
+15/05/2014 20:58:36 | Visualización: [ >| ]
+15/05/2014 20:58:36 | Visualización: [ >| ]
+15/05/2014 20:58:36 | Visualización: [ >| ]
+15/05/2014 20:58:37 | Visualización: [ >| ]
+15/05/2014 20:58:39 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+15/05/2014 21:07:25 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:34:14 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:34:27 | Menú seleccionado: Configuración
+17/05/2014 14:34:28 | Menú deseleccionado: Configuración
+17/05/2014 14:34:28 | Configuración > Máquina Virtual Java...
+17/05/2014 14:34:32 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:35:13 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:35:18 | Menú seleccionado: Configuración
+17/05/2014 14:35:20 | Menú deseleccionado: Configuración
+17/05/2014 14:35:20 | Configuración > Máquina Virtual Java...
+17/05/2014 14:35:23 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:37:42 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:37:50 | Archivo > Cargar y procesar clase...
+17/05/2014 14:37:58 | ¿Habilitar vistas para DYV? No
+17/05/2014 14:37:59 | Preprocesador: clase cargada: 'C:\Users\Estefania\Desktop\Fib.java'
+17/05/2014 14:38:00 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:38:28 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:38:30 | ERROR [Error de configuración]: Debe corregirse la actual configuración de la Máquina Virtual de Java.
+17/05/2014 14:39:02 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:40:39 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:40:41 | ERROR [Error de configuración]: Debe corregirse la actual configuración de la Máquina Virtual de Java.
+17/05/2014 14:44:40 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:46:03 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:46:05 | ERROR [Error de configuración]: Debe corregirse la actual configuración de la Máquina Virtual de Java.
+17/05/2014 14:46:16 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:47:18 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:47:20 | ERROR [Error de configuración]: Debe corregirse la actual configuración de la Máquina Virtual de Java.
+17/05/2014 14:47:47 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:50:11 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:50:13 | ERROR [Error de configuración]: Debe corregirse la actual configuración de la Máquina Virtual de Java.
+17/05/2014 14:50:34 | Menú seleccionado: Configuración
+17/05/2014 14:50:35 | Menú deseleccionado: Configuración
+17/05/2014 14:50:35 | Configuración > Máquina Virtual Java...
+17/05/2014 14:50:38 | Menú seleccionado: Configuración
+17/05/2014 14:50:40 | Menú deseleccionado: Configuración
+17/05/2014 14:50:40 | Configuración > Idioma...
+17/05/2014 14:50:42 | Idioma cambiado: en
+17/05/2014 14:50:48 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:50:50 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:50:52 | ERROR [Configuration error]: The current Java virtual machine configuration must be corrected.
+17/05/2014 14:51:11 | Menú seleccionado: Configuration
+17/05/2014 14:51:14 | Menú deseleccionado: Configuration
+17/05/2014 14:51:14 | Configuración > Mostrar/ocultar barra herramientas
+17/05/2014 14:51:16 | Menú seleccionado: Configuration
+17/05/2014 14:51:17 | Menú deseleccionado: Configuration
+17/05/2014 14:51:17 | Configuración > Mostrar/ocultar barra herramientas
+17/05/2014 14:51:17 | Menú seleccionado: Configuration
+17/05/2014 14:51:18 | Menú deseleccionado: Configuration
+17/05/2014 14:51:18 | Configuración > Idioma...
+17/05/2014 14:51:21 | Idioma cambiado: es
+17/05/2014 14:51:22 | Menú seleccionado: Configuración
+17/05/2014 14:51:25 | Menú deseleccionado: Configuración
+17/05/2014 14:51:27 | Configuración > Mostrar/ocultar barra herramientas
+17/05/2014 14:51:28 | Configuración > Mostrar/ocultar barra herramientas
+17/05/2014 14:51:30 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:51:48 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:52:09 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:52:13 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:52:15 | ERROR [Error de configuración]: Debe corregirse la actual configuración de la Máquina Virtual de Java.
+17/05/2014 14:52:25 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:52:34 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:52:41 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:52:54 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:53:04 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:58:44 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:59:03 | Menú seleccionado: Configuración
+17/05/2014 14:59:05 | Menú deseleccionado: Configuración
+17/05/2014 14:59:05 | Configuración > Máquina Virtual Java...
+17/05/2014 14:59:13 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 14:59:25 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 14:59:54 | Menú seleccionado: Configuración
+17/05/2014 14:59:56 | Menú deseleccionado: Configuración
+17/05/2014 14:59:56 | Configuración > Máquina Virtual Java...
+17/05/2014 15:00:01 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 15:00:05 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 15:00:10 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 15:34:08 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 15:34:16 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+17/05/2014 15:35:32 | ----------------- INICIO DE SESION 192.168.0.128
+17/05/2014 15:35:36 | ----------------- FIN DE SESION 192.168.0.128
+
+
+
+12/06/2014 10:54:12 | ----------------- INICIO DE SESION 212.128.246.139
+12/06/2014 10:54:18 | ----------------- FIN DE SESION 212.128.246.139
+
+
+
+13/06/2014 12:55:04 | ----------------- INICIO DE SESION 192.168.2.6
+13/06/2014 12:55:15 | ERROR [Error de Máquina virtual de Java]: No se encontró Máquina Virtual válida
+13/06/2014 12:55:50 | ERROR [Error de Máquina virtual de Java]: No se encontró Máquina Virtual válida
+13/06/2014 12:56:02 | ----------------- FIN DE SESION 192.168.2.6
+
+
+
+13/06/2014 13:09:06 | ----------------- INICIO DE SESION 192.168.2.6
+13/06/2014 13:09:32 | Menú seleccionado: Archivo
+13/06/2014 13:09:33 | Menú deseleccionado: Archivo
+13/06/2014 13:09:33 | Archivo > Nueva clase
+13/06/2014 13:09:41 | Menú seleccionado: Archivo
+13/06/2014 13:09:42 | Menú deseleccionado: Archivo
+13/06/2014 13:09:42 | Archivo > Cargar y procesar clase...
+13/06/2014 13:11:07 | Preprocesador: clase cargada: 'C:\Users\Warz\SRec\cuadros\CuadroIdioma.java' (error tras procesamiento)
+13/06/2014 13:11:07 | ERROR COMPILACIÓN [CuadroIdioma__codSRec__20140613131104.java]
+13/06/2014 13:11:15 | Menú seleccionado: Archivo
+13/06/2014 13:11:18 | Menú deseleccionado: Archivo
+13/06/2014 13:11:18 | Archivo > Cargar animación...
+13/06/2014 13:11:21 | Menú seleccionado: Archivo
+13/06/2014 13:11:23 | Menú deseleccionado: Archivo
+13/06/2014 13:11:23 | Archivo > Cargar y procesar clase...
+13/06/2014 13:11:41 | ERROR [TITULO]: MENSAJE CLASE VACIA
+13/06/2014 13:11:44 | Menú seleccionado: Archivo
+13/06/2014 13:11:45 | Menú deseleccionado: Archivo
+13/06/2014 13:11:45 | Archivo > Cargar y procesar clase...
+13/06/2014 13:12:27 | Preprocesador: no se procesará clase.
+13/06/2014 13:12:28 | Menú seleccionado: Visualización
+13/06/2014 13:12:29 | Menú deseleccionado: Visualización
+13/06/2014 13:12:29 | Visualización > Identificador de método
+13/06/2014 13:12:29 | Visualización > Identificador de método: true
+13/06/2014 13:12:31 | Menú seleccionado: Visualización
+13/06/2014 13:12:32 | Menú deseleccionado: Visualización
+13/06/2014 13:12:32 | Visualización > Arranque de animación en estado inicial
+13/06/2014 13:12:32 | Visualización > Arranque de animación en estado inicial: false
+13/06/2014 13:12:33 | Menú seleccionado: Visualización
+13/06/2014 13:12:34 | Menú deseleccionado: Visualización
+13/06/2014 13:12:34 | Visualización > Formato de animación...
+13/06/2014 13:13:04 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:13:08 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:13:08 | Filtrado y selección > Datos de entrada y salida...
+13/06/2014 13:13:11 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:13:13 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:13:13 | Filtrado y selección > Llamadas internas...
+13/06/2014 13:13:15 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:13:16 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:13:16 | Menú seleccionado: Árbol
+13/06/2014 13:13:16 | Menú deseleccionado: Árbol
+13/06/2014 13:13:16 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:13:17 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:13:17 | Menú seleccionado: Árbol
+13/06/2014 13:13:17 | Menú deseleccionado: Árbol
+13/06/2014 13:13:17 | Menú seleccionado: Traza
+13/06/2014 13:13:17 | Menú deseleccionado: Traza
+13/06/2014 13:13:17 | Menú seleccionado: Información
+13/06/2014 13:13:18 | Menú deseleccionado: Información
+13/06/2014 13:13:18 | Menú seleccionado: Configuración
+13/06/2014 13:13:22 | Menú deseleccionado: Configuración
+13/06/2014 13:13:22 | Configuración > Archivos intermedios...
+13/06/2014 13:13:26 | Menú seleccionado: Información
+13/06/2014 13:13:27 | Menú deseleccionado: Información
+13/06/2014 13:13:27 | Menú seleccionado: Configuración
+13/06/2014 13:13:30 | Menú deseleccionado: Configuración
+13/06/2014 13:13:30 | Configuración > Idioma...
+13/06/2014 13:13:32 | Menú seleccionado: Ayuda
+13/06/2014 13:13:35 | Menú deseleccionado: Ayuda
+13/06/2014 13:13:35 | Ayuda > Sobre SRec
+13/06/2014 13:13:43 | Botón: Nueva clase
+13/06/2014 13:13:57 | Menú seleccionado: Archivo
+13/06/2014 13:14:01 | Menú deseleccionado: Archivo
+13/06/2014 13:14:01 | Archivo > Cargar y procesar clase...
+13/06/2014 13:14:53 | Preprocesador: no se procesará clase.
+13/06/2014 13:14:55 | Menú seleccionado: Visualización
+13/06/2014 13:14:56 | Menú deseleccionado: Visualización
+13/06/2014 13:14:56 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:14:57 | Menú deseleccionado: Filtrado y sele1cc3i/ó0n6/
+2014 13:14:57 | Menú seleccionado: Árbol
+13/06/2014 13:14:58 | Menú deseleccionado: Árbol
+13/06/2014 13:14:58 | Menú seleccionado: Traza
+13/06/2014 13:15:00 | Menú deseleccionado: Traza
+13/06/2014 13:15:00 | Traza > Sangrado
+13/06/2014 13:15:00 | Traza > Sangrado: false
+13/06/2014 13:15:01 | Menú seleccionado: Traza
+13/06/2014 13:15:01 | Menú deseleccionado: Traza
+13/06/2014 13:15:01 | Menú seleccionado: Información
+13/06/2014 13:15:01 | Menú deseleccionado: Información
+13/06/2014 13:15:01 | Menú seleccionado: Traza
+13/06/2014 13:15:02 | Menú deseleccionado: Traza
+13/06/2014 13:15:02 | Traza > Sangrado
+13/06/2014 13:15:02 | Traza > Sangrado: true
+13/06/2014 13:15:03 | Menú seleccionado: Traza
+13/06/2014 13:15:03 | Menú deseleccionado: Traza
+13/06/2014 13:15:03 | Menú seleccionado: Información
+13/06/2014 13:15:04 | Menú deseleccionado: Información
+13/06/2014 13:15:04 | Menú seleccionado: Configuración
+13/06/2014 13:15:08 | Menú deseleccionado: Configuración
+13/06/2014 13:15:08 | Configuración > Archivo LOG...
+13/06/2014 13:15:08 | ----------------- FIN DE SESION 192.168.2.6
+
+
+
+13/06/2014 13:15:09 | ----------------- INICIO DE SESION 192.168.2.6
+13/06/2014 13:15:10 | Menú seleccionado: Configuración
+13/06/2014 13:15:12 | Menú deseleccionado: Configuración
+13/06/2014 13:15:12 | Visualización > Cargar configuración...
+13/06/2014 13:15:15 | Menú seleccionado: Ayuda
+13/06/2014 13:15:16 | Menú deseleccionado: Ayuda
+13/06/2014 13:15:16 | Ayuda > Temas de ayuda...
+13/06/2014 13:16:03 | Botón > Orden cronológico
+13/06/2014 13:16:04 | Botón > Orden cronológico: false
+13/06/2014 13:16:07 | Botón: Formato de animación...
+13/06/2014 13:16:11 | Barra velocidad animación: [ 1 ]
+13/06/2014 13:16:11 | Barra velocidad animación: [ 2 ]
+13/06/2014 13:16:12 | Barra velocidad animación: [ 3 ]
+13/06/2014 13:16:12 | Barra velocidad animación: [ 2 ]
+13/06/2014 13:16:12 | Barra velocidad animación: [ 1 ]
+13/06/2014 13:16:13 | Barra velocidad animación: [ 1 ]
+13/06/2014 13:16:15 | Menú seleccionado: Archivo
+13/06/2014 13:16:18 | Menú deseleccionado: Archivo
+13/06/2014 13:16:18 | Menú seleccionado: Visualización
+13/06/2014 13:16:19 | Menú deseleccionado: Visualización
+13/06/2014 13:16:19 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:16:21 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:16:21 | Filtrado y selección > Datos de entrada y salida...
+13/06/2014 13:16:24 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:16:25 | Menú deseleccionado: Filtrado y selección1
+3/06/2014 13:16:25 | Menú seleccionado: Árbol
+13/06/2014 13:16:27 | Menú deseleccionado: Árbol
+13/06/2014 13:16:27 | Menú seleccionado: Traza
+13/06/2014 13:16:28 | Menú deseleccionado: Traza
+13/06/2014 13:16:28 | Menú seleccionado: Información
+13/06/2014 13:16:28 | Menú deseleccionado: Información
+13/06/2014 13:16:28 | Menú seleccionado: Configuración
+13/06/2014 13:16:31 | Menú deseleccionado: Configuración
+13/06/2014 13:16:31 | Menú seleccionado: Ayuda
+13/06/2014 13:16:32 | Menú deseleccionado: Ayuda
+13/06/2014 13:16:36 | Botón: Cargar y procesar clase
+13/06/2014 13:17:19 | Preprocesador: no se procesará clase.
+13/06/2014 13:17:21 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:17:22 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:17:22 | Menú seleccionado: Árbol
+13/06/2014 13:17:22 | Menú deseleccionado: Árbol
+13/06/2014 13:17:22 | Menú seleccionado: Traza
+13/06/2014 13:17:22 | Menú deseleccionado: Traza
+13/06/2014 13:17:22 | Menú seleccionado: Información
+13/06/2014 13:17:22 | Menú deseleccionado: Información
+13/06/2014 13:17:22 | Menú seleccionado: Configuración
+13/06/2014 13:17:24 | Menú deseleccionado: Configuración
+13/06/2014 13:17:24 | Menú seleccionado: Ayuda
+13/06/2014 13:17:25 | Menú deseleccionado: Ayuda
+13/06/2014 13:20:59 | Menú seleccionado: Archivo
+13/06/2014 13:21:02 |1 M3e/n0ú6 /d2e0s1e4l e1c3c:i2o1n:a0d2o :|  AArrcchhiivvoo 
+> Cargar y procesar clase...
+13/06/2014 13:21:26 | ¿Habilitar vistas para DYV? No
+13/06/2014 13:21:27 | Preprocesador: clase cargada: 'C:\Users\Warz\Examples\Fib.java'
+13/06/2014 13:21:50 | Botón: Procesar clase
+13/06/2014 13:21:53 | ¿Habilitar vistas para DYV? No
+13/06/2014 13:21:55 | Preprocesador: clase cargada: 'C:\Users\Warz\Examples\Fib.java'
+13/06/2014 13:22:04 | Botón > Seleccionar método...
+13/06/2014 13:22:28 | Método seleccionado: fib1 ( int )  [ int ]
+13/06/2014 13:22:34 | Botón > Asignar parámetros y lanzar animación.
+13/06/2014 13:22:42 | Lanzar ejecución: fib1(4);
+13/06/2014 13:22:53 | Visualización: [ |< ]
+13/06/2014 13:22:54 | Visualización: [ |< ]
+13/06/2014 13:22:54 | Visualización: [ |< ]
+13/06/2014 13:22:54 | Visualización: [ |< ]
+13/06/2014 13:22:55 | Visualización: [ |< ]
+13/06/2014 13:22:55 | Visualización: [ |< ]
+13/06/2014 13:22:55 | Visualización: [ |< ]
+13/06/2014 13:22:55 | Visualización: [ |< ]
+13/06/2014 13:22:56 | Visualización: [ << ]
+13/06/2014 13:22:57 | Visualización: [ >| ]
+13/06/2014 13:22:58 | Visualización: [ >| ]
+13/06/2014 13:23:01 | Botón: Zoom+ (panel 1, vista V_ARBOL)
+13/06/2014 13:23:02 | Botón: Zoom+ (panel 2, vista V_PILA)
+13/06/2014 13:23:05 | Botón: Zoom- (panel 2, vista V_PILA)
+13/06/2014 13:23:06 | Botón: Zoom- (panel 1, vista V_ARBOL)
+13/06/2014 13:23:08 | Visualización: [ >| ]
+13/06/2014 13:23:09 | Visualización: [ >| ]
+13/06/2014 13:23:10 | Visualización: [ >| ]
+13/06/2014 13:23:10 | Visualización: [ >| ]
+13/06/2014 13:23:11 | Visualización: [ >| ]
+13/06/2014 13:23:11 | Visualización: [ >| ]
+13/06/2014 13:23:12 | Visualización: [ >| ]
+13/06/2014 13:23:12 | Visualización: [ >| ]
+13/06/2014 13:23:12 | Visualización: [ >| ]
+13/06/2014 13:23:13 | Visualización: [ >| ]
+13/06/2014 13:23:13 | Visualización: [ >| ]
+13/06/2014 13:23:14 | Visualización: [ >| ]
+13/06/2014 13:23:15 | Visualización: [ >| ]
+13/06/2014 13:23:15 | Visualización: [ >| ]
+13/06/2014 13:23:16 | Visualización: [ >| ]
+13/06/2014 13:23:19 | Visualización: [ |< ]
+13/06/2014 13:23:20 | Visualización: [ |< ]
+13/06/2014 13:23:20 | Visualización: [ |< ]
+13/06/2014 13:23:21 | Visualización: [ |< ]
+13/06/2014 13:23:21 | Visualización: [ |< ]
+13/06/2014 13:23:21 | Visualización: [ |< ]
+13/06/2014 13:23:21 | Visualización: [ |< ]
+13/06/2014 13:23:21 | Visualización: [ |< ]
+13/06/2014 13:23:22 | Visualización: [ |< ]
+13/06/2014 13:23:22 | Visualización: [ |< ]
+13/06/2014 13:23:22 | Visualización: [ |< ]
+13/06/2014 13:23:23 | Visualización: [ |< ]
+13/06/2014 13:23:23 | Visualización: [ |< ]
+13/06/2014 13:23:24 | Visualización: [ |< ]
+13/06/2014 13:23:24 | Visualización: [ |< ]
+13/06/2014 13:23:24 | Visualización: [ |< ]
+13/06/2014 13:23:25 | Visualización: [ |< ]
+13/06/2014 13:23:27 | Visualización: [ >| ]
+13/06/2014 13:23:28 | Visualización: [ >| ]
+13/06/2014 13:23:29 | Visualización: [ >| ]
+13/06/2014 13:23:30 | Visualización: [ >| ]
+13/06/2014 13:23:30 | Visualización: [ >| ]
+13/06/2014 13:23:31 | Visualización: [ >| ]
+13/06/2014 13:23:31 | Visualización: [ >| ]
+13/06/2014 13:23:32 | Visualización: [ >| ]
+13/06/2014 13:23:33 | Visualización: [ >| ]
+13/06/2014 13:23:33 | Visualización: [ >| ]
+13/06/2014 13:23:34 | Visualización: [ >| ]
+13/06/2014 13:23:35 | Visualización: [ >| ]
+13/06/2014 13:23:35 | Visualización: [ >| ]
+13/06/2014 13:23:36 | Visualización: [ >| ]
+13/06/2014 13:23:36 | Visualización: [ >| ]
+13/06/2014 13:23:36 | Visualización: [ >| ]
+13/06/2014 13:23:37 | Visualización: [ >| ]
+13/06/2014 13:23:40 | Visualización: [ |< ]
+13/06/2014 13:23:40 | Visualización: [ |< ]
+13/06/2014 13:23:40 | Visualización: [ |< ]
+13/06/2014 13:23:40 | Visualización: [ |< ]
+13/06/2014 13:23:40 | Visualización: [ |< ]
+13/06/2014 13:23:40 | Visualización: [ |< ]
+13/06/2014 13:23:41 | Visualización: [ |< ]
+13/06/2014 13:23:41 | Visualización: [ |< ]
+13/06/2014 13:23:41 | Visualización: [ |< ]
+13/06/2014 13:23:41 | Visualización: [ |< ]
+13/06/2014 13:23:41 | Visualización: [ |< ]
+13/06/2014 13:23:41 | Visualización: [ |< ]
+13/06/2014 13:23:42 | Visualización: [ |< ]
+13/06/2014 13:23:42 | Visualización: [ |< ]
+13/06/2014 13:23:42 | Visualización: [ |< ]
+13/06/2014 13:23:42 | Visualización: [ |< ]
+13/06/2014 13:23:42 | Visualización: [ |< ]
+13/06/2014 13:23:47 | Visualización: [ -> ]
+13/06/2014 13:23:50 | Visualización: [ <- ]
+13/06/2014 13:23:51 | Barra velocidad animación: [ 1 ]
+13/06/2014 13:23:51 | Barra velocidad animación: [ 2 ]
+13/06/2014 13:23:52 | Barra velocidad animación: [ 3 ]
+13/06/2014 13:23:52 | Barra velocidad animación: [ 3 ]
+13/06/2014 13:23:54 | Visualización: [ >| ]
+13/06/2014 13:23:55 | Visualización: [ >| ]
+13/06/2014 13:23:56 | Visualización: [ >| ]
+13/06/2014 13:24:04 | Barra velocidad animación: [ 3 ]
+13/06/2014 13:24:04 | Barra velocidad animación: [ 4 ]
+13/06/2014 13:24:04 | Barra velocidad animación: [ 5 ]
+13/06/2014 13:24:05 | Barra velocidad animación: [ 5 ]
+13/06/2014 13:24:06 | Visualización: [ << ]
+13/06/2014 13:24:09 | Visualización: [ -> ]
+13/06/2014 13:24:11 | Visualización: [ <- ]
+13/06/2014 13:24:13 | Visualización: [ > ]
+13/06/2014 13:24:20 | Barra velocidad animación: [ 5 ]
+13/06/2014 13:24:20 | Barra velocidad animación: [ 4 ]
+13/06/2014 13:24:21 | Barra velocidad animación: [ 4 ]
+13/06/2014 13:24:21 | Barra velocidad animación: [ 4 ]
+13/06/2014 13:24:21 | Barra velocidad animación: [ 3 ]
+13/06/2014 13:24:21 | Barra velocidad animación: [ 3 ]
+13/06/2014 13:24:22 | Barra velocidad animación: [ 3 ]
+13/06/2014 13:24:22 | Barra velocidad animación: [ 2 ]
+13/06/2014 13:24:22 | Barra velocidad animación: [ 2 ]
+13/06/2014 13:24:22 | Barra velocidad animación: [ 2 ]
+13/06/2014 13:24:22 | Barra velocidad animación: [ 1 ]
+13/06/2014 13:24:23 | Barra velocidad animación: [ 1 ]
+13/06/2014 13:24:46 | Visualización: [ << ]
+13/06/2014 13:24:47 | Visualización: [ > ]
+13/06/2014 13:24:52 | Botón: Datos de Entrada y Salida...
+13/06/2014 13:25:03 | Botón: Exportar animación GIF...
+13/06/2014 13:25:12 | Botón: Exportar animación GIF...
+13/06/2014 13:25:25 | Botón: Exportar animación GIF...
+13/06/2014 13:25:27 | Botón: Exportar captura de estado actual...
+13/06/2014 13:25:37 | Botón: Datos de Entrada y Salida...
+13/06/2014 13:25:40 | Visualización > Entrada y salida: E=true S=false
+13/06/2014 13:25:42 | Visualización > Entrada y salida: E=false S=true
+13/06/2014 13:25:43 | Visualización > Entrada y salida: E=true S=false
+13/06/2014 13:25:44 | Visualización > Entrada y salida: E=false S=true
+13/06/2014 13:25:45 | Visualización > Entrada y salida: E=true S=true
+13/06/2014 13:25:48 | Botón: Visibilidad de métodos y parámetros...
+13/06/2014 13:25:52 | Botón > Búsqueda de llamadas...
+13/06/2014 13:26:03 | Información > Buscar llamada...: fib1(2) []
+13/06/2014 13:26:07 | Botón > Búsqueda de llamadas...
+13/06/2014 13:26:09 | Información > Buscar llamada...: fib1() [2]
+13/06/2014 13:26:14 | Botón > Búsqueda de llamadas...
+13/06/2014 13:26:17 | Información > Buscar llamada...: fib1(1) []
+13/06/2014 13:26:22 | Botón > Búsqueda de llamadas...
+13/06/2014 13:26:27 | Información > Buscar llamada...: fib1(3) []
+13/06/2014 13:26:49 | Botón > Búsqueda de llamadas...
+13/06/2014 13:26:52 | Botón > Búsqueda de llamadas...
+13/06/2014 13:26:58 | Botón > Restauración de llamadas
+13/06/2014 13:27:01 | Botón > Restauración de llamadas
+13/06/2014 13:27:04 | Botón > Búsqueda de llamadas...
+13/06/2014 13:27:07 | Información > Buscar llamada...: fib1(3) [3]
+13/06/2014 13:27:09 | Botón > Restauración de llamadas
+13/06/2014 13:27:14 | Botón: Visibilidad de métodos y parámetros...
+13/06/2014 13:27:14 | Visualización > Mostrar vista global: false
+13/06/2014 13:27:17 | Botón: Visibilidad de métodos y parámetros...
+13/06/2014 13:27:17 | Visualización > Mostrar vista global: true
+13/06/2014 13:27:20 | Botón: Visibilidad de métodos y parámetros...
+13/06/2014 13:27:20 | Visualización > Mostrar vista global: false
+13/06/2014 13:27:25 | Botón > Orden cronológico
+13/06/2014 13:27:25 | Botón > Orden cronológico: true
+13/06/2014 13:27:29 | Botón > Información traza...
+13/06/2014 13:27:39 | Botón: Formato de animación...
+13/06/2014 13:27:45 | Botón: Formato de animación...
+13/06/2014 13:28:01 | Visualización: [ << ]
+13/06/2014 13:28:03 | Visualización: [ >> ]
+13/06/2014 13:28:07 | Menú seleccionado: Archivo
+13/06/2014 13:28:10 | Menú deseleccionado: Archivo
+13/06/2014 13:28:10 | Archivo > Cargar animación GIF...
+13/06/2014 13:28:20 | Menú seleccionado: Archivo
+13/06/2014 13:28:24 | Menú deseleccionado: Archivo
+13/06/2014 13:28:24 | Archivo > Exportar animación como GIF......
+13/06/2014 13:28:28 | Guardar GIF: capturarAnimacionGIF
+13/06/2014 13:30:07 | Menú seleccionado: Archivo
+13/06/2014 13:30:12 | Menú deseleccionado: Archivo
+13/06/2014 13:30:12 | Archivo > Cargar animación GIF...
+13/06/2014 13:30:15 | Animación GIF cargada 'C:\Users\Warz\Examples\test1.gif'...
+13/06/2014 13:30:27 | Menú seleccionado: Archivo
+13/06/2014 13:30:29 | Menú deseleccionado: Archivo
+13/06/2014 13:30:29 | Menú seleccionado: Visualización
+13/06/2014 13:30:31 | Menú deseleccionado: Visualización
+13/06/2014 13:30:31 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:30:32 | Menú deseleccionado: Filtra1do y 3s/e0l6e/c2c0i1ó4n 1
+3:30:32 | Menú seleccionado: Árbol
+13/06/2014 13:30:33 | Menú deseleccionado: Árbol
+13/06/2014 13:30:33 | Menú seleccionado: Traza
+13/06/2014 13:30:33 | Menú deseleccionado: Traza
+13/06/2014 13:30:33 | Menú seleccionado: Información
+13/06/2014 13:30:34 | Menú deseleccionado: Información
+13/06/2014 13:30:34 | Menú seleccionado: Configuración
+13/06/2014 13:30:37 | Menú deseleccionado: Configuración
+13/06/2014 13:30:37 | Visualización > Cargar configuración...
+13/06/2014 13:30:40 | Menú seleccionado: Configuración
+13/06/2014 13:30:42 | Menú deseleccionado: Configuración
+13/06/2014 13:30:42 | Visualización > Restaurar configuración
+13/06/2014 13:30:43 | Menú seleccionado: Configuración
+13/06/2014 13:30:45 | Menú deseleccionado: Configuración
+13/06/2014 13:30:45 | Visualización > Restaurar configuración
+13/06/2014 13:30:46 | Menú seleccionado: Configuración
+13/06/2014 13:30:48 | Menú deseleccionado: Configuración
+13/06/2014 13:30:48 | Configuración > Máquina Virtual Java...
+13/06/2014 13:30:50 | Menú seleccionado: Información
+13/06/2014 13:30:51 | Menú deseleccionado: Información
+13/06/2014 13:30:51 | Menú seleccionado: Configuración
+13/06/2014 13:30:53 | Menú deseleccionado: Configuración
+13/06/2014 13:30:53 | Menú seleccionado: Ayuda
+13/06/2014 13:30:54 | Menú deseleccionado: Ayuda
+13/06/2014 13:31:07 | Menú seleccionado: Archivo
+13/06/2014 13:31:09 | Menú deseleccionado: Archivo
+13/06/2014 13:31:09 | Archivo > Cargar y procesar clase...
+13/06/2014 13:31:16 | ¿Habilitar vistas para DYV? Sí
+13/06/2014 13:31:40 | ERROR [Error de valores]: El número de parámetro dado para la estructura no es válido.
+13/06/2014 13:32:25 | ERROR [Error de valores]: Hay valores repetidos en los datos introducidos.
+13/06/2014 13:32:30 | ERROR [Error de valores]: Hay valores repetidos en los datos introducidos.
+13/06/2014 13:32:36 | ERROR [Error de valores]: Hay valores repetidos en los datos introducidos.
+13/06/2014 13:33:07 | Preprocesador: clase cargada: 'C:\Users\Warz\Examples\Fib.java'
+13/06/2014 13:33:09 | Botón: Procesar clase
+13/06/2014 13:33:13 | ¿Habilitar vistas para DYV? Sí
+13/06/2014 13:33:26 | Preprocesador: clase cargada: 'C:\Users\Warz\Examples\Fib.java'
+13/06/2014 13:33:28 | Botón > Seleccionar método...
+13/06/2014 13:33:36 | Método seleccionado: fibMemo ( int , int[] )  [ void ]
+13/06/2014 13:33:41 | Botón > Asignar parámetros y lanzar animación.
+13/06/2014 13:34:03 | ERROR [Error de parámetros]: No se ha asignado ningún valor al parámetro nº 2.
+13/06/2014 13:34:07 | ERROR [Error de parámetros]: El parámetro nº2 ( int[] ) no está escrito correctamente.
+13/06/2014 13:34:11 | ERROR [Error de parámetros]: El parámetro nº2 ( int[] ) no está escrito correctamente.
+13/06/2014 13:34:21 | ERROR [Error de parámetros]: El parámetro nº2 ( int[] ) no está escrito correctamente.
+13/06/2014 13:34:30 | ERROR [Error de parámetros]: El parámetro nº2 ( int[] ) no está escrito correctamente.
+13/06/2014 13:34:40 | ERROR [Error de parámetros]: No se ha asignado ningún valor al parámetro nº 2.
+13/06/2014 13:34:43 | ERROR [Error de parámetros]: El parámetro nº2 ( int[] ) no está escrito correctamente.
+13/06/2014 13:34:51 | Lanzar ejecución: fibMemo(5, {0});
+13/06/2014 13:34:51 | ERROR [Error de ejecución]: El método lanzó una excepción: java.lang.ArrayIndexOutOfBoundsException: 5.
+13/06/2014 13:34:56 | Menú seleccionado: Archivo
+13/06/2014 13:34:58 | Menú deseleccionado: Archivo
+13/06/2014 13:34:58 | Botón > Asignar parámetros y lanzar animación.
+13/06/2014 13:35:06 | Lanzar ejecución: fibMemo(5, {});
+13/06/2014 13:35:07 | ERROR [Error de ejecución]: El método lanzó una excepción: java.lang.NullPointerException.
+13/06/2014 13:35:09 | Menú seleccionado: Archivo
+13/06/2014 13:35:14 | Menú deseleccionado: Archivo
+13/06/2014 13:35:14 | Botón > Asignar parámetros y lanzar animación.
+13/06/2014 13:35:41 | Menú seleccionado: Archivo
+13/06/2014 13:35:41 | Menú deseleccionado: Archivo
+13/06/2014 13:35:43 | Botón > Asignar parámetros y lanzar animación.
+13/06/2014 13:35:47 | Botón > Seleccionar método...
+13/06/2014 13:35:50 | Método seleccionado: fib2 ( int )  [ int ]
+13/06/2014 13:35:52 | Botón > Asignar parámetros y lanzar animación.
+13/06/2014 13:35:56 | Lanzar ejecución: fib2(5);
+13/06/2014 13:36:05 | Visualización: [ >| ]
+13/06/2014 13:36:07 | Visualización: [ >| ]
+13/06/2014 13:36:14 | Visualización: [ > ]
+13/06/2014 13:37:00 | Visualización: [ |< ]
+13/06/2014 13:37:02 | Visualización: [ << ]
+13/06/2014 13:37:04 | Visualización: [ >| ]
+13/06/2014 13:37:05 | Visualización: [ >| ]
+13/06/2014 13:37:11 | Visualización: [ >| ]
+13/06/2014 13:37:13 | Visualización: [ >| ]
+13/06/2014 13:37:15 | Visualización: [ >| ]
+13/06/2014 13:37:19 | Visualización: [ >| ]
+13/06/2014 13:37:22 | Visualización: [ >| ]
+13/06/2014 13:37:41 | Visualización: [ >| ]
+13/06/2014 13:38:13 | Visualización: [ >| ]
+13/06/2014 13:39:34 | Visualización: [ >| ]
+13/06/2014 13:39:37 | Visualización: [ >| ]
+13/06/2014 13:40:12 | Visualización: [ >| ]
+13/06/2014 13:40:16 | Visualización: [ >| ]
+13/06/2014 13:40:17 | Visualización: [ >| ]
+13/06/2014 13:40:18 | Visualización: [ >| ]
+13/06/2014 13:40:19 | Visualización: [ >| ]
+13/06/2014 13:40:20 | Visualización: [ >| ]
+13/06/2014 13:40:21 | Visualización: [ >| ]
+13/06/2014 13:40:33 | Visualización: [ >| ]
+13/06/2014 13:40:37 | Visualización: [ |< ]
+13/06/2014 13:40:38 | Visualización: [ |< ]
+13/06/2014 13:40:38 | Visualización: [ |< ]
+13/06/2014 13:40:38 | Visualización: [ |< ]
+13/06/2014 13:40:39 | Visualización: [ |< ]
+13/06/2014 13:40:39 | Visualización: [ |< ]
+13/06/2014 13:40:39 | Visualización: [ |< ]
+13/06/2014 13:40:39 | Visualización: [ |< ]
+13/06/2014 13:40:39 | Visualización: [ |< ]
+13/06/2014 13:40:40 | Visualización: [ |< ]
+13/06/2014 13:40:40 | Visualización: [ |< ]
+13/06/2014 13:40:40 | Visualización: [ |< ]
+13/06/2014 13:40:40 | Visualización: [ |< ]
+13/06/2014 13:40:40 | Visualización: [ |< ]
+13/06/2014 13:40:41 | Visualización: [ |< ]
+13/06/2014 13:40:41 | Visualización: [ |< ]
+13/06/2014 13:40:41 | Visualización: [ |< ]
+13/06/2014 13:40:42 | Visualización: [ |< ]
+13/06/2014 13:40:43 | Visualización: [ >| ]
+13/06/2014 13:40:43 | Visualización: [ >| ]
+13/06/2014 13:40:44 | Visualización: [ >| ]
+13/06/2014 13:40:45 | Visualización: [ >| ]
+13/06/2014 13:40:46 | Visualización: [ >| ]
+13/06/2014 13:40:47 | Visualización: [ >| ]
+13/06/2014 13:40:48 | Visualización: [ >| ]
+13/06/2014 13:40:51 | Visualización: [ >| ]
+13/06/2014 13:40:52 | Visualización: [ >| ]
+13/06/2014 13:40:53 | Visualización: [ >| ]
+13/06/2014 13:40:54 | Visualización: [ >| ]
+13/06/2014 13:40:55 | Visualización: [ >| ]
+13/06/2014 13:40:55 | Visualización: [ >| ]
+13/06/2014 13:40:56 | Visualización: [ >| ]
+13/06/2014 13:40:56 | Visualización: [ >| ]
+13/06/2014 13:40:57 | Visualización: [ >| ]
+13/06/2014 13:40:57 | Visualización: [ >| ]
+13/06/2014 13:40:57 | Visualización: [ >| ]
+13/06/2014 13:41:04 | Visualización: [ |< ]
+13/06/2014 13:41:04 | Visualización: [ |< ]
+13/06/2014 13:41:04 | Visualización: [ |< ]
+13/06/2014 13:41:04 | Visualización: [ |< ]
+13/06/2014 13:41:05 | Visualización: [ |< ]
+13/06/2014 13:41:05 | Visualización: [ |< ]
+13/06/2014 13:41:05 | Visualización: [ |< ]
+13/06/2014 13:41:05 | Visualización: [ |< ]
+13/06/2014 13:41:05 | Visualización: [ |< ]
+13/06/2014 13:41:06 | Visualización: [ |< ]
+13/06/2014 13:41:06 | Visualización: [ |< ]
+13/06/2014 13:41:06 | Visualización: [ |< ]
+13/06/2014 13:41:06 | Visualización: [ |< ]
+13/06/2014 13:41:07 | Visualización: [ |< ]
+13/06/2014 13:41:07 | Visualización: [ |< ]
+13/06/2014 13:41:07 | Visualización: [ |< ]
+13/06/2014 13:41:07 | Visualización: [ |< ]
+13/06/2014 13:41:07 | Visualización: [ |< ]
+13/06/2014 13:41:08 | Visualización: [ |< ]
+13/06/2014 13:41:10 | Menú seleccionado: Visualización
+13/06/2014 13:41:11 | Menú deseleccionado: Visualización
+13/06/2014 13:41:11 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:41:14 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:41:14 | Menú seleccionado: Árbol
+13/06/2014 13:41:15 | Menú deseleccionado: Árbol
+13/06/2014 13:41:15 | Menú seleccionado: Traza
+13/06/2014 13:41:16 | Menú deseleccionado: Traza
+13/06/2014 13:41:16 | Menú seleccionado: Información
+13/06/2014 13:41:17 | Menú deseleccionado: Información
+13/06/2014 13:41:17 | Menú seleccionado: Traza
+13/06/2014 13:41:18 | Menú deseleccionado: Traza
+13/06/2014 13:41:18 | Traza > Estructura de datos completa en DYV
+13/06/2014 13:41:18 | Traza > Estructura de datos completa en DYV: true
+13/06/2014 13:41:21 | Menú seleccionado: Árbol
+13/06/2014 13:41:23 | Menú deseleccionado: Árbol
+13/06/2014 13:41:23 | Árbol de recursión > Estructura de datos en DYV
+13/06/2014 13:41:23 | Árbol de recursión > Estructura de datos en DYV: false
+13/06/2014 13:41:25 | Visualización: [ >> ]
+13/06/2014 13:41:27 | Menú seleccionado: Árbol
+13/06/2014 13:41:28 | Menú deseleccionado: Árbol
+13/06/2014 13:41:28 | Árbol de recursión > Estructura de datos en DYV
+13/06/2014 13:41:28 | Árbol de recursión > Estructura de datos en DYV: true
+13/06/2014 13:41:32 | Menú seleccionado: Árbol
+13/06/2014 13:41:39 | Menú deseleccionado: Árbol
+13/06/2014 13:41:39 | Árbol de recursión > Estructura de datos en DYV
+13/06/2014 13:41:39 | Árbol de recursión > Estructura de datos en DYV: false
+13/06/2014 13:41:41 | Menú seleccionado: Árbol
+13/06/2014 13:41:42 | Menú deseleccionado: Árbol
+13/06/2014 13:41:42 | Árbol de recursión > Estructura de datos en DYV
+13/06/2014 13:41:42 | Árbol de recursión > Estructura de datos en DYV: true
+13/06/2014 13:41:44 | Menú seleccionado: Árbol
+13/06/2014 13:41:44 | Menú deseleccionado: Árbol
+13/06/2014 13:41:44 | Árbol de recursión > Estructura de datos en DYV
+13/06/2014 13:41:44 | Árbol de recursión > Estructura de datos en DYV: false
+13/06/2014 13:41:46 | Menú seleccionado: Traza
+13/06/2014 13:41:48 | Menú deseleccionado: Traza
+13/06/2014 13:41:48 | Menú seleccionado: Árbol
+13/06/2014 13:41:49 | Menú deseleccionado: Árbol
+13/06/2014 13:41:49 | Árbol de recursión > Estructura de datos en DYV
+13/06/2014 13:41:49 | Árbol de recursión > Estructura de datos en DYV: true
+13/06/2014 13:41:49 | Menú seleccionado: Traza
+13/06/2014 13:41:52 | Menú deseleccionado: Traza
+13/06/2014 13:41:52 | Traza > Estructura de datos completa en DYV
+13/06/2014 13:41:52 | Traza > Estructura de datos completa en DYV: false
+13/06/2014 13:41:54 | Menú seleccionado: Traza
+13/06/2014 13:41:55 | Menú deseleccionado: Traza
+13/06/2014 13:41:55 | Traza > Estructura de datos completa en DYV
+13/06/2014 13:41:55 | Traza > Estructura de datos completa en DYV: true
+13/06/2014 13:42:12 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:42:13 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:42:13 | Menú seleccionado: Árbol
+13/06/2014 13:42:15 | Menú deseleccionado: Árbol
+13/06/2014 13:42:15 | Menú seleccionado: Traza
+13/06/2014 13:42:16 | Menú deseleccionado: Traza
+13/06/2014 13:42:16 | Menú seleccionado: Información
+13/06/2014 13:42:17 | Menú deseleccionado: Información
+13/06/2014 13:42:17 | Información > Información traza...
+13/06/2014 13:42:20 | Menú seleccionado: Información
+13/06/2014 13:42:21 | Menú deseleccionado: Información
+13/06/2014 13:42:21 | Información > Información nodo actual...
+13/06/2014 13:42:21 | Información > Información nodo actual...: N.1   fib2(5) [8]
+13/06/2014 13:42:24 | Menú seleccionado: Configuración
+13/06/2014 13:42:29 | Menú deseleccionado: Configuración
+13/06/2014 13:42:29 | Menú seleccionado: Ayuda
+13/06/2014 13:42:30 | Menú deseleccionado: Ayuda
+13/06/2014 13:42:37 | Menú seleccionado: Visualización
+13/06/2014 13:42:39 | Menú deseleccionado: Visualización
+13/06/2014 13:42:39 | Visualización > Configuración de Zoom...
+13/06/2014 13:42:42 | Menú seleccionado: Visualización
+13/06/2014 13:42:43 | Menú deseleccionado: Visualización
+13/06/2014 13:42:43 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:42:44 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:42:44 | Menú seleccionado: Árbol
+13/06/2014 13:42:45 | Menú deseleccionado: Árbol
+13/06/2014 13:42:45 | Árbol de recursión > Árboles dinámicos
+13/06/2014 13:42:45 | Árbol de recursión > Árboles dinámicos: true
+13/06/2014 13:42:49 | Menú seleccionado: Árbol
+13/06/2014 13:42:52 | Menú deseleccionado: Árbol
+13/06/2014 13:42:53 | Visualización: [ << ]
+13/06/2014 13:42:55 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:42:55 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:42:55 | Menú seleccionado: Árbol
+13/06/2014 13:42:56 | Menú deseleccionado: Árbol
+13/06/2014 13:42:56 | Menú seleccionado: Traza
+13/06/2014 13:42:57 | Menú deseleccionado: Traza
+13/06/2014 13:42:57 | Menú seleccionado: Árbol
+13/06/2014 13:42:57 | Menú deseleccionado: Árbol
+13/06/2014 13:42:57 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:42:58 | Menú deseleccionado: Filtrado y selecc1ió3n/0
+6/2014 13:42:58 | Menú seleccionado: Árbol
+13/06/2014 13:42:58 | Menú deseleccionado: Árbol
+13/06/2014 13:42:58 | Menú seleccionado: Traza
+13/06/2014 13:42:58 | Menú deseleccionado: Traza
+13/06/2014 13:42:58 | Menú seleccionado: Información
+13/06/2014 13:42:58 | Menú deseleccionado: Información
+13/06/2014 13:42:58 | Menú seleccionado: Traza
+13/06/2014 13:42:58 | Menú deseleccionado: Traza
+13/06/2014 13:42:58 | Menú seleccionado: Árbol
+13/06/2014 13:42:59 | Menú deseleccionado: Árbol
+13/06/2014 13:42:59 | Menú seleccionado: Información
+13/06/2014 13:42:59 | Menú deseleccionado: Información
+13/06/2014 13:42:59 | Menú seleccionado: Traza
+13/06/2014 13:43:00 | Menú deseleccionado: Traza
+13/06/2014 13:43:00 | Menú seleccionado: Árbol
+13/06/2014 13:43:00 | Menú deseleccionado: Árbol
+13/06/2014 13:43:00 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:43:00 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:43:00 | Menú seleccionado: Árbol
+13/06/2014 13:43:01 | Menú deseleccionado: Árbol
+13/06/2014 13:43:01 | Árbol de recursión > Árboles dinámicos
+13/06/2014 13:43:01 | Árbol de recursión > Árboles dinámicos: false
+13/06/2014 13:43:02 | Menú seleccionado: Árbol
+13/06/2014 13:43:03 | Menú deseleccionado: Árbol
+13/06/2014 13:43:03 | Árbol de recursión > Árboles dinámicos
+13/06/2014 13:43:03 | Árbol de recursión > Árboles dinámicos: true
+13/06/2014 13:43:05 | Visualización: [ >| ]
+13/06/2014 13:43:06 | Visualización: [ >| ]
+13/06/2014 13:43:06 | Visualización: [ >| ]
+13/06/2014 13:43:07 | Visualización: [ >| ]
+13/06/2014 13:43:07 | Visualización: [ >| ]
+13/06/2014 13:43:08 | Visualización: [ >| ]
+13/06/2014 13:43:08 | Visualización: [ >| ]
+13/06/2014 13:43:10 | Visualización: [ >| ]
+13/06/2014 13:43:10 | Visualización: [ >| ]
+13/06/2014 13:43:11 | Visualización: [ >| ]
+13/06/2014 13:43:12 | Visualización: [ >| ]
+13/06/2014 13:43:13 | Visualización: [ >| ]
+13/06/2014 13:43:13 | Visualización: [ >| ]
+13/06/2014 13:43:14 | Visualización: [ >| ]
+13/06/2014 13:43:15 | Visualización: [ >| ]
+13/06/2014 13:43:15 | Visualización: [ >| ]
+13/06/2014 13:43:17 | Visualización: [ >| ]
+13/06/2014 13:43:18 | Visualización: [ >| ]
+13/06/2014 13:43:19 | Visualización: [ >| ]
+13/06/2014 13:43:21 | Visualización: [ |< ]
+13/06/2014 13:43:22 | Visualización: [ |< ]
+13/06/2014 13:43:23 | Visualización: [ |< ]
+13/06/2014 13:43:23 | Visualización: [ |< ]
+13/06/2014 13:43:24 | Visualización: [ |< ]
+13/06/2014 13:43:24 | Visualización: [ |< ]
+13/06/2014 13:43:25 | Visualización: [ |< ]
+13/06/2014 13:43:25 | Visualización: [ |< ]
+13/06/2014 13:43:25 | Visualización: [ |< ]
+13/06/2014 13:43:26 | Visualización: [ |< ]
+13/06/2014 13:43:26 | Visualización: [ |< ]
+13/06/2014 13:43:26 | Visualización: [ |< ]
+13/06/2014 13:43:27 | Visualización: [ |< ]
+13/06/2014 13:43:27 | Visualización: [ |< ]
+13/06/2014 13:43:27 | Visualización: [ |< ]
+13/06/2014 13:43:28 | Visualización: [ |< ]
+13/06/2014 13:43:28 | Visualización: [ |< ]
+13/06/2014 13:43:28 | Visualización: [ |< ]
+13/06/2014 13:43:29 | Visualización: [ |< ]
+13/06/2014 13:43:30 | Visualización: [ >| ]
+13/06/2014 13:43:31 | Visualización: [ >| ]
+13/06/2014 13:43:32 | Visualización: [ >| ]
+13/06/2014 13:43:32 | Visualización: [ >| ]
+13/06/2014 13:43:33 | Visualización: [ >| ]
+13/06/2014 13:43:34 | Visualización: [ >| ]
+13/06/2014 13:43:34 | Visualización: [ >| ]
+13/06/2014 13:43:35 | Visualización: [ >| ]
+13/06/2014 13:43:35 | Visualización: [ >| ]
+13/06/2014 13:43:36 | Visualización: [ >| ]
+13/06/2014 13:43:36 | Visualización: [ >| ]
+13/06/2014 13:43:37 | Visualización: [ >| ]
+13/06/2014 13:43:37 | Visualización: [ >| ]
+13/06/2014 13:43:38 | Visualización: [ >| ]
+13/06/2014 13:43:39 | Visualización: [ >| ]
+13/06/2014 13:43:40 | Visualización: [ >| ]
+13/06/2014 13:43:40 | Visualización: [ >| ]
+13/06/2014 13:43:41 | Visualización: [ >| ]
+13/06/2014 13:43:42 | Visualización: [ >| ]
+13/06/2014 13:43:46 | Menú seleccionado: Configuración
+13/06/2014 13:43:47 | Menú deseleccionado: Configuración
+13/06/2014 13:43:47 | Menú seleccionado: Información
+13/06/2014 13:43:49 | Menú deseleccionado: Información
+13/06/2014 13:43:50 | Menú seleccionado: Información
+13/06/2014 13:43:51 | Menú deseleccionado: Información
+13/06/2014 13:43:51 | Menú seleccionado: Traza
+13/06/2014 13:43:52 | Menú deseleccionado: Traza
+13/06/2014 13:43:52 | Menú seleccionado: Árbol
+13/06/2014 13:43:53 | Menú deseleccionado: Árbol
+13/06/2014 13:43:53 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:44:02 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:44:02 | Menú seleccionado: Visualización
+13/06/2014 13:44:05 | Menú deseleccionado: Visualización
+13/06/2014 13:44:05 | Visualización > Ubicación de paneles
+13/06/2014 13:44:23 | Menú seleccionado: Visualización
+13/06/2014 13:44:24 | Menú deseleccionado: Visualización
+13/06/2014 13:44:24 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:44:27 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:44:27 | Menú seleccionado: Árbol
+13/06/2014 13:44:30 | Menú deseleccionado: Árbol
+13/06/2014 13:44:30 | Árbol de recursión > Vista global
+13/06/2014 13:44:30 | Árbol de recursión > Vista global: false
+13/06/2014 13:44:32 | Menú seleccionado: Árbol
+13/06/2014 13:44:33 | Menú deseleccionado: Árbol
+13/06/2014 13:44:33 | Árbol de recursión > Vista global
+13/06/2014 13:44:33 | Árbol de recursión > Vista global: true
+13/06/2014 13:44:34 | Menú seleccionado: Árbol
+13/06/2014 13:44:37 | Menú deseleccionado: Árbol
+13/06/2014 13:44:37 | Árbol de recursión > Ajustar vista global
+13/06/2014 13:44:38 | Árbol de recursión > Ajustar vista global: false
+13/06/2014 13:44:39 | Menú seleccionado: Árbol
+13/06/2014 13:44:40 | Menú deseleccionado: Árbol
+13/06/2014 13:44:40 | Árbol de recursión > Ajustar vista global
+13/06/2014 13:44:40 | Árbol de recursión > Ajustar vista global: true
+13/06/2014 13:44:42 | Menú seleccionado: Árbol
+13/06/2014 13:44:42 | Menú deseleccionado: Árbol
+13/06/2014 13:44:42 | Menú seleccionado: Traza
+13/06/2014 13:44:44 | Menú deseleccionado: Traza
+13/06/2014 13:44:44 | Menú seleccionado: Información
+13/06/2014 13:44:46 | Menú deseleccionado: Información
+13/06/2014 13:44:46 | Información > Información traza...
+13/06/2014 13:44:49 | Menú seleccionado: Información
+13/06/2014 13:44:49 | Menú deseleccionado: Información
+13/06/2014 13:44:49 | Menú seleccionado: Configuración
+13/06/2014 13:44:54 | Menú deseleccionado: Configuración
+13/06/2014 13:44:54 | Configuración > Archivos intermedios...
+13/06/2014 13:45:01 | Menú seleccionado: Información
+13/06/2014 13:45:02 | Menú deseleccionado: Información
+13/06/2014 13:45:02 | Menú seleccionado: Configuración
+13/06/2014 13:45:04 | Menú deseleccionado: Configuración
+13/06/2014 13:45:04 | Visualización > Guardar configuración...
+13/06/2014 13:45:06 | Menú seleccionado: Configuración
+13/06/2014 13:45:07 | Menú deseleccionado: Configuración
+13/06/2014 13:45:07 | Menú seleccionado: Ayuda
+13/06/2014 13:45:08 | Menú deseleccionado: Ayuda
+13/06/2014 13:45:11 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:12 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:13 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:13 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:14 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:14 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:15 | Botón: ZoomAjuste (panel 1, vista V_ARBOL)
+13/06/2014 13:45:17 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:18 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:18 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:19 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:25 | Botón: ZoomAjuste (panel 2, vista V_PILA)
+13/06/2014 13:45:25 | Botón: ZoomAjuste (panel 1, vista V_ARBOL)
+13/06/2014 13:45:26 | Botón: Zoom- (panel 1, vista V_ARBOL)
+13/06/2014 13:45:27 | Botón: Zoom- (panel 1, vista V_ARBOL)
+13/06/2014 13:45:28 | Botón: Zoom- (panel 1, vista V_ARBOL)
+13/06/2014 13:45:28 | Botón: Zoom- (panel 1, vista V_ARBOL)
+13/06/2014 13:45:29 | Botón: Zoom- (panel 1, vista V_ARBOL)
+13/06/2014 13:45:30 | Botón: Zoom- (panel 1, vista V_ARBOL)
+13/06/2014 13:45:31 | Botón: ZoomAjuste (panel 1, vista V_ARBOL)
+13/06/2014 13:45:33 | Botón: Zoom...
+13/06/2014 13:45:46 | Cuadro de Zoom: zoomAjuste (0)
+13/06/2014 13:45:47 | Cuadro de Zoom: zoomAjuste (1)
+13/06/2014 13:45:49 | Cuadro de Zoom: zoomAjuste (3)
+13/06/2014 13:45:50 | Cuadro de Zoom: zoomAjuste (4)
+13/06/2014 13:46:16 | Botón > Información traza...
+13/06/2014 13:46:20 | Menú seleccionado: Archivo
+13/06/2014 13:46:21 | Menú deseleccionado: Archivo
+13/06/2014 13:46:21 | Menú seleccionado: Visualización
+13/06/2014 13:46:22 | Menú deseleccionado: Visualización
+13/06/2014 13:46:22 | Menú seleccionado: Archivo
+13/06/2014 13:46:23 | Menú deseleccionado: Archivo
+13/06/2014 13:46:23 | Archivo > Guardar traza...
+13/06/2014 13:46:29 | Menú seleccionado: Filtrado y selección
+13/06/2014 13:46:31 | Menú deseleccionado: Filtrado y selección
+13/06/2014 13:46:31 | Menú seleccionado: Árbol
+13/06/2014 13:46:32 | Menú deseleccionado: Árbol
+13/06/2014 13:46:32 | Menú seleccionado: Traza
+13/06/2014 13:46:32 | Menú deseleccionado: Traza
+13/06/2014 13:46:32 | Menú seleccionado: Información
+13/06/2014 13:46:32 | Menú deseleccionado: Información
+13/06/2014 13:46:32 | Menú seleccionado: Configuración
+13/06/2014 13:46:34 | Menú deseleccionado: Configuración
+13/06/2014 13:46:36 | ----------------- FIN DE SESION 192.168.2.6
+
+
+
+15/06/2014 11:28:09 | ----------------- INICIO DE SESION 192.168.2.6
+15/06/2014 11:28:14 | ----------------- FIN DE SESION 192.168.2.6
+
+
+
