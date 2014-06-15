@@ -706,7 +706,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[46]) )
 			{
 				if (Conf.fichero_log) log_write("Filtrado y selección > Búsqueda de llamadas...");
-				new CuadroBuscarLlamada(dtb);
+				new CuadroBuscarLlamada(this, dtb);
 			}
 			
 			// Filtrado > Restauración de llamadas
@@ -1334,7 +1334,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if(fuente==botones[30])		// Filtrado y selección > Búsqueda de llamadas...
 			{
 				if (Conf.fichero_log) log_write("Botón > Búsqueda de llamadas...");
-				new CuadroBuscarLlamada(dtb);
+				new CuadroBuscarLlamada(this, dtb);
 			}
 			else if(fuente==botones[31])		// Filtrado y selección > Restauración de llamadas
 			{
