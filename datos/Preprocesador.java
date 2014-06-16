@@ -333,8 +333,8 @@ public class Preprocesador extends Thread
 					
 					if (!obf.getfClass()) {
 						String aux2[]=new String[2];
-						aux[0]="\""+omvj.getDir()+"javac\"";
-						aux[2]="\""+fichero[0]+fichero[1].replace(".java",codigoPrevio+".java")+"\"";
+						aux2[0]="\""+omvj.getDir()+"javac\"";
+						aux2[1]="\""+fichero[0]+fichero[1].replace(".java",codigoPrevio+".java")+"\"";
 						LlamadorSistema.ejecucionArray(aux2);
 						//LlamadorSistema.ejecucion("\""+omvj.getDir()+"javac\" \""+
 						//		fichero[0]+fichero[1].replace(".java",codigoPrevio+".java")+"\"");
