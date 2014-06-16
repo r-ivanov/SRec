@@ -1,2 +1,9 @@
+# Ficheros compilados de la aplicación
 *.class
+
+# Log de debug
 log-SREC.txt
+
+# Ficheros de configuración para cada usuario
+datos/opciones.xml
+datos/opdefecto.xml
