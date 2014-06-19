@@ -528,7 +528,7 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener, Ke
 				if (botonesDYV[i]==e.getSource())
 				{
 					if (botonesDYV[i].isSelected())
-						new CuadroIdentificarParametros(this,this.metodos.get(i),i,
+						new CuadroIdentificarParametros(Ventana.thisventana, this,this.metodos.get(i),i,
 								estructura[i].getText(),indices[i].getText());
 				}
 		}
