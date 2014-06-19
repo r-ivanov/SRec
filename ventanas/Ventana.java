@@ -684,7 +684,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[44]) )
 			{
 				if (Conf.fichero_log) log_write("Filtrado y selección > Llamadas terminadas...");
-				new CuadroElegirHistorico();
+				new CuadroElegirHistorico(this);
 			}
 			
 			// Filtrado > Subárboles en saltos
@@ -1164,7 +1164,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if(fuente==botones[12])		// Visualización > Nodos históricos...
 			{
 				if (Conf.fichero_log) log_write("Botón: Nodos históricos...");
-				new CuadroElegirHistorico();
+				new CuadroElegirHistorico(this);
 			}
 			
 			else if(fuente==botones[13])		// Visualización > Mostrar subárboles en saltos
