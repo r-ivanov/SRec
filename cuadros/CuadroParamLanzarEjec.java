@@ -432,7 +432,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener, Key
 			dialogo.setVisible(false);
 		else if (e.getSource()==generar)
 			if (cga==null)
-				cga=new CuadroGenerarAleatorio(this,this.metodo);
+				cga=new CuadroGenerarAleatorio(Ventana.thisventana, this,this.metodo);
 			else
 				cga.setVisible(true);
 		else if (e.getSource()==cargar)
