@@ -5,8 +5,8 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
 /**
- * Botón de la aplicación que permite mostrar distintas imagenes según
- * el estado actual del botón.
+ * Botón de la aplicación que permite mostrar distintas imagenes según el estado
+ * actual del botón.
  * 
  * @author Antonio Pérez Carrasco
  * @author David Pastor Herranz
@@ -50,28 +50,28 @@ public class BotonImagen extends JButton {
 		this.pathImagenBotonDeshabilitado = pathImagenBotonDeshabilitado;
 		this.setPreferredSize(new Dimension(ancho, alto));
 	}
-	
+
 	/**
 	 * Determina y establece la imagen que debe mostrar el botón.
 	 */
-	private void actualizarImagenMostrada() {		
-		if (this.isEnabled()) {			
-			if (ratonEstaSobreBoton || mostrarPulsado) {
-				this.setIcon(new ImageIcon(pathImagenRatonSobreBoton));
+	private void actualizarImagenMostrada() {
+		if (this.isEnabled()) {
+			if (this.ratonEstaSobreBoton || this.mostrarPulsado) {
+				this.setIcon(new ImageIcon(this.pathImagenRatonSobreBoton));
 			} else {
-				this.setIcon(new ImageIcon(pathImagenBotonHabilitado));
-			}			
+				this.setIcon(new ImageIcon(this.pathImagenBotonHabilitado));
+			}
 		} else {
-			this.setIcon(new ImageIcon(pathImagenBotonDeshabilitado));
+			this.setIcon(new ImageIcon(this.pathImagenBotonDeshabilitado));
 		}
 	}
-	
+
 	/**
 	 * Habilita el botón, mostrando la imagen correspondiente.
 	 */
 	public void habilitar() {
 		this.setEnabled(true);
-		mostrarPulsado = false;
+		this.mostrarPulsado = false;
 		this.actualizarImagenMostrada();
 	}
 
@@ -80,19 +80,18 @@ public class BotonImagen extends JButton {
 	 */
 	public void deshabilitar() {
 		this.setEnabled(false);
-		mostrarPulsado = false;
+		this.mostrarPulsado = false;
 		this.actualizarImagenMostrada();
 	}
 
 	/**
-	 * Notifica al botón que el ratón se encuentra actualmente
-	 * sobre el.
+	 * Notifica al botón que el ratón se encuentra actualmente sobre el.
 	 */
 	public void ratonEstaSobreBoton() {
 		this.ratonEstaSobreBoton = true;
 		this.actualizarImagenMostrada();
 	}
-	
+
 	/**
 	 * Notifica al botón que el ratón ya no se encuentra sobre el.
 	 */
@@ -100,11 +99,11 @@ public class BotonImagen extends JButton {
 		this.ratonEstaSobreBoton = false;
 		this.actualizarImagenMostrada();
 	}
-	
+
 	/**
-	 * Notifica al botón que debe mostrar la imagen correspondiente
-	 * a cuando el botón esta pulsado, el botón mostrará esta imagen
-	 * hasta que se habilite de nuevo o se deshabilite.
+	 * Notifica al botón que debe mostrar la imagen correspondiente a cuando el
+	 * botón esta pulsado, el botón mostrará esta imagen hasta que se habilite
+	 * de nuevo o se deshabilite.
 	 */
 	public void mostrarPulsado() {
 		this.mostrarPulsado = true;

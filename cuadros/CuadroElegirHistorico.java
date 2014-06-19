@@ -57,7 +57,7 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 *            Ventana a la que permanecerá asociado el cuadro de diálogo
 	 */
 	public CuadroElegirHistorico(Ventana ventana) {
-		dialogo = new JDialog(ventana, true);
+		this.dialogo = new JDialog(ventana, true);
 		this.ventana = ventana;
 		this.start();
 	}
@@ -65,9 +65,10 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	/**
 	 * Genera una nueva opción
 	 */
+	@Override
 	public void run() {
 
-		oov = (OpcionOpsVisualizacion) gOpciones.getOpcion(
+		this.oov = (OpcionOpsVisualizacion) this.gOpciones.getOpcion(
 				"OpcionOpsVisualizacion", false);
 
 		// Panel Datos que se muestran
@@ -75,28 +76,28 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 		GridLayout gl1 = new GridLayout(3, 1);
 		panelHistoria.setLayout(gl1);
 
-		botonesHistoria = new JRadioButton[3];
-		botonesHistoria[0] = new JRadioButton(Texto.get(
+		this.botonesHistoria = new JRadioButton[3];
+		this.botonesHistoria[0] = new JRadioButton(Texto.get(
 				"COOV_INFONODOMANTHIST", Conf.idioma));
-		botonesHistoria[1] = new JRadioButton(Texto.get(
+		this.botonesHistoria[1] = new JRadioButton(Texto.get(
 				"COOV_INFONODOATENHIST", Conf.idioma));
-		botonesHistoria[2] = new JRadioButton(Texto.get(
+		this.botonesHistoria[2] = new JRadioButton(Texto.get(
 				"COOV_INFONODOELIMHIST", Conf.idioma));
 
-		botonesHistoria[0].setToolTipText(Texto.get("COOV_INFONODOMANTHISTTTT",
+		this.botonesHistoria[0].setToolTipText(Texto.get("COOV_INFONODOMANTHISTTTT",
 				Conf.idioma));
-		botonesHistoria[1].setToolTipText(Texto.get("COOV_INFONODOATENHISTTTT",
+		this.botonesHistoria[1].setToolTipText(Texto.get("COOV_INFONODOATENHISTTTT",
 				Conf.idioma));
-		botonesHistoria[2].setToolTipText(Texto.get("COOV_INFONODOELIMHISTTTT",
+		this.botonesHistoria[2].setToolTipText(Texto.get("COOV_INFONODOELIMHISTTTT",
 				Conf.idioma));
 
-		grupoBotonesHistoria = new ButtonGroup();
+		this.grupoBotonesHistoria = new ButtonGroup();
 
-		for (int i = 0; i < botonesHistoria.length; i++) {
-			grupoBotonesHistoria.add(botonesHistoria[i]);
-			botonesHistoria[i].addActionListener(this);
-			botonesHistoria[i].addKeyListener(this);
-			panelHistoria.add(botonesHistoria[i]);
+		for (int i = 0; i < this.botonesHistoria.length; i++) {
+			this.grupoBotonesHistoria.add(this.botonesHistoria[i]);
+			this.botonesHistoria[i].addActionListener(this);
+			this.botonesHistoria[i].addKeyListener(this);
+			panelHistoria.add(this.botonesHistoria[i]);
 		}
 
 		panelHistoria.setBorder(new TitledBorder(Texto.get("COOV_INFOHIST",
@@ -104,14 +105,14 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 
 		// Panel para los botones
 		JPanel panelBoton = new JPanel();
-		panelBoton.add(aceptar);
-		panelBoton.add(cancelar);
+		panelBoton.add(this.aceptar);
+		panelBoton.add(this.cancelar);
 
 		// aceptar.addActionListener(this);
-		aceptar.addMouseListener(this);
-		aceptar.addKeyListener(this);
-		cancelar.addMouseListener(this);
-		cancelar.addKeyListener(this);
+		this.aceptar.addMouseListener(this);
+		this.aceptar.addKeyListener(this);
+		this.cancelar.addMouseListener(this);
+		this.cancelar.addKeyListener(this);
 
 		// Panel general
 		BorderLayout bl = new BorderLayout();
@@ -122,16 +123,16 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 		panel.add(panelBoton, BorderLayout.SOUTH);
 
 		// Preparamos y mostramos cuadro
-		dialogo.getContentPane().add(panel);
-		dialogo.setTitle(Texto.get("COOV_OPSANIM", Conf.idioma));
+		this.dialogo.getContentPane().add(panel);
+		this.dialogo.setTitle(Texto.get("COOV_OPSANIM", Conf.idioma));
 
-		dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
+		this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
 		int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
-		dialogo.setLocation(coord[0], coord[1]);
+		this.dialogo.setLocation(coord[0], coord[1]);
 
-		dialogo.setResizable(false);
+		this.dialogo.setResizable(false);
 		setValores();
-		dialogo.setVisible(true);
+		this.dialogo.setVisible(true);
 	}
 
 	/**
@@ -139,12 +140,12 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * botón correspondiente.
 	 */
 	private void setValores() {
-		if (oov.getHistoria() == OpcionOpsVisualizacion.MANTENER_HISTORIA) {
-			botonesHistoria[0].setSelected(true);
-		} else if (oov.getHistoria() == OpcionOpsVisualizacion.ATENUAR_HISTORIA) {
-			botonesHistoria[1].setSelected(true);
-		} else if (oov.getHistoria() == OpcionOpsVisualizacion.ELIMINAR_HISTORIA) {
-			botonesHistoria[2].setSelected(true);
+		if (this.oov.getHistoria() == OpcionOpsVisualizacion.MANTENER_HISTORIA) {
+			this.botonesHistoria[0].setSelected(true);
+		} else if (this.oov.getHistoria() == OpcionOpsVisualizacion.ATENUAR_HISTORIA) {
+			this.botonesHistoria[1].setSelected(true);
+		} else if (this.oov.getHistoria() == OpcionOpsVisualizacion.ELIMINAR_HISTORIA) {
+			this.botonesHistoria[2].setSelected(true);
 		}
 	}
 
@@ -152,12 +153,12 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * Actualiza la configuración con el valor seleccionado.
 	 */
 	private void getValores() {
-		if (botonesHistoria[0].isSelected()) {
-			oov.setHistoria(OpcionOpsVisualizacion.MANTENER_HISTORIA);
-		} else if (botonesHistoria[1].isSelected()) {
-			oov.setHistoria(OpcionOpsVisualizacion.ATENUAR_HISTORIA);
-		} else if (botonesHistoria[2].isSelected()) {
-			oov.setHistoria(OpcionOpsVisualizacion.ELIMINAR_HISTORIA);
+		if (this.botonesHistoria[0].isSelected()) {
+			this.oov.setHistoria(OpcionOpsVisualizacion.MANTENER_HISTORIA);
+		} else if (this.botonesHistoria[1].isSelected()) {
+			this.oov.setHistoria(OpcionOpsVisualizacion.ATENUAR_HISTORIA);
+		} else if (this.botonesHistoria[2].isSelected()) {
+			this.oov.setHistoria(OpcionOpsVisualizacion.ELIMINAR_HISTORIA);
 		}
 	}
 
@@ -167,26 +168,27 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de acción
 	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof JRadioButton) {
 			getValores();
-			gOpciones.setOpcion(oov, 1);
+			this.gOpciones.setOpcion(this.oov, 1);
 
 			if (Conf.fichero_log) {
 				Logger.log_write("Visualización > Históricos: "
-						+ oov.getHistoriaString());
+						+ this.oov.getHistoriaString());
 			}
 
 			Conf.setValoresOpsVisualizacion(false);
 			Conf.setValoresVisualizacion();
-			if (ventana.getTraza() != null) {
-				ventana.actualizarTraza();
-				ventana.refrescarFormato();
+			if (this.ventana.getTraza() != null) {
+				this.ventana.actualizarTraza();
+				this.ventana.refrescarFormato();
 				Conf.setRedibujarGrafoArbol(false);
 			}
 		} else if (e.getSource() instanceof JButton) {
-			if (e.getSource() == aceptar) {
-				dialogo.setVisible(false);
+			if (e.getSource() == this.aceptar) {
+				this.dialogo.setVisible(false);
 			}
 		}
 	}
@@ -197,6 +199,7 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de teclado
 	 */
+	@Override
 	public void keyPressed(KeyEvent e) {
 
 	}
@@ -207,26 +210,27 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de teclado
 	 */
+	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
-			dialogo.setVisible(false);
+			this.dialogo.setVisible(false);
 		}
 
 		if (e.getSource().getClass().getName().contains("JRadioButton")) {
-			for (int i = 0; i < botonesHistoria.length; i++) {
-				if (botonesHistoria[i].isFocusOwner()) {
+			for (int i = 0; i < this.botonesHistoria.length; i++) {
+				if (this.botonesHistoria[i].isFocusOwner()) {
 					if (code == KeyEvent.VK_DOWN) {
-						if (i < botonesHistoria.length - 1) {
-							botonesHistoria[i].transferFocus();
+						if (i < this.botonesHistoria.length - 1) {
+							this.botonesHistoria[i].transferFocus();
 						} else {
-							aceptar.requestFocus();
+							this.aceptar.requestFocus();
 						}
 					} else if (code == KeyEvent.VK_UP) {
 						if (i > 0) {
-							botonesHistoria[i].transferFocusBackward();
+							this.botonesHistoria[i].transferFocusBackward();
 						} else {
-							aceptar.requestFocus();
+							this.aceptar.requestFocus();
 						}
 					}
 				}
@@ -234,9 +238,9 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 		}
 		if (e.getSource() instanceof JButton) {
 			if (code == KeyEvent.VK_DOWN) {
-				botonesHistoria[0].requestFocus();
+				this.botonesHistoria[0].requestFocus();
 			} else if (code == KeyEvent.VK_UP) {
-				botonesHistoria[(botonesHistoria.length) - 1].requestFocus();
+				this.botonesHistoria[(this.botonesHistoria.length) - 1].requestFocus();
 			}
 		}
 
@@ -248,6 +252,7 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de teclado
 	 */
+	@Override
 	public void keyTyped(KeyEvent e) {
 
 	}
@@ -258,6 +263,7 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mouseClicked(MouseEvent e) {
 
 	}
@@ -268,6 +274,7 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mouseEntered(MouseEvent e) {
 
 	}
@@ -278,6 +285,7 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mouseExited(MouseEvent e) {
 
 	}
@@ -288,8 +296,9 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mousePressed(MouseEvent e) {
-		if (e.getSource() == aceptar) {
+		if (e.getSource() == this.aceptar) {
 			this.dialogo.setVisible(false);
 		}
 	}
@@ -300,9 +309,10 @@ public class CuadroElegirHistorico extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (e.getSource() == cancelar) {
-			dialogo.setVisible(false);
+		if (e.getSource() == this.cancelar) {
+			this.dialogo.setVisible(false);
 		}
 	}
 }

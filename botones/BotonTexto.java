@@ -10,7 +10,7 @@ import conf.Conf;
  * @author David Pastor Herranz
  */
 public class BotonTexto extends JButton {
-	
+
 	private static final long serialVersionUID = -5249565776019093689L;
 
 	/**

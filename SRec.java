@@ -8,7 +8,7 @@ import utilidades.*;
  * @author Luis Fernández
  */
 public class SRec {
-	
+
 	/**
 	 * Invoca una nueva instancia de la ventana de la aplicación.
 	 */
@@ -22,7 +22,8 @@ public class SRec {
 	 */
 	public static void main(String args[]) {
 		if (args.length != 0) {
-			System.out.println("\n\n" + Texto.get("SREC_NOARG", Conf.idioma) + "\n\n");
+			System.out.println("\n\n" + Texto.get("SREC_NOARG", Conf.idioma)
+					+ "\n\n");
 		}
 		new SRec();
 	}

@@ -250,7 +250,7 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
+
 	}
 
 	/**
@@ -272,7 +272,7 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
+
 	}
 
 	/**
@@ -296,7 +296,7 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+
 	}
 
 }

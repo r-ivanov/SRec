@@ -33,9 +33,9 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 
 	private static final int ANCHO_CUADRO = 460;
 	private static final int ALTO_CUADRO = 215;
-	
+
 	private Ventana ventana;
-	
+
 	private JComboBox<String> selectorMetodo;
 
 	private BotonAceptar aceptar;
@@ -72,46 +72,47 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 	/**
 	 * Crea el cuadro de parámetros
 	 */
+	@Override
 	public void run() {
 
 		ValoresParametros.inicializar(false);
 
-		if (dtb != null) {
-			
-			ArrayList<DatosMetodoBasicos> metodos = dtb.getMetodos();
+		if (this.dtb != null) {
+
+			ArrayList<DatosMetodoBasicos> metodos = this.dtb.getMetodos();
 
 			// Panel Selección Método
-			selectorMetodo = new JComboBox<String>();
+			this.selectorMetodo = new JComboBox<String>();
 			for (int i = 0; i < metodos.size(); i++) {
 				if (metodos.get(i).getEsVisible()) {
-					selectorMetodo.addItem(metodos.get(i).getInterfaz());
+					this.selectorMetodo.addItem(metodos.get(i).getInterfaz());
 				}
 			}
-			selectorMetodo.addActionListener(this);
-			selectorMetodo.addKeyListener(this);
+			this.selectorMetodo.addActionListener(this);
+			this.selectorMetodo.addKeyListener(this);
 
-			panelSelecMetodo = new JPanel();
-			panelSelecMetodo.setLayout(new BorderLayout());
-			panelSelecMetodo.add(selectorMetodo);
-			panelSelecMetodo.setBorder(new TitledBorder(Texto.get(
+			this.panelSelecMetodo = new JPanel();
+			this.panelSelecMetodo.setLayout(new BorderLayout());
+			this.panelSelecMetodo.add(this.selectorMetodo);
+			this.panelSelecMetodo.setBorder(new TitledBorder(Texto.get(
 					"CUBSQ_SELMET", Conf.idioma)));
 
 			// Panel Inserción valores
-			panelContenedorValores = new JPanel();
-			panelContenedorValores.setLayout(new BorderLayout());
+			this.panelContenedorValores = new JPanel();
+			this.panelContenedorValores.setLayout(new BorderLayout());
 
 			String interfazMetodo = metodos.get(0).getInterfaz();
 
-			String[][] valoresParam = ventana.getTraza()
+			String[][] valoresParam = this.ventana.getTraza()
 					.getValoresParametros(interfazMetodo, true);
-			String[][] valoresResult = ventana.getTraza()
+			String[][] valoresResult = this.ventana.getTraza()
 					.getValoresResultado(interfazMetodo, true);
 
 			JPanel ppa = panelParametros(metodos.get(0), valoresParam,
 					valoresResult);
-			panelContenedorValores.add(ppa, BorderLayout.NORTH);
+			this.panelContenedorValores.add(ppa, BorderLayout.NORTH);
 
-			JScrollPane jsp = new JScrollPane(panelContenedorValores);
+			JScrollPane jsp = new JScrollPane(this.panelContenedorValores);
 
 			if (Conf.elementosVisualizar == Conf.VISUALIZAR_TODO) {
 				jsp.setBorder(new TitledBorder(Texto.get("CUBSQ_VALPAMRES",
@@ -127,56 +128,57 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 			// Botones
 
 			// Botón Aceptar
-			aceptar = new BotonAceptar();
-			aceptar.addActionListener(this);
-			aceptar.addKeyListener(this);
+			this.aceptar = new BotonAceptar();
+			this.aceptar.addActionListener(this);
+			this.aceptar.addKeyListener(this);
 
 			// Botón Restaurar
-			restaurar = new BotonTexto(Texto.get("PARB_RESTAURAR", Conf.idioma));
-			restaurar.setPreferredSize(new Dimension(95, 23));
-			restaurar.addActionListener(this);
-			restaurar.addKeyListener(this);
+			this.restaurar = new BotonTexto(Texto.get("PARB_RESTAURAR",
+					Conf.idioma));
+			this.restaurar.setPreferredSize(new Dimension(95, 23));
+			this.restaurar.addActionListener(this);
+			this.restaurar.addKeyListener(this);
 
 			// Botón Cancelar
-			cancelar = new BotonCancelar();
-			cancelar.addActionListener(this);
-			cancelar.addKeyListener(this);
+			this.cancelar = new BotonCancelar();
+			this.cancelar.addActionListener(this);
+			this.cancelar.addKeyListener(this);
 
 			// Panel para los botones
-			panelBoton = new JPanel();
-			panelBoton.add(aceptar);
-			panelBoton.add(restaurar);
-			panelBoton.add(cancelar);
+			this.panelBoton = new JPanel();
+			this.panelBoton.add(this.aceptar);
+			this.panelBoton.add(this.restaurar);
+			this.panelBoton.add(this.cancelar);
 
 			// Panel general
-			panel = new JPanel();
-			panel.setLayout(new BorderLayout());
+			this.panel = new JPanel();
+			this.panel.setLayout(new BorderLayout());
 
-			panel.add(panelSelecMetodo, BorderLayout.NORTH);
-			panel.add(jsp, BorderLayout.CENTER);
-			panel.add(panelBoton, BorderLayout.SOUTH);
+			this.panel.add(this.panelSelecMetodo, BorderLayout.NORTH);
+			this.panel.add(jsp, BorderLayout.CENTER);
+			this.panel.add(this.panelBoton, BorderLayout.SOUTH);
 
-			dialogo.getContentPane().add(panel);
-			dialogo.setTitle(Texto.get("CUBSQ_TITULO", Conf.idioma));
+			this.dialogo.getContentPane().add(this.panel);
+			this.dialogo.setTitle(Texto.get("CUBSQ_TITULO", Conf.idioma));
 
 			// Preparamos y mostramos cuadro
 			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
-			dialogo.setLocation(coord[0], coord[1]);
-			dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
-			dialogo.setResizable(false);
-			dialogo.setVisible(true);
+			this.dialogo.setLocation(coord[0], coord[1]);
+			this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
+			this.dialogo.setResizable(false);
+			this.dialogo.setVisible(true);
 		}
 	}
-	
+
 	/**
-	 * Devuelve la posición del método seleccionado con respecto
-	 * a los métodos contenidos en los datos de traza básicos.
+	 * Devuelve la posición del método seleccionado con respecto a los métodos
+	 * contenidos en los datos de traza básicos.
 	 * 
-	 * @return posicion del método para la lista de métodos de los
-	 * datos de traza básicos.
+	 * @return posicion del método para la lista de métodos de los datos de
+	 *         traza básicos.
 	 */
 	private int numMetodoSeleccionado() {
-		int numMetodo = selectorMetodo.getSelectedIndex();
+		int numMetodo = this.selectorMetodo.getSelectedIndex();
 		int aux = 0, posic = 0;
 		for (int i = 0; i < this.dtb.getNumMetodos(); i++) {
 			if (aux == numMetodo) {
@@ -195,59 +197,58 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de acción
 	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource() == selectorMetodo) {
+
+		if (e.getSource() == this.selectorMetodo) {
 			int numMetodo = numMetodoSeleccionado();
 
-			String valoresE[][] = ventana.getTraza()
-					.getValoresParametros(
-							this.dtb.getMetodo(numMetodo).getInterfaz(), true);
-			String valoresS[][] = ventana.getTraza()
-					.getValoresResultado(
-							this.dtb.getMetodo(numMetodo).getInterfaz(), true);
+			String valoresE[][] = this.ventana.getTraza().getValoresParametros(
+					this.dtb.getMetodo(numMetodo).getInterfaz(), true);
+			String valoresS[][] = this.ventana.getTraza().getValoresResultado(
+					this.dtb.getMetodo(numMetodo).getInterfaz(), true);
 
 			JPanel panelMetodo = panelParametros(this.dtb.getMetodo(numMetodo),
 					valoresE, valoresS);
 
-			panelContenedorValores.removeAll();
-			panelContenedorValores.add(panelMetodo, BorderLayout.NORTH);
-			panelContenedorValores.updateUI();
-			
-		} else if (e.getSource() == aceptar) {
+			this.panelContenedorValores.removeAll();
+			this.panelContenedorValores.add(panelMetodo, BorderLayout.NORTH);
+			this.panelContenedorValores.updateUI();
+
+		} else if (e.getSource() == this.aceptar) {
 			accion();
-		} else if (e.getSource() == restaurar) {
-			ventana.getTraza().iluminar(numMetodo, null, null,
-					false);
-			ventana.refrescarFormato();
-			dialogo.setVisible(false);
-		} else if (e.getSource() == cancelar) {
-			dialogo.setVisible(false);
+		} else if (e.getSource() == this.restaurar) {
+			this.ventana.getTraza().iluminar(this.numMetodo, null, null, false);
+			this.ventana.refrescarFormato();
+			this.dialogo.setVisible(false);
+		} else if (e.getSource() == this.cancelar) {
+			this.dialogo.setVisible(false);
 		}
 	}
-	
+
 	/**
-	 * Tras introducir los datos y pulsar aceptar, se ejecuta el siguiente método
-	 * que comprueba si los valores introducidos son correctos. Si es así comenzará
-	 * la búsqueda y se ocultara el diálogo, en caso contrario se mostrará un error
-	 * avisando de ello.
+	 * Tras introducir los datos y pulsar aceptar, se ejecuta el siguiente
+	 * método que comprueba si los valores introducidos son correctos. Si es así
+	 * comenzará la búsqueda y se ocultara el diálogo, en caso contrario se
+	 * mostrará un error avisando de ello.
 	 */
 	private void accion() {
 		if (valoresCorrectos()) {
 			activarBusqueda();
-			dialogo.setVisible(false);
+			this.dialogo.setVisible(false);
 		} else {
 			new CuadroError(Ventana.thisventana, Texto.get("ERROR_PARAM",
 					Conf.idioma),
 					Texto.get("ERROR_PARAMINCSIMPLE", Conf.idioma));
 		}
 	}
-	
+
 	/**
-	 * Comprueba si los parametros introducidos son correctos teniendo
-	 * en cuenta el formato del tipo de dato que espera recibir.
+	 * Comprueba si los parametros introducidos son correctos teniendo en cuenta
+	 * el formato del tipo de dato que espera recibir.
 	 * 
-	 * @return Devuelve true si los valores son correctos, false en caso contrario.
+	 * @return Devuelve true si los valores son correctos, false en caso
+	 *         contrario.
 	 */
 	private boolean valoresCorrectos() {
 		int numMetodo = numMetodoSeleccionado();
@@ -270,21 +271,24 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 			dim[i + dimE.length] = dimS[i];
 		}
 
-		for (int i = 0; i < campos.length; i++) {
+		for (int i = 0; i < this.campos.length; i++) {
 			if (this.campos[i] != null
-					&& this.campos[i].getSelectedItem().toString().length() > 0)
+					&& this.campos[i].getSelectedItem().toString().length() > 0) {
 				if (!ServiciosString.esDeTipoCorrecto(this.campos[i]
-						.getSelectedItem().toString(), tipos[i], dim[i]))
+						.getSelectedItem().toString(), tipos[i], dim[i])) {
 					return false;
+				}
+			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Una vez que se ha comprobado que los parámetros son correctos, se procede
 	 * a obtener los valores de entrada y salida (dependiendo de las opciones de
 	 * configuración establecidas) con el formato correcto, para posteriormente
-	 * pedir a la traza que ilumine los nodos que cumplan con las condiciones calculadas.
+	 * pedir a la traza que ilumine los nodos que cumplan con las condiciones
+	 * calculadas.
 	 */
 	private void activarBusqueda() {
 		int numMetodo = numMetodoSeleccionado();
@@ -371,9 +375,9 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 			Logger.log_write(mensaje);
 		}
 
-		ventana.getTraza().iluminar(numMetodoSeleccionado(),
-				valoresE, valoresS, true);
-		ventana.refrescarFormato();
+		this.ventana.getTraza().iluminar(numMetodoSeleccionado(), valoresE,
+				valoresS, true);
+		this.ventana.refrescarFormato();
 	}
 
 	/**
@@ -382,25 +386,24 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de teclado
 	 */
+	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 
-		if (code != KeyEvent.VK_ENTER && e.getSource() == selectorMetodo) {
+		if (code != KeyEvent.VK_ENTER && e.getSource() == this.selectorMetodo) {
 			int numMetodo = numMetodoSeleccionado();
 
-			String valoresE[][] = ventana.getTraza()
-					.getValoresParametros(
-							this.dtb.getMetodo(numMetodo).getInterfaz(), true);
-			String valoresS[][] = ventana.getTraza()
-					.getValoresResultado(
-							this.dtb.getMetodo(numMetodo).getInterfaz(), true);
+			String valoresE[][] = this.ventana.getTraza().getValoresParametros(
+					this.dtb.getMetodo(numMetodo).getInterfaz(), true);
+			String valoresS[][] = this.ventana.getTraza().getValoresResultado(
+					this.dtb.getMetodo(numMetodo).getInterfaz(), true);
 
 			JPanel panelMetodo = panelParametros(this.dtb.getMetodo(numMetodo),
 					valoresE, valoresS);
 
-			panelContenedorValores.removeAll();
-			panelContenedorValores.add(panelMetodo, BorderLayout.NORTH);
-			panelContenedorValores.updateUI();
+			this.panelContenedorValores.removeAll();
+			this.panelContenedorValores.add(panelMetodo, BorderLayout.NORTH);
+			this.panelContenedorValores.updateUI();
 		}
 	}
 
@@ -410,15 +413,18 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de teclado
 	 */
+	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_ENTER)
+		if (code == KeyEvent.VK_ENTER) {
 			if (e.getSource().getClass().getName().contains("JTextField")
 					|| e.getSource().getClass().getName()
-							.contains("BorderlessTextField"))
+							.contains("BorderlessTextField")) {
 				accion();
-			else if (e.getSource().getClass().getName().contains("JComboBox"))
-				campos[0].requestFocus();
+			} else if (e.getSource().getClass().getName().contains("JComboBox")) {
+				this.campos[0].requestFocus();
+			}
+		}
 	}
 
 	/**
@@ -427,14 +433,15 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de teclado
 	 */
+	@Override
 	public void keyTyped(KeyEvent e) {
 
 	}
-	
+
 	/**
-	 * Permite construir el panel que albergará los distintos parámetros
-	 * de entrada y de salida, de manera que sea posible seleccionar mediante
-	 * un combobox los distintos parámetros de la búsqueda de entre todos los
+	 * Permite construir el panel que albergará los distintos parámetros de
+	 * entrada y de salida, de manera que sea posible seleccionar mediante un
+	 * combobox los distintos parámetros de la búsqueda de entre todos los
 	 * existentes en la ejecución.
 	 */
 	private JPanel panelParametros(DatosMetodoBasicos metodo,
@@ -447,8 +454,9 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 			numParam = numParamE
 					+ (metodo.getTipo().equals("void") ? metodo
 							.getNumParametrosE() : 1);
-			
-			// Si no es método void, recorremos visiblidad de "parámetros de salida"
+
+			// Si no es método void, recorremos visiblidad de
+			// "parámetros de salida"
 			if (numParam == (numParamE * 2)) {
 				for (int i = 0; i < numParamE; i++) {
 					if (!metodo.getVisibilidadS(i)) {
@@ -462,7 +470,7 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 					numParam--;
 				}
 			}
-			
+
 		} else if (Conf.elementosVisualizar == Conf.VISUALIZAR_ENTRADA) {
 			numParam = numParamE;
 			for (int i = 0; i < numParamE; i++) {
@@ -473,9 +481,10 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 		} else if (Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA) {
 			numParam = (metodo.getTipo().equals("void") ? metodo
 					.getNumParametrosE() : 1);
-			
-			// Si no es método void, recorremos visiblidad de "parámetros de salida"
-			if (numParam == (numParamE * 2)) { 
+
+			// Si no es método void, recorremos visiblidad de
+			// "parámetros de salida"
+			if (numParam == (numParamE * 2)) {
 				for (int i = 0; i < numParamE; i++) {
 					if (!metodo.getVisibilidadS(i)) {
 						numParam--;
@@ -492,8 +501,8 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 		panelValoresParamI.setLayout(new GridLayout(numParam, 1));
 		panelValoresParamD.setLayout(new GridLayout(numParam, 1));
 
-		campos = new JComboBox[numParam];
-		editor = new JTextComponent[numParam];
+		this.campos = new JComboBox[numParam];
+		this.editor = new JTextComponent[numParam];
 
 		String textoEntrada = Texto.get("ETIQFL_ENTR", Conf.idioma);
 		String textoSalida = Texto.get("ETIQFL_SALI", Conf.idioma);
@@ -501,7 +510,7 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 		int posic = 0;
 
 		if (Conf.elementosVisualizar == Conf.VISUALIZAR_TODO
-				|| Conf.elementosVisualizar == Conf.VISUALIZAR_ENTRADA)
+				|| Conf.elementosVisualizar == Conf.VISUALIZAR_ENTRADA) {
 			for (int i = 0; i < metodo.getNumParametrosE(); i++) {
 				if (metodo.getVisibilidadE(i)) {
 					String textoEtiqueta = textoEntrada + ": "
@@ -518,28 +527,29 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 
 					JLabel etiqueta = new JLabel(textoEtiqueta);
 
-					campos[posic] = new JComboBox<String>();
-					campos[posic].setEditable(true);
-					campos[posic].setPreferredSize(new Dimension(250, 20));
+					this.campos[posic] = new JComboBox<String>();
+					this.campos[posic].setEditable(true);
+					this.campos[posic].setPreferredSize(new Dimension(250, 20));
 
-					campos[posic].addItem("");
+					this.campos[posic].addItem("");
 
 					for (int j = 0; j < valoresE.length; j++) {
 						if (valoresE[j][i] != null) {
-							campos[posic].addItem(valoresE[j][i]);
+							this.campos[posic].addItem(valoresE[j][i]);
 						}
 					}
 
-					editor[posic] = (JTextComponent) campos[posic].getEditor()
-							.getEditorComponent();
-					editor[posic].addKeyListener(this);
+					this.editor[posic] = (JTextComponent) this.campos[posic]
+							.getEditor().getEditorComponent();
+					this.editor[posic].addKeyListener(this);
 
 					panelValoresParamI.add(etiqueta);
-					panelValoresParamD.add(campos[posic]);
+					panelValoresParamD.add(this.campos[posic]);
 
 					posic++;
 				}
 			}
+		}
 
 		if (Conf.elementosVisualizar == Conf.VISUALIZAR_TODO
 				|| Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA) {
@@ -564,24 +574,25 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 
 						JLabel etiqueta = new JLabel(textoEtiqueta);
 
-						campos[posic] = new JComboBox<String>();
-						campos[posic].setEditable(true);
-						campos[posic].setPreferredSize(new Dimension(250, 20));
+						this.campos[posic] = new JComboBox<String>();
+						this.campos[posic].setEditable(true);
+						this.campos[posic].setPreferredSize(new Dimension(250,
+								20));
 
-						campos[posic].addItem("");
+						this.campos[posic].addItem("");
 
 						for (int j = 0; j < valoresS.length; j++) {
 							if (valoresS[j][i] != null) {
-								campos[posic].addItem(valoresS[j][i]);
+								this.campos[posic].addItem(valoresS[j][i]);
 							}
 						}
 
-						editor[posic] = (JTextComponent) campos[posic]
+						this.editor[posic] = (JTextComponent) this.campos[posic]
 								.getEditor().getEditorComponent();
-						editor[posic].addKeyListener(this);
+						this.editor[posic].addKeyListener(this);
 
 						panelValoresParamI.add(etiqueta);
-						panelValoresParamD.add(campos[posic]);
+						panelValoresParamD.add(this.campos[posic]);
 
 						posic++;
 					}
@@ -600,25 +611,26 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 
 				JLabel etiqueta = new JLabel(textoEtiqueta);
 
-				campos[campos.length - 1] = new JComboBox<String>();
-				campos[campos.length - 1].setEditable(true);
-				campos[campos.length - 1].setPreferredSize(new Dimension(250,
-						20));
+				this.campos[this.campos.length - 1] = new JComboBox<String>();
+				this.campos[this.campos.length - 1].setEditable(true);
+				this.campos[this.campos.length - 1]
+						.setPreferredSize(new Dimension(250, 20));
 
-				campos[campos.length - 1].addItem("");
+				this.campos[this.campos.length - 1].addItem("");
 
 				for (int j = 0; j < valoresS.length; j++) {
 					if (valoresS[j][0] != null) {
-						campos[campos.length - 1].addItem(valoresS[j][0]);
+						this.campos[this.campos.length - 1]
+								.addItem(valoresS[j][0]);
 					}
 				}
 
-				editor[campos.length - 1] = (JTextComponent) campos[campos.length - 1]
+				this.editor[this.campos.length - 1] = (JTextComponent) this.campos[this.campos.length - 1]
 						.getEditor().getEditorComponent();
-				editor[campos.length - 1].addKeyListener(this);
+				this.editor[this.campos.length - 1].addKeyListener(this);
 
 				panelValoresParamI.add(etiqueta);
-				panelValoresParamD.add(campos[campos.length - 1]);
+				panelValoresParamD.add(this.campos[this.campos.length - 1]);
 			}
 		}
 

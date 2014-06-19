@@ -60,7 +60,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 *            Ventana a la que permanecerá asociado el cuadro de diálogo.
 	 */
 	public CuadroElegirES(Ventana ventana) {
-		dialogo = new JDialog(ventana, true);
+		this.dialogo = new JDialog(ventana, true);
 		this.ventana = ventana;
 		this.start();
 	}
@@ -68,8 +68,9 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	/**
 	 * Ejecuta el thread.
 	 */
+	@Override
 	public void run() {
-		oov = (OpcionOpsVisualizacion) gOpciones.getOpcion(
+		this.oov = (OpcionOpsVisualizacion) this.gOpciones.getOpcion(
 				"OpcionOpsVisualizacion", false);
 
 		// Panel Datos que se muestran
@@ -77,28 +78,28 @@ public class CuadroElegirES extends Thread implements ActionListener,
 		GridLayout gl1 = new GridLayout(3, 1);
 		panelDatos.setLayout(gl1);
 
-		botonesDatos = new JRadioButton[3];
-		botonesDatos[0] = new JRadioButton(Texto.get("COOV_ENTRADA",
+		this.botonesDatos = new JRadioButton[3];
+		this.botonesDatos[0] = new JRadioButton(Texto.get("COOV_ENTRADA",
 				Conf.idioma));
-		botonesDatos[1] = new JRadioButton(
-				Texto.get("COOV_SALIDA", Conf.idioma));
-		botonesDatos[2] = new JRadioButton(Texto.get("COOV_ENTRSAL",
+		this.botonesDatos[1] = new JRadioButton(Texto.get("COOV_SALIDA",
+				Conf.idioma));
+		this.botonesDatos[2] = new JRadioButton(Texto.get("COOV_ENTRSAL",
 				Conf.idioma));
 
-		botonesDatos[0].setToolTipText(Texto
-				.get("COOV_ENTRADATTT", Conf.idioma));
-		botonesDatos[1]
-				.setToolTipText(Texto.get("COOV_SALIDATTT", Conf.idioma));
-		botonesDatos[2].setToolTipText(Texto
-				.get("COOV_ENTRSALTTT", Conf.idioma));
+		this.botonesDatos[0].setToolTipText(Texto.get("COOV_ENTRADATTT",
+				Conf.idioma));
+		this.botonesDatos[1].setToolTipText(Texto.get("COOV_SALIDATTT",
+				Conf.idioma));
+		this.botonesDatos[2].setToolTipText(Texto.get("COOV_ENTRSALTTT",
+				Conf.idioma));
 
-		grupoBotonesDatos = new ButtonGroup();
+		this.grupoBotonesDatos = new ButtonGroup();
 
-		for (int i = 0; i < botonesDatos.length; i++) {
-			grupoBotonesDatos.add(botonesDatos[i]);
-			botonesDatos[i].addActionListener(this);
-			botonesDatos[i].addKeyListener(this);
-			panelDatos.add(botonesDatos[i]);
+		for (int i = 0; i < this.botonesDatos.length; i++) {
+			this.grupoBotonesDatos.add(this.botonesDatos[i]);
+			this.botonesDatos[i].addActionListener(this);
+			this.botonesDatos[i].addKeyListener(this);
+			panelDatos.add(this.botonesDatos[i]);
 		}
 
 		panelDatos.setBorder(new TitledBorder(Texto.get("COOV_INFONODO",
@@ -106,13 +107,13 @@ public class CuadroElegirES extends Thread implements ActionListener,
 
 		// Panel para el botón
 		JPanel panelBoton = new JPanel();
-		panelBoton.add(aceptar);
-		panelBoton.add(cancelar);
+		panelBoton.add(this.aceptar);
+		panelBoton.add(this.cancelar);
 
-		aceptar.addMouseListener(this);
-		aceptar.addKeyListener(this);
-		cancelar.addMouseListener(this);
-		cancelar.addKeyListener(this);
+		this.aceptar.addMouseListener(this);
+		this.aceptar.addKeyListener(this);
+		this.cancelar.addMouseListener(this);
+		this.cancelar.addKeyListener(this);
 
 		// Panel general
 		BorderLayout bl = new BorderLayout();
@@ -123,28 +124,28 @@ public class CuadroElegirES extends Thread implements ActionListener,
 		panel.add(panelBoton, BorderLayout.SOUTH);
 
 		// Preparamos y mostramos cuadro
-		dialogo.getContentPane().add(panel);
-		dialogo.setTitle(Texto.get("COOV_OPSANIM", Conf.idioma));
+		this.dialogo.getContentPane().add(panel);
+		this.dialogo.setTitle(Texto.get("COOV_OPSANIM", Conf.idioma));
 
-		dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
+		this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
 		int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
-		dialogo.setLocation(coord[0], coord[1]);
+		this.dialogo.setLocation(coord[0], coord[1]);
 
-		dialogo.setResizable(false);
+		this.dialogo.setResizable(false);
 		setValores();
-		dialogo.setVisible(true);
+		this.dialogo.setVisible(true);
 	}
 
 	/**
 	 * Establece el valor seleccionado segun la opción de visualización actual.
 	 */
 	private void setValores() {
-		if (oov.getDatosMostrar() == OpcionOpsVisualizacion.DATOS_ENTRADA) {
-			botonesDatos[0].setSelected(true);
-		} else if (oov.getDatosMostrar() == OpcionOpsVisualizacion.DATOS_SALIDA) {
-			botonesDatos[1].setSelected(true);
-		} else if (oov.getDatosMostrar() == OpcionOpsVisualizacion.DATOS_TODOS) {
-			botonesDatos[2].setSelected(true);
+		if (this.oov.getDatosMostrar() == OpcionOpsVisualizacion.DATOS_ENTRADA) {
+			this.botonesDatos[0].setSelected(true);
+		} else if (this.oov.getDatosMostrar() == OpcionOpsVisualizacion.DATOS_SALIDA) {
+			this.botonesDatos[1].setSelected(true);
+		} else if (this.oov.getDatosMostrar() == OpcionOpsVisualizacion.DATOS_TODOS) {
+			this.botonesDatos[2].setSelected(true);
 		}
 	}
 
@@ -153,12 +154,12 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * con el valor seleccionado.
 	 */
 	private void getValores() {
-		if (botonesDatos[0].isSelected()) {
-			oov.setDatosMostrar(OpcionOpsVisualizacion.DATOS_ENTRADA);
-		} else if (botonesDatos[1].isSelected()) {
-			oov.setDatosMostrar(OpcionOpsVisualizacion.DATOS_SALIDA);
-		} else if (botonesDatos[2].isSelected()) {
-			oov.setDatosMostrar(OpcionOpsVisualizacion.DATOS_TODOS);
+		if (this.botonesDatos[0].isSelected()) {
+			this.oov.setDatosMostrar(OpcionOpsVisualizacion.DATOS_ENTRADA);
+		} else if (this.botonesDatos[1].isSelected()) {
+			this.oov.setDatosMostrar(OpcionOpsVisualizacion.DATOS_SALIDA);
+		} else if (this.botonesDatos[2].isSelected()) {
+			this.oov.setDatosMostrar(OpcionOpsVisualizacion.DATOS_TODOS);
 		}
 	}
 
@@ -168,26 +169,28 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de acción
 	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof JRadioButton) {
 			getValores();
-			gOpciones.setOpcion(oov, 1);
+			this.gOpciones.setOpcion(this.oov, 1);
 
 			if (Conf.fichero_log) {
 				Logger.log_write("Visualización > Entrada y salida: E="
-						+ oov.mostrarEntrada() + " S=" + oov.mostrarSalida());
+						+ this.oov.mostrarEntrada() + " S="
+						+ this.oov.mostrarSalida());
 			}
 
 			Conf.setValoresOpsVisualizacion(false);
 			Conf.setValoresVisualizacion();
-			if (ventana.getTraza() != null) {
-				ventana.actualizarTraza();
-				ventana.refrescarFormato();
+			if (this.ventana.getTraza() != null) {
+				this.ventana.actualizarTraza();
+				this.ventana.refrescarFormato();
 				Conf.setRedibujarGrafoArbol(false);
 			}
 		} else if (e.getSource() instanceof JButton) {
-			if (e.getSource() == aceptar) {
-				dialogo.setVisible(false);
+			if (e.getSource() == this.aceptar) {
+				this.dialogo.setVisible(false);
 			}
 		}
 	}
@@ -198,6 +201,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de teclado
 	 */
+	@Override
 	public void keyPressed(KeyEvent e) {
 
 	}
@@ -208,26 +212,27 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de teclado
 	 */
+	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
-			dialogo.setVisible(false);
+			this.dialogo.setVisible(false);
 		}
 
 		if (e.getSource().getClass().getName().contains("JRadioButton")) {
-			for (int i = 0; i < botonesDatos.length; i++) {
-				if (botonesDatos[i].isFocusOwner()) {
+			for (int i = 0; i < this.botonesDatos.length; i++) {
+				if (this.botonesDatos[i].isFocusOwner()) {
 					if (code == KeyEvent.VK_DOWN) {
-						if (i < botonesDatos.length - 1) {
-							botonesDatos[i].transferFocus();
+						if (i < this.botonesDatos.length - 1) {
+							this.botonesDatos[i].transferFocus();
 						} else {
-							aceptar.requestFocus();
+							this.aceptar.requestFocus();
 						}
 					} else if (code == KeyEvent.VK_UP) {
 						if (i > 0) {
-							botonesDatos[i].transferFocusBackward();
+							this.botonesDatos[i].transferFocusBackward();
 						} else {
-							aceptar.requestFocus();
+							this.aceptar.requestFocus();
 						}
 					}
 				}
@@ -236,9 +241,10 @@ public class CuadroElegirES extends Thread implements ActionListener,
 
 		if (e.getSource() instanceof JButton) {
 			if (code == KeyEvent.VK_DOWN) {
-				botonesDatos[0].requestFocus();
+				this.botonesDatos[0].requestFocus();
 			} else if (code == KeyEvent.VK_UP) {
-				botonesDatos[(botonesDatos.length) - 1].requestFocus();
+				this.botonesDatos[(this.botonesDatos.length) - 1]
+						.requestFocus();
 			}
 		}
 
@@ -250,6 +256,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de teclado
 	 */
+	@Override
 	public void keyTyped(KeyEvent e) {
 	}
 
@@ -259,6 +266,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mouseClicked(MouseEvent e) {
 	}
 
@@ -268,6 +276,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
 
@@ -277,6 +286,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mouseExited(MouseEvent e) {
 	}
 
@@ -286,8 +296,9 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mousePressed(MouseEvent e) {
-		if (e.getSource() == aceptar) {
+		if (e.getSource() == this.aceptar) {
 			this.dialogo.setVisible(false);
 		}
 	}
@@ -298,8 +309,9 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	 * @param e
 	 *            evento de ratón
 	 */
+	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (e.getSource() == cancelar) {
+		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
 		}
 	}
