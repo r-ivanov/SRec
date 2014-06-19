@@ -643,7 +643,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[25]) )
 			{
 				if (Conf.fichero_log) log_write("Visualización > Formato de animación...");
-				new CuadroOpcionConfVisualizacion();
+				new CuadroOpcionConfVisualizacion(this);
 			}
 
 			// Visualización > Configuración de Zoom...			
@@ -1242,7 +1242,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if(fuente==botones[19])		// Configuración > Formato de animación
 			{
 				if (Conf.fichero_log) log_write("Botón: Formato de animación...");
-				new CuadroOpcionConfVisualizacion();
+				new CuadroOpcionConfVisualizacion(this);
 			}
 			else if(fuente==botones[20])		// Configuración > Zoom
 			{
