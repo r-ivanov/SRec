@@ -1,10 +1,3 @@
-/**
-	Representa la clase del cuadro que ofrece la selección del método que se desea visualizar
-	
-	@author Antonio Pérez Carrasco
-	@version 2006-2007
- */
-
 package cuadros;
 
 import java.awt.BorderLayout;
@@ -22,7 +15,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
@@ -38,71 +30,61 @@ import datos.*;
 import utilidades.*;
 import ventanas.*;
 
+/**
+ * Representa la clase del cuadro que ofrece la selección del método que se
+ * desea visualizar
+ * 
+ * @author Antonio Pérez Carrasco
+ * @version 2006-2007
+ */
 public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 		ActionListener, KeyListener, MouseListener {
-	static final long serialVersionUID = 02;
-	private final boolean DEPURAR = false;
 
-	final int anchoCuadro = 450;
-	final int altoCuadro = 550; // 130 aquí actúa como medida base inicial
+	private static final int ANCHO_CUADRO = 450;
+	private static final int ALTO_CUADRO = 550;
 
-	BotonAceptar aceptar;
-	BotonCancelar cancelar;
-	JPanel panel, panelBoton, panelBotones;
-	int numero;
+	private BotonAceptar aceptar;
+	private BotonCancelar cancelar;
+	private JPanel panel, panelBotones;
+	private int numero;
 
-	JCheckBox checkTodos;
+	private JCheckBox checkTodos;
 
-	ButtonGroup grupoBotones;
-	JRadioButton[] botonesRadio;
-	JCheckBox[] botonesCheck;
+	private ButtonGroup grupoBotones;
+	private JRadioButton[] botonesRadio;
+	private JCheckBox[] botonesCheck;
 
-	String[] valores;
+	private BorderLayout bl;
 
-	Preprocesador p;
-	BorderLayout bl;
+	private Ventana ventana;
 
-	JFrame vv;
+	private JDialog dialogo;
 
-	JDialog dialogo;
-	boolean luzVerde = false;
-
-	ClaseAlgoritmo clase;
-	ArrayList<MetodoAlgoritmo> metodos = new ArrayList<MetodoAlgoritmo>(0);
-
-	/**
-	 * Contructor: genera un nuevo cuadro de diálogo que permite al usuario
-	 * elegir qué método de una determinada clase se quiere ejecutar
-	 * 
-	 * @param clase
-	 *            clase a la que pertenece el método que se quiere ejecutar
-	 * @param ventanaVisualiazdor
-	 *            ventana a la que se asociará el cuadro de diálogo
-	 * @param gestorEjecucion
-	 *            gestor que realizará los pasos necesarios para ejecutar el
-	 *            método seleccionado
-	 * @param codigounico
-	 *            código único que identifica a la clase y la da nombre
-	 */
-	public CuadroMetodosProcesadosSelecMetodo(ClaseAlgoritmo clase,
-			Preprocesador p) {
-
-		this.dialogo = new JDialog(Ventana.thisventana, true);
-
-		// Inicializamos atributos del cuadro de parámetros
-		this.vv = Ventana.thisventana;
-		this.clase = clase;
-		this.numero = this.clase.getNumMetodosProcesados();// this.metodos.length;
-		this.p = p;
-
-		this.metodos = this.clase.getMetodosProcesados();
-
-		this.start();
-	}
+	private ClaseAlgoritmo clase;
+	private ArrayList<MetodoAlgoritmo> metodos = new ArrayList<MetodoAlgoritmo>(
+			0);
 
 	/**
 	 * Genera un nuevo cuadro de diálogo que permite al usuario elegir qué
 	 * método de una determinada clase se quiere ejecutar
+	 * 
+	 * @param ventana
+	 *            Ventana a la que el cuadro quedará asociado.
+	 * @param clase
+	 *            clase a la que pertenece el método que se quiere ejecutar.
+	 */
+	public CuadroMetodosProcesadosSelecMetodo(Ventana ventana,
+			ClaseAlgoritmo clase) {
+		this.dialogo = new JDialog(ventana, true);
+		this.ventana = ventana;
+		this.clase = clase;
+		this.numero = this.clase.getNumMetodosProcesados();
+		this.metodos = this.clase.getMetodosProcesados();
+		this.start();
+	}
+
+	/**
+	 * Ejecuta el thread asociado al cuadro.
 	 */
 	@Override
 	public void run() {
@@ -150,7 +132,6 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			String toolTipTextRadio = Texto.get("CMP_SELECTMET", Conf.idioma);
 			String toolTipTextCheck = Texto.get("CMP_SELECTMETV", Conf.idioma);
 
-			int y = 0;
 			for (int i = 0; i < this.numero; i++) {
 				String cadenaEtiqueta = this.metodos.get(i).getRepresentacion()
 						+ (this.metodos.get(i).getTecnica() == MetodoAlgoritmo.TECNICA_DYV ? "  <D>"
@@ -191,8 +172,6 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 
 				panelMetodos.add(panel);
 
-				y++;
-
 				int[] llamadas = this.metodos.get(i).getMetodosLlamados();
 				for (int j = 0; j < llamadas.length; j++) {
 					panel = new JPanel();
@@ -209,8 +188,6 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 					panel.add(izqdaLlamada, BorderLayout.WEST);
 
 					panelMetodos.add(panel);
-
-					y++;
 				}
 
 			}
@@ -250,8 +227,8 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 
 			JScrollPane jsp = new JScrollPane(panelContenedorMetodos);
 			jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
-			jsp.setPreferredSize(new Dimension(this.anchoCuadro - 10,
-					this.altoCuadro - 136));
+			jsp.setPreferredSize(new Dimension(ANCHO_CUADRO - 10,
+					ALTO_CUADRO - 136));
 			jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 			panelGeneral.setBorder(new TitledBorder(this.numero + " "
@@ -270,10 +247,10 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			this.cancelar.addKeyListener(this);
 			this.cancelar.addMouseListener(this);
 
-			// Panel para el botón
-			this.panelBoton = new JPanel();
-			this.panelBoton.add(this.aceptar);
-			this.panelBoton.add(this.cancelar);
+			// Panel para los botones
+			this.panelBotones = new JPanel();
+			this.panelBotones.add(this.aceptar);
+			this.panelBotones.add(this.cancelar);
 
 			// Panel general
 			this.bl = new BorderLayout();
@@ -281,32 +258,30 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			this.panel.setLayout(this.bl);
 
 			this.panel.add(panelGeneral, BorderLayout.NORTH);
-			this.panel.add(this.panelBoton, BorderLayout.SOUTH);
+			this.panel.add(this.panelBotones, BorderLayout.SOUTH);
 
 			// Preparamos y mostramos cuadro
 			this.dialogo.getContentPane().add(this.panel);
 			this.dialogo.setTitle(Texto.get("CMP_ESCOGER", Conf.idioma));
-			int alto = 28;
-			if (!Ventana.thisventana.msWindows) {
-				alto = 24;
-			}
-			this.dialogo.setSize(this.anchoCuadro, this.altoCuadro);// +(alto*numero));
-			int coord[] = Conf.ubicarCentro(this.anchoCuadro, this.altoCuadro);// +(alto*numero));
+			this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
+			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
 			this.dialogo.setLocation(coord[0], coord[1]);
 			this.dialogo.setResizable(false);
 			this.dialogo.setVisible(true);
 		} else {
-			new CuadroError(this.vv, Texto.get("ERROR_CLASE", Conf.idioma),
-					Texto.get("ERROR_NOMETVIS", Conf.idioma));
+			new CuadroError(this.ventana,
+					Texto.get("ERROR_CLASE", Conf.idioma), Texto.get(
+							"ERROR_NOMETVIS", Conf.idioma));
 		}
 
 	}
 
 	/**
-	 * Recoge la selección del método señalado por el usuario y da paso al
-	 * proprocesador
+	 * Recoge la selección del método señalado por el usuario y establece el
+	 * método seleccionado para posteriormente permitir su ejecución desde la
+	 * ventana.
 	 */
-	public void recogerMetodoSeleccionado() {
+	private void recogerMetodoSeleccionado() {
 		boolean errorProducido = false;
 
 		// Actualizar cuál es el método principal
@@ -327,19 +302,17 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 						+ ma.getRepresentacion();
 				Logger.log_write(mensaje);
 			}
-			Ventana.thisventana.setClase(this.clase);
+			this.ventana.setClase(this.clase);
 			this.dialogo.setVisible(false);
 
 			// Limpiamos los paneles de visualizacion
-			Ventana.thisventana.abrirPanelCodigo(true, true);
+			this.ventana.abrirPanelCodigo(true, true);
 			// Escribir signatura del método seleccionado
-			Ventana.thisventana.setValoresPanelControl(ma.getRepresentacion());
+			this.ventana.setValoresPanelControl(ma.getRepresentacion());
 			// Habilitamos la opcion para asignar parametros y ejecutar
-			Ventana.thisventana.setClaseHabilitadaAnimacion(true);
-			Ventana.thisventana.setClasePendienteGuardar(false);
-
+			this.ventana.setClaseHabilitadaAnimacion(true);
+			this.ventana.setClasePendienteGuardar(false);
 		}
-
 	}
 
 	/**
@@ -500,9 +473,5 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			}
 
 		}
-	}
-
-	public JDialog getDialogo() {
-		return this.dialogo;
 	}
 }

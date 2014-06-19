@@ -1768,7 +1768,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 	
 	public void iniciarNuevaVisualizacionSelecMetodo()
 	{
-		new CuadroMetodosProcesadosSelecMetodo(this.claseAlgoritmo,p);
+		new CuadroMetodosProcesadosSelecMetodo(this, this.claseAlgoritmo);
 	}
 	
 	public void introducirParametros()
