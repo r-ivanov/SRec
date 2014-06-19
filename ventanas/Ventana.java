@@ -930,7 +930,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[34]) )
 			{
 				if (Conf.fichero_log) log_write("Configuración > Idioma...");
-				new CuadroIdioma();
+				new CuadroIdioma(this);
 			}
 
 			// Configuración > Mostrar/ocultar barra herramientas
