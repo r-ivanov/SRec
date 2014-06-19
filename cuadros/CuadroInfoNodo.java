@@ -19,6 +19,9 @@ import botones.BotonAceptar;
 import conf.Conf;
 import datos.*;
 
+/**
+ * Permite construir cuadros de información sobre un determinado nodo del árbol.
+ */
 public class CuadroInfoNodo extends Thread implements ActionListener,
 		KeyListener {
 
