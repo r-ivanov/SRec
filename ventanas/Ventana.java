@@ -1766,11 +1766,6 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		return Texto.get("APLIC",Conf.idioma);
 	}
 	
-	public void iniciarNuevaVisualizacion()
-	{
-		new CuadroMetodosProcesados(this.claseAlgoritmo,p);
-	}
-	
 	public void iniciarNuevaVisualizacionSelecMetodo()
 	{
 		new CuadroMetodosProcesadosSelecMetodo(this.claseAlgoritmo,p);

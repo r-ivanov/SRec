@@ -75,15 +75,7 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements 
 	{
 		if (e.getSource()==aceptar)
 		{
-			//System.out.println("la accion es="+accion);
-			//VentanaVisualizador.thisventana.vaciarPaneles();
-			if (accion.equals("nueva"))
-				Ventana.thisventana.iniciarNuevaVisualizacion();
-			if (accion.equals("nueva2"))
-				Ventana.thisventana.iniciarNuevaVisualizacionSelecMetodo();
-			if (accion.equals("nueva3"))
-				Ventana.thisventana.introducirParametros();
-			else if (accion.equals("cargar"))
+			if (accion.equals("cargar"))
 				new CargadorTraza();
 			else if (accion.equals("procesar"))
 				new Preprocesador();
@@ -116,6 +108,4 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements 
 	public void keyReleased(KeyEvent e)
 	{
 	}
-	
-
 }

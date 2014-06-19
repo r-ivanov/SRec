@@ -78,7 +78,6 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener, Ke
 	JFrame vv;
 	Preprocesador preprocesador;
 	JDialog dialogo;
-	CuadroParam cuadroParam;
 	boolean luzVerde=false;
 	
 	/**
@@ -662,16 +661,6 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener, Ke
 			this.dialogo.setVisible(false);
 		}
 	}
-	
-	
-	public void setLuzVerde(boolean v)
-	{
-		this.luzVerde=v;
-		if (cuadroParam!=null)
-			cuadroParam.setLuzVerde(v);
-	}
-	
-	
 	
 	protected void setParametrosMetodo(int i, String paramE, String paramI)
 	{

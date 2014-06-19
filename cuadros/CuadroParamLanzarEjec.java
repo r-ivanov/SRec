@@ -79,7 +79,6 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener, Key
 	JFrame vv;
 	Preprocesador p;
 	JDialog dialogo;
-	CuadroMetodosProcesados cmp;
 	AlmacenValores almacenValores=new AlmacenValores();
 	boolean luzVerde=false;
 

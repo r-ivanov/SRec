@@ -61,37 +61,12 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener,
 	private BotonAceptar aceptar = new BotonAceptar();
 	private BotonCancelar cancelar = new BotonCancelar();
 
-	private CuadroParam cp;
-	private boolean cpOcple;
 	private CuadroParamLanzarEjec cple;
 	private JDialog dialogo;
 
 	private MetodoAlgoritmo metodo;
 
 	private Ventana ventana;
-
-	/**
-	 * Construye un cuadro de diálogo para generar valores aleatorios para los
-	 * parámetros de un determinado método.
-	 * 
-	 * @param ventana
-	 *            Ventana de la aplicación a la que quedará asociado el cuadro.
-	 * @param cp
-	 *            Cuadro de introducción de parámetros desde el que se invoca
-	 *            este diálogo.
-	 * @param metodo
-	 *            Información del método para el que necesitamos generar valores
-	 *            aleatorios para sus parámetros.
-	 */
-	public CuadroGenerarAleatorio(Ventana ventana, CuadroParam cp,
-			MetodoAlgoritmo metodo) {
-		this.ventana = ventana;
-		this.cp = cp;
-		this.cpOcple = true;
-		this.dialogo = new JDialog(cp.getJDialog(), true);
-		this.metodo = metodo;
-		this.start();
-	}
 
 	/**
 	 * Construye un cuadro de diálogo para generar valores aleatorios para los
@@ -111,7 +86,6 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener,
 			MetodoAlgoritmo metodo) {
 		this.ventana = ventana;
 		this.cple = cple;
-		this.cpOcple = false;
 		this.dialogo = new JDialog(cple.getJDialog(), true);
 		this.metodo = metodo;
 		this.start();
@@ -655,12 +629,9 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener,
 			Logger.log_write("Valor aleatorio de " + i + "º parámetro: "
 					+ valor);
 		}
-
-		if (this.cpOcple) {
-			this.cp.setValor(valor, i);
-		} else {
-			this.cple.setValor(valor, i);
-		}
+		
+		this.cple.setValor(valor, i);
+		
 		this.dialogo.setTitle(Texto.get("CGF_TITULO", Conf.idioma));
 	}
 
