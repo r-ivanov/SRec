@@ -339,7 +339,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			{
 				if (Conf.fichero_log) log_write("Archivo > Nueva clase");
 				if (panelVentana.haySitio())
-					new CuadroNuevaClase();
+					new CuadroNuevaClase(this);
 				else
 					new CuadroPreguntaNuevaVisualizacion(this,"crear");
 			}
@@ -1035,7 +1035,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			if (fuente==botones[0])			// Archivo > Nueva clase
 			{
 				if (Conf.fichero_log) log_write("Botón: Nueva clase");
-				new CuadroNuevaClase();
+				new CuadroNuevaClase(this);
 			}
 			
 			else if(fuente==botones[1])		// Archivo > Cargar y procesar clase
