@@ -757,7 +757,7 @@ public class PanelArbol extends JPanel implements ActionListener, KeyListener, M
 			// Menú contextual: tercera opción: cuadro de inforamción sobre nodo
 			else if (item==opcionesMenuContextual[2])
 			{
-				new CuadroInfoNodo(Ventana.thisventana.traza,ra);
+				new CuadroInfoNodo(Ventana.thisventana, ra);
 			}
 			// Menú contextual: cuarta opción: seleccionar/no seleccionar
 			else if (item==opcionesMenuContextual[3])

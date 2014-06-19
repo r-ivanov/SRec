@@ -870,7 +870,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[14]) )
 			{
 				if (Conf.fichero_log) log_write("Información > Información nodo actual...");
-				new CuadroInfoNodo(Ventana.thisventana.traza);
+				new CuadroInfoNodo(Ventana.thisventana, Ventana.thisventana.traza);
 			}
 			
 			// Información > Buscar llamada...
