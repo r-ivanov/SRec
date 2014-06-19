@@ -916,7 +916,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[32]) )
 			{
 				if (Conf.fichero_log) log_write("Configuración > Archivos intermedios...");
-				new CuadroOpcionBorradoFicheros ();
+				new CuadroOpcionBorradoFicheros(this);
 			}
 
 			// Configuración > Máquina Virtual Java...
