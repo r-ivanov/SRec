@@ -162,7 +162,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		Conf.setConfiguracionIdioma();
 		Conf.setConfiguracionVistas();
 
-		new CuadroIntro();
+		new CuadroIntro(this);
 		borrarArchivosInservibles();
 	
 		Conf.setFicheros();

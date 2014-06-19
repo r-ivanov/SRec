@@ -1,118 +1,92 @@
-/**
-	Cuadro de identificación del programa
-	
-	@author Antonio Pérez Carrasco
-	@version 2006-2007
-*/
-
 package cuadros;
 
-
-
-
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridLayout;
-
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.border.TitledBorder;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTextPane;
-
 import conf.*;
-import botones.*;
-import utilidades.*;
 import ventanas.*;
 
+/**
+ * Cuadro de identificación del programa.
+ * 
+ * @author Antonio Pérez Carrasco
+ * @version 2006-2007
+ */
+public class CuadroIntro extends Thread {
 
-public class CuadroIntro extends Thread //implements ActionListener, KeyListener, MouseListener
-{
-	static final long serialVersionUID=42;
+	private static final int ANCHO_CUADRO = 600;
+	private static final int ALTO_CUADRO = 300;
 
-	static final boolean depurar=false;
+	private JLabel etiqueta1;
+	private JPanel panel;
 
-	final int anchoCuadro=600;
-	final int altoCuadro=300;
-	
-	
-	JLabel etiqueta1;
-	JPanel panel;
+	private BorderLayout bl;
 
-	BorderLayout bl;
-	GridLayout gl;
-	
-	JDialog dialogo=null;
+	private JDialog dialogo = null;
 
 	/**
-		Constructor: Genera un nuevo cuadro de identificación del programa
-	*/
-	public CuadroIntro()
-	{	
-		dialogo =new JDialog(Ventana.thisventana,true);
-		dialogo.setAlwaysOnTop(true);
+	 * Genera un nuevo cuadro de identificación del programa.
+	 * 
+	 * @param ventana Ventana a la que quedará asociado el cuadro.
+	 */
+	public CuadroIntro(Ventana ventana) {
+		this.dialogo = new JDialog(ventana, true);
+		this.dialogo.setAlwaysOnTop(true);
 		this.start();
 	}
-	
+
 	/**
-		Genera un nuevo cuadro de identifiación del programa
-	*/
-	public synchronized void run()
-	{
+	 * Ejecuta el thread asociado al cuadro.
+	 */
+	@Override
+	public synchronized void run() {
 		// Etiqueta 1
-		this.etiqueta1=new JLabel();
-		Icon imagen = new ImageIcon( "imagenes/ImagenIntro_"+idiomaImagen()+".png");
-		etiqueta1.setIcon(imagen);
-		
+		this.etiqueta1 = new JLabel();
+		Icon imagen = new ImageIcon("imagenes/ImagenIntro_" + idiomaImagen()
+				+ ".png");
+		this.etiqueta1.setIcon(imagen);
+
 		// Panel general
-		bl= new BorderLayout();
-		panel = new JPanel();
-		panel.setLayout(bl);
-		
-		panel.add(etiqueta1,BorderLayout.WEST);
+		this.bl = new BorderLayout();
+		this.panel = new JPanel();
+		this.panel.setLayout(this.bl);
 
-		dialogo.getContentPane().add(panel);
-		int coord[]=Conf.ubicarCentro(anchoCuadro,altoCuadro);
-		dialogo.setLocation(coord[0],coord[1]);
-		
-		dialogo.setTitle("");
-		dialogo.setUndecorated(true);
-		dialogo.setSize(anchoCuadro,altoCuadro);
-		
-		dialogo.setResizable(false);
-		
-		final JDialog dialogoF=dialogo;
+		this.panel.add(this.etiqueta1, BorderLayout.WEST);
 
-		new Thread (){
-			public synchronized void run()
-			{
-				try { wait(3500); } catch(InterruptedException ie) {}
+		this.dialogo.getContentPane().add(this.panel);
+		int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
+		this.dialogo.setLocation(coord[0], coord[1]);
+
+		this.dialogo.setTitle("");
+		this.dialogo.setUndecorated(true);
+		this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
+
+		this.dialogo.setResizable(false);
+
+		final JDialog dialogoF = this.dialogo;
+
+		new Thread() {
+			@Override
+			public synchronized void run() {
+				try {
+					wait(3500);
+				} catch (InterruptedException ie) {
+				}
 				dialogoF.setVisible(false);
 			}
 		}.start();
-		
-		dialogo.setVisible(true);
+
+		this.dialogo.setVisible(true);
 	}
-	
-	private String idiomaImagen()
-	{
-		if (Conf.idioma.equals("es"))
+
+	private String idiomaImagen() {
+		if (Conf.idioma.equals("es")) {
 			return "es";
-		else
+		} else {
 			return "en";
+		}
 	}
 }
