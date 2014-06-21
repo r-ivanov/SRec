@@ -472,21 +472,21 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[9]))
 			{
 				if (Conf.fichero_log) log_write("Archivo > "+textos[9]+"...");
-				new CuadroVistasDisponibles(this.panelVentana,1);
+				new CuadroVistasDisponibles(this, this.panelVentana,1);
 			}
 			
 			// Archivo > Capturas de imagen de cada paso
 			else if ( textoFuente.equals(textos[10]))
 			{
 				if (Conf.fichero_log) log_write("Archivo > "+textos[10]+"...");
-				new CuadroVistasDisponibles(this.panelVentana,2);
+				new CuadroVistasDisponibles(this, this.panelVentana,2);
 			}	
 			
 			// Archivo > Captura de imagen
 			else if ( textoFuente.equals(textos[11]))
 			{
 				if (Conf.fichero_log) log_write("Archivo > "+textos[11]+"...");
-				new CuadroVistasDisponibles(this.panelVentana,3);
+				new CuadroVistasDisponibles(this, this.panelVentana,3);
 			}
 			
 			// Archivo > Salir
@@ -1130,19 +1130,19 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( fuente==botones[7])	// Archivo > Exportar animación GIF...
 			{
 				if (Conf.fichero_log) log_write("Botón: Exportar animación GIF...");
-				new CuadroVistasDisponibles(this.panelVentana,1);
+				new CuadroVistasDisponibles(this, this.panelVentana,1);
 			}
 			
 			else if ( fuente==botones[8])	// Archivo > Exportar capturas de estados
 			{
 				if (Conf.fichero_log) log_write("Botón: Exportar capturas de estados...");
-				new CuadroVistasDisponibles(this.panelVentana,2);
+				new CuadroVistasDisponibles(this, this.panelVentana,2);
 			}	
 			
 			else if ( fuente==botones[9])	// Archivo > Exportar captura de estado actual
 			{
 				if (Conf.fichero_log) log_write("Botón: Exportar captura de estado actual...");
-				new CuadroVistasDisponibles(this.panelVentana,3);
+				new CuadroVistasDisponibles(this, this.panelVentana,3);
 			}
 			
 			

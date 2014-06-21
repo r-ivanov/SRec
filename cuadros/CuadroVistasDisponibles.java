@@ -1,16 +1,4 @@
-/**
-	Genera el cuadro de diálogo que permite exportar el contenido gráfico de una vista
-	**********************************************************************************
-		
-	@author Antonio Pérez Carrasco
-	@version 2006-2007
-*/
-
 package cuadros;
-
-
-
-
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -22,17 +10,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
 import org.jgraph.JGraph;
-import org.jgraph.graph.*;
-
 import javax.swing.border.TitledBorder;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-
-
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -40,300 +20,301 @@ import javax.swing.JRadioButton;
 import conf.*;
 import datos.MetodoAlgoritmo;
 import botones.*;
-import opciones.*;
 import utilidades.*;
 import paneles.*;
 import ventanas.*;
 
-public class CuadroVistasDisponibles extends Thread implements ActionListener, KeyListener, MouseListener
-{
-	static final long serialVersionUID=07;
+/**
+ * Genera el cuadro de diálogo que permite exportar el contenido gráfico de una
+ * vista
+ * 
+ * @author Antonio Pérez Carrasco
+ * @version 2006-2007
+ */
+public class CuadroVistasDisponibles extends Thread implements ActionListener,
+		KeyListener, MouseListener {
 
-	final int anchoCuadro=275;
-	final int altoCuadro=90;
-	final int anchoCuadroNW=290;		// No Windows
-	final int altoCuadroNW=404;			// No Windows
+	private static final int ANCHO_CUADRO = 275;
+	private static final int ALTO_CUADRO = 90;
+	private static final int ANCHO_CUADRO_NO_WINDOWS = 290;
+	private static final int ALTO_CUADRO_NO_WINDOWS = 404;
 
-	PanelVentana pv;
-	String [] vistasDisponibles;
-	String [] vistasVisibles;
-	
-	GestorOpciones gOpciones=new GestorOpciones();
+	private PanelVentana pv;
+	private String[] vistasDisponibles;
 
-	JDialog dialogo;
-	
-	BotonAceptar aceptar=new BotonAceptar();
-	BotonCancelar cancelar=new BotonCancelar();
-	
-	int tipoExportacion=0;
-	JRadioButton botonesVistas[];
-	ButtonGroup grupoBotones;
-	
-	JComponent panelFotografia; 
-	JGraph grafo;
-	String nombreVista;
-	int numeroVista;
-	int[] dimPanelFotografia;
-	int[] posicPanelFotografia;
+	private Ventana ventana;
+	private JDialog dialogo;
+
+	private BotonAceptar aceptar = new BotonAceptar();
+	private BotonCancelar cancelar = new BotonCancelar();
+
+	private int tipoExportacion = 0;
+	private JRadioButton botonesVistas[];
+	private ButtonGroup grupoBotones;
+
+	private JGraph grafo;
+	private int numeroVista;
+
 	/**
-		Constructor: genera un nuevo cuadro de opción
-		
-		@param ventanaVisualizador Ventana a la que permanecerá asociado el cuadro de diálogo
-	*/
-	public CuadroVistasDisponibles (PanelVentana pv,int tipoExportacion)
-	{	
-		this.pv=pv;
-		this.tipoExportacion=tipoExportacion;
-		dialogo=new JDialog(Ventana.thisventana,true);
+	 * Constructor: genera un nuevo cuadro de opción que permite exportar el
+	 * contenido gráfico de una vista.
+	 * 
+	 * @param ventana
+	 *            Ventana a la que permanecerá asociado el cuadro de diálogo.
+	 * @param pv
+	 *            PanelVentana que contiene las distintas visualizaciones del
+	 *            árbol.
+	 * @param tipoExportacion
+	 *            (1 - animación gif, 2 - de un paso, 3 - captura única).
+	 */
+	public CuadroVistasDisponibles(Ventana ventana, PanelVentana pv,
+			int tipoExportacion) {
+		this.pv = pv;
+		this.tipoExportacion = tipoExportacion;
+		this.dialogo = new JDialog(ventana, true);
+		this.ventana = ventana;
 		this.start();
 	}
 
 	/**
-		Genera una nueva opción
-	*/
-	
-	public void run()
-	{
-		vistasDisponibles=pv.getNombreVistasDisponibles();
-		vistasVisibles=pv.getNombreVistasVisibles();
-		
+	 * Genera una nueva opción
+	 */
+
+	@Override
+	public void run() {
+		this.vistasDisponibles = this.pv.getNombreVistasDisponibles();
+
 		// Panel Datos que se muestran
 		JPanel panelVistas = new JPanel();
-		GridLayout gl1 = new GridLayout(vistasDisponibles.length,1);
+		GridLayout gl1 = new GridLayout(this.vistasDisponibles.length, 1);
 		panelVistas.setLayout(gl1);
-		
-		grupoBotones=new ButtonGroup();
-		
-		botonesVistas = new JRadioButton[vistasDisponibles.length];
-		for (int i=0; i<vistasDisponibles.length; i++)
-		{
-			botonesVistas[i]=new JRadioButton(vistasDisponibles[i]);
-			botonesVistas[i].setToolTipText(Texto.get("CVD_MARCAR",Conf.idioma));
-			botonesVistas[i].addKeyListener(this);
-			if ((i==2)&&(!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,Ventana.thisventana.traza.getTecnicas())))
-				botonesVistas[i].setEnabled(false);
-			grupoBotones.add(botonesVistas[i]);
-			panelVistas.add(botonesVistas[i]);
+
+		this.grupoBotones = new ButtonGroup();
+
+		this.botonesVistas = new JRadioButton[this.vistasDisponibles.length];
+		for (int i = 0; i < this.vistasDisponibles.length; i++) {
+			this.botonesVistas[i] = new JRadioButton(this.vistasDisponibles[i]);
+			this.botonesVistas[i].setToolTipText(Texto.get("CVD_MARCAR",
+					Conf.idioma));
+			this.botonesVistas[i].addKeyListener(this);
+			if ((i == 2)
+					&& (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
+							this.ventana.getTraza().getTecnicas()))) {
+				this.botonesVistas[i].setEnabled(false);
+			}
+			this.grupoBotones.add(this.botonesVistas[i]);
+			panelVistas.add(this.botonesVistas[i]);
 		}
-		botonesVistas[0].setSelected(true);
-		
-		if((vistasDisponibles.length>=4)&&(this.tipoExportacion<3)) 
-			botonesVistas[3].setEnabled(false);
-		
-		panelVistas.setBorder(new TitledBorder(Texto.get("CVD_SELECVISTA",Conf.idioma)));
-		
+		this.botonesVistas[0].setSelected(true);
+
+		if ((this.vistasDisponibles.length >= 4) && (this.tipoExportacion < 3)) {
+			this.botonesVistas[3].setEnabled(false);
+		}
+
+		panelVistas.setBorder(new TitledBorder(Texto.get("CVD_SELECVISTA",
+				Conf.idioma)));
+
 		// Panel para el botón
 		JPanel panelBoton = new JPanel();
-		panelBoton.add(aceptar);
-		panelBoton.add(cancelar);
+		panelBoton.add(this.aceptar);
+		panelBoton.add(this.cancelar);
 
-		//aceptar.addActionListener(this);
-		aceptar.addMouseListener(this);
-		aceptar.addActionListener(this);
-		cancelar.addMouseListener(this);
-		cancelar.addActionListener(this);
-	
+		this.aceptar.addMouseListener(this);
+		this.aceptar.addActionListener(this);
+		this.cancelar.addMouseListener(this);
+		this.cancelar.addActionListener(this);
+
 		// Panel general
-		BorderLayout bl= new BorderLayout();
+		BorderLayout bl = new BorderLayout();
 		JPanel panel = new JPanel();
 		panel.setLayout(bl);
-	
-		panel.add(panelVistas,BorderLayout.NORTH);
-		panel.add(panelBoton,BorderLayout.SOUTH);
-			
-		// Preparamos y mostramos cuadro
-		
-		dialogo.getContentPane().add(panel);
-		dialogo.setTitle(Texto.get("CVD_VISTASDIS",Conf.idioma));
 
-		if (Ventana.thisventana.msWindows)
-		{
-			dialogo.setSize(anchoCuadro,altoCuadro+(24*vistasDisponibles.length));
-			int coord[]=Conf.ubicarCentro(anchoCuadro,altoCuadro);
-			dialogo.setLocation(coord[0],coord[1]);
+		panel.add(panelVistas, BorderLayout.NORTH);
+		panel.add(panelBoton, BorderLayout.SOUTH);
+
+		// Preparamos y mostramos cuadro
+
+		this.dialogo.getContentPane().add(panel);
+		this.dialogo.setTitle(Texto.get("CVD_VISTASDIS", Conf.idioma));
+
+		if (Ventana.thisventana.msWindows) {
+			this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO
+					+ (24 * this.vistasDisponibles.length));
+			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
+			this.dialogo.setLocation(coord[0], coord[1]);
+		} else {
+			this.dialogo.setSize(ANCHO_CUADRO_NO_WINDOWS,
+					ALTO_CUADRO_NO_WINDOWS);
+			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO_NO_WINDOWS,
+					ALTO_CUADRO_NO_WINDOWS);
+			this.dialogo.setLocation(coord[0], coord[1]);
 		}
-		else
-		{
-			dialogo.setSize(anchoCuadroNW,altoCuadroNW);
-			int coord[]=Conf.ubicarCentro(anchoCuadroNW,altoCuadroNW);
-			dialogo.setLocation(coord[0],coord[1]);
-		}
-		dialogo.setResizable(false);
-		dialogo.setVisible(true);
+		this.dialogo.setResizable(false);
+		this.dialogo.setVisible(true);
 	}
 
-
-
-	
 	/**
-		Comprueba que la cadena s contenga un valor válido (0..255)
-		
-		@param s cadena que será comprobada
-		@return true si la cadena contiene un valor válido para una componente RGB
-	*/	
-	private void getValores()
-	{
-		for (int i=0; i<this.botonesVistas.length; i++)
-		{
-			if (botonesVistas[i].isSelected())
-			{
-				pv.setVistaActiva(botonesVistas[i].getText());
-				panelFotografia=pv.getPanelPorNombre(botonesVistas[i].getText());
-				grafo=(JGraph)pv.getGrafoPorNombre(botonesVistas[i].getText());
-				dimPanelFotografia=pv.getDimPanelPorNombre(botonesVistas[i].getText());
-				posicPanelFotografia=pv.getPosicPanelPorNombre(botonesVistas[i].getText());
-				nombreVista=botonesVistas[i].getText();
-				numeroVista=i;
+	 * Obtiene la vista que está seleccionada y la establece como vista activa.
+	 */
+	private void getValores() {
+		for (int i = 0; i < this.botonesVistas.length; i++) {
+			if (this.botonesVistas[i].isSelected()) {
+				this.pv.setVistaActiva(this.botonesVistas[i].getText());
+				this.numeroVista = i;
 			}
 		}
 	}
-	
-	
-	private void accion()
-	{
+
+	/**
+	 * Hace la captura según las opciones seleccionadas.
+	 */
+	private void accion() {
 		getValores();
 		this.dialogo.setVisible(false);
-		if (this.tipoExportacion==1)
-		{
-			if (Conf.fichero_log) Logger.log_write("Guardar GIF: capturarAnimacionGIF");
-			//new FotografoArbol().capturarAnimacionGIF(panelFotografia);
-			new FotografoArbol().capturarAnimacionGIF(grafo,numeroVista);
-			
+		if (this.tipoExportacion == 1) {
+			if (Conf.fichero_log) {
+				Logger.log_write("Guardar GIF: capturarAnimacionGIF");
+			}
+			new FotografoArbol().capturarAnimacionGIF(this.grafo,
+					this.numeroVista);
+
+		} else if (this.tipoExportacion == 2) {
+			if (Conf.fichero_log) {
+				Logger.log_write("Guardar GIF: hacerCapturasPaso");
+			}
+			new FotografoArbol()
+					.hacerCapturasPaso(this.grafo, this.numeroVista);
+		} else if (this.tipoExportacion == 3) {
+			if (Conf.fichero_log) {
+				Logger.log_write("Guardar GIF: hacerCapturaUnica");
+			}
+			new FotografoArbol()
+					.hacerCapturaUnica(this.grafo, this.numeroVista);
 		}
-		else if (this.tipoExportacion==2)
-		{
-			if (Conf.fichero_log) Logger.log_write("Guardar GIF: hacerCapturasPaso");
-			//new FotografoArbol().hacerCapturasPaso(panelFotografia);
-			new FotografoArbol().hacerCapturasPaso(grafo,numeroVista);
-		}
-		else if (this.tipoExportacion==3)
-		{
-			if (Conf.fichero_log) Logger.log_write("Guardar GIF: hacerCapturaUnica");
-			//new FotografoArbol().hacerCapturaUnica(panelFotografia);
-			new FotografoArbol().hacerCapturaUnica(grafo,numeroVista);
-		}
-	
+
 	}
-	
 
 	/**
-		Gestiona los eventos de acción
-		
-		@param e evento de acción
-	*/	
-	public void actionPerformed(ActionEvent e)
-	{
-		
+	 * Gestiona los eventos de acción
+	 * 
+	 * @param e
+	 *            evento de acción
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
 	}
-	
+
 	/**
-		Gestiona los eventos de teclado
-		
-		@param e evento de teclado
-	*/		
-	public void keyPressed(KeyEvent e)
-	{
+	 * Gestiona los eventos de teclado
+	 * 
+	 * @param e
+	 *            evento de teclado
+	 */
+	@Override
+	public void keyPressed(KeyEvent e) {
 	}
-	
+
 	/**
-		Gestiona los eventos de teclado
-		
-		@param e evento de teclado
-	*/			
-	public void keyReleased(KeyEvent e)
-	{
-		int code=e.getKeyCode();
-		
-		//System.out.println("keyReleased");
-		if (code==KeyEvent.VK_DOWN || code==KeyEvent.VK_UP)
-		{
-			if (e.getSource().getClass().getName().contains("JRadioButton"))
-				for (int i=0; i<botonesVistas.length; i++)
-					if (botonesVistas[i].isFocusOwner())
-					{
-						if (code==KeyEvent.VK_DOWN)
-						{
-							if (i<botonesVistas.length-1)
-								botonesVistas[i].transferFocus();
-						}
-						else if (code==KeyEvent.VK_UP)
-						{
-							if (i>0)
-								botonesVistas[i].transferFocusBackward();
+	 * Gestiona los eventos de teclado
+	 * 
+	 * @param e
+	 *            evento de teclado
+	 */
+	@Override
+	public void keyReleased(KeyEvent e) {
+		int code = e.getKeyCode();
+		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_UP) {
+			if (e.getSource().getClass().getName().contains("JRadioButton")) {
+				for (int i = 0; i < this.botonesVistas.length; i++) {
+					if (this.botonesVistas[i].isFocusOwner()) {
+						if (code == KeyEvent.VK_DOWN) {
+							if (i < this.botonesVistas.length - 1) {
+								this.botonesVistas[i].transferFocus();
+							}
+						} else if (code == KeyEvent.VK_UP) {
+							if (i > 0) {
+								this.botonesVistas[i].transferFocusBackward();
+							}
 						}
 					}
-		}
-		else if (code==KeyEvent.VK_ENTER)
-		{
+				}
+			}
+		} else if (code == KeyEvent.VK_ENTER) {
 			accion();
+		} else if (code == KeyEvent.VK_ESCAPE) {
+			this.dialogo.setVisible(false);
 		}
-		else if (code==KeyEvent.VK_ESCAPE)
-		{
-			dialogo.setVisible(false);
-		}
-		
 	}
 
 	/**
-		Gestiona los eventos de teclado
-		
-		@param e evento de teclado
-	*/			
-	public void keyTyped(KeyEvent e)
-	{
-	}
-	
-	/**
-		Gestiona los eventos de ratón
-		
-		@param e evento de ratón
-	*/		
-	public void mouseClicked(MouseEvent e) 
-	{
-	}
-	
-	/**
-		Gestiona los eventos de ratón
-		
-		@param e evento de ratón
-	*/		
-	public void mouseEntered(MouseEvent e) 
-	{
+	 * Gestiona los eventos de teclado
+	 * 
+	 * @param e
+	 *            evento de teclado
+	 */
+	@Override
+	public void keyTyped(KeyEvent e) {
+
 	}
 
 	/**
-		Gestiona los eventos de ratón
-		
-		@param e evento de ratón
-	*/			
-	public void mouseExited(MouseEvent e) 
-	{
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
 	}
-	
+
 	/**
-		Gestiona los eventos de ratón
-		
-		@param e evento de ratón
-	*/		
-	public void mousePressed(MouseEvent e) 
-	{
-		
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
 	}
-	
+
 	/**
-		Gestiona los eventos de ratón
-		
-		@param e evento de ratón
-	*/		
-	public void mouseReleased(MouseEvent e)
-	{
-		if (e.getSource()==aceptar)
-		{
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
+	/**
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	/**
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (e.getSource() == this.aceptar) {
 			accion();
 		}
-		if (e.getSource()==cancelar)
-		{
-			dialogo.setVisible(false);
+		if (e.getSource() == this.cancelar) {
+			this.dialogo.setVisible(false);
 		}
 	}
 }
