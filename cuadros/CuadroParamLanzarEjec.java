@@ -1,14 +1,4 @@
-/**
-	Implementa el cuadro que recoge los parámetros desde la interfaz
-	
-	@author Antonio Pérez Carrasco
-	@version 2006-2007
-*/
-
 package cuadros;
-
-
-
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -19,15 +9,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-
 import javax.swing.border.TitledBorder;
 import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.text.JTextComponent;
@@ -38,633 +25,672 @@ import datos.*;
 import utilidades.*;
 import ventanas.*;
 
-public class CuadroParamLanzarEjec extends Thread implements ActionListener, KeyListener, MouseListener
-{
-	static final long serialVersionUID=02;
+/**
+ * Implementa el cuadro que recoge los parámetros desde la interfaz y permite
+ * lanzar una ejecución.
+ * 
+ * @author Antonio Pérez Carrasco
+ * @version 2006-2007
+ */
+public class CuadroParamLanzarEjec extends Thread implements ActionListener,
+		KeyListener, MouseListener {
 
-	static final boolean depurar=false;
+	private static final int ANCHO_CUADRO = 490;
+	private static final int ALTO_CUADRO = 92;
+	private static final int ALTURA_PISO = 23;
 
-	final int anchoCuadro=490;
-	final int altoCuadro=92;		// Base inicial
-	final int alturaPiso=23;
+	private CuadroGenerarAleatorio cga = null;
 
-	CuadroGenerarAleatorio cga=null;
-	
-	JLabel[] etiquetas;
-	JComboBox[] cuadrosvalores;
-	JCheckBox[] mostrarvalores;
-	
-	BotonAceptar aceptar;
-	BotonCancelar cancelar;
-	BotonTexto generar;
-	BotonTexto cargar;
-	BotonTexto guardar;
-	
-	JPanel panel, panelBoton, panelParam;
-	int numero;
-	boolean editarValores;
-	
-	MetodoAlgoritmo metodo;
-	ClaseAlgoritmo clase;
-	
-	String [] valores;
+	private JLabel[] etiquetas;
+	private JComboBox<String>[] cuadrosvalores;
+	private JCheckBox[] mostrarvalores;
 
-	
+	private BotonAceptar aceptar;
+	private BotonCancelar cancelar;
+	private BotonTexto generar;
+	private BotonTexto cargar;
+	private BotonTexto guardar;
 
-	boolean estamosCargando=false;
+	private JPanel panel, panelBoton, panelParam;
+	private int numero;
+	private boolean editarValores;
 
+	private MetodoAlgoritmo metodo;
+	private ClaseAlgoritmo clase;
 
-	String codigounico;
-	
-	JFrame vv;
-	Preprocesador p;
-	JDialog dialogo;
-	AlmacenValores almacenValores=new AlmacenValores();
-	boolean luzVerde=false;
+	private String[] valores;
 
-	int numMetodo;
-	
+	private boolean estamosCargando = false;
+
+	private Ventana ventana;
+	private Preprocesador p;
+	private JDialog dialogo;
+	private AlmacenValores almacenValores = new AlmacenValores();
+
 	/**
-		Constructor: crea un nuevo cuadro de parámetros
-		
-		@param metodo método que se ha seleccionado para modificar sus valores de entrada
-		@param cmp Cuadro al que se devolverá el control de ejecución, padre de este cuadro
-	*/
-	public CuadroParamLanzarEjec(MetodoAlgoritmo metodo, ClaseAlgoritmo clase, Preprocesador p)
-	{	
-		dialogo = new JDialog(Ventana.thisventana,true);
-	
+	 * Crea un nuevo cuadro que recoge los parámetros desde la interfaz y
+	 * permite lanzar una ejecución.
+	 * 
+	 * @param ventana
+	 *            Ventana a la que quedará asociado el cuadro.
+	 * 
+	 * @param metodo
+	 *            método que se ha seleccionado para modificar sus valores de
+	 *            entrada
+	 * @param clase
+	 *            Clase a la que pertenece el método para la que se introducirán
+	 *            los parámetros.
+	 * @param p
+	 *            Preprocesador que permitirá lanzar la ejecución una vez
+	 *            seleccionados los parámetros.
+	 */
+	public CuadroParamLanzarEjec(Ventana ventana, MetodoAlgoritmo metodo,
+			ClaseAlgoritmo clase, Preprocesador p) {
+
+		this.dialogo = new JDialog(ventana, true);
+		this.ventana = ventana;
+
 		ValoresParametros.inicializar(false);
-		
-	
-		// Inicializamos atributos del cuadro de parámetros
-		if (!metodo.getTipo().equals("void"))
-			this.numero=metodo.getNumeroParametros();
-		else
-			this.numero=metodo.getNumeroParametros()*2;
-		this.metodo=metodo;
-		this.clase=clase;
-		this.p=p;
+
+		if (!metodo.getTipo().equals("void")) {
+			this.numero = metodo.getNumeroParametros();
+		} else {
+			this.numero = metodo.getNumeroParametros() * 2;
+		}
+
+		this.metodo = metodo;
+		this.clase = clase;
+		this.p = p;
 		this.start();
 	}
 
 	/**
-		Crea el cuadro de parámetros
-	*/
-	public void run()
-	{
+	 * Ejecuta el thread asociado al cuadro.
+	 */
+	@Override
+	public void run() {
 		this.editarValores = true;
-		if (this.numero>0)
-		{
-			etiquetas = new JLabel[numero];
-			cuadrosvalores = new JComboBox[numero];
-			mostrarvalores = new JCheckBox[numero];
-			
+		if (this.numero > 0) {
+
+			this.etiquetas = new JLabel[this.numero];
+			this.cuadrosvalores = new JComboBox[this.numero];
+			this.mostrarvalores = new JCheckBox[this.numero];
+
 			// Tendremos n campos: n parámetros
-			if (!metodo.getTipo().equals("void"))
-			{
-				for (int i=0; i<numero; i++)
-				{
-					etiquetas[i]=new JLabel();
-					etiquetas[i].setText(Texto.get("ETIQFL_ENTR",Conf.idioma)+": "+metodo.getNombreParametro(i)+" ("+metodo.getTipoParametro(i)+ServiciosString.cadenaDimensiones(metodo.getDimParametro(i))+")");
-					cuadrosvalores[i]=new JComboBox();	// Cambiar por caja con desplegable
-					cuadrosvalores[i].setEditable(true);
-					cuadrosvalores[i].setEnabled(editarValores);
-					ValoresParametros.introducirValores(cuadrosvalores[i],metodo.getTipoParametro(i),metodo.getDimParametro(i));
-					ValoresParametros.introducirValor(cuadrosvalores[i],metodo.getTipoParametro(i),metodo.getDimParametro(i),
-							metodo.getParamValor(i),true);
-					//cuadrosvalores[i].setText(metodo.getParamValor(i));
-					//cuadrosvalores[i].setHorizontalAlignment(JTextField.CENTER);
-					cuadrosvalores[i].addKeyListener(this);
-					if (cuadrosvalores[i].isEnabled())
-						cuadrosvalores[i].setToolTipText(Texto.get("CPARAM_ESCRVALADEC",Conf.idioma)+" "+metodo.getTipoParametro(i));
-					mostrarvalores[i]=new JCheckBox(Texto.get("ETIQFL_ENTR",Conf.idioma)+": "+metodo.getNombreParametro(i)+" ("+metodo.getTipoParametro(i)+ServiciosString.cadenaDimensiones(metodo.getDimParametro(i))+")");
-					mostrarvalores[i].setSelected(true);
-					mostrarvalores[i].setToolTipText(Texto.get("CPARAM_CASILVIS",Conf.idioma));
-					mostrarvalores[i].addKeyListener(this);
-					mostrarvalores[i].addMouseListener(this);
+			if (!this.metodo.getTipo().equals("void")) {
+				for (int i = 0; i < this.numero; i++) {
+					this.etiquetas[i] = new JLabel();
+					this.etiquetas[i].setText(Texto.get("ETIQFL_ENTR",
+							Conf.idioma)
+							+ ": "
+							+ this.metodo.getNombreParametro(i)
+							+ " ("
+							+ this.metodo.getTipoParametro(i)
+							+ ServiciosString.cadenaDimensiones(this.metodo
+									.getDimParametro(i)) + ")");
+					this.cuadrosvalores[i] = new JComboBox<String>();
+					this.cuadrosvalores[i].setEditable(true);
+					this.cuadrosvalores[i].setEnabled(this.editarValores);
+					ValoresParametros.introducirValores(this.cuadrosvalores[i],
+							this.metodo.getTipoParametro(i),
+							this.metodo.getDimParametro(i));
+					ValoresParametros.introducirValor(this.cuadrosvalores[i],
+							this.metodo.getTipoParametro(i),
+							this.metodo.getDimParametro(i),
+							this.metodo.getParamValor(i), true);
+					this.cuadrosvalores[i].addKeyListener(this);
+					if (this.cuadrosvalores[i].isEnabled()) {
+						this.cuadrosvalores[i].setToolTipText(Texto.get(
+								"CPARAM_ESCRVALADEC", Conf.idioma)
+								+ " "
+								+ this.metodo.getTipoParametro(i));
+					}
+					this.mostrarvalores[i] = new JCheckBox(Texto.get(
+							"ETIQFL_ENTR", Conf.idioma)
+							+ ": "
+							+ this.metodo.getNombreParametro(i)
+							+ " ("
+							+ this.metodo.getTipoParametro(i)
+							+ ServiciosString.cadenaDimensiones(this.metodo
+									.getDimParametro(i)) + ")");
+					this.mostrarvalores[i].setSelected(true);
+					this.mostrarvalores[i].setToolTipText(Texto.get(
+							"CPARAM_CASILVIS", Conf.idioma));
+					this.mostrarvalores[i].addKeyListener(this);
+					this.mostrarvalores[i].addMouseListener(this);
 				}
-			}
-			else		// Tendremos n*2 campos: n parámetros vistos a la entrada y n vistos a la salida
-			{
-				for (int i=0; i<numero; i++)
-				{
-					etiquetas[i]=new JLabel();
-					cuadrosvalores[i]=new JComboBox();	// Cambiar por caja con desplegable
-					mostrarvalores[i]=new JCheckBox();
-					//cuadrosvalores[i].setHorizontalAlignment(JTextField.CENTER);
-					cuadrosvalores[i].addKeyListener(this);
-					if (i<(numero/2))
-					{
-						mostrarvalores[i].setText(Texto.get("ETIQFL_ENTR",Conf.idioma)+": "+metodo.getNombreParametro(i)+" ("+metodo.getTipoParametro(i)+ServiciosString.cadenaDimensiones(metodo.getDimParametro(i))+")");
-						cuadrosvalores[i].setEditable(true);
-						cuadrosvalores[i].setEnabled(editarValores);
-						ValoresParametros.introducirValores(cuadrosvalores[i],metodo.getTipoParametro(i),metodo.getDimParametro(i));
-						ValoresParametros.introducirValor(cuadrosvalores[i],metodo.getTipoParametro(i),metodo.getDimParametro(i),
-								metodo.getParamValor(i),true);
-						//cuadrosvalores[i].setText(metodo.getParamValor(i));
-						if (cuadrosvalores[i].isEnabled())
-							cuadrosvalores[i].setToolTipText(Texto.get("CPARAM_ESCRVALADEC",Conf.idioma)+" "+metodo.getTipoParametro(i));
+			} else {
+				// Tendremos n*2 campos: n parámetros vistos a la entrada y n
+				// vistos a la salida.
+				for (int i = 0; i < this.numero; i++) {
+					this.etiquetas[i] = new JLabel();
+					this.cuadrosvalores[i] = new JComboBox<String>();
+					this.mostrarvalores[i] = new JCheckBox();
+					this.cuadrosvalores[i].addKeyListener(this);
+					if (i < (this.numero / 2)) {
+						this.mostrarvalores[i].setText(Texto.get("ETIQFL_ENTR",
+								Conf.idioma)
+								+ ": "
+								+ this.metodo.getNombreParametro(i)
+								+ " ("
+								+ this.metodo.getTipoParametro(i)
+								+ ServiciosString.cadenaDimensiones(this.metodo
+										.getDimParametro(i)) + ")");
+						this.cuadrosvalores[i].setEditable(true);
+						this.cuadrosvalores[i].setEnabled(this.editarValores);
+						ValoresParametros.introducirValores(
+								this.cuadrosvalores[i],
+								this.metodo.getTipoParametro(i),
+								this.metodo.getDimParametro(i));
+						ValoresParametros.introducirValor(
+								this.cuadrosvalores[i],
+								this.metodo.getTipoParametro(i),
+								this.metodo.getDimParametro(i),
+								this.metodo.getParamValor(i), true);
+						if (this.cuadrosvalores[i].isEnabled()) {
+							this.cuadrosvalores[i].setToolTipText(Texto.get(
+									"CPARAM_ESCRVALADEC", Conf.idioma)
+									+ " "
+									+ this.metodo.getTipoParametro(i));
+						}
+					} else {
+						this.mostrarvalores[i]
+								.setText(Texto.get("ETIQFL_SALI", Conf.idioma)
+										+ ": "
+										+ this.metodo.getNombreParametro(i
+												- (this.numero / 2))
+										+ " ("
+										+ this.metodo.getTipoParametro(i
+												- (this.numero / 2))
+										+ ServiciosString.cadenaDimensiones(this.metodo
+												.getDimParametro(i
+														- (this.numero / 2)))
+										+ ")");
+						this.cuadrosvalores[i].setEnabled(false);
+						if (this.cuadrosvalores[i].isEnabled()) {
+							this.cuadrosvalores[i].setToolTipText(Texto.get(
+									"CPARAM_ESCRVALADEC", Conf.idioma)
+									+ " "
+									+ this.metodo.getTipoParametro(i
+											- (this.numero / 2)));
+						}
 					}
-					else
-					{
-						mostrarvalores[i].setText(Texto.get("ETIQFL_SALI",Conf.idioma)+": "+metodo.getNombreParametro(i-(numero/2))+" ("+metodo.getTipoParametro(i-(numero/2))+ServiciosString.cadenaDimensiones(metodo.getDimParametro(i-(numero/2)))+")");
-						cuadrosvalores[i].setEnabled(false);
-						if (cuadrosvalores[i].isEnabled())
-							cuadrosvalores[i].setToolTipText(Texto.get("CPARAM_ESCRVALADEC",Conf.idioma)+" "+metodo.getTipoParametro(i-(numero/2)));
+					if (i < this.metodo.getNumeroParametros()) {
+						this.mostrarvalores[i].setSelected(this.metodo
+								.getVisibilidadEntrada(i));
+					} else {
+						this.mostrarvalores[i].setSelected(this.metodo
+								.getVisibilidadSalida(i
+										- this.metodo.getNumeroParametros()));
 					}
-					if (i<metodo.getNumeroParametros())
-						mostrarvalores[i].setSelected(metodo.getVisibilidadEntrada(i));
-					else
-						mostrarvalores[i].setSelected(metodo.getVisibilidadSalida(i-metodo.getNumeroParametros()));
-					if (cuadrosvalores[i].isEnabled())
-						mostrarvalores[i].setToolTipText(Texto.get("CPARAM_CASILVIS",Conf.idioma));
-					mostrarvalores[i].addKeyListener(this);
-					mostrarvalores[i].addMouseListener(this);
+					if (this.cuadrosvalores[i].isEnabled()) {
+						this.mostrarvalores[i].setToolTipText(Texto.get(
+								"CPARAM_CASILVIS", Conf.idioma));
+					}
+					this.mostrarvalores[i].addKeyListener(this);
+					this.mostrarvalores[i].addMouseListener(this);
 				}
 			}
 
-			
 			// Panel vertical para etiquetas
-			GridLayout gl1 = new GridLayout(numero,1);
+			GridLayout gl1 = new GridLayout(this.numero, 1);
 			JPanel panelEtiquetas = new JPanel();
 			panelEtiquetas.setLayout(gl1);
-			for (int i=0; i<numero; i++)
-				panelEtiquetas.add(mostrarvalores[i]);
-				
+			for (int i = 0; i < this.numero; i++) {
+				panelEtiquetas.add(this.mostrarvalores[i]);
+			}
+
 			// Panel vertical para cuadros de valores
-			GridLayout gl2 = new GridLayout(numero,1);
+			GridLayout gl2 = new GridLayout(this.numero, 1);
 			JPanel panelCuadros = new JPanel();
 			panelCuadros.setLayout(gl2);
-			for (int i=0; i<numero; i++)
-				panelCuadros.add(cuadrosvalores[i]);
-			
-			JTextComponent[] editor = new  JTextComponent[cuadrosvalores.length];
-			for (int i=0; i<editor.length; i++)	
-			{
-				editor[i]=(JTextComponent)cuadrosvalores[i].getEditor().getEditorComponent();
+			for (int i = 0; i < this.numero; i++) {
+				panelCuadros.add(this.cuadrosvalores[i]);
+			}
+
+			JTextComponent[] editor = new JTextComponent[this.cuadrosvalores.length];
+			for (int i = 0; i < editor.length; i++) {
+				editor[i] = (JTextComponent) this.cuadrosvalores[i].getEditor()
+						.getEditorComponent();
 				editor[i].addKeyListener(this);
 			}
-			
-			// Panel vertical para check boxes
-			/*GridLayout gl3 = new GridLayout(numero,1);
-			JPanel panelChecks = new JPanel();
-			panelChecks.setLayout(gl3);
-			for (int i=0; i<numero; i++)
-				panelChecks.add(mostrarvalores[i]);*/
-				
+
 			// Panel general de parámetros
 			BorderLayout bl = new BorderLayout();
-			panelParam = new JPanel();
-			panelParam.setLayout(bl);
-			panelParam.setBorder(new TitledBorder(Texto.get("CPARAM_INSERVPAR",Conf.idioma)+" "+this.metodo.getNombre()));
-			panelParam.add(panelEtiquetas,BorderLayout.WEST);
-			panelParam.add(panelCuadros  ,BorderLayout.CENTER);
-			//panelParam.add(panelChecks   ,BorderLayout.EAST);
-	
+			this.panelParam = new JPanel();
+			this.panelParam.setLayout(bl);
+			this.panelParam.setBorder(new TitledBorder(Texto.get(
+					"CPARAM_INSERVPAR", Conf.idioma)
+					+ " "
+					+ this.metodo.getNombre()));
+			this.panelParam.add(panelEtiquetas, BorderLayout.WEST);
+			this.panelParam.add(panelCuadros, BorderLayout.CENTER);
+
 			// Botón Aceptar
-			aceptar=new BotonAceptar();
-			aceptar.addActionListener(this);
-			aceptar.addKeyListener(this);
-			aceptar.addMouseListener(this);
-			//aceptar.setRojo();
-			
+			this.aceptar = new BotonAceptar();
+			this.aceptar.addActionListener(this);
+			this.aceptar.addKeyListener(this);
+			this.aceptar.addMouseListener(this);
+			// aceptar.setRojo();
+
 			// Botón Cancelar
-			cancelar=new BotonCancelar();
-			cancelar.addActionListener(this);
-			cancelar.addKeyListener(this);
-			cancelar.addMouseListener(this);
-	
+			this.cancelar = new BotonCancelar();
+			this.cancelar.addActionListener(this);
+			this.cancelar.addKeyListener(this);
+			this.cancelar.addMouseListener(this);
+
 			// Botón Generar
-			generar = new BotonTexto(Texto.get("BOTONGENERAR",Conf.idioma));
-			generar.addActionListener(this);
-			generar.addKeyListener(this);
-			generar.addMouseListener(this);
+			this.generar = new BotonTexto(
+					Texto.get("BOTONGENERAR", Conf.idioma));
+			this.generar.addActionListener(this);
+			this.generar.addKeyListener(this);
+			this.generar.addMouseListener(this);
 
 			// Botón Cargar
-			cargar = new BotonTexto(Texto.get("BOTONCARGAR",Conf.idioma));
-			cargar.addActionListener(this);
-			cargar.addKeyListener(this);
-			cargar.addMouseListener(this);	
+			this.cargar = new BotonTexto(Texto.get("BOTONCARGAR", Conf.idioma));
+			this.cargar.addActionListener(this);
+			this.cargar.addKeyListener(this);
+			this.cargar.addMouseListener(this);
 
 			// Botón Almacenar
-			guardar = new BotonTexto(Texto.get("BOTONGUARDAR",Conf.idioma));
-			guardar.addActionListener(this);
-			guardar.addKeyListener(this);
-			guardar.addMouseListener(this);
-	
-			
-			if (!cuadrosvalores[0].isEnabled())
-			{
-				generar.setEnabled(false);
-				cargar.setEnabled(false);
-				guardar.setEnabled(false);
+			this.guardar = new BotonTexto(
+					Texto.get("BOTONGUARDAR", Conf.idioma));
+			this.guardar.addActionListener(this);
+			this.guardar.addKeyListener(this);
+			this.guardar.addMouseListener(this);
+
+			if (!this.cuadrosvalores[0].isEnabled()) {
+				this.generar.setEnabled(false);
+				this.cargar.setEnabled(false);
+				this.guardar.setEnabled(false);
 			}
-			
-			
+
 			// Panel para el botón
-			panelBoton = new JPanel();
-			panelBoton.add(aceptar);
-			panelBoton.add(cancelar);
-			panelBoton.add(generar);
-			panelBoton.add(cargar);
-			panelBoton.add(guardar);
-	
+			this.panelBoton = new JPanel();
+			this.panelBoton.add(this.aceptar);
+			this.panelBoton.add(this.cancelar);
+			this.panelBoton.add(this.generar);
+			this.panelBoton.add(this.cargar);
+			this.panelBoton.add(this.guardar);
+
 			// Panel general
-			bl= new BorderLayout();
-			panel = new JPanel();
-			panel.setLayout(bl);
-	
-			panel.add(panelParam,BorderLayout.NORTH);
-			panel.add(panelBoton,BorderLayout.SOUTH);
-			
-			dialogo.getContentPane().add(panel);
-			if (numero!=1)
-				dialogo.setTitle(Texto.get("CPARAM_PARAMS",Conf.idioma));
-			else
-				dialogo.setTitle(Texto.get("CPARAM_PARAM",Conf.idioma));
-	
-			//cuadrosvalores[0].requestFocusInWindow();
-			
+			bl = new BorderLayout();
+			this.panel = new JPanel();
+			this.panel.setLayout(bl);
+
+			this.panel.add(this.panelParam, BorderLayout.NORTH);
+			this.panel.add(this.panelBoton, BorderLayout.SOUTH);
+
+			this.dialogo.getContentPane().add(this.panel);
+			if (this.numero != 1) {
+				this.dialogo.setTitle(Texto.get("CPARAM_PARAMS", Conf.idioma));
+			} else {
+				this.dialogo.setTitle(Texto.get("CPARAM_PARAM", Conf.idioma));
+			}
+
 			// Preparamos y mostramos cuadro
-			int coord[]=Conf.ubicarCentro(anchoCuadro,altoCuadro+(alturaPiso*numero));
-			dialogo.setLocation(coord[0],coord[1]);
-			dialogo.setSize(anchoCuadro,altoCuadro+(alturaPiso*numero));
-			dialogo.setResizable(false);
-			dialogo.setVisible(true);
-			
+			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO
+					+ (ALTURA_PISO * this.numero));
+			this.dialogo.setLocation(coord[0], coord[1]);
+			this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO
+					+ (ALTURA_PISO * this.numero));
+			this.dialogo.setResizable(false);
+			this.dialogo.setVisible(true);
+
 			this.foco();
 
 		}
 	}
-	
-	
-	
-	
-	private void foco()
-	{
-		cuadrosvalores[0].requestFocusInWindow();
-		cuadrosvalores[0].requestFocus();
-		mostrarvalores[0].transferFocus();
+
+	private void foco() {
+		this.cuadrosvalores[0].requestFocusInWindow();
+		this.cuadrosvalores[0].requestFocus();
+		this.mostrarvalores[0].transferFocus();
 	}
 
 	/**
-		Comprueba y recoge los valores
-		
-		@param valoresFinales true si el usuario ha dado por buenos los datos introducidos
-					false si es una comprobación interna del programa, no solicitada por el usuario
-		@param true si los datos introducidos son válidos
-	*/
-	private synchronized boolean recogerValores(boolean valoresFinales)
-	{
-		if (this.editarValores)
-		{
-			
-			// En primer lugar, comprobamos que todos los valores escritos son correctos:
-			for (int i=0; i<this.metodo.getNumeroParametros(); i++)
-			{
-				String texto=(String)(cuadrosvalores[i].getSelectedItem());//getText();
-				if ( texto.length()==0 )
-				{
-					new CuadroError(vv,Texto.get("ERROR_PARAM",Conf.idioma), Texto.get("CPARAM_NOVALOR",Conf.idioma)+" nº "+(i+1)+".");
+	 * Comprueba y recoge los valores
+	 * 
+	 * @param valoresFinales
+	 *            true si el usuario ha dado por buenos los datos introducidos
+	 *            false si es una comprobación interna del programa, no
+	 *            solicitada por el usuario
+	 * 
+	 * @param true si los datos introducidos son válidos
+	 */
+	private synchronized boolean recogerValores(boolean valoresFinales) {
+		if (this.editarValores) {
+
+			// En primer lugar, comprobamos que todos los valores escritos son
+			// correctos:
+			for (int i = 0; i < this.metodo.getNumeroParametros(); i++) {
+				String texto = (String) (this.cuadrosvalores[i]
+						.getSelectedItem());
+				if (texto.length() == 0) {
+					new CuadroError(this.ventana, Texto.get("ERROR_PARAM",
+							Conf.idioma), Texto.get("CPARAM_NOVALOR",
+							Conf.idioma) + " nº " + (i + 1) + ".");
 					return false;
 				}
-				
-				if (!ServiciosString.esDeTipoCorrecto(texto,this.metodo.getTipoParametro(i),this.metodo.getDimParametro(i)))
-				{
-					new CuadroError(vv,Texto.get("ERROR_PARAM",Conf.idioma), Texto.get("CPARAM_ELPARAM",Conf.idioma)
-										+" nº"+(i+1)+" ( "+this.metodo.getTipoParametro(i)+
-										ServiciosString.cadenaDimensiones(this.metodo.getDimParametro(i))
-										+" ) "+Texto.get("CPARAM_NOESCORR",Conf.idioma));
+
+				if (!ServiciosString.esDeTipoCorrecto(texto,
+						this.metodo.getTipoParametro(i),
+						this.metodo.getDimParametro(i))) {
+					new CuadroError(this.ventana, Texto.get("ERROR_PARAM",
+							Conf.idioma), Texto.get("CPARAM_ELPARAM",
+							Conf.idioma)
+							+ " nº"
+							+ (i + 1)
+							+ " ( "
+							+ this.metodo.getTipoParametro(i)
+							+ ServiciosString.cadenaDimensiones(this.metodo
+									.getDimParametro(i))
+							+ " ) "
+							+ Texto.get("CPARAM_NOESCORR", Conf.idioma));
 					return false;
 				}
 			}
 
-			// En segundo lugar, actualizamos los valores de los parámetros del método
-			for (int i=0; i<this.metodo.getNumeroParametros(); i++)
-			{
-				String texto=(String)(cuadrosvalores[i].getSelectedItem());//getText();
-				this.metodo.setParamValor(i,texto.replace(" ",""));
+			// En segundo lugar, actualizamos los valores de los parámetros del
+			// método
+			for (int i = 0; i < this.metodo.getNumeroParametros(); i++) {
+				String texto = (String) (this.cuadrosvalores[i]
+						.getSelectedItem());// getText();
+				this.metodo.setParamValor(i, texto.replace(" ", ""));
 			}
 		}
-		if (!comprobarVisibilidadCorrecta())
+		
+		if (!comprobarVisibilidadCorrecta()) {
 			return false;
-		
+		}
 
-		// En tercer lugar, actualizamos la visibilidad de los parámetros del método
-		for (int i=0; i<numero; i++)
-		{
-			if (i<this.metodo.getNumeroParametros())
-				this.metodo.setVisibilidadEntrada(mostrarvalores[i].isSelected(),i);
-			else
-				this.metodo.setVisibilidadSalida(mostrarvalores[i].isSelected(),i-metodo.getNumeroParametros());
-		}	
-		
-		if (valoresFinales)
-		{
-			//cmp.actualizarMetodo(this.metodo,this.numMetodo);
-			dialogo.setVisible(false);
-		}
-		
-		for (int i=0; i<this.metodo.getNumeroParametros(); i++)
-		{
-			ValoresParametros.anadirValorListados((String)(cuadrosvalores[i].getSelectedItem())
-						,this.metodo.getTipoParametro(i),this.metodo.getDimParametro(i));
-		}
-		
-		if (Conf.fichero_log)
-		{
-			MetodoAlgoritmo ma=this.clase.getMetodoPrincipal();
-			String[] paramMA=ma.getParamValores();
-			String mensaje="Lanzar ejecución: "+ma.getNombre()+"(";
-			for (int i=0; i<paramMA.length; i++)
-			{
-				if (i>0)
-					mensaje+=", ";
-				mensaje+=paramMA[i];
+		// En tercer lugar, actualizamos la visibilidad de los parámetros del
+		// método
+		for (int i = 0; i < this.numero; i++) {
+			if (i < this.metodo.getNumeroParametros()) {
+				this.metodo.setVisibilidadEntrada(
+						this.mostrarvalores[i].isSelected(), i);
+			} else {
+				this.metodo.setVisibilidadSalida(
+						this.mostrarvalores[i].isSelected(),
+						i - this.metodo.getNumeroParametros());
 			}
-			mensaje+=");";
+		}
+
+		if (valoresFinales) {
+			this.dialogo.setVisible(false);
+		}
+
+		for (int i = 0; i < this.metodo.getNumeroParametros(); i++) {
+			ValoresParametros.anadirValorListados(
+					(String) (this.cuadrosvalores[i].getSelectedItem()),
+					this.metodo.getTipoParametro(i),
+					this.metodo.getDimParametro(i));
+		}
+
+		if (Conf.fichero_log) {
+			MetodoAlgoritmo ma = this.clase.getMetodoPrincipal();
+			String[] paramMA = ma.getParamValores();
+			String mensaje = "Lanzar ejecución: " + ma.getNombre() + "(";
+			for (int i = 0; i < paramMA.length; i++) {
+				if (i > 0) {
+					mensaje += ", ";
+				}
+				mensaje += paramMA[i];
+			}
+			mensaje += ");";
 			Logger.log_write(mensaje);
 		}
 		Ventana.thisventana.setClase(this.clase);
-		dialogo.setVisible(false);
-		p.ejecutarAlgoritmo();
-		
+		this.dialogo.setVisible(false);
+		this.p.ejecutarAlgoritmo();
+
 		return true;
 	}
-	
-	
-	
+
 	/**
-		Escribe en un JTextField el valor pasado como parámetro
-		
-		@param texto texto que escribirá en el JTextField correspondiente
-		@param i número de JTextField en el que se debe introducir el texto pasado como parámetro
-	*/
-	public void setValor(String texto, int i)
-	{
-		if (i<cuadrosvalores.length && cuadrosvalores[i]!=null)
-		{
-			texto=texto.replace(" ","");
-			cuadrosvalores[i].addItem(texto);
-			cuadrosvalores[i].setSelectedItem(texto);
+	 * Escribe en un JTextField el valor pasado como parámetro
+	 * 
+	 * @param texto
+	 *            texto que escribirá en el JTextField correspondiente
+	 * @param i
+	 *            número de JTextField en el que se debe introducir el texto
+	 *            pasado como parámetro
+	 */
+	public void setValor(String texto, int i) {
+		if (i < this.cuadrosvalores.length && this.cuadrosvalores[i] != null) {
+			texto = texto.replace(" ", "");
+			this.cuadrosvalores[i].addItem(texto);
+			this.cuadrosvalores[i].setSelectedItem(texto);
 		}
-			//cuadrosvalores[i].setText(texto);
 	}
-	
+
 	/**
-		Permite extraer el JDialog asociado
-		
-		@return JDialog de CuadroParam
-	*/
-	public JDialog getJDialog()
-	{
+	 * Permite extraer el JDialog asociado
+	 * 
+	 * @return JDialog de CuadroParam
+	 */
+	public JDialog getJDialog() {
 		return this.dialogo;
 	}
 	
-	
-	public void gestionEventoBotones(AWTEvent e)
-	{
-		if (e.getSource()==aceptar)
+	/**
+	 * Gestiona los eventos realizados sobre los botones.
+	 * 
+	 * @param e evento.
+	 */
+	private void gestionEventoBotones(AWTEvent e) {
+		if (e.getSource() == this.aceptar) {
 			recogerValores(true);
-		else if (e.getSource()==cancelar)
-			dialogo.setVisible(false);
-		else if (e.getSource()==generar)
-			if (cga==null)
-				cga=new CuadroGenerarAleatorio(Ventana.thisventana, this,this.metodo);
-			else
-				cga.setVisible(true);
-		else if (e.getSource()==cargar)
-		{
-			estamosCargando=true;
-			if (almacenValores.cargar(this.metodo))
-			{
-				this.valores=almacenValores.get();
-				for (int i=0; i<valores.length; i++)
-				{
-					ComboBoxEditor cbe=cuadrosvalores[i].getEditor();
+		} else if (e.getSource() == this.cancelar) {
+			this.dialogo.setVisible(false);
+		} else if (e.getSource() == this.generar) {
+			if (this.cga == null) {
+				this.cga = new CuadroGenerarAleatorio(Ventana.thisventana,
+						this, this.metodo);
+			} else {
+				this.cga.setVisible(true);
+			}
+		} else if (e.getSource() == this.cargar) {
+			this.estamosCargando = true;
+			if (this.almacenValores.cargar(this.metodo)) {
+				this.valores = this.almacenValores.get();
+				for (int i = 0; i < this.valores.length; i++) {
+					ComboBoxEditor cbe = this.cuadrosvalores[i].getEditor();
 					cbe.setItem(this.valores[i]);
-					cuadrosvalores[i].insertItemAt(this.valores[i],0);
-					cuadrosvalores[i].setSelectedIndex(0);
-					//cuadrosvalores[i].setText(this.valores[i]);
+					this.cuadrosvalores[i].insertItemAt(this.valores[i], 0);
+					this.cuadrosvalores[i].setSelectedIndex(0);
 				}
-				if (recogerValores(false))
-					aceptar.setEnabled(true);
-				else
-					aceptar.setEnabled(false);
+				if (recogerValores(false)) {
+					this.aceptar.setEnabled(true);
+				} else {
+					this.aceptar.setEnabled(false);
+				}
+			} else {
+				if (this.almacenValores.getError().length() > 0) {
+					new CuadroError(this.dialogo, "3"
+							+ Texto.get("ERROR_ARCH", Conf.idioma),
+							this.almacenValores.getError());
+				}
 			}
-			else
-			{
-				if (almacenValores.getError().length()>0)
-					new CuadroError(this.dialogo, "3"+Texto.get("ERROR_ARCH",Conf.idioma),almacenValores.getError());
+		} else if (e.getSource() == this.guardar) {
+			String valores[] = new String[this.cuadrosvalores.length];
+			for (int i = 0; i < this.cuadrosvalores.length; i++) {
+				valores[i] = (String) (this.cuadrosvalores[i].getSelectedItem());
 			}
-		}
-		else if ( e.getSource()==guardar)
-		{
-			String valores[]=new String[cuadrosvalores.length];
-			for (int i=0; i<cuadrosvalores.length; i++)
-				valores[i]=(String)(cuadrosvalores[i].getSelectedItem());
-				//valores[i]=cuadrosvalores[i].getText();
-			almacenValores.guardar(valores, this.metodo);
-			guardar.setEnabled(true);
+			this.almacenValores.guardar(valores, this.metodo);
+			this.guardar.setEnabled(true);
 		}
 	}
 	
-	
-	private boolean comprobarVisibilidadCorrecta()
-	{
-		boolean unoActivo=false;
+	/**
+	 * Comprueba que al menos uno de los parámetros
+	 * del método esté seleccionado.
+	 * 
+	 * @return true si al menos un parámetro está seleccionado,
+	 * false en caso contrario.
+	 */
+	private boolean comprobarVisibilidadCorrecta() {
+		boolean unoActivo = false;
 		// Tendremos n campos: n parámetros
-		if (!metodo.getTipo().equals("void"))
-		{
-			for (int i=0; i<numero; i++)
-				if (mostrarvalores[i].isSelected())
-					unoActivo=true;
-			if (!unoActivo)
-				new CuadroError(this.dialogo, Texto.get("ERROR_PARAM",Conf.idioma),Texto.get("ERROR_VISIBIENTR",Conf.idioma));
+		if (!this.metodo.getTipo().equals("void")) {
+			for (int i = 0; i < this.numero; i++) {
+				if (this.mostrarvalores[i].isSelected()) {
+					unoActivo = true;
+				}
+			}
+			if (!unoActivo) {
+				new CuadroError(this.dialogo, Texto.get("ERROR_PARAM",
+						Conf.idioma),
+						Texto.get("ERROR_VISIBIENTR", Conf.idioma));
+			}
 		}
 		// Tenemos n*2 campos: n de entrada, n de salida
-		else
-		{
-			for (int i=0; i<numero/2; i++)
-				if (mostrarvalores[i].isSelected())
-					unoActivo=true;
-			if (!unoActivo)
-				new CuadroError(this.dialogo, Texto.get("ERROR_PARAM",Conf.idioma),Texto.get("ERROR_VISIBIENTR",Conf.idioma));
-				
-			/*if (unoActivo)
-			{
-				unoActivo=false;
-				for (int i=numero/2; i<numero; i++)
-					if (mostrarvalores[i].isSelected())
-						unoActivo=true;
-				if (!unoActivo)
-					new CuadroError(this.dialogo, Texto.get("ERROR_PARAM",Conf.idioma),Texto.get("ERROR_VISIBISALI",Conf.idioma));
-			}*/
+		else {
+			for (int i = 0; i < this.numero / 2; i++) {
+				if (this.mostrarvalores[i].isSelected()) {
+					unoActivo = true;
+				}
+			}
+			if (!unoActivo) {
+				new CuadroError(this.dialogo, Texto.get("ERROR_PARAM",
+						Conf.idioma),
+						Texto.get("ERROR_VISIBIENTR", Conf.idioma));
+			}
 		}
 		return unoActivo;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
-		Gestiona los eventos de acción
+	 * Gestiona los eventos de acción
+	 * 
+	 * @param e
+	 *            evento de acción
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
 		
-		@param e evento de acción
-	*/
-	public void actionPerformed(ActionEvent e)
-	{
-		//gestionEventoBotones(e);
-			
 	}
 
 	/**
-		Gestiona los eventos de teclado
-		
-		@param e evento de teclado
-	*/
-	public void keyPressed(KeyEvent e)
-	{
-		
+	 * Gestiona los eventos de teclado
+	 * 
+	 * @param e
+	 *            evento de teclado
+	 */
+	@Override
+	public void keyPressed(KeyEvent e) {
+
 	}
-	
+
 	/**
-		Gestiona los eventos de teclado
-		
-		@param e evento de teclado
-	*/	
-	public void keyReleased(KeyEvent e)
-	{
-		//System.out.println("CuadroParam.keyPressed");
-		int code=e.getKeyCode();
-		if (code==KeyEvent.VK_ENTER)
-		{
-			if ((e.getSource()!=cargar || !estamosCargando))
+	 * Gestiona los eventos de teclado
+	 * 
+	 * @param e
+	 *            evento de teclado
+	 */
+	@Override
+	public void keyReleased(KeyEvent e) {
+		int code = e.getKeyCode();
+		if (code == KeyEvent.VK_ENTER) {
+			if ((e.getSource() != this.cargar || !this.estamosCargando)) {
 				recogerValores(true);
-			estamosCargando=false;
-		}
-		else if ((e.getSource() instanceof JButton) && code==KeyEvent.VK_SPACE)
+			}
+			this.estamosCargando = false;
+		} else if ((e.getSource() instanceof JButton)
+				&& code == KeyEvent.VK_SPACE) {
 			gestionEventoBotones(e);
-		
-		
-		if (e.getSource().getClass().getName().contains("JCheckBox"))
-		{
-			for (int i=0; i<mostrarvalores.length; i++)
-			{
-				if (mostrarvalores[i].isFocusOwner())
-				{
-					if (code==KeyEvent.VK_DOWN)
-					{
-						mostrarvalores[i].transferFocus();
-					}
-					else if (code==KeyEvent.VK_UP)
-					{
-						mostrarvalores[i].transferFocusBackward();
-					}
-					else if (code==KeyEvent.VK_RIGHT)
-					{
-						cuadrosvalores[i].requestFocus();
+		}
+
+		if (e.getSource().getClass().getName().contains("JCheckBox")) {
+			for (int i = 0; i < this.mostrarvalores.length; i++) {
+				if (this.mostrarvalores[i].isFocusOwner()) {
+					if (code == KeyEvent.VK_DOWN) {
+						this.mostrarvalores[i].transferFocus();
+					} else if (code == KeyEvent.VK_UP) {
+						this.mostrarvalores[i].transferFocusBackward();
+					} else if (code == KeyEvent.VK_RIGHT) {
+						this.cuadrosvalores[i].requestFocus();
 					}
 				}
 			}
 		}
-		
-		else if (code==KeyEvent.VK_ESCAPE)
-			dialogo.setVisible(false);
-		else if (e.getSource() instanceof JCheckBox)
+
+		else if (code == KeyEvent.VK_ESCAPE) {
+			this.dialogo.setVisible(false);
+		} else if (e.getSource() instanceof JCheckBox) {
 			comprobarVisibilidadCorrecta();
+		}
 	}
 
 	/**
-		Gestiona los eventos de teclado
-		
-		@param e evento de teclado
-	*/
-	public void keyTyped(KeyEvent e)
-	{
-		//System.out.println("CuadroParam.keyTyped");
-		/*int code=e.getKeyCode();
-		new Thread() {
-			public synchronized void run()
-			{
-				try { wait (10); } catch (InterruptedException ie) {System.out.println("Error de delay");};
-				if (recogerValores(false))
-					aceptar.setVerde();
-				else
-					aceptar.setRojo();
-			}
-		}.start();*/
-
-	}
-
-	/**
-		Gestiona los eventos de ratón
-		
-		@param e evento de ratón
-	*/	
-	public void mouseClicked(MouseEvent e) 
-	{
-		/*if (e.getSource()==aceptar)
-			recogerValores(true);
-		else if (e.getSource()==cancelar)
-			dialogo.setVisible(false);*/
-
-
-	}
-	
-	/**
-		Gestiona los eventos de ratón
-		
-		@param e evento de ratón
-	*/	
-	public void mouseEntered(MouseEvent e) 
-	{
-
-	}
-	
-	/**
-		Gestiona los eventos de ratón
-		
-		@param e evento de ratón
-	*/	
-	public void mouseExited(MouseEvent e) 
-	{
-
-	}
-	
-	/**
-		Gestiona los eventos de ratón
-		
-		@param e evento de ratón
-	*/	
-	public void mousePressed(MouseEvent e) 
-	{
+	 * Gestiona los eventos de teclado
+	 * 
+	 * @param e
+	 *            evento de teclado
+	 */
+	@Override
+	public void keyTyped(KeyEvent e) {
 		
 	}
 
 	/**
-		Gestiona los eventos de ratón
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mouseClicked(MouseEvent e) {
 		
-		@param e evento de ratón
-	*/		
-	public void mouseReleased(MouseEvent e)
-	{
-		if (e.getSource() instanceof JButton)
+	}
+
+	/**
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	/**
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
+	/**
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	/**
+	 * Gestiona los eventos de ratón
+	 * 
+	 * @param e
+	 *            evento de ratón
+	 */
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (e.getSource() instanceof JButton) {
 			gestionEventoBotones(e);
-		if (e.getSource() instanceof JCheckBox)
+		}
+		if (e.getSource() instanceof JCheckBox) {
 			comprobarVisibilidadCorrecta();
+		}
 	}
-	
-	public void setLuzVerde(boolean v)
-	{
-		this.luzVerde=v;
-	}
-	
 }

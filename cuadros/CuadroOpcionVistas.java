@@ -91,8 +91,7 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 		for (int i = 0; i < Vista.codigos.length; i++) {
 			JPanel panelVista = new JPanel();
 			panelVista.setLayout(new BorderLayout());
-			panelVista.setPreferredSize(new Dimension(
-					CuadroOpcionVistas.ANCHO_CUADRO - 10, 23));
+			panelVista.setPreferredSize(new Dimension(ANCHO_CUADRO - 10, 23));
 
 			JLabel etiq = new JLabel(Texto.get(Vista.codigos[i], Conf.idioma));
 
@@ -177,17 +176,14 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 		this.dialogo.setTitle(Texto.get("CPAN_DISPOS", Conf.idioma));
 
 		if (this.ventana.msWindows) {
-			this.dialogo.setSize(CuadroOpcionVistas.ANCHO_CUADRO,
-					CuadroOpcionVistas.ALTO_CUADRO);
-			int coord[] = Conf.ubicarCentro(CuadroOpcionVistas.ANCHO_CUADRO,
-					CuadroOpcionVistas.ALTO_CUADRO);
+			this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
+			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
 			this.dialogo.setLocation(coord[0], coord[1]);
 		} else {
-			this.dialogo.setSize(CuadroOpcionVistas.ANCHO_CUADRO_NO_WINDOWS,
-					CuadroOpcionVistas.ALTO_CUADRO_NO_WINDOWS);
-			int coord[] = Conf.ubicarCentro(
-					CuadroOpcionVistas.ANCHO_CUADRO_NO_WINDOWS,
-					CuadroOpcionVistas.ALTO_CUADRO_NO_WINDOWS);
+			this.dialogo.setSize(ANCHO_CUADRO_NO_WINDOWS,
+					ALTO_CUADRO_NO_WINDOWS);
+			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO_NO_WINDOWS,
+					ALTO_CUADRO_NO_WINDOWS);
 			this.dialogo.setLocation(coord[0], coord[1]);
 		}
 		this.dialogo.setResizable(false);
@@ -292,11 +288,12 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 						wait(300);
 					} catch (java.lang.InterruptedException ie) {
 					}
-					CuadroOpcionVistas.this.ventana.distribuirPaneles(
-							panel1activos,
-							(CuadroOpcionVistas.this.selecPanel
-									.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
-									: Conf.PANEL_HORIZONTAL));
+					CuadroOpcionVistas.this.ventana
+							.distribuirPaneles(
+									panel1activos,
+									(CuadroOpcionVistas.this.selecPanel
+											.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
+											: Conf.PANEL_HORIZONTAL));
 				}
 			}.start();
 

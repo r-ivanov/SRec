@@ -1772,7 +1772,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 	
 	public void introducirParametros()
 	{
-		new CuadroParamLanzarEjec(this.claseAlgoritmo.getMetodoPrincipal(), this.claseAlgoritmo, p);
+		new CuadroParamLanzarEjec(this, this.claseAlgoritmo.getMetodoPrincipal(), this.claseAlgoritmo, p);
 	}
 	
 	// Deshabilita las opciones de menu que deben quedar deshabilitadas tras cerrar una animación
