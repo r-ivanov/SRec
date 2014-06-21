@@ -650,7 +650,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			{
 				if (Conf.fichero_log) log_write("Visualización > Configuración de Zoom...");
 				if (this.panelOcupado())
-					new CuadroZoom(panelVentana);
+					new CuadroZoom(this, panelVentana);
 				else
 					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOVISZOOM",Conf.idioma));
 			}
@@ -1247,7 +1247,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			{
 				if (Conf.fichero_log) log_write("Botón: Zoom...");
 				if (this.panelOcupado())
-					new CuadroZoom(panelVentana);
+					new CuadroZoom(this, panelVentana);
 				else
 					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOVISZOOM",Conf.idioma));
 			}
@@ -1258,7 +1258,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 					int[] vistasVisiblesAhora=this.panelVentana.getCodigosVistasVisibles();
 					if (Conf.fichero_log) log_write("Botón: Zoom+ (panel 1, vista "+Vista.codigos[vistasVisiblesAhora[0]]+")");
 					if (vistasVisiblesAhora[0]!=2)
-						CuadroZoom.zoomAjuste(panelVentana,vistasVisiblesAhora[0],CuadroZoom.MAS5);
+						CuadroZoom.zoomAjuste(this, panelVentana,vistasVisiblesAhora[0],CuadroZoom.MAS5);
 				}
 				else
 					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOVISZOOM",Conf.idioma));
@@ -1270,7 +1270,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 					int[] vistasVisiblesAhora=this.panelVentana.getCodigosVistasVisibles();
 					if (Conf.fichero_log) log_write("Botón: Zoom- (panel 1, vista "+Vista.codigos[vistasVisiblesAhora[0]]+")");
 					if (vistasVisiblesAhora[0]!=2)
-						CuadroZoom.zoomAjuste(panelVentana,vistasVisiblesAhora[0],CuadroZoom.MENOS5);
+						CuadroZoom.zoomAjuste(this, panelVentana,vistasVisiblesAhora[0],CuadroZoom.MENOS5);
 				}
 					
 				else
@@ -1283,7 +1283,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 					int[] vistasVisiblesAhora=this.panelVentana.getCodigosVistasVisibles();
 					if (Conf.fichero_log) log_write("Botón: ZoomAjuste (panel 1, vista "+Vista.codigos[vistasVisiblesAhora[0]]+")");
 					if (vistasVisiblesAhora[0]!=2)
-						CuadroZoom.zoomAjuste(panelVentana,vistasVisiblesAhora[0],CuadroZoom.AJUSTE);
+						CuadroZoom.zoomAjuste(this, panelVentana,vistasVisiblesAhora[0],CuadroZoom.AJUSTE);
 				}
 				else
 					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOVISZOOM",Conf.idioma));
@@ -1295,7 +1295,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 					int[] vistasVisiblesAhora=this.panelVentana.getCodigosVistasVisibles();
 					if (Conf.fichero_log) log_write("Botón: Zoom+ (panel 2, vista "+Vista.codigos[vistasVisiblesAhora[1]]+")");
 					if (vistasVisiblesAhora[1]!=2)
-						CuadroZoom.zoomAjuste(panelVentana,vistasVisiblesAhora[1],CuadroZoom.MAS5);
+						CuadroZoom.zoomAjuste(this, panelVentana,vistasVisiblesAhora[1],CuadroZoom.MAS5);
 				}
 				else
 					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOVISZOOM",Conf.idioma));
@@ -1307,7 +1307,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 					int[] vistasVisiblesAhora=this.panelVentana.getCodigosVistasVisibles();
 					if (Conf.fichero_log) log_write("Botón: Zoom- (panel 2, vista "+Vista.codigos[vistasVisiblesAhora[1]]+")");
 					if (vistasVisiblesAhora[1]!=2)
-						CuadroZoom.zoomAjuste(panelVentana,vistasVisiblesAhora[1],CuadroZoom.MENOS5);
+						CuadroZoom.zoomAjuste(this, panelVentana,vistasVisiblesAhora[1],CuadroZoom.MENOS5);
 				}
 					
 				else
@@ -1320,7 +1320,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 					int[] vistasVisiblesAhora=this.panelVentana.getCodigosVistasVisibles();
 					if (Conf.fichero_log) log_write("Botón: ZoomAjuste (panel 2, vista "+Vista.codigos[vistasVisiblesAhora[1]]+")");
 					if (vistasVisiblesAhora[1]!=2)
-						CuadroZoom.zoomAjuste(panelVentana,vistasVisiblesAhora[1],CuadroZoom.AJUSTE);
+						CuadroZoom.zoomAjuste(this, panelVentana,vistasVisiblesAhora[1],CuadroZoom.AJUSTE);
 				}
 				else
 					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOVISZOOM",Conf.idioma));
