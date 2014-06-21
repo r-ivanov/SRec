@@ -954,7 +954,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener
 	{
 		
 		if (Ventana.thisventana.clasePendienteGuardar)
-			new CuadroPreguntaEdicionNoGuardada("cierreVentana");
+			new CuadroPreguntaEdicionNoGuardada(Ventana.thisventana, "cierreVentana");
 		else
 			Ventana.thisventana.activarCierre();
 		

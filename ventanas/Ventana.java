@@ -349,7 +349,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			{
 				if (Conf.fichero_log) log_write("Archivo > Cargar y procesar clase...");
 				if (this.clasePendienteGuardar)
-					new CuadroPreguntaEdicionNoGuardada("cargarClase");
+					new CuadroPreguntaEdicionNoGuardada(this, "cargarClase");
 				else
 					gestionOpcionCargarClase();
 			}
@@ -390,7 +390,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 				if (Conf.fichero_log) log_write("Archivo > Seleccionar método...");
 				if (this.claseAlgoritmo!=null) {
 					if (this.clasePendienteGuardar||this.clasePendienteProcesar) {
-						new CuadroPreguntaEdicionNoGuardada("guardar");
+						new CuadroPreguntaEdicionNoGuardada(this, "guardar");
 					}
 					else {
 						iniciarNuevaVisualizacionSelecMetodo();
@@ -431,7 +431,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			{
 				if (Conf.fichero_log) log_write("Archivo > Cargar animación...");
 				if (this.clasePendienteGuardar)
-					new CuadroPreguntaEdicionNoGuardada("cargarAnimacion");
+					new CuadroPreguntaEdicionNoGuardada(this, "cargarAnimacion");
 				else
 					gestionOpcionCargarAnimacion();
 
@@ -442,7 +442,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			{
 				if (Conf.fichero_log) log_write("Archivo > Cargar animación GIF...");
 				if (this.clasePendienteGuardar)
-					new CuadroPreguntaEdicionNoGuardada("cargarAnimacionGIF");
+					new CuadroPreguntaEdicionNoGuardada(this, "cargarAnimacionGIF");
 				else
 					gestionOpcionCargarAnimacionGIF();
 			}
@@ -1041,7 +1041,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			{
 				if (Conf.fichero_log) log_write("Botón: Cargar y procesar clase");
 				if (this.clasePendienteGuardar)
-					new CuadroPreguntaEdicionNoGuardada("cargarClase");
+					new CuadroPreguntaEdicionNoGuardada(this, "cargarClase");
 				else
 					gestionOpcionCargarClase();
 			}
@@ -1074,7 +1074,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 				if (Conf.fichero_log) log_write("Botón > Seleccionar método...");
 				if (this.claseAlgoritmo!=null) {
 					if (this.clasePendienteGuardar||this.clasePendienteProcesar) {
-						new CuadroPreguntaEdicionNoGuardada("guardar");
+						new CuadroPreguntaEdicionNoGuardada(this, "guardar");
 					}
 					else {
 						iniciarNuevaVisualizacionSelecMetodo();
@@ -1108,7 +1108,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			{
 				if (Conf.fichero_log) log_write("Botón: Cargar visualización...");
 				if (this.clasePendienteGuardar)
-					new CuadroPreguntaEdicionNoGuardada("cargarAnimacion");
+					new CuadroPreguntaEdicionNoGuardada(this, "cargarAnimacion");
 				else
 					gestionOpcionCargarAnimacion();
 			}
