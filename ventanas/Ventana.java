@@ -286,9 +286,8 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			
 			if (!omvj.getValida())
 			{
-				CuadroOpcionMVJava comvj = new CuadroOpcionMVJava(true); //A true para indicar que cargue un texto más explicativo para la primera ejecución
-				//new CuadroError(comvj.getDialogo(),Texto.get("ERROR_CONF",Conf.idioma),
-				//			Texto.get("ERROR_CORRMVJ",Conf.idioma));
+				// A true para indicar que cargue un texto más explicativo para la primera ejecución.
+				CuadroOpcionMVJava comvj = new CuadroOpcionMVJava(this, true);
 			}
 		}
 		
@@ -923,7 +922,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[33]) )
 			{
 				if (Conf.fichero_log) log_write("Configuración > Máquina Virtual Java...");
-				new CuadroOpcionMVJava(false);
+				new CuadroOpcionMVJava(this, false);
 			}
 
 			// Configuración > Idioma...
