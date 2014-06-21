@@ -659,7 +659,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[27]) )
 			{
 				if (Conf.fichero_log) log_write("Visualización > Ubicación de paneles");
-				new CuadroOpcionVistas();
+				new CuadroOpcionVistas(this);
 			}
 			
 			
@@ -1328,7 +1328,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if(fuente==botones[27])		// Configuración > Vistas y paneles
 			{
 				if (Conf.fichero_log) log_write("Botón: Vistas y paneles");
-				new CuadroOpcionVistas();
+				new CuadroOpcionVistas(this);
 			}
 			else if(fuente==botones[30])		// Filtrado y selección > Búsqueda de llamadas...
 			{

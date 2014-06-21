@@ -155,9 +155,9 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener,
 		this.dialogo.getContentPane().add(this.panel);
 
 		// Preparamos y mostramos cuadro
-		int coord[] = Conf.ubicarCentro(CuadroOpcionMVJava.ANCHO_CUADRO, CuadroOpcionMVJava.ALTO_CUADRO);
+		int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
 		this.dialogo.setLocation(coord[0], coord[1]);
-		this.dialogo.setSize(CuadroOpcionMVJava.ANCHO_CUADRO, CuadroOpcionMVJava.ALTO_CUADRO);
+		this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
 		this.dialogo.setResizable(false);
 		this.dialogo.setTitle(Texto.get("COMVJ_SELECTITULO", Conf.idioma));
 		this.dialogo.setVisible(true);
