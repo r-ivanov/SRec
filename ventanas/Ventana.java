@@ -676,7 +676,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if ( textoFuente.equals(textos[43]) )
 			{
 				if (Conf.fichero_log) log_write("Filtrado y selección > Métodos y parámetros...");
-				new CuadroVisibilidad(dtb);
+				new CuadroVisibilidad(this, dtb);
 			}
 			
 			// Filtrado > Llamadas terminadas...
@@ -1157,7 +1157,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 			else if(fuente==botones[11])		// Visualización > Visibilidad de métodos y parámetros
 			{
 				if (Conf.fichero_log) log_write("Botón: Visibilidad de métodos y parámetros...");
-				new CuadroVisibilidad(dtb);
+				new CuadroVisibilidad(this, dtb);
 			}
 			
 			else if(fuente==botones[12])		// Visualización > Nodos históricos...
