@@ -50,6 +50,7 @@ public class CuadroPreguntaSobreescribir extends CuadroPregunta implements
 		this.param = param;
 		this.objeto = o;
 		this.componenteUI = c;
+		this.start();
 	}
 
 	/**

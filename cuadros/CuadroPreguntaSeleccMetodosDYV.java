@@ -42,6 +42,7 @@ public class CuadroPreguntaSeleccMetodosDYV extends CuadroPregunta implements
 				Conf.idioma), Texto.get("NO", Conf.idioma));
 		this.clase = clase;
 		this.p = p;
+		this.start();
 	}
 
 	/**
@@ -58,6 +59,8 @@ public class CuadroPreguntaSeleccMetodosDYV extends CuadroPregunta implements
 				Logger.log_write("¿Habilitar vistas para DYV? Sí");
 			}
 			new CuadroSeleccionMetodos(this.clase, this.ventana, this.p);
+		} else {
+			this.p.fase2(this.clase);
 		}
 	}
 

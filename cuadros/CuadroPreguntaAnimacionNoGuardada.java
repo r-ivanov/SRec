@@ -39,6 +39,7 @@ public class CuadroPreguntaAnimacionNoGuardada extends CuadroPregunta implements
 				"PREGMEN_ANIMNOGUARD", Conf.idioma), Texto.get("GUARDAR",
 				Conf.idioma), Texto.get("BOTONCANCELAR", Conf.idioma), Texto
 				.get("NO_GUARDAR", Conf.idioma));
+		this.start();
 	}
 
 	/**

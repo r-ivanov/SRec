@@ -75,7 +75,6 @@ public abstract class CuadroPregunta extends Thread implements ActionListener,
 		this.textoBotonAceptar = textoBotonAceptar;
 		this.textoBotonCancelar = textoBotonCancelar;
 		this.textoBotonIgnorar = textoBotonIgnorar;
-		this.start();
 	}
 
 	/**
@@ -101,7 +100,6 @@ public abstract class CuadroPregunta extends Thread implements ActionListener,
 		this.etiq = etiq;
 		this.textoBotonAceptar = textoBotonAceptar;
 		this.textoBotonCancelar = textoBotonCancelar;
-		this.start();
 	}
 	
 	/**

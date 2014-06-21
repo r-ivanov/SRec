@@ -40,6 +40,7 @@ public class CuadroPreguntaEdicionNoGuardada extends CuadroPregunta implements
 						Conf.idioma), Texto.get("SI", Conf.idioma), Texto.get(
 						"NO", Conf.idioma));
 		this.accion = accion;
+		this.start();
 	}
 
 	/**

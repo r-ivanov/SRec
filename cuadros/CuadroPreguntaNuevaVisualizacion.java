@@ -36,6 +36,7 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements
 				"PREGMEN_DESCART", Conf.idioma), Texto.get("BOTONACEPTAR",
 				Conf.idioma), Texto.get("BOTONCANCELAR", Conf.idioma));
 		this.accion = accion;
+		this.start();
 	}
 
 	/**
