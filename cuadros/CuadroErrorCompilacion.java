@@ -45,24 +45,6 @@ public class CuadroErrorCompilacion extends Thread implements ActionListener,
 	/**
 	 * Constructor: crea una nueva instancia del cuadro de error
 	 * 
-	 * @param dialogo
-	 *            dialogo al que quedará asociado este cuadro
-	 * @param titulo
-	 *            título que llevará el cuadro de error
-	 * @param etiq
-	 *            mensaje que mostrará el cuadro de error
-	 */
-	public CuadroErrorCompilacion(JDialog dialogo, String fichero,
-			String errores) {
-		this.d = new JDialog(dialogo, true);
-		this.fichero = fichero;
-		this.errores = errores;
-		this.start();
-	}
-
-	/**
-	 * Constructor: crea una nueva instancia del cuadro de error
-	 * 
 	 * @param ventana
 	 *            ventana a la que quedará asociado este cuadro
 	 * @param titulo
@@ -78,7 +60,7 @@ public class CuadroErrorCompilacion extends Thread implements ActionListener,
 	}
 
 	/**
-	 * crea una nueva instancia del cuadro de error. DESECHADO
+	 * Ejecuta el thread asociado al hilo.
 	 */
 	@Override
 	public synchronized void run() {

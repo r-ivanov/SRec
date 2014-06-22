@@ -89,7 +89,7 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 	 * @param alt
 	 *            alto del cuadro
 	 */
-	public CuadroError(JDialog dialogo, String titulo, String etiq, int anc,
+	private CuadroError(JDialog dialogo, String titulo, String etiq, int anc,
 			int alt) {
 		this.d = new JDialog(dialogo, true);
 		this.titulo = titulo;
