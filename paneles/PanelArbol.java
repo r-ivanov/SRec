@@ -11,6 +11,8 @@ import java.io.File;
 import java.lang.OutOfMemoryError;
 
 
+
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -21,14 +23,16 @@ import javax.swing.JViewport;
 import javax.swing.border.EmptyBorder;
 
 
+
+
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 
+import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -36,11 +40,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import java.awt.geom.Rectangle2D;
 
 /*import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;*/
+
+
 
 
 import org.jgraph.JGraph;
@@ -51,6 +56,7 @@ import cuadros.*;
 import datos.*;
 import eventos.*;
 import grafica.*;
+import grafo.SrecCellViewFactory;
 import utilidades.*;
 import ventanas.*;
 
@@ -68,7 +74,7 @@ public class PanelArbol extends JPanel implements ActionListener, KeyListener, M
 	
 	
 	GraphModel model = new DefaultGraphModel();
-	GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+	GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
 	
 	
 	JViewport vp;
@@ -133,11 +139,10 @@ public class PanelArbol extends JPanel implements ActionListener, KeyListener, M
 	public PanelArbol(NombresYPrefijos nyp) throws Exception 
 	{
 		this.nyp=nyp;
-		
 		if (Ventana.thisventana.traza!=null)
 		{
 			GraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+			GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
 			this.graph = new JGraph(model, view);
 			
 			this.graph.getModel().addGraphModelListener(null);
@@ -285,7 +290,7 @@ public class PanelArbol extends JPanel implements ActionListener, KeyListener, M
 		{
 			
 			GraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+			GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
 			graph = new JGraph(model, view);
 			
 			graph.getModel().addGraphModelListener(null);
@@ -336,7 +341,6 @@ public class PanelArbol extends JPanel implements ActionListener, KeyListener, M
 			//cc=new ContenedorArbol(VentanaVisualizador.thisventana.traza.getRaiz(),graph,this.nyp,1);
 			//this.celdas=cc.getCeldas();
 	
-			
 			graph.getGraphLayoutCache().insert(this.celdas);
 			
 			graph.addMouseListener(this);
@@ -354,7 +358,6 @@ public class PanelArbol extends JPanel implements ActionListener, KeyListener, M
 				altoGraph=cc.maximoAlto();		
 			}
 			
-		
 			vp.setBackground(Conf.colorPanel);
 			vp.removeAll();
 			vp.add(graph);
@@ -453,7 +456,7 @@ public class PanelArbol extends JPanel implements ActionListener, KeyListener, M
 			this.add(jspArbol,BorderLayout.CENTER);
 			if (Conf.mostrarVisor && jspVisor!=null)
 				this.add(jspVisor,BorderLayout.SOUTH);
-
+			
 			this.updateUI();
 		}
 	}
@@ -513,7 +516,7 @@ public class PanelArbol extends JPanel implements ActionListener, KeyListener, M
 	private JPanel crearVisor(Object[] celdas,JGraph graph,int posX, int posY, boolean movimientoVisor)
 	{
 		GraphModel model = new DefaultGraphModel();
-		GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+		GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
 		g=new JGraph(model, view);
 	
 		g.getModel().addGraphModelListener(null);

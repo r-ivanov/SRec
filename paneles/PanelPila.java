@@ -14,9 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import java.awt.BorderLayout;
-
 import java.awt.Dimension;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -28,12 +26,12 @@ import java.awt.event.KeyListener;
 import org.jgraph.JGraph;
 import org.jgraph.graph.*;
 
-
 import conf.*;
 import cuadros.*;
 import datos.*;
 import eventos.*;
 import grafica.*;
+import grafo.SrecCellViewFactory;
 import utilidades.*;
 import ventanas.*;
 
@@ -80,7 +78,7 @@ class PanelPila extends JPanel implements ActionListener, KeyListener, MouseList
 			this.setLayout(new BorderLayout());
 
 			GraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+			GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
 			graph = new JGraph(model, view);
 			
 			escalaOriginal=graph.getScale();
@@ -115,7 +113,7 @@ class PanelPila extends JPanel implements ActionListener, KeyListener, MouseList
 		if (Ventana.thisventana.traza!=null)
 		{
 			GraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+			GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
 			graph = new JGraph(model, view);
 			
 			graph.getModel().addGraphModelListener(null);

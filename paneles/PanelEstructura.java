@@ -9,6 +9,7 @@
 package paneles;
 
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,6 +20,7 @@ import org.jgraph.graph.*;
 import conf.*;
 import datos.*;
 import grafica.*;
+import grafo.SrecCellViewFactory;
 import utilidades.*;
 import ventanas.*;
 
@@ -59,7 +61,7 @@ class PanelEstructura extends JPanel implements MouseListener
 			this.mostrarNombreMetodos = Ventana.thisventana.traza.getNumMetodos()!= 1;
 			
 			GraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+			GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
 			graph = new JGraph(model, view);
 			
 			escalaOriginal=graph.getScale();
@@ -98,7 +100,7 @@ class PanelEstructura extends JPanel implements MouseListener
 		this.registro = Ventana.thisventana.traza.getRaiz().getNodoActual();
 		
 		GraphModel model = new DefaultGraphModel();
-		GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+		GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
 		graph = new JGraph(model, view);
 		
 		graph.getModel().addGraphModelListener(null);
