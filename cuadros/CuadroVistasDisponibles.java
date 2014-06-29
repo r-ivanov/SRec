@@ -159,7 +159,8 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 	private void getValores() {
 		for (int i = 0; i < this.botonesVistas.length; i++) {
 			if (this.botonesVistas[i].isSelected()) {
-				this.pv.setVistaActiva(this.botonesVistas[i].getText());
+                this.pv.setVistaActiva(botonesVistas[i].getText());
+                this.grafo = (JGraph) this.pv.getGrafoPorNombre(this.botonesVistas[i].getText());
 				this.numeroVista = i;
 			}
 		}
