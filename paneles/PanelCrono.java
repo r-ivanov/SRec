@@ -12,12 +12,11 @@ package paneles;
 import java.lang.OutOfMemoryError;
 
 
-
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
-
 
 
 import java.awt.BorderLayout;
@@ -34,7 +33,6 @@ import java.awt.event.KeyListener;
 
 
 
-
 import org.jgraph.JGraph;
 import org.jgraph.graph.*;
 
@@ -43,7 +41,6 @@ import cuadros.*;
 import datos.*;
 import eventos.*;
 import grafica.*;
-import grafo.SrecCellViewFactory;
 import utilidades.*;
 import ventanas.*;
 
@@ -60,7 +57,7 @@ public class PanelCrono extends JPanel implements ActionListener, KeyListener, M
 
 	
 	GraphModel model = new DefaultGraphModel();
-	GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
+	GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 	
 	
 	JViewport vp;
@@ -116,7 +113,7 @@ public class PanelCrono extends JPanel implements ActionListener, KeyListener, M
 		if (Ventana.thisventana.traza!=null)
 		{
 			GraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
+			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 			this.graph = new JGraph(model, view);
 			
 			this.graph.getModel().addGraphModelListener(null);
@@ -190,7 +187,7 @@ public class PanelCrono extends JPanel implements ActionListener, KeyListener, M
 		if (Ventana.thisventana.traza!=null)
 		{
 			GraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
+			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 			this.graph = new JGraph(model, view);
 			
 			this.graph.getModel().addGraphModelListener(null);

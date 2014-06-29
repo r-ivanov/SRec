@@ -6,7 +6,6 @@ import grafica.ContenedorArbol;
 import grafica.ContenedorCronologica;
 import grafica.ContenedorEstructura;
 import grafica.ContenedorPila;
-import grafo.SrecCellViewFactory;
 
 import org.jgraph.JGraph;
 import org.jgraph.graph.DefaultCellViewFactory;
@@ -15,6 +14,7 @@ import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
 
 import conf.Conf;
+
 import utilidades.FotografoArbol;
 import utilidades.NombresYPrefijos;
 import utilidades.ServiciosString;
@@ -30,7 +30,7 @@ public class GestorTrazaExportacion {
 	int ancho;
 	
 	GraphModel model = new DefaultGraphModel();
-	GraphLayoutCache view = new GraphLayoutCache(model,new SrecCellViewFactory());
+	GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 	NombresYPrefijos nyp;
 	public GestorTrazaExportacion(int numeroVista)
 	{
@@ -82,7 +82,7 @@ public class GestorTrazaExportacion {
 		{
 			case 0:
 				model = new DefaultGraphModel();
-				view = new GraphLayoutCache(model,new SrecCellViewFactory());
+				view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 				
 				this.graph = new JGraph(model, view);
 				this.graph.getModel().addGraphModelListener(null);
@@ -97,7 +97,7 @@ public class GestorTrazaExportacion {
 				break;
 			case 1:
 				model = new DefaultGraphModel();
-				view = new GraphLayoutCache(model,new SrecCellViewFactory());
+				view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 				
 				this.graph = new JGraph(model, view);
 				this.graph.getModel().addGraphModelListener(null);
@@ -112,7 +112,7 @@ public class GestorTrazaExportacion {
 				break;
 			case 2:
 				model = new DefaultGraphModel();
-				view = new GraphLayoutCache(model,new SrecCellViewFactory());
+				view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 				
 				this.graph = new JGraph(model, view);
 				this.graph.getModel().addGraphModelListener(null);
@@ -127,7 +127,7 @@ public class GestorTrazaExportacion {
 				break;
 			case 3:
 				model = new DefaultGraphModel();
-				view = new GraphLayoutCache(model,new SrecCellViewFactory());
+				view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 				
 				this.graph = new JGraph(model, view);
 				this.graph.getModel().addGraphModelListener(null);
