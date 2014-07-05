@@ -664,25 +664,15 @@ public class Preprocesador extends Thread
 			traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
 			traza_diferido.setTitulo(tituloPanel);
 			
-			
-			
-			
-
-			// Este objeto lo creamos para que se puedan guardar cómodamente los XML de animaciones (tirarán de datos de este objeto dtb)
-			DatosTrazaBasicos dtb=new DatosTrazaBasicos(traza_diferido);
-			
-			/*for (int i=0; i<dtb.getNumMetodos(); i++)
-			{
-				System.out.println("CREACION DTB METODO "+dtb.getMetodo(i).getNombre()+": "+( dtb.getMetodo(i).esMetodoConRetorno() ));
-				System.out.println("    Param. entrada: "+dtb.getMetodo(i).getNumParametrosE()+" Param. salida: "+dtb.getMetodo(i).getNumParametrosS());
-				
-			}*/
-			vv.setDTB(dtb);
-			
-			//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),80);
-			vv.visualizarAlgoritmo(traza_diferido,true,cuadroProgreso,claseProcesada[0],claseProcesada[1],true);
-
-			//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),90);
+			Ejecucion ejecucion = new Ejecucion(traza_diferido, claseProcesada[0], claseProcesada[1]);		
+			if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
+				ejecucion.getTraza().todoVisible();
+				FamiliaEjecuciones.getInstance().addEjecucion(ejecucion);
+			} else {		
+				vv.setDTB(ejecucion.getDatosTrazaBasicos());			
+				vv.visualizarAlgoritmo(traza_diferido, true, cuadroProgreso, ejecucion.getFicheroFuenteDirectorio(),
+						ejecucion.getFicheroFuente(), true);
+			}
 		}
 
 		File file=new File(ficherosinex+ahora+".class");
