@@ -668,6 +668,7 @@ public class Preprocesador extends Thread
 			if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
 				ejecucion.getTraza().todoVisible();
 				FamiliaEjecuciones.getInstance().addEjecucion(ejecucion);
+				FamiliaEjecuciones.getInstance().pintaFamilia();
 			} else {		
 				vv.setDTB(ejecucion.getDatosTrazaBasicos());			
 				vv.visualizarAlgoritmo(traza_diferido, true, cuadroProgreso, ejecucion.getFicheroFuenteDirectorio(),
