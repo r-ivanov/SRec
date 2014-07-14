@@ -617,6 +617,12 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 				}
 			}
 		}
+		
+		if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
+			panel2.removeAll();
+			panel2.add(new JScrollPane(FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones()));
+			//panel2.updateUI();
+		}
 	}
 	
 	/**

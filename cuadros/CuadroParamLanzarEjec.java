@@ -373,22 +373,22 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 					return false;
 				}
 
-				if (!ServiciosString.esDeTipoCorrecto(texto,
-						this.metodo.getTipoParametro(i),
-						this.metodo.getDimParametro(i))) {
-					new CuadroError(this.ventana, Texto.get("ERROR_PARAM",
-							Conf.idioma), Texto.get("CPARAM_ELPARAM",
-							Conf.idioma)
-							+ " nº"
-							+ (i + 1)
-							+ " ( "
-							+ this.metodo.getTipoParametro(i)
-							+ ServiciosString.cadenaDimensiones(this.metodo
-									.getDimParametro(i))
-							+ " ) "
-							+ Texto.get("CPARAM_NOESCORR", Conf.idioma));
-					return false;
-				}
+//				if (!ServiciosString.esDeTipoCorrecto(texto,
+//						this.metodo.getTipoParametro(i),
+//						this.metodo.getDimParametro(i))) {
+//					new CuadroError(this.ventana, Texto.get("ERROR_PARAM",
+//							Conf.idioma), Texto.get("CPARAM_ELPARAM",
+//							Conf.idioma)
+//							+ " nº"
+//							+ (i + 1)
+//							+ " ( "
+//							+ this.metodo.getTipoParametro(i)
+//							+ ServiciosString.cadenaDimensiones(this.metodo
+//									.getDimParametro(i))
+//							+ " ) "
+//							+ Texto.get("CPARAM_NOESCORR", Conf.idioma));
+//					return false;
+//				}
 			}
 
 			// En segundo lugar, actualizamos los valores de los parámetros del
