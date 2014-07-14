@@ -668,8 +668,8 @@ public class Preprocesador extends Thread
 			if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
 				ejecucion.getTraza().todoVisible();
 				FamiliaEjecuciones.getInstance().addEjecucion(ejecucion);
-				FamiliaEjecuciones.getInstance().pintaFamilia();
-			} else {		
+				FamiliaEjecuciones.getInstance().setEjecucionActiva(ejecucion);
+			} else {			
 				vv.setDTB(ejecucion.getDatosTrazaBasicos());			
 				vv.visualizarAlgoritmo(traza_diferido, true, cuadroProgreso, ejecucion.getFicheroFuenteDirectorio(),
 						ejecucion.getFicheroFuente(), true);
@@ -679,7 +679,6 @@ public class Preprocesador extends Thread
 		File file=new File(ficherosinex+ahora+".class");
 		file.delete();
 	}
-	
 	
 	private Traza poda(Traza traza)
 	{

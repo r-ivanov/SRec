@@ -11,11 +11,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
-
 import javax.swing.JComponent;
-
 import javax.swing.JPanel;
-
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
@@ -26,13 +23,18 @@ import javax.swing.event.ChangeListener;
 import opciones.GestorOpciones;
 import opciones.OpcionVistas;
 import opciones.Vista;
-
 import conf.Conf;
+import datos.FamiliaEjecuciones;
 import datos.MetodoAlgoritmo;
 
 
 
+
+import eventos.NavegacionListener;
+
 import java.lang.OutOfMemoryError;
+
+
 
 
 import utilidades.*;
@@ -84,6 +86,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 	boolean abriendoVistas=false;
 	
 	JPanel panelGral;
+	
+	private NavegacionListener arbolNavegacionListener;
 	
 	String[] nombresVistas=new String[Vista.codigos.length];
 	boolean[] vistasActualizadas=new boolean[Vista.codigos.length];
@@ -217,7 +221,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 		pContencion.setLayout(new BorderLayout());
 		pContencion.add(separadorCentral,BorderLayout.CENTER);
 		
-		jspArbol.addComponentListener(pArbol.getNavegacionListener());
+		this.arbolNavegacionListener = pArbol.getNavegacionListener();
+		jspArbol.addComponentListener(this.arbolNavegacionListener);
 
 		// Creamos panel general
 		panelGral = new JPanel();
@@ -354,7 +359,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 			}
 			
 			pControl.setValores(Ventana.thisventana.traza.getTitulo(), this);
-			jspArbol.addComponentListener(pArbol.getNavegacionListener());
+			
+			jspArbol.removeComponentListener(this.arbolNavegacionListener);
+			this.arbolNavegacionListener = pArbol.getNavegacionListener();
+			jspArbol.addComponentListener(this.arbolNavegacionListener);
 			
 			new Thread()
 			{		
@@ -367,7 +375,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 
 				}
 			}.start();
-			if(!Conf.arranqueEstadoInicial)
+			if(!Conf.arranqueEstadoInicial || FamiliaEjecuciones.getInstance().estaHabilitado())
 			{
 				pControl.hacerFinal();
 			}
@@ -540,7 +548,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 	
 	
 	public void ubicarVistas()
-	{
+	{	
 		// Vista de árbol
 		if (Conf.getVista(Vista.codigos[0]).getPanel()==1)
 			panel1.add(Texto.get(Vista.codigos[0],Conf.idioma),contenedorArbol);
@@ -610,12 +618,6 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
 	
 	/**
 		Comprueba si está cerrado el panel (es decir, si no está visualizando nada en su interior)

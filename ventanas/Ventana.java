@@ -1569,11 +1569,37 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		//memoria();
 	}
 
+	/**
+	 * Abre un nuevo panel de algoritmo que permita la visualización de de una determinada traza ya cargado
+	 * el algoritmo.
+	 *
+	 * @param traza Recibe la traza de ejecución del algoritmo, será el contenido de la visualización
+	 * @param dtb Datos de traza básicos.
+	 */
+	public void visualizarTraza(Traza traza, DatosTrazaBasicos dtb)
+	{
+		try {		
+			traza.asignarNumeroMetodo();
+			
+			this.dtb = dtb;
+			this.trazaCompleta=traza.copiar();
+			this.traza=traza.copiar();
+			this.traza=this.dtb.podar(traza);
 	
-	
-
-	
-	
+			panelVentana.mostrarEjecucionTraza();
+			
+			habilitarOpcionesAnimacion(true);
+			
+			if (this.claseAlgoritmo!=null)
+				this.animacionPendienteGuardar=true;
+			
+		} catch(OutOfMemoryError oome) {
+			new CuadroError(this,Texto.get("ERROR_EJEC",Conf.idioma), Texto.get("ERROR_NOMEMSUF",Conf.idioma));
+		} catch(Exception exp) {
+			new CuadroError(this,Texto.get("ERROR_EJEC",Conf.idioma), Texto.get("ERROR_NODET",Conf.idioma));
+			exp.printStackTrace();
+		}
+	}
 	
 	public boolean panelOcupado()
 	{
