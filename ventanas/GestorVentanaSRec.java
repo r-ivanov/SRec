@@ -726,7 +726,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener
 	protected static JToolBar[] creaBarrasHeramientas(JButton[] botones)
 	{
 		// Primero creamos los botones
-		botones=new JButton[35];
+		botones=new JButton[36];
 		
 		// Grupo archivo Java
 		botones[ 0]=new JButton( new ImageIcon("./imagenes/i_nuevaclase.gif") );
@@ -737,6 +737,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener
 		// Grupo animación
 		botones[28]=new JButton( new ImageIcon("./imagenes/i_seleccionmetodo.gif") );
 		botones[29]=new JButton( new ImageIcon("./imagenes/i_nuevavisualizacion.gif") );
+		botones[35]=new JButton( new ImageIcon("./imagenes/i_generargrafodependencia.gif"));
+		
 		// antiguos
 		botones[ 4]=new JButton( new ImageIcon("./imagenes/i_nuevavisualizacion.gif") );
 		botones[ 5]=new JButton( new ImageIcon("./imagenes/i_abrirvisualizacion.gif") );
@@ -796,6 +798,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener
 		botones[28].setEnabled(false);
 		botones[29].setEnabled(false);
 		botones[33].setEnabled(false);
+		botones[35].setEnabled(false);
 
 		Ventana.thisventana.setBotones(botones);
 		Ventana.thisventana.habilitarOpcionesAnimacion(false);
@@ -829,6 +832,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener
 
 		for (int i=28; i<30; i++)		// Grupo de apertura y cierre de animaciones
 			barras[1].add(botones[i]);
+		barras[1].add(botones[35]);
 		
 		barras[2].add(botones[7]);
 		barras[2].add(botones[9]);  // Grupo de exportación
@@ -866,6 +870,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener
 		// Animaciones
 		botones[28].setToolTipText(Texto.get("BARRA_HERR_TTT26",Conf.idioma));
 		botones[29].setToolTipText(Texto.get("BARRA_HERR_TTT27",Conf.idioma));
+		botones[35].setToolTipText(Texto.get("BARRA_HERR_TTT35",Conf.idioma));
+				
 		// antiguos
 		botones[ 4].setToolTipText(Texto.get("BARRA_HERR_TTT05",Conf.idioma));
 		botones[ 5].setToolTipText(Texto.get("BARRA_HERR_TTT06",Conf.idioma));

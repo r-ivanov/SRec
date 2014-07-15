@@ -312,6 +312,8 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			// Habilitamos la opcion para asignar parametros y ejecutar
 			this.ventana.setClaseHabilitadaAnimacion(true);
 			this.ventana.setClasePendienteGuardar(false);
+			// Deshabilitamos las opciones de la animación por si estuviesen activas.
+			this.ventana.habilitarOpcionesAnimacion(false);
 		}
 	}
 
