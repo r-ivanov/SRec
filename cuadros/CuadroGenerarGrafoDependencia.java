@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -74,7 +75,8 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 		panelRadio.setLayout(new GridLayout(this.numeroFilas, 1));
 		panelRadio.setBorder(new TitledBorder(Texto.get("CVIS_BORDER",
 				Conf.idioma)));
-
+		
+		ButtonGroup radioButtonGroup = new ButtonGroup();
 		for (int i = 0; i < this.dtb.getNumMetodos(); i++) {
 			DatosMetodoBasicos dmb = this.dtb.getMetodo(i);
 			this.botonesMetodos[i] = new JRadioButton(dmb.getNombre());
@@ -83,6 +85,7 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			if (i == 0) {
 				this.botonesMetodos[i].setSelected(true);
 			}
+			radioButtonGroup.add(this.botonesMetodos[i]);
 			panelRadio.add(this.botonesMetodos[i]);
 		}
 
