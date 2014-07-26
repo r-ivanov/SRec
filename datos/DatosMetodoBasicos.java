@@ -4,261 +4,472 @@ import java.util.ArrayList;
 
 import utilidades.ServiciosString;
 
+/**
+ * Almacena información relativa a un método (Parámetros de entrada, de salida,
+ * su visibilidad y valor de retorno).
+ */
+public class DatosMetodoBasicos {
 
-public class DatosMetodoBasicos
-{
-	String nombre;
-	
-	ArrayList<String> nombreParamE;
-	ArrayList<String> tipoParamE;
-	
-	ArrayList<String> nombreParamS;
-	ArrayList<String> tipoParamS;
-	
-	int[]dimE;
-	int[]dimS;
-	
-	boolean retorno;	// A true si el método en cuestión devuelve un valor, a false si devuelve void
-	
-	boolean metodoPrincipal;	// a true si es el método que inició la ejecución
-	
-	boolean tecnica=false;
-	
-	boolean metodoVisible;
-	boolean visibilidadE[];
-	boolean visibilidadS[];
+	private String nombre;
 
+	private ArrayList<String> nombreParamE;
+	private ArrayList<String> tipoParamE;
 
-	public DatosMetodoBasicos(String nombre, int numParamE, int numParamS, boolean retorno)
-	{
-		this.nombre=nombre;
-		
-		this.visibilidadE=new boolean[numParamE];
-		this.visibilidadS=new boolean[numParamS];
-		
-		this.dimE=new int[visibilidadE.length];
-		this.dimS=new int[visibilidadS.length];
-		
-		for (int i=0; i<visibilidadE.length; i++)
-			visibilidadE[i]=false;
-		for (int i=0; i<visibilidadS.length; i++)
-			visibilidadS[i]=false;
-		
-		this.retorno=retorno;	
-		
-		this.nombreParamE=new ArrayList<String>(0);
-		this.tipoParamE=new ArrayList<String>(0);
-		this.nombreParamS=new ArrayList<String>(0);
-		this.tipoParamS=new ArrayList<String>(0);
-		
+	private ArrayList<String> nombreParamS;
+	private ArrayList<String> tipoParamS;
+
+	private int[] dimE;
+	private int[] dimS;
+
+	private boolean retorno;
+
+	private boolean metodoPrincipal;
+
+	private boolean metodoVisible;
+	private boolean visibilidadE[];
+	private boolean visibilidadS[];
+
+	/**
+	 * Permite construir los datos de método básicos para un método.
+	 * 
+	 * @param nombre
+	 *            Nombre del método.
+	 * @param numParamE
+	 *            Número de parámetros de entrada.
+	 * @param numParamS
+	 *            Número de parámetros de salida.
+	 * @param retorno
+	 *            true si el método tiene un valor de retorno, false si es void.
+	 */
+	public DatosMetodoBasicos(String nombre, int numParamE, int numParamS,
+			boolean retorno) {
+		this.nombre = nombre;
+
+		this.visibilidadE = new boolean[numParamE];
+		this.visibilidadS = new boolean[numParamS];
+
+		this.dimE = new int[this.visibilidadE.length];
+		this.dimS = new int[this.visibilidadS.length];
+
+		for (int i = 0; i < this.visibilidadE.length; i++) {
+			this.visibilidadE[i] = false;
+		}
+		for (int i = 0; i < this.visibilidadS.length; i++) {
+			this.visibilidadS[i] = false;
+		}
+
+		this.retorno = retorno;
+
+		this.nombreParamE = new ArrayList<String>(0);
+		this.tipoParamE = new ArrayList<String>(0);
+		this.nombreParamS = new ArrayList<String>(0);
+		this.tipoParamS = new ArrayList<String>(0);
+
 	}
-	
-	public void addParametroEntrada(String nombre, String tipo, int dim, boolean visible)
-	{
-		nombreParamE.add(nombre);
-		tipoParamE.add(tipo);
-		dimE[nombreParamE.size()-1]=dim;
-		visibilidadE[nombreParamE.size()-1]=visible;
+
+	/**
+	 * Añade un nuevo parámetro de entrada.
+	 * 
+	 * @param nombre
+	 *            Nombre del parámetro.
+	 * @param tipo
+	 *            Tipo del parámetro.
+	 * @param dim
+	 *            Dimensiones del parámetro (0 si es valor único, 1 si es un
+	 *            array, 2 si es una matriz, ...)
+	 * @param visible
+	 *            true si el parámetro debe visualizarse en las ejecuciones.
+	 */
+	public void addParametroEntrada(String nombre, String tipo, int dim,
+			boolean visible) {
+		this.nombreParamE.add(nombre);
+		this.tipoParamE.add(tipo);
+		this.dimE[this.nombreParamE.size() - 1] = dim;
+		this.visibilidadE[this.nombreParamE.size() - 1] = visible;
 	}
-	
-	public void addParametroSalida(String nombre, String tipo, int dim, boolean visible)
-	{
-		nombreParamS.add(nombre);
-		tipoParamS.add(tipo);
-		dimS[nombreParamS.size()-1]=dim;
-		visibilidadS[nombreParamS.size()-1]=visible;
+
+	/**
+	 * Añade un nuevo parámetro de salida (parámetros para los que se visualiza
+	 * su evolución en la salida).
+	 * 
+	 * @param nombre
+	 *            Nombre del parámetro.
+	 * @param tipo
+	 *            Tipo del parámetro.
+	 * @param dim
+	 *            Dimensiones del parámetro (0 si es valor único, 1 si es un
+	 *            array, 2 si es una matriz, ...)
+	 * @param visible
+	 *            true si el parámetro debe visualizarse en las ejecuciones.
+	 */
+	public void addParametroSalida(String nombre, String tipo, int dim,
+			boolean visible) {
+		this.nombreParamS.add(nombre);
+		this.tipoParamS.add(tipo);
+		this.dimS[this.nombreParamS.size() - 1] = dim;
+		this.visibilidadS[this.nombreParamS.size() - 1] = visible;
 	}
-	
-	public void setEsPrincipal(boolean valor)
-	{
-		this.metodoPrincipal=valor;
+
+	/**
+	 * Establece el método como principal o no.
+	 * 
+	 * @param valor
+	 *            true para marcarlo como principal, false en caso contrario.
+	 */
+	public void setEsPrincipal(boolean valor) {
+		this.metodoPrincipal = valor;
 	}
-	
-	public void setEsVisible(boolean valor)
-	{
-		this.metodoVisible=valor;
+
+	/**
+	 * Establece el método como visible o no.
+	 * 
+	 * @param valor
+	 *            true para marcarlo como visible, false en caso contrario.
+	 */
+	public void setEsVisible(boolean valor) {
+		this.metodoVisible = valor;
 	}
-	
-	public boolean getEsVisible()
-	{
+
+	/**
+	 * Devuelve si el método es visible o no.
+	 * 
+	 * @return true si es visible, false en caso contrario.
+	 */
+	public boolean getEsVisible() {
 		return this.metodoVisible;
 	}
-	
-	public int getNumParametrosE()
-	{
-		return visibilidadE.length;
+
+	/**
+	 * Devuelve el número de parámetros de entrada.
+	 * 
+	 * @return Número de parámetros de entrada.
+	 */
+	public int getNumParametrosE() {
+		return this.visibilidadE.length;
 	}
-	
-	public int getNumParametrosS()
-	{
-		return visibilidadS.length;
+
+	/**
+	 * Devuelve el número de parámetros de salida.
+	 * 
+	 * @return Número de parámetros de salida.
+	 */
+	public int getNumParametrosS() {
+		return this.visibilidadS.length;
 	}
-	
-	public String getNombre()
-	{
+
+	/**
+	 * Devuelve el Nombre del método.
+	 * 
+	 * @return Nombre del método.
+	 */
+	public String getNombre() {
 		return this.nombre;
 	}
-	
-	public String getNombreParametroE (int numParametro)
-	{
+
+	/**
+	 * Devuelve el Nombre del parámetro de entrada especificado.
+	 * 
+	 * @param numParametro
+	 *            posición del parámetro.
+	 * 
+	 * @return Nombre del parámetro especificado.
+	 */
+	public String getNombreParametroE(int numParametro) {
 		return this.nombreParamE.get(numParametro);
 	}
-	
-	public String[] getNombreParametrosE ()
-	{
-		String []nombres=new String[this.nombreParamE.size()];
-		
-		for (int i=0; i<this.nombreParamE.size(); i++)
-			nombres[i]=this.nombreParamE.get(i);
-		
+
+	/**
+	 * Devuelve los nombres de todos los parámetros de entrada.
+	 * 
+	 * @return Nombre de los parámetros de entrada.
+	 */
+	public String[] getNombreParametrosE() {
+		String[] nombres = new String[this.nombreParamE.size()];
+
+		for (int i = 0; i < this.nombreParamE.size(); i++) {
+			nombres[i] = this.nombreParamE.get(i);
+		}
+
 		return nombres;
 	}
-	
-	public String getNombreParametroS (int numParametro)
-	{
+
+	/**
+	 * Devuelve el Nombre del parámetro de salida especificado.
+	 * 
+	 * @param numParametro
+	 *            posición del parámetro.
+	 * 
+	 * @return Nombre del parámetro especificado.
+	 */
+	public String getNombreParametroS(int numParametro) {
 		return this.nombreParamS.get(numParametro);
 	}
-	
-	public String[] getNombreParametrosS ()
-	{
-		String []nombres=new String[this.nombreParamS.size()];
-		
-		for (int i=0; i<this.nombreParamS.size(); i++)
-			nombres[i]=this.nombreParamS.get(i);
-			
+
+	/**
+	 * Devuelve los nombres de todos los parámetros de salida.
+	 * 
+	 * @return Nombre de los parámetros de salida.
+	 */
+	public String[] getNombreParametrosS() {
+		String[] nombres = new String[this.nombreParamS.size()];
+
+		for (int i = 0; i < this.nombreParamS.size(); i++) {
+			nombres[i] = this.nombreParamS.get(i);
+		}
+
 		return nombres;
 	}
-	
-	public String getTipoParametroE (int numParametro)
-	{
+
+	/**
+	 * Devuelve el Tipo del parámetro de entrada especificado.
+	 * 
+	 * @param numParametro
+	 *            posición del parámetro.
+	 * 
+	 * @return Tipo del parámetro especificado.
+	 */
+	public String getTipoParametroE(int numParametro) {
 		return this.tipoParamE.get(numParametro);
 	}
-	
-	public String[] getTipoParametrosE ()
-	{
-		String []tipos=new String[this.tipoParamE.size()];
-		
-		for (int i=0; i<tipos.length; i++)
-			tipos[i]=new String(this.tipoParamE.get(i));
-		
+
+	/**
+	 * Devuelve los tipos de todos los parámetros de entrada.
+	 * 
+	 * @return Nombre de los parámetros de entrada.
+	 */
+	public String[] getTipoParametrosE() {
+		String[] tipos = new String[this.tipoParamE.size()];
+
+		for (int i = 0; i < tipos.length; i++) {
+			tipos[i] = new String(this.tipoParamE.get(i));
+		}
+
 		return tipos;
 	}
-	
-	public String getTipoParametroS (int numParametro)
-	{
+
+	/**
+	 * Devuelve el Tipo del parámetro de salida especificado.
+	 * 
+	 * @param numParametro
+	 *            posición del parámetro.
+	 * 
+	 * @return Tipo del parámetro especificado.
+	 */
+	public String getTipoParametroS(int numParametro) {
 		return this.tipoParamS.get(numParametro);
 	}
-	
-	public String[] getTipoParametrosS ()
-	{
-		String []tipos=new String[this.tipoParamS.size()];
-		
-		for (int i=0; i<tipos.length; i++)
-			tipos[i]=new String(this.tipoParamS.get(i));
-		
+
+	/**
+	 * Devuelve los tipos de todos los parámetros de salida.
+	 * 
+	 * @return Nombre de los parámetros de salida.
+	 */
+	public String[] getTipoParametrosS() {
+		String[] tipos = new String[this.tipoParamS.size()];
+
+		for (int i = 0; i < tipos.length; i++) {
+			tipos[i] = new String(this.tipoParamS.get(i));
+		}
+
 		return tipos;
 	}
-	
-	public int getDimParametroE (int numParametro)
-	{
+
+	/**
+	 * Devuelve el número de dimensiones del parámetro de entrada especificado.
+	 * 
+	 * @param numParametro
+	 *            posición del parámetro.
+	 * 
+	 * @return Número de dimensiones del parámetro especificado.
+	 */
+	public int getDimParametroE(int numParametro) {
 		return this.dimE[numParametro];
 	}
-	
-	public int getDimParametroS (int numParametro)
-	{
+
+	/**
+	 * Devuelve el número de dimensiones del parámetro de salida especificado.
+	 * 
+	 * @param numParametro
+	 *            posición del parámetro.
+	 * 
+	 * @return Número de dimensiones del parámetro especificado.
+	 */
+	public int getDimParametroS(int numParametro) {
 		return this.dimS[numParametro];
 	}
-	
-	public boolean esMetodoConRetorno()
-	{
+
+	/**
+	 * Permite consultar si el método tiene un valor de retorno.
+	 * 
+	 * @return true si el tipo de retorno es distinto de void, false en caso
+	 *         contrario.
+	 */
+	public boolean esMetodoConRetorno() {
 		return this.retorno;
 	}
-	
-	public String getTipo()
-	{
-		if (!this.retorno)
+
+	/**
+	 * Devuelve el tipo del valor de retorno del método, si el método devuelve
+	 * void, se devuelve el tipo del primer parámetro de salida.
+	 * 
+	 * @return Tipo del valor de retorno.
+	 */
+	public String getTipo() {
+		if (!this.retorno) {
 			return "void";
-		else
-			return tipoParamS.get(0);
+		} else {
+			return this.tipoParamS.get(0);
+		}
 	}
-	
-	public int getDimTipo()
-	{
-		if (!this.retorno)
+
+	/**
+	 * Devuelve el número de dimensiones dimensiones del tipo de retorno del
+	 * método, si el método devuelve void, se devuelven el número de dimensiones
+	 * del primer parámetro de salida.
+	 * 
+	 * @return Número de dimensiones del tipo de retorno.
+	 */
+	public int getDimTipo() {
+		if (!this.retorno) {
 			return 0;
-		else
-			return dimS[0];
-	}
-	
-	public boolean[] getVisibilidadE ()
-	{
-		return visibilidadE;
-	}
-	
-	public boolean getVisibilidadE (int i)
-	{
-		return visibilidadE[i];
-	}
-	
-	public void setVisibilidadE(boolean v,int i)
-	{
-		visibilidadE[i]=v;
-	}
-	
-	public void setVisibilidadS(boolean v,int i)
-	{
-		visibilidadS[i]=v;
-	}
-	
-	public boolean[] getVisibilidadS ()
-	{
-		return visibilidadS;
-	}
-	
-	public boolean getVisibilidadS (int i)
-	{
-		return visibilidadS[i];
-	}
-	
-	public int[] getDimE ()
-	{
-		return dimE;
-	}
-	
-	public int[] getDimS ()
-	{
-		return dimS;
-	}
-	
-	public boolean getEsPrincipal()
-	{
-		return metodoPrincipal;
-	}
-	
-	public String getInterfaz()
-	{
-		String interfaz=this.nombre+ "(";
-		
-		String tipoParam[]=this.getTipoParametrosE();
-		String nombreParam[]=this.getNombreParametrosE();
-		int dimParam[]= this.getDimE();
-		
-		for (int i=0; i<tipoParam.length; i++)
-		{
-			interfaz=interfaz+" "+tipoParam[i];
-			if (dimParam[i]>0)
-				interfaz=interfaz+" "+ServiciosString.cadenaDimensiones(dimParam[i]);
-			interfaz=interfaz+" "+nombreParam[i];
-			if (i<(tipoParam.length-1))
-				interfaz=interfaz+",";
+		} else {
+			return this.dimS[0];
 		}
-		
-		interfaz=interfaz+" ) [ "+this.getTipo();
-		if (this.getDimTipo()>0)
-		{
-			interfaz=interfaz+" "+ServiciosString.cadenaDimensiones(this.getDimTipo());
+	}
+
+	/**
+	 * Devuelve la visibilidad de los parámetros de entrada.
+	 * 
+	 * @return visibilidad de los parámetros de entrada, cada posición contiene
+	 *         el valor correspondiente a la posición de cada parámetro de
+	 *         entrada.
+	 */
+	public boolean[] getVisibilidadE() {
+		return this.visibilidadE;
+	}
+
+	/**
+	 * Devuelve la visibilidad de uno de los parámetros de entrada.
+	 * 
+	 * @param i
+	 *            posición del método de entrada.
+	 * 
+	 * @return visibilidad del parámetro, true si es visible, false en caso
+	 *         contrario.
+	 */
+	public boolean getVisibilidadE(int i) {
+		return this.visibilidadE[i];
+	}
+
+	/**
+	 * Permite establecer la visibilidad de uno de los parámetros de entrada.
+	 * 
+	 * @param v
+	 *            true si debe ser visible, false en caso contrario.
+	 * @param i
+	 *            posición del método de entrada.
+	 */
+	public void setVisibilidadE(boolean v, int i) {
+		this.visibilidadE[i] = v;
+	}
+
+	/**
+	 * Permite establecer la visibilidad de uno de los parámetros de salida.
+	 * 
+	 * @param v
+	 *            true si debe ser visible, false en caso contrario.
+	 * @param i
+	 *            posición del método de salida.
+	 */
+	public void setVisibilidadS(boolean v, int i) {
+		this.visibilidadS[i] = v;
+	}
+
+	/**
+	 * Devuelve la visibilidad de los parámetros de salida.
+	 * 
+	 * @return visibilidad de los parámetros de entrada, cada posición contiene
+	 *         el valor correspondiente a la posición de cada parámetro de
+	 *         salida.
+	 */
+	public boolean[] getVisibilidadS() {
+		return this.visibilidadS;
+	}
+
+	/**
+	 * Devuelve la visibilidad de uno de los parámetros de salida.
+	 * 
+	 * @param i
+	 *            posición del método de salida.
+	 * 
+	 * @return visibilidad del parámetro, true si es visible, false en caso
+	 *         contrario.
+	 */
+	public boolean getVisibilidadS(int i) {
+		return this.visibilidadS[i];
+	}
+
+	/**
+	 * Devuelve el número de dimensiones de los parámetros de entrada.
+	 * 
+	 * @return Número de dimensiones de los parámetros de entrada, cada posición
+	 *         contiene el valor correspondiente a la posición de cada parámetro
+	 *         de entrada.
+	 */
+	public int[] getDimE() {
+		return this.dimE;
+	}
+
+	/**
+	 * Devuelve el número de dimensiones de los parámetros de salida.
+	 * 
+	 * @return Número de dimensiones de los parámetros de entrada, cada posición
+	 *         contiene el valor correspondiente a la posición de cada parámetro
+	 *         de salida.
+	 */
+	public int[] getDimS() {
+		return this.dimS;
+	}
+	
+	/**
+	 * Permite consultar si el método está marcado como principal.
+	 * 
+	 * @return true si está marcado como principal, false en caso contrario.
+	 */
+	public boolean getEsPrincipal() {
+		return this.metodoPrincipal;
+	}
+	
+	/**
+	 * Devuelve la representación del método.
+	 * 
+	 * @return representación del método.
+	 */
+	public String getInterfaz() {
+		String interfaz = this.nombre + "(";
+
+		String tipoParam[] = this.getTipoParametrosE();
+		String nombreParam[] = this.getNombreParametrosE();
+		int dimParam[] = this.getDimE();
+
+		for (int i = 0; i < tipoParam.length; i++) {
+			interfaz = interfaz + " " + tipoParam[i];
+			if (dimParam[i] > 0) {
+				interfaz = interfaz + " "
+						+ ServiciosString.cadenaDimensiones(dimParam[i]);
+			}
+			interfaz = interfaz + " " + nombreParam[i];
+			if (i < (tipoParam.length - 1)) {
+				interfaz = interfaz + ",";
+			}
 		}
-		interfaz=interfaz+" ]";
+
+		interfaz = interfaz + " ) [ " + this.getTipo();
+		if (this.getDimTipo() > 0) {
+			interfaz = interfaz + " "
+					+ ServiciosString.cadenaDimensiones(this.getDimTipo());
+		}
+		interfaz = interfaz + " ]";
 		return interfaz;
 	}
 }
