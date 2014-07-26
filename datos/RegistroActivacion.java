@@ -639,14 +639,14 @@ public class RegistroActivacion
 	{
 		if (this.entrada==null)
 			this.entrada=new Estado();
-		this.entrada.setString(es);
+		this.entrada.nuevoValorParametro(es);
 	}
 	
 	public void setSalidaString(String ss)
 	{
 		if (this.salida==null)
 			this.salida=new Estado();
-		this.salida.setString(ss);
+		this.salida.nuevoValorParametro(ss);
 	}
 	
 	public void setEntradaClase(String es)
