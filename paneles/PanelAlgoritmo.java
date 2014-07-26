@@ -22,6 +22,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import eventos.NavegacionListener;
 
 import opciones.GestorOpciones;
 import opciones.OpcionVistas;
@@ -87,6 +88,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 	
 	String[] nombresVistas=new String[Vista.codigos.length];
 	boolean[] vistasActualizadas=new boolean[Vista.codigos.length];
+	
+    private NavegacionListener arbolNavegacionListener;
 	
 	// Panel de paneles vacíos
 	public PanelAlgoritmo() throws Exception
@@ -217,7 +220,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 		pContencion.setLayout(new BorderLayout());
 		pContencion.add(separadorCentral,BorderLayout.CENTER);
 		
-		jspArbol.addComponentListener(pArbol.getNavegacionListener());
+        this.arbolNavegacionListener = pArbol.getNavegacionListener();
+        jspArbol.addComponentListener(this.arbolNavegacionListener);
 
 		// Creamos panel general
 		panelGral = new JPanel();
@@ -354,7 +358,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener
 			}
 			
 			pControl.setValores(Ventana.thisventana.traza.getTitulo(), this);
-			jspArbol.addComponentListener(pArbol.getNavegacionListener());
+			
+            jspArbol.removeComponentListener(this.arbolNavegacionListener);
+            this.arbolNavegacionListener = pArbol.getNavegacionListener();
+            jspArbol.addComponentListener(this.arbolNavegacionListener);
 			
 			new Thread()
 			{		
