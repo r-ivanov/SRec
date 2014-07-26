@@ -140,27 +140,6 @@ public class PanelVentana extends JPanel
 		this.updateUI();
 	}
 	
-	/**
-	 * Abre los paneles necesarios para visualizar la traza cuando
-	 * ya se encuentra un algoritmo cargado.
-	 * 
-	 * @param traza Traza que será visualizada.
-	 */
-	public void mostrarEjecucionTraza() throws Exception
-	{
-		try {
-			pAlgoritmo.abrirVistas();
-		}
-		catch (Exception e) {
-			pAlgoritmo=null;
-			e.printStackTrace();
-			throw e;
-		}
-		this.removeAll();
-		this.add(pAlgoritmo);
-		this.updateUI();
-	}
-	
 	public void abrirPanelAlgoritmo(String fichero)
 	{
 

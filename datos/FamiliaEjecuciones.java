@@ -38,7 +38,11 @@ public class FamiliaEjecuciones {
 	
 	public void setEjecucionActiva(Ejecucion ejecucion) {
 		this.ejecucionActiva = ejecucion;
-		Ventana.getInstance().visualizarTraza(ejecucion.getTraza(), ejecucion.getDatosTrazaBasicos());
+		Ventana.getInstance().setDTB(ejecucion.getDatosTrazaBasicos());
+		Ventana.getInstance().visualizarAlgoritmo(
+				ejecucion.getTraza(), false, null,
+				ejecucion.getFicheroFuenteDirectorio(),
+				ejecucion.getFicheroFuente(), true);
 	}
 
 	public void borrarEjecuciones() {
