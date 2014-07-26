@@ -6,7 +6,7 @@ import utilidades.ServiciosString;
 
 /**
  * Almacena información relativa a un método (Parámetros de entrada, de salida,
- * su visibilidad y valor de retorno).
+ * su visibilidad, dimensiones y valor de retorno).
  */
 public class DatosMetodoBasicos {
 
@@ -64,7 +64,6 @@ public class DatosMetodoBasicos {
 		this.tipoParamE = new ArrayList<String>(0);
 		this.nombreParamS = new ArrayList<String>(0);
 		this.tipoParamS = new ArrayList<String>(0);
-
 	}
 
 	/**

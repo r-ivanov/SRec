@@ -661,29 +661,8 @@ public class CargadorTraza extends Thread {
 		String metodoEjecucion = datos.getAttribute("metodoEjecucion");
 		String nombre = datos.getAttribute("nombre");
 
-		boolean tecnicaREC = datos.getAttribute("tecnicaREC").toLowerCase()
-				.equals("true");
-		boolean tecnicaDYV = datos.getAttribute("tecnicaDYV").toLowerCase()
-				.equals("true");
-
-		int[] tecnicas = null;
-		if (tecnicaREC && tecnicaDYV) {
-			tecnicas = new int[2];
-			tecnicas[0] = MetodoAlgoritmo.TECNICA_REC;
-			tecnicas[1] = MetodoAlgoritmo.TECNICA_DYV;
-
-		} else if (tecnicaREC) {
-			tecnicas = new int[1];
-			tecnicas[0] = MetodoAlgoritmo.TECNICA_REC;
-
-		} else if (tecnicaDYV) {
-			tecnicas = new int[1];
-			tecnicas[0] = MetodoAlgoritmo.TECNICA_DYV;
-
-		}
-
 		DatosTrazaBasicos dtb = new DatosTrazaBasicos(archivo, idTraza,
-				metodoEjecucion, nombre, tecnicas);
+				metodoEjecucion, nombre);
 		Element metodos[] = ManipulacionElement.nodeListToElementArray(edtb
 				.getElementsByTagName("Metodo"));
 
