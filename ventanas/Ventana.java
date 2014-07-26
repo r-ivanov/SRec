@@ -1396,7 +1396,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 	public void gestionOpcionCargarAnimacion()
 	{
 		if (panelVentana.haySitio())
-			new CargadorTraza();
+			new CargadorTraza(this);
 		else
 			new CuadroPreguntaNuevaVisualizacion(this,"cargar");
 	}

@@ -49,7 +49,7 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.aceptar) {
 			if (this.accion.equals("cargar")) {
-				new CargadorTraza();
+				new CargadorTraza(this.ventana);
 			} else if (this.accion.equals("procesar")) {
 				new Preprocesador();
 			} else if (this.accion.equals("procesar de nuevo")) {
