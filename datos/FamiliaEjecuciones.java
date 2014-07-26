@@ -18,7 +18,7 @@ public class FamiliaEjecuciones {
 	
 	private FamiliaEjecuciones() {
 		this.ejecuciones = new ArrayList<Ejecucion>();
-		this.habilitado = false;
+		this.habilitado = true;
 	}
 
 	public static FamiliaEjecuciones getInstance() {
@@ -40,10 +40,6 @@ public class FamiliaEjecuciones {
 		this.ejecucionActiva = ejecucion;
 		Ventana.getInstance().visualizarTraza(ejecucion.getTraza(), ejecucion.getDatosTrazaBasicos());
 	}
-	
-	public void setPrimeraEjecucionActiva() {
-		this.setEjecucionActiva(this.ejecuciones.get(0));		
-	}
 
 	public void borrarEjecuciones() {
 		this.ejecuciones.clear();
@@ -51,14 +47,6 @@ public class FamiliaEjecuciones {
 
 	public boolean estaHabilitado() {
 		return this.habilitado;
-	}
-	
-	public void habilitar() {
-		this.habilitado = true;
-	}
-	
-	public void deshabilitar() {
-		this.habilitado = false;
 	}
 	
 	public int numeroEjecuciones() {

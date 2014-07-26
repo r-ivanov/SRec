@@ -581,6 +581,8 @@ public class Preprocesador extends Thread
 	{
 		// Desde la clase ClaseAlgoritmo de la ventana, debemos sacar el ID2, que nos dará el nombre del .class que tenemos que analizar
 		// extraemos por ahí sus Method, etc. e identificamos el que ha sido escogido con la información retenida en la clasealgoritmo
+	
+		//cuadroProgreso = new CuadroProgreso(this.vv,Texto.get("CP_ESPERE",Conf.idioma),Texto.get("CP_PROCES",Conf.idioma),0);
 		
 		claseAlgoritmo=vv.getClase();	
 		String nombreClass=claseAlgoritmo.getId2();
@@ -593,7 +595,18 @@ public class Preprocesador extends Thread
 			return;
 		}
 	
+		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),20);	
 		MetodoAlgoritmo metodoAlgoritmo=claseAlgoritmo.getMetodoPrincipal();
+		
+		
+		//System.out.println("Preprocesador, detectado metodo principal: "+metodoAlgoritmo.getRepresentacion());
+		//for (int i=0; i<claseAlgoritmo.getNumMetodos(); i++)
+		//	System.out.println(claseAlgoritmo.getMetodo(i).getMarcadoPrincipal()+": "+claseAlgoritmo.getMetodo(i).getRepresentacion());
+
+		
+		
+		
+		
 		
 		Method metodos[]=claseCargada.getDeclaredMethods();
 	
@@ -603,71 +616,64 @@ public class Preprocesador extends Thread
 		Class[] clasesParametros = new Class[tipos.length];
 		for (int j=0; j<tipos.length; j++)
 			clasesParametros[j]= (Class)tipos[j];
+	
+		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),30);	
+		Object[] valoresParametros=new Object[tipos.length];
 		
-		ParametrosParser parametrosParser = new ParametrosParser(metodoAlgoritmo);
-		
-		String[][] matrizParametros = parametrosParser.obtenerMatrizParametros();	
-		if (matrizParametros.length > 1) {
-			FamiliaEjecuciones.getInstance().habilitar();
-			FamiliaEjecuciones.getInstance().borrarEjecuciones();
-		} else {
-			FamiliaEjecuciones.getInstance().deshabilitar();
+		for (int i=0; i<valoresParametros.length; i++)
+		{
+			try {
+				valoresParametros[i]=GestorParametros.asignarParam(metodoAlgoritmo.getParamValor(i),clasesParametros[i]);
+			} catch (java.lang.Exception ex) {
+				ex.printStackTrace();
+				System.out.println("Excepcion en Preprocesador, llamada a 'asignarParam' (i="+i+")");
+			}
+			
 		}
 		
-		for (int numeroEjecucion = 0; numeroEjecucion < matrizParametros.length; numeroEjecucion++) {
-			
-			Object[] valoresParametros=new Object[tipos.length];
-			
+
+		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),35);	
+		
+		String tituloPanel="";
+		tituloPanel=tituloPanel+metodoEjecutar.getName()+" ( ";
+		if (valoresParametros!=null)
 			for (int i=0; i<valoresParametros.length; i++)
 			{
-				try {
-					valoresParametros[i]=GestorParametros.asignarParam(matrizParametros[numeroEjecucion][i],clasesParametros[i]);
-				} catch (java.lang.Exception ex) {
-					ex.printStackTrace();
-					System.out.println("Excepcion en Preprocesador, llamada a 'asignarParam' (i="+i+")");
-				}			
+				tituloPanel=tituloPanel+ServiciosString.representacionObjeto(valoresParametros[i]);
+				if (i<valoresParametros.length-1)
+					tituloPanel=tituloPanel+" , ";
 			}
-			
-			String tituloPanel="";
-			tituloPanel=tituloPanel+metodoEjecutar.getName()+" ( ";
-			if (valoresParametros!=null)
-				for (int i=0; i<valoresParametros.length; i++)
-				{
-					tituloPanel=tituloPanel+ServiciosString.representacionObjeto(valoresParametros[i]);
-					if (i<valoresParametros.length-1)
-						tituloPanel=tituloPanel+" , ";
-				}
-			tituloPanel=tituloPanel+" )";
-	
-			Traza traza=Traza.singleton();
-			traza.vaciarTraza();
-			
-			try { wait(250); } catch(InterruptedException ie) {}
-			if (Ejecutador.ejecutar(claseAlgoritmo.getId2(),metodoEjecutar.getName(),clasesParametros,valoresParametros))
-			{
-				Traza traza_diferido=null;	
-				traza_diferido=traza.copiar();
-				traza_diferido.setIDTraza(ahora);
-				traza_diferido.setVisibilidad(claseAlgoritmo);
-				traza_diferido.setArchivo(claseAlgoritmo.getPath());
-				traza_diferido.setTecnicas(MetodoAlgoritmo.tecnicasEjecucion(claseAlgoritmo,metodoAlgoritmo));
-				traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
-				traza_diferido.setTitulo(tituloPanel);
-				
-				Ejecucion ejecucion = new Ejecucion(traza_diferido, claseProcesada[0], claseProcesada[1]);		
-				if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
-					ejecucion.getTraza().todoVisible();
-					FamiliaEjecuciones.getInstance().addEjecucion(ejecucion);
-				} else {			
-					vv.setDTB(ejecucion.getDatosTrazaBasicos());			
-					vv.visualizarAlgoritmo(traza_diferido, true, cuadroProgreso, ejecucion.getFicheroFuenteDirectorio(),
-							ejecucion.getFicheroFuente(), true);
-				}
-			}
-		}
+		tituloPanel=tituloPanel+" )";
+
+		Traza traza=Traza.singleton();
+		traza.vaciarTraza();
+		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),50);	
+
+		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),60);	
 		
-		if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
-			FamiliaEjecuciones.getInstance().setPrimeraEjecucionActiva();
+		try { wait(250); } catch(InterruptedException ie) {}
+		if (Ejecutador.ejecutar(claseAlgoritmo.getId2(),metodoEjecutar.getName(),clasesParametros,valoresParametros))
+		{
+			Traza traza_diferido=null;
+			//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),70);	
+			traza_diferido=traza.copiar();
+			traza_diferido.setIDTraza(ahora);
+			traza_diferido.setVisibilidad(claseAlgoritmo);
+			traza_diferido.setArchivo(claseAlgoritmo.getPath());
+			traza_diferido.setTecnicas(MetodoAlgoritmo.tecnicasEjecucion(claseAlgoritmo,metodoAlgoritmo));
+			traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
+			traza_diferido.setTitulo(tituloPanel);
+			
+			Ejecucion ejecucion = new Ejecucion(traza_diferido, claseProcesada[0], claseProcesada[1]);		
+			if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
+				ejecucion.getTraza().todoVisible();
+				FamiliaEjecuciones.getInstance().addEjecucion(ejecucion);
+				FamiliaEjecuciones.getInstance().setEjecucionActiva(ejecucion);
+			} else {			
+				vv.setDTB(ejecucion.getDatosTrazaBasicos());			
+				vv.visualizarAlgoritmo(traza_diferido, true, cuadroProgreso, ejecucion.getFicheroFuenteDirectorio(),
+						ejecucion.getFicheroFuente(), true);
+			}
 		}
 
 		File file=new File(ficherosinex+ahora+".class");
