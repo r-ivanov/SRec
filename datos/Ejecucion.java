@@ -1,5 +1,8 @@
 package datos;
 
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+
 import grafica.ContenedorArbol;
 
 import org.jgraph.JGraph;
@@ -57,6 +60,16 @@ public class Ejecucion {
 		grafo.setBackground(Conf.colorPanel);
 		grafo.getGraphLayoutCache().insert(c.getCeldas());
 		
+		grafo.setSize(new Dimension(c.maximoAncho(), c.maximoAlto()));
+		
 		return grafo;
+	}
+	
+	public BufferedImage obtenerSnapshotDelGrafo() {
+		JGraph grafo = this.obtenerGrafo();
+		BufferedImage bi = grafo.getImage(grafo.getBackground(), 0);
+		bi.getGraphics().drawImage(null, 0, 0, null);
+		bi.getGraphics().dispose();
+		return bi;
 	}
 }
