@@ -456,7 +456,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 					this.trazaCompleta.actualizarEstadoTrazaCompleta(this.traza);
 					this.trazaCompleta.setVisibilidad(this.dtb);
 					
-					new AlmacenadorTraza(this.traza, this.trazaCompleta, this.dtb);
+					new AlmacenadorTraza(this, this.traza, this.trazaCompleta, this.dtb);
 				}
 				else
 					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOVISGUARD",Conf.idioma));
@@ -1120,7 +1120,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 					this.trazaCompleta.actualizarEstadoTrazaCompleta(this.traza);
 					this.trazaCompleta.setVisibilidad(this.dtb);
 
-					new AlmacenadorTraza(this.traza, this.trazaCompleta, this.dtb);
+					new AlmacenadorTraza(this, this.traza, this.trazaCompleta, this.dtb);
 				}
 				else
 					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOVISGUARD",Conf.idioma));
@@ -2228,7 +2228,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		this.trazaCompleta.actualizarEstadoTrazaCompleta(this.traza);
 		this.trazaCompleta.setVisibilidad(this.dtb);
 		
-		new AlmacenadorTraza(this.traza, this.trazaCompleta, this.dtb);
+		new AlmacenadorTraza(this, this.traza, this.trazaCompleta, this.dtb);
 		// AlmacenadorTraza es un thread, el programa no guarda la traza por eso, se sale sin esperar al thread.
 	}
 	
