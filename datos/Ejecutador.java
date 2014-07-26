@@ -18,7 +18,7 @@ import cuadros.CuadroError;
 public class Ejecutador {
 
 	/**
-	 * ejecuta el método cuyo nombre se le pasa por parámetro
+	 * Ejecuta el método cuyo nombre se le pasa por parámetro
 	 * 
 	 * @param clase
 	 *            nombre de la clase a la que pertenece el método que se va a
