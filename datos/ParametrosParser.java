@@ -12,7 +12,7 @@ public class ParametrosParser {
 		int combinaciones = 1;
 		for (int i = 0; i < this.metodoAlgoritmo.getNumeroParametros(); i++) {
 			String valorParametro = this.metodoAlgoritmo.getParamValor(i);
-			int numeroValores = valorParametro.split(",").length;
+			int numeroValores = valorParametro.split(";").length;
 			combinaciones *= numeroValores; 
 		}
 		
@@ -27,10 +27,19 @@ public class ParametrosParser {
 			matrizParametros[i] = new String[this.metodoAlgoritmo.getNumeroParametros()];
 		}
 		
+		int parametrosVariables = 0;
 		for (int numeroParametro = 0; numeroParametro < this.metodoAlgoritmo.getNumeroParametros(); numeroParametro++) {
 			String valorParametro = this.metodoAlgoritmo.getParamValor(numeroParametro);
-			String[] valores = valorParametro.split(",");
-			int repeticionesPorValor = combinaciones / (valores.length * (numeroParametro + 1));
+			String[] valores = valorParametro.split(";");
+			
+			int repeticionesPorValor;
+			if (valores.length == 1) {
+				repeticionesPorValor = combinaciones;
+			} else {
+				parametrosVariables++;
+				repeticionesPorValor = combinaciones / (valores.length * parametrosVariables);
+			}
+			
 			for (int i = 0; i < combinaciones; i++) {
 				int posicionValor = (i / repeticionesPorValor) % valores.length;
 				matrizParametros[i][numeroParametro] = valores[posicionValor];

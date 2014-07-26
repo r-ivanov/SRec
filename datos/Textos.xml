@@ -10,8 +10,8 @@
 		<T valor="Not available text" idioma="en" id="DEFECTO"/>
 
 		<!-- Cabecera -->
-		<T valor="SRec, Sistema de animaci[oacute]n de la recursividad - 17/05/2014" idioma="es" id="APLIC"/>
-		<T valor="SRec, System for recursion animation - 17/05/2014" idioma="en" id="APLIC"/>
+		<T valor="SRec, Sistema de animaci[oacute]n de la recursividad" idioma="es" id="APLIC"/>
+		<T valor="SRec, System for recursion animation" idioma="en" id="APLIC"/>
 	
 	
 		<!-- otros -->
