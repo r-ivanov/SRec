@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JScrollPane;
-
 import paneles.PanelFamiliaEjecuciones;
 import ventanas.Ventana;
 
@@ -17,8 +15,6 @@ public class FamiliaEjecuciones {
 	private boolean habilitado;
 	
 	private Ejecucion ejecucionActiva;
-	
-	private JScrollPane panelEjecuciones;
 	
 	private FamiliaEjecuciones() {
 		this.ejecuciones = new ArrayList<Ejecucion>();
@@ -34,7 +30,6 @@ public class FamiliaEjecuciones {
 
 	public void addEjecucion(Ejecucion ejecucion) {
 		this.ejecuciones.add(ejecucion);
-		this.panelEjecuciones = null;
 	}
 	
 	public boolean esEjecucionActiva(Ejecucion ejecucion) {
@@ -74,11 +69,8 @@ public class FamiliaEjecuciones {
 		return this.ejecuciones.iterator();
 	}
 	
-	public JScrollPane obtenerPanelEjecuciones() {
-		if (panelEjecuciones == null) {
-			panelEjecuciones = new JScrollPane(new PanelFamiliaEjecuciones(this));
-		}
-		return panelEjecuciones;
+	public PanelFamiliaEjecuciones obtenerPanelEjecuciones() {
+		return new PanelFamiliaEjecuciones(this);
 	}
 
 //	public void visualizarEjecuciones() {
