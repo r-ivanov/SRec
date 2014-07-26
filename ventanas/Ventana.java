@@ -19,25 +19,27 @@ import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.lang.OutOfMemoryError;
 import java.net.InetAddress;
 
 
-
 import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+
 import javax.swing.plaf.metal.MetalBorders;
 //import javax.swing.plaf.metal.MetalBorders;
 
 import javax.swing.UIManager;
-
 
 
 
@@ -1091,11 +1093,19 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 				else
 					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOARCHPROC",Conf.idioma));
 			}
-			else if(fuente==botones[35])		// Generar Grafo de dependencia
+			/*
+			else if(fuente==botones[4])		// Archivo > Nueva visualización
 			{
-				if (Conf.fichero_log) log_write("Botón: Generar Grafo de dependencia");
-				this.generarGrafoDependencia();
+				if (Conf.fichero_log) log_write("Botón: Nueva visualización");
+				if (this.claseAlgoritmo!=null)
+					if (panelVentana.haySitio())
+						iniciarNuevaVisualizacion();
+					else
+						new CuadroPreguntaNuevaVisualizacion(this,"nueva");
+				else
+					new CuadroError(this,Texto.get("ERROR_VISU",Conf.idioma), Texto.get("ERROR_NOARCHPROC",Conf.idioma));
 			}
+			*/
 			else if(fuente==botones[5])		// Archivo > Cargar visualización...
 			{
 				if (Conf.fichero_log) log_write("Botón: Cargar visualización...");
@@ -1793,10 +1803,6 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		new CuadroParamLanzarEjec(this, this.claseAlgoritmo.getMetodoPrincipal(), this.claseAlgoritmo, p);
 	}
 	
-	public void generarGrafoDependencia() {
-		new CuadroGenerarGrafoDependencia(this, this.dtb);
-	}
-	
 	// Deshabilita las opciones de menu que deben quedar deshabilitadas tras cerrar una animación
 	public void cerrarVentana()
 	{
@@ -2053,7 +2059,6 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		botones[30].setEnabled(valor);
 		botones[31].setEnabled(valor);
 		botones[34].setEnabled(valor);
-		botones[35].setEnabled(valor);
 
 		
 		GestorVentanaSRec.habilitaMenuItem(menus[2], Texto.get("MENU_INFO_01",Conf.idioma), valor);
