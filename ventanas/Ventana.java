@@ -64,6 +64,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 	boolean clasePendienteGuardar=false;
 	boolean clasePendienteProcesar=false;
 	
+	
 	//Logger logger=new Logger();
 	
 	boolean interfazIniciada=false;	// A true durante varios segundos para implementar antirrebotes en botones
@@ -292,9 +293,6 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		
 	}
 	
-	public static Ventana getInstance() {
-		return thisventana;
-	}
 	
 	/**
 		Gestiona todos los eventos relacionados con acciones.
