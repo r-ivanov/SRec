@@ -214,7 +214,7 @@ public class Estructura {
 
 	/**
 	 * Devuelve el tamaño de las dimensiones de la estructura, si la estructura
-	 * es una matriz, el segundo valor valdrá 0.
+	 * es un array, el segundo valor valdrá 0.
 	 * 
 	 * @return Tamaño de las dimensiones de la estructura.
 	 */
