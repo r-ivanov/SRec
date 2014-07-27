@@ -1,7 +1,5 @@
 package datos;
 
-import javax.swing.JFrame;
-
 import grafica.ContenedorArbol;
 import grafica.ContenedorCronologica;
 import grafica.ContenedorEstructura;
@@ -13,141 +11,174 @@ import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
 
-import conf.Conf;
-
 import utilidades.FotografoArbol;
 import utilidades.NombresYPrefijos;
 import utilidades.ServiciosString;
 import ventanas.Ventana;
+import conf.Conf;
 
+/**
+ * Permite generar el grafo (Árbol, Pila y Traza) correspondiente a una traza
+ * para posteriormente ser exportado.
+ */
 public class GestorTrazaExportacion {
 
-	Traza t;// traza para la exportacion, así no tenemos que rebobinar la traza que se usa en vistas
-	JGraph graph;
-	int numeroVista;
-	
-	int alto;
-	int ancho;
-	
-	GraphModel model = new DefaultGraphModel();
-	GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
-	NombresYPrefijos nyp;
-	public GestorTrazaExportacion(int numeroVista)
-	{
-		this.t=Ventana.thisventana.getTraza().copiar();
-		t.nadaVisible();
-		this.numeroVista=numeroVista;
-		
+	// traza para la exportacion, así no tenemos que rebobinar la traza que se
+	// usa en vistas
+	private Traza t;
+	private JGraph graph;
+	private int numeroVista;
 
-		boolean mostrarNombreMetodos = Ventana.thisventana.traza.getNumMetodos()!= 1;
-		
-		if (mostrarNombreMetodos)
-		{
-			nyp=new NombresYPrefijos();
-			String[] nombresMetodos=Ventana.thisventana.trazaCompleta.getNombresMetodos();
-			String prefijos[]=ServiciosString.obtenerPrefijos(nombresMetodos);
-			for (int i=0; i<nombresMetodos.length; i++)
-				nyp.add(nombresMetodos[i],prefijos[i]);
+	private int alto;
+	private int ancho;
+
+	private NombresYPrefijos nyp;
+
+	/**
+	 * Construye una nueva instancia del objeto
+	 * 
+	 * @param numeroVista
+	 *            Número de vista para la que se generará el grafo (0 para
+	 *            árbol, 1 para pila, 2 para cronológica y 3 para estructura)
+	 */
+	public GestorTrazaExportacion(Ventana ventana, int numeroVista) {
+		this.t = ventana.getTraza().copiar();
+		this.t.nadaVisible();
+		this.numeroVista = numeroVista;
+
+		boolean mostrarNombreMetodos = ventana.getTraza().getNumMetodos() != 1;
+
+		if (mostrarNombreMetodos) {
+			this.nyp = new NombresYPrefijos();
+			String[] nombresMetodos = ventana.trazaCompleta.getNombresMetodos();
+			String prefijos[] = ServiciosString.obtenerPrefijos(nombresMetodos);
+			for (int i = 0; i < nombresMetodos.length; i++) {
+				this.nyp.add(nombresMetodos[i], prefijos[i]);
+			}
 		}
 	}
-	
-	
-	public boolean finalTraza()
-	{
-		return t.enteroVisible();
+
+	/**
+	 * Mueve la traza a su estado final.
+	 * 
+	 * @return true si todos los elementos son visibles, false en caso
+	 *         contrario.
+	 */
+	public boolean finalTraza() {
+		return this.t.enteroVisible();
 	}
-	
-	public void avanzarTraza()
-	{
-		t.siguienteVisible();
+
+	/**
+	 * Avanza la traza al siguiente estado.
+	 */
+	public void avanzarTraza() {
+		this.t.siguienteVisible();
 	}
-	
-	public int getAncho()
-	{
+
+	/**
+	 * Devuelve el ancho de la vista a generar.
+	 * 
+	 * @return ancho de la vista
+	 */
+	public int getAncho() {
 		return this.ancho;
 	}
-	
-	public int getAlto()
-	{
+
+	/**
+	 * Devuelve el alto de la vista a generar.
+	 * 
+	 * @return ancho de la vista
+	 */
+	public int getAlto() {
 		return this.alto;
 	}
-	
-	public JGraph grafoEstadoActual()
-	{
-		this.graph=null;
-		GraphModel model=null;
+
+	/**
+	 * Devuelve un grafo correspondiente a la vista seleccionada del estado
+	 * actual de la traza.
+	 * 
+	 * @return Grafo correspondiente a la vista seleccionada.
+	 */
+	public JGraph grafoEstadoActual() {
+		this.graph = null;
+		GraphModel model = null;
 		GraphLayoutCache view;
-		Object []celdas;
-		switch(numeroVista)
-		{
-			case 0:
-				model = new DefaultGraphModel();
-				view = new GraphLayoutCache(model,new DefaultCellViewFactory());
-				
-				this.graph = new JGraph(model, view);
-				this.graph.getModel().addGraphModelListener(null);
-				ContenedorArbol c=new ContenedorArbol(t.getRaiz(),this.graph,nyp,1);
-				celdas=c.getCeldas();
-				System.out.println("grafoEstadoActual Numero de celdas= "+celdas.length);
-				this.graph.setBackground(Conf.colorPanel);
-				this.graph.getGraphLayoutCache().insert(celdas);
-				this.ancho=c.maximoAncho();
-				this.alto=c.maximoAlto();
-				FotografoArbol.gifPila = false; //Indicamos que NO vamos a hacer una animacion gif de la vista de pila
-				break;
-			case 1:
-				model = new DefaultGraphModel();
-				view = new GraphLayoutCache(model,new DefaultCellViewFactory());
-				
-				this.graph = new JGraph(model, view);
-				this.graph.getModel().addGraphModelListener(null);
-				ContenedorPila cp=new ContenedorPila(t.getRaiz(),this.graph, t.copiar(),nyp,1);
-				celdas=cp.getCeldas();
-				System.out.println("grafoEstadoActual Numero de celdas= "+celdas.length);
-				this.graph.setBackground(Conf.colorPanel);
-				this.graph.getGraphLayoutCache().insert(celdas);
-				this.ancho=cp.maximoAncho();
-				this.alto=cp.maximoAlto();
-				FotografoArbol.gifPila = true; //Indicamos que vamos a hacer una animacion gif de la vista de pila
-				break;
-			case 2:
-				model = new DefaultGraphModel();
-				view = new GraphLayoutCache(model,new DefaultCellViewFactory());
-				
-				this.graph = new JGraph(model, view);
-				this.graph.getModel().addGraphModelListener(null);
-				ContenedorCronologica cc=new ContenedorCronologica(nyp, t.getRaiz());
-				celdas=cc.getCeldas();
-				System.out.println("grafoEstadoActual Numero de celdas= "+celdas.length);
-				this.graph.setBackground(Conf.colorPanel);
-				this.graph.getGraphLayoutCache().insert(celdas);
-				this.ancho=cc.maximoAncho();
-				this.alto=cc.maximoAlto();
-				FotografoArbol.gifPila = true; //Indicamos que vamos a hacer una animacion gif de la vista de pila. En este caso tiene que ser TRUE
-				break;
-			case 3:
-				model = new DefaultGraphModel();
-				view = new GraphLayoutCache(model,new DefaultCellViewFactory());
-				
-				this.graph = new JGraph(model, view);
-				this.graph.getModel().addGraphModelListener(null);
-				ContenedorEstructura ce=new ContenedorEstructura(t.getRaiz(),this.graph);
-				celdas=ce.getCeldas();
-				System.out.println("grafoEstadoActual Numero de celdas= "+celdas.length);
-				this.graph.setBackground(Conf.colorPanel);
-				this.graph.getGraphLayoutCache().insert(celdas);
-				this.ancho=ce.maximoAncho();
-				this.alto=ce.maximoAlto();
-				FotografoArbol.gifPila = false; //Indicamos que vamos NO a hacer una animacion gif de la vista de pila
-				break;
-			case 4:
-				break;
-			default:
-				return null;
+		Object[] celdas;
+		switch (this.numeroVista) {
+		case 0:
+			model = new DefaultGraphModel();
+			view = new GraphLayoutCache(model, new DefaultCellViewFactory());
+
+			this.graph = new JGraph(model, view);
+			this.graph.getModel().addGraphModelListener(null);
+			ContenedorArbol c = new ContenedorArbol(this.t.getRaiz(),
+					this.graph, this.nyp, 1);
+			celdas = c.getCeldas();
+			this.graph.setBackground(Conf.colorPanel);
+			this.graph.getGraphLayoutCache().insert(celdas);
+			this.ancho = c.maximoAncho();
+			this.alto = c.maximoAlto();
+			FotografoArbol.gifPila = false; // Indicamos que NO vamos a hacer
+											// una animacion gif de la vista de
+											// pila
+			break;
+		case 1:
+			model = new DefaultGraphModel();
+			view = new GraphLayoutCache(model, new DefaultCellViewFactory());
+
+			this.graph = new JGraph(model, view);
+			this.graph.getModel().addGraphModelListener(null);
+			ContenedorPila cp = new ContenedorPila(this.t.getRaiz(),
+					this.graph, this.t.copiar(), this.nyp, 1);
+			celdas = cp.getCeldas();
+			this.graph.setBackground(Conf.colorPanel);
+			this.graph.getGraphLayoutCache().insert(celdas);
+			this.ancho = cp.maximoAncho();
+			this.alto = cp.maximoAlto();
+			FotografoArbol.gifPila = true; // Indicamos que vamos a hacer una
+											// animacion gif de la vista de pila
+			break;
+		case 2:
+			model = new DefaultGraphModel();
+			view = new GraphLayoutCache(model, new DefaultCellViewFactory());
+
+			this.graph = new JGraph(model, view);
+			this.graph.getModel().addGraphModelListener(null);
+			ContenedorCronologica cc = new ContenedorCronologica(this.nyp,
+					this.t.getRaiz());
+			celdas = cc.getCeldas();
+			this.graph.setBackground(Conf.colorPanel);
+			this.graph.getGraphLayoutCache().insert(celdas);
+			this.ancho = cc.maximoAncho();
+			this.alto = cc.maximoAlto();
+			FotografoArbol.gifPila = true; // Indicamos que vamos a hacer una
+											// animacion gif de la vista de
+											// pila. En este caso tiene que ser
+											// TRUE
+			break;
+		case 3:
+			model = new DefaultGraphModel();
+			view = new GraphLayoutCache(model, new DefaultCellViewFactory());
+
+			this.graph = new JGraph(model, view);
+			this.graph.getModel().addGraphModelListener(null);
+			ContenedorEstructura ce = new ContenedorEstructura(
+					this.t.getRaiz(), this.graph);
+			celdas = ce.getCeldas();
+			this.graph.setBackground(Conf.colorPanel);
+			this.graph.getGraphLayoutCache().insert(celdas);
+			this.ancho = ce.maximoAncho();
+			this.alto = ce.maximoAlto();
+			FotografoArbol.gifPila = false; // Indicamos que vamos NO a hacer
+											// una animacion gif de la vista de
+											// pila
+			break;
+		case 4:
+			break;
+		default:
+			return null;
 		}
 		return this.graph;
 	}
-	
-	
-	
+
 }
