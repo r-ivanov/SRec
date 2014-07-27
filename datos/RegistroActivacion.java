@@ -2448,7 +2448,7 @@ public class RegistroActivacion {
 	 *            parámetros.
 	 * 
 	 * @return Matriz en la que cada fila corresponde a cada una de las listas
-	 *         de valores obtenidos recorriendo el árbol en anchura.
+	 *         de valores obtenidos.
 	 */
 	public String[][] getValoresParametrosInicio(String interfaz) {
 		ArrayList<String[]> valores = this.getValoresParametros(interfaz);
@@ -2485,7 +2485,7 @@ public class RegistroActivacion {
 	 *            parámetros.
 	 * 
 	 * @return Matriz en la que cada fila corresponde a cada una de las listas
-	 *         de valores obtenidos recorriendo el árbol en anchura.
+	 *         de valores obtenidos.
 	 */
 	public String[][] getValoresResultadoInicio(String interfaz) {
 		ArrayList<String[]> valores = this.getValoresResultado(interfaz);
