@@ -431,7 +431,7 @@ public class Traza
 	{
 		//this.raiz.borrarCaminoActual();
 		if (!this.getRaiz().esMostradoEntero())
-			raiz.siguienteVisible(true);
+			raiz.siguienteVisible();
 		//this.raiz.crearCaminoActual();
 	}
 
@@ -457,8 +457,8 @@ public class Traza
 			RegistroActivacion ra=raiz.getNodoActual();
 			if (ra!=null)
 			{
-				ra.nadaVisible(false);
-				ra.siguienteVisible(false);
+				ra.nadaVisible();
+				ra.siguienteVisible();
 				//ra.asignarInhibidoRecursivo(false);	// no es necesario
 			}
 		}
@@ -482,7 +482,7 @@ public class Traza
 	public void nadaVisible()
 	{
 		this.raiz.borrarCaminoActual();
-		raiz.nadaVisible(true);
+		raiz.nadaVisible();
 		this.raiz.crearCaminoActual();
 		siguienteVisible();
 	}
@@ -494,7 +494,7 @@ public class Traza
 	*/
 	public boolean enteroVisible()
 	{
-		return raiz.enteroVisible(true,true);
+		return raiz.enteroVisible();
 	}
 
 	/**
@@ -595,25 +595,6 @@ public class Traza
 		//raiz.actualizarNodoActualES();
 		this.raiz.crearCaminoActual();
 	}
-
-	public void visualizarConHistoria()
-	{
-		raiz.visualizarConHistoria();
-	}
-	
-	public void visualizarConHistoriaAtenuada()
-	{
-		
-		raiz.visualizarConHistoriaAtenuada();
-	}
-	
-	public void visualizarSinHistoria()
-	{
-		raiz.visualizarSinHistoria();
-	}
-	
-	
-	
 	
 	public RegistroActivacion getRegistroActivacionPorID(int id)
 	{
