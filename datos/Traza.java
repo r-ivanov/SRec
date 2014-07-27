@@ -10,9 +10,9 @@ import utilidades.ServiciosString;
  * @version 2006-2007
  */
 public class Traza {
-	
+
 	private static Traza traza = new Traza();
-	
+
 	private RegistroActivacion raiz = null;
 	private RegistroActivacion ultimo = null;
 
@@ -20,10 +20,10 @@ public class Traza {
 
 	private String archivo = "";
 	private String metodoEjecucion; // Almacena el metodo cuya ejecución se
-									// lanzó
+	// lanzó
 
 	private String titulo; // Sirve de titulo para el panel que contiene las
-							// vistas
+	// vistas
 
 	private int[] tecnicas = null;
 
@@ -60,7 +60,7 @@ public class Traza {
 	public static Traza singleton() {
 		return Traza.traza;
 	}
-	
+
 	/**
 	 * Devuelve el identificador de la traza.
 	 * 
@@ -69,43 +69,106 @@ public class Traza {
 	public String getIDTraza() {
 		return this.idTraza;
 	}
-	
+
 	/**
 	 * Permite establecer el identificador de la traza.
 	 * 
-	 * @param id Identificador de la traza.
+	 * @param id
+	 *            Identificador de la traza.
 	 */
 	public void setIDTraza(String id) {
 		this.idTraza = id;
 	}
-	
+
 	/**
-	 * Permite establecer las técnicas que se usan en la visualización de la traza.
+	 * Permite establecer las técnicas que se usan en la visualización de la
+	 * traza.
 	 * 
-	 * @param tecnicas Lista de técnicas: MetodoAlgoritmo.TECNICA_REC y MetodoAlgoritmo.TECNICA_DYV
+	 * @param tecnicas
+	 *            Lista de técnicas: MetodoAlgoritmo.TECNICA_REC y
+	 *            MetodoAlgoritmo.TECNICA_DYV
 	 */
 	public void setTecnicas(int[] tecnicas) {
 		this.tecnicas = tecnicas;
 	}
-	
+
 	/**
 	 * Permite obtener las técnicas que se usan en la visualización de la traza.
 	 * 
-	 * @return Lista de técnicas: MetodoAlgoritmo.TECNICA_REC y MetodoAlgoritmo.TECNICA_DYV
+	 * @return Lista de técnicas: MetodoAlgoritmo.TECNICA_REC y
+	 *         MetodoAlgoritmo.TECNICA_DYV
 	 */
 	public int[] getTecnicas() {
 		return this.tecnicas;
 	}
-	
+
+	/**
+	 * Añade una entrada a la traza
+	 * 
+	 * @param estado Estado a incluir como entrada
+	 * @param nombreMetodo Nombre del método
+	 * @param nombreParametros Nombre de los distintos parámetros.
+	 */
+	public void anadirEntrada(Estado estado, String nombreMetodo,
+			String nombreParametros[]) {
+		if (this.raiz == null) {
+			this.raiz = new RegistroActivacion(estado, nombreMetodo,
+					nombreParametros);
+			this.ultimo = this.raiz;
+		} else {
+			this.ultimo = this.ultimo.anadirEntrada(estado, nombreMetodo,
+					nombreParametros);
+		}
+	}
+
+	/**
+	 * Añade una salida a la traza
+	 * 
+	 * @param estado Estado a incluir como salida
+	 * @param devuelveValor true si la salida devuelve un valor, false en caso contrario.
+	 */
+	public void anadirSalida(Estado estado, boolean devuelveValor) {
+		this.ultimo.setDevuelveValor(devuelveValor);
+		this.ultimo = this.ultimo.anadirSalida(estado);
+	}
+
+	/**
+	 * Añade una salida a la traza
+	 * 
+	 * @param estado Estado a incluir como salida
+	 * @param nombreMetodo Nombre del método
+	 * @param nombreParametros Nombre de los distintos parámetros.
+	 * @param devuelveValor true si la salida devuelve un valor, false en caso contrario.
+	 */
+	public void anadirSalida(Estado estado, String nombreMetodo,
+			String nombreParametros[], boolean devuelveValor) {
+		this.ultimo.setDevuelveValor(devuelveValor);
+		this.ultimo = this.ultimo.anadirSalida(estado);
+	}
+
+	/**
+	 * Añade una salida a la traza
+	 * 
+	 * @param estado Estado a incluir como salida
+	 * @param nombreMetodo Nombre del método
+	 * @param nombreParametros Nombre de los distintos parámetros.
+	 */
+	public void anadirSalida(Estado estado, String nombreMetodo,
+			String nombreParametros[]) {
+		this.ultimo.setDevuelveValor(false);
+		this.ultimo = this.ultimo.anadirSalida(estado);
+	}
+
 	/**
 	 * Establece el nombre del método en ejecución.
 	 * 
-	 * @param metodoEjecucion Nombre del método en ejecución.
+	 * @param metodoEjecucion
+	 *            Nombre del método en ejecución.
 	 */
 	public void setNombreMetodoEjecucion(String metodoEjecucion) {
 		this.metodoEjecucion = metodoEjecucion;
 	}
-	
+
 	/**
 	 * Devuelve el nombre del método en ejecución
 	 * 
@@ -114,7 +177,7 @@ public class Traza {
 	public String getNombreMetodoEjecucion() {
 		return this.metodoEjecucion;
 	}
-	
+
 	/**
 	 * Devuelve la representación de las lineas de traza.
 	 * 
@@ -123,25 +186,28 @@ public class Traza {
 	public String[] getLineasTraza() {
 		return this.getRaiz().getLineasTraza(4);
 	}
-	
+
 	/**
-	 * Devuelve la representación de las lineas de traza con salida ligada a entrada.
+	 * Devuelve la representación de las lineas de traza con salida ligada a
+	 * entrada.
 	 * 
-	 * @return Representación de las lineas de traza con salida ligada a entrada.
+	 * @return Representación de las lineas de traza con salida ligada a
+	 *         entrada.
 	 */
 	public String[] getLineasTrazaSalidaLigadaEntrada() {
 		return this.getRaiz().getLineasTrazaSalidaLigadaEntrada(4);
 	}
-	
+
 	/**
 	 * Permite establecer el archivo correspondiente a la traza.
 	 * 
-	 * @param s Archivo correspondiente a la traza.
+	 * @param s
+	 *            Archivo correspondiente a la traza.
 	 */
 	public void setArchivo(String s) {
 		this.archivo = s;
 	}
-	
+
 	/**
 	 * Devuelve el archivo correspondiente a la traza.
 	 * 
@@ -150,7 +216,7 @@ public class Traza {
 	public String getArchivo() {
 		return this.archivo;
 	}
-	
+
 	/**
 	 * Devuelve el número de nodos que componen la traza.
 	 * 
@@ -159,17 +225,16 @@ public class Traza {
 	public int getNumNodos() {
 		return this.raiz.getNumNodos();
 	}
-	
+
 	/**
 	 * Devuelve la altura del árbol
 	 * 
 	 * @return Áltura del árbol.
 	 */
-	public int getAltura()
-	{
+	public int getAltura() {
 		return this.raiz.getMaxAltura();
 	}
-	
+
 	/**
 	 * Devuelve el número de nodos visibles del árbol.
 	 * 
@@ -178,7 +243,7 @@ public class Traza {
 	public int getNumNodosVisibles() {
 		return this.raiz.getNumNodosVisibles();
 	}
-	
+
 	/**
 	 * Devuelve el número de nodos históricos del árbol.
 	 * 
@@ -187,7 +252,7 @@ public class Traza {
 	public int getNumNodosHistoricos() {
 		return this.raiz.getNumNodosHistoricos();
 	}
-	
+
 	/**
 	 * Devuelve el número de nodos aún no mostrados del árbol.
 	 * 
@@ -196,12 +261,15 @@ public class Traza {
 	public int getNumNodosAunNoMostrados() {
 		return this.raiz.getNumNodosAunNoMostrados();
 	}
-	
+
 	/**
-	 * Devuelve una matriz con todos los valores de los parámetros de entrada para los distintos nodos del árbol.
+	 * Devuelve una matriz con todos los valores de los parámetros de entrada
+	 * para los distintos nodos del árbol.
 	 * 
-	 * @param interfaz Interfaz del método de la cual se obtendrán los valores.
-	 * @param filtrarRepetidos true para eliminar valores repetidos, false en caso contrario.
+	 * @param interfaz
+	 *            Interfaz del método de la cual se obtendrán los valores.
+	 * @param filtrarRepetidos
+	 *            true para eliminar valores repetidos, false en caso contrario.
 	 * 
 	 * @return Matriz con todos los valores de los parámetros de entrada.
 	 */
@@ -217,15 +285,15 @@ public class Traza {
 
 		if (filtrarRepetidos) {
 			for (int i = 0; i < datos.length; i++) // i = num Nodo almacenado,
-													// los vamos recorriendo
+				// los vamos recorriendo
 			{
 				for (int j = i + 1; j < datos.length; j++) // j = num Nodo de
-															// comparación,
-															// comparamos hacia
-															// adelante
+					// comparación,
+					// comparamos hacia
+					// adelante
 				{
 					for (int k = 0; k < datos[i].length; k++) // k = num
-																// Parámetro
+						// Parámetro
 					{
 						if (datos[i][k] != null && datos[j][k] != null
 								&& datos[i][k].equals(datos[j][k])) {
@@ -238,12 +306,15 @@ public class Traza {
 
 		return datos;
 	}
-	
+
 	/**
-	 * Devuelve una matriz con todos los valores de los parámetros de salida para los distintos nodos del árbol.
+	 * Devuelve una matriz con todos los valores de los parámetros de salida
+	 * para los distintos nodos del árbol.
 	 * 
-	 * @param interfaz Interfaz del método de la cual se obtendrán los valores.
-	 * @param filtrarRepetidos true para eliminar valores repetidos, false en caso contrario.
+	 * @param interfaz
+	 *            Interfaz del método de la cual se obtendrán los valores.
+	 * @param filtrarRepetidos
+	 *            true para eliminar valores repetidos, false en caso contrario.
 	 * 
 	 * @return Matriz con todos los valores de los parámetros de salida.
 	 */
@@ -266,15 +337,15 @@ public class Traza {
 
 		if (filtrarRepetidos) {
 			for (int i = 0; i < datos.length; i++) // i = num Nodo almacenado,
-													// los vamos recorriendo
+				// los vamos recorriendo
 			{
 				for (int j = i + 1; j < datos.length; j++) // j = num Nodo de
-															// comparación,
-															// comparamos hacia
-															// adelante
+					// comparación,
+					// comparamos hacia
+					// adelante
 				{
 					for (int k = 0; k < datos[i].length; k++) // k = num
-																// Parámetro
+						// Parámetro
 					{
 						if (datos[i][k] != null && datos[j][k] != null
 								&& datos[i][k].equals(datos[j][k])) {
@@ -296,10 +367,11 @@ public class Traza {
 
 		return datos;
 	}
-	
+
 	/**
-	 * Obtiene todas las interfaces de los distintos métodos que componen el árbol.
-	 *  
+	 * Obtiene todas las interfaces de los distintos métodos que componen el
+	 * árbol.
+	 * 
 	 * @return Interfaces de los distintos métodos que componen el árbol.
 	 */
 	public String[] getInterfacesMetodos() {
@@ -320,7 +392,7 @@ public class Traza {
 
 		return interfaces;
 	}
-	
+
 	/**
 	 * Devuelve el número de nodos inhibidos del árbol.
 	 * 
@@ -329,7 +401,7 @@ public class Traza {
 	public int getNumNodosInhibidos() {
 		return this.raiz.getNumNodosInhibidos();
 	}
-	
+
 	/**
 	 * Devuelve el número de nodos iluminados del árbol.
 	 * 
@@ -338,7 +410,7 @@ public class Traza {
 	public int getNumNodosIluminados() {
 		return this.raiz.getNumNodosIluminados();
 	}
-	
+
 	/**
 	 * Devuelve el título de la traza.
 	 * 
@@ -347,11 +419,12 @@ public class Traza {
 	public String getTitulo() {
 		return this.titulo;
 	}
-	
+
 	/**
 	 * Permite establecer el título de la traza.
 	 * 
-	 * @param titulo Título de la traza.
+	 * @param titulo
+	 *            Título de la traza.
 	 */
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
@@ -360,12 +433,13 @@ public class Traza {
 	/**
 	 * Asigna a la raíz un valor determinado.
 	 * 
-	 * @param ra Nueva raíz del árbol.
+	 * @param ra
+	 *            Nueva raíz del árbol.
 	 */
 	public void setRaiz(RegistroActivacion ra) {
 		this.raiz = ra;
 	}
-	
+
 	/**
 	 * Permite visualizar el árbol en un fichero de texto plano.
 	 * 
@@ -376,18 +450,21 @@ public class Traza {
 	}
 
 	/**
-	 * Mira si la traza está con la raíz mostrandose en su estado inicial (Entrada pero sin hijos)
+	 * Mira si la traza está con la raíz mostrandose en su estado inicial
+	 * (Entrada pero sin hijos)
 	 * 
-	 * @return true si la raíz se muestra en su estado inicial, false en caso contrario.
+	 * @return true si la raíz se muestra en su estado inicial, false en caso
+	 *         contrario.
 	 */
 	public boolean raizInicio() {
 		return this.getRaiz().estadoInicio();
 	}
-	
+
 	/**
 	 * Devuelve si el nodo actual se ve al completo.
 	 * 
-	 * @return true si el nodo actual se ve al completo, false en caso contrario.
+	 * @return true si el nodo actual se ve al completo, false en caso
+	 *         contrario.
 	 */
 	public boolean nodoActualCompleto() {
 		RegistroActivacion ra = this.raiz.getNodoActual();
@@ -397,7 +474,7 @@ public class Traza {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Devuelve el número de métodos en ejecución.
 	 * 
@@ -406,7 +483,7 @@ public class Traza {
 	public int getNumMetodos() {
 		return this.raiz.getNumMetodos();
 	}
-	
+
 	/**
 	 * Devuelve el nombre de los distintos métodos en ejecución.
 	 * 
@@ -415,7 +492,7 @@ public class Traza {
 	public String[] getNombresMetodos() {
 		return this.raiz.getNombresMetodos();
 	}
-	
+
 	/**
 	 * Devuelve el tipo de estructura para DYV que se está visualizando.
 	 * 
@@ -462,7 +539,7 @@ public class Traza {
 		}
 		this.raiz.crearCaminoActual();
 	}
-	
+
 	/**
 	 * Recalcula la traza para que haya varios elementos menos visibles.
 	 */
@@ -541,7 +618,7 @@ public class Traza {
 
 		return t;
 	}
-	
+
 	/**
 	 * Permite Iluminar todos los nodos que se corresponden con los valores de
 	 * entrada, y de salida de un método.
@@ -565,7 +642,8 @@ public class Traza {
 	/**
 	 * Asigna qué parametros son visibles durante la animación
 	 * 
-	 * @param claseAlgoritmo Información de la clase actual.
+	 * @param claseAlgoritmo
+	 *            Información de la clase actual.
 	 */
 	public void setVisibilidad(ClaseAlgoritmo claseAlgoritmo) {
 		this.raiz.setVisibilidad(claseAlgoritmo);
@@ -574,12 +652,13 @@ public class Traza {
 	/**
 	 * Asigna qué parametros son visibles durante la animación
 	 * 
-	 * @param dtb Datos de traza básicos.
+	 * @param dtb
+	 *            Datos de traza básicos.
 	 */
 	public void setVisibilidad(DatosTrazaBasicos dtb) {
 		this.raiz.setVisibilidad(dtb);
 	}
-	
+
 	/**
 	 * Configura la traza para visualizar tanto la entrada como la salida.
 	 */
@@ -588,7 +667,7 @@ public class Traza {
 		this.raiz.visualizarEntradaYSalida();
 		this.raiz.crearCaminoActual();
 	}
-	
+
 	/**
 	 * Configura la traza para visualizar únicamente la entrada.
 	 */
@@ -597,7 +676,7 @@ public class Traza {
 		this.raiz.visualizarSoloEntrada();
 		this.raiz.crearCaminoActual();
 	}
-	
+
 	/**
 	 * Configura la traza para visualizar únicamente la salida.
 	 */
@@ -606,18 +685,20 @@ public class Traza {
 		this.raiz.visualizarSoloSalida();
 		this.raiz.crearCaminoActual();
 	}
-	
+
 	/**
-	 * Devuelve el registro de activación que se corresponde con el identificador proporcionado.
+	 * Devuelve el registro de activación que se corresponde con el
+	 * identificador proporcionado.
 	 * 
-	 * @param id Identificador del registro de activación
+	 * @param id
+	 *            Identificador del registro de activación
 	 * 
 	 * @return Registro de activación que se corresponde con el identificador.
 	 */
 	public RegistroActivacion getRegistroActivacionPorID(int id) {
 		return this.raiz.getRegistroActivacionPorID(id);
 	}
-	
+
 	/**
 	 * Devuelve el registro de activación atual.
 	 * 
@@ -626,18 +707,19 @@ public class Traza {
 	public RegistroActivacion getRegistroActivo() {
 		return this.raiz.getRegistroActivo();
 	}
-	
+
 	/**
-	 * Permite actualizar todos los nodos de la traza con los nodos de
-	 * la traza pasada por parámetro.
+	 * Permite actualizar todos los nodos de la traza con los nodos de la traza
+	 * pasada por parámetro.
 	 * 
-	 * @param traza Traza de la cual se obtendrá toda la información de los nodos.
+	 * @param traza
+	 *            Traza de la cual se obtendrá toda la información de los nodos.
 	 */
 	public void actualizarEstadoTrazaCompleta(Traza traza) {
 		this.raiz.actualizarEstadoFlagsDesdeGemelo(traza);
 		this.raiz.asignarMetodosNoVisibles();
 	}
-	
+
 	/**
 	 * Corrige todos los valores de los nodos cuando necesitan ser reprocesados.
 	 */
@@ -646,16 +728,19 @@ public class Traza {
 	}
 
 	/**
-	 *  Asigna a cada registro de activación un número en función del método al que pertenece. El método principal tendrá un 0 en sus nodos, ...
+	 * Asigna a cada registro de activación un número en función del método al
+	 * que pertenece. El método principal tendrá un 0 en sus nodos, ...
 	 */
 	public void asignarNumeroMetodo() {
 		this.raiz.asignarNumeroMetodo(this.getInterfacesMetodos());
 	}
 
 	/**
-	 *  Asigna a cada registro de activación un número en función del método al que pertenece. El método principal tendrá un 0 en sus nodos, ...
-	 *  
-	 *  @param interfaces Interfaces de los métodos disponibles.
+	 * Asigna a cada registro de activación un número en función del método al
+	 * que pertenece. El método principal tendrá un 0 en sus nodos, ...
+	 * 
+	 * @param interfaces
+	 *            Interfaces de los métodos disponibles.
 	 */
 	public void asignarNumeroMetodo(String[] interfaces) {
 		this.raiz.asignarNumeroMetodo(interfaces);

@@ -102,6 +102,40 @@ public class Estado {
 	}
 
 	/**
+	 * Constructor: genera un nuevo estado con una serie de valores, bien
+	 * parámetros, bien de salida
+	 * 
+	 * @param p
+	 *            conjunto de valores
+	 * @param e
+	 *            objeto que contiene la estructura que se desea visualizar
+	 * @param indEstructura
+	 *            Posición que identifica la estructura DYV.
+	 * @param ind
+	 *            valores para las corrdenadas que se desean resaltar de la
+	 *            estructura.
+	 */
+	public Estado(Object p[], Object e, int indEstructura, int ind[]) {
+		this(p);
+		if (e != null) {
+			this.setEstructuraIndices(e, indEstructura, ind);
+		}
+	}
+
+	/**
+	 * Constructor: genera un nuevo estado dado un estado anterior.
+	 * 
+	 * @param Estado
+	 *            estado.
+	 */
+	public Estado(Estado e) {
+		if (e != null) {
+			this.param = e.getParametros();
+			this.clases = e.getClases();
+		}
+	}
+
+	/**
 	 * Devuelve la estructura
 	 * 
 	 * @return valores
@@ -152,29 +186,33 @@ public class Estado {
 			this.indices = new int[0];
 		}
 	}
-	
+
 	/**
-	 * Establece el índice que identifica el parámetro en el que está la estructura.
+	 * Establece el índice que identifica el parámetro en el que está la
+	 * estructura.
 	 * 
-	 * @param x índice de la estructura.
+	 * @param x
+	 *            índice de la estructura.
 	 */
 	public void setIndiceDeEstructura(int x) {
 		this.indiceEstructura = x;
 	}
-	
+
 	/**
-	 * Devuelve el índice que identifica el parámetro en el que está la estructura.
+	 * Devuelve el índice que identifica el parámetro en el que está la
+	 * estructura.
 	 * 
 	 * @return Índice de la estructura.
 	 */
 	public int getIndiceDeEstructura() {
 		return this.indiceEstructura;
 	}
-	
+
 	/**
 	 * Devuelve el valor parámetro dado por la posición especificada.
 	 * 
-	 * @param i posición del parámetro.
+	 * @param i
+	 *            posición del parámetro.
 	 * 
 	 * @return valor del parámetro.
 	 */
@@ -209,7 +247,7 @@ public class Estado {
 	public String[] getClases() {
 		return this.clases;
 	}
-	
+
 	/**
 	 * Devuelve el número de dimensiones.
 	 * 
@@ -218,11 +256,13 @@ public class Estado {
 	public int[] getDimensiones() {
 		return this.dim;
 	}
-	
+
 	/**
-	 * Establece la representación dada la visibilidad de parámetros especificada.
+	 * Establece la representación dada la visibilidad de parámetros
+	 * especificada.
 	 * 
-	 * @param visibles Visibilidad de parámetros.
+	 * @param visibles
+	 *            Visibilidad de parámetros.
 	 */
 	protected void setRepresentacion(boolean visibles[]) {
 		this.representacion = "";
@@ -248,12 +288,15 @@ public class Estado {
 					+ "/" + this.param.length + ")";
 		}
 	}
-	
+
 	/**
-	 * Establece la representación dada la visibilidad de parámetros especificada y los nombres.
+	 * Establece la representación dada la visibilidad de parámetros
+	 * especificada y los nombres.
 	 * 
-	 * @param visibles Visibilidad de parámetros.
-	 * @param nombres Nombres de parámetros.
+	 * @param visibles
+	 *            Visibilidad de parámetros.
+	 * @param nombres
+	 *            Nombres de parámetros.
 	 */
 	protected void setRepresentacionLineasTraza(boolean visibles[],
 			String nombres[]) {
@@ -281,7 +324,7 @@ public class Estado {
 			this.representacion = "Error de visibilidad(2)";
 		}
 	}
-	
+
 	/**
 	 * Devuelve la representación del estado.
 	 * 
@@ -290,11 +333,12 @@ public class Estado {
 	public String getRepresentacion() {
 		return this.representacion;
 	}
-	
+
 	/**
 	 * Obtiene la representación completa, incluyendo nombres y valores.
 	 * 
-	 * @param nombres Nombres de los parámetros.
+	 * @param nombres
+	 *            Nombres de los parámetros.
 	 * 
 	 * @return Representación completa.
 	 */
@@ -320,7 +364,7 @@ public class Estado {
 
 		return representacion;
 	}
-	
+
 	/**
 	 * Devuelve la representación para las lineas de traza.
 	 * 
@@ -329,7 +373,7 @@ public class Estado {
 	public String getRepresentacionLineasTraza() {
 		return this.representacionLineaTraza;
 	}
-	
+
 	/**
 	 * Devuelve la visibilidad de parámetros.
 	 * 
@@ -338,7 +382,7 @@ public class Estado {
 	public boolean[] getVisibilidad() {
 		return this.visibles;
 	}
-	
+
 	/**
 	 * Devuelve los valores de los parámetros.
 	 * 
@@ -348,11 +392,12 @@ public class Estado {
 		return this.param;
 
 	}
-	
+
 	/**
 	 * Añade un nuevo valor en la lista de parámetros.
 	 * 
-	 * @param e nuevo valor.
+	 * @param e
+	 *            nuevo valor.
 	 */
 	public void nuevoValorParametro(String e) {
 		if (this.param == null || this.param.length == 0) {
@@ -367,11 +412,12 @@ public class Estado {
 			this.param = pSaux;
 		}
 	}
-	
+
 	/**
 	 * Añade un nuevo tipo de dato en la lista de tipos.
 	 * 
-	 * @param e nuevo tipo.
+	 * @param e
+	 *            nuevo tipo.
 	 */
 	public void setClase(String e) {
 		if (this.clases == null || this.clases.length == 0) {
@@ -386,11 +432,12 @@ public class Estado {
 			this.clases = pSaux;
 		}
 	}
-	
+
 	/**
 	 * Añade una nueva dimension en la lista de dimensiones.
 	 * 
-	 * @param e nuevo valor de dimensión.
+	 * @param e
+	 *            nuevo valor de dimensión.
 	 */
 	public void setDim(int e) {
 		if (this.dim == null || this.dim.length == 0) {
