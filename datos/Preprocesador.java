@@ -1,777 +1,814 @@
-/**
-	Gestiona todo el procesamiento de un fichero antes de ser ejecutado y visualizado
-	
-	@author Antonio Pérez Carrasco
-	@version 2006-2007
-*/
 package datos;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.FileReader;
 import java.io.IOException;
-
-
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-
-import org.w3c.dom.*;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import conf.*;
-import cuadros.*;
-import opciones.*;
+import opciones.GestorOpciones;
+import opciones.OpcionBorradoFicheros;
+import opciones.OpcionFicherosRecientes;
+import opciones.OpcionMVJava;
+
+import org.w3c.dom.Document;
+
 import paneles.PanelCompilador;
-import toxml.*;
-import utilidades.*;
-import ventanas.*;
+import toxml.Java2XML;
+import utilidades.GeneradorJava;
+import utilidades.LlamadorSistema;
+import utilidades.Logger;
+import utilidades.ManipulacionElement;
+import utilidades.SelecDireccion;
+import utilidades.ServiciosString;
+import utilidades.Texto;
+import ventanas.Ventana;
+import conf.Conf;
+import cuadros.CuadroError;
+import cuadros.CuadroErrorCompilacion;
+import cuadros.CuadroPreguntaSeleccMetodosDYV;
+import cuadros.CuadroProgreso;
+import cuadros.ValoresParametros;
 
+/**
+ * Gestiona todo el procesamiento de un fichero antes de ser ejecutado y
+ * visualizado
+ * 
+ * @author Antonio Pérez Carrasco
+ * @version 2006-2007
+ */
+public class Preprocesador extends Thread {
 
-public class Preprocesador extends Thread
-{
-	ClaseAlgoritmo claseAlgoritmo=null;
+	private ClaseAlgoritmo claseAlgoritmo = null;
 
-	static String fichero[] = new String[2];
-	Ventana vv;
-	Runtime runtime;
-	boolean depurar=false;  			// Depurar
-	boolean selecMetodo=false;
+	private static String fichero[] = new String[2];
+	private Ventana vv;
+	private boolean selecMetodo = false;
 
-	static String claseProcesada[]=new String[2];
-	
-	GestorOpciones gOpciones=new GestorOpciones();
+	private static String claseProcesada[] = new String[2];
 
-	OpcionBorradoFicheros obf=null;
-	OpcionMVJava omvj=null;
-	Document documento;
-	CuadroProgreso cuadroProgreso;
+	private GestorOpciones gOpciones = new GestorOpciones();
 
-	static String ficheroclass, ficherosinex, ficheroxml;
-	//CuadroSeleccionMetodos cuadroSeleccionMetodos;
-	CuadroError cuadroError; 
-	boolean compilado;
-	
-	static String ahora;
-	
-	String codigoPrevio;
-	
-	
-	boolean distintaClase=false;	
-	// a true si reprocesamos la misma clase que ya estaba cargada, es para no borrar históricos de parámetros introducidos
-	
-	
+	private OpcionBorradoFicheros obf = null;
+	private OpcionMVJava omvj = null;
+	private Document documento;
+	private CuadroProgreso cuadroProgreso;
+
+	private static String ficheroclass, ficherosinex, ficheroxml;
+	private boolean compilado;
+
+	private static String ahora;
+
+	private String codigoPrevio;
+
+	// a true si reprocesamos la misma clase que ya estaba cargada, es para no
+	// borrar históricos de parámetros introducidos
+	private boolean distintaClase = false;
+
 	/**
-		Constructor: crea un nuevo gestor
-	*/
-	public Preprocesador()
-	{
-		fichero[0]=null;
-		fichero[1]=null;
-		start();
+	 * Constructor: crea un nuevo preprocesador
+	 */
+	public Preprocesador() {
+		fichero[0] = null;
+		fichero[1] = null;
+		this.start();
 	}
-	
-	
+
 	/**
-		Constructor: crea un nuevo gestor
-		
-		@param dir path del fichero que hay que preprocesar
-		@param nombre nombre del fichero que hay que preprocesar
-	*/
-	public Preprocesador(String path,String nombre)
-	{
-		if (path!=null && nombre!=null)
-		{
-			fichero[0]=path.substring(0,path.lastIndexOf("\\")+1);
-			fichero[1]=nombre;
+	 * Constructor: crea un nuevo preprocesador
+	 * 
+	 * @param path
+	 *            path del fichero que hay que preprocesar
+	 * @param nombre
+	 *            nombre del fichero que hay que preprocesar
+	 */
+	public Preprocesador(String path, String nombre) {
+		if (path != null && nombre != null) {
+			fichero[0] = path.substring(0, path.lastIndexOf("\\") + 1);
+			fichero[1] = nombre;
+		} else {
+			fichero[0] = null;
+			fichero[1] = null;
 		}
-		else
-		{
-			fichero[0]=null;
-			fichero[1]=null;
-		}
-		start();
+		this.start();
 	}
-	
-	public Preprocesador(String path,String nombre, boolean selecMetodo)
-	{
-		if (path!=null && nombre!=null)
-		{
-			fichero[0]=path.substring(0,path.lastIndexOf("\\")+1);
-			fichero[1]=nombre;
+
+	/**
+	 * Constructor: crea un nuevo preprocesador.
+	 * 
+	 * @param path
+	 *            path del fichero que hay que preprocesar
+	 * @param nombre
+	 *            nombre del fichero que hay que preprocesar
+	 * @param selecMetodo
+	 *            A true si debe mostrarse el cuadro de selección de métodos al
+	 *            terminar de procesar, false en caso contrario.
+	 */
+	public Preprocesador(String path, String nombre, boolean selecMetodo) {
+		if (path != null && nombre != null) {
+			fichero[0] = path.substring(0, path.lastIndexOf("\\") + 1);
+			fichero[1] = nombre;
+		} else {
+			fichero[0] = null;
+			fichero[1] = null;
 		}
-		else
-		{
-			fichero[0]=null;
-			fichero[1]=null;
-		}
-		this.selecMetodo=selecMetodo;
-		start();
+		this.selecMetodo = selecMetodo;
+		this.start();
 	}
-	
-	
+
 	/**
-		Constructor: crea un nuevo gestor
-		
-		@param path path del fichero que hay que preprocesar
-	*/
-	public Preprocesador(String []path)
-	{
-		if (path!=null && path.length==2 && path[0]!=null && path[1]!=null)
-		{
-			fichero[0]=path[0];
-			fichero[1]=path[1];
+	 * Constructor: crea un nuevo preprocesador
+	 * 
+	 * @param path
+	 *            path del fichero que hay que preprocesar
+	 */
+	public Preprocesador(String[] path) {
+		if (path != null && path.length == 2 && path[0] != null
+				&& path[1] != null) {
+			fichero[0] = path[0];
+			fichero[1] = path[1];
+		} else {
+			fichero[0] = null;
+			fichero[1] = null;
 		}
-		else
-		{
-			fichero[0]=null;
-			fichero[1]=null;
-		}
-		start();
-	}	
-	
-	
+		this.start();
+	}
+
 	/**
-		Método que se encarga de llevar a cabo, en un nuevo thread, todo el procesamiento del fichero
-	*/
-	public synchronized void run()
-	{
-		this.vv=Ventana.thisventana;
+	 * Método que se encarga de llevar a cabo, en un nuevo thread, todo el
+	 * procesamiento del fichero
+	 */
+	@Override
+	public synchronized void run() {
+		this.vv = Ventana.thisventana;
 		this.vv.setTextoCompilador(PanelCompilador.CODIGO_VACIO);
-		
-		
-		
-		
+
 		Ventana.setProcesando(true);
-	
-		//LlamadorSistema.ejecucion("getClasspath.bat");
-		
+
 		// Cargamos y manejamos opciones
-		omvj = (OpcionMVJava)(gOpciones.getOpcion("OpcionMVJava",true));
-		
-		if (!omvj.getValida())
-		{
-			fichero[1]=null;
-			new CuadroError(vv, Texto.get("ERROR_CONF",Conf.idioma),Texto.get("ERROR_NOMVJ",Conf.idioma));
-				return;
+		this.omvj = (OpcionMVJava) (this.gOpciones.getOpcion("OpcionMVJava",
+				true));
+
+		if (!this.omvj.getValida()) {
+			fichero[1] = null;
+			new CuadroError(this.vv, Texto.get("ERROR_CONF", Conf.idioma),
+					Texto.get("ERROR_NOMVJ", Conf.idioma));
+			return;
 		}
-		distintaClase=false;	
+		this.distintaClase = false;
 		OpcionFicherosRecientes ofr;
-		
-		// Si no hemos recibido nombre fichero por parametro, sacamos JFileChooser...
-		if (fichero[0]==null)		
-		{
-			ofr=(OpcionFicherosRecientes)gOpciones.getOpcion("OpcionFicherosRecientes",true);
-			
-			fichero[0]=ofr.getDir();
-			fichero=SelecDireccion.cuadroAbrirFichero(fichero[0],Texto.get("VVC_PROCCLAS",Conf.idioma),
-						null,"java",Texto.get("ARCHIVO_JAVA",Conf.idioma),1);
-			
+
+		// Si no hemos recibido nombre fichero por parametro, sacamos
+		// JFileChooser...
+		if (fichero[0] == null) {
+			ofr = (OpcionFicherosRecientes) this.gOpciones.getOpcion(
+					"OpcionFicherosRecientes", true);
+
+			fichero[0] = ofr.getDir();
+			fichero = SelecDireccion.cuadroAbrirFichero(fichero[0],
+					Texto.get("VVC_PROCCLAS", Conf.idioma), null, "java",
+					Texto.get("ARCHIVO_JAVA", Conf.idioma), 1);
+
 			// Forzamos a abrir Selector de fichero
-			distintaClase=true;
-			
+			this.distintaClase = true;
+
 			// *1* Comprobar que fichero existe
-			if (fichero==null || fichero[1]==null)
-			{
-				if (Conf.fichero_log) Logger.log_write("Preprocesador: no se procesará clase.");
+			if (fichero == null || fichero[1] == null) {
+				if (Conf.fichero_log) {
+					Logger.log_write("Preprocesador: no se procesará clase.");
+				}
 				Ventana.setProcesando(false);
 			}
 		}
 
-		
-		
-		boolean existeFichero=false;
-		if (fichero!=null && fichero[1]!=null && !fichero[1].toLowerCase().contains("srec"))
-		{
-			File f=new File(fichero[0]+fichero[1]);
-			
-			existeFichero=f.exists();
-				
+		boolean existeFichero = false;
+		if (fichero != null && fichero[1] != null
+				&& !fichero[1].toLowerCase().contains("srec")) {
+			File f = new File(fichero[0] + fichero[1]);
+
+			existeFichero = f.exists();
+
 		}
-		if (existeFichero)//fichero!=null && fichero[1]!=null && !fichero[1].toLowerCase().contains("srec"))
-		{
+		if (existeFichero) {
 
 			this.vv.setClaseHabilitada(false);
 			// Cargamos opción de borrado de ficheros
-			obf=(OpcionBorradoFicheros)gOpciones.getOpcion("OpcionBorradoFicheros", true);
-			
-			
+			this.obf = (OpcionBorradoFicheros) this.gOpciones.getOpcion(
+					"OpcionBorradoFicheros", true);
+
 			// Cargamos lector de fichero
-			if (fichero!=null && fichero[1]!=null)
-			{
+			if (fichero != null && fichero[1] != null) {
 				try {
-					FileReader fileStream = new FileReader( fichero[0]+fichero[1]);
+					FileReader fileStream = new FileReader(fichero[0]
+							+ fichero[1]);
 					fileStream.close();
 				} catch (FileNotFoundException fnfe) {
-					new CuadroError(vv, Texto.get("ERROR_ARCH",Conf.idioma), Texto.get("ERROR_ARCHNE",Conf.idioma));
-					fichero[1]=null;
+					new CuadroError(this.vv, Texto.get("ERROR_ARCH",
+							Conf.idioma),
+							Texto.get("ERROR_ARCHNE", Conf.idioma));
+					fichero[1] = null;
 				} catch (IOException ioe) {
 					System.out.println("Error IO");
-					fichero[1]=null;
+					fichero[1] = null;
 				}
 
-				// Creamos cuadro de progreso para informar al usuario del avance del proceso de carga de la clase Java
-				cuadroProgreso = new CuadroProgreso(this.vv,Texto.get("CP_ESPERE",Conf.idioma),Texto.get("CP_PROCES",Conf.idioma),0);
+				// Creamos cuadro de progreso para informar al usuario del
+				// avance del proceso de carga de la clase Java
+				this.cuadroProgreso = new CuadroProgreso(this.vv, Texto.get(
+						"CP_ESPERE", Conf.idioma), Texto.get("CP_PROCES",
+						Conf.idioma), 0);
 
-				ficheroclass = fichero[1].replace(".java",".class");
-				ficherosinex = fichero[1].replace(".java","");
-				ficheroxml = fichero[1].replace(".java",".xml");
-		
-				// Borramos ficheros que puedan interferir en proceso de ejecución
-				File file=new File(fichero[0]+ficheroclass);
+				ficheroclass = fichero[1].replace(".java", ".class");
+				ficherosinex = fichero[1].replace(".java", "");
+				ficheroxml = fichero[1].replace(".java", ".xml");
+
+				// Borramos ficheros que puedan interferir en proceso de
+				// ejecución
+				File file = new File(fichero[0] + ficheroclass);
 				file.delete();
-				file=new File(ficheroclass);
+				file = new File(ficheroclass);
 				file.delete();
-				file=new File(fichero[0]+ficheroxml);
+				file = new File(fichero[0] + ficheroxml);
 				file.delete();
-				file=new File(ficheroxml);
+				file = new File(ficheroxml);
 				file.delete();
 
-				cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),10);	
-				
-				
-				// Compilamos externamente (mediante compilador de Java) el fichero seleccionado por el usuario
+				this.cuadroProgreso.setValores(
+						Texto.get("CP_PROCES", Conf.idioma), 10);
+
+				// Compilamos externamente (mediante compilador de Java) el
+				// fichero seleccionado por el usuario
 				// A partir de Java 7, Runtime.exec recibe un array de Strings
-				if (!obf.getfClass()){
-					String aux[]=new String[2];
-					aux[0]="\""+omvj.getDir()+"javac\"";
-					aux[1]="\""+fichero[0]+fichero[1]+"\"";
+				if (!this.obf.getfClass()) {
+					String aux[] = new String[2];
+					aux[0] = "\"" + this.omvj.getDir() + "javac\"";
+					aux[1] = "\"" + fichero[0] + fichero[1] + "\"";
 					LlamadorSistema.ejecucionArray(aux);
-					//LlamadorSistema.ejecucion("\""+omvj.getDir()+"javac\" \""+fichero[0]+fichero[1]+"\"");
 				}
-				String aux[]=new String[4];
-				aux[0]="\""+omvj.getDir()+"javac\"";
-				aux[1]="-d";
-				aux[2]=".\\";
-				aux[3]="\""+fichero[0]+fichero[1]+"\"";
-				String salidaCompilador=LlamadorSistema.ejecucionArray(aux);
-				//String salidaCompilador=LlamadorSistema.ejecucion("\""+omvj.getDir()+"javac\" -d .\\ \""+fichero[0]+fichero[1]+"\"");
-								
-				compilado=salidaCompilador.length()<4;
+				String aux[] = new String[4];
+				aux[0] = "\"" + this.omvj.getDir() + "javac\"";
+				aux[1] = "-d";
+				aux[2] = ".\\";
+				aux[3] = "\"" + fichero[0] + fichero[1] + "\"";
+				String salidaCompilador = LlamadorSistema.ejecucionArray(aux);
+				// String
+
+				this.compilado = salidaCompilador.length() < 4;
 				this.vv.setTextoCompilador(salidaCompilador);
-			
-				if (!compilado)
-				{
-					cuadroProgreso.cerrar();
-					//System.out.print(""+"");
-					
-					int posicExtensionNombre=fichero[1].toLowerCase().indexOf(".java");
-					String nombreClase=fichero[1].substring(0,posicExtensionNombre);
-					
+
+				if (!this.compilado) {
+					this.cuadroProgreso.cerrar();
+
+					int posicExtensionNombre = fichero[1].toLowerCase()
+							.indexOf(".java");
+					String nombreClase = fichero[1].substring(0,
+							posicExtensionNombre);
+
 					this.vv.setTitulo(fichero[1]);
-					if (distintaClase)
-					{
-						ValoresParametros.inicializar(distintaClase);
+					if (this.distintaClase) {
+						ValoresParametros.inicializar(this.distintaClase);
 						this.vv.habilitarOpcionesAnimacion(false);
-						this.vv.setClase(new ClaseAlgoritmo(fichero[0]+fichero[1],nombreClase));
+						this.vv.setClase(new ClaseAlgoritmo(fichero[0]
+								+ fichero[1], nombreClase));
 						this.vv.setPreprocesador(this);
-						this.vv.abrirPanelCodigo(true,true);
-						//this.vv.setTextoCompilador(salidaCompilador);
-						if (Conf.fichero_log) Logger.log_write("Preprocesador: clase cargada: '"+fichero[0]+fichero[1]+"'");
+						this.vv.abrirPanelCodigo(true, true);
+						if (Conf.fichero_log) {
+							Logger.log_write("Preprocesador: clase cargada: '"
+									+ fichero[0] + fichero[1] + "'");
+						}
 						Ventana.setProcesando(false);
-					}
-					else
-					{
-						//ValoresParametros.inicializar(distintaClase);
+					} else {
 						this.vv.habilitarOpcionesAnimacion(false);
-						this.vv.setClase(new ClaseAlgoritmo(fichero[0]+fichero[1],nombreClase));
+						this.vv.setClase(new ClaseAlgoritmo(fichero[0]
+								+ fichero[1], nombreClase));
 						this.vv.setPreprocesador(this);
 						this.vv.cerrarVistas();
 
-						if (Conf.fichero_log) Logger.log_write("Preprocesador: clase cargada: '"+fichero[0]+fichero[1]+"'");
+						if (Conf.fichero_log) {
+							Logger.log_write("Preprocesador: clase cargada: '"
+									+ fichero[0] + fichero[1] + "'");
+						}
 						Ventana.setProcesando(false);
 
 					}
-					
-				}
-				else
-				{
-					// Actualizamos opción de ficheros recientes (para mantener último directorio)
-					ofr=(OpcionFicherosRecientes)gOpciones.getOpcion("OpcionFicherosRecientes", true);
+
+				} else {
+					// Actualizamos opción de ficheros recientes (para mantener
+					// último directorio)
+					ofr = (OpcionFicherosRecientes) this.gOpciones.getOpcion(
+							"OpcionFicherosRecientes", true);
 					ofr.setDir(fichero[0]);
-					gOpciones.setOpcion(ofr,2);
-					
-					
-					
-					
+					this.gOpciones.setOpcion(ofr, 2);
+
 					// Convertimos la clase a XML
-					cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),20);	
-					Java2XML.main(fichero[0]+fichero[1]);
-					cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),35);	
-					documento=ManipulacionElement.getDocumento(fichero[0]+ficheroxml);
-					if (obf.getfXml())	// Si el usuario no está interesado en XML original, lo borramos
+					this.cuadroProgreso.setValores(
+							Texto.get("CP_PROCES", Conf.idioma), 20);
+					Java2XML.main(fichero[0] + fichero[1]);
+					this.cuadroProgreso.setValores(
+							Texto.get("CP_PROCES", Conf.idioma), 35);
+					this.documento = ManipulacionElement
+							.getDocumento(fichero[0] + ficheroxml);
+					if (this.obf.getfXml()) // Si el usuario no está interesado
+					// en XML original, lo borramos
 					{
-						file=new File(fichero[0]+ficheroxml);
+						file = new File(fichero[0] + ficheroxml);
 						file.delete();
 					}
 
-					if (documento==null)
-					{
-						//System.out.println("documento es null");
-						cuadroProgreso.cerrar();	
-						new CuadroError(vv, Texto.get("ERROR_ARCH",Conf.idioma),Texto.get("ERROR_ANTIESCRIT",Conf.idioma));
+					if (this.documento == null) {
+						this.cuadroProgreso.cerrar();
+						new CuadroError(this.vv, Texto.get("ERROR_ARCH",
+								Conf.idioma), Texto.get("ERROR_ANTIESCRIT",
+								Conf.idioma));
 						return;
 					}
-					cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),50);
-						
-					Calendar c = new GregorianCalendar();
-					codigoPrevio=generarCodigoUnico(""+c.get(Calendar.DAY_OF_MONTH), ""+(c.get(Calendar.MONTH)+1),
-								""+c.get(Calendar.YEAR), ""+c.get(Calendar.HOUR_OF_DAY),
-								""+c.get(Calendar.MINUTE), ""+c.get(Calendar.SECOND));	
-					
-					// Creamos clase nueva, para tener siempre actualizada la información (si cargamos clase original, se tira de caché la 2ª vez)
-					Transformador.correccionNombres(documento,fichero[1].replace(".java",codigoPrevio+".java"),"",codigoPrevio);
-					GeneradorJava.writeJavaFile(documento,fichero[1].replace(".java",codigoPrevio+".java"));
-					
-					compilado=true;
-					
-					cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),65);	
-					
-					if (!obf.getfClass()) {
-						String aux2[]=new String[2];
-						aux2[0]="\""+omvj.getDir()+"javac\"";
-						aux2[1]="\""+fichero[0]+fichero[1].replace(".java",codigoPrevio+".java")+"\"";
-						LlamadorSistema.ejecucionArray(aux2);
-						//LlamadorSistema.ejecucion("\""+omvj.getDir()+"javac\" \""+
-						//		fichero[0]+fichero[1].replace(".java",codigoPrevio+".java")+"\"");
-					}
-					String aux2[]=new String[4];
-					aux2[0]="\""+omvj.getDir()+"javac\"";
-					aux2[1]="-d";
-					aux2[2]=".\\";
-					aux2[3]="\""+fichero[1].replace(".java",codigoPrevio+".java")+"\"";
-					salidaCompilador=LlamadorSistema.ejecucionArray(aux2);
-					//salidaCompilador=LlamadorSistema.ejecucion("\""+omvj.getDir()+"javac\" -d .\\ \""+
-					//					/*fichero[0]+*/fichero[1].replace(".java",codigoPrevio+".java")+"\"");
-					compilado=salidaCompilador.length()<4;
-										
-					if (!compilado)
-					{
-						cuadroProgreso.cerrar();
-						//System.out.print(""+"");
-						
-						new CuadroErrorCompilacion(vv, fichero[1].replace(".java",codigoPrevio+".java"),
-							salidaCompilador.substring(4,salidaCompilador.length()-1));
-						try {wait(550);} catch (java.lang.InterruptedException ie) {}
-					}
-					else
-					{
-						// Creamos la instancia de ClaseAlgoritmo que nos ayudará a gestionar las creaciones de animaciones
-						cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),80);
-						
-						try {
-							claseAlgoritmo=Transformador.crearObjetoClaseAlgoritmo(documento);	// Sólo contiene métodos visualizables
-						} catch (Exception e) {
-							cuadroProgreso.cerrar();
-							new CuadroError(vv, "TITULO","MENSAJE CLASE VACIA");
-								
-							try {wait(550);} catch (java.lang.InterruptedException ie) {}
-						}
-					
-						
-						claseAlgoritmo.setId(ficherosinex+codigoPrevio);
+					this.cuadroProgreso.setValores(
+							Texto.get("CP_PROCES", Conf.idioma), 50);
 
-					
-						cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),88);
-						Class clase=null;
+					Calendar c = new GregorianCalendar();
+					this.codigoPrevio = this.generarCodigoUnico(
+							"" + c.get(Calendar.DAY_OF_MONTH),
+							"" + (c.get(Calendar.MONTH) + 1),
+							"" + c.get(Calendar.YEAR),
+							"" + c.get(Calendar.HOUR_OF_DAY),
+							"" + c.get(Calendar.MINUTE),
+							"" + c.get(Calendar.SECOND));
+
+					// Creamos clase nueva, para tener siempre actualizada la
+					// información (si cargamos clase original, se tira de caché
+					// la 2ª vez)
+					Transformador.correccionNombres(
+							this.documento,
+							fichero[1].replace(".java", this.codigoPrevio
+									+ ".java"), "", this.codigoPrevio);
+					GeneradorJava.writeJavaFile(
+							this.documento,
+							fichero[1].replace(".java", this.codigoPrevio
+									+ ".java"));
+
+					this.compilado = true;
+
+					this.cuadroProgreso.setValores(
+							Texto.get("CP_PROCES", Conf.idioma), 65);
+
+					if (!this.obf.getfClass()) {
+						String aux2[] = new String[2];
+						aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
+						aux2[1] = "\""
+								+ fichero[0]
+								+ fichero[1].replace(".java", this.codigoPrevio
+										+ ".java") + "\"";
+						LlamadorSistema.ejecucionArray(aux2);
+					}
+					String aux2[] = new String[4];
+					aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
+					aux2[1] = "-d";
+					aux2[2] = ".\\";
+					aux2[3] = "\""
+							+ fichero[1].replace(".java", this.codigoPrevio
+									+ ".java") + "\"";
+					salidaCompilador = LlamadorSistema.ejecucionArray(aux2);
+					this.compilado = salidaCompilador.length() < 4;
+
+					if (!this.compilado) {
+						this.cuadroProgreso.cerrar();
+
+						new CuadroErrorCompilacion(this.vv, fichero[1].replace(
+								".java", this.codigoPrevio + ".java"),
+								salidaCompilador.substring(4,
+										salidaCompilador.length() - 1));
 						try {
-							clase = Class.forName(ficherosinex+codigoPrevio);
+							this.wait(550);
+						} catch (java.lang.InterruptedException ie) {
+						}
+					} else {
+						// Creamos la instancia de ClaseAlgoritmo que nos
+						// ayudará a gestionar las creaciones de animaciones
+						this.cuadroProgreso.setValores(
+								Texto.get("CP_PROCES", Conf.idioma), 80);
+
+						try {
+							this.claseAlgoritmo = Transformador
+									.crearObjetoClaseAlgoritmo(this.documento); // Sólo
+							// contiene
+							// métodos
+							// visualizables
+						} catch (Exception e) {
+							this.cuadroProgreso.cerrar();
+							new CuadroError(this.vv, "TITULO",
+									"MENSAJE CLASE VACIA");
+
+							try {
+								this.wait(550);
+							} catch (java.lang.InterruptedException ie) {
+							}
+						}
+
+						this.claseAlgoritmo.setId(ficherosinex
+								+ this.codigoPrevio);
+
+						this.cuadroProgreso.setValores(
+								Texto.get("CP_PROCES", Conf.idioma), 88);
+						Class clase = null;
+						try {
+							clase = Class.forName(ficherosinex
+									+ this.codigoPrevio);
 						} catch (java.lang.ClassNotFoundException cnfe) {
-							if (clase==null)
-							{
-								System.out.println("No se pudo cargar la clase "+ficherosinex);
-								cuadroProgreso.cerrar();
+							if (clase == null) {
+								System.out
+										.println("No se pudo cargar la clase "
+												+ ficherosinex);
+								this.cuadroProgreso.cerrar();
 							}
 							return;
 						}
-						cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),95);		
-						
+						this.cuadroProgreso.setValores(
+								Texto.get("CP_PROCES", Conf.idioma), 95);
+
 						c = new GregorianCalendar();
-						ahora=generarCodigoUnico(""+c.get(Calendar.DAY_OF_MONTH), ""+(c.get(Calendar.MONTH)+1),
-												""+c.get(Calendar.YEAR), ""+c.get(Calendar.HOUR_OF_DAY),
-												""+c.get(Calendar.MINUTE), ""+c.get(Calendar.SECOND));
-						
-						claseAlgoritmo.setId2( "SRec_"+claseAlgoritmo.getId()+ahora);
-						
-						cuadroProgreso.cerrar();	
-						Transformador.correccionNombres(documento, fichero[1],"SRec_",ahora);
-						
-						
-						
-						
-						
+						ahora = this.generarCodigoUnico(
+								"" + c.get(Calendar.DAY_OF_MONTH),
+								"" + (c.get(Calendar.MONTH) + 1),
+								"" + c.get(Calendar.YEAR),
+								"" + c.get(Calendar.HOUR_OF_DAY),
+								"" + c.get(Calendar.MINUTE),
+								"" + c.get(Calendar.SECOND));
+
+						this.claseAlgoritmo.setId2("SRec_"
+								+ this.claseAlgoritmo.getId() + ahora);
+
+						this.cuadroProgreso.cerrar();
+						Transformador.correccionNombres(this.documento,
+								fichero[1], "SRec_", ahora);
+
 						Ventana.thisventana.habilitarOpcionesDYV(false);
-						if (claseAlgoritmo.potencialMetodoDYV())	// Si la clase tiene algún método que se pueda visualizar con DYV
-							//new CuadroSeleccionMetodos(claseAlgoritmo,this.vv,this);
-							new CuadroPreguntaSeleccMetodosDYV(Ventana.thisventana,claseAlgoritmo,this);
-						else {	// Si no lo tiene, directamente procesamos
+						if (this.claseAlgoritmo.potencialMetodoDYV()) {
+							new CuadroPreguntaSeleccMetodosDYV(
+									Ventana.thisventana, this.claseAlgoritmo,
+									this);
+						} else { // Si no lo tiene, directamente procesamos
 							Ventana.thisventana.habilitarOpcionesDYV(false);
-							fase2(claseAlgoritmo);
+							this.fase2(this.claseAlgoritmo);
 						}
 					}
 				}
 			}
+		} else if (fichero[1] != null) {
+			new CuadroError(this.vv, Texto.get("ERROR_ARCH", Conf.idioma),
+					Texto.get("ERROR_ARCHNE", Conf.idioma));
 		}
-		else if(fichero[1]!=null)
-			new CuadroError(vv, Texto.get("ERROR_ARCH",Conf.idioma) , Texto.get("ERROR_ARCHNE",Conf.idioma) );
 	}
-		
-	public synchronized void fase2(ClaseAlgoritmo clase)
-	{
-		
-		this.claseAlgoritmo=clase;
-		//cuadroProgreso = new CuadroProgreso(this.vv,Texto.get("CP_ESPERE",Conf.idioma),Texto.get("CP_PROCES",Conf.idioma),0);
-		String ficherosinexF=ficherosinex+codigoPrevio;
-		
-		int errorManipulacion=Transformador.insertarLineasNecesarias(documento,claseAlgoritmo);
+	
+	/**
+	 * Una vez procesado el fichero, este método se encargará de insertar las
+	 * llamadas necesarias en el xml para procesar la clase final que será ejecutada.
+	 * 
+	 * @param clase Clase a ser procesada.
+	 */
+	public synchronized void fase2(ClaseAlgoritmo clase) {
 
-		
-		if (errorManipulacion==1)
-		{
-			cuadroProgreso.cerrar();
+		this.claseAlgoritmo = clase;
+		String ficherosinexF = ficherosinex + this.codigoPrevio;
+
+		int errorManipulacion = Transformador.insertarLineasNecesarias(
+				this.documento, this.claseAlgoritmo);
+
+		if (errorManipulacion == 1) {
+			this.cuadroProgreso.cerrar();
 			Ventana.setProcesando(false);
-			if (Conf.fichero_log) Logger.log_write("Preprocesador: clase cargada: '"+fichero[0]+fichero[1]+"' (error 1, clase interfaz)");
-			new CuadroError(vv, Texto.get("ERROR_CLASE",Conf.idioma),	Texto.get("ERROR_CLASEINTERFAZ",Conf.idioma));
-		}
-		/*else if (errorManipulacion==2)
-		{
-			System.out.println("prueba fase2 (2.2) ["+errorManipulacion+"]");
-			cuadroProgreso.cerrar();
-			VentanaVisualizador.setProcesando(false);
-			new CuadroError(vv, Texto.get("ERROR_CLASE",Conf.idioma),	Texto.get("ERROR_CLASENOSENTEN",Conf.idioma));
-		}*/
-		else if (errorManipulacion==3)
-		{
-			cuadroProgreso.cerrar();
+			if (Conf.fichero_log) {
+				Logger.log_write("Preprocesador: clase cargada: '" + fichero[0]
+						+ fichero[1] + "' (error 1, clase interfaz)");
+			}
+			new CuadroError(this.vv, Texto.get("ERROR_CLASE", Conf.idioma),
+					Texto.get("ERROR_CLASEINTERFAZ", Conf.idioma));
+		} else if (errorManipulacion == 2) {
+			this.cuadroProgreso.cerrar();
 			Ventana.setProcesando(false);
-			if (Conf.fichero_log) Logger.log_write("Preprocesador: clase cargada: '"+fichero[0]+fichero[1]+"' (error 3, clase abstracta)");
-			new CuadroError(vv, Texto.get("ERROR_CLASE",Conf.idioma),	Texto.get("ERROR_CLASEABS",Conf.idioma));
-		}
-		else
-		{
-			cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),15);	
+			new CuadroError(this.vv, Texto.get("ERROR_CLASE", Conf.idioma),
+					Texto.get("ERROR_CLASENOSENTEN", Conf.idioma));
+		} else if (errorManipulacion == 3) {
+			this.cuadroProgreso.cerrar();
+			Ventana.setProcesando(false);
+			if (Conf.fichero_log) {
+				Logger.log_write("Preprocesador: clase cargada: '" + fichero[0]
+						+ fichero[1] + "' (error 3, clase abstracta)");
+			}
+			new CuadroError(this.vv, Texto.get("ERROR_CLASE", Conf.idioma),
+					Texto.get("ERROR_CLASEABS", Conf.idioma));
+		} else {
+			this.cuadroProgreso.setValores(Texto.get("CP_PROCES", Conf.idioma),
+					15);
 			// Escribir nuevo fichero XML con nuevos nodos (sentencias)
-			if (!obf.getfXmlzv())
-				ManipulacionElement.writeXmlFile(documento,fichero[0]+"SRec_"+ficherosinexF+ahora+".xml");
+			if (!this.obf.getfXmlzv()) {
+				ManipulacionElement.writeXmlFile(this.documento, fichero[0]
+						+ "SRec_" + ficherosinexF + ahora + ".xml");
+			}
 
-			String fich2=fichero[1].replace(".java","");
-			fich2=fich2+codigoPrevio+ahora+".java";		// fich2 sustituye a fichero[1]
-			String fichc=ficheroclass.replace(".class","");
-			fichc=fichc+codigoPrevio+ahora+".class";		// fichc sustituye a ficheroclass
-			
-			cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),30);
-			
+			String fich2 = fichero[1].replace(".java", "");
+			fich2 = fich2 + this.codigoPrevio + ahora + ".java"; // fich2
+			// sustituye
+			// a
+			// fichero[1]
+			String fichc = ficheroclass.replace(".class", "");
+			fichc = fichc + this.codigoPrevio + ahora + ".class"; // fichc
+			// sustituye
+			// a
+			// ficheroclass
+
+			this.cuadroProgreso.setValores(Texto.get("CP_PROCES", Conf.idioma),
+					30);
+
 			// Escribir clase final de Java que ejecutaremos
-			if (!obf.getfJavazv())
-				GeneradorJava.writeJavaFile(documento,fichero[0]+"SRec_"+fich2);
-			
-			GeneradorJava.writeJavaFile(documento,"SRec_"+fich2);
-			cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),50);
-			
+			if (!this.obf.getfJavazv()) {
+				GeneradorJava.writeJavaFile(this.documento, fichero[0]
+						+ "SRec_" + fich2);
+			}
+
+			GeneradorJava.writeJavaFile(this.documento, "SRec_" + fich2);
+			this.cuadroProgreso.setValores(Texto.get("CP_PROCES", Conf.idioma),
+					50);
+
 			// Compilamos el nuevo fichero Java
-			File file=new File(fichero[0]+"SRec_"+fichc);
+			File file = new File(fichero[0] + "SRec_" + fichc);
 			file.delete();
-			file=new File("SRec_"+fichc);
+			file = new File("SRec_" + fichc);
 			file.delete();
 
-			compilado=true;
+			this.compilado = true;
 
-			if (!obf.getfClasszv()) {
-				String aux3[]=new String[4];
-				aux3[0]="\""+omvj.getDir()+"javac\"";
-				aux3[1]="-d";
-				aux3[2]="\""+fichero[0]+"\\";
-				aux3[3]="\" SRec_"+fich2;
+			if (!this.obf.getfClasszv()) {
+				String aux3[] = new String[4];
+				aux3[0] = "\"" + this.omvj.getDir() + "javac\"";
+				aux3[1] = "-d";
+				aux3[2] = "\"" + fichero[0] + "\\";
+				aux3[3] = "\" SRec_" + fich2;
 				LlamadorSistema.ejecucionArray(aux3);
-				//LlamadorSistema.ejecucion("\""+omvj.getDir()+"javac\" -d \""+fichero[0]+"\\\" SRec_"+fich2);
 			}
-			cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),85);
-			
-			String aux3[]=new String[4];
-			aux3[0]="\""+omvj.getDir()+"javac\"";
-			aux3[1]="-d";
-			aux3[2]=".\\";
-			aux3[3]="SRec_"+fich2;
-			String salidaCompilador=LlamadorSistema.ejecucionArray(aux3);
-			//String salidaCompilador=LlamadorSistema.ejecucion("\""+omvj.getDir()+"javac\" -d .\\ SRec_"+fich2);
-			
-			compilado=salidaCompilador.length()<4;
-			
-			cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),70);	
-			
-			file=new File("SRec_"+fich2);
+			this.cuadroProgreso.setValores(Texto.get("CP_PROCES", Conf.idioma),
+					85);
+
+			String aux3[] = new String[4];
+			aux3[0] = "\"" + this.omvj.getDir() + "javac\"";
+			aux3[1] = "-d";
+			aux3[2] = ".\\";
+			aux3[3] = "SRec_" + fich2;
+			String salidaCompilador = LlamadorSistema.ejecucionArray(aux3);
+			// String
+
+			this.compilado = salidaCompilador.length() < 4;
+
+			this.cuadroProgreso.setValores(Texto.get("CP_PROCES", Conf.idioma),
+					70);
+
+			file = new File("SRec_" + fich2);
 			file.delete();
-			file=new File(ficherosinex+".class");
+			file = new File(ficherosinex + ".class");
 			file.delete();
-			
-			
-			
-			if (!compilado)
-			{
-				cuadroProgreso.cerrar();
-				//System.out.print(""+"");
+
+			if (!this.compilado) {
+				this.cuadroProgreso.cerrar();
 				Ventana.setProcesando(false);
-				if (Conf.fichero_log) Logger.log_write("Preprocesador: clase cargada: '"+fichero[0]+fichero[1]+"' (error tras procesamiento)");
-				new CuadroErrorCompilacion(vv, fichero[1].replace(".java",codigoPrevio+".java"),
-					salidaCompilador.substring(4,salidaCompilador.length()-1));
-				try {wait(550);} catch (java.lang.InterruptedException ie) {}
-			}
-			else
-			{
+				if (Conf.fichero_log) {
+					Logger.log_write("Preprocesador: clase cargada: '"
+							+ fichero[0] + fichero[1]
+							+ "' (error tras procesamiento)");
+				}
+				new CuadroErrorCompilacion(this.vv, fichero[1].replace(".java",
+						this.codigoPrevio + ".java"),
+						salidaCompilador.substring(4,
+								salidaCompilador.length() - 1));
+				try {
+					this.wait(550);
+				} catch (java.lang.InterruptedException ie) {
+				}
+			} else {
 				this.vv.setClase(this.claseAlgoritmo);
 				// Ajustamos configuración del programa a procesado realizado
-				//vv.setClasePreprocesada(fich2.replace(".java",""),fichero[1].replace(".java",""));
-				
 				this.vv.setTitulo(fichero[1]);
-				cuadroProgreso.setValores(Texto.get("CP_PROCES",Conf.idioma),90);	
-				
-				try { wait(100); } catch(InterruptedException ie) {} 
-				
-				claseProcesada[0]=fichero[0];
-				claseProcesada[1]=fichero[1];
-				cuadroProgreso.cerrar();
-				
-				// Informamos del fin del proceso
-				//new CuadroInformacion(VentanaVisualizador.thisventana,Texto.get("INFO_PROCOK",Conf.idioma),
-				//		Texto.get("INFO_METPROCOK",Conf.idioma)+
-				//		ficherosinexF.substring(0,ficherosinexF.indexOf("__codSRec__"))+".",550,100);
-				
-				if (Conf.fichero_log) Logger.log_write("Preprocesador: clase cargada: '"+fichero[0]+fichero[1]+"'");
-				ValoresParametros.inicializar(distintaClase);
-				this.vv.abrirPanelCodigo(true,true);
-				this.vv.setClasePendienteGuardar(!distintaClase && this.vv.getClasePendienteGuardar());
+				this.cuadroProgreso.setValores(
+						Texto.get("CP_PROCES", Conf.idioma), 90);
+
+				try {
+					this.wait(100);
+				} catch (InterruptedException ie) {
+				}
+
+				claseProcesada[0] = fichero[0];
+				claseProcesada[1] = fichero[1];
+				this.cuadroProgreso.cerrar();
+
+				if (Conf.fichero_log) {
+					Logger.log_write("Preprocesador: clase cargada: '"
+							+ fichero[0] + fichero[1] + "'");
+				}
+				ValoresParametros.inicializar(this.distintaClase);
+				this.vv.abrirPanelCodigo(true, true);
+				this.vv.setClasePendienteGuardar(!this.distintaClase
+						&& this.vv.getClasePendienteGuardar());
 				this.vv.habilitarOpcionesAnimacion(false);
 				this.vv.setClase(this.claseAlgoritmo);
 				this.vv.setPreprocesador(this);
 				this.vv.setTextoCompilador("");
 				Ventana.setProcesando(false);
-				if(this.selecMetodo)
+				if (this.selecMetodo) {
 					this.vv.iniciarNuevaVisualizacionSelecMetodo();
+				}
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/**
-		Gestiona los detalles necesarios para poder ejecutar el algoritmo de forma controlada, tras el procesamiento del mismo
-		
-		@param metodo instancia del método que se va a invocar
-		@param p parámetros que se le pasarán al método
-		@param cp clases a las que pertenecen esos parámetros
-		@param paramVisibles determina si un parámetro deberá visualizarse o no a posteriori
-		@param ficherosinex nombre de la clase a la que pertenece el método que se va a invocar
-	*/
-	public synchronized void ejecutarAlgoritmo()
-	{
-		// Desde la clase ClaseAlgoritmo de la ventana, debemos sacar el ID2, que nos dará el nombre del .class que tenemos que analizar
-		// extraemos por ahí sus Method, etc. e identificamos el que ha sido escogido con la información retenida en la clasealgoritmo
-	
-		//cuadroProgreso = new CuadroProgreso(this.vv,Texto.get("CP_ESPERE",Conf.idioma),Texto.get("CP_PROCES",Conf.idioma),0);
-		
-		claseAlgoritmo=vv.getClase();	
-		String nombreClass=claseAlgoritmo.getId2();
-		
-		Class claseCargada=null;
+
+	/**
+	 * Gestiona los detalles necesarios para poder ejecutar el algoritmo de
+	 * forma controlada, tras el procesamiento del mismo
+	 */
+	public synchronized void ejecutarAlgoritmo() {
+		// Desde la clase ClaseAlgoritmo de la ventana, debemos sacar el ID2,
+		// que nos dará el nombre del .class que tenemos que analizar
+		// extraemos por ahí sus Method, etc. e identificamos el que ha sido
+		// escogido con la información retenida en la clasealgoritmo
+
+		this.claseAlgoritmo = this.vv.getClase();
+		String nombreClass = this.claseAlgoritmo.getId2();
+
+		Class claseCargada = null;
 		try {
 			claseCargada = Class.forName(nombreClass);
 		} catch (java.lang.ClassNotFoundException cnfe) {
-			System.out.println("No se pudo cargar la clase "+nombreClass);
+			System.out.println("No se pudo cargar la clase " + nombreClass);
 			return;
 		}
-	
-		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),20);	
-		MetodoAlgoritmo metodoAlgoritmo=claseAlgoritmo.getMetodoPrincipal();
-		
-		
-		//System.out.println("Preprocesador, detectado metodo principal: "+metodoAlgoritmo.getRepresentacion());
-		//for (int i=0; i<claseAlgoritmo.getNumMetodos(); i++)
-		//	System.out.println(claseAlgoritmo.getMetodo(i).getMarcadoPrincipal()+": "+claseAlgoritmo.getMetodo(i).getRepresentacion());
 
-		
-		
-		
-		
-		
-		Method metodos[]=claseCargada.getDeclaredMethods();
-	
-		Method metodoEjecutar=identificarMetodoEjecutar(metodoAlgoritmo,metodos);
-		
+		MetodoAlgoritmo metodoAlgoritmo = this.claseAlgoritmo
+				.getMetodoPrincipal();
+
+		Method metodos[] = claseCargada.getDeclaredMethods();
+
+		Method metodoEjecutar = this.identificarMetodoEjecutar(metodoAlgoritmo,
+				metodos);
+
 		Type[] tipos = metodoEjecutar.getGenericParameterTypes();
 		Class[] clasesParametros = new Class[tipos.length];
-		for (int j=0; j<tipos.length; j++)
-			clasesParametros[j]= (Class)tipos[j];
-	
-		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),30);	
-		Object[] valoresParametros=new Object[tipos.length];
-		
-		for (int i=0; i<valoresParametros.length; i++)
-		{
+		for (int j = 0; j < tipos.length; j++) {
+			clasesParametros[j] = (Class) tipos[j];
+		}
+
+		Object[] valoresParametros = new Object[tipos.length];
+
+		for (int i = 0; i < valoresParametros.length; i++) {
 			try {
-				valoresParametros[i]=GestorParametros.asignarParam(metodoAlgoritmo.getParamValor(i),clasesParametros[i]);
+				valoresParametros[i] = GestorParametros.asignarParam(
+						metodoAlgoritmo.getParamValor(i), clasesParametros[i]);
 			} catch (java.lang.Exception ex) {
 				ex.printStackTrace();
-				System.out.println("Excepcion en Preprocesador, llamada a 'asignarParam' (i="+i+")");
+				System.out
+						.println("Excepcion en Preprocesador, llamada a 'asignarParam' (i="
+								+ i + ")");
 			}
-			
+
 		}
-		
 
-		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),35);	
-		
-		String tituloPanel="";
-		tituloPanel=tituloPanel+metodoEjecutar.getName()+" ( ";
-		if (valoresParametros!=null)
-			for (int i=0; i<valoresParametros.length; i++)
-			{
-				tituloPanel=tituloPanel+ServiciosString.representacionObjeto(valoresParametros[i]);
-				if (i<valoresParametros.length-1)
-					tituloPanel=tituloPanel+" , ";
+		String tituloPanel = "";
+		tituloPanel = tituloPanel + metodoEjecutar.getName() + " ( ";
+		if (valoresParametros != null) {
+			for (int i = 0; i < valoresParametros.length; i++) {
+				tituloPanel = tituloPanel
+						+ ServiciosString
+								.representacionObjeto(valoresParametros[i]);
+				if (i < valoresParametros.length - 1) {
+					tituloPanel = tituloPanel + " , ";
+				}
 			}
-		tituloPanel=tituloPanel+" )";
+		}
+		tituloPanel = tituloPanel + " )";
 
-		Traza traza=Traza.singleton();
+		Traza traza = Traza.singleton();
 		traza.vaciarTraza();
-		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),50);	
 
-		//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),60);	
-		
-		try { wait(250); } catch(InterruptedException ie) {}
-		if (Ejecutador.ejecutar(claseAlgoritmo.getId2(),metodoEjecutar.getName(),clasesParametros,valoresParametros))
-		{
-			Traza traza_diferido=null;
-			//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),70);	
-			traza_diferido=traza.copiar();
+		try {
+			this.wait(250);
+		} catch (InterruptedException ie) {
+		}
+		if (Ejecutador.ejecutar(this.claseAlgoritmo.getId2(),
+				metodoEjecutar.getName(), clasesParametros, valoresParametros)) {
+			Traza traza_diferido = null;
+			traza_diferido = traza.copiar();
 			traza_diferido.setIDTraza(ahora);
-			traza_diferido.setVisibilidad(claseAlgoritmo);
-			traza_diferido.setArchivo(claseAlgoritmo.getPath());
-			traza_diferido.setTecnicas(MetodoAlgoritmo.tecnicasEjecucion(claseAlgoritmo,metodoAlgoritmo));
+			traza_diferido.setVisibilidad(this.claseAlgoritmo);
+			traza_diferido.setArchivo(this.claseAlgoritmo.getPath());
+			traza_diferido.setTecnicas(MetodoAlgoritmo.tecnicasEjecucion(
+					this.claseAlgoritmo, metodoAlgoritmo));
 			traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
 			traza_diferido.setTitulo(tituloPanel);
-			
-			
-			
-			
 
-			// Este objeto lo creamos para que se puedan guardar cómodamente los XML de animaciones (tirarán de datos de este objeto dtb)
-			DatosTrazaBasicos dtb=new DatosTrazaBasicos(traza_diferido);
-			
-			/*for (int i=0; i<dtb.getNumMetodos(); i++)
-			{
-				System.out.println("CREACION DTB METODO "+dtb.getMetodo(i).getNombre()+": "+( dtb.getMetodo(i).esMetodoConRetorno() ));
-				System.out.println("    Param. entrada: "+dtb.getMetodo(i).getNumParametrosE()+" Param. salida: "+dtb.getMetodo(i).getNumParametrosS());
-				
-			}*/
-			vv.setDTB(dtb);
-			
-			//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),80);
-			vv.visualizarAlgoritmo(traza_diferido,true,cuadroProgreso,claseProcesada[0],claseProcesada[1],true);
+			// Este objeto lo creamos para que se puedan guardar cómodamente los
+			// XML de animaciones (tirarán de datos de este objeto dtb)
+			DatosTrazaBasicos dtb = new DatosTrazaBasicos(traza_diferido);
+			this.vv.setDTB(dtb);
 
-			//cuadroProgreso.setValores(Texto.get("CP_EJEC",Conf.idioma),90);
+			this.vv.visualizarAlgoritmo(traza_diferido, true,
+					this.cuadroProgreso, claseProcesada[0], claseProcesada[1],
+					true);
 		}
 
-		File file=new File(ficherosinex+ahora+".class");
+		File file = new File(ficherosinex + ahora + ".class");
 		file.delete();
 	}
 	
-	
-	private Traza poda(Traza traza)
-	{
-		claseAlgoritmo=vv.getClase();
-		
-		RegistroActivacion ra=traza.getRaiz();
-		
-		ra=poda(ra);
-		
-		return traza;
+	/**
+	 * Genera un identificador único dada una fecha concreta.
+	 * 
+	 * @param dia Dia
+	 * @param mes Mes
+	 * @param anyo Año
+	 * @param h Hora
+	 * @param m Minutos
+	 * @param s Segundos
+	 * 
+	 * @return Código único.
+	 */
+	private String generarCodigoUnico(String dia, String mes, String anyo,
+			String h, String m, String s) {
+		if (mes.length() == 1) {
+			mes = "0" + mes;
+		}
+		if (dia.length() == 1) {
+			dia = "0" + dia;
+		}
+		if (h.length() == 1) {
+			h = "0" + h;
+		}
+		if (m.length() == 1) {
+			m = "0" + m;
+		}
+		if (s.length() == 1) {
+			s = "0" + s;
+		}
+
+		return "__codSRec__" + anyo + mes + dia + h + m + s;
 	}
 	
-	
-	private RegistroActivacion poda(RegistroActivacion ra)
-	{
-		String nombre=ra.getNombreMetodo();
-		
-		return null;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	private String generarCodigoUnico(String dia, String mes, String anyo, String h, String m, String s)
-	{
-		if (mes.length()==1)
-			mes="0"+mes;
-		if (dia.length()==1)
-			dia="0"+dia;
-		if (h.length()==1)
-			h="0"+h;	
-		if (m.length()==1)
-			m="0"+m;		
-		if (s.length()==1)
-			s="0"+s;	
-	
-		return "__codSRec__"+anyo+mes+dia+h+m+s;
-	}
-	
-	
-	private Method identificarMetodoEjecutar(MetodoAlgoritmo metodoAlgoritmo, Method []metodos)
-	{
-		Method metodoEjecutar=null;
-		
-		for (int i=0; i<metodos.length; i++)
-		{
+	/**
+	 * Dada la representación de un método del algoritmo, determina el método a ejecutar de la clase.
+	 * 
+	 * @param metodoAlgoritmo Información del método.
+	 * @param metodos Lista de métodos disponibles.
+	 * 
+	 * @return Método a ejecutar.
+	 */
+	private Method identificarMetodoEjecutar(MetodoAlgoritmo metodoAlgoritmo,
+			Method[] metodos) {
+		Method metodoEjecutar = null;
+
+		for (int i = 0; i < metodos.length; i++) {
 			// Si se llaman igual y tienen mismo número de parámetros...
-			if (metodoAlgoritmo.getNombre().equals(metodos[i].getName()) && 
-				metodoAlgoritmo.getNumeroParametros()==metodos[i].getGenericParameterTypes().length)
-			{
+			if (metodoAlgoritmo.getNombre().equals(metodos[i].getName())
+					&& metodoAlgoritmo.getNumeroParametros() == metodos[i]
+							.getGenericParameterTypes().length) {
 				// ...y si los tipos de los parámetros son iguales...
 				Type[] tipos = metodos[i].getGenericParameterTypes();
 				Class[] clases = new Class[tipos.length];
-				for (int j=0; j<tipos.length; j++)
-					clases[j]= (Class)tipos[j];
-				
-				//boolean sonTodosIguales=true;
-				for (int j=0; j<tipos.length; j++)
-					if (clases[j].getCanonicalName().contains(metodoAlgoritmo.getTipoParametro(j)) &&
-						dimensionesCorrectas( clases[j].getCanonicalName(), metodoAlgoritmo.getDimParametro(j)))
-						metodoEjecutar=metodos[i];
+				for (int j = 0; j < tipos.length; j++) {
+					clases[j] = (Class) tipos[j];
+				}
+
+				// boolean sonTodosIguales=true;
+				for (int j = 0; j < tipos.length; j++) {
+					if (clases[j].getCanonicalName().contains(
+							metodoAlgoritmo.getTipoParametro(j))
+							&& this.dimensionesCorrectas(
+									clases[j].getCanonicalName(),
+									metodoAlgoritmo.getDimParametro(j))) {
+						metodoEjecutar = metodos[i];
+					}
+				}
 
 			}
 		}
-		
+
 		return metodoEjecutar;
 	}
 	
-	
-	private boolean dimensionesCorrectas(String claseCanonica , int numero)
-	{
-		int vecesEncontradas=0;
-		for (int i=0; i<claseCanonica.length(); i++)
-			if (claseCanonica.charAt(i)=='[')
+	/**
+	 * Determina si las dimensiones de una clase son las correctas.
+	 * 
+	 * @param claseCanonica Nombre canónico de la clase.
+	 * @param numero Número de dimensiones esperado.
+	 * 
+	 * @return true si las dimensiones son las esperadas, false en caso contrario.
+	 */
+	private boolean dimensionesCorrectas(String claseCanonica, int numero) {
+		int vecesEncontradas = 0;
+		for (int i = 0; i < claseCanonica.length(); i++) {
+			if (claseCanonica.charAt(i) == '[') {
 				vecesEncontradas++;
-		
-		return vecesEncontradas==numero;
+			}
+		}
+
+		return vecesEncontradas == numero;
 	}
-	
-	
+
 }
