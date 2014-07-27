@@ -145,9 +145,9 @@ public class Estado {
 	}
 
 	/**
-	 * Devuelve los valores de los índices
+	 * Devuelve los valores de los índices que identifican la estructura.
 	 * 
-	 * @return valor de las clases de los valores
+	 * @return valor de los índices que identifican la estructura (filaInf, filaSup, colInf, colSup, )
 	 */
 	public int[] getIndices() {
 		return this.indices;
