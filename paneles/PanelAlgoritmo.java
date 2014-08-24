@@ -93,7 +93,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 		JPanel izqda = new JPanel();
 		izqda.setLayout(new BorderLayout());
 
-		pCodigo = new PanelCodigo(null, null);
+		pCodigo = new PanelCodigo(null);
 		pTraza = new PanelTraza();
 		pCompilador = new PanelCompilador(this);
 
@@ -337,7 +337,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 	public void cerrarPanelCodigo() {
 		this.contenedorCodigo.removeAll();
 
-		pCodigo = new PanelCodigo(null, null);
+		pCodigo = new PanelCodigo(null);
 
 		this.quitarBordesJSP();
 		this.contenedorCodigo.updateUI();
