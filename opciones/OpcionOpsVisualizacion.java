@@ -1,9 +1,5 @@
 package opciones;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -89,28 +85,36 @@ public class OpcionOpsVisualizacion extends Opcion {
 	/**
 	 * Permite establecer el valor para la opción de mostrar saltos de árboles.
 	 * 
-	 * @param b valor para mostrar saltos de árboles.
+	 * @param b
+	 *            valor para mostrar saltos de árboles.
 	 */
 	public void setMostrarArbolSalto(boolean b) {
 		this.mostrarArbolSalto = b;
 	}
 
 	/**
-	 * Permite establecer el tipo de visualización para los nodos de entrada y salida.
+	 * Permite establecer el tipo de visualización para los nodos de entrada y
+	 * salida.
 	 * 
-	 * @param x DATOS_TODOS, DATOS_SALIDA, DATOS_ENTRADA
+	 * @param x
+	 *            DATOS_TODOS, DATOS_SALIDA, DATOS_ENTRADA
 	 */
 	public void setDatosMostrar(int x) {
 		if (x >= DATOS_TODOS && x <= DATOS_SALIDA) {
 			this.datosMostrar = x;
 		}
 	}
-	
+
 	/**
-	 * Permite establecer el tipo de visualización para los nodos de entrada y salida.
+	 * Permite establecer el tipo de visualización para los nodos de entrada y
+	 * salida.
 	 * 
-	 * @param s1 "true" si se desean visualizar datos de entrada, "false" en caso contrario.
-	 * @param s2 "true" si se desean visualizar datos de salida, "false" en caso contrario.
+	 * @param s1
+	 *            "true" si se desean visualizar datos de entrada, "false" en
+	 *            caso contrario.
+	 * @param s2
+	 *            "true" si se desean visualizar datos de salida, "false" en
+	 *            caso contrario.
 	 */
 	public void setDatosMostrar(String s1, String s2) {
 		if (s1.equals("true") && s2.equals("true")) {
@@ -131,10 +135,10 @@ public class OpcionOpsVisualizacion extends Opcion {
 	public int getHistoria() {
 		return this.historia;
 	}
-	
+
 	/**
-	 * Devuelve el valor del tipo de visualización para la historia de
-	 * ejecución como string.
+	 * Devuelve el valor del tipo de visualización para la historia de ejecución
+	 * como string.
 	 * 
 	 * @return "Mantener", "Atenuar" o "Eliminar"
 	 */
@@ -290,27 +294,30 @@ public class OpcionOpsVisualizacion extends Opcion {
 	public void setMostrarEstructuraCompletaCrono(boolean v) {
 		this.mostrarEstructCompletaCrono = v;
 	}
-	
+
 	/**
-	 * Devuelve si las ejecuciones de algoritmos deben arrancar desde su estado inicial.
+	 * Devuelve si las ejecuciones de algoritmos deben arrancar desde su estado
+	 * inicial.
 	 * 
-	 * @return true si deben arrancarse desde su estado inicial, false en
-	 *         caso contrario.
+	 * @return true si deben arrancarse desde su estado inicial, false en caso
+	 *         contrario.
 	 */
 	public boolean getArranqueEstadoInicial() {
 		return this.arranqueEstadoInicial;
 	}
-	
+
 	/**
-	 * Permite establecer si las ejecuciones de algoritmos deben arrancar desde su estado inicial.
+	 * Permite establecer si las ejecuciones de algoritmos deben arrancar desde
+	 * su estado inicial.
 	 * 
-	 * @param v true si deben arrancarse desde su estado inicial, false en
-	 *         caso contrario.
+	 * @param v
+	 *            true si deben arrancarse desde su estado inicial, false en
+	 *            caso contrario.
 	 */
 	public void setArranqueEstadoInicial(boolean v) {
 		this.arranqueEstadoInicial = v;
 	}
-	
+
 	/**
 	 * Devuelve si la vista global debe mostrarse ajustada.
 	 * 
@@ -319,16 +326,17 @@ public class OpcionOpsVisualizacion extends Opcion {
 	public boolean getAjustarVistaGlobal() {
 		return this.ajustarVistaGlobal;
 	}
-	
+
 	/**
 	 * Permite establecer si la vista global debe mostrarse ajustada.
 	 * 
-	 * @param v true si debe mostrarse ajustada, false en caso contrario.
+	 * @param v
+	 *            true si debe mostrarse ajustada, false en caso contrario.
 	 */
 	public void setAjustarVistaGlobal(boolean v) {
 		this.ajustarVistaGlobal = v;
 	}
-	
+
 	/**
 	 * Devuelve si la vista global debe mostrarse dinámicamente, es decir
 	 * utilizando los nodos visibles para establecer la forma del árbol.
@@ -338,17 +346,18 @@ public class OpcionOpsVisualizacion extends Opcion {
 	public boolean getVisualizacionDinamica() {
 		return this.visualizacionDinamica;
 	}
-	
+
 	/**
-	 * Permite establecer si la vista global debe mostrarse dinámicamente, es decir
-	 * utilizando los nodos visibles para establecer la forma del árbol.
+	 * Permite establecer si la vista global debe mostrarse dinámicamente, es
+	 * decir utilizando los nodos visibles para establecer la forma del árbol.
 	 * 
-	 * @param v true si debe mostrarse dinámicamente, false en caso contrario.
+	 * @param v
+	 *            true si debe mostrarse dinámicamente, false en caso contrario.
 	 */
 	public void setVisualizacionDinamica(boolean v) {
 		this.visualizacionDinamica = v;
 	}
-	
+
 	/**
 	 * Devuelve si debe mostrarse la estructura DYV junto a los nodos del árbol.
 	 * 
@@ -357,36 +366,39 @@ public class OpcionOpsVisualizacion extends Opcion {
 	public boolean getMostrarEstructuraEnArbol() {
 		return this.mostrarEstructuraEnArbol;
 	}
-	
+
 	/**
-	 * Permite establecer si debe mostrarse la estructura DYV junto a los nodos del árbol.
+	 * Permite establecer si debe mostrarse la estructura DYV junto a los nodos
+	 * del árbol.
 	 * 
-	 * @param v true si debe mostrarse, false en caso contrario.
+	 * @param v
+	 *            true si debe mostrarse, false en caso contrario.
 	 */
 	public void setMostrarEstructuraEnArbol(boolean v) {
 		this.mostrarEstructuraEnArbol = v;
 	}
-	
+
 	/**
-	 * Devuelve si los eventos de entrada deben mostrarse ligados a los de salida
-	 * en la vista de traza.
+	 * Devuelve si los eventos de entrada deben mostrarse ligados a los de
+	 * salida en la vista de traza.
 	 * 
 	 * @return true si deben mostrarse ligados, false en caso contrario.
 	 */
 	public boolean getMostrarSalidaLigadaEntrada() {
 		return this.mostrarSalidaLigadaEntrada;
 	}
-	
+
 	/**
-	 * Permite establecer si los eventos de entrada deben mostrarse ligados a los de salida
-	 * en la vista de traza.
+	 * Permite establecer si los eventos de entrada deben mostrarse ligados a
+	 * los de salida en la vista de traza.
 	 * 
-	 * @param v true si deben mostrarse ligados, false en caso contrario.
+	 * @param v
+	 *            true si deben mostrarse ligados, false en caso contrario.
 	 */
 	public void setMostrarSalidaLigadaEntrada(boolean v) {
 		this.mostrarSalidaLigadaEntrada = v;
 	}
-	
+
 	/**
 	 * Devuelve si deben mostrarse los nodos de entrada en las visualizaciones.
 	 * 
@@ -396,7 +408,7 @@ public class OpcionOpsVisualizacion extends Opcion {
 		return this.datosMostrar == DATOS_TODOS
 				|| this.datosMostrar == DATOS_ENTRADA;
 	}
-	
+
 	/**
 	 * Devuelve si deben mostrarse los nodos de salida en las visualizaciones.
 	 * 
@@ -574,26 +586,4 @@ public class OpcionOpsVisualizacion extends Opcion {
 			this.setVisualizacionDinamica(false);
 		}
 	}
-
-	/**
-	 * Gestiona la lectura desde fichero
-	 * 
-	 * @param stream Input stream para el fichero.
-	 */
-	private void readObject(ObjectInputStream stream) throws IOException,
-			ClassNotFoundException {
-		this.historia = stream.readInt();
-		this.datosMostrar = stream.readInt();
-	}
-	
-	/**
-	 * Gestiona la escritura a fichero
-	 * 
-	 * @param stream Output stream para el fichero.
-	 */
-	private void writeObject(ObjectOutputStream stream) throws IOException {
-		stream.writeInt(this.historia);
-		stream.writeInt(this.datosMostrar);
-	}
-
 }

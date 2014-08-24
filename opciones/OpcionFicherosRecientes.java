@@ -1,9 +1,5 @@
 package opciones;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -22,7 +18,7 @@ public class OpcionFicherosRecientes extends Opcion {
 	private static final int TAMANO = 8;
 	// Direcciones de Ficheros
 	private String ficheros[];
-	
+
 	// Path último fichero Java
 	private String dir = ".\\";
 
@@ -286,31 +282,4 @@ public class OpcionFicherosRecientes extends Opcion {
 				.getElementsByTagName("dirxml"));
 		this.setDirXML(elements[0].getAttribute("valor"));
 	}
-
-	/**
-	 * Gestiona la lectura desde fichero
-	 * 
-	 * @param stream Input stream para el fichero.
-	 */
-	private void readObject(ObjectInputStream stream) throws IOException,
-	ClassNotFoundException {
-		this.dir = stream.readUTF();
-		this.ficheros = new String[TAMANO];
-		for (int i = 0; i < TAMANO; i++) {
-			this.ficheros[i] = stream.readUTF();
-		}
-	}
-
-	/**
-	 * Gestiona la escritura a fichero
-	 * 
-	 * @param stream Output stream para el fichero.
-	 */
-	private void writeObject(ObjectOutputStream stream) throws IOException {
-		stream.writeUTF(this.dir);
-		for (int i = 0; i < TAMANO; i++) {
-			stream.writeUTF(this.ficheros[i]);
-		}
-	}
-
 }

@@ -17,9 +17,12 @@ import utilidades.ManipulacionElement;
 public class OpcionMVJava extends Opcion {
 	private static final long serialVersionUID = 1002;
 
-	private String dir = null; // Directorio donde se encuentra la máquina virtual
-	private String version = null; // Versión (valor autoasignado en función de directorio)
-	private boolean valida = false; // Constata que está actualmente intstalada la MV en el directorio "dir"
+	private String dir = null; // Directorio donde se encuentra la máquina
+								// virtual
+	private String version = null; // Versión (valor autoasignado en función de
+									// directorio)
+	private boolean valida = false; // Constata que está actualmente intstalada
+									// la MV en el directorio "dir"
 
 	/**
 	 * Constructor: crea una opción vacía
@@ -81,8 +84,8 @@ public class OpcionMVJava extends Opcion {
 			// o como esto: "/bin/lib/jvm/java-1.5.0-sun/jre/bin/java"
 			else if ((dir.contains("/java") || dir.contains("/Java"))
 					&& (dir.charAt(dir.length() - 1) == 'a'
-					&& dir.charAt(dir.length() - 2) == 'v' && dir
-					.charAt(dir.length() - 3) == 'a')) {
+							&& dir.charAt(dir.length() - 2) == 'v' && dir
+							.charAt(dir.length() - 3) == 'a')) {
 				this.version = null;
 
 				int x = dir.indexOf(".");

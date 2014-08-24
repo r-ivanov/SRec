@@ -1,9 +1,5 @@
 package opciones;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -51,8 +47,7 @@ public class OpcionIdioma extends Opcion {
 	/**
 	 * Devuelve el idioma a utilizar.
 	 * 
-	 * @return idiomaId
-	 *            código de idioma
+	 * @return idiomaId código de idioma
 	 */
 	public String get() {
 		return this.idioma;
@@ -75,24 +70,5 @@ public class OpcionIdioma extends Opcion {
 		Element elements[] = ManipulacionElement.nodeListToElementArray(e
 				.getElementsByTagName("idioma"));
 		this.idioma = elements[0].getAttribute("valor");
-	}
-
-	/**
-	 * Gestiona la lectura desde fichero
-	 * 
-	 * @param stream Input stream para el fichero.
-	 */
-	private void readObject(ObjectInputStream stream) throws IOException,
-	ClassNotFoundException {
-		this.idioma = stream.readUTF();
-	}
-
-	/**
-	 * Gestiona la escritura a fichero
-	 * 
-	 * @param stream Output stream para el fichero.
-	 */
-	private void writeObject(ObjectOutputStream stream) throws IOException {
-		stream.writeUTF(this.idioma);
 	}
 }

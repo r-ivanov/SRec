@@ -1,9 +1,5 @@
 package opciones;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -268,32 +264,5 @@ public class OpcionBorradoFicheros extends Opcion {
 		} else {
 			this.setLOG(false);
 		}
-	}
-
-	/**
-	 * Gestiona la lectura desde fichero
-	 * 
-	 * @param stream Input stream para el fichero.
-	 */
-	private void readObject(ObjectInputStream stream) throws IOException,
-			ClassNotFoundException {
-		this.setfXml(stream.readBoolean());
-		this.setfXmlzv(stream.readBoolean());
-		this.setfJavazv(stream.readBoolean());
-		this.setfClass(stream.readBoolean());
-		this.setfClasszv(stream.readBoolean());
-	}
-
-	/**
-	 * Gestiona la escritura a fichero
-	 * 
-	 * @param stream Output stream para el fichero.
-	 */
-	private void writeObject(ObjectOutputStream stream) throws IOException {
-		stream.writeBoolean(this.getfXml());
-		stream.writeBoolean(this.getfXmlzv());
-		stream.writeBoolean(this.getfJavazv());
-		stream.writeBoolean(this.getfClass());
-		stream.writeBoolean(this.getfClasszv());
 	}
 }

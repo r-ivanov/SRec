@@ -1,9 +1,5 @@
 package opciones;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -11,20 +7,20 @@ import utilidades.ManipulacionElement;
 import conf.Conf;
 
 /**
- * Permite configurar los distintos valores de visualización que
- * se manejan en la aplicación.
+ * Permite configurar los distintos valores de visualización que se manejan en
+ * la aplicación.
  */
 public class OpcionConfVisualizacion extends Opcion {
-	
+
 	private static final long serialVersionUID = 1006;
 
 	// Colores de fuente
 	private int colorFEntradaR = 255; // Valor R para fuente en celdas de
-										// entrada
+	// entrada
 	private int colorFEntradaG = 255; // Valor G para fuente en celdas de
-										// entrada
+	// entrada
 	private int colorFEntradaB = 255; // Valor B para fuente en celdas de
-										// entrada
+	// entrada
 
 	private int colorFSalidaR = 255; // Valor R para fuente en celdas de salida
 	private int colorFSalidaG = 255; // Valor G para fuente en celdas de salida
@@ -32,11 +28,11 @@ public class OpcionConfVisualizacion extends Opcion {
 
 	// Colores de celda
 	private int colorC1EntradaR = 100; // Valor R para color en celdas de
-										// entrada
+	// entrada
 	private int colorC1EntradaG = 100; // Valor G para color en celdas de
-										// entrada
+	// entrada
 	private int colorC1EntradaB = 240; // Valor B para color en celdas de
-										// entrada
+	// entrada
 
 	private int colorC1SalidaR = 240; // Valor R para color en celdas de salida
 	private int colorC1SalidaG = 100; // Valor G para color en celdas de salida
@@ -46,7 +42,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	private int colorCAEntradaR = 0; // Valor R para color en celdas de entrada
 	private int colorCAEntradaG = 0; // Valor G para color en celdas de entrada
 	private int colorCAEntradaB = 140; // Valor B para color en celdas de
-										// entrada
+	// entrada
 
 	private int colorCASalidaR = 140; // Valor R para color en celdas de salida
 	private int colorCASalidaG = 0; // Valor G para color en celdas de salida
@@ -54,11 +50,11 @@ public class OpcionConfVisualizacion extends Opcion {
 
 	// Colores no calculados salida
 	private int colorC1NCSalidaR = 255; // Valor R para color en celdas de
-										// entrada
+	// entrada
 	private int colorC1NCSalidaG = 100; // Valor G para color en celdas de
-										// entrada
+	// entrada
 	private int colorC1NCSalidaB = 100; // Valor B para color en celdas de
-										// entrada
+	// entrada
 
 	// Color flecha
 	private int colorFlechaR = 100; // Valor R para color de flecha
@@ -77,93 +73,93 @@ public class OpcionConfVisualizacion extends Opcion {
 
 	// Color marcos camino actual
 	private int colorCActualR = 235; // Valor R para color de marcos camino
-										// actual
+	// actual
 	private int colorCActualG = 215; // Valor G para color de marcos camino
-										// actual
+	// actual
 	private int colorCActualB = 0; // Valor B para color de marcos camino actual
 
 	// Color código: palabras reservadas
 	private int colorCodigoPRR = 210; // Valor R para color de código: palabras
-										// reservadas
+	// reservadas
 	private int colorCodigoPRG = 0; // Valor G para color de código: palabras
-									// reservadas
+	// reservadas
 	private int colorCodigoPRB = 0; // Valor B para color de código: palabras
-									// reservadas
+	// reservadas
 
 	// Color código: comentarios
 	private int colorCodigoCoR = 0; // Valor R para color de código: comentarios
 	private int colorCodigoCoG = 180; // Valor G para color de código:
-										// comentarios
+	// comentarios
 	private int colorCodigoCoB = 0; // Valor B para color de código: comentarios
 
 	// Color código: nombre método foreground
 	private int colorCodigoMFR = 0; // Valor R para color de código: nombre
-									// método foreground
+	// método foreground
 	private int colorCodigoMFG = 0; // Valor G para color de código: nombre
-									// método foreground
+	// método foreground
 	private int colorCodigoMFB = 220; // Valor B para color de código: nombre
-										// método foreground
+	// método foreground
 
 	// Color código: nombre método background
 	private int colorCodigoMBR = 210; // Valor R para color de código: nombre
-										// método background
+	// método background
 	private int colorCodigoMBG = 210; // Valor G para color de código: nombre
-										// método background
+	// método background
 	private int colorCodigoMBB = 255; // Valor B para color de código: nombre
-										// método background
+	// método background
 
 	// Color código: resto codigo
 	private int colorCodigoRCR = 0; // Valor R para color de código: resto
-									// codigo
+	// codigo
 	private int colorCodigoRCG = 0; // Valor G para color de código: resto
-									// codigo
+	// codigo
 	private int colorCodigoRCB = 0; // Valor B para color de código: resto
-									// codigo
+	// codigo
 
 	// Color nodos buscados (iluminados)
 	private int colorIluminadoR = 200; // Valor R para color nodos buscados
-										// (iluminados)
+	// (iluminados)
 	private int colorIluminadoG = 100; // Valor G para color nodos buscados
-										// (iluminados)
+	// (iluminados)
 	private int colorIluminadoB = 0; // Valor B para color nodos buscados
-										// (iluminados)
+	// (iluminados)
 
 	// Color nodos resaltados
 	private int colorResaltadoR = 204; // Valor R para color nodos buscados
-										// (iluminados)
+	// (iluminados)
 	private int colorResaltadoG = 204; // Valor G para color nodos buscados
-										// (iluminados)
+	// (iluminados)
 	private int colorResaltadoB = 0; // Valor B para color nodos buscados
-										// (iluminados)
+	// (iluminados)
 
 	// Colores para el modo 2
 
 	private int colorModo2_R[] = new int[Conf.numColoresMetodos]; // Valor R
-																	// para
-																	// color de
-																	// traza:
-																	// fondo
-																	// panel
+	// para
+	// color de
+	// traza:
+	// fondo
+	// panel
 	private int colorModo2_G[] = new int[Conf.numColoresMetodos]; // Valor G
-																	// para
-																	// color de
-																	// traza:
-																	// fondo
-																	// panel
+	// para
+	// color de
+	// traza:
+	// fondo
+	// panel
 	private int colorModo2_B[] = new int[Conf.numColoresMetodos]; // Valor B
-																	// para
-																	// color de
-																	// traza:
-																	// fondo
-																	// panel
+	// para
+	// color de
+	// traza:
+	// fondo
+	// panel
 
 	private int modoColor = 1;
 
 	// Otras opciones sobre colores
 	private boolean colorDegradadoModo1 = false; // false=se usan dos colores
-													// para la celda (degradado)
+	// para la celda (degradado)
 	private boolean colorDegradadoModo2 = false; // false=se usan dos colores
-													// para la celda (degradado)
+	// para la celda (degradado)
 
 	// Otras características
 	private int grosorFlecha = 2; // Valor para grosor de flechas
@@ -189,7 +185,7 @@ public class OpcionConfVisualizacion extends Opcion {
 
 	private int zoomCrono = -20;
 	private int zoomEstructura = -20;
-	
+
 	/**
 	 * Crea una nueva opción de visualización.
 	 */
@@ -203,94 +199,115 @@ public class OpcionConfVisualizacion extends Opcion {
 	/**
 	 * Permite establecer el color de la fuente para las celdas de entrada.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorFEntrada(int r, int g, int b) {
 		this.colorFEntradaR = r;
 		this.colorFEntradaG = g;
 		this.colorFEntradaB = b;
 	}
-	
+
 	/**
 	 * Permite establecer el color de la fuente para las celdas de salida.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorFSalida(int r, int g, int b) {
 		this.colorFSalidaR = r;
 		this.colorFSalidaG = g;
 		this.colorFSalidaB = b;
 	}
-	
+
 	/**
 	 * Permite establecer el color para las celdas de entrada.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorC1Entrada(int r, int g, int b) {
 		this.colorC1EntradaR = r;
 		this.colorC1EntradaG = g;
 		this.colorC1EntradaB = b;
 	}
-	
+
 	/**
 	 * Permite establecer el color para las celdas de salida.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorC1Salida(int r, int g, int b) {
 		this.colorC1SalidaR = r;
 		this.colorC1SalidaG = g;
 		this.colorC1SalidaB = b;
 	}
-	
+
 	/**
 	 * Permite establecer el color para las celdas atenuadas de entrada.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorCAEntrada(int r, int g, int b) {
 		this.colorCAEntradaR = r;
 		this.colorCAEntradaG = g;
 		this.colorCAEntradaB = b;
 	}
-	
+
 	/**
 	 * Permite establecer el color para las celdas atenuadas de salida.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorCASalida(int r, int g, int b) {
 		this.colorCASalidaR = r;
 		this.colorCASalidaG = g;
 		this.colorCASalidaB = b;
 	}
-	
+
 	/**
 	 * Permite establecer el color para las celdas no calculadas de salida.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorC1NCSalida(int r, int g, int b) {
 		this.colorC1NCSalidaR = r;
 		this.colorC1NCSalidaG = g;
 		this.colorC1NCSalidaB = b;
 	}
-	
+
 	/**
 	 * Permite establecer si el color es degradado para el modo 1.
 	 * 
@@ -299,7 +316,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public void setColorDegradadoModo1(boolean b) {
 		this.colorDegradadoModo1 = b;
 	}
-	
+
 	/**
 	 * Permite establecer si el color es degradado para el modo 2.
 	 * 
@@ -308,229 +325,270 @@ public class OpcionConfVisualizacion extends Opcion {
 	public void setColorDegradadoModo2(boolean b) {
 		this.colorDegradadoModo2 = b;
 	}
-	
+
 	/**
 	 * Permite establecer el color de las flechas.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorFlecha(int r, int g, int b) {
 		this.colorFlechaR = r;
 		this.colorFlechaG = g;
 		this.colorFlechaB = b;
 	}
-	
+
 	/**
 	 * Permite establecer el grosor de las flechas.
 	 * 
-	 * @param grosor Grosor en pixeles.
+	 * @param grosor
+	 *            Grosor en pixeles.
 	 */
 	public void setGrosorFlecha(int grosor) {
 		this.grosorFlecha = grosor;
 	}
-	
+
 	/**
 	 * Permite establecer el color de los paneles.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorPanel(int r, int g, int b) {
 		this.colorPanelR = r;
 		this.colorPanelG = g;
 		this.colorPanelB = b;
 	}
-	
+
 	/**
-	 * Permite establecer el color del marcos del nodo actual
-	 * en la visualización de algoritmos.
+	 * Permite establecer el color del marcos del nodo actual en la
+	 * visualización de algoritmos.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorActual(int r, int g, int b) {
 		this.colorActualR = r;
 		this.colorActualG = g;
 		this.colorActualB = b;
 	}
-	
+
 	/**
-	 * Permite establecer el color de los marcos del camino actual
-	 * en la visualización de algoritmos.
+	 * Permite establecer el color de los marcos del camino actual en la
+	 * visualización de algoritmos.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorCActual(int r, int g, int b) {
 		this.colorCActualR = r;
 		this.colorCActualG = g;
 		this.colorCActualB = b;
 	}
-	
+
 	/**
 	 * Permite establecer la forma de las flechas en la visualización.
 	 * 
-	 * @param x forma de la flecha.
+	 * @param x
+	 *            forma de la flecha.
 	 */
 	public void setFormaFlecha(int x) {
 		this.formaFlecha = x;
 	}
-	
+
 	/**
 	 * Permite establecer el grosor de los marcos de las celdas.
 	 * 
-	 * @param x Grosor en pixeles.
+	 * @param x
+	 *            Grosor en pixeles.
 	 */
 	public void setGrosorActual(int x) {
 		this.grosorActual = x;
 	}
-	
+
 	/**
 	 * Permite establecer la distancia horizontal entre celdas.
 	 * 
-	 * @param x distancia en pixeles.
+	 * @param x
+	 *            distancia en pixeles.
 	 */
 	public void setDistanciaH(int x) {
 		this.distanciaH = x;
 	}
-	
+
 	/**
 	 * Permite establecer la distancia vertical entre celdas.
 	 * 
-	 * @param x distancia en pixeles.
+	 * @param x
+	 *            distancia en pixeles.
 	 */
 	public void setDistanciaV(int x) {
 		this.distanciaV = x;
 	}
-	
+
 	/**
 	 * Permite establecer el tipo de borde de las celdas.
 	 * 
-	 * @param x Tipo de borde de las celdas.
+	 * @param x
+	 *            Tipo de borde de las celdas.
 	 */
 	public void setTipoBordeCelda(int x) {
 		this.tipoBordeCelda = x;
 	}
-	
+
 	/**
-	 * Permite establecer el color de las palabras reservadas en
-	 * la vista de código.
+	 * Permite establecer el color de las palabras reservadas en la vista de
+	 * código.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorCodigoPR(int r, int g, int b) {
 		this.colorCodigoPRR = r;
 		this.colorCodigoPRG = g;
 		this.colorCodigoPRB = b;
 	}
-	
+
 	/**
-	 * Permite establecer el color de los comentarios en
-	 * la vista de código.
+	 * Permite establecer el color de los comentarios en la vista de código.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorCodigoCo(int r, int g, int b) {
 		this.colorCodigoCoR = r;
 		this.colorCodigoCoG = g;
 		this.colorCodigoCoB = b;
 	}
-	
+
 	/**
-	 * Permite establecer el color de foreground para los métodos en
-	 * la vista de código.
+	 * Permite establecer el color de foreground para los métodos en la vista de
+	 * código.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorCodigoMF(int r, int g, int b) {
 		this.colorCodigoMFR = r;
 		this.colorCodigoMFG = g;
 		this.colorCodigoMFB = b;
 	}
-	
+
 	/**
-	 * Permite establecer el color de backgrouund para los métodos en
-	 * la vista de código.
+	 * Permite establecer el color de backgrouund para los métodos en la vista
+	 * de código.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorCodigoMB(int r, int g, int b) {
 		this.colorCodigoMBR = r;
 		this.colorCodigoMBG = g;
 		this.colorCodigoMBB = b;
 	}
-	
+
 	/**
-	 * Permite establecer el color del código en
-	 * la vista de código.
+	 * Permite establecer el color del código en la vista de código.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorCodigoRC(int r, int g, int b) {
 		this.colorCodigoRCR = r;
 		this.colorCodigoRCG = g;
 		this.colorCodigoRCB = b;
 	}
-	
+
 	/**
 	 * Permite establecer el color de los nodos iluminados.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorIluminado(int r, int g, int b) {
 		this.colorIluminadoR = r;
 		this.colorIluminadoG = g;
 		this.colorIluminadoB = b;
 	}
-	
+
 	/**
 	 * Permite establecer el color de los nodos resaltados.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
 	 */
 	public void setColorResaltado(int r, int g, int b) {
 		this.colorResaltadoR = r;
 		this.colorResaltadoG = g;
 		this.colorResaltadoB = b;
 	}
-	
+
 	/**
-	 * Permite establecer el modo de colores, el habitual,
-	 * o el de diferenciación de métodos.
+	 * Permite establecer el modo de colores, el habitual, o el de
+	 * diferenciación de métodos.
 	 * 
-	 * @param valor 1 para el habitual, 2 para el de diferenciación de métodos.
+	 * @param valor
+	 *            1 para el habitual, 2 para el de diferenciación de métodos.
 	 */
 	public void setModoColor(int valor) {
 		this.modoColor = valor;
 	}
-	
+
 	/**
-	 * Permite establecer el color para cada uno de los niveles
-	 * del modo 2.
+	 * Permite establecer el color para cada uno de los niveles del modo 2.
 	 * 
-	 * @param r componente R
-	 * @param g componente G
-	 * @param b componente B
-	 * @param i nivel del modo 2.
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
+	 * @param i
+	 *            nivel del modo 2.
 	 */
 	public void setColorModo2(int r, int g, int b, int i) {
 		if (i >= 0 && i < this.colorModo2_R.length) {
@@ -539,69 +597,73 @@ public class OpcionConfVisualizacion extends Opcion {
 			this.colorModo2_B[i] = b;
 		}
 	}
-	
+
 	/**
-	 * Permite establecer la fuente y el tamaño de fuente de la
-	 * vista de código.
+	 * Permite establecer la fuente y el tamaño de fuente de la vista de código.
 	 * 
-	 * @param nombre nombre de la fuente.
-	 * @param tam Tamaño de la fuente.
+	 * @param nombre
+	 *            nombre de la fuente.
+	 * @param tam
+	 *            Tamaño de la fuente.
 	 */
-	public void setFuenteCodigo(String nombre, int tam)
-	{
+	public void setFuenteCodigo(String nombre, int tam) {
 		this.fuenteCodigo = nombre;
 		this.tamFuenteCodigo = tam;
 	}
-	
+
 	/**
-	 * Permite establecer la fuente y el tamaño de fuente de la
-	 * vista de traza.
+	 * Permite establecer la fuente y el tamaño de fuente de la vista de traza.
 	 * 
-	 * @param nombre nombre de la fuente.
-	 * @param tam Tamaño de la fuente.
+	 * @param nombre
+	 *            nombre de la fuente.
+	 * @param tam
+	 *            Tamaño de la fuente.
 	 */
-	public void setFuenteTraza(String nombre, int tam)
-	{
+	public void setFuenteTraza(String nombre, int tam) {
 		this.fuenteTraza = nombre;
 		this.tamFuenteTraza = tam;
 	}
-	
+
 	/**
 	 * Permite establecer el nivel de zoom de la vista de árbol.
 	 * 
-	 * @param zoom nivel de zoom.
+	 * @param zoom
+	 *            nivel de zoom.
 	 */
 	public void setZoomArbol(int zoom) {
 		this.zoomArbol = zoom;
 	}
-	
+
 	/**
 	 * Permite establecer el nivel de zoom de la vista de pila.
 	 * 
-	 * @param zoom nivel de zoom.
+	 * @param zoom
+	 *            nivel de zoom.
 	 */
 	public void setZoomPila(int zoom) {
 		this.zoomPila = zoom;
 	}
-	
+
 	/**
 	 * Permite establecer el nivel de zoom de la vista cronológica.
 	 * 
-	 * @param zoom nivel de zoom.
+	 * @param zoom
+	 *            nivel de zoom.
 	 */
 	public void setZoomCrono(int zoom) {
 		this.zoomCrono = zoom;
 	}
-	
+
 	/**
 	 * Permite establecer el nivel de zoom de la vista de estructura.
 	 * 
-	 * @param zoom nivel de zoom.
+	 * @param zoom
+	 *            nivel de zoom.
 	 */
 	public void setZoomEstructura(int zoom) {
 		this.zoomEstructura = zoom;
 	}
-	
+
 	/**
 	 * Devuelve el color de la fuente de entrada
 	 * 
@@ -614,7 +676,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorFEntradaB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de la fuente de salida
 	 * 
@@ -627,7 +689,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorFSalidaB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de las celdas de entrada.
 	 * 
@@ -640,7 +702,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorC1EntradaB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de las celdas de salida.
 	 * 
@@ -653,7 +715,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorC1SalidaB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de las celdas atenuadas de entrada.
 	 * 
@@ -666,7 +728,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorCAEntradaB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de las celdas atenuadas de salida.
 	 * 
@@ -679,7 +741,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorCASalidaB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de las celdas pendientes.
 	 * 
@@ -692,25 +754,27 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorC1NCSalidaB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve si el modo 1 debe mostrarse con degradado.
 	 * 
-	 * @return true si el modo 1 debe mostrarse con degradado, false en caso contrario.
+	 * @return true si el modo 1 debe mostrarse con degradado, false en caso
+	 *         contrario.
 	 */
 	public boolean getColorDegradadoModo1() {
 		return this.colorDegradadoModo1;
 	}
-	
+
 	/**
 	 * Devuelve si el modo 2 debe mostrarse con degradado.
 	 * 
-	 * @return true si el modo 2 debe mostrarse con degradado, false en caso contrario.
+	 * @return true si el modo 2 debe mostrarse con degradado, false en caso
+	 *         contrario.
 	 */
 	public boolean getColorDegradadoModo2() {
 		return this.colorDegradadoModo2;
 	}
-	
+
 	/**
 	 * Devuelve el color de las flechas.
 	 * 
@@ -723,7 +787,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorFlechaB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el grosor de las flechas.
 	 * 
@@ -732,7 +796,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getGrosorFlecha() {
 		return this.grosorFlecha;
 	}
-	
+
 	/**
 	 * Devuelve el color de los paneles.
 	 * 
@@ -745,7 +809,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorPanelB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color del marco actual.
 	 * 
@@ -758,7 +822,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorActualB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color del marco del camino actual.
 	 * 
@@ -771,7 +835,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorCActualB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve la forma de las flechas.
 	 * 
@@ -780,7 +844,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getFormaFlecha() {
 		return this.formaFlecha;
 	}
-	
+
 	/**
 	 * Devuelve el grosor del marco de las celdas.
 	 * 
@@ -789,7 +853,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getGrosorActual() {
 		return this.grosorActual;
 	}
-	
+
 	/**
 	 * Devuelve la separación horizontal de las celdas.
 	 * 
@@ -798,7 +862,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getDistanciaH() {
 		return this.distanciaH;
 	}
-	
+
 	/**
 	 * Devuelve la separación vertical de las celdas.
 	 * 
@@ -807,7 +871,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getDistanciaV() {
 		return this.distanciaV;
 	}
-	
+
 	/**
 	 * Devuelve el tipo de borde de las celdas.
 	 * 
@@ -816,7 +880,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getTipoBordeCelda() {
 		return this.tipoBordeCelda;
 	}
-	
+
 	/**
 	 * Devuelve el color de las palabras reservadas en la vista de código.
 	 * 
@@ -829,7 +893,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorCodigoPRB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de los comentarios en la vista de código.
 	 * 
@@ -842,7 +906,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorCodigoCoB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de foreground para los métodos en la vista de código.
 	 * 
@@ -855,7 +919,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorCodigoMFB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de background para los métodos en la vista de código.
 	 * 
@@ -868,7 +932,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorCodigoMBB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color del código en la vista de código.
 	 * 
@@ -881,7 +945,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorCodigoRCB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de los nodos iluminados.
 	 * 
@@ -894,7 +958,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorIluminadoB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve el color de los nodos resaltados.
 	 * 
@@ -907,7 +971,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorResaltadoB;
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve la fuente usada en la vista de código.
 	 * 
@@ -916,7 +980,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public String getFuenteCodigo() {
 		return this.fuenteCodigo;
 	}
-	
+
 	/**
 	 * Devuelve el tamaño de fuente para la vista de código.
 	 * 
@@ -925,7 +989,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getTamFuenteCodigo() {
 		return this.tamFuenteCodigo;
 	}
-	
+
 	/**
 	 * Permite obtener el modo de colores.
 	 * 
@@ -934,11 +998,13 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getModoColor() {
 		return this.modoColor;
 	}
-	
+
 	/**
-	 * Permite obtener el color correspondiente al nivel especificado del modo 2.
+	 * Permite obtener el color correspondiente al nivel especificado del modo
+	 * 2.
 	 * 
-	 * @param i nivel del modo 2.
+	 * @param i
+	 *            nivel del modo 2.
 	 * 
 	 * @return array de enteros con los componentes (R, G y B) respectivamente.
 	 */
@@ -951,7 +1017,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		}
 		return color;
 	}
-	
+
 	/**
 	 * Devuelve la fuente usada en la vista de traza.
 	 * 
@@ -960,7 +1026,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public String getFuenteTraza() {
 		return this.fuenteTraza;
 	}
-	
+
 	/**
 	 * Devuelve el tamaño de fuente para la vista de traza.
 	 * 
@@ -969,7 +1035,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getTamFuenteTraza() {
 		return this.tamFuenteTraza;
 	}
-	
+
 	/**
 	 * Devuelve el nivel de zoom para la vista de árbol.
 	 * 
@@ -978,7 +1044,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getZoomArbol() {
 		return this.zoomArbol;
 	}
-	
+
 	/**
 	 * Devuelve el nivel de zoom para la vista de pila.
 	 * 
@@ -1336,169 +1402,4 @@ public class OpcionConfVisualizacion extends Opcion {
 				.getAttribute("horizontal")));
 
 	}
-
-	/**
-	 * Gestiona la lectura desde fichero
-	 * 
-	 * @param stream Input stream para el fichero.
-	 */
-	private void readObject(ObjectInputStream stream) throws IOException,
-			ClassNotFoundException {
-		this.colorFEntradaR = stream.readInt();
-		this.colorFEntradaG = stream.readInt();
-		this.colorFEntradaB = stream.readInt();
-		this.colorFSalidaR = stream.readInt();
-		this.colorFSalidaG = stream.readInt();
-		this.colorFSalidaB = stream.readInt();
-
-		this.colorC1EntradaR = stream.readInt();
-		this.colorC1EntradaG = stream.readInt();
-		this.colorC1EntradaB = stream.readInt();
-		this.colorC1SalidaR = stream.readInt();
-		this.colorC1SalidaG = stream.readInt();
-		this.colorC1SalidaB = stream.readInt();
-
-		this.colorC1NCSalidaR = stream.readInt();
-		this.colorC1NCSalidaG = stream.readInt();
-		this.colorC1NCSalidaB = stream.readInt();
-
-		this.colorDegradadoModo1 = stream.readBoolean();
-		this.colorDegradadoModo2 = stream.readBoolean();
-
-		this.colorFlechaR = stream.readInt();
-		this.colorFlechaG = stream.readInt();
-		this.colorFlechaB = stream.readInt();
-
-		this.colorPanelR = stream.readInt();
-		this.colorPanelG = stream.readInt();
-		this.colorPanelB = stream.readInt();
-
-		this.colorActualR = stream.readInt();
-		this.colorActualG = stream.readInt();
-		this.colorActualB = stream.readInt();
-
-		this.colorCActualR = stream.readInt();
-		this.colorCActualG = stream.readInt();
-		this.colorCActualB = stream.readInt();
-
-		this.grosorActual = stream.readInt();
-		this.grosorFlecha = stream.readInt();
-		this.formaFlecha = stream.readInt();
-
-		this.distanciaH = stream.readInt();
-		this.distanciaV = stream.readInt();
-		this.tipoBordeCelda = stream.readInt();
-
-		this.colorCodigoPRR = stream.readInt();
-		this.colorCodigoPRG = stream.readInt();
-		this.colorCodigoPRB = stream.readInt();
-
-		this.colorCodigoCoR = stream.readInt();
-		this.colorCodigoCoG = stream.readInt();
-		this.colorCodigoCoB = stream.readInt();
-
-		this.colorCodigoMFR = stream.readInt();
-		this.colorCodigoMFG = stream.readInt();
-		this.colorCodigoMFB = stream.readInt();
-
-		this.colorCodigoMBR = stream.readInt();
-		this.colorCodigoMBG = stream.readInt();
-		this.colorCodigoMBB = stream.readInt();
-
-		this.colorCodigoRCR = stream.readInt();
-		this.colorCodigoRCG = stream.readInt();
-		this.colorCodigoRCB = stream.readInt();
-
-		this.fuenteCodigo = stream.readUTF();
-		this.tamFuenteCodigo = stream.readInt();
-
-		this.fuenteTraza = stream.readUTF();
-		this.tamFuenteTraza = stream.readInt();
-
-		this.zoomArbol = stream.readInt();
-		this.zoomPila = stream.readInt();
-
-	}
-	
-	/**
-	 * Gestiona la escritura a fichero
-	 * 
-	 * @param stream Output stream para el fichero.
-	 */
-	private void writeObject(ObjectOutputStream stream) throws IOException {
-		stream.writeInt(this.colorFEntradaR);
-		stream.writeInt(this.colorFEntradaG);
-		stream.writeInt(this.colorFEntradaB);
-		stream.writeInt(this.colorFSalidaR);
-		stream.writeInt(this.colorFSalidaG);
-		stream.writeInt(this.colorFSalidaB);
-
-		stream.writeInt(this.colorC1EntradaR);
-		stream.writeInt(this.colorC1EntradaG);
-		stream.writeInt(this.colorC1EntradaB);
-		stream.writeInt(this.colorC1SalidaR);
-		stream.writeInt(this.colorC1SalidaG);
-		stream.writeInt(this.colorC1SalidaB);
-
-		stream.writeInt(this.colorC1NCSalidaR);
-		stream.writeInt(this.colorC1NCSalidaG);
-		stream.writeInt(this.colorC1NCSalidaB);
-
-		stream.writeBoolean(this.colorDegradadoModo1);
-		stream.writeBoolean(this.colorDegradadoModo2);
-
-		stream.writeInt(this.colorFlechaR);
-		stream.writeInt(this.colorFlechaG);
-		stream.writeInt(this.colorFlechaB);
-
-		stream.writeInt(this.colorPanelR);
-		stream.writeInt(this.colorPanelG);
-		stream.writeInt(this.colorPanelB);
-
-		stream.writeInt(this.colorActualR);
-		stream.writeInt(this.colorActualG);
-		stream.writeInt(this.colorActualB);
-
-		stream.writeInt(this.colorCActualR);
-		stream.writeInt(this.colorCActualG);
-		stream.writeInt(this.colorCActualB);
-
-		stream.writeInt(this.grosorActual);
-		stream.writeInt(this.grosorFlecha);
-		stream.writeInt(this.formaFlecha);
-
-		stream.writeInt(this.distanciaH);
-		stream.writeInt(this.distanciaV);
-		stream.writeInt(this.tipoBordeCelda);
-
-		stream.writeInt(this.colorCodigoPRR);
-		stream.writeInt(this.colorCodigoPRG);
-		stream.writeInt(this.colorCodigoPRB);
-
-		stream.writeInt(this.colorCodigoCoR);
-		stream.writeInt(this.colorCodigoCoG);
-		stream.writeInt(this.colorCodigoCoB);
-
-		stream.writeInt(this.colorCodigoMFR);
-		stream.writeInt(this.colorCodigoMFG);
-		stream.writeInt(this.colorCodigoMFB);
-
-		stream.writeInt(this.colorCodigoMBR);
-		stream.writeInt(this.colorCodigoMBG);
-		stream.writeInt(this.colorCodigoMBB);
-
-		stream.writeInt(this.colorCodigoRCR);
-		stream.writeInt(this.colorCodigoRCG);
-		stream.writeInt(this.colorCodigoRCB);
-
-		stream.writeUTF(this.fuenteCodigo);
-		stream.writeInt(this.tamFuenteCodigo);
-
-		stream.writeUTF(this.fuenteTraza);
-		stream.writeInt(this.tamFuenteTraza);
-
-		stream.writeInt(this.zoomArbol);
-		stream.writeInt(this.zoomPila);
-	}
-
 }

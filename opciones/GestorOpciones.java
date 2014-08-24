@@ -24,12 +24,12 @@ public class GestorOpciones {
 	private static String dirdefecto = "datos/opdefecto.xml";
 
 	private static String[] clasesOpciones = { "OpcionBorradoFicheros",
-			"OpcionConfVisualizacion", "OpcionFicherosRecientes",
-			"OpcionIdioma", "OpcionMVJava", "OpcionOpsVisualizacion",
-			"OpcionTipoGrafico", "OpcionVistas" };
+		"OpcionConfVisualizacion", "OpcionFicherosRecientes",
+		"OpcionIdioma", "OpcionMVJava", "OpcionOpsVisualizacion",
+		"OpcionTipoGrafico", "OpcionVistas" };
 
 	private Document documento;
-	
+
 	/**
 	 * Determina si actualmente existe el archivo de opciones.
 	 * 
@@ -39,7 +39,7 @@ public class GestorOpciones {
 		File file = new File(direccion);
 		return (file.exists());
 	}
-	
+
 	/**
 	 * Determina si actualmente existe el archivo de opciones por defecto.
 	 * 
@@ -49,7 +49,7 @@ public class GestorOpciones {
 		File file = new File(dirdefecto);
 		return (file.exists());
 	}
-	
+
 	/**
 	 * Devuelve el path del archivo de opciones.
 	 * 
@@ -58,7 +58,7 @@ public class GestorOpciones {
 	public static String getNombreArchivoOpciones() {
 		return direccion;
 	}
-	
+
 	/**
 	 * Devuelve el path del archivo de opciones por defecto.
 	 * 
@@ -67,7 +67,7 @@ public class GestorOpciones {
 	public static String getNombreArchivoOpDefecto() {
 		return dirdefecto;
 	}
-	
+
 	/**
 	 * Crea el archivo de opciones.
 	 */
@@ -116,18 +116,18 @@ public class GestorOpciones {
 
 				} catch (java.lang.ClassNotFoundException cnfe) {
 					System.out
-							.println("GestorOpciones.crearArchivo ClassNotFoundException");
+					.println("GestorOpciones.crearArchivo ClassNotFoundException");
 				} catch (java.lang.InstantiationException ie) {
 					System.out
-							.println("GestorOpciones.crearArchivo InstantiationException");
+					.println("GestorOpciones.crearArchivo InstantiationException");
 				} catch (java.lang.IllegalAccessException iae) {
 					System.out
-							.println("GestorOpciones.crearArchivo IllegalAccessException");
+					.println("GestorOpciones.crearArchivo IllegalAccessException");
 				}
 
 				if (opcion == null) {
 					System.out
-							.println("GestorOpciones.crearArchivo opcion=null");
+					.println("GestorOpciones.crearArchivo opcion=null");
 				}
 
 				this.anadirOpcion(((Opcion) opcion)
@@ -135,12 +135,13 @@ public class GestorOpciones {
 			}
 		}
 	}
-	
+
 	/**
 	 * Añade una opción al fichero de opciones. Si la opción existía
 	 * previamente, será reemplazada con el nuevo valor.
 	 * 
-	 * @param e Elemento xml para la opción.
+	 * @param e
+	 *            Elemento xml para la opción.
 	 */
 	private void anadirOpcion(Element e) {
 		// Añadimos la nueva opción, sustituyéndola si ya existía
@@ -151,14 +152,14 @@ public class GestorOpciones {
 						.getElementsByTagName(e.getNodeName()));
 		if (elementos.length != 0) {
 			elementoDocumento.removeChild(elementos[0]); // Sólo debería haber
-															// un elemento con
-															// ese nombre...
+			// un elemento con
+			// ese nombre...
 		}
 
 		elementoDocumento.appendChild(e);
 		ManipulacionElement.writeXmlFile(this.documento, direccion);
 	}
-	
+
 	/**
 	 * Crea el archivo de opciones por defecto.
 	 */
@@ -171,12 +172,15 @@ public class GestorOpciones {
 		Document documentoDefecto = ManipulacionElement.getDocumento(direccion);
 		ManipulacionElement.writeXmlFile(documentoDefecto, dirdefecto);
 	}
-	
+
 	/**
 	 * Permite obtener el valor de una opción.
 	 * 
-	 * @param nombre Nombre de la opción.
-	 * @param porDefecto Si la opción debe obtenerse del archivo de opciones por defecto.
+	 * @param nombre
+	 *            Nombre de la opción.
+	 * @param porDefecto
+	 *            Si la opción debe obtenerse del archivo de opciones por
+	 *            defecto.
 	 * 
 	 * @return Valor de la opción.
 	 */
@@ -195,16 +199,16 @@ public class GestorOpciones {
 			this.opcion.setValores(elementos[0]);
 		} catch (java.lang.ClassNotFoundException cnfe) {
 			System.out
-					.println("GestorOpciones.getOpcion ClassNotFoundException:");
+			.println("GestorOpciones.getOpcion ClassNotFoundException:");
 			System.out.println("  elementos[0].getNodeName()="
 					+ elementos[0].getNodeName());
 			System.out.println("  nombre                    =" + nombre);
 		} catch (java.lang.InstantiationException ie) {
 			System.out
-					.println("GestorOpciones.getOpcion InstantiationException");
+			.println("GestorOpciones.getOpcion InstantiationException");
 		} catch (java.lang.IllegalAccessException iae) {
 			System.out
-					.println("GestorOpciones.getOpcion IllegalAccessException");
+			.println("GestorOpciones.getOpcion IllegalAccessException");
 		} catch (Exception e) {
 			System.out.println("GestorOpciones.getOpcion Exception");
 			e.printStackTrace();
@@ -213,16 +217,19 @@ public class GestorOpciones {
 
 		return this.opcion;
 	}
-	
+
 	/**
 	 * Permite establecer el valor de una opción.
 	 * 
-	 * @param op Opción a establecer.
-	 * @param donde 0 para el fichero de opciones por defecto, 1 para el normal, 2 para ambos.
+	 * @param op
+	 *            Opción a establecer.
+	 * @param donde
+	 *            0 para el fichero de opciones por defecto, 1 para el normal, 2
+	 *            para ambos.
 	 */
 	public void setOpcion(Opcion op, int donde) {
 		if (donde == 1 || donde == 2)// Actualizamos la opción en las opciones
-										// en uso
+			// en uso
 		{
 			this.documento = ManipulacionElement.getDocumento(direccion);
 			Element elementos[] = ManipulacionElement
@@ -232,17 +239,17 @@ public class GestorOpciones {
 			for (int i = 0; i < elementos.length; i++) {
 				if (elementos[i].getNodeName().equals(op.getNombre())) {
 					this.documento.getElementsByTagName("Opciones").item(0)
-							.removeChild(elementos[i]);
+					.removeChild(elementos[i]);
 				}
 			}
 
 			this.documento.getElementsByTagName("Opciones").item(0)
-					.appendChild(op.getRepresentacionElement(this.documento));
+			.appendChild(op.getRepresentacionElement(this.documento));
 			ManipulacionElement.writeXmlFile(this.documento, direccion);
 		}
 
 		if (donde == 0 || donde == 2)// Actualizamos la opción en las opciones
-										// por defecto
+			// por defecto
 		{
 			Document docdefecto = ManipulacionElement.getDocumento(dirdefecto);
 			Element elementos[] = ManipulacionElement
@@ -252,42 +259,44 @@ public class GestorOpciones {
 			for (int i = 0; i < elementos.length; i++) {
 				if (elementos[i].getNodeName().equals(op.getNombre())) {
 					docdefecto.getElementsByTagName("Opciones").item(0)
-							.removeChild(elementos[i]);
+					.removeChild(elementos[i]);
 				}
 			}
 
 			docdefecto.getElementsByTagName("Opciones").item(0)
-					.appendChild(op.getRepresentacionElement(docdefecto));
+			.appendChild(op.getRepresentacionElement(docdefecto));
 			ManipulacionElement.writeXmlFile(docdefecto, dirdefecto);
 		}
 
 	}
-	
+
 	/**
 	 * Permite crear una copia del fichero de opciones.
 	 * 
-	 * @param fichero Fichero destino donde serán almacenadas las opciones.
+	 * @param fichero
+	 *            Fichero destino donde serán almacenadas las opciones.
 	 */
 	public void crearArchivo(String fichero) {
 		this.documento = ManipulacionElement.getDocumento(direccion);
 		if (!((fichero.charAt(fichero.length() - 1) == 'L' || fichero
 				.charAt(fichero.length() - 1) == 'l')
 				&& (fichero.charAt(fichero.length() - 2) == 'M' || fichero
-						.charAt(fichero.length() - 2) == 'm')
+				.charAt(fichero.length() - 2) == 'm')
 				&& (fichero.charAt(fichero.length() - 3) == 'X' || fichero
-						.charAt(fichero.length() - 3) == 'x') && (fichero
-					.charAt(fichero.length() - 4) == '.'))) {
+				.charAt(fichero.length() - 3) == 'x') && (fichero
+						.charAt(fichero.length() - 4) == '.'))) {
 			fichero = fichero + ".xml";
 		}
 		ManipulacionElement.writeXmlFile(this.documento, fichero);
 
 	}
-	
+
 	/**
 	 * Permite almacenar en el fichero de opciones, las opciones especificadas
 	 * en el fichero especificado.
 	 * 
-	 * @param fichero Fichero fuente donde están almacenadas las opciones.
+	 * @param fichero
+	 *            Fichero fuente donde están almacenadas las opciones.
 	 */
 	public boolean cargarArchivo(String fichero) {
 		this.documento = ManipulacionElement.getDocumento(fichero);
@@ -307,10 +316,10 @@ public class GestorOpciones {
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Almacena las opciones del fichero con las opciones por defecto
-	 * en el fichero de opciones.
+	 * Almacena las opciones del fichero con las opciones por defecto en el
+	 * fichero de opciones.
 	 */
 	public void cargarArchivoPorDefecto() {
 		this.documento = ManipulacionElement.getDocumento(dirdefecto);
