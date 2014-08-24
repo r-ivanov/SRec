@@ -15,13 +15,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import javax.swing.plaf.metal.MetalBorders;
-
+import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
@@ -29,13 +29,11 @@ import javax.swing.JToolBar;
 import botones.*;
 import conf.*;
 import cuadros.*;
-
 import grafica.*;
 import utilidades.*;
-
 import ventanas.*;
 
-public class PanelBotonesVisualizacionArbol extends PanelBotonesVisualizacion
+public class PanelBotonesVisualizacionArbol extends JPanel
 						implements MouseListener, ChangeListener
 {
 	static final long serialVersionUID=12;
