@@ -663,7 +663,6 @@ public class ContenedorArbol {
 				ubicacion[0]
 						+ (int) (GraphConstants.getSize(this.entrada
 								.getAttributes()).getWidth()));
-		objetoNivel.mostrar();
 	}
 
 	/**
