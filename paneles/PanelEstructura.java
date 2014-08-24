@@ -102,7 +102,7 @@ class PanelEstructura extends JPanel implements MouseListener
 		graph = new JGraph(model, view);
 		
 		graph.getModel().addGraphModelListener(null);
-		ce=new ContenedorEstructura(this.registro,graph);
+		ce=new ContenedorEstructura(this.registro);
 		
 		Object celdas[]=ce.getCeldas();
 		
@@ -204,22 +204,6 @@ class PanelEstructura extends JPanel implements MouseListener
 	public void mouseClicked(MouseEvent e)
 	{
 		//System.out.println("Evento de raton, mouseClicked");
-		
-		if (e.getSource().getClass().getName().equals("JGraph"))
-		{
-			//System.out.println("Clase:"+e.getSource().getClass().getName());
-			//System.out.println("X:"+e.getX()+"  Y:"+e.getY());
-			RegistroActivacion ra=ce.getRegistroPosicion(e.getX(),e.getY());
-			if (ra!=null)
-			{
-				//System.out.println("Celda Entrada: "+ra.getEntradaString(this.traza,"Entrada"));
-				//System.out.println("Celda Salida : "+ra.getSalidaString(this.traza,"Salida"));
-			}
-			else
-			{
-				//System.out.println("Lugar vacio");
-			}
-		}
 	}
 	
 	public void mouseReleased(MouseEvent e)
