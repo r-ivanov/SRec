@@ -634,9 +634,6 @@ public class ContenedorArbol {
 							- alturaCelda;
 					ubicacion[3] = this.posic0Nivel() + (alturaCeldaEstr * 2);
 				}
-				System.out
-				.println("UBICACION NODO SIN HIJOS (no Estructura), maximoAnchoUsado="
-						+ maximoAnchoUsado);
 				ubicacion[0] = maximoAnchoUsado + Conf.sepH;
 				ubicacion[2] = ubicacion[0];
 

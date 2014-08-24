@@ -1387,8 +1387,6 @@ public class OpcionConfVisualizacion extends Opcion {
 		this.setZoomArbol(Integer.parseInt(elements[0]
 				.getAttribute("zoomArbol")));
 		this.setZoomPila(Integer.parseInt(elements[0].getAttribute("zoomPila")));
-		// this.setZoomArbolEstr(
-		// Integer.parseInt(elements[0].getAttribute("zoomArbolEstr")));
 		this.setZoomCrono(Integer.parseInt(elements[0]
 				.getAttribute("zoomCrono")));
 		this.setZoomEstructura(Integer.parseInt(elements[0]
