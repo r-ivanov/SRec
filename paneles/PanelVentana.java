@@ -125,7 +125,7 @@ public class PanelVentana extends JPanel
 	{
 		try {
 			if (directorio!=null && fichero!=null)
-				pAlgoritmo.abrirPanelCodigo(directorio+fichero,traza.getNombreMetodoEjecucion(),editable,!editable);
+				pAlgoritmo.abrirPanelCodigo(directorio+fichero,editable,!editable);
 			pAlgoritmo.abrirVistas();
 		}
 		catch (Exception e) {
@@ -160,7 +160,7 @@ public class PanelVentana extends JPanel
 	public void abrirPanelCodigo(String archivo, boolean editable, boolean cargarFichero)
 	{
 		pAlgoritmo.cerrarVistas();
-		pAlgoritmo.abrirPanelCodigo(archivo,"¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿|¿||?|????????????????????",editable,cargarFichero);
+		pAlgoritmo.abrirPanelCodigo(archivo,editable,cargarFichero);
 	}
 	
 	public void cerrarPanelCodigo()
@@ -278,7 +278,7 @@ public class PanelVentana extends JPanel
 	
 	public String getNombresAnimaciones()
 	{
-		return pAlgoritmo.getNombre();
+		return pAlgoritmo.getTituloPanel();
 	}
 	
 	public String getIdTrazas()

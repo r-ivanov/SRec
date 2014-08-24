@@ -70,7 +70,7 @@ class PanelCodigo implements MouseListener
 		this.archivo=archivo;
 		this.nombreMetodo=nombreMetodo;
 		
-		this.abrir(archivo,nombreMetodo,this.editable,true,true);
+		this.abrir(archivo,this.editable,true,true);
 	}
 
 	
@@ -84,11 +84,11 @@ class PanelCodigo implements MouseListener
 	
 	public void visualizar(boolean recargarFormato)
 	{
-		this.abrir(this.archivo,this.nombreMetodo, this.editable, Ventana.thisventana.getClase()==null, recargarFormato);
+		this.abrir(this.archivo, this.editable, Ventana.thisventana.getClase()==null, recargarFormato);
 	}
 	
 
-	public void abrir(String archivo, String nombreMetodo, boolean editable, boolean cargarFichero, boolean recargarFormato)
+	public void abrir(String archivo, boolean editable, boolean cargarFichero, boolean recargarFormato)
 	{
 		if (archivo!=null)
 		{
