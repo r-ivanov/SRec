@@ -150,9 +150,9 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		// Detectamos tamaño de la pantalla de salida
 		Conf.setTamanoMonitor();
 
-		if (!gOpciones.existeArchivoOpciones())
+		if (!GestorOpciones.existeArchivoOpciones())
 			gOpciones.crearArchivo();
-		if (!gOpciones.existeArchivoOpcionesPorDefecto())
+		if (!GestorOpciones.existeArchivoOpcionesPorDefecto())
 			gOpciones.crearArchivoPorDefecto();
 		
 		ManipulacionElement.copiarXML(GestorOpciones.getNombreArchivoOpDefecto(),GestorOpciones.getNombreArchivoOpciones());
