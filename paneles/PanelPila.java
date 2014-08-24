@@ -119,7 +119,7 @@ class PanelPila extends JPanel implements ActionListener, KeyListener, MouseList
 			graph = new JGraph(model, view);
 			
 			graph.getModel().addGraphModelListener(null);
-			cp=new ContenedorPila(Ventana.thisventana.traza.getRaiz(),graph,Ventana.thisventana.traza,this.nyp,1);
+			cp=new ContenedorPila(Ventana.thisventana.traza.getRaiz(),Ventana.thisventana.traza,this.nyp,1);
 			
 			Object celdas[]=cp.getCeldas();
 			
