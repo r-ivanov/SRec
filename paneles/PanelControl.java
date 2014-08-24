@@ -1,98 +1,98 @@
-/**
-	Panel que contiene los botones de la visualización y la etiqueta que presenta el título del panel
-	
-	@author Antonio Pérez Carrasco
-	@version 2006-2007
-*/
-
-
 package paneles;
-
 
 import java.awt.BorderLayout;
 
-
-
 import javax.swing.JLabel;
-
 import javax.swing.JPanel;
 
-import conf.*;
+import conf.Conf;
 
+/**
+ * Panel que contiene los botones de la visualización y la etiqueta que presenta
+ * el título del panel
+ * 
+ * @author Antonio Pérez Carrasco
+ * @version 2006-2007
+ */
+class PanelControl extends JPanel {
+	static final long serialVersionUID = 14;
 
+	private JLabel etiqueta;
+	private PanelBotonesVisualizacionArbol pbv;
 
-class PanelControl extends JPanel //implements ActionListener
-{
-	static final long serialVersionUID=14;
-
-	JLabel etiqueta;
-	PanelBotonesVisualizacionArbol pbv;
-
-	
 	/**
-		Constructor: crea un nuevo panel de control
-		
-		@param traza traza de la ejecución del método
-		@param pArbol panel de traza asociado a este panel de control (comparten traza)
-		@param titulopanel titulo del panel, que se mostrará a través de la etiqueta
-		@param pa panel al que pertenece este panel de control
-	*/
-	public PanelControl(PanelArbol pArbol, PanelPila pPila, PanelTraza pTraza, String titulopanel, PanelAlgoritmo pa)
-	{
+	 * Constructor: crea un nuevo panel de control
+	 * 
+	 * @param titulopanel
+	 *            titulo del panel, que se mostrará a través de la etiqueta
+	 * @param pa
+	 *            panel al que pertenece este panel de control
+	 */
+	public PanelControl(String titulopanel, PanelAlgoritmo pa) {
 		this.setLayout(new BorderLayout());
 		this.requestFocusInWindow();
-		
+
 		// Etiqueta superior
-		etiqueta = new JLabel(titulopanel);
-		etiqueta.setFont(Conf.fuenteTitulo);
-		this.add(etiqueta,BorderLayout.CENTER);
-		etiqueta.setHorizontalAlignment(0);
-		
+		this.etiqueta = new JLabel(titulopanel);
+		this.etiqueta.setFont(Conf.fuenteTitulo);
+		this.add(this.etiqueta, BorderLayout.CENTER);
+		this.etiqueta.setHorizontalAlignment(0);
+
 		// Panel superior de botones
-		pbv = new PanelBotonesVisualizacionArbol(pa);
-		this.add(pbv,BorderLayout.EAST);
-		
-		//this.setBackground(Conf.colorFrontalPanelContenedor);
+		this.pbv = new PanelBotonesVisualizacionArbol(pa);
+		this.add(this.pbv, BorderLayout.EAST);
 	}
 	
-	
-	public void setValores(String titulopanel, PanelAlgoritmo pa)
-	{
+	/**
+	 * Permite establecer el título del panel de control y el PanelAlgoritmo al que pertenece.
+	 * 
+	 * @param titulopanel
+	 *            titulo del panel, que se mostrará a través de la etiqueta
+	 * @param pa
+	 *            panel al que pertenece este panel de control
+	 */
+	public void setValores(String titulopanel, PanelAlgoritmo pa) {
 		this.requestFocusInWindow();
-		
+
 		// Etiqueta superior
-		etiqueta.setText(titulopanel);
-		
+		this.etiqueta.setText(titulopanel);
+
 		// Panel superior de botones
-		pbv.setValores(pa);
+		this.pbv.setValores(pa);
 	}
 	
-	public void visualizar()
-	{
-		pbv.visualizar();
+	/**
+	 * Habilita y deshabilita los botones correspondientes al estado de la ejecución,
+	 * únicamente se utiliza al redibujar el árbol. 
+	 */
+	public void visualizar() {
+		this.pbv.visualizar();
 	}
-	
-	
-	public void idioma()
-	{
+
+	public void idioma() {
 		this.pbv.setToolTipText();
 	}
 	
-	
-	protected void deshabilitarControles()
-	{
-		pbv.deshabilitarControles();
+	/**
+	 * Establece los tooltips para cada uno de los botones.
+	 */
+	protected void deshabilitarControles() {
+		this.pbv.deshabilitarControles();
 	}
 	
-	protected void habilitarControles()
-	{
-		pbv.habilitarControles();
+	/**
+	 * Habilita los botones y controles de visualización según
+	 * el estado actual.
+	 */
+	protected void habilitarControles() {
+		this.pbv.habilitarControles();
 	}
 	
-	public void hacerFinal()
-	{
-		pbv.hacer_final();
+	/**
+	 * Sitúa la visualización al final
+	 */
+	public void hacerFinal() {
+		this.pbv.hacer_final();
 	}
-	
-}
 
+}

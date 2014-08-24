@@ -188,7 +188,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 		dcha.add(separadorVistas, BorderLayout.CENTER);
 
 		// Creamos panel superior (nombre de método, botones, ...)
-		pControl = new PanelControl(null, null, null, "", this);
+		pControl = new PanelControl("", this);
 		this.contenedorControl = new JPanel();
 		this.contenedorControl.setLayout(new BorderLayout());
 		this.contenedorControl.add(pControl, BorderLayout.CENTER);
@@ -417,7 +417,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 				pTraza = new PanelTraza();
 				pCrono = new PanelCrono(null);
 				pEstructura = new PanelEstructura(null);
-				pControl = new PanelControl(null, null, null, "", this);
+				pControl = new PanelControl("", this);
 			} catch (Exception e2) {
 			}
 		}
@@ -487,7 +487,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 				pArbol = new PanelArbol(null);
 				pPila = new PanelPila(null);
 				pTraza = new PanelTraza();
-				pControl = new PanelControl(null, null, null, "", this);
+				pControl = new PanelControl("", this);
 				this.ocupado = false;
 			} catch (Exception e2) {
 			}
