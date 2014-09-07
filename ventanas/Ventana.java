@@ -232,7 +232,7 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		
 		JPanel p=new JPanel();
 		
-		this.barrasHerramientas= GestorVentanaSRec.creaBarrasHeramientas(this.botones);
+		this.barrasHerramientas= GestorVentanaSRec.creaBarrasHeramientas();
 		
 		for (int i=0; i<this.barrasHerramientas.length; i++)
 			p.add(barrasHerramientas[i]);
