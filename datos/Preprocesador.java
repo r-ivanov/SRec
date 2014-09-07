@@ -146,8 +146,6 @@ public class Preprocesador extends Thread {
 		this.vv = Ventana.thisventana;
 		this.vv.setTextoCompilador(PanelCompilador.CODIGO_VACIO);
 
-		Ventana.setProcesando(true);
-
 		// Cargamos y manejamos opciones
 		this.omvj = (OpcionMVJava) (this.gOpciones.getOpcion("OpcionMVJava",
 				true));
@@ -180,7 +178,6 @@ public class Preprocesador extends Thread {
 				if (Conf.fichero_log) {
 					Logger.log_write("Preprocesador: no se procesará clase.");
 				}
-				Ventana.setProcesando(false);
 			}
 		}
 
@@ -279,7 +276,6 @@ public class Preprocesador extends Thread {
 							Logger.log_write("Preprocesador: clase cargada: '"
 									+ fichero[0] + fichero[1] + "'");
 						}
-						Ventana.setProcesando(false);
 					} else {
 						this.vv.habilitarOpcionesAnimacion(false);
 						this.vv.setClase(new ClaseAlgoritmo(fichero[0]
@@ -291,8 +287,6 @@ public class Preprocesador extends Thread {
 							Logger.log_write("Preprocesador: clase cargada: '"
 									+ fichero[0] + fichero[1] + "'");
 						}
-						Ventana.setProcesando(false);
-
 					}
 
 				} else {
@@ -478,7 +472,6 @@ public class Preprocesador extends Thread {
 
 		if (errorManipulacion == 1) {
 			this.cuadroProgreso.cerrar();
-			Ventana.setProcesando(false);
 			if (Conf.fichero_log) {
 				Logger.log_write("Preprocesador: clase cargada: '" + fichero[0]
 						+ fichero[1] + "' (error 1, clase interfaz)");
@@ -487,12 +480,10 @@ public class Preprocesador extends Thread {
 					Texto.get("ERROR_CLASEINTERFAZ", Conf.idioma));
 		} else if (errorManipulacion == 2) {
 			this.cuadroProgreso.cerrar();
-			Ventana.setProcesando(false);
 			new CuadroError(this.vv, Texto.get("ERROR_CLASE", Conf.idioma),
 					Texto.get("ERROR_CLASENOSENTEN", Conf.idioma));
 		} else if (errorManipulacion == 3) {
 			this.cuadroProgreso.cerrar();
-			Ventana.setProcesando(false);
 			if (Conf.fichero_log) {
 				Logger.log_write("Preprocesador: clase cargada: '" + fichero[0]
 						+ fichero[1] + "' (error 3, clase abstracta)");
@@ -571,7 +562,6 @@ public class Preprocesador extends Thread {
 
 			if (!this.compilado) {
 				this.cuadroProgreso.cerrar();
-				Ventana.setProcesando(false);
 				if (Conf.fichero_log) {
 					Logger.log_write("Preprocesador: clase cargada: '"
 							+ fichero[0] + fichero[1]
@@ -613,7 +603,6 @@ public class Preprocesador extends Thread {
 				this.vv.setClase(this.claseAlgoritmo);
 				this.vv.setPreprocesador(this);
 				this.vv.setTextoCompilador("");
-				Ventana.setProcesando(false);
 				if (this.selecMetodo) {
 					this.vv.iniciarNuevaVisualizacionSelecMetodo();
 				}

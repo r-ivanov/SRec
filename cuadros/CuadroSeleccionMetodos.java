@@ -411,7 +411,6 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 		if (e.getSource() == this.aceptar) {
 			recogerMetodosSeleccionados();
 		} else if (e.getSource() == this.cancelar) {
-			Ventana.setProcesando(false);
 			this.dialogo.setVisible(false);
 		} else if (e.getSource().getClass().getName().contains("JCheckBox")) {
 			for (int i = 0; i < this.numero; i++) {
@@ -452,7 +451,6 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 			recogerMetodosSeleccionados();
 		} else if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
-			Ventana.setProcesando(false);
 		} else {
 			if (e.getSource() instanceof JTextField) {
 				for (int i = 0; i < this.estructura.length; i++) {
@@ -531,7 +529,6 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 		if (e.getSource() == this.aceptar) {
 			recogerMetodosSeleccionados();
 		} else if (e.getSource() == this.cancelar) {
-			Ventana.setProcesando(false);
 			this.dialogo.setVisible(false);
 		}
 	}

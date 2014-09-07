@@ -160,8 +160,8 @@ public class PanelVentana extends JPanel {
 	/**
 	 * Abre el panel de código.
 	 * 
-	 * @param fichero
-	 *            Clase con el código fuente para la ejecución.
+	 * @param archivo
+	 *            Path de la clase con el código fuente para la ejecución.
 	 * @param editable
 	 *            True si se permite edición, false en caso contrario.
 	 * @param cargarFichero
@@ -182,6 +182,8 @@ public class PanelVentana extends JPanel {
 
 	/**
 	 * Permite establer el texto del panel del compilador.
+	 * 
+	 * @param texto Texto que mostrará el panel del compilador.
 	 */
 	public void setTextoCompilador(String texto) {
 		this.pAlgoritmo.setTextoCompilador(texto);

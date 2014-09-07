@@ -1098,7 +1098,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 	@Override
 	public void windowClosing(WindowEvent e) {
 
-		if (Ventana.thisventana.clasePendienteGuardar) {
+		if (Ventana.thisventana.getClasePendienteGuardar()) {
 			new CuadroPreguntaEdicionNoGuardada(Ventana.thisventana,
 					"cierreVentana");
 		} else {
