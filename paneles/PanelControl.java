@@ -68,7 +68,10 @@ class PanelControl extends JPanel {
 	public void visualizar() {
 		this.pbv.visualizar();
 	}
-
+	
+	/**
+	 * Establece el tooltip para los botones según el idoma configurado.
+	 */
 	public void idioma() {
 		this.pbv.setToolTipText();
 	}
