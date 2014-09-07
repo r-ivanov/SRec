@@ -335,15 +335,13 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 
 		for (int i = 0; i < valoresE.length; i++) {
 			if (ServiciosString.tieneContenido(valoresE[i])) {
-				valoresE[i] = ServiciosString.adecuarParametro(valoresE[i],
-						tiposE[i], dimE[i]);
+				valoresE[i] = ServiciosString.adecuarParametro(valoresE[i], dimE[i]);
 			}
 		}
 
 		for (int i = 0; i < valoresS.length; i++) {
 			if (ServiciosString.tieneContenido(valoresS[i])) {
-				valoresS[i] = ServiciosString.adecuarParametro(valoresS[i],
-						tiposS[i], dimS[i]);
+				valoresS[i] = ServiciosString.adecuarParametro(valoresS[i], dimS[i]);
 			}
 		}
 
