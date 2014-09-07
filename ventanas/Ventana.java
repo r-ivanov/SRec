@@ -1798,9 +1798,9 @@ public class Ventana extends JFrame implements ActionListener//, ComponentListen
 		return tam;
 	}
 	
-	public void distribuirPaneles(boolean[] valores1,int disposicion)
+	public void ubicarYDistribuirPaneles(int disposicion)
 	{
-		panelVentana.distribuirPaneles(valores1,disposicion);
+		panelVentana.ubicarYDistribuirPaneles(disposicion);
 	}
 	
 	public void distribuirPaneles(int disposicion)

@@ -939,7 +939,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 	}
 
 	/**
-	 * Devuelve las dimensiones del panel y grafo de la pila.
+	 * Devuelve las dimensiones del panel y grafo de la vista cronológica.
 	 * 
 	 * @return {anchura_panel, altura_panel, achura_grafo, altura_grafo}
 	 */

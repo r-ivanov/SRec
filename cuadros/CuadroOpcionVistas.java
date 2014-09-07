@@ -289,8 +289,7 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 					} catch (java.lang.InterruptedException ie) {
 					}
 					CuadroOpcionVistas.this.ventana
-							.distribuirPaneles(
-									panel1activos,
+							.ubicarYDistribuirPaneles(
 									(CuadroOpcionVistas.this.selecPanel
 											.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
 											: Conf.PANEL_HORIZONTAL));
