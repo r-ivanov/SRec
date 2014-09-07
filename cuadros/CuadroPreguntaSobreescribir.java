@@ -83,8 +83,7 @@ public class CuadroPreguntaSobreescribir extends CuadroPregunta implements
 					.contains("FotografoArbol")) {
 				if (this.param.charAt(0) == '1') {
 					((FotografoArbol) (this.objeto)).hacerCapturaUnica2(
-							this.componenteUI,
-							Integer.parseInt(this.param.substring(1)));
+							this.componenteUI);
 				} else if (this.param.charAt(0) == 'A') {
 					((FotografoArbol) (this.objeto)).capturarAnimacionGIF2(
 							this.componenteUI,
