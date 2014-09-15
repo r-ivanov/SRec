@@ -63,8 +63,8 @@ public class OpcionConfVisualizacion extends Opcion {
 
 	// Color panel
 	private int colorPanelR = 255; // Valor R para color del panel
-	private int colorPanelG = 248; // Valor G para color del panel
-	private int colorPanelB = 241; // Valor B para color del panel
+	private int colorPanelG = 255; // Valor G para color del panel
+	private int colorPanelB = 255; // Valor B para color del panel
 
 	// Color marco nodo actual
 	private int colorActualR = 10; // Valor R para color marco nodo actual
@@ -156,7 +156,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	private int modoColor = 1;
 
 	// Otras opciones sobre colores
-	private boolean colorDegradadoModo1 = false; // false=se usan dos colores
+	private boolean colorDegradadoModo1 = true; // false=se usan dos colores
 	// para la celda (degradado)
 	private boolean colorDegradadoModo2 = false; // false=se usan dos colores
 	// para la celda (degradado)
@@ -170,7 +170,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	private int distanciaH = 30; // Distancia horizontal entre celdas
 	private int distanciaV = 30; // Distancia vertical entre celdas
 
-	private int tipoBordeCelda = 0;
+	private int tipoBordeCelda = 1;
 
 	// Fuentes (vistas de código y traza)
 	private String fuenteCodigo = "Courier New Negrita";

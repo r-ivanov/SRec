@@ -20,7 +20,7 @@ public class OpcionVistas extends Opcion {
 
 	private ArrayList<Vista> vistas = new ArrayList<Vista>();
 
-	private int posic = Conf.PANEL_VERTICAL;
+	private int posic = Conf.PANEL_HORIZONTAL;
 
 	/**
 	 * Constructor: crea una opción vacía con los valores de opción por defecto.
@@ -31,7 +31,11 @@ public class OpcionVistas extends Opcion {
 			for (int i = 0; i < Vista.codigos.length; i++) {
 				Vista v = new Vista(Vista.codigos[i]);
 				v.setTipo(i <= 2 ? Vista.TIPO_REC : Vista.TIPO_DYV);
-				v.setPanel(i % 2 == 0 ? 2 : 1);
+				if (i == 0) {
+					v.setPanel(1);
+				} else {
+					v.setPanel(2);
+				}
 				v.setActiva(i < 2 ? true : false);
 				this.vistas.add(v);
 			}
