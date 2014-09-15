@@ -7,3 +7,8 @@ log-SREC.txt
 # Ficheros de configuración para cada usuario
 datos/opciones.xml
 datos/opdefecto.xml
+
+# Directorios de build
+build/**
+release/**
+build_tmp/**

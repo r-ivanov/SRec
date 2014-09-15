@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="SRec" default="jar" basedir=".">
+
+	<target name="clean" description="Limpia los directorios de compilación">
+		<delete dir="bin"/>
+		<delete dir="release"/>
+		<delete dir="build_tmp" />
+	</target>
+	
+    <target name="compile" description="Compila el código">
+        <mkdir dir="bin" />
+        <javac srcdir="." includes="**" destdir="bin" encoding="Cp1252"/>
+    </target>
+
+    <target name="jar" description="Genera el JAR ejecutable" depends="clean,compile">
+    	<mkdir dir="release" />
+    	
+    	<copy todir="release/ayuda">
+    	    <fileset dir="ayuda" />
+    	</copy>
+    	
+    	<copy todir="release/ayuda/imagenes">
+			<fileset dir="ayuda/imagenes" />
+		</copy>
+    	
+    	<copy todir="release/imagenes">
+			<fileset dir="imagenes" />
+		</copy>
+
+    	<copy todir="release/datos">
+			<fileset dir="bin/datos" />
+    		<fileset file="datos/Textos_consubmenus.xml" />
+    		<fileset file="datos/Textos.xml" />
+		</copy>
+    	
+    	<copy todir="release/opciones">
+			<fileset dir="bin/opciones" />
+		</copy>
+    	
+    	<mkdir dir="build_tmp" />  		
+		<manifest file="build_tmp/MANIFEST.MF">
+			<attribute name="Main-Class" value="SRec"/>
+    		<attribute name="Class-Path" value="."/>
+    	</manifest>
+ 	
+        <jar destfile="./release/SRec.jar" basedir="bin" manifest = "build_tmp/MANIFEST.MF" compress="true" />
+    	
+    	<delete dir="build_tmp" />
+    		
+    </target>
+	
+</project>
