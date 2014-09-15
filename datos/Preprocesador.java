@@ -478,10 +478,6 @@ public class Preprocesador extends Thread {
 			}
 			new CuadroError(this.vv, Texto.get("ERROR_CLASE", Conf.idioma),
 					Texto.get("ERROR_CLASEINTERFAZ", Conf.idioma));
-		} else if (errorManipulacion == 2) {
-			this.cuadroProgreso.cerrar();
-			new CuadroError(this.vv, Texto.get("ERROR_CLASE", Conf.idioma),
-					Texto.get("ERROR_CLASENOSENTEN", Conf.idioma));
 		} else if (errorManipulacion == 3) {
 			this.cuadroProgreso.cerrar();
 			if (Conf.fichero_log) {
