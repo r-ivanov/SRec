@@ -72,6 +72,13 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 	 */
 	public PanelEditorJava(String texto, boolean editable) {
 		super();
+		
+		// Área de numero de linea
+		areaNum = new JTextPane();
+		areaNum.setFont(new Font("Courier New", Font.BOLD, 14));
+		areaNum.setEditable(false);
+		areaNum.setEnabled(false);
+				
 		this.edit = new JEditorPane();
 		this.edit.setEditorKit(new StyledEditorKit());
 		this.edit.setEditable(editable);
@@ -88,11 +95,6 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 		construyendo = true;
 		this.edit.setText(texto);
 
-		// Área de numero de linea
-		areaNum = new JTextPane();
-		areaNum.setFont(new Font("Courier New", Font.BOLD, 14));
-		areaNum.setEditable(false);
-		areaNum.setEnabled(false);
 		try {
 			areaNum.setBackground(new Color(230, 230, 230));
 			areaNum.setForeground(new Color(50, 50, 50));
@@ -218,6 +220,7 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 		boolean parsearTodo = false;
 		if (construyendo) {
 			construyendo = false;
+			edit.setCaretPosition(0);
 			parsearTodo = true;
 
 			new Thread() { // Thread para aseguarnos que queda bien coloreado al
@@ -229,6 +232,7 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 					try {
 						wait(2000);
 						apply(0, edit.getText().length() - 1, true);
+						edit.setCaretPosition(0);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -488,7 +492,8 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 	 * Actualiza los números de línea de la banda izquierda.
 	 */
 	private void actualizarBandaNumLinea() {
-		if (areaNum != null) {
+		synchronized (areaNum) {
+			
 			String texto = "";
 			try {
 				doc = (DefaultStyledDocument) edit.getDocument();
