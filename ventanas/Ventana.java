@@ -1855,6 +1855,7 @@ public class Ventana extends JFrame implements ActionListener {
 	public void visualizarAlgoritmo(Traza traza, boolean inicializar,
 			CuadroProgreso cuadroProgreso, String directorio, String fichero,
 			boolean editable) {
+		
 		try {
 			if (inicializar) {
 				traza.nadaVisible();
@@ -1868,9 +1869,9 @@ public class Ventana extends JFrame implements ActionListener {
 				traza.asignarNumeroMetodo();
 
 				this.trazaCompleta = traza.copiar();
-				this.traza = traza.copiar();
 				this.traza = this.dtb.podar(traza);
-
+				this.traza.hacerCoherente();				
+				this.trazaCompleta.actualizarEstadoTrazaCompleta(this.traza);				
 			}
 			this.panelVentana.abrirPanelAlgoritmo(this.traza, directorio,
 					fichero, editable);

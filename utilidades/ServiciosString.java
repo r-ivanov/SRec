@@ -1292,5 +1292,26 @@ public class ServiciosString {
 
 		return dir;
 	}
+	
+	/**
+	 * Permite comprobar si dos strings son iguales (Incluyendo posibles valores null)
+	 * 
+	 * @param s1 Primer string.
+	 * @param s2 Segundo string.
+	 * 
+	 * @return true si son iguales, false en caso contrario.
+	 */
+	public static boolean sonIguales(String s1, String s2) {
+		
+		if (s1 == null && s2 == null) {
+			return true;
+		}
+		
+		if (s1 != null && s1.equals(s2)) {
+			return true;
+		}
+		
+		return false;
+	}
 
 }

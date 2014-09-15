@@ -471,4 +471,67 @@ public class DatosMetodoBasicos {
 		interfaz = interfaz + " ]";
 		return interfaz;
 	}
+	
+	/**
+	 * Permite comparar el método con otro para determinar si son iguales
+	 * (Sin tener en cuenta la visibilidad que presentan).
+	 * 
+	 * @param dmt Objeto con el que comparar.
+	 * 
+	 * @return true si son iguales (Ignorando visibilidad), false en caso contrario.
+	 */
+	public boolean esIgual(DatosMetodoBasicos dmt) {
+		
+		if (!ServiciosString.sonIguales(this.nombre, dmt.nombre)) {
+			return false;
+		}
+		
+		if (this.metodoPrincipal != dmt.metodoPrincipal) {
+			return false;
+		}
+		
+		if (this.retorno != dmt.retorno) {
+			return false;
+		}
+		
+		if (this.getNumParametrosE() != dmt.getNumParametrosE()) {
+			return false;
+		}
+		
+		if (this.getNumParametrosS() != dmt.getNumParametrosS()) {
+			return false;
+		}
+		
+		for (int i = 0; i < this.getNumParametrosE(); i++) {
+			
+			if (!ServiciosString.sonIguales(this.nombreParamE.get(i), dmt.nombreParamE.get(i))) {
+				return false;
+			}
+			
+			if (!ServiciosString.sonIguales(this.tipoParamE.get(i), dmt.tipoParamE.get(i))) {
+				return false;
+			}
+			
+			if (this.dimE[i] != dmt.dimE[i]) {
+				return false;
+			}
+		}
+		
+		for (int i = 0; i < this.getNumParametrosS(); i++) {
+			
+			if (!ServiciosString.sonIguales(this.nombreParamS.get(i), dmt.nombreParamS.get(i))) {
+				return false;
+			}
+			
+			if (!ServiciosString.sonIguales(this.tipoParamS.get(i), dmt.tipoParamS.get(i))) {
+				return false;
+			}
+			
+			if (this.dimS[i] != dmt.dimS[i]) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 }

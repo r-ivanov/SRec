@@ -145,6 +145,7 @@ public class Preprocesador extends Thread {
 	public synchronized void run() {
 		this.vv = Ventana.thisventana;
 		this.vv.setTextoCompilador(PanelCompilador.CODIGO_VACIO);
+		this.vv.setDTB(null);
 
 		// Cargamos y manejamos opciones
 		this.omvj = (OpcionMVJava) (this.gOpciones.getOpcion("OpcionMVJava",
@@ -688,10 +689,9 @@ public class Preprocesador extends Thread {
 					this.claseAlgoritmo, metodoAlgoritmo));
 			traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
 			traza_diferido.setTitulo(tituloPanel);
-
-			// Este objeto lo creamos para que se puedan guardar cómodamente los
-			// XML de animaciones (tirarán de datos de este objeto dtb)
-			DatosTrazaBasicos dtb = new DatosTrazaBasicos(traza_diferido);
+			
+			DatosTrazaBasicos dtb = this.obtenerDTBConVisibilidadParaNuevaTraza(traza_diferido);
+			traza_diferido.setVisibilidad(dtb);
 			this.vv.setDTB(dtb);
 
 			this.vv.visualizarAlgoritmo(traza_diferido, true,
@@ -701,6 +701,49 @@ public class Preprocesador extends Thread {
 
 		File file = new File(ficherosinex + ahora + ".class");
 		file.delete();
+	}
+	
+	/**
+	 * Permite obtener un dtb con los datos de visibilidad de métodos y parámetros
+	 * de la ejecución anterior, únicamente en el caso de que se esté ejecutando el
+	 * mismo método para el algoritmo.
+	 * 
+	 * @param traza Traza de la nueva ejecución.
+	 * 
+	 * @return Datos de traza básicos con la visibilidad de métodos y parámetros anterior.
+	 */
+	private DatosTrazaBasicos obtenerDTBConVisibilidadParaNuevaTraza(Traza traza) {
+		
+		DatosTrazaBasicos datosActuales = this.vv.getDTB();
+		DatosTrazaBasicos datosNuevos = new DatosTrazaBasicos(traza);
+		
+		if (datosActuales != null && datosActuales.getNombreMetodoEjecucion() != null &&
+				datosActuales.getNombreMetodoEjecucion().equals(datosNuevos.getNombreMetodoEjecucion())) {
+			
+			if (datosActuales.getNumMetodos() == datosNuevos.getNumMetodos()) {
+				
+				for (int i = 0; i < datosActuales.getNumMetodos(); i++) {
+					
+					DatosMetodoBasicos metodoActual = datosActuales.getMetodo(i);
+					DatosMetodoBasicos metodoNuevo = datosNuevos.getMetodo(i);		
+					
+					if (metodoActual.esIgual(metodoNuevo)) {
+						
+						metodoNuevo.setEsVisible(metodoActual.getEsVisible());
+						
+						for (int indiceEntrada = 0; indiceEntrada < metodoActual.getNumParametrosE(); indiceEntrada++){
+							metodoNuevo.setVisibilidadE(metodoActual.getVisibilidadE(indiceEntrada), indiceEntrada);
+						}
+						
+						for (int indiceSalida = 0; indiceSalida < metodoActual.getNumParametrosS(); indiceSalida++){
+							metodoNuevo.setVisibilidadS(metodoActual.getVisibilidadS(indiceSalida), indiceSalida);
+						}
+					}
+				}
+			}
+		}
+			
+		return datosNuevos;
 	}
 	
 	/**
