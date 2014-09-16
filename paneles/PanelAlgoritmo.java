@@ -21,6 +21,7 @@ import utilidades.ServiciosString;
 import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
+import datos.FamiliaEjecuciones;
 import datos.MetodoAlgoritmo;
 import eventos.NavegacionListener;
 
@@ -398,7 +399,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 
 				}
 			}.start();
-			if (!Conf.arranqueEstadoInicial) {
+			if (!Conf.arranqueEstadoInicial || FamiliaEjecuciones.getInstance().estaHabilitado()) {
 				pControl.hacerFinal();
 			} else {
 				// Actualizamos la vista para que se posicione bien sobre el

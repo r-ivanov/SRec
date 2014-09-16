@@ -689,61 +689,12 @@ public class Preprocesador extends Thread {
 					this.claseAlgoritmo, metodoAlgoritmo));
 			traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
 			traza_diferido.setTitulo(tituloPanel);
-			
-			DatosTrazaBasicos dtb = this.obtenerDTBConVisibilidadParaNuevaTraza(traza_diferido);
-			traza_diferido.setVisibilidad(dtb);
-			this.vv.setDTB(dtb);
 
-			this.vv.visualizarAlgoritmo(traza_diferido, true,
-					this.cuadroProgreso, claseProcesada[0], claseProcesada[1],
-					true);
+			this.vv.visualizarEjecucion(new Ejecucion(traza_diferido), true);
 		}
 
 		File file = new File(ficherosinex + ahora + ".class");
 		file.delete();
-	}
-	
-	/**
-	 * Permite obtener un dtb con los datos de visibilidad de métodos y parámetros
-	 * de la ejecución anterior, únicamente en el caso de que se esté ejecutando el
-	 * mismo método para el algoritmo.
-	 * 
-	 * @param traza Traza de la nueva ejecución.
-	 * 
-	 * @return Datos de traza básicos con la visibilidad de métodos y parámetros anterior.
-	 */
-	private DatosTrazaBasicos obtenerDTBConVisibilidadParaNuevaTraza(Traza traza) {
-		
-		DatosTrazaBasicos datosActuales = this.vv.getDTB();
-		DatosTrazaBasicos datosNuevos = new DatosTrazaBasicos(traza);
-		
-		if (datosActuales != null && datosActuales.getNombreMetodoEjecucion() != null &&
-				datosActuales.getNombreMetodoEjecucion().equals(datosNuevos.getNombreMetodoEjecucion())) {
-			
-			if (datosActuales.getNumMetodos() == datosNuevos.getNumMetodos()) {
-				
-				for (int i = 0; i < datosActuales.getNumMetodos(); i++) {
-					
-					DatosMetodoBasicos metodoActual = datosActuales.getMetodo(i);
-					DatosMetodoBasicos metodoNuevo = datosNuevos.getMetodo(i);		
-					
-					if (metodoActual.esIgual(metodoNuevo)) {
-						
-						metodoNuevo.setEsVisible(metodoActual.getEsVisible());
-						
-						for (int indiceEntrada = 0; indiceEntrada < metodoActual.getNumParametrosE(); indiceEntrada++){
-							metodoNuevo.setVisibilidadE(metodoActual.getVisibilidadE(indiceEntrada), indiceEntrada);
-						}
-						
-						for (int indiceSalida = 0; indiceSalida < metodoActual.getNumParametrosS(); indiceSalida++){
-							metodoNuevo.setVisibilidadS(metodoActual.getVisibilidadS(indiceSalida), indiceSalida);
-						}
-					}
-				}
-			}
-		}
-			
-		return datosNuevos;
 	}
 	
 	/**

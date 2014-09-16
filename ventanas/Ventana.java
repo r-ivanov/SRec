@@ -61,7 +61,9 @@ import cuadros.CuadroZoom;
 import datos.AlmacenadorTraza;
 import datos.CargadorTraza;
 import datos.ClaseAlgoritmo;
+import datos.DatosMetodoBasicos;
 import datos.DatosTrazaBasicos;
+import datos.Ejecucion;
 import datos.Preprocesador;
 import datos.Traza;
 
@@ -329,6 +331,15 @@ public class Ventana extends JFrame implements ActionListener {
 			}
 		}
 
+	}
+	
+	/**
+	 * Devuelve la única instancia de la ventana de la aplicación.
+	 * 
+	 * @return Ventana de la aplicación.
+	 */
+	public static Ventana getInstance() {
+		return thisventana;
 	}
 
 	@Override
@@ -1891,6 +1902,48 @@ public class Ventana extends JFrame implements ActionListener {
 			if (this.claseAlgoritmo != null) {
 				this.animacionPendienteGuardar = true;
 			}
+
+		} catch (OutOfMemoryError oome) {
+			new CuadroError(this, Texto.get("ERROR_EJEC", Conf.idioma),
+					Texto.get("ERROR_NOMEMSUF", Conf.idioma));
+		} catch (Exception exp) {
+			new CuadroError(this, Texto.get("ERROR_EJEC", Conf.idioma),
+					Texto.get("ERROR_NODET", Conf.idioma));
+			exp.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Establece la ejecución correspondiente a la traza pasada por parámetro,
+	 * para cuando el algoritmo ya ha sido cargado y se están visualizando
+	 * distintas ejecuciones.
+	 * 
+	 * @param ejecucion
+	 *            Recibe una ejecución del algoritmo, será el contenido
+	 *            de la visualización.
+	 * @param inicializar
+	 *            A true si se desea partir desde el estado inicial de
+	 *            visualización del algoritmo.
+	 */
+	public void visualizarEjecucion(Ejecucion ejecucion, boolean inicializar) {
+		
+		try {
+			
+			this.setDTB(ejecucion.getDTB());
+			this.trazaCompleta = ejecucion.obtenerTrazaCompleta();
+			this.traza = ejecucion.obtenerTrazaConPodaParaVisibilidad();
+			
+			if (inicializar) {
+				traza.nadaVisible();
+			}
+
+			this.habilitarOpcionesAnimacion(true);
+
+			if (this.claseAlgoritmo != null) {
+				this.animacionPendienteGuardar = true;
+			}
+			
+			panelVentana.mostrarEjecucionTraza();
 
 		} catch (OutOfMemoryError oome) {
 			new CuadroError(this, Texto.get("ERROR_EJEC", Conf.idioma),
