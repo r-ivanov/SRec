@@ -1,9 +1,45 @@
-Actualizado: 17/05/2014
 **************************************
 *     HISTORIAL DE MODIFICACIONES    *
 **************************************
 
-- Este documento recoge las modificaciones que se han ido realizando a la herramienta SRec -
+SRec v1.4
+=========
+
+- Se ha añadido un sistema de control de versiones para SRec (git).
+
+- Se ha añadido documentación (en formato java doc) con explicación y especificación para cada clase y método de la aplicación (Sobre el 5% de la aplicación estaba previamente documentado, pero desactualizado):
+    - Todos los métodos públicos y privados de la aplicación: 1625 métodos.
+    - Todos los constructores públicos y privados de la aplicación: 135 constructores.
+    - Todas las clases de la aplicación: 106 clases.
+
+- Se ha generado la documentación de toda la aplicación en formato javadoc (html).
+
+- Se ha corregido y estandarizado todo el código fuente de la aplicación.
+
+- Se ha eliminado el código comentado, obsoleto o inalcanzable de toda la aplicación, algunos números:
+    - 251 métodos eliminados.
+    - 30 constructores eliminados.
+    - 312 variables eliminadas.
+    - 4 clases eliminadas.
+
+- Se han eliminado todos los ficheros comprimidos con código o recursos obsoletos.
+
+- Se han refactorizado los botones de la aplicación, ofreciendo una interfaz de métodos mucho más semántica y sencilla.
+
+- Se han corregido leaks de memoria que hacían que con sucesivas ejecuciones de algoritmos la aplicación fuese más lenta.
+
+- Se ha añadido funcionalidad para mantener la visibilidad de métodos y parámetros en sucesivas ejecuciones de un mismo método.
+
+- Se han corregido diversos problemas de concurrencia en el panel de código de la aplicación:
+    - En muchas ocasiones la barra de numeración de líneas desaparecía o aparecía duplicada cuando la vista se actualizaba.
+    - También se ha corregido un problema por el que la vista hacía scroll hasta el final en muchas ocasiones.
+
+- Se han eliminado del código fuente los ficheros de opciones que definen la configuración para un usuario/máquina específicos, modificando algunas opciones por defecto en SRec, esto permite que cada nueva distribución de SRec parta de un estado limpio y configurable por el usuario, y evita los problemas por configuraciones específicas para una determinada máquina.
+
+- Se ha añadido un sistema de build basado en ant que permite la automatizar la compilación y generación de versiones para distribución de SRec. Esto también permite poner SRec en cualquier entorno de integración continua. Tras añadir este punto y con todas las tareas de limpieza aplicadas, se ha revisado la generación del jar distribuible, que ha pasado de ocupar 2241 Kb a 569 Kb (Únicamente tamaño de jar ejecutable, sin contar ficheros auxiliares como imágenes que deben incluirse fuera del jar en el paquete de distribución).
+
+SRec v1.3
+=========
 
 ** PROBLEMAS CON JAVA 7
  * No se queda bloqueado al compilar clases con JDK 7.
