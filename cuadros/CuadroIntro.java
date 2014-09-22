@@ -34,7 +34,6 @@ public class CuadroIntro extends Thread {
 	 */
 	public CuadroIntro(Ventana ventana) {
 		this.dialogo = new JDialog(ventana, true);
-		this.dialogo.setAlwaysOnTop(true);
 		this.start();
 	}
 
