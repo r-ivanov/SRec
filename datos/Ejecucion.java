@@ -91,6 +91,7 @@ public class Ejecucion {
 		grafo.getModel().addGraphModelListener(null);
 		
 		Traza traza = this.obtenerTrazaConPodaParaVisibilidad();
+		traza.todoVisible();
 		ContenedorArbol c = new ContenedorArbol(traza.getRaiz(), grafo, null, 1);
 		grafo.setBackground(Conf.colorPanel);
 		grafo.getGraphLayoutCache().insert(c.getCeldas());

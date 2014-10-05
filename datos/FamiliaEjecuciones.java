@@ -18,11 +18,14 @@ public class FamiliaEjecuciones {
 	
 	private Ejecucion ejecucionActiva;
 	
-	private JScrollPane panelEjecuciones;
+	private JScrollPane scrollPanelEjecuciones;
+	private PanelFamiliaEjecuciones panelEjecuciones;
 	
 	private FamiliaEjecuciones() {
 		this.ejecuciones = new ArrayList<Ejecucion>();
 		this.habilitado = false;
+		this.panelEjecuciones = new PanelFamiliaEjecuciones(this);
+		this.scrollPanelEjecuciones = new JScrollPane(this.panelEjecuciones);
 	}
 
 	public static FamiliaEjecuciones getInstance() {
@@ -34,7 +37,6 @@ public class FamiliaEjecuciones {
 
 	public void addEjecucion(Ejecucion ejecucion) {
 		this.ejecuciones.add(ejecucion);
-		this.panelEjecuciones = null;
 	}
 	
 	public boolean esEjecucionActiva(Ejecucion ejecucion) {
@@ -74,10 +76,17 @@ public class FamiliaEjecuciones {
 		return this.ejecuciones.iterator();
 	}
 	
-	public JScrollPane obtenerPanelEjecuciones() {
-		if (panelEjecuciones == null) {
-			panelEjecuciones = new JScrollPane(new PanelFamiliaEjecuciones(this));
+	public void actualizarPanel() {
+		this.panelEjecuciones.actualizar();
+	}
+	
+	public void actualizarVisibilidadEjecuciones() {
+		for (Iterator<Ejecucion> iterator = this.getEjecuciones(); iterator.hasNext();) {
+			iterator.next().actualizarVisibilidad();
 		}
-		return panelEjecuciones;
+	}
+	
+	public JScrollPane obtenerPanelEjecuciones() {
+		return this.scrollPanelEjecuciones;
 	}
 }

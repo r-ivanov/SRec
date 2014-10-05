@@ -577,14 +577,23 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 
 		nyp = null;
 	}
-
+	
 	/**
 	 * Permite ubicar las distintas vistas según los valores de configuración de
 	 * ubicación y disposición de paneles.
 	 */
 	public void ubicarVistas() {
+		
+		boolean familiaEjecucionesHabilitado = FamiliaEjecuciones.getInstance().estaHabilitado();
+		
+		if (familiaEjecucionesHabilitado) {
+			separadorVistas.setRightComponent(FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones());
+		} else {
+			separadorVistas.setRightComponent(this.panel2);
+		}
+		
 		// Vista de árbol
-		if (Conf.getVista(Vista.codigos[0]).getPanel() == 1) {
+		if (Conf.getVista(Vista.codigos[0]).getPanel() == 1 || familiaEjecucionesHabilitado) {
 			this.panel1.add(Texto.get(Vista.codigos[0], Conf.idioma),
 					this.contenedorArbol);
 		} else {
@@ -596,7 +605,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 			// cargando GIF
 		{
 			// Vista de pila
-			if (Conf.getVista(Vista.codigos[1]).getPanel() == 1) {
+			if (Conf.getVista(Vista.codigos[1]).getPanel() == 1 || familiaEjecucionesHabilitado) {
 				this.panel1.add(Texto.get(Vista.codigos[1], Conf.idioma),
 						this.contenedorPila);
 			} else {
@@ -607,7 +616,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
 				// Vista cronológica
-				if (Conf.getVista(Vista.codigos[2]).getPanel() == 1) {
+				if (Conf.getVista(Vista.codigos[2]).getPanel() == 1 || familiaEjecucionesHabilitado) {
 					this.panel1.add(Texto.get(Vista.codigos[2], Conf.idioma),
 							this.contenedorCrono);
 				} else {
@@ -616,7 +625,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 				}
 
 				// Vista de estructura
-				if (Conf.getVista(Vista.codigos[3]).getPanel() == 1) {
+				if (Conf.getVista(Vista.codigos[3]).getPanel() == 1 || familiaEjecucionesHabilitado) {
 					this.panel1.add(Texto.get(Vista.codigos[3], Conf.idioma),
 							this.contenedorEstructura);
 				} else {
@@ -625,7 +634,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 				}
 			} else {
 				// Vista de traza
-				if (Conf.getVista(Vista.codigos[2]).getPanel() == 1) {
+				if (Conf.getVista(Vista.codigos[2]).getPanel() == 1 || familiaEjecucionesHabilitado) {
 					this.panel1.add(Texto.get(Vista.codigos[2], Conf.idioma),
 							this.contenedorTraza);
 				} else {
@@ -636,7 +645,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 
 			// Si las vistas de recursividad fueron colocadas todas en un panel
 			if (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
-					Ventana.thisventana.getTraza().getTecnicas())) {
+					Ventana.thisventana.getTraza().getTecnicas()) && !familiaEjecucionesHabilitado) {
 				if (Conf.getVista(Vista.codigos[0]).getPanel() == 1
 						&& Conf.getVista(Vista.codigos[1]).getPanel() == 1
 						&& Conf.getVista(Vista.codigos[2]).getPanel() == 1) {

@@ -8,8 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,7 +21,6 @@ import javax.swing.Scrollable;
 
 import org.jgraph.JGraph;
 
-import ventanas.Ventana;
 import conf.Conf;
 import datos.Ejecucion;
 import datos.FamiliaEjecuciones;
@@ -36,20 +33,27 @@ public class PanelFamiliaEjecuciones extends JPanel implements Scrollable {
 	private static final int H = 200;
 
 	private static final int BORDE = 10;
-
+	
+	private final FamiliaEjecuciones familiaEjecuciones;
 	private final FlowLayout layout = new FlowLayout();
 	private final int hGap = this.layout.getHgap();
 	private final int vGap = this.layout.getVgap();
-	private final Dimension size;
+	private Dimension size;
 
 	public PanelFamiliaEjecuciones(FamiliaEjecuciones familiaEjecuciones) {
 		setLayout(this.layout);
-		for (Iterator<Ejecucion> iterator = familiaEjecuciones.getEjecuciones(); iterator
+		this.familiaEjecuciones = familiaEjecuciones;
+	}
+	
+	public void actualizar() {
+		this.removeAll();
+		
+		for (Iterator<Ejecucion> iterator = this.familiaEjecuciones.getEjecuciones(); iterator
 				.hasNext();) {
-			this.add(new GraphPanel(familiaEjecuciones, iterator.next()));
+			this.add(new GraphPanel(this.familiaEjecuciones, iterator.next()));
 		}
 
-		int numeroEjecuciones = familiaEjecuciones.numeroEjecuciones();
+		int numeroEjecuciones = this.familiaEjecuciones.numeroEjecuciones();
 		this.size = new Dimension(numeroEjecuciones * W
 				+ (numeroEjecuciones + 1) * this.hGap, H + 2 * this.vGap);
 	}
