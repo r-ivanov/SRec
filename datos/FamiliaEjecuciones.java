@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import conf.Conf;
 import paneles.PanelFamiliaEjecuciones;
 import ventanas.Ventana;
 
@@ -18,14 +20,14 @@ public class FamiliaEjecuciones {
 	
 	private Ejecucion ejecucionActiva;
 	
-	private JScrollPane scrollPanelEjecuciones;
+	//private JScrollPane scrollPanelEjecuciones;
 	private PanelFamiliaEjecuciones panelEjecuciones;
 	
 	private FamiliaEjecuciones() {
 		this.ejecuciones = new ArrayList<Ejecucion>();
 		this.habilitado = false;
 		this.panelEjecuciones = new PanelFamiliaEjecuciones(this);
-		this.scrollPanelEjecuciones = new JScrollPane(this.panelEjecuciones);
+		//this.scrollPanelEjecuciones = new JScrollPane(this.panelEjecuciones);
 	}
 
 	public static FamiliaEjecuciones getInstance() {
@@ -76,8 +78,8 @@ public class FamiliaEjecuciones {
 		return this.ejecuciones.iterator();
 	}
 	
-	public void actualizarPanel() {
-		this.panelEjecuciones.actualizar();
+	public void actualizarPanel(int height, int width, int orientation) {
+		this.panelEjecuciones.actualizar(height, width, orientation);
 	}
 	
 	public void actualizarVisibilidadEjecuciones() {
@@ -86,7 +88,7 @@ public class FamiliaEjecuciones {
 		}
 	}
 	
-	public JScrollPane obtenerPanelEjecuciones() {
-		return this.scrollPanelEjecuciones;
+	public JPanel obtenerPanelEjecuciones() {
+		return this.panelEjecuciones;
 	}
 }
