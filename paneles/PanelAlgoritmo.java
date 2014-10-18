@@ -1,6 +1,8 @@
 package paneles;
 
 import java.awt.BorderLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -34,7 +36,9 @@ import eventos.NavegacionListener;
  */
 public class PanelAlgoritmo extends JPanel implements ChangeListener {
 	static final long serialVersionUID = 14;
-
+	
+	private static final int GROSOR_SPLIT_DIVIDER = 8;
+	
 	private static JSplitPane separadorCodigo, separadorVistas,
 			separadorCentral;
 
@@ -181,7 +185,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 
 		separadorVistas = new JSplitPane(tipoDisposicion, this.panel1,
 				this.panel2);
-		separadorVistas.setDividerSize(8);
+		separadorVistas.setDividerSize(GROSOR_SPLIT_DIVIDER);
 		separadorVistas.setOneTouchExpandable(true);
 		separadorVistas.setResizeWeight(0.5);
 		separadorVistas.setDividerLocation(0.5);
@@ -578,6 +582,11 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 		nyp = null;
 	}
 	
+	private void ajustarTamanioFamiliaEjecuciones() {
+		int height = separadorVistas.getHeight() - separadorVistas.getDividerLocation() - GROSOR_SPLIT_DIVIDER;
+		FamiliaEjecuciones.getInstance().actualizarPanel(separadorVistas.getWidth(), height, Conf.disposicionPaneles);
+	}
+	
 	/**
 	 * Permite ubicar las distintas vistas según los valores de configuración de
 	 * ubicación y disposición de paneles.
@@ -587,7 +596,16 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 		boolean familiaEjecucionesHabilitado = FamiliaEjecuciones.getInstance().estaHabilitado();
 		
 		if (familiaEjecucionesHabilitado) {
+			
 			separadorVistas.setRightComponent(FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones());
+			this.ajustarTamanioFamiliaEjecuciones();
+			separadorVistas.addPropertyChangeListener(JSplitPane.DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {	
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					ajustarTamanioFamiliaEjecuciones();
+				}
+			});
+			
 		} else {
 			separadorVistas.setRightComponent(this.panel2);
 		}
