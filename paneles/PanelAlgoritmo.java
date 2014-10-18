@@ -603,7 +603,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 		if (familiaEjecucionesHabilitado) {
 			separadorVistas.setRightComponent(FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones());
 			if (Conf.disposicionPaneles == Conf.PANEL_HORIZONTAL) {
-				separadorVistas.setDividerLocation(separadorVistas.getHeight() - 300 - GROSOR_SPLIT_DIVIDER);
+				separadorVistas.setDividerLocation(separadorVistas.getHeight() - 250 - GROSOR_SPLIT_DIVIDER);
 			} else {
 				separadorVistas.setDividerLocation(separadorVistas.getWidth() - 250 - GROSOR_SPLIT_DIVIDER);
 			}			
