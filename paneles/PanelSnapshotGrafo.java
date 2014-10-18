@@ -23,10 +23,10 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 5487058416021891922L;
 	private static final int BORDE_SELECCION = 10;
-	
+
 	private final FamiliaEjecuciones familiaEjecuciones;
 	private final Ejecucion ejecucion;
-	
+
 	private final int anchura;
 	private final int altura;
 
@@ -38,7 +38,7 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 
 		this.familiaEjecuciones = familiaEjecuciones;
 		this.ejecucion = ejecucion;
-		
+
 		this.anchura = anchura;
 		this.altura = altura;
 
@@ -104,6 +104,16 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 
 	@Override
 	public Dimension getPreferredSize() {
+		return new Dimension(this.anchura, this.altura);
+	}
+
+	@Override
+	public Dimension getMaximumSize() {
+		return new Dimension(this.anchura, this.altura);
+	}
+
+	@Override
+	public Dimension getMinimumSize() {
 		return new Dimension(this.anchura, this.altura);
 	}
 

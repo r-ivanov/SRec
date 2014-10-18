@@ -74,8 +74,8 @@ public class FamiliaEjecuciones {
 		return this.ejecuciones.iterator();
 	}
 	
-	public void actualizarPanel(int anchura, int altura, int orientacion) {
-		this.panelEjecuciones.pintar(anchura, altura, orientacion);
+	public void actualizarPanel(int tamanio, int orientacion) {
+		this.panelEjecuciones.pintar(tamanio, orientacion);
 	}
 	
 	public void actualizarVisibilidadEjecuciones() {
