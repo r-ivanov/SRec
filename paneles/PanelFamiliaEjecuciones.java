@@ -29,8 +29,8 @@ public class PanelFamiliaEjecuciones extends JPanel implements Scrollable {
 
 	private static final long serialVersionUID = -6270875064574073828L;
 
-	protected int width;
-	protected int height;
+	private static final int W = 300;
+	private static final int H = 200;
 
 	private static final int BORDE = 10;
 	
@@ -45,27 +45,17 @@ public class PanelFamiliaEjecuciones extends JPanel implements Scrollable {
 		this.familiaEjecuciones = familiaEjecuciones;
 	}
 	
-	public void actualizar(int height, int width, int orientation) {
+	public void actualizar() {
 		this.removeAll();
 		
-		int numeroEjecuciones = this.familiaEjecuciones.numeroEjecuciones();
-		
-		if (orientation == Conf.PANEL_HORIZONTAL) {
-			this.height = height;
-			this.width = (height * 4) / 3;
-			this.size = new Dimension(numeroEjecuciones * this.width
-					+ (numeroEjecuciones + 1) * this.hGap, this.height);
-		} else {
-			this.width = width;
-			this.height = (width * 3) / 4;
-			this.size = new Dimension(this.width, numeroEjecuciones * this.height
-					+ (numeroEjecuciones + 1) * this.vGap);
-		}
-			
 		for (Iterator<Ejecucion> iterator = this.familiaEjecuciones.getEjecuciones(); iterator
 				.hasNext();) {
-			this.add(new GraphPanel(this.familiaEjecuciones, iterator.next(), this.height, this.width));
-		}		
+			this.add(new GraphPanel(this.familiaEjecuciones, iterator.next()));
+		}
+
+		int numeroEjecuciones = this.familiaEjecuciones.numeroEjecuciones();
+		this.size = new Dimension(numeroEjecuciones * W
+				+ (numeroEjecuciones + 1) * this.hGap, H + 2 * this.vGap);
 	}
 
 	@Override
@@ -87,9 +77,9 @@ public class PanelFamiliaEjecuciones extends JPanel implements Scrollable {
 
 	private int getIncrement(int orientation) {
 		if (orientation == Adjustable.HORIZONTAL) {
-			return this.width + this.hGap;
+			return W + this.hGap;
 		} else {
-			return this.height + this.vGap;
+			return H + this.vGap;
 		}
 	}
 
@@ -111,16 +101,9 @@ public class PanelFamiliaEjecuciones extends JPanel implements Scrollable {
 		private final Ejecucion ejecucion;
 		
 		private BufferedImage snapshot;
-		
-		private int height;
-		private int width;
-		
-		public GraphPanel(FamiliaEjecuciones familiaEjecuciones, Ejecucion ejecucion,
-				int height, int width) {
+
+		public GraphPanel(FamiliaEjecuciones familiaEjecuciones, Ejecucion ejecucion) {
 			this.setBackground(Conf.colorPanel);
-			
-			this.height = height;
-			this.width = width;
 			
 			this.familiaEjecuciones = familiaEjecuciones;
 			this.ejecucion = ejecucion;
@@ -135,8 +118,8 @@ public class PanelFamiliaEjecuciones extends JPanel implements Scrollable {
 		 * una vez obtenido, escalaremos el grafo para obtener un snapshot ajustado */
 		private void inicializarSnapshot() {
 			
-			int imageWidth = this.width - BORDE * 2;
-			int imageHeight = this.height - BORDE * 2;
+			int imageWidth = W - BORDE * 2;
+			int imageHeight = H - BORDE * 2;
 			
 			JGraph graph = this.ejecucion.obtenerGrafo();
 			
@@ -163,8 +146,8 @@ public class PanelFamiliaEjecuciones extends JPanel implements Scrollable {
 	        Graphics2D g2d = (Graphics2D) g;
 	        
 	        /* Pintamos la captura */
-	        int xCenter = this.width / 2;
-	        int yCenter = this.height / 2;	        
+	        int xCenter = W / 2;
+	        int yCenter = H / 2;	        
 	        int snapshotXCenter = this.snapshot.getWidth() / 2;
 	        int snapshotYCenter = this.snapshot.getHeight() / 2;	        
 	        g2d.drawImage(this.snapshot, xCenter - snapshotXCenter, yCenter - snapshotYCenter, null);
@@ -173,13 +156,13 @@ public class PanelFamiliaEjecuciones extends JPanel implements Scrollable {
 		        /* Pintamos el rectángulo de selección */
 		        g2d.setStroke(new BasicStroke(BORDE));
 		        g2d.setPaint(new GradientPaint(80, 100, Color.RED, 8, 20, Color.BLUE, true));
-		        g2d.draw(new Rectangle2D.Double(0, 0, this.width, this.height));
+		        g2d.draw(new Rectangle2D.Double(0, 0, W, H));
 	        }
 	    }
 		
 		@Override
 		public Dimension getPreferredSize() {
-			return new Dimension(this.width, this.height);
+			return new Dimension(W, H);
 		}
 
 		/**

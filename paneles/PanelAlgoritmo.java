@@ -588,11 +588,6 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 		
 		if (familiaEjecucionesHabilitado) {
 			separadorVistas.setRightComponent(FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones());
-			separadorVistas.setDividerLocation(0.70);
-			separadorVistas.setResizeWeight(1.0);
-			separadorVistas.setEnabled(false);
-			FamiliaEjecuciones.getInstance().actualizarPanel(separadorVistas.getHeight() - separadorVistas.getDividerLocation(),
-					separadorVistas.getWidth(), Conf.disposicionPaneles);
 		} else {
 			separadorVistas.setRightComponent(this.panel2);
 		}

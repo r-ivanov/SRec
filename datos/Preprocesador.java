@@ -689,16 +689,8 @@ public class Preprocesador extends Thread {
 					this.claseAlgoritmo, metodoAlgoritmo));
 			traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
 			traza_diferido.setTitulo(tituloPanel);
-			Ejecucion e = new Ejecucion(traza_diferido);
-FamiliaEjecuciones.getInstance().habilitar();
-FamiliaEjecuciones.getInstance().borrarEjecuciones();
-FamiliaEjecuciones.getInstance().addEjecucion(e);
-FamiliaEjecuciones.getInstance().addEjecucion(new Ejecucion(traza_diferido));
-FamiliaEjecuciones.getInstance().addEjecucion(new Ejecucion(traza_diferido));
-FamiliaEjecuciones.getInstance().addEjecucion(new Ejecucion(traza_diferido));
-FamiliaEjecuciones.getInstance().setEjecucionActiva(e);
-//FamiliaEjecuciones.getInstance().actualizarPanel();
-			this.vv.visualizarEjecucion(e, true);
+
+			this.vv.visualizarEjecucion(new Ejecucion(traza_diferido), true);
 		}
 
 		File file = new File(ficherosinex + ahora + ".class");
