@@ -1,6 +1,7 @@
 package paneles;
 
 import java.awt.BasicStroke;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -12,6 +13,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 
 import org.jgraph.JGraph;
 
@@ -136,7 +138,10 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
-
+		JRootPane rootPane = this.getRootPane();
+		if (rootPane != null) {
+			rootPane.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		}
 	}
 
 	/**
@@ -147,7 +152,10 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
-
+		JRootPane rootPane = this.getRootPane();
+		if (rootPane != null) {
+			rootPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		}
 	}
 
 	/**
@@ -157,7 +165,7 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 	 *            evento de ratón
 	 */
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mousePressed(MouseEvent e) { 
 
 	}
 
