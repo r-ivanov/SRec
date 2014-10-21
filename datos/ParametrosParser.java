@@ -1,5 +1,12 @@
 package datos;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import utilidades.ServiciosString;
+
 public class ParametrosParser {
 	
 	private MetodoAlgoritmo metodoAlgoritmo;
@@ -12,11 +19,61 @@ public class ParametrosParser {
 		int combinaciones = 1;
 		for (int i = 0; i < this.metodoAlgoritmo.getNumeroParametros(); i++) {
 			String valorParametro = this.metodoAlgoritmo.getParamValor(i);
-			int numeroValores = valorParametro.split(";").length;
+			int numeroValores = reemplazarYPartirValores(valorParametro).size();
 			combinaciones *= numeroValores; 
-		}
-		
+		}		
 		return combinaciones;
+	}
+	
+	public static List<String> reemplazarYPartirValores(String cadenaEntrada) {
+		
+		Pattern p = Pattern.compile("(-?[0-9]+)\\.\\.(-?[0-9]+)");
+	    Matcher matcher = p.matcher(cadenaEntrada);    
+	    StringBuffer sb = new StringBuffer(cadenaEntrada.length());
+	    while (matcher.find()) {
+	    	int digito1 = Integer.parseInt(matcher.group(1));
+	    	int digito2 = Integer.parseInt(matcher.group(2));
+	    	String secuencia = "";
+	    	for (int i = digito1; i <= digito2; i++) {
+	    		secuencia += i;
+	    		if (i != digito2) {
+	    			secuencia += ","; 
+	    		}
+	    	}
+	    	matcher.appendReplacement(sb, Matcher.quoteReplacement(secuencia));
+	    }
+	    matcher.appendTail(sb);    
+	    cadenaEntrada = sb.toString();
+		
+		ArrayList<String> valores = new ArrayList<String>();
+		int balanceoArray = 0;
+		boolean enCadena = false;
+		int ultimoValor = 0;
+		for (int i = 0; i < cadenaEntrada.length(); i++) {
+			char caracter = cadenaEntrada.charAt(i);
+			if (caracter == '{') {
+				balanceoArray++;
+			} else if (caracter == '}') {
+				balanceoArray--;
+			} else if (caracter == '"') {
+				enCadena = !enCadena;
+			} else if (caracter == ',' && balanceoArray == 0 && !enCadena) {
+				valores.add(cadenaEntrada.substring(ultimoValor, i).trim());
+				ultimoValor = i + 1;
+			}
+		}
+		valores.add(cadenaEntrada.substring(ultimoValor, cadenaEntrada.length()).trim());
+		
+		return valores;
+	}
+	
+	public static boolean comprobarValoresParametro(List<String> valores, String tipo, int dim) {
+		for (int i = 0; i < valores.size(); i++) {
+			if (!ServiciosString.esDeTipoCorrecto(valores.get(i), tipo, dim)) {
+				return false;
+			}
+		}	
+		return true;
 	}
 	
 	public String[][] obtenerMatrizParametros() {
@@ -30,19 +87,19 @@ public class ParametrosParser {
 		int parametrosVariables = 0;
 		for (int numeroParametro = 0; numeroParametro < this.metodoAlgoritmo.getNumeroParametros(); numeroParametro++) {
 			String valorParametro = this.metodoAlgoritmo.getParamValor(numeroParametro);
-			String[] valores = valorParametro.split(";");
+			List<String> valores = reemplazarYPartirValores(valorParametro);
 			
 			int repeticionesPorValor;
-			if (valores.length == 1) {
+			if (valores.size() == 1) {
 				repeticionesPorValor = combinaciones;
 			} else {
 				parametrosVariables++;
-				repeticionesPorValor = combinaciones / (valores.length * parametrosVariables);
+				repeticionesPorValor = combinaciones / (valores.size() * parametrosVariables);
 			}
 			
 			for (int i = 0; i < combinaciones; i++) {
-				int posicionValor = (i / repeticionesPorValor) % valores.length;
-				matrizParametros[i][numeroParametro] = valores[posicionValor];
+				int posicionValor = (i / repeticionesPorValor) % valores.size();
+				matrizParametros[i][numeroParametro] = valores.get(posicionValor);
 			}
 		}
 		
