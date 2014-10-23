@@ -525,6 +525,11 @@ public class ServiciosString {
 	 *         contrario.
 	 */
 	public static boolean esDeTipoCorrecto(String valor, String tipo, int dim) {
+		
+		if (valor == null || valor.equals("")) {
+			return false;
+		}
+		
 		if (dim == 0) {
 			// Quitar espacios de delante de y detrás si los hay
 			while (valor.charAt(0) == ' ') {

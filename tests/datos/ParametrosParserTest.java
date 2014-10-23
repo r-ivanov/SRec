@@ -209,6 +209,18 @@ public class ParametrosParserTest {
 	}
 	
 	@Test
+	public void testParametrosParserReemplazaRangosDecrecientesCorrectamente() {
+		
+		String valorEntrada = "3..1";	
+		List<String> valores = ParametrosParser.reemplazarYPartirValores(valorEntrada);
+		
+		assertEquals("3", valores.get(0));
+		assertEquals("2", valores.get(1));
+		assertEquals("1", valores.get(2));
+		assertTrue(ParametrosParser.comprobarValoresParametro(valores, "int", 0));
+	}
+	
+	@Test
 	public void testParametrosParserReemplazaRangosCorrectamenteConValoresNegativos() {
 		
 		String valorEntrada = "-1..0";	

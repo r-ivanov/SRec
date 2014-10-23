@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
@@ -372,8 +374,9 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 							Conf.idioma) + " nº " + (i + 1) + ".");
 					return false;
 				}
-
-				if (!ServiciosString.esDeTipoCorrecto(texto,
+				
+				List<String> valores = ParametrosParser.reemplazarYPartirValores(texto);
+				if (!ParametrosParser.comprobarValoresParametro(valores,
 						this.metodo.getTipoParametro(i),
 						this.metodo.getDimParametro(i))) {
 					new CuadroError(this.ventana, Texto.get("ERROR_PARAM",

@@ -641,64 +641,81 @@ public class Preprocesador extends Thread {
 		for (int j = 0; j < tipos.length; j++) {
 			clasesParametros[j] = (Class) tipos[j];
 		}
-
-		Object[] valoresParametros = new Object[tipos.length];
-
-		for (int i = 0; i < valoresParametros.length; i++) {
-			try {
-				valoresParametros[i] = GestorParametros.asignarParam(
-						metodoAlgoritmo.getParamValor(i), clasesParametros[i]);
-			} catch (java.lang.Exception ex) {
-				ex.printStackTrace();
-				System.out
-						.println("Excepcion en Preprocesador, llamada a 'asignarParam' (i="
-								+ i + ")");
-			}
-
+		
+		for (int j=0; j<tipos.length; j++)
+			clasesParametros[j]= (Class)tipos[j];
+		
+		ParametrosParser parametrosParser = new ParametrosParser(metodoAlgoritmo);
+		
+		String[][] matrizParametros = parametrosParser.obtenerMatrizParametros();	
+		if (matrizParametros.length > 1) {
+			FamiliaEjecuciones.getInstance().habilitar();
+		} else {
+			FamiliaEjecuciones.getInstance().deshabilitar();
 		}
-
-		String tituloPanel = "";
-		tituloPanel = tituloPanel + metodoEjecutar.getName() + " ( ";
-		if (valoresParametros != null) {
+		FamiliaEjecuciones.getInstance().borrarEjecuciones();
+		
+		for (int numeroEjecucion = 0; numeroEjecucion < matrizParametros.length; numeroEjecucion++) {
+			
+			Object[] valoresParametros = new Object[tipos.length];
+	
 			for (int i = 0; i < valoresParametros.length; i++) {
-				tituloPanel = tituloPanel
-						+ ServiciosString
-								.representacionObjeto(valoresParametros[i]);
-				if (i < valoresParametros.length - 1) {
-					tituloPanel = tituloPanel + " , ";
+				try {
+					valoresParametros[i] = GestorParametros
+							.asignarParam(matrizParametros[numeroEjecucion][i], clasesParametros[i]);
+				} catch (java.lang.Exception ex) {
+					ex.printStackTrace();
+					System.out
+							.println("Excepcion en Preprocesador, llamada a 'asignarParam' (i="
+									+ i + ")");
+				}
+	
+			}
+	
+			String tituloPanel = "";
+			tituloPanel = tituloPanel + metodoEjecutar.getName() + " ( ";
+			if (valoresParametros != null) {
+				for (int i = 0; i < valoresParametros.length; i++) {
+					tituloPanel = tituloPanel
+							+ ServiciosString
+									.representacionObjeto(valoresParametros[i]);
+					if (i < valoresParametros.length - 1) {
+						tituloPanel = tituloPanel + " , ";
+					}
+				}
+			}
+			tituloPanel = tituloPanel + " )";
+	
+			Traza traza = Traza.singleton();
+			traza.vaciarTraza();
+	
+			try {
+				this.wait(250);
+			} catch (InterruptedException ie) {
+			}
+			if (Ejecutador.ejecutar(this.claseAlgoritmo.getId2(),
+					metodoEjecutar.getName(), clasesParametros, valoresParametros)) {
+				Traza traza_diferido = null;
+				traza_diferido = traza.copiar();
+				traza_diferido.setIDTraza(ahora);
+				traza_diferido.setVisibilidad(this.claseAlgoritmo);
+				traza_diferido.setArchivo(this.claseAlgoritmo.getPath());
+				traza_diferido.setTecnicas(MetodoAlgoritmo.tecnicasEjecucion(
+						this.claseAlgoritmo, metodoAlgoritmo));
+				traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
+				traza_diferido.setTitulo(tituloPanel);
+				Ejecucion e = new Ejecucion(traza_diferido);
+				
+				if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
+					FamiliaEjecuciones.getInstance().addEjecucion(e);
+				} else {						
+					vv.visualizarEjecucion(e, true);
 				}
 			}
 		}
-		tituloPanel = tituloPanel + " )";
-
-		Traza traza = Traza.singleton();
-		traza.vaciarTraza();
-
-		try {
-			this.wait(250);
-		} catch (InterruptedException ie) {
-		}
-		if (Ejecutador.ejecutar(this.claseAlgoritmo.getId2(),
-				metodoEjecutar.getName(), clasesParametros, valoresParametros)) {
-			Traza traza_diferido = null;
-			traza_diferido = traza.copiar();
-			traza_diferido.setIDTraza(ahora);
-			traza_diferido.setVisibilidad(this.claseAlgoritmo);
-			traza_diferido.setArchivo(this.claseAlgoritmo.getPath());
-			traza_diferido.setTecnicas(MetodoAlgoritmo.tecnicasEjecucion(
-					this.claseAlgoritmo, metodoAlgoritmo));
-			traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
-			traza_diferido.setTitulo(tituloPanel);
-			Ejecucion e = new Ejecucion(traza_diferido);
-FamiliaEjecuciones.getInstance().habilitar();
-FamiliaEjecuciones.getInstance().borrarEjecuciones();
-FamiliaEjecuciones.getInstance().addEjecucion(e);
-FamiliaEjecuciones.getInstance().addEjecucion(new Ejecucion(traza_diferido));
-FamiliaEjecuciones.getInstance().addEjecucion(new Ejecucion(traza_diferido));
-FamiliaEjecuciones.getInstance().addEjecucion(new Ejecucion(traza_diferido));
-FamiliaEjecuciones.getInstance().setEjecucionActiva(e);
-//FamiliaEjecuciones.getInstance().actualizarPanel();
-			this.vv.visualizarEjecucion(e, true);
+		
+		if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
+			FamiliaEjecuciones.getInstance().setPrimeraEjecucionActiva();
 		}
 
 		File file = new File(ficherosinex + ahora + ".class");

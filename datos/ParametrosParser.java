@@ -34,11 +34,23 @@ public class ParametrosParser {
 	    	int digito1 = Integer.parseInt(matcher.group(1));
 	    	int digito2 = Integer.parseInt(matcher.group(2));
 	    	String secuencia = "";
-	    	for (int i = digito1; i <= digito2; i++) {
-	    		secuencia += i;
-	    		if (i != digito2) {
-	    			secuencia += ","; 
-	    		}
+	    	
+	    	if (digito2 >= digito1) {
+	    		/* Rango creciente */
+		    	for (int i = digito1; i <= digito2; i++) {
+		    		secuencia += i;
+		    		if (i != digito2) {
+		    			secuencia += ","; 
+		    		}
+		    	}
+	    	} else {
+	    		/* Rango decreciente */
+	    		for (int i = digito1; i >= digito2; i--) {
+		    		secuencia += i;
+		    		if (i != digito2) {
+		    			secuencia += ","; 
+		    		}
+		    	}
 	    	}
 	    	matcher.appendReplacement(sb, Matcher.quoteReplacement(secuencia));
 	    }
