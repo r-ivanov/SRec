@@ -653,7 +653,6 @@ public class Preprocesador extends Thread {
 		} else {
 			FamiliaEjecuciones.getInstance().deshabilitar();
 		}
-		FamiliaEjecuciones.getInstance().borrarEjecuciones();
 		
 		for (int numeroEjecucion = 0; numeroEjecucion < matrizParametros.length; numeroEjecucion++) {
 			

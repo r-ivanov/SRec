@@ -60,10 +60,12 @@ public class FamiliaEjecuciones {
 	
 	public void habilitar() {
 		this.habilitado = true;
+		this.borrarEjecuciones();
 	}
 	
 	public void deshabilitar() {
 		this.habilitado = false;
+		this.borrarEjecuciones();
 	}
 	
 	public int numeroEjecuciones() {
