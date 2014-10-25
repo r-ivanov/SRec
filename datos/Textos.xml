@@ -600,7 +600,9 @@
 		<T valor="Generar" idioma="es" id="BOTONGENERAR"/>
 		<T valor="Generate" idioma="en" id="BOTONGENERAR"/>	
 		<T valor="Cargar" idioma="es" id="BOTONCARGAR"/>
-		<T valor="Load" idioma="en" id="BOTONCARGAR"/>	
+		<T valor="Load" idioma="en" id="BOTONCARGAR"/>
+		<T valor="Ver Ejecuciones" idioma="es" id="BOTONEJECUCIONES"/>
+		<T valor="See Executions" idioma="en" id="BOTONEJECUCIONES"/>	
 		<T valor="Guardar" idioma="es" id="BOTONGUARDAR"/>
 		<T valor="Save" idioma="en" id="BOTONGUARDAR"/>	
 		<T valor="Inicializar" idioma="es" id="BOTONINIC"/>
@@ -1100,7 +1102,9 @@
 		<T valor="Marque la casilla para visualizar este par[aacute]metro en la visualizaci[oacute]n" idioma="es" id="CPARAM_CASILVIS"/>
 		<T valor="Check the cell for visualize this parameter en this visualization" idioma="en" id="CPARAM_CASILVIS"/>	
 		<T valor="Inserci[oacute]n de valores para" idioma="es" id="CPARAM_INSERVPAR"/>
-		<T valor="Insert values for" idioma="en" id="CPARAM_INSERVPAR"/>	
+		<T valor="Insert values for" idioma="en" id="CPARAM_INSERVPAR"/>
+		<T valor="Valores de ejecución para" idioma="es" id="CVALORES_VALORES"/>
+		<T valor="Executin values for" idioma="en" id="CVALORES_VALORES"/>	
 		<T valor="Par[aacute]metros" idioma="es" id="CPARAM_PARAMS"/>
 		<T valor="Parameters" idioma="en" id="CPARAM_PARAMS"/>	
 		<T valor="Par[aacute]metro" idioma="es" id="CPARAM_PARAM"/>

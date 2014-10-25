@@ -96,18 +96,13 @@ public class ParametrosParser {
 			matrizParametros[i] = new String[this.metodoAlgoritmo.getNumeroParametros()];
 		}
 		
-		int parametrosVariables = 0;
+		int productoCombinacionesAcumulado = 1;
 		for (int numeroParametro = 0; numeroParametro < this.metodoAlgoritmo.getNumeroParametros(); numeroParametro++) {
 			String valorParametro = this.metodoAlgoritmo.getParamValor(numeroParametro);
 			List<String> valores = reemplazarYPartirValores(valorParametro);
 			
-			int repeticionesPorValor;
-			if (valores.size() == 1) {
-				repeticionesPorValor = combinaciones;
-			} else {
-				parametrosVariables++;
-				repeticionesPorValor = combinaciones / (valores.size() * parametrosVariables);
-			}
+			int repeticionesPorValor = combinaciones / valores.size() / productoCombinacionesAcumulado;
+			productoCombinacionesAcumulado *= valores.size();
 			
 			for (int i = 0; i < combinaciones; i++) {
 				int posicionValor = (i / repeticionesPorValor) % valores.size();
@@ -116,5 +111,13 @@ public class ParametrosParser {
 		}
 		
 		return matrizParametros;
+	}
+	
+	public String[] obtenerNombresParametros() {
+		return this.metodoAlgoritmo.getNombreParametros();
+	}
+	
+	public String obtenerNombreMetodo() {
+		return this.metodoAlgoritmo.getNombre();
 	}
 }

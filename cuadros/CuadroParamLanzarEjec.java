@@ -52,6 +52,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	private BotonTexto generar;
 	private BotonTexto cargar;
 	private BotonTexto guardar;
+	private BotonTexto verEjecuciones;
 
 	private JPanel panel, panelBoton, panelParam;
 	private int numero;
@@ -273,8 +274,13 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 			this.aceptar.addActionListener(this);
 			this.aceptar.addKeyListener(this);
 			this.aceptar.addMouseListener(this);
-			// aceptar.setRojo();
-
+			
+			// Botón Ver Ejecuciones
+			this.verEjecuciones = new BotonTexto(Texto.get("BOTONEJECUCIONES", Conf.idioma));
+			this.verEjecuciones.addActionListener(this);
+			this.verEjecuciones.addKeyListener(this);
+			this.verEjecuciones.addMouseListener(this);		
+			
 			// Botón Cancelar
 			this.cancelar = new BotonCancelar();
 			this.cancelar.addActionListener(this);
@@ -310,6 +316,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 			// Panel para el botón
 			this.panelBoton = new JPanel();
 			this.panelBoton.add(this.aceptar);
+			this.panelBoton.add(this.verEjecuciones);
 			this.panelBoton.add(this.cancelar);
 			this.panelBoton.add(this.generar);
 			this.panelBoton.add(this.cargar);
@@ -349,7 +356,46 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 		this.cuadrosvalores[0].requestFocus();
 		this.mostrarvalores[0].transferFocus();
 	}
-
+	
+	private boolean comprobarYAsignarValores() {
+		for (int i = 0; i < this.metodo.getNumeroParametros(); i++) {
+			String texto = (String) (this.cuadrosvalores[i]
+					.getSelectedItem());
+			if (texto.length() == 0) {
+				new CuadroError(this.ventana, Texto.get("ERROR_PARAM",
+						Conf.idioma), Texto.get("CPARAM_NOVALOR",
+						Conf.idioma) + " nº " + (i + 1) + ".");
+				return false;
+			}
+			
+			List<String> valores = ParametrosParser.reemplazarYPartirValores(texto);
+			if (!ParametrosParser.comprobarValoresParametro(valores,
+					this.metodo.getTipoParametro(i),
+					this.metodo.getDimParametro(i))) {
+				new CuadroError(this.ventana, Texto.get("ERROR_PARAM",
+						Conf.idioma), Texto.get("CPARAM_ELPARAM",
+						Conf.idioma)
+						+ " nº"
+						+ (i + 1)
+						+ " ( "
+						+ this.metodo.getTipoParametro(i)
+						+ ServiciosString.cadenaDimensiones(this.metodo
+								.getDimParametro(i))
+						+ " ) "
+						+ Texto.get("CPARAM_NOESCORR", Conf.idioma));
+				return false;
+			}
+		}
+		
+		for (int i = 0; i < this.metodo.getNumeroParametros(); i++) {
+			String texto = (String) (this.cuadrosvalores[i]
+					.getSelectedItem());
+			this.metodo.setParamValor(i, texto.replace(" ", ""));
+		}
+		
+		return true;		
+	}
+	
 	/**
 	 * Comprueba y recoge los valores
 	 * 
@@ -362,45 +408,9 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	 */
 	private synchronized boolean recogerValores(boolean valoresFinales) {
 		if (this.editarValores) {
-
-			// En primer lugar, comprobamos que todos los valores escritos son
-			// correctos:
-			for (int i = 0; i < this.metodo.getNumeroParametros(); i++) {
-				String texto = (String) (this.cuadrosvalores[i]
-						.getSelectedItem());
-				if (texto.length() == 0) {
-					new CuadroError(this.ventana, Texto.get("ERROR_PARAM",
-							Conf.idioma), Texto.get("CPARAM_NOVALOR",
-							Conf.idioma) + " nº " + (i + 1) + ".");
-					return false;
-				}
-				
-				List<String> valores = ParametrosParser.reemplazarYPartirValores(texto);
-				if (!ParametrosParser.comprobarValoresParametro(valores,
-						this.metodo.getTipoParametro(i),
-						this.metodo.getDimParametro(i))) {
-					new CuadroError(this.ventana, Texto.get("ERROR_PARAM",
-							Conf.idioma), Texto.get("CPARAM_ELPARAM",
-							Conf.idioma)
-							+ " nº"
-							+ (i + 1)
-							+ " ( "
-							+ this.metodo.getTipoParametro(i)
-							+ ServiciosString.cadenaDimensiones(this.metodo
-									.getDimParametro(i))
-							+ " ) "
-							+ Texto.get("CPARAM_NOESCORR", Conf.idioma));
-					return false;
-				}
-			}
-
-			// En segundo lugar, actualizamos los valores de los parámetros del
-			// método
-			for (int i = 0; i < this.metodo.getNumeroParametros(); i++) {
-				String texto = (String) (this.cuadrosvalores[i]
-						.getSelectedItem());// getText();
-				this.metodo.setParamValor(i, texto.replace(" ", ""));
-			}
+			if (!comprobarYAsignarValores()) {
+				return false;
+			}			
 		}
 		
 		if (!comprobarVisibilidadCorrecta()) {
@@ -485,6 +495,10 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	private void gestionEventoBotones(AWTEvent e) {
 		if (e.getSource() == this.aceptar) {
 			recogerValores(true);
+		} else if (e.getSource() == this.verEjecuciones) {
+			if (comprobarYAsignarValores()) {
+				new CuadroValores(this.ventana, new ParametrosParser(this.metodo));
+			}
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
 		} else if (e.getSource() == this.generar) {
