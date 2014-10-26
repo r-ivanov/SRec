@@ -19,6 +19,9 @@ public class FamiliaEjecuciones {
 	private Ejecucion ejecucionActiva;
 	
 	private PanelFamiliaEjecuciones panelEjecuciones;
+	private boolean necesitaRepintarEjecuciones = false;
+	private int tamanioPanel = -1;
+	private int orientacionPanel = -1;
 	
 	private FamiliaEjecuciones() {
 		this.ejecuciones = new ArrayList<Ejecucion>();
@@ -35,6 +38,7 @@ public class FamiliaEjecuciones {
 
 	public void addEjecucion(Ejecucion ejecucion) {
 		this.ejecuciones.add(ejecucion);
+		this.necesitaRepintarEjecuciones = true;
 	}
 	
 	public boolean esEjecucionActiva(Ejecucion ejecucion) {
@@ -52,6 +56,7 @@ public class FamiliaEjecuciones {
 
 	public void borrarEjecuciones() {
 		this.ejecuciones.clear();
+		this.necesitaRepintarEjecuciones = true;
 	}
 
 	public boolean estaHabilitado() {
@@ -77,10 +82,17 @@ public class FamiliaEjecuciones {
 	}
 	
 	public void actualizarPanel(int tamanio, int orientacion) {
-		this.panelEjecuciones.pintar(tamanio, orientacion);
+		if (tamanio != this.tamanioPanel || orientacion != this.orientacionPanel ||
+				this.necesitaRepintarEjecuciones) {
+			actualizarVisibilidadEjecuciones();
+			this.panelEjecuciones.pintar(tamanio, orientacion);
+			this.tamanioPanel = tamanio;
+			this.orientacionPanel = orientacion;
+			this.necesitaRepintarEjecuciones = false;
+		}
 	}
 	
-	public void actualizarVisibilidadEjecuciones() {
+	private void actualizarVisibilidadEjecuciones() {
 		for (Iterator<Ejecucion> iterator = this.getEjecuciones(); iterator.hasNext();) {
 			iterator.next().actualizarVisibilidad();
 		}
