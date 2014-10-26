@@ -29,7 +29,6 @@
 
     	<copy todir="release/datos">
 			<fileset dir="bin/datos" />
-    		<fileset file="datos/Textos_consubmenus.xml" />
     		<fileset file="datos/Textos.xml" />
 		</copy>
     	

@@ -588,6 +588,8 @@
 		<T valor="Accept" idioma="en" id="BOTONACEPTAR"/>
 		<T valor="Cancelar" idioma="es" id="BOTONCANCELAR"/>
 		<T valor="Cancel" idioma="en" id="BOTONCANCELAR"/>
+		<T valor="Cerrar" idioma="es" id="BOTONCERRAR"/>
+		<T valor="Close" idioma="en" id="BOTONCERRAR"/>
 		<T valor="Ayuda" idioma="es" id="BOTONAYUDA"/>
 		<T valor="Help" idioma="en" id="BOTONAYUDA"/>	
 		

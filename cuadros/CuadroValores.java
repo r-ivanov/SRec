@@ -1,27 +1,29 @@
 package cuadros;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.AWTEvent;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.List;
 
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.ComboBoxEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.text.JTextComponent;
+import javax.swing.ScrollPaneConstants;
 
 import conf.*;
 import botones.*;
@@ -36,12 +38,11 @@ import ventanas.*;
  */
 public class CuadroValores extends Thread implements ActionListener,
 		KeyListener, MouseListener {
-
-	private static final int ANCHO_CUADRO = 400;
-	private static final int ALTO_CUADRO = 300;
+	
+	private static final int VIEWPORT_FILAS_MAXIMAS = 10;
 	
 	private Ventana ventana;
-	private BotonAceptar aceptar;
+	private BotonTexto cerrar;
 
 	private JPanel panel, panelBoton, panelParam;
 	private JDialog dialogo;
@@ -73,6 +74,28 @@ public class CuadroValores extends Thread implements ActionListener,
 
 		this.start();
 	}
+	
+	private static String[][] obtenerMatrizParametrosConNumeroDeFila(String[][] matrizParametros) {
+		String[][] parametrosConNumeroDeFila = new String[matrizParametros.length][];
+		for (int i = 0; i < matrizParametros.length; i++) {
+			String[] filaParametros = new String[matrizParametros[i].length + 1];
+			filaParametros[0] = "<html><b>" + (i + 1) + "</b></html>";
+			for (int j = 0; j < matrizParametros[i].length; j++) {
+				filaParametros[j+1] = matrizParametros[i][j];
+			}
+			parametrosConNumeroDeFila[i] = filaParametros;
+		}
+		return parametrosConNumeroDeFila;
+	}
+	
+	private static String[] obtenerListaParametrosConCabeceraDeEjecucion(String[] nombreParametros) {
+		String[] nombreParametrosConNumero = new String[nombreParametros.length + 1];
+		nombreParametrosConNumero[0] = "<html><b>#</b></html>";
+		for (int i = 0; i < nombreParametros.length; i++) {
+			nombreParametrosConNumero[i+1] = nombreParametros[i];
+		}
+		return nombreParametrosConNumero;
+	}
 
 	/**
 	 * Ejecuta el thread asociado al cuadro.
@@ -81,28 +104,40 @@ public class CuadroValores extends Thread implements ActionListener,
 	public void run() {
 
 		// Panel general de parámetros			
-		this.panelParam = new JPanel();		
-		JTable table = new JTable(this.parametrosParser.obtenerMatrizParametros(),
-				this.parametrosParser.obtenerNombresParametros());
-		JScrollPane scrollPane = new JScrollPane(table);
-		table.setFillsViewportHeight(true);
-		this.panelParam.add(scrollPane);
+		BorderLayout bl = new BorderLayout();
+		this.panelParam = new JPanel();
+		this.panelParam.setLayout(bl);
+		this.panelParam.setBorder(new TitledBorder(Texto.get("CVALORES_VALORES", Conf.idioma) +
+				" " + this.parametrosParser.obtenerNombreMetodo() + " :"));
 		
+		String[][] matrizParametros = obtenerMatrizParametrosConNumeroDeFila(this.parametrosParser.obtenerMatrizParametros());		
+		String[] nombreParametros = obtenerListaParametrosConCabeceraDeEjecucion(this.parametrosParser.obtenerNombresParametros());		
+		JTable tabla = new JTable(matrizParametros, nombreParametros);
+		tabla.setEnabled(false);
+		
+		TableColumnSizer.setColumnsWidthToFit(tabla, true, false);
+		Dimension tamanioTabla = TableColumnSizer
+				.getPreferredScrollableViewportSize(tabla, Math.min(matrizParametros.length, VIEWPORT_FILAS_MAXIMAS));
+		
+		JScrollPane scrollPane = new JScrollPane(tabla);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		tabla.setPreferredScrollableViewportSize(tamanioTabla);
+		this.panelParam.add(scrollPane);
 
-		// Botón Aceptar
-		this.aceptar = new BotonAceptar();
-		this.aceptar.addActionListener(this);
-		this.aceptar.addKeyListener(this);
-		this.aceptar.addMouseListener(this);
+		// Botón Cerrar
+		this.cerrar = new BotonTexto(Texto.get("BOTONCERRAR", Conf.idioma));
+		this.cerrar.addActionListener(this);
+		this.cerrar.addKeyListener(this);
+		this.cerrar.addMouseListener(this);
 
 		// Panel para el botón
 		this.panelBoton = new JPanel();
-		this.panelBoton.add(this.aceptar);
+		this.panelBoton.add(this.cerrar);
 
 		// Panel general
-		BorderLayout bl = new BorderLayout();
+		bl = new BorderLayout();
 		this.panel = new JPanel();
-		this.panel.setLayout(bl);
+		this.panel.setLayout(bl);		
 
 		this.panel.add(this.panelParam, BorderLayout.NORTH);
 		this.panel.add(this.panelBoton, BorderLayout.SOUTH);
@@ -112,10 +147,11 @@ public class CuadroValores extends Thread implements ActionListener,
 				" " + this.parametrosParser.obtenerNombreMetodo());
 
 		// Preparamos y mostramos cuadro
-		int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
+		Dimension tamanioPanel = new Dimension(tamanioTabla.width + 10, tamanioTabla.height + 110);
+		int coord[] = Conf.ubicarCentro(tamanioPanel.width, tamanioPanel.height);
 		this.dialogo.setLocation(coord[0], coord[1]);
-		this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
-		this.dialogo.setResizable(true);
+		this.dialogo.setSize(tamanioPanel);
+		this.dialogo.setResizable(false);
 		this.dialogo.setVisible(true);
 	}
 
@@ -134,7 +170,7 @@ public class CuadroValores extends Thread implements ActionListener,
 	 * @param e evento.
 	 */
 	private void gestionEventoBotones(AWTEvent e) {
-		if (e.getSource() == this.aceptar) {
+		if (e.getSource() == this.cerrar) {
 			this.dialogo.setVisible(false);
 		}
 	}
