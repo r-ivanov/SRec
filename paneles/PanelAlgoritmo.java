@@ -578,18 +578,25 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 
 		this.panel1.removeAll();
 		this.panel2.removeAll();
+		
+		separadorVistas.setRightComponent(this.panel2);
+		separadorVistas.setDividerLocation(0.5);
+		separadorVistas.setResizeWeight(0.5);
+		separadorVistas.setOneTouchExpandable(true);
+		separadorVistas.setEnabled(true);
+		FamiliaEjecuciones.getInstance().deshabilitar();
 
 		nyp = null;
 	}
 	
-	private void ajustarTamanioFamiliaEjecuciones() {
+	private void actualizarFamiliaEjecuciones(boolean forzar) {
 		int tamanio;
 		if (Conf.disposicionPaneles == Conf.PANEL_HORIZONTAL) {
 			tamanio = separadorVistas.getHeight() - separadorVistas.getDividerLocation() - GROSOR_SPLIT_DIVIDER;
 		} else {
 			tamanio = separadorVistas.getWidth() - separadorVistas.getDividerLocation() - GROSOR_SPLIT_DIVIDER;
 		}
-		FamiliaEjecuciones.getInstance().actualizarPanel(tamanio, Conf.disposicionPaneles);
+		FamiliaEjecuciones.getInstance().actualizar(tamanio, Conf.disposicionPaneles, forzar);
 	}
 	
 	/**
@@ -603,11 +610,11 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 		if (familiaEjecucionesHabilitado) {
 			separadorVistas.setRightComponent(FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones());
 			if (Conf.disposicionPaneles == Conf.PANEL_HORIZONTAL) {
-				separadorVistas.setDividerLocation(separadorVistas.getHeight() - 250 - GROSOR_SPLIT_DIVIDER);
+				separadorVistas.setDividerLocation(separadorVistas.getHeight() * 70/100 - GROSOR_SPLIT_DIVIDER);
 			} else {
-				separadorVistas.setDividerLocation(separadorVistas.getWidth() - 250 - GROSOR_SPLIT_DIVIDER);
+				separadorVistas.setDividerLocation(separadorVistas.getWidth() * 70/100 - GROSOR_SPLIT_DIVIDER);
 			}			
-			this.ajustarTamanioFamiliaEjecuciones();
+			this.actualizarFamiliaEjecuciones(false);
 			separadorVistas.setResizeWeight(1.0);
 			separadorVistas.setOneTouchExpandable(false);
 			separadorVistas.setEnabled(false);			
@@ -874,6 +881,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 					}
 				}
 			}.start();
+		}
+		if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
+			this.actualizarFamiliaEjecuciones(true);
 		}
 		this.updateUI();
 	}

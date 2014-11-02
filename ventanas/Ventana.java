@@ -61,9 +61,9 @@ import cuadros.CuadroZoom;
 import datos.AlmacenadorTraza;
 import datos.CargadorTraza;
 import datos.ClaseAlgoritmo;
-import datos.DatosMetodoBasicos;
 import datos.DatosTrazaBasicos;
 import datos.Ejecucion;
+import datos.FamiliaEjecuciones;
 import datos.Preprocesador;
 import datos.Traza;
 
@@ -2520,9 +2520,11 @@ public class Ventana extends JFrame implements ActionListener {
 		this.botones[21].setEnabled(valor);
 		this.botones[22].setEnabled(valor);
 		this.botones[23].setEnabled(valor);
-		this.botones[24].setEnabled(valor);
-		this.botones[25].setEnabled(valor);
-		this.botones[26].setEnabled(valor);
+		
+		this.botones[24].setEnabled(!FamiliaEjecuciones.getInstance().estaHabilitado() && valor);
+		this.botones[25].setEnabled(!FamiliaEjecuciones.getInstance().estaHabilitado() && valor);
+		this.botones[26].setEnabled(!FamiliaEjecuciones.getInstance().estaHabilitado() && valor);
+		
 		this.botones[27].setEnabled(valor);
 
 		this.botones[30].setEnabled(valor);

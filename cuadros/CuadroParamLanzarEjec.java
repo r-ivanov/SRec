@@ -37,7 +37,7 @@ import ventanas.*;
 public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 		KeyListener, MouseListener {
 
-	private static final int ANCHO_CUADRO = 490;
+	private static final int ANCHO_CUADRO = 550;
 	private static final int ALTO_CUADRO = 92;
 	private static final int ALTURA_PISO = 23;
 
@@ -52,7 +52,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	private BotonTexto generar;
 	private BotonTexto cargar;
 	private BotonTexto guardar;
-	private BotonTexto verEjecuciones;
+	private BotonTexto verValores;
 
 	private JPanel panel, panelBoton, panelParam;
 	private int numero;
@@ -273,19 +273,19 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 			this.aceptar = new BotonAceptar();
 			this.aceptar.addActionListener(this);
 			this.aceptar.addKeyListener(this);
-			this.aceptar.addMouseListener(this);
-			
-			// Botón Ver Ejecuciones
-			this.verEjecuciones = new BotonTexto(Texto.get("BOTONEJECUCIONES", Conf.idioma));
-			this.verEjecuciones.addActionListener(this);
-			this.verEjecuciones.addKeyListener(this);
-			this.verEjecuciones.addMouseListener(this);		
+			this.aceptar.addMouseListener(this);	
 			
 			// Botón Cancelar
 			this.cancelar = new BotonCancelar();
 			this.cancelar.addActionListener(this);
 			this.cancelar.addKeyListener(this);
 			this.cancelar.addMouseListener(this);
+			
+			// Botón Ver Valores
+			this.verValores = new BotonTexto(Texto.get("BOTONVALORES", Conf.idioma), 100);
+			this.verValores.addActionListener(this);
+			this.verValores.addKeyListener(this);
+			this.verValores.addMouseListener(this);	
 
 			// Botón Generar
 			this.generar = new BotonTexto(
@@ -316,8 +316,8 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 			// Panel para el botón
 			this.panelBoton = new JPanel();
 			this.panelBoton.add(this.aceptar);
-			this.panelBoton.add(this.verEjecuciones);
 			this.panelBoton.add(this.cancelar);
+			this.panelBoton.add(this.verValores);
 			this.panelBoton.add(this.generar);
 			this.panelBoton.add(this.cargar);
 			this.panelBoton.add(this.guardar);
@@ -495,7 +495,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	private void gestionEventoBotones(AWTEvent e) {
 		if (e.getSource() == this.aceptar) {
 			recogerValores(true);
-		} else if (e.getSource() == this.verEjecuciones) {
+		} else if (e.getSource() == this.verValores) {
 			if (comprobarYAsignarValores()) {
 				new CuadroValores(this.ventana, new ParametrosParser(this.metodo));
 			}

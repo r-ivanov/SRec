@@ -3,21 +3,21 @@ package cuadros;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import conf.*;
+import datos.FamiliaEjecuciones;
 import datos.MetodoAlgoritmo;
 import botones.*;
 import opciones.*;
@@ -209,7 +209,17 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 	 */
 	private void actualizarInterfazRadioButton() {
 		int numVistas = Vista.codigos.length;
-
+		
+		/* Deshabilitamos la configuración de disposición de vistas
+		 * cuando la Familia de ejecuciones está activa */
+		if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
+			for (int i = 0; i < numVistas; i++) {
+				this.selec1[i].setEnabled(false);
+				this.selec2[i].setEnabled(false);
+			}
+			return;
+		}
+		
 		if (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV, this.ventana
 				.getTraza().getTecnicas())) {
 			// En rec tenemos 3 vistas
@@ -295,6 +305,9 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 											: Conf.PANEL_HORIZONTAL));
 				}
 			}.start();
+			
+			this.gOpciones.setOpcion(this.ov, 2);
+			Conf.setConfiguracionVistas();
 
 		} else if (e.getSource() instanceof JComboBox) {
 			if (this.selecPanel.getSelectedIndex() == 0) {
@@ -305,11 +318,14 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 			this.ventana
 					.distribuirPaneles((this.selecPanel.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
 							: Conf.PANEL_HORIZONTAL));
-
+			
+			this.gOpciones.setOpcion(this.ov, 2);
+			Conf.setConfiguracionVistas();
+			
+			if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
+				FamiliaEjecuciones.getInstance().recargarEjecucionActiva();
+			}
 		}
-		this.gOpciones.setOpcion(this.ov, 2);
-		Conf.setConfiguracionVistas();
-
 	}
 
 	/**

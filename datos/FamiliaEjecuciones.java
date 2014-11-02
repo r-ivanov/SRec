@@ -45,6 +45,10 @@ public class FamiliaEjecuciones {
 		return ejecucion.equals(ejecucionActiva);
 	}
 	
+	public void recargarEjecucionActiva() {
+		Ventana.getInstance().visualizarEjecucion(this.ejecucionActiva, false);
+	}
+	
 	public void setEjecucionActiva(Ejecucion ejecucion) {
 		this.ejecucionActiva = ejecucion;
 		Ventana.getInstance().visualizarEjecucion(ejecucion, false);
@@ -81,9 +85,9 @@ public class FamiliaEjecuciones {
 		return this.ejecuciones.iterator();
 	}
 	
-	public void actualizarPanel(int tamanio, int orientacion) {
+	public void actualizar(int tamanio, int orientacion, boolean forzar) {
 		if (tamanio != this.tamanioPanel || orientacion != this.orientacionPanel ||
-				this.necesitaRepintarEjecuciones) {
+				this.necesitaRepintarEjecuciones || forzar) {
 			actualizarVisibilidadEjecuciones();
 			this.panelEjecuciones.pintar(tamanio, orientacion);
 			this.tamanioPanel = tamanio;

@@ -2,8 +2,6 @@ package cuadros;
 
 import java.awt.BorderLayout;
 import java.awt.AWTEvent;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,22 +9,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
 
 import conf.*;
-import botones.*;
+import botones.*; 
 import datos.*;
 import utilidades.*;
 import ventanas.*;
@@ -107,8 +99,7 @@ public class CuadroValores extends Thread implements ActionListener,
 		BorderLayout bl = new BorderLayout();
 		this.panelParam = new JPanel();
 		this.panelParam.setLayout(bl);
-		this.panelParam.setBorder(new TitledBorder(Texto.get("CVALORES_VALORES", Conf.idioma) +
-				" " + this.parametrosParser.obtenerNombreMetodo() + " :"));
+		this.panelParam.setBorder(new TitledBorder(Texto.get("CVALORES_VALORES", Conf.idioma)));
 		
 		String[][] matrizParametros = obtenerMatrizParametrosConNumeroDeFila(this.parametrosParser.obtenerMatrizParametros());		
 		String[] nombreParametros = obtenerListaParametrosConCabeceraDeEjecucion(this.parametrosParser.obtenerNombresParametros());		
@@ -143,8 +134,7 @@ public class CuadroValores extends Thread implements ActionListener,
 		this.panel.add(this.panelBoton, BorderLayout.SOUTH);
 
 		this.dialogo.getContentPane().add(this.panel);
-		this.dialogo.setTitle(Texto.get("CVALORES_VALORES", Conf.idioma) +
-				" " + this.parametrosParser.obtenerNombreMetodo());
+		this.dialogo.setTitle(Texto.get("CVALORES_TITULO", Conf.idioma));
 
 		// Preparamos y mostramos cuadro
 		Dimension tamanioPanel = new Dimension(tamanioTabla.width + 10, tamanioTabla.height + 110);
