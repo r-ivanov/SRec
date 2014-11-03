@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -396,11 +397,14 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 					try {
 						this.wait(50);
 					} catch (java.lang.InterruptedException ie) {
-					}
-					pArbol.getNavegacionListener().ejecucion(1);
-
-					pArbol.updateUI();
-
+					}					
+					SwingUtilities.invokeLater(new Runnable() {					
+						@Override
+						public void run() {
+							pArbol.getNavegacionListener().ejecucion(1);
+							pArbol.updateUI();
+						}
+					});
 				}
 			}.start();
 			if (!Conf.arranqueEstadoInicial || FamiliaEjecuciones.getInstance().estaHabilitado()) {
@@ -766,7 +770,12 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 							this.wait(240);
 						} catch (java.lang.InterruptedException ie) {
 						}
-						pPila.visualizar();
+						SwingUtilities.invokeLater(new Runnable() {							
+							@Override
+							public void run() {
+								pPila.visualizar();
+							}
+						});
 					}
 				}.start();
 				hemosActualizado[1] = true;
@@ -786,7 +795,12 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 								this.wait(20);
 							} catch (java.lang.InterruptedException ie) {
 							}
-							pCrono.visualizar();
+							SwingUtilities.invokeLater(new Runnable() {							
+								@Override
+								public void run() {
+									pCrono.visualizar();
+								}
+							});
 						}
 					}.start();
 					hemosActualizado[2] = true;
@@ -805,7 +819,12 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 							this.wait(100);
 						} catch (java.lang.InterruptedException ie) {
 						}
-						pArbol.visualizar(false, true, false);
+						SwingUtilities.invokeLater(new Runnable() {						
+							@Override
+							public void run() {
+								pArbol.visualizar(false, true, false);
+							}
+						});
 					}
 				}.start();
 				hemosActualizado[0] = true;
@@ -824,7 +843,12 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 								this.wait(220);
 							} catch (java.lang.InterruptedException ie) {
 							}
-							pEstructura.visualizar();
+							SwingUtilities.invokeLater(new Runnable() {							
+								@Override
+								public void run() {
+									pEstructura.visualizar();									
+								}
+							});
 						}
 					}.start();
 					hemosActualizado[3] = true;
@@ -876,9 +900,14 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 						this.wait(250);
 					} catch (java.lang.InterruptedException ie) {
 					}
-					if (pArbol.getNavegacionListener() != null) {
-						pArbol.getNavegacionListener().ejecucion(1);
-					}
+					SwingUtilities.invokeLater(new Runnable() {						
+						@Override
+						public void run() {
+							if (pArbol.getNavegacionListener() != null) {
+								pArbol.getNavegacionListener().ejecucion(1);
+							}
+						}
+					});
 				}
 			}.start();
 		}
