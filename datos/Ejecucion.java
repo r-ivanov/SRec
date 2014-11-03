@@ -7,6 +7,8 @@ import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
 
+import utilidades.NombresYPrefijos;
+import utilidades.ServiciosString;
 import ventanas.Ventana;
 import conf.Conf;
 
@@ -92,7 +94,15 @@ public class Ejecucion {
 		
 		Traza traza = this.obtenerTrazaConPodaParaVisibilidad();
 		traza.todoVisible();
-		ContenedorArbol c = new ContenedorArbol(traza.getRaiz(), grafo, null, 1);
+		
+		NombresYPrefijos nyp = new NombresYPrefijos();
+		String[] nombresMetodos = traza.getNombresMetodos();
+		String prefijos[] = ServiciosString.obtenerPrefijos(nombresMetodos);
+		for (int i = 0; i < nombresMetodos.length; i++) {
+			nyp.add(nombresMetodos[i], prefijos[i]);
+		}
+		
+		ContenedorArbol c = new ContenedorArbol(traza.getRaiz(), grafo, nyp, 1);
 		grafo.setBackground(Conf.colorPanel);
 		grafo.getGraphLayoutCache().insert(c.getCeldas());
 		
