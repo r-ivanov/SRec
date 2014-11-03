@@ -65,6 +65,9 @@ todas las previsualizaciones que se están mostrando.
 - Se ha modificado la opción "Estructura de datos en DYV..." para que al activarla o desactivarla, tenga efecto inmediato sobre todas las
 previsualizaciones que se están mostrando.
 
+- Se ha añadido tests de JUnit a la aplicación (se encuentran en el paquete tests) para validar automáticamente los escenarios de introducción
+de parámetros.
+
 - Se han corregido diversos problemas de concurrencia en la visualización de árboles que provocaban que la aplicación presentara inconsistencias
 y hacían que en ciertas ocasiones algunas aristas entre nodos no se pintaran correctamente.
 
