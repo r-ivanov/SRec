@@ -2,13 +2,74 @@
 *     HISTORIAL DE MODIFICACIONES    *
 **************************************
 
-SRec v1.5
-=========
+SRec v1.5 (Múltiples Visualizaciones)
+==================================================
 
+- Se ha añadido soporte para múltiples visualizaciones de algoritmos en SRec.
 
+- SRec ahora puede tomar valores múltiples para la introducción de parámetros, basta con especificar los valores
+separados por comas, o mediante la notación x..y que incluye todos los valores desde x a y, en orden ascendiente o descendiente.
 
-SRec v1.4
-=========
+- El cuadro de introducción de parámetros ahora permite visualizar los valores para el conjunto de ejecuciones que serán lanzadas
+mediante el botón "Ver Valores...".
+
+- Al igual que anteriormente, si el formato del conjunto de valores especificado es erróneo o contiene tipos incorrectos para el parámetro,
+SRec no permitirá lanzar la ejecución, notificando acerca de los parámetros con valores incorrectos, esto también se aplica cuando se
+desea ver el conjunto de valores para las distintas ejecuciones.
+
+- Al pulsar sobre "Ver valores..." se muestra un nuevo cuadro de diálogo que permite visualizar estos valores, la longitud de esta tabla
+se ajusta automáticamente a los valores de las ejecuciones, permitiendo ver claramente los conjuntos de valores sin necesidad de ajustar
+su tamaño manualmente. Por otro lado, el viewport de la tabla mostrará un máximo de 10 valores, siendo desplazable cuando se supere dicho
+número.
+
+- El conjunto de múltiples ejecuciones se calcula con el producto cartesiano de los valores especificados para cada parámetro, lo que significa
+que se lanzará una ejecución por cada combinación de valores posible, los valores para las ejecuciones, son visualizables desde el cuadro
+"Ver valores..."
+
+- Una vez que se especifican los valores mediante el cuadro de introducción de parámetros, SRec comprueba si se trata de una o varias ejecuciones.
+En el caso de ser varias, se activa el modo de múltiples visualizaciones de SRec.
+
+- En el modo de múltiples visualizaciones de SRec, todos los paneles de visualización del estado de la ejecución activa se colocan en el primer
+panel, dejando el segundo panel para las previsualizaciones del conjunto de árboles, en este caso el primer panel se establece para que ocupe
+un 70% del espacio disponible, dejando el 30% restante para las previsualizaciones.
+
+- Cuando el modo de múltiples visualizaciones de SRec está activo, mediante la opción "Ubicación de Vistas y Paneles", se permite cambiar
+la orientación del panel de previsualizaciones, de este modo el usuario puede decidir si usar una orientación u otra, siendo más útil la
+visualización horizontal para árboles que crecen en anchura, y la visualización vertical para árboles que crecen en profundidad.
+
+- Por otro lado, cuando el modo de múltiples visualizaciones está activo, se deshabilitan tanto las opciones de recolocación de paneles como
+las opciones de zoom para el panel de previsualizaciones.
+
+- El usuario puede visualizar las distintas ejecuciones simplemente con hacer click sobre ellas, estás ejecuciones se lanzarán en su estado final,
+permitiendo al usuario utilizar las herramientas de animación para ir atrás y adelante en la ejecución. La ejecución actualmente activa se
+identifica en el panel de previsualizaciones mediante un marco de selección.
+
+- En todo momento el usuario puede cerrar la visualización de la misma manera que se hacía anteriormente, pulsando sobre la "X" del panel de
+animaciones, esto restaura los paneles de visualización para ejecutar cualquier otro algoritmo.
+
+- Se ha modificado la opción "Identificador de método" para que al activarse o desactivarse, tenga efecto inmediato sobre todas las
+previsualizaciones que se están mostrando, actualizando todas ellas cuando la opción se activa o se desactiva.
+
+- Se han modificado las opciones aplicables desde "Formato tipográfico" para que al modificarse dichas opciones, tengan efecto sobre todas las
+previsualizaciones que se están mostrando, actualizando todas ellas cuando cambia algún elemento de configuración de fuentes o colores.
+
+- Se ha modificado la opción "Datos de entrada y salida..." para que al seleccionar la visibilidad de las celdas de entrada y salida, tenga
+efecto inmediato sobre todas las previsualizaciones que se están mostrando.
+
+- Se ha modificado la opción "Métodos y parámetros..." para que al seleccionar filtros de visibilidad para métodos internos y parámetros, tenga
+efecto inmediato sobre todas las previsualizaciones que se están mostrando.
+
+- Se ha modificado la opción "Llamadas terminadas..." para que al seleccionar distintos valores de configuración, tengan efecto inmediato sobre
+todas las previsualizaciones que se están mostrando.
+
+- Se ha modificado la opción "Estructura de datos en DYV..." para que al activarla o desactivarla, tenga efecto inmediato sobre todas las
+previsualizaciones que se están mostrando.
+
+- Se han corregido diversos problemas de concurrencia en la visualización de árboles que provocaban que la aplicación presentara inconsistencias
+y hacían que en ciertas ocasiones algunas aristas entre nodos no se pintaran correctamente.
+
+SRec v1.4 (Limpieza, Documentación, Sistema de build y Bugfixing)
+=================================================================
 
 - Se ha añadido un sistema de control de versiones para SRec (git).
 
