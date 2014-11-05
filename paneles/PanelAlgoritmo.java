@@ -1,6 +1,8 @@
 package paneles;
 
 import java.awt.BorderLayout;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -35,7 +37,7 @@ import eventos.NavegacionListener;
  * @author Antonio Pérez Carrasco
  * @version 2006-2007
  */
-public class PanelAlgoritmo extends JPanel implements ChangeListener {
+public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentListener {
 	static final long serialVersionUID = 14;
 	
 	private static final int GROSOR_SPLIT_DIVIDER = 8;
@@ -595,11 +597,16 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 	
 	private void actualizarFamiliaEjecuciones(boolean forzar) {
 		int tamanio;
+		int dividerLocation;
+		int[] tamanioMonitor = Conf.getTamanoMonitor();
 		if (Conf.disposicionPaneles == Conf.PANEL_HORIZONTAL) {
-			tamanio = separadorVistas.getHeight() - separadorVistas.getDividerLocation() - GROSOR_SPLIT_DIVIDER;
+			tamanio = tamanioMonitor[1] / 5;
+			dividerLocation = Math.max(0, separadorVistas.getHeight() - tamanio - GROSOR_SPLIT_DIVIDER);	
 		} else {
-			tamanio = separadorVistas.getWidth() - separadorVistas.getDividerLocation() - GROSOR_SPLIT_DIVIDER;
+			tamanio = tamanioMonitor[0] / 6;
+			dividerLocation = Math.max(0, separadorVistas.getWidth() - tamanio - GROSOR_SPLIT_DIVIDER);
 		}
+		separadorVistas.setDividerLocation(dividerLocation);
 		FamiliaEjecuciones.getInstance().actualizar(tamanio, Conf.disposicionPaneles, forzar);
 	}
 	
@@ -612,16 +619,14 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 		boolean familiaEjecucionesHabilitado = FamiliaEjecuciones.getInstance().estaHabilitado();
 		
 		if (familiaEjecucionesHabilitado) {
-			separadorVistas.setRightComponent(FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones());
-			if (Conf.disposicionPaneles == Conf.PANEL_HORIZONTAL) {
-				separadorVistas.setDividerLocation(separadorVistas.getHeight() * 70/100 - GROSOR_SPLIT_DIVIDER);
-			} else {
-				separadorVistas.setDividerLocation(separadorVistas.getWidth() * 70/100 - GROSOR_SPLIT_DIVIDER);
-			}			
+			JScrollPane panelEjecuciones = FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones();
+			separadorVistas.setRightComponent(panelEjecuciones);			
 			this.actualizarFamiliaEjecuciones(false);
 			separadorVistas.setResizeWeight(1.0);
-			separadorVistas.setOneTouchExpandable(false);
-			separadorVistas.setEnabled(false);			
+			separadorVistas.setOneTouchExpandable(true);
+			separadorVistas.setEnabled(false);
+			panelEjecuciones.removeComponentListener(this);
+			panelEjecuciones.addComponentListener(this);
 		} else {
 			separadorVistas.setRightComponent(this.panel2);
 			separadorVistas.setDividerLocation(0.5);
@@ -1520,4 +1525,30 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener {
 			this.actualizar();
 		}
 	}
+	
+	@Override
+    public void componentResized(ComponentEvent e) {
+		if (e.getSource() == FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones()) {
+			int tamanio = Conf.disposicionPaneles == Conf.PANEL_HORIZONTAL ?
+					separadorVistas.getHeight() : separadorVistas.getHeight();
+			if (separadorVistas.getDividerLocation() < (tamanio - GROSOR_SPLIT_DIVIDER - 1)) {
+				actualizarFamiliaEjecuciones(false);
+			}
+		}
+	}
+
+    @Override
+    public void componentMoved(ComponentEvent e) {
+    	
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e) {
+    	
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e) {
+    	
+    }
 }
