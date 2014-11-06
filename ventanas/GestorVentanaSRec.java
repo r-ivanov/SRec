@@ -101,6 +101,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				Texto.get("MENU_ARCH_09", Conf.idioma),
 				Texto.get("MENU_ARCH_11", Conf.idioma),
 				Texto.get("MENU_ARCH_10", Conf.idioma),
+				Texto.get("MENU_ARCH_16", Conf.idioma),
 				Texto.get("MENU_ARCH_12", Conf.idioma),
 				Texto.get("MENU_ARCH_08", Conf.idioma) };
 		char mnArchivo[] = new char[noArchivo.length];
@@ -122,8 +123,9 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				"./imagenes/i_exportaranimacion.gif",
 				"./imagenes/i_exportarestados.gif",
 				"./imagenes/i_exportarestado.gif",
+				"./imagenes/i_exportar_ejecuciones.gif",
 				"./imagenes/i_exportartraza.gif", "./imagenes/i_cerrar.gif" };
-		int sepArchivo[] = { 3, 8, 11 }; // Separador debajo de las cuarta,
+		int sepArchivo[] = { 3, 8, 12 }; // Separador debajo de las cuarta,
 		// séptima y décima opción de menú
 		// (contamos desde cero)
 		KeyStroke ksArchivo[] = {
@@ -149,6 +151,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 																						null,
 																						null,
 																						null,
+																						null,
 																						KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T,
 																								java.awt.Event.CTRL_MASK),
 																								KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X,
@@ -167,6 +170,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		habilitaMenuItem(menus[0], Texto.get("MENU_ARCH_09", Conf.idioma),
 				false);
 		habilitaMenuItem(menus[0], Texto.get("MENU_ARCH_10", Conf.idioma),
+				false);
+		habilitaMenuItem(menus[0], Texto.get("MENU_ARCH_16", Conf.idioma),
 				false);
 		habilitaMenuItem(menus[0], Texto.get("MENU_ARCH_11", Conf.idioma),
 				false);

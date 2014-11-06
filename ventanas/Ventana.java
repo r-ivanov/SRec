@@ -27,6 +27,7 @@ import opciones.Vista;
 import paneles.PanelCompilador;
 import paneles.PanelVentana;
 import utilidades.BuscadorMVJava;
+import utilidades.FotografoArbol;
 import utilidades.Logger;
 import utilidades.ManipulacionElement;
 import utilidades.SelecDireccion;
@@ -232,9 +233,10 @@ public class Ventana extends JFrame implements ActionListener {
 				"MENU_ARBL_01", // 45 a 49
 				"MENU_ARBL_02", "MENU_TRAZ_00", "MENU_VISU_19", "MENU_TRAZ_02",
 				"MENU_TRAZ_03", // 50 a 54
-				"MENU_TRAZ_04", "MENU_VISU_18", "MENU_ARBL_03", "MENU_ARBL_04" // 55
+				"MENU_TRAZ_04", "MENU_VISU_18", "MENU_ARBL_03", "MENU_ARBL_04", // 55
+				"MENU_ARCH_16"
 				// a
-				// 58
+				// 59
 		};
 
 		this.codigos = codigos2;
@@ -538,6 +540,14 @@ public class Ventana extends JFrame implements ActionListener {
 					this.log_write("Archivo > " + this.textos[11] + "...");
 				}
 				new CuadroVistasDisponibles(this, this.panelVentana, 3);
+			}
+			
+			// Archivo > Capturas de ejecuciones
+			else if (textoFuente.equals(this.textos[59])) {
+				if (Conf.fichero_log) {
+					this.log_write("Archivo > " + this.textos[59] + "...");
+				}
+				new FotografoArbol().hacerCapturasEjecuciones();
 			}
 
 			// Archivo > Salir
@@ -2561,6 +2571,8 @@ public class Ventana extends JFrame implements ActionListener {
 				Texto.get("MENU_ARCH_09", Conf.idioma), valor);
 		GestorVentanaSRec.habilitaMenuItem(this.menus[0],
 				Texto.get("MENU_ARCH_10", Conf.idioma), valor);
+		GestorVentanaSRec.habilitaMenuItem(this.menus[0],
+				Texto.get("MENU_ARCH_16", Conf.idioma), valor && FamiliaEjecuciones.getInstance().estaHabilitado());
 		GestorVentanaSRec.habilitaMenuItem(this.menus[0],
 				Texto.get("MENU_ARCH_11", Conf.idioma), valor);
 		GestorVentanaSRec.habilitaMenuItem(this.menus[0],

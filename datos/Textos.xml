@@ -92,7 +92,8 @@
 		<T valor="Select method..." idioma="en" id="MENU_ARCH_14"/>
 		<T valor="Nueva animaci[oacute]n..." idioma="es" id="MENU_ARCH_15"/>
 		<T valor="New animation..." idioma="en" id="MENU_ARCH_15"/>
-		
+		<T valor="Exportar capturas de ejecuciones..." idioma="es" id="MENU_ARCH_16"/>
+		<T valor="Export executions captures..." idioma="en" id="MENU_ARCH_16"/>
 		
 		
 		<!-- Menu Visualizacion -->
@@ -576,6 +577,8 @@
 		<T valor="Export animation as GIF89" idioma="en" id="CA_GUARDEXPORTGIF"/>
 		<T valor="Exportar animaci[oacute]n como cat[aacute]logo de im[aacute]genes" idioma="es" id="CA_GUARDEXPORTMULTGIF"/>
 		<T valor="Export animation as image catalogue" idioma="en" id="CA_GUARDEXPORTMULTGIF"/>
+		<T valor="Exportar Capturas de Ejecuciones" idioma="es" id="CA_GUARDEXPORTEJECUCIONES"/>
+		<T valor="Export Executions Captures" idioma="en" id="CA_GUARDEXPORTEJECUCIONES"/>
 		<T valor="Exportar captura del [aacute]rbol actual" idioma="es" id="CA_GUARDEXPORT1GIF"/>
 		<T valor="Export current tree capture" idioma="en" id="CA_GUARDEXPORT1GIF"/>		
 		<T valor="Guardar traza" idioma="es" id="CA_GUARTRAZA"/>
