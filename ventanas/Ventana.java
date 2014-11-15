@@ -39,6 +39,7 @@ import cuadros.CuadroBuscarLlamada;
 import cuadros.CuadroElegirES;
 import cuadros.CuadroElegirHistorico;
 import cuadros.CuadroError;
+import cuadros.CuadroGenerarGrafoDependencia;
 import cuadros.CuadroIdioma;
 import cuadros.CuadroInfoNodo;
 import cuadros.CuadroInfoTraza;
@@ -1260,6 +1261,12 @@ public class Ventana extends JFrame implements ActionListener {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOARCHPROC", Conf.idioma));
 				}
+			} else if (fuente == this.botones[35]) {
+				// Generar grafo de dependencia
+                if (Conf.fichero_log) {
+                	log_write("Botón: Generar Grafo de dependencia");
+                }
+                this.generarGrafoDependencia();
 			} else if (fuente == this.botones[5]) // Archivo > Cargar
 			// visualización...
 			{
@@ -2216,6 +2223,10 @@ public class Ventana extends JFrame implements ActionListener {
 				this.claseAlgoritmo.getMetodoPrincipal(), this.claseAlgoritmo,
 				this.p);
 	}
+	
+    public void generarGrafoDependencia() {
+        new CuadroGenerarGrafoDependencia(this, this.dtb);
+    }
 
 	/**
 	 * Deshabilita las opciones de menu que deben quedar deshabilitadas tras
@@ -2540,6 +2551,7 @@ public class Ventana extends JFrame implements ActionListener {
 		this.botones[30].setEnabled(valor);
 		this.botones[31].setEnabled(valor);
 		this.botones[34].setEnabled(valor);
+        this.botones[35].setEnabled(valor);
 
 		GestorVentanaSRec.habilitaMenuItem(this.menus[2],
 				Texto.get("MENU_INFO_01", Conf.idioma), valor);

@@ -222,6 +222,8 @@
 		<T valor="Select method..." idioma="en" id="BARRA_HERR_TTT26"/>
 		<T valor="Nueva animaci[oacute]n..." idioma="es" id="BARRA_HERR_TTT27"/>
 		<T valor="New animation..." idioma="en" id="BARRA_HERR_TTT27"/>
+		<T valor="Generar grafo de dependencia..." idioma="es" id="BARRA_HERR_TTT35"/>
+        <T valor="Generate dependency graph..." idioma="en" id="BARRA_HERR_TTT35"/>
 		<T valor="Nueva animaci[oacute]n..." idioma="es" id="BARRA_HERR_TTT05"/>
 		<T valor="New animation..." idioma="en" id="BARRA_HERR_TTT05"/>	
 		<T valor="Cargar animaci[oacute]n..." idioma="es" id="BARRA_HERR_TTT06"/>
