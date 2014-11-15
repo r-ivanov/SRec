@@ -2,6 +2,11 @@
 *     HISTORIAL DE MODIFICACIONES    *
 **************************************
 
+SRec v1.6 (Programación Dinámica)
+==================================================
+
+
+
 SRec v1.5 (Múltiples Visualizaciones)
 ==================================================
 
