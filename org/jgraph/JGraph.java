@@ -1769,6 +1769,14 @@ public class JGraph
 			}
 		}
 	}
+	
+	/**
+	 * Forces UI refresh.
+	 */
+	public void refreshUI() {
+		offscreen = null;
+		firePropertyChange(SCALE_PROPERTY, scale, scale);
+	}
 
 	/**
 	 * Returns the center of the component relative to the parent viewport's

@@ -22,6 +22,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
 import org.jgraph.JGraph;
+import org.jgraph.event.GraphModelEvent;
+import org.jgraph.event.GraphModelListener;
 import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;
@@ -29,7 +31,11 @@ import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.DefaultPort;
 import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
+import org.jgraph.util.NonCollidingEdgeRouter;
+import org.jgraph.util.ParallelEdgeRouter;
 
+import paneles.PanelArbol;
+import paneles.PanelGrafoDependencia;
 import conf.*;
 import botones.*;
 import datos.*;
@@ -156,7 +162,12 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 		if (e.getSource() == this.aceptar) {
 			// Procesar grafo de dependencia
 			
-			DefaultGraphCell celda1 = new DefaultGraphCell("3, 4");			
+			DefaultGraphModel model = new DefaultGraphModel();
+			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+			final JGraph grafo = new JGraph(model, view);
+			NonCollidingEdgeRouter edgeRouter = new NonCollidingEdgeRouter(grafo);
+			
+			DefaultGraphCell celda1 = new DefaultGraphCell("1, 2");			
 			GraphConstants.setFont(celda1.getAttributes(), new Font("Arial",Font.BOLD,20));
 			GraphConstants.setDisconnectable(celda1.getAttributes(), false);
 			GraphConstants.setMoveable(celda1.getAttributes(), true);
@@ -166,7 +177,7 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			GraphConstants.setForeground(    celda1.getAttributes(), Conf.colorFEntrada);
 			GraphConstants.setBackground(celda1.getAttributes(), (Conf.colorC1AEntrada));
 			GraphConstants.setGradientColor(celda1.getAttributes(), (Conf.colorC2AEntrada));
-			GraphConstants.setBounds(celda1.getAttributes(), new Rectangle(0,0, 75, 40));
+			GraphConstants.setBounds(celda1.getAttributes(), new Rectangle(100,0, 75, 40));
 //			GraphConstants.setAutoSize(celda1.getAttributes(), true);
 			GraphConstants.setBorder(celda1.getAttributes(), BorderFactory.createBevelBorder(0));
 			GraphConstants.setSizeable(celda1.getAttributes(), false);
@@ -214,8 +225,9 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			GraphConstants.setLineEnd(arista1.getAttributes(), GraphConstants.ARROW_CLASSIC);
 			GraphConstants.setEndFill(arista1.getAttributes(), true);
 			GraphConstants.setSelectable(arista1.getAttributes(),false);
-			GraphConstants.setLineWidth(arista1.getAttributes(), Conf.grosorFlecha); // grosor de línea a  8 puntos
+			GraphConstants.setLineWidth(arista1.getAttributes(), 2); // grosor de línea a  8 puntos
 			GraphConstants.setLineColor(arista1.getAttributes(), Conf.colorFlecha);
+			GraphConstants.setRouting(arista1.getAttributes(), edgeRouter);
 			arista1.setSource(port1);
 			arista1.setTarget(port2);
 			
@@ -223,8 +235,9 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			GraphConstants.setLineEnd(arista2.getAttributes(), GraphConstants.ARROW_CLASSIC);
 			GraphConstants.setEndFill(arista2.getAttributes(), true);
 			GraphConstants.setSelectable(arista2.getAttributes(),false);
-			GraphConstants.setLineWidth(arista2.getAttributes(), Conf.grosorFlecha); // grosor de línea a  8 puntos
+			GraphConstants.setLineWidth(arista2.getAttributes(), 2); // grosor de línea a  8 puntos
 			GraphConstants.setLineColor(arista2.getAttributes(), Conf.colorFlecha);
+			GraphConstants.setRouting(arista2.getAttributes(), edgeRouter);
 			arista2.setSource(port1);
 			arista2.setTarget(port3);
 			
@@ -232,8 +245,9 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			GraphConstants.setLineEnd(arista3.getAttributes(), GraphConstants.ARROW_CLASSIC);
 			GraphConstants.setEndFill(arista3.getAttributes(), true);
 			GraphConstants.setSelectable(arista3.getAttributes(),false);
-			GraphConstants.setLineWidth(arista3.getAttributes(), Conf.grosorFlecha); // grosor de línea a  8 puntos
+			GraphConstants.setLineWidth(arista3.getAttributes(), 2); // grosor de línea a  8 puntos
 			GraphConstants.setLineColor(arista3.getAttributes(), Conf.colorFlecha);
+			GraphConstants.setRouting(arista3.getAttributes(), edgeRouter);
 			arista3.setSource(port2);
 			arista3.setTarget(port3);
 			
@@ -246,12 +260,6 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			
 //			edges[i].setTarget( ((DefaultGraphCell)(contenedoresHijos[i].getPuertoVisibleParaPadre())) );
 			
-			DefaultGraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
-			
-			JGraph grafo = new JGraph(model, view);
-			grafo.getModel().addGraphModelListener(null);
-			
 			grafo.setBackground(Conf.colorPanel);
 			grafo.getGraphLayoutCache().insert(celda1);
 			grafo.getGraphLayoutCache().insert(celda2);
@@ -261,14 +269,30 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			grafo.getGraphLayoutCache().insert(arista3);
 			
 			grafo.setSize(800, 600);
+			
+			
 				
-	        JFrame f = new JFrame();
+	        final JFrame f = new JFrame();
 	        f.setSize(800, 600);
-	        JScrollPane sp = new JScrollPane(grafo);
-	        sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-	        f.add(sp);
+	        final JScrollPane sp = new JScrollPane(grafo);
+	        try {				
+			    f.add(sp);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	       
 	        f.pack();
 	        f.setVisible(true);
+	        
+	        scale = 1.0000000000000001;
+	        
+	        grafo.getModel().addGraphModelListener(new GraphModelListener() {				
+				@Override
+				public void graphChanged(GraphModelEvent e) {
+					grafo.refreshUI();
+				}
+			});
 
 			
 			this.dialogo.setVisible(false);
@@ -277,6 +301,8 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			this.dialogo.setVisible(false);
 		}
 	}
+	
+	double scale = 1.1;
 
 	/**
 	 * Gestiona los eventos de teclado
