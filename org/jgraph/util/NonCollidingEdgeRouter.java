@@ -6,12 +6,10 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jgraph.JGraph;
 import org.jgraph.graph.AbstractCellView;
 import org.jgraph.graph.CellView;
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.EdgeView;
-import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
 import org.jgraph.graph.DefaultEdge.LoopRouting;
@@ -23,12 +21,7 @@ import org.jgraph.graph.DefaultEdge.LoopRouting;
 public class NonCollidingEdgeRouter extends LoopRouting {
 	
 	private static final long serialVersionUID = 7596676104954178713L;
-	
-	private JGraph graph;
-	
-	public NonCollidingEdgeRouter(JGraph graph) {
-		this.graph = graph;
-	}
+	private static final int MARGEN_ARISTA_BASE = 10;
 
 	@Override
 	public List routeEdge(GraphLayoutCache cache, EdgeView edge) {
@@ -74,7 +67,7 @@ public class NonCollidingEdgeRouter extends LoopRouting {
 		}
 		
 		int totalNodos = nodos.size();
-		int margenArista = 10;
+		int margenArista = MARGEN_ARISTA_BASE;
 		List<Point2D> verticesParaCurva = new ArrayList<Point2D>();		
 		Line2D lineaArista = new Line2D.Double(from, to);
 		
@@ -89,7 +82,7 @@ public class NonCollidingEdgeRouter extends LoopRouting {
 			rectanguloActual = rectanguloObtenido;
 			rectanguloObtenido = obtenerRectanguloARodear(nodos, rectanguloActual, puntosArista, margenArista);
 			if (rectanguloObtenido != null && !rectanguloObtenido.equals(rectanguloActual)) {
-				margenArista = (totalNodos - nodos.size()) * 10;
+				margenArista = (totalNodos - nodos.size()) * MARGEN_ARISTA_BASE;
 				verticesParaCurva = obtenerVerticesParaCurva(lineaArista, rectanguloObtenido, margenArista, edgeView);
 			}
 		

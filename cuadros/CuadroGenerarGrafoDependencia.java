@@ -165,7 +165,7 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			DefaultGraphModel model = new DefaultGraphModel();
 			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 			final JGraph grafo = new JGraph(model, view);
-			NonCollidingEdgeRouter edgeRouter = new NonCollidingEdgeRouter(grafo);
+			NonCollidingEdgeRouter edgeRouter = new NonCollidingEdgeRouter();
 			
 			DefaultGraphCell celda1 = new DefaultGraphCell("1, 2");			
 			GraphConstants.setFont(celda1.getAttributes(), new Font("Arial",Font.BOLD,20));
