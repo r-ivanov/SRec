@@ -8,7 +8,7 @@ public class NodoGrafoDependencia {
 
 	private List<NodoGrafoDependencia> dependencias;
 	private RegistroActivacion registroActivacion;
-
+	
 	public NodoGrafoDependencia(RegistroActivacion registroActivacionAsociado) {
 		this.dependencias = new ArrayList<NodoGrafoDependencia>();
 		this.registroActivacion = registroActivacionAsociado;
@@ -17,7 +17,12 @@ public class NodoGrafoDependencia {
 	public boolean equals(NodoGrafoDependencia nodo) {
 		return this.clasesParametrosEntradaIguales(nodo) &&
 				this.nombreParametrosEntradaIguales(nodo) &&
-				this.valorParametrosEntradaIguales(nodo);
+				this.valorParametrosEntradaIguales(nodo) &&
+				this.nombreMetodoIgual(nodo);
+	}
+	
+	private boolean nombreMetodoIgual(NodoGrafoDependencia nodo) {
+		return this.registroActivacion.getNombreMetodo().equals(nodo.registroActivacion.getNombreMetodo());
 	}
 	
 	private boolean clasesParametrosEntradaIguales(NodoGrafoDependencia nodo) {
@@ -47,6 +52,10 @@ public class NodoGrafoDependencia {
 	
 	public void addDependencia(NodoGrafoDependencia nodo) {
 		this.dependencias.add(nodo);
+	}
+	
+	public List<NodoGrafoDependencia> getDependencias() {
+		return this.dependencias;
 	}
 	
 	public boolean contieneDependencia(NodoGrafoDependencia nodoGrafoDependencia) {

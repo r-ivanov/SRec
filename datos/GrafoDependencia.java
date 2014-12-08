@@ -12,31 +12,47 @@ public class GrafoDependencia {
 	public GrafoDependencia(Traza traza, String nombreMetodo) {
 		this.nodos = new ArrayList<NodoGrafoDependencia>();
 		this.nombreMetodo = nombreMetodo;
-		this.insertarNodos(null, traza.getRaiz());
+		this.insertarNodos(null, traza.getRaiz(), new ArrayList<NodoGrafoDependencia>());
 	}
 	
-	private void insertarNodos(NodoGrafoDependencia padre, RegistroActivacion registroActivacion) {	
+	private void insertarNodos(NodoGrafoDependencia padre, RegistroActivacion registroActivacion, List<NodoGrafoDependencia> procesados) {	
 		
-		boolean recorrerHijos = true;
-		
-		if (this.nombreMetodo.equals(registroActivacion.getNombreMetodo())) {
-			NodoGrafoDependencia nodo = this.obtenerNodo(registroActivacion);
-			if (nodo == null) {
-				nodo = new NodoGrafoDependencia(registroActivacion);
+		/* Comprobamos si el nodo ya ha sido procesado */
+		NodoGrafoDependencia nodo = new NodoGrafoDependencia(registroActivacion);
+		boolean procesado = false;
+		for (NodoGrafoDependencia visitado : procesados) {
+			if (nodo.equals(visitado)) {
+				procesado = true;
+				nodo = visitado;
+				break;
+			}
+		}
+			
+		/* Resolvemos las dependencias de los nodos hijos */
+		boolean mismoMetodo = this.nombreMetodo.equals(registroActivacion.getNombreMetodo());
+		if (!procesado) {			
+			if (mismoMetodo) {
 				this.nodos.add(nodo);
-			} else {
-				recorrerHijos = false;
+			}		
+			for (int i = 0; i < registroActivacion.numHijos(); i++) {
+				this.insertarNodos(nodo, registroActivacion.getHijo(i), procesados);
 			}
-			if (padre != null) {
-				padre.addDependencia(nodo);
-			}
-			padre = nodo;
 		}
 		
-		if (recorrerHijos) {
-			for (int i = 0; i < registroActivacion.numHijos(); i++) {
-				this.insertarNodos(padre, registroActivacion.getHijo(i));
+		/* Establecemos las dependencias del padre una vez resueltas las del nodo actual */
+		if (padre != null) {
+			if (mismoMetodo) {
+				padre.addDependencia(nodo);
+			} else {
+				for (NodoGrafoDependencia dependencia : nodo.getDependencias()) {
+					padre.addDependencia(dependencia);
+				}
 			}
+		}
+		
+		/* Establecemos el nodo como procesado si no lo estaba */
+		if (!procesado) {
+			procesados.add(nodo);
 		}
 	}
 	
