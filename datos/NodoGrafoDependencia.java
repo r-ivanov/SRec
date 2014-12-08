@@ -7,29 +7,46 @@ import java.util.List;
 public class NodoGrafoDependencia {
 
 	private List<NodoGrafoDependencia> dependencias;
-	private String[] nombreParametros;
-	private String[] valoresParametros;
+	private RegistroActivacion registroActivacion;
 
-	public NodoGrafoDependencia(String[] nombreParametros,
-			String[] valoresParametros) {
+	public NodoGrafoDependencia(RegistroActivacion registroActivacionAsociado) {
 		this.dependencias = new ArrayList<NodoGrafoDependencia>();
-		this.nombreParametros = nombreParametros;
-		this.valoresParametros = valoresParametros;
+		this.registroActivacion = registroActivacionAsociado;
 	}
 
-	public boolean equals(NodoGrafoDependencia nodoGrafoDependencia) {
-		return this.tieneParametros(nodoGrafoDependencia.nombreParametros,
-				nodoGrafoDependencia.valoresParametros);
-	}
-
-	public boolean tieneParametros(String[] nombreParametros,
-			String[] valoresParametros) {
-		return this.nombreParametros.equals(nombreParametros)
-				&& this.valoresParametros.equals(valoresParametros);
+	public boolean equals(NodoGrafoDependencia nodo) {
+		return this.clasesParametrosEntradaIguales(nodo) &&
+				this.nombreParametrosEntradaIguales(nodo) &&
+				this.valorParametrosEntradaIguales(nodo);
 	}
 	
-	public void addDependencia(NodoGrafoDependencia nodoGrafoDependencia) {
-		this.dependencias.add(nodoGrafoDependencia);
+	private boolean clasesParametrosEntradaIguales(NodoGrafoDependencia nodo) {
+		return this.arraysIguales(this.registroActivacion.clasesParamE(), nodo.registroActivacion.clasesParamE());
+	}
+	
+	private boolean nombreParametrosEntradaIguales(NodoGrafoDependencia nodo) {
+		return this.arraysIguales(this.registroActivacion.getNombreParametros(), nodo.registroActivacion.getNombreParametros());
+	}
+	
+	private boolean valorParametrosEntradaIguales(NodoGrafoDependencia nodo) {
+		return this.arraysIguales(this.registroActivacion.getParametros(), nodo.registroActivacion.getParametros());
+	}
+	
+	private boolean arraysIguales(String[] array1, String[] array2) {
+		boolean iguales = array1.length == array2.length;
+		if (iguales) {
+			for (int i = 0; i < array1.length; i++) {
+				if (!array1[i].equals(array2[i])) {
+					iguales = false;
+					break;
+				}
+			}
+		}
+		return iguales;
+	}
+	
+	public void addDependencia(NodoGrafoDependencia nodo) {
+		this.dependencias.add(nodo);
 	}
 	
 	public boolean contieneDependencia(NodoGrafoDependencia nodoGrafoDependencia) {

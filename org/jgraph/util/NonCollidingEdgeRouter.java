@@ -21,7 +21,7 @@ import org.jgraph.graph.DefaultEdge.LoopRouting;
 public class NonCollidingEdgeRouter extends LoopRouting {
 	
 	private static final long serialVersionUID = 7596676104954178713L;
-	private static final int MARGEN_ARISTA_BASE = 10;
+	private static final int MARGEN_ARISTA_BASE = 2;
 
 	@Override
 	public List routeEdge(GraphLayoutCache cache, EdgeView edge) {
