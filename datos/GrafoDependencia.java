@@ -2,7 +2,10 @@ package datos;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+
+import utilidades.MatrizDinamica;
 
 public class GrafoDependencia {
 	
@@ -30,7 +33,7 @@ public class GrafoDependencia {
 			
 		/* Resolvemos las dependencias de los nodos hijos */
 		boolean mismoMetodo = this.nombreMetodo.equals(registroActivacion.getNombreMetodo());
-		if (!procesado) {			
+		if (!procesado) {
 			if (mismoMetodo) {
 				this.nodos.add(nodo);
 			}		
@@ -71,5 +74,90 @@ public class GrafoDependencia {
 	
 	public List<NodoGrafoDependencia> obtenerNodos() {
 		return this.nodos;
+	}
+	
+	public MatrizDinamica<NodoGrafoDependencia> obtenerMatrizPorDefecto() {
+		
+		MatrizDinamica<NodoGrafoDependencia> matriz = new MatrizDinamica<NodoGrafoDependencia>();
+		if (this.nodos.size() > 0) {
+			NodoGrafoDependencia raiz = this.nodos.get(0);
+			this.aniadirDependenciasAMatriz(matriz, raiz);
+		}
+		
+		return matriz;
+	}
+	
+	private void aniadirDependenciasAMatriz(MatrizDinamica<NodoGrafoDependencia> matriz, NodoGrafoDependencia raiz) {
+		
+		/* Insertamos el primer nodo, y lo añadimos a la cola */
+		matriz.set(0, 0, raiz);
+		LinkedList<NodoGrafoDependencia> colaDependencias = new LinkedList<NodoGrafoDependencia>();
+		colaDependencias.add(raiz);
+		
+		/* Segun obtenemos dependencias, las añadimos a la cola para ir procesándolas en anchura */
+		while(!colaDependencias.isEmpty()) {
+			NodoGrafoDependencia nodo = colaDependencias.remove();
+			int[] posicionNodo = matriz.getPosicion(nodo);
+			int fila = posicionNodo[0];
+			int columna = posicionNodo[1];
+			for (NodoGrafoDependencia dependencia: nodo.getDependencias()) {
+				if (!matriz.contiene(dependencia)) {
+					int[] posicion = this.encontrarPosicionMasCercanaLibre(matriz, fila, columna);
+					matriz.set(posicion[0], posicion[1], dependencia);
+					colaDependencias.add(dependencia);
+				}
+			}
+			
+			/* Buscamos entre los nodos por si alguno no depende del nodo raiz, esto puede darse
+			 * cuando se desea obtener las dependencias de los métodos auxiliares. */
+			if (colaDependencias.isEmpty()) {
+				for (NodoGrafoDependencia nodoGrafo : this.nodos) {
+					if (!matriz.contiene(nodoGrafo)) {
+						int[] posicion = this.encontrarPosicionMasCercanaLibre(matriz, 0, 0);
+						matriz.set(posicion[0], posicion[1], nodoGrafo);
+						colaDependencias.add(nodoGrafo);
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	private int[] encontrarPosicionMasCercanaLibre(MatrizDinamica<NodoGrafoDependencia> matriz, int fila, int columna) {
+		int[] posicion = new int[2];
+		boolean huecoEncontrado = false;
+		int distancia = 0;
+		while (!huecoEncontrado) {
+			distancia++;
+			
+			if (!huecoEncontrado) {
+				for (int i = fila; i < fila + distancia; i++) {
+					if (matriz.get(i, columna + distancia) == null) {
+						posicion[0] = i;
+						posicion[1] = columna + distancia;
+						huecoEncontrado = true;
+					}
+				}
+			}
+			
+			if (!huecoEncontrado) {
+				for (int i = columna; i < columna + distancia; i++) {
+					if (matriz.get(fila + distancia, i) == null) {
+						posicion[0] = fila + distancia;
+						posicion[1] = i;
+						huecoEncontrado = true;
+					}
+				}
+			}
+			
+			if (!huecoEncontrado) {
+				if (matriz.get(fila + distancia, columna + distancia) == null) {
+					posicion[0] = fila + distancia;
+					posicion[1] = columna + distancia;
+					huecoEncontrado = true;
+				}
+			}
+		}
+		return posicion;
 	}
 }
