@@ -35,6 +35,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Dimension2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -2815,6 +2816,54 @@ public class BasicGraphUI extends GraphUI implements Serializable {
 					if (initialLocation.getY() + totDy + viewBounds.getHeight() > graphBounds
 							.getHeight())
 						dy = 0;
+				}
+			}
+			
+			if (views.length == 1) {
+				CellView view = views[0];
+				double viewCollisionMargin = GraphConstants.getCollisionMargin(view.getAllAttributes());
+				if (viewCollisionMargin >= 0) {
+					for (CellView graphView : graph.getGraphLayoutCache().getCellViews()) {
+						double graphViewCollisionMargin = GraphConstants.getCollisionMargin(graphView.getAllAttributes());
+						if (view.getCell() != graphView.getCell() && graphViewCollisionMargin >= 0) {
+							
+							Rectangle2D viewBoundsWithMargin = new Rectangle2D.Double(
+									initialLocation.getX() + totDx - viewCollisionMargin,
+									initialLocation.getY() + totDy - viewCollisionMargin,
+									view.getBounds().getWidth() + viewCollisionMargin,
+									view.getBounds().getHeight() + viewCollisionMargin);
+							
+							Rectangle2D graphViewBoundsWithMargin = new Rectangle2D.Double(
+									graphView.getBounds().getX() - graphViewCollisionMargin,
+									graphView.getBounds().getY() - graphViewCollisionMargin,
+									graphView.getBounds().getWidth() + graphViewCollisionMargin,
+									graphView.getBounds().getHeight() + graphViewCollisionMargin);
+							
+							if (viewBoundsWithMargin.intersects(graphViewBoundsWithMargin)) {														
+//								Point2D verticeSuperiorIzquierdo = new Point2D.Double(graphViewBoundsWithMargin.getX(), graphViewBoundsWithMargin.getY());
+//								Point2D verticeSuperiorDerecho = new Point2D.Double(graphViewBoundsWithMargin.getMaxX(), graphViewBoundsWithMargin.getY());
+//								Point2D verticeInferiorIzquierdo = new Point2D.Double(graphViewBoundsWithMargin.getX(), graphViewBoundsWithMargin.getMaxY());
+//								Point2D verticeInferiorDerecho = new Point2D.Double(graphViewBoundsWithMargin.getMaxX(), graphViewBoundsWithMargin.getMaxY());
+//								
+//								Line2D lineaSuperior = new Line2D.Double(verticeSuperiorIzquierdo, verticeSuperiorDerecho);
+//								Line2D lineaInferior = new Line2D.Double(verticeInferiorIzquierdo, verticeInferiorDerecho);
+//								Line2D lineaIzquierda = new Line2D.Double(verticeSuperiorIzquierdo, verticeInferiorIzquierdo);
+//								Line2D lineaDerecha = new Line2D.Double(verticeSuperiorDerecho, verticeInferiorDerecho);
+								
+//								if (lineaSuperior.intersects(viewBoundsWithMargin)) {
+//									dx = 0;
+//								} else if (lineaInferior.intersects(viewBoundsWithMargin)) {
+//									dx = 0;
+//								} else if (lineaIzquierda.intersects(viewBoundsWithMargin)) {
+//									dy = 0;
+//								} else if (lineaDerecha.intersects(viewBoundsWithMargin)) {
+//									dy = 0;
+//								}
+								
+								break;
+							}
+						}
+					}
 				}
 			}
 

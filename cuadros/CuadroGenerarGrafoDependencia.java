@@ -170,35 +170,12 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 			}
 			
 			GrafoDependencia grafoDependencia = new GrafoDependencia(this.ventana.trazaCompleta, nombreMetodo);
-			
-			MatrizDinamica<NodoGrafoDependencia> matriz = grafoDependencia.obtenerMatrizPorDefecto();
-			
-			for (int i = 0; i < matriz.numFilas(); i++) {
-				for (int j = 0; j < matriz.numColumnas(); j++) {
-					NodoGrafoDependencia nodo = matriz.get(i, j);
-					if (nodo != null) {
-						System.out.print(matriz.get(i, j).getParams()[0] + " ");
-					} else {
-						System.out.print("  ");
-					}
-				}
-				System.out.println();
-			}
-			
-			DefaultGraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
-			final JGraph grafo = new JGraph(model, view);
-			
-			for (NodoGrafoDependencia nodo : grafoDependencia.obtenerNodos()) {
-				grafo.getGraphLayoutCache().insert(nodo.obtenerCeldasDelNodoParaGrafo().toArray());
-			}
-			
-			grafo.setBackground(Conf.colorPanel);		
-			grafo.setSize(800, 600);
+			grafoDependencia.tabularGrafo();
+			JGraph representacionGrafo = grafoDependencia.obtenerRepresentacionGrafo();
 						
 	        final JFrame f = new JFrame();
 	        f.setSize(800, 600);
-	        final JScrollPane sp = new JScrollPane(grafo);
+	        final JScrollPane sp = new JScrollPane(representacionGrafo);
 	        try {				
 			    f.add(sp);
 			} catch (Exception e1) {
@@ -208,13 +185,6 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 	       
 	        f.pack();
 	        f.setVisible(true);
-	        
-	        grafo.getModel().addGraphModelListener(new GraphModelListener() {				
-				@Override
-				public void graphChanged(GraphModelEvent e) {
-					grafo.refreshUI();
-				}
-			});
 			
 			this.dialogo.setVisible(false);
 			

@@ -413,6 +413,12 @@ public class GraphConstants {
 	 * Boolean as values for this key.
 	 */
 	public static final String CONSTRAINED = "constrained";
+	
+	/**
+	 * Key for the <code>collisionMargin</code> attribute. Use instances of
+	 * Double as values for this key.
+	 */
+	public static final String COLLISION_MARGIN = "collision_margin";
 
 	/**
 	 * Key for the <code>selectable</code> attribute. Use instances of Boolean
@@ -1320,6 +1326,23 @@ public class GraphConstants {
 	}
 
 	/**
+	 * Sets the collision margin attribute in the specified map to the specified value.
+	 */
+	public static final void setCollisionMargin(Map map, double margin) {
+		map.put(COLLISION_MARGIN, new Double(margin));
+	}
+
+	/**
+	 * Returns the collision margin attribute from the specified map.
+	 */
+	public static final double getCollisionMargin(Map map) {
+		Double doubleObj = (Double) map.get(COLLISION_MARGIN);
+		if (doubleObj != null)
+			return doubleObj.doubleValue();
+		return -1;
+	}
+	
+	/**
 	 * Sets the selectable attribute in the specified map to the specified
 	 * value. This detemines whether or not a cell may be selected. Vertices and
 	 * edges may be selectable, not ports.
@@ -1327,7 +1350,7 @@ public class GraphConstants {
 	public static final void setSelectable(Map map, boolean flag) {
 		map.put(SELECTABLE, new Boolean(flag));
 	}
-
+	
 	/**
 	 * Returns the selectable attribute from the specified map.
 	 * 

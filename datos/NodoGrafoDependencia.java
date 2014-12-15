@@ -1,12 +1,15 @@
 package datos;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 
+import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultPort;
@@ -19,6 +22,11 @@ import conf.Conf;
 
 public class NodoGrafoDependencia {
 	
+	private static final int anchoPixelCaracter = 13;
+	private static final int alturaCelda = 26;
+	private static final int tamFuente = 20;
+	private static final double margenColision = 10;
+	
 	private static final Edge.Routing edgeRouter;
 	static {
 		edgeRouter = new NonCollidingEdgeRouter();
@@ -27,7 +35,10 @@ public class NodoGrafoDependencia {
 	private List<NodoGrafoDependencia> dependencias;
 	private RegistroActivacion registroActivacion;
 	
+	private DefaultGraphCell celdaEntrada;
+	private DefaultGraphCell celdaSalida;
 	private DefaultGraphCell celdaGrafo;
+	
 	private DefaultPort portCelda;
 	private List<DefaultEdge> aristas;
 	
@@ -35,28 +46,126 @@ public class NodoGrafoDependencia {
 		this.dependencias = new ArrayList<NodoGrafoDependencia>();
 		this.aristas = new ArrayList<DefaultEdge>();
 		this.registroActivacion = registroActivacionAsociado;
+		this.inicializarRepresentacion();
+	}
+	
+	private void inicializarRepresentacion() {
 		
-		String repEntrada = registroActivacionAsociado.getEntrada().getRepresentacion();
+		String repEntrada = this.registroActivacion.getEntrada().getRepresentacion();
 		if (repEntrada.length() < 3) {
 			repEntrada = "  " + repEntrada + "  ";
 		}
-
-		this.celdaGrafo = new DefaultGraphCell(repEntrada);
-		GraphConstants.setFont(this.celdaGrafo.getAttributes(), new Font("Arial", Font.BOLD, 20));
+		
+		String repSalida = this.registroActivacion.getSalida().getRepresentacion();
+		if (repSalida.length() < 3) {
+			repSalida = "  " + repSalida + "  ";
+		}
+		
+		this.celdaEntrada = new DefaultGraphCell(repEntrada);
+		GraphConstants.setDisconnectable(this.celdaEntrada.getAttributes(), false);
+		GraphConstants.setMoveable(this.celdaEntrada.getAttributes(), true);
+		GraphConstants.setSelectable(this.celdaEntrada.getAttributes(), false);
+		GraphConstants.setEditable(this.celdaEntrada.getAttributes(), false);
+		GraphConstants.setFont(this.celdaEntrada.getAttributes(), new Font("Arial",Font.BOLD, tamFuente));
+		GraphConstants.setForeground(this.celdaEntrada.getAttributes(), Conf.colorFEntrada);
+		GraphConstants.setOpaque(this.celdaEntrada.getAttributes(), true);
+		GraphConstants.setBackground(
+				this.celdaEntrada.getAttributes(),
+				(Conf.modoColor == 1 ? Conf.colorC1Entrada : Conf.coloresNodo[this.registroActivacion.getNumMetodo() % 10]));
+		GraphConstants.setGradientColor(
+				this.celdaEntrada.getAttributes(),
+				(Conf.modoColor == 1 ? Conf.colorC2Entrada : Conf.coloresNodo2[this.registroActivacion.getNumMetodo() % 10]));
+		this.marcoCelda(this.celdaEntrada.getAttributes());
+		
+		this.celdaSalida = new DefaultGraphCell(repSalida);
+		GraphConstants.setDisconnectable(this.celdaSalida.getAttributes(), false);
+		GraphConstants.setMoveable(this.celdaSalida.getAttributes(), true);
+		GraphConstants.setSelectable(this.celdaSalida.getAttributes(), false);
+		GraphConstants.setEditable(this.celdaSalida.getAttributes(), false);
+		GraphConstants.setFont(this.celdaSalida.getAttributes(), new Font("Arial",Font.BOLD, tamFuente));
+		GraphConstants.setForeground(this.celdaSalida.getAttributes(), Conf.colorFSalida);
+		GraphConstants.setOpaque(this.celdaSalida.getAttributes(), true);
+		GraphConstants.setBackground(
+				this.celdaSalida.getAttributes(),
+				(Conf.modoColor == 1 ? Conf.colorC1Salida : Conf.coloresNodo[this.registroActivacion.getNumMetodo() % 10]));
+		GraphConstants.setGradientColor(
+				this.celdaSalida.getAttributes(),
+				(Conf.modoColor == 1 ? Conf.colorC2Salida : Conf.coloresNodo2[this.registroActivacion.getNumMetodo() % 10]));
+		this.marcoCelda(this.celdaSalida.getAttributes());
+		
+		// Tamaños
+		int tamanioCadena = Math.max(repEntrada.length(), repSalida.length()) * anchoPixelCaracter;
+		GraphConstants.setBounds(this.celdaEntrada.getAttributes(), new Rectangle(
+				0, 0, tamanioCadena, alturaCelda));
+		GraphConstants.setBounds(this.celdaSalida.getAttributes(), new Rectangle(
+				0, alturaCelda, tamanioCadena, alturaCelda));
+		
+		
+		this.celdaGrafo = new DefaultGraphCell();
+		this.celdaGrafo.add(this.celdaEntrada);
+		this.celdaGrafo.add(this.celdaSalida);
+		GraphConstants.setSize(this.celdaGrafo.getAttributes(), new Dimension(tamanioCadena, alturaCelda * 2));
 		GraphConstants.setDisconnectable(this.celdaGrafo.getAttributes(), false);
 		GraphConstants.setMoveable(this.celdaGrafo.getAttributes(), true);
 		GraphConstants.setSelectable(this.celdaGrafo.getAttributes(), true);
 		GraphConstants.setResize(this.celdaGrafo.getAttributes(), false);
-		GraphConstants.setOpaque(this.celdaGrafo.getAttributes(), true);
-		GraphConstants.setForeground(this.celdaGrafo.getAttributes(), Conf.colorFEntrada);
-		GraphConstants.setBackground(this.celdaGrafo.getAttributes(), (Conf.colorC1AEntrada));
-		GraphConstants.setGradientColor(this.celdaGrafo.getAttributes(), (Conf.colorC2AEntrada));
-		//GraphConstants.setBounds(celda1.getAttributes(), new Rectangle(200, 200, 75, 40));
-		GraphConstants.setAutoSize(this.celdaGrafo.getAttributes(), true);
-		GraphConstants.setBorder(this.celdaGrafo.getAttributes(), BorderFactory.createBevelBorder(0));
+		GraphConstants.setOpaque(this.celdaGrafo.getAttributes(), false);
+		GraphConstants.setAutoSize(this.celdaGrafo.getAttributes(), false);
 		GraphConstants.setSizeable(this.celdaGrafo.getAttributes(), false);
+		GraphConstants.setCollisionMargin(this.celdaGrafo.getAttributes(), margenColision);
+				
 		this.portCelda = new DefaultPort();
 		this.celdaGrafo.add(this.portCelda);
+	}
+	
+	/**
+	 * Establece el diseño del marco de la celda dado su mapa de atributos.
+	 * 
+	 * @param am Mapa de atributos de una celda concreta.
+	 * @param anular A true si se desea eliminar el borde, false en caso contrario.
+	 */
+	private void marcoCelda(AttributeMap am) {
+		switch (Conf.bordeCelda) {
+			case 1:
+				GraphConstants
+				.setBorder(am, BorderFactory.createBevelBorder(0));
+				break;
+			case 2:
+				GraphConstants
+				.setBorder(am, BorderFactory.createEtchedBorder());
+				break;
+			case 3:
+				GraphConstants.setBorder(am,
+						BorderFactory.createLineBorder(Conf.colorFlecha));
+				break;
+			case 4:
+				GraphConstants.setBorder(am,
+						BorderFactory.createLoweredBevelBorder());
+				break;
+			case 5:
+				GraphConstants.setBorder(am,
+						BorderFactory.createRaisedBevelBorder());
+				break;
+		}
+	}
+	
+	public void setPosicion(int x, int y) {	
+		Dimension d = GraphConstants.getSize(this.celdaGrafo.getAttributes());
+		if (d != null) {
+			int dimX = (int) d.getWidth();
+			int dimY = (int) d.getHeight();
+			
+			/* Posicion del centro del nodo */
+			int nuevaX = x - dimX/2;
+			int nuevaY = y - dimY/2;
+			
+			GraphConstants.setBounds(this.celdaGrafo.getAttributes(),
+					new Rectangle(nuevaX, nuevaY, dimX, dimY));
+			GraphConstants.setBounds(this.celdaEntrada.getAttributes(),
+					new Rectangle(nuevaX, nuevaY, dimX, alturaCelda));
+			GraphConstants.setBounds(this.celdaSalida.getAttributes(),
+					new Rectangle(nuevaX, nuevaY + alturaCelda, dimX, alturaCelda));
+		}
 	}
 
 	public boolean equals(NodoGrafoDependencia nodo) {
@@ -104,7 +213,7 @@ public class NodoGrafoDependencia {
 		GraphConstants.setLineEnd(arista.getAttributes(), GraphConstants.ARROW_CLASSIC);
 		GraphConstants.setEndFill(arista.getAttributes(), true);
 		GraphConstants.setSelectable(arista.getAttributes(),false);
-		GraphConstants.setLineWidth(arista.getAttributes(), 1);
+		GraphConstants.setLineWidth(arista.getAttributes(), Conf.grosorFlecha);
 		GraphConstants.setLineColor(arista.getAttributes(), Conf.colorFlecha);
 		GraphConstants.setRouting(arista.getAttributes(), edgeRouter);
 		GraphConstants.setLineStyle(arista.getAttributes(), GraphConstants.STYLE_SPLINE);

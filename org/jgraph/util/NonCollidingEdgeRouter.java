@@ -3,6 +3,7 @@ package org.jgraph.util;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.jgraph.graph.AbstractCellView;
 import org.jgraph.graph.CellView;
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.EdgeView;
+import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
 import org.jgraph.graph.DefaultEdge.LoopRouting;
@@ -21,7 +23,7 @@ import org.jgraph.graph.DefaultEdge.LoopRouting;
 public class NonCollidingEdgeRouter extends LoopRouting {
 	
 	private static final long serialVersionUID = 7596676104954178713L;
-	private static final int MARGEN_ARISTA_BASE = 2;
+	private static final int MARGEN_ARISTA_BASE = 10;
 
 	@Override
 	public List routeEdge(GraphLayoutCache cache, EdgeView edge) {
@@ -61,63 +63,70 @@ public class NonCollidingEdgeRouter extends LoopRouting {
 		for (int i = 0; i < celdas.length; i++) {
 			Object modeloCelda = celdas[i].getCell();
 			if (DefaultGraphModel.isVertex(model, modeloCelda) && !celdas[i].getCell().equals(edgeView.getSource().getParentView().getCell())
-					&& !celdas[i].getCell().equals(edgeView.getTarget().getParentView().getCell())) {				
+					&& !celdas[i].getCell().equals(edgeView.getTarget().getParentView().getCell()) && DefaultGraphModel.isGroup(model, modeloCelda)) {				
 				nodos.add(celdas[i]);
 			}
 		}
-		
-		int totalNodos = nodos.size();
-		int margenArista = MARGEN_ARISTA_BASE;
-		List<Point2D> verticesParaCurva = new ArrayList<Point2D>();		
-		Line2D lineaArista = new Line2D.Double(from, to);
-		
-		Rectangle2D rectanguloActual = null;
-		Rectangle2D rectanguloObtenido = null;
-		do {	
-			List<Point2D> puntosArista = new ArrayList<Point2D>();
-			puntosArista.add(from);
-			puntosArista.addAll(verticesParaCurva);
-			puntosArista.add(to);
-			
-			rectanguloActual = rectanguloObtenido;
-			rectanguloObtenido = obtenerRectanguloARodear(nodos, rectanguloActual, puntosArista, margenArista);
-			if (rectanguloObtenido != null && !rectanguloObtenido.equals(rectanguloActual)) {
-				margenArista = (totalNodos - nodos.size()) * MARGEN_ARISTA_BASE;
-				verticesParaCurva = obtenerVerticesParaCurva(lineaArista, rectanguloObtenido, margenArista, edgeView);
-			}
-		
-		} while (rectanguloObtenido != null && !rectanguloObtenido.equals(rectanguloActual));
-		
-		return verticesParaCurva;
+				
+		return this.obtenerVerticesParaArista(nodos, from, to, MARGEN_ARISTA_BASE);
 	}
 	
-	private Rectangle2D obtenerRectanguloARodear(List<CellView> nodos, Rectangle2D rectangulo, List<Point2D> puntosArista, double margenArista) {
+	private List<Point2D> obtenerVerticesParaArista(List<CellView> nodos, Point2D puntoOrigen, Point2D puntoDestino, double margenArista) {
 		
-		List<CellView> copiaNodos = new ArrayList<CellView>(nodos);
-		for (int i = 0; i < puntosArista.size() - 1; i++) {
-			Line2D lineaArista = new Line2D.Double(puntosArista.get(i), puntosArista.get(i + 1));
-			for (CellView nodo : copiaNodos) {
-				Rectangle2D boundsNodo = nodo.getBounds();
-				if (lineaArista.intersects(boundsNodo.getX() - margenArista,
-						boundsNodo.getY() - margenArista,
-						boundsNodo.getWidth() + margenArista,
-						boundsNodo.getHeight() + margenArista)) {
-					
-					if (rectangulo == null) {
-						rectangulo = new Rectangle2D.Double(nodo.getBounds().getX(), nodo.getBounds().getY(),
-								nodo.getBounds().getWidth(), nodo.getBounds().getHeight());
-					} else {
-						rectangulo = rectangulo.createUnion(nodo.getBounds());
-					}
-					nodos.remove(nodo);
+		List<Point2D> puntosIntermedios = new ArrayList<Point2D>();
+		
+		boolean hayColisiones = true;
+		do {
+			Point2D puntoOrigenActual = puntosIntermedios.isEmpty() ? puntoOrigen : puntosIntermedios.get(puntosIntermedios.size() -1);
+			Line2D lineaActual = new Line2D.Double(puntoOrigenActual, puntoDestino);
+			List<Point2D> puntos = obtenerPuntosDeAristaParaNodoMasCercano(nodos, null, lineaActual, margenArista);
+			if (puntos.isEmpty()) {
+				hayColisiones = false;
+			} else {
+				puntosIntermedios.addAll(puntos);
+			}
+		} while (hayColisiones);
+		
+		return puntosIntermedios;
+	}
+	
+	private List<Point2D> obtenerPuntosDeAristaParaNodoMasCercano(List<CellView> nodos, List<CellView> nodosAnalizados, Line2D linea, double margenArista) {
+		
+		if (nodosAnalizados == null) {
+			nodosAnalizados = new ArrayList<CellView>();
+		}
+		
+		List<Point2D> puntosArista = new ArrayList<Point2D>();
+		CellView nodoQueColisiona = null;
+		double distanciaMasCercana = -1;
+		for (CellView nodo : nodos) {
+			if (linea.intersects(nodo.getBounds()) && !nodosAnalizados.contains(nodo)) {
+				Point2D puntoNodoCentro = AbstractCellView.getCenterPoint(nodo);
+				double distanciaAlNodo = linea.getP1().distance(puntoNodoCentro);
+				if (distanciaMasCercana < 0 || distanciaAlNodo < distanciaMasCercana) {
+					distanciaMasCercana = distanciaAlNodo;
+					nodoQueColisiona = nodo;
 				}
 			}
 		}
 		
-		return rectangulo;
+		if (nodoQueColisiona != null) {
+			puntosArista.addAll(obtenerVerticesParaCurva(linea, nodoQueColisiona.getBounds(), margenArista));
+			Line2D nuevaLineaArista = new Line2D.Double(linea.getP1(), puntosArista.get(puntosArista.size() - 1));
+			nodosAnalizados.add(nodoQueColisiona);
+			List<Point2D> nuevosPuntosArista = this.obtenerPuntosDeAristaParaNodoMasCercano(nodos, nodosAnalizados, nuevaLineaArista, margenArista);
+			if (nuevosPuntosArista.isEmpty()) {
+				nodos.remove(nodoQueColisiona);
+				return puntosArista;
+			} else {
+				return nuevosPuntosArista;
+			}
+		} else {
+			return puntosArista;
+		}
 	}
 	
-	private List<Point2D> obtenerVerticesParaCurva(Line2D lineaArista, Rectangle2D rectangulo, double margenArista, EdgeView edge) {
+	private List<Point2D> obtenerVerticesParaCurva(Line2D lineaArista, Rectangle2D rectangulo, double margenArista) {
 		
 		List<Point2D> verticesSuperiores = new ArrayList<Point2D>();
 		List<Point2D> verticesInferiores = new ArrayList<Point2D>();

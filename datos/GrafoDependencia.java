@@ -5,6 +5,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jgraph.JGraph;
+import org.jgraph.event.GraphModelEvent;
+import org.jgraph.event.GraphModelListener;
+import org.jgraph.graph.DefaultCellViewFactory;
+import org.jgraph.graph.DefaultGraphModel;
+import org.jgraph.graph.GraphLayoutCache;
+
+import conf.Conf;
 import utilidades.MatrizDinamica;
 
 public class GrafoDependencia {
@@ -72,11 +80,28 @@ public class GrafoDependencia {
 		return nodoObtenido;
 	}
 	
-	public List<NodoGrafoDependencia> obtenerNodos() {
-		return this.nodos;
+	public JGraph obtenerRepresentacionGrafo() {
+		
+		DefaultGraphModel model = new DefaultGraphModel();
+		GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
+		final JGraph representacionGrafo = new JGraph(model, view);
+		representacionGrafo.setMarqueeHandler(null);
+		
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			representacionGrafo.getGraphLayoutCache().insert(nodo.obtenerCeldasDelNodoParaGrafo().toArray());
+		}
+		
+		representacionGrafo.setBackground(Conf.colorPanel);		
+		representacionGrafo.getModel().addGraphModelListener(new GraphModelListener() {				
+			@Override
+			public void graphChanged(GraphModelEvent e) {
+				representacionGrafo.refreshUI();
+			}
+		});
+		return representacionGrafo;
 	}
 	
-	public MatrizDinamica<NodoGrafoDependencia> obtenerMatrizPorDefecto() {
+	public void tabularGrafo() {
 		
 		MatrizDinamica<NodoGrafoDependencia> matriz = new MatrizDinamica<NodoGrafoDependencia>();
 		if (this.nodos.size() > 0) {
@@ -84,7 +109,14 @@ public class GrafoDependencia {
 			this.aniadirDependenciasAMatriz(matriz, raiz);
 		}
 		
-		return matriz;
+		for (int fila = 0; fila < matriz.numFilas(); fila++) {
+			for (int columna = 0; columna < matriz.numColumnas(); columna++) {
+				NodoGrafoDependencia nodo = matriz.get(fila, columna);
+				if (nodo != null) {
+					nodo.setPosicion((fila + 1) * 200, (columna + 1) * 200);
+				}
+			}
+		}
 	}
 	
 	private void aniadirDependenciasAMatriz(MatrizDinamica<NodoGrafoDependencia> matriz, NodoGrafoDependencia raiz) {
@@ -131,16 +163,6 @@ public class GrafoDependencia {
 			distancia++;
 			
 			if (!huecoEncontrado) {
-				for (int i = fila; i < fila + distancia; i++) {
-					if (matriz.get(i, columna + distancia) == null) {
-						posicion[0] = i;
-						posicion[1] = columna + distancia;
-						huecoEncontrado = true;
-					}
-				}
-			}
-			
-			if (!huecoEncontrado) {
 				for (int i = columna; i < columna + distancia; i++) {
 					if (matriz.get(fila + distancia, i) == null) {
 						posicion[0] = fila + distancia;
@@ -149,6 +171,16 @@ public class GrafoDependencia {
 					}
 				}
 			}
+			
+			if (!huecoEncontrado) {
+				for (int i = fila; i < fila + distancia; i++) {
+					if (matriz.get(i, columna + distancia) == null) {
+						posicion[0] = i;
+						posicion[1] = columna + distancia;
+						huecoEncontrado = true;
+					}
+				}
+			}		
 			
 			if (!huecoEncontrado) {
 				if (matriz.get(fila + distancia, columna + distancia) == null) {
