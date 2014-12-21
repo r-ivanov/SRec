@@ -79,12 +79,27 @@ public class NonCollidingEdgeRouter extends LoopRouting {
 		rectangulos = resolverColisionesEntreRectangulos(rectangulos, margenColision * 2);	
 		List<Rectangle2D> copiaRectangulos = new ArrayList<Rectangle2D>(rectangulos);
 		for (Rectangle2D rectangulo : copiaRectangulos) {
-			if (sourceCell.getBounds().intersects(rectangulo) || targetCell.getBounds().intersects(rectangulo)) {
+			if (this.obtenerRectanguloConMargen(sourceCell.getBounds(), margenColision).intersects(rectangulo) ||
+					this.obtenerRectanguloConMargen(targetCell.getBounds(), margenColision).intersects(rectangulo)) {
 				rectangulos.remove(rectangulo);
 			}
 		}
 		
-		return this.obtenerVerticesParaArista(rectangulos, from, to, margenColision);
+		List<Point2D> verticesArista = this.obtenerVerticesParaArista(rectangulos, from, to, margenColision);
+		
+		/* Eliminamos vertices innecesarios */
+		List<Point2D> verticesFinales = new ArrayList<Point2D>(verticesArista);
+		for (int i = 1; i < verticesArista.size() - 1; i++) {
+			Point2D verticeAnterior = verticesArista.get(i-1);
+			Point2D verticeActual = verticesArista.get(i);
+			Point2D verticeSiguiente = verticesArista.get(i+1);
+			if ((verticeAnterior.getX() == verticeActual.getX() && verticeActual.getX() == verticeSiguiente.getX()) ||
+					(verticeAnterior.getY() == verticeActual.getY() && verticeActual.getY() == verticeSiguiente.getY())) {
+				verticesFinales.remove(verticeActual);
+			}
+		}
+		
+		return verticesFinales;
 	}
 	
 	private List<Rectangle2D> resolverColisionesEntreRectangulos(List<Rectangle2D> rectangulos, double margenColision) {
