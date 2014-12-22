@@ -1,5 +1,7 @@
 package datos;
 
+import java.awt.Dimension;
+import java.awt.geom.Dimension2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -102,6 +104,16 @@ public class GrafoDependencia {
 	}
 	
 	public void tabularGrafo() {
+		
+		double anchuraNodoMayor = 0;
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			if (nodo.getAnchura() > anchuraNodoMayor) {
+				anchuraNodoMayor = nodo.getAnchura();
+			}
+		}	
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			nodo.setAnchura(anchuraNodoMayor);
+		}
 		
 		MatrizDinamica<NodoGrafoDependencia> matriz = new MatrizDinamica<NodoGrafoDependencia>();
 		if (this.nodos.size() > 0) {

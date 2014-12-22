@@ -3,6 +3,7 @@ package datos;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -104,6 +105,8 @@ public class NodoGrafoDependencia {
 		this.celdaGrafo = new DefaultGraphCell();
 		this.celdaGrafo.add(this.celdaEntrada);
 		this.celdaGrafo.add(this.celdaSalida);
+		GraphConstants.setBounds(this.celdaGrafo.getAttributes(), new Rectangle(
+				0, 0, tamanioCadena, alturaCelda * 2));
 		GraphConstants.setSize(this.celdaGrafo.getAttributes(), new Dimension(tamanioCadena, alturaCelda * 2));
 		GraphConstants.setDisconnectable(this.celdaGrafo.getAttributes(), false);
 		GraphConstants.setMoveable(this.celdaGrafo.getAttributes(), true);
@@ -149,23 +152,36 @@ public class NodoGrafoDependencia {
 		}
 	}
 	
+	public void setAnchura(double anchura) {
+		Rectangle2D bounds = GraphConstants.getBounds(this.celdaGrafo.getAttributes());
+		GraphConstants.setBounds(this.celdaGrafo.getAttributes(),
+				new Rectangle2D.Double(bounds.getX(), bounds.getY(), anchura, bounds.getHeight()));
+		GraphConstants.setBounds(this.celdaEntrada.getAttributes(),
+				new Rectangle2D.Double(bounds.getX(), bounds.getY(), anchura, alturaCelda));
+		GraphConstants.setBounds(this.celdaSalida.getAttributes(),
+				new Rectangle2D.Double(bounds.getX(), bounds.getY() + alturaCelda, anchura, alturaCelda));
+	}
+	
+	public double getAnchura() {	
+		return GraphConstants.getSize(this.celdaGrafo.getAttributes()).getWidth();
+	}
+	
 	public void setPosicion(int x, int y) {	
-		Dimension d = GraphConstants.getSize(this.celdaGrafo.getAttributes());
-		if (d != null) {
-			int dimX = (int) d.getWidth();
-			int dimY = (int) d.getHeight();
-			
-			/* Posicion del centro del nodo */
-			int nuevaX = x - dimX/2;
-			int nuevaY = y - dimY/2;
-			
-			GraphConstants.setBounds(this.celdaGrafo.getAttributes(),
-					new Rectangle(nuevaX, nuevaY, dimX, dimY));
-			GraphConstants.setBounds(this.celdaEntrada.getAttributes(),
-					new Rectangle(nuevaX, nuevaY, dimX, alturaCelda));
-			GraphConstants.setBounds(this.celdaSalida.getAttributes(),
-					new Rectangle(nuevaX, nuevaY + alturaCelda, dimX, alturaCelda));
-		}
+		Rectangle2D bounds = GraphConstants.getBounds(this.celdaGrafo.getAttributes());
+		
+		int dimX = (int) bounds.getWidth();
+		int dimY = (int) bounds.getHeight();
+		
+		/* Posicion del centro del nodo */
+		int nuevaX = x - dimX/2;
+		int nuevaY = y - dimY/2;
+		
+		GraphConstants.setBounds(this.celdaGrafo.getAttributes(),
+				new Rectangle(nuevaX, nuevaY, dimX, dimY));
+		GraphConstants.setBounds(this.celdaEntrada.getAttributes(),
+				new Rectangle(nuevaX, nuevaY, dimX, alturaCelda));
+		GraphConstants.setBounds(this.celdaSalida.getAttributes(),
+				new Rectangle(nuevaX, nuevaY + alturaCelda, dimX, alturaCelda));
 	}
 
 	public boolean equals(NodoGrafoDependencia nodo) {

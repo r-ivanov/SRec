@@ -93,8 +93,10 @@ public class NonCollidingEdgeRouter extends LoopRouting {
 			Point2D verticeAnterior = verticesArista.get(i-1);
 			Point2D verticeActual = verticesArista.get(i);
 			Point2D verticeSiguiente = verticesArista.get(i+1);
-			if ((verticeAnterior.getX() == verticeActual.getX() && verticeActual.getX() == verticeSiguiente.getX()) ||
-					(verticeAnterior.getY() == verticeActual.getY() && verticeActual.getY() == verticeSiguiente.getY())) {
+			if ((Math.abs(verticeAnterior.getX() - verticeActual.getX()) < margenColision &&
+					Math.abs(verticeActual.getX() - verticeSiguiente.getX()) < margenColision) ||
+					(Math.abs(verticeAnterior.getY() - verticeActual.getY()) < margenColision &&
+							Math.abs(verticeActual.getY() - verticeSiguiente.getY()) < margenColision)) {
 				verticesFinales.remove(verticeActual);
 			}
 		}
