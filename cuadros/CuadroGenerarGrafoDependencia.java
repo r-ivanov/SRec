@@ -1,46 +1,24 @@
 package cuadros;
 
-import grafica.ContenedorArbol;
-
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.border.TitledBorder;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
 
-import org.jgraph.JGraph;
-import org.jgraph.event.GraphModelEvent;
-import org.jgraph.event.GraphModelListener;
-import org.jgraph.graph.DefaultCellViewFactory;
-import org.jgraph.graph.DefaultEdge;
-import org.jgraph.graph.DefaultGraphCell;
-import org.jgraph.graph.DefaultGraphModel;
-import org.jgraph.graph.DefaultPort;
-import org.jgraph.graph.GraphConstants;
-import org.jgraph.graph.GraphLayoutCache;
-import org.jgraph.util.NonCollidingEdgeRouter;
-import org.jgraph.util.ParallelEdgeRouter;
-
-import paneles.PanelArbol;
-import paneles.PanelGrafoDependencia;
-import conf.*;
-import botones.*;
-import datos.*;
-import utilidades.*;
-import ventanas.*;
+import ventanas.Ventana;
+import botones.BotonAceptar;
+import botones.BotonCancelar;
+import conf.Conf;
+import datos.DatosMetodoBasicos;
+import datos.DatosTrazaBasicos;
 
 /**
  * Permite seleccionar un método de entre los distintos activos en la ejecución
@@ -49,7 +27,7 @@ import ventanas.*;
  * @author David Pastor Herranz
  */
 public class CuadroGenerarGrafoDependencia extends Thread implements
-		ActionListener, KeyListener {
+ActionListener, KeyListener {
 
 	private static final int ANCHO_CUADRO = 275;
 
@@ -96,10 +74,10 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 
 		JPanel panelRadio = new JPanel();
 		panelRadio.setLayout(new GridLayout(this.numeroFilas, 1));
-//		panelRadio.setBorder(new TitledBorder(Texto.get("CVIS_BORDER",
-//				Conf.idioma)));
+		// panelRadio.setBorder(new TitledBorder(Texto.get("CVIS_BORDER",
+		// Conf.idioma)));
 		panelRadio.setBorder(new TitledBorder("Métodos disponibles"));
-		
+
 		ButtonGroup radioButtonGroup = new ButtonGroup();
 		for (int i = 0; i < this.dtb.getNumMetodos(); i++) {
 			DatosMetodoBasicos dmb = this.dtb.getMetodo(i);
@@ -133,9 +111,9 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 
 		// Preparamos y mostramos cuadro
 		this.dialogo.getContentPane().add(panel);
-//		this.dialogo.setTitle(Texto.get("CVIS_VIS", Conf.idioma));
+		// this.dialogo.setTitle(Texto.get("CVIS_VIS", Conf.idioma));
 		this.dialogo.setTitle("Generar grafo de dependencia");
-		
+
 		if (this.ventana.msWindows) {
 			this.dialogo.setSize(ANCHO_CUADRO, this.numeroFilas * 23 + 90);
 			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO,
@@ -160,7 +138,7 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.aceptar) {
-			// Procesar grafo de dependencia
+
 			String nombreMetodo = null;
 			for (int i = 0; i < this.botonesMetodos.length; i++) {
 				if (this.botonesMetodos[i].isSelected()) {
@@ -168,26 +146,10 @@ public class CuadroGenerarGrafoDependencia extends Thread implements
 					break;
 				}
 			}
-			
-			GrafoDependencia grafoDependencia = new GrafoDependencia(this.ventana.trazaCompleta, nombreMetodo);
-			grafoDependencia.tabularGrafo();
-			JGraph representacionGrafo = grafoDependencia.obtenerRepresentacionGrafo();
-						
-	        final JFrame f = new JFrame();
-	        f.setSize(800, 600);
-	        final JScrollPane sp = new JScrollPane(representacionGrafo);
-	        try {				
-			    f.add(sp);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	       
-	        f.pack();
-	        f.setVisible(true);
-			
+
 			this.dialogo.setVisible(false);
-			
+			new CuadroGrafoDependencia(this.ventana, nombreMetodo);
+
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
 		}

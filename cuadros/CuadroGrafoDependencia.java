@@ -6,9 +6,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
+import org.jgraph.JGraph;
+
+import conf.Conf;
+import datos.GrafoDependencia;
 import ventanas.*;
 
 /**
@@ -18,19 +24,39 @@ import ventanas.*;
  */
 public class CuadroGrafoDependencia extends Thread implements
 		ActionListener, KeyListener {
-
+	
+	private static final int PORCENTAJE_PANTALLA = 70;
+	
+	private String nombreMetodo;
+	
 	private Ventana ventana;
 	private JDialog dialogo;
-
+	
+	private GrafoDependencia grafoDependencia;
+	private JGraph representacionGrafo;
+	private JScrollPane representacionGrafoScroll;
+	
+//	i_tabulado.gif
+//	
+//	i_formato.gif
+//	i_zoommas.gif
+//	i_zoommenos.gif
+//	i_zoomajuste.gif
+//	
+//	i_entradasalida.gif
+//	i_vermetodosparam.gif
+	
 	/**
 	 * Genera un nuevo cuadro que permite mostrar un grafo de dependencia.
 	 * 
 	 * @param ventana
 	 *            Ventana a la que quedará asociado el cuadro.
+	 * @param nombreMetodo Nombre del método para el que generar el grafo de dependencia.
 	 */
-	public CuadroGrafoDependencia(Ventana ventana) {
+	public CuadroGrafoDependencia(Ventana ventana, String nombreMetodo) {
 			this.dialogo = new JDialog(ventana, true);
 			this.ventana = ventana;
+			this.nombreMetodo = nombreMetodo;
 			this.start();
 	}
 
@@ -44,18 +70,30 @@ public class CuadroGrafoDependencia extends Thread implements
 		BorderLayout bl = new BorderLayout();
 		JPanel panel = new JPanel();
 		panel.setLayout(bl);
-
 //		panel.add(panelRadio, BorderLayout.NORTH);
 //		panel.add(panelBotones, BorderLayout.SOUTH);
 
 		// Preparamos y mostramos cuadro
 		this.dialogo.getContentPane().add(panel);
 		this.dialogo.setTitle("Grafo de Dependencia");
-//		this.dialogo.setSize(ANCHO_CUADRO, this.numeroFilas * 23 + 90);
-//		int coord[] = Conf.ubicarCentro(ANCHO_CUADRO,
-//				this.numeroFilas * 23 + 90);
-//		this.dialogo.setLocation(coord[0], coord[1]);
-		this.dialogo.setResizable(false);
+		
+		// Ubicamos y dimensionamos el cuadro según la resolución de pantalla configurada.
+		int[] tamanio = Conf.getTamanoMonitor();
+		tamanio[0] = tamanio[0] * PORCENTAJE_PANTALLA / 100;
+		tamanio[1] = tamanio[1] * PORCENTAJE_PANTALLA / 100;
+		dialogo.setSize(tamanio[0], tamanio[1]);
+		
+		int[] ubicacion = Conf.ubicarCentro(tamanio[0], tamanio[1]);
+		dialogo.setLocation(ubicacion[0], ubicacion[1]);
+		
+        this.grafoDependencia = new GrafoDependencia(this.ventana.trazaCompleta, this.nombreMetodo);
+        this.representacionGrafo = this.grafoDependencia.obtenerRepresentacionGrafo();
+                    
+        this.representacionGrafoScroll = new JScrollPane(this.representacionGrafo);
+        this.dialogo.add(this.representacionGrafoScroll);
+		
+		//dialogo.setIconImage(new ImageIcon(icono).getImage());
+        this.dialogo.setResizable(false);
 		this.dialogo.setVisible(true);
 	}
 

@@ -40,6 +40,7 @@ import cuadros.CuadroElegirES;
 import cuadros.CuadroElegirHistorico;
 import cuadros.CuadroError;
 import cuadros.CuadroGenerarGrafoDependencia;
+import cuadros.CuadroGrafoDependencia;
 import cuadros.CuadroIdioma;
 import cuadros.CuadroInfoNodo;
 import cuadros.CuadroInfoTraza;
@@ -2224,8 +2225,12 @@ public class Ventana extends JFrame implements ActionListener {
 				this.p);
 	}
 	
-    public void generarGrafoDependencia() {
-        new CuadroGenerarGrafoDependencia(this, this.dtb);
+    private void generarGrafoDependencia() {
+    	if (this.dtb.getNumMetodos() > 1) {
+    		new CuadroGenerarGrafoDependencia(this, this.dtb);
+    	} else if (this.dtb.getNumMetodos() == 1) {
+    		new CuadroGrafoDependencia(this, this.dtb.getNombreMetodoEjecucion());
+    	}
     }
 
 	/**
@@ -2245,7 +2250,7 @@ public class Ventana extends JFrame implements ActionListener {
 
 	/**
 	 * Devuelve las dimensiones necesarias a aplicar cuando se desea
-	 * redimensionar la ventana.
+	 * redimensionar la ventana a su tamaño inicial.
 	 * 
 	 * @param d
 	 *            Dimensiones {anchura, altura}.

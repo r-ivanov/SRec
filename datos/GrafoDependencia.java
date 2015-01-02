@@ -1,7 +1,8 @@
 package datos;
 
-import java.awt.Dimension;
-import java.awt.geom.Dimension2D;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,7 +12,9 @@ import org.jgraph.JGraph;
 import org.jgraph.event.GraphModelEvent;
 import org.jgraph.event.GraphModelListener;
 import org.jgraph.graph.DefaultCellViewFactory;
+import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultGraphModel;
+import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
 
 import conf.Conf;
@@ -19,13 +22,49 @@ import utilidades.MatrizDinamica;
 
 public class GrafoDependencia {
 	
+	private static final int MARGEN_TABLA = 70;
+	private static final int TAMANIO_MARCADORES_EJES = 20;
+	private static final int MARGEN_NODOS_ANCHURA = 50;
+	private static final int MARGEN_NODOS_ALTURA = 30;
+	
 	private List<NodoGrafoDependencia> nodos;
 	private String nombreMetodo;
+	private MatrizDinamica<NodoGrafoDependencia> matrizTabulado;
+	private int anchuraCuadroMatriz;
+	private int alturaCuadroMatriz;
+	private boolean dibujarTabla;
 	
 	public GrafoDependencia(Traza traza, String nombreMetodo) {
+		
 		this.nodos = new ArrayList<NodoGrafoDependencia>();
 		this.nombreMetodo = nombreMetodo;
-		this.insertarNodos(null, traza.getRaiz(), new ArrayList<NodoGrafoDependencia>());
+		this.dibujarTabla = false;
+		
+		this.insertarNodos(null, traza.getRaiz(), new ArrayList<NodoGrafoDependencia>());		
+		this.ajustarNodosAMismaAnchuraYCalcularTamanioCuadro();
+		this.tabularGrafoConOrganizacionPorDefecto();
+	}
+	
+	private void ajustarNodosAMismaAnchuraYCalcularTamanioCuadro() {
+		
+		double anchuraNodoMayor = 0;
+		double alturaNodoMayor = 0;
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			if (nodo.getAnchura() > anchuraNodoMayor) {
+				anchuraNodoMayor = nodo.getAnchura();
+			}
+			if (nodo.getAltura() > alturaNodoMayor) {
+				alturaNodoMayor = nodo.getAltura();
+			}
+		}
+		
+		/* Establecemos la misma anchura para todos los nodos */
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			nodo.setAnchura(anchuraNodoMayor);
+		}
+		
+		this.anchuraCuadroMatriz = (int) anchuraNodoMayor + MARGEN_NODOS_ANCHURA * 2;
+		this.alturaCuadroMatriz = (int) alturaNodoMayor + MARGEN_NODOS_ALTURA * 2;
 	}
 	
 	private void insertarNodos(NodoGrafoDependencia padre, RegistroActivacion registroActivacion, List<NodoGrafoDependencia> procesados) {	
@@ -82,6 +121,23 @@ public class GrafoDependencia {
 		return nodoObtenido;
 	}
 	
+	private DefaultGraphCell crearLineaParaTabla(int xInicial, int yInicial, int longitud, boolean vertical) {
+		DefaultGraphCell linea = new DefaultGraphCell("");
+		GraphConstants.setDisconnectable(linea.getAttributes(), false);
+		GraphConstants.setMoveable(linea.getAttributes(), true);
+		GraphConstants.setSelectable(linea.getAttributes(), false);
+		GraphConstants.setEditable(linea.getAttributes(), false);
+		GraphConstants.setOpaque(linea.getAttributes(), true);
+		GraphConstants.setBackground(linea.getAttributes(), Color.LIGHT_GRAY);		
+		GraphConstants.setBounds(linea.getAttributes(), new Rectangle(
+				xInicial,
+				yInicial,
+				vertical ? 1 : longitud,
+				vertical ? longitud : 1
+				));		
+		return linea;
+	}
+	
 	public JGraph obtenerRepresentacionGrafo() {
 		
 		DefaultGraphModel model = new DefaultGraphModel();
@@ -89,12 +145,31 @@ public class GrafoDependencia {
 		final JGraph representacionGrafo = new JGraph(model, view);
 		representacionGrafo.setMarqueeHandler(null);
 		
+		if (this.dibujarTabla || true) {
+			for (int fila = 0; fila <= this.matrizTabulado.numFilas(); fila++) {
+				DefaultGraphCell linea = this.crearLineaParaTabla(
+						MARGEN_TABLA - TAMANIO_MARCADORES_EJES,
+						MARGEN_TABLA + fila * this.alturaCuadroMatriz,
+						this.matrizTabulado.numColumnas() * this.anchuraCuadroMatriz + TAMANIO_MARCADORES_EJES,
+						false);
+				representacionGrafo.getGraphLayoutCache().insert(linea);
+			}			
+			for (int columna = 0; columna <= this.matrizTabulado.numColumnas(); columna++) {
+				DefaultGraphCell linea = this.crearLineaParaTabla(
+						MARGEN_TABLA + columna * this.anchuraCuadroMatriz,
+						MARGEN_TABLA - TAMANIO_MARCADORES_EJES,
+						this.matrizTabulado.numFilas() * this.alturaCuadroMatriz + TAMANIO_MARCADORES_EJES,
+						true);
+				representacionGrafo.getGraphLayoutCache().insert(linea);
+			}
+		}
+		
 		for (NodoGrafoDependencia nodo : this.nodos) {
 			representacionGrafo.getGraphLayoutCache().insert(nodo.obtenerCeldasDelNodoParaGrafo().toArray());
 		}
 		
 		representacionGrafo.setBackground(Conf.colorPanel);		
-		representacionGrafo.getModel().addGraphModelListener(new GraphModelListener() {				
+		representacionGrafo.getModel().addGraphModelListener(new GraphModelListener() {
 			@Override
 			public void graphChanged(GraphModelEvent e) {
 				representacionGrafo.refreshUI();
@@ -103,32 +178,26 @@ public class GrafoDependencia {
 		return representacionGrafo;
 	}
 	
-	public void tabularGrafo() {
-		
-		double anchuraNodoMayor = 0;
-		for (NodoGrafoDependencia nodo : this.nodos) {
-			if (nodo.getAnchura() > anchuraNodoMayor) {
-				anchuraNodoMayor = nodo.getAnchura();
-			}
-		}	
-		for (NodoGrafoDependencia nodo : this.nodos) {
-			nodo.setAnchura(anchuraNodoMayor);
-		}
-		
-		MatrizDinamica<NodoGrafoDependencia> matriz = new MatrizDinamica<NodoGrafoDependencia>();
+	private void tabularGrafoConOrganizacionPorDefecto() {		
+		this.matrizTabulado = new MatrizDinamica<NodoGrafoDependencia>();
 		if (this.nodos.size() > 0) {
 			NodoGrafoDependencia raiz = this.nodos.get(0);
-			this.aniadirDependenciasAMatriz(matriz, raiz);
+			this.aniadirDependenciasAMatriz(this.matrizTabulado, raiz);
 		}
 		
-		for (int fila = 0; fila < matriz.numFilas(); fila++) {
-			for (int columna = 0; columna < matriz.numColumnas(); columna++) {
-				NodoGrafoDependencia nodo = matriz.get(fila, columna);
+		for (int fila = 0; fila < this.matrizTabulado.numFilas(); fila++) {
+			for (int columna = 0; columna < this.matrizTabulado.numColumnas(); columna++) {
+				NodoGrafoDependencia nodo = this.matrizTabulado.get(fila, columna);
 				if (nodo != null) {
-					nodo.setPosicion((fila + 1) * 200, (columna + 1) * 200);
+					nodo.setPosicion(MARGEN_TABLA + MARGEN_NODOS_ANCHURA + columna * this.anchuraCuadroMatriz,
+							MARGEN_TABLA + MARGEN_NODOS_ALTURA + fila * this.alturaCuadroMatriz);
 				}
 			}
 		}
+	}
+	
+	public void debeDibujarseTabla(boolean valor) {
+		this.dibujarTabla = valor;
 	}
 	
 	private void aniadirDependenciasAMatriz(MatrizDinamica<NodoGrafoDependencia> matriz, NodoGrafoDependencia raiz) {
@@ -175,6 +244,16 @@ public class GrafoDependencia {
 			distancia++;
 			
 			if (!huecoEncontrado) {
+				for (int i = fila; i < fila + distancia; i++) {
+					if (matriz.get(i, columna + distancia) == null) {
+						posicion[0] = i;
+						posicion[1] = columna + distancia;
+						huecoEncontrado = true;
+					}
+				}
+			}
+			
+			if (!huecoEncontrado) {
 				for (int i = columna; i < columna + distancia; i++) {
 					if (matriz.get(fila + distancia, i) == null) {
 						posicion[0] = fila + distancia;
@@ -183,16 +262,6 @@ public class GrafoDependencia {
 					}
 				}
 			}
-			
-			if (!huecoEncontrado) {
-				for (int i = fila; i < fila + distancia; i++) {
-					if (matriz.get(i, columna + distancia) == null) {
-						posicion[0] = i;
-						posicion[1] = columna + distancia;
-						huecoEncontrado = true;
-					}
-				}
-			}		
 			
 			if (!huecoEncontrado) {
 				if (matriz.get(fila + distancia, columna + distancia) == null) {

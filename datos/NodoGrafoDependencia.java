@@ -1,5 +1,6 @@
 package datos;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -166,22 +167,22 @@ public class NodoGrafoDependencia {
 		return GraphConstants.getSize(this.celdaGrafo.getAttributes()).getWidth();
 	}
 	
+	public double getAltura() {	
+		return GraphConstants.getSize(this.celdaGrafo.getAttributes()).getHeight();
+	}
+	
 	public void setPosicion(int x, int y) {	
 		Rectangle2D bounds = GraphConstants.getBounds(this.celdaGrafo.getAttributes());
 		
 		int dimX = (int) bounds.getWidth();
 		int dimY = (int) bounds.getHeight();
 		
-		/* Posicion del centro del nodo */
-		int nuevaX = x - dimX/2;
-		int nuevaY = y - dimY/2;
-		
 		GraphConstants.setBounds(this.celdaGrafo.getAttributes(),
-				new Rectangle(nuevaX, nuevaY, dimX, dimY));
+				new Rectangle(x, y, dimX, dimY));
 		GraphConstants.setBounds(this.celdaEntrada.getAttributes(),
-				new Rectangle(nuevaX, nuevaY, dimX, alturaCelda));
+				new Rectangle(x, y, dimX, alturaCelda));
 		GraphConstants.setBounds(this.celdaSalida.getAttributes(),
-				new Rectangle(nuevaX, nuevaY + alturaCelda, dimX, alturaCelda));
+				new Rectangle(x, y + alturaCelda, dimX, alturaCelda));
 	}
 
 	public boolean equals(NodoGrafoDependencia nodo) {
@@ -226,11 +227,11 @@ public class NodoGrafoDependencia {
 	
 	public void addDependencia(NodoGrafoDependencia nodo) {		
 		DefaultEdge arista = new DefaultEdge();
-		GraphConstants.setLineEnd(arista.getAttributes(), GraphConstants.ARROW_CLASSIC);
+		GraphConstants.setLineEnd(arista.getAttributes(), GraphConstants.ARROW_TECHNICAL);
 		GraphConstants.setEndFill(arista.getAttributes(), true);
 		GraphConstants.setSelectable(arista.getAttributes(),false);
-		GraphConstants.setLineWidth(arista.getAttributes(), Conf.grosorFlecha);
-		GraphConstants.setLineColor(arista.getAttributes(), Conf.colorFlecha);
+		GraphConstants.setLineWidth(arista.getAttributes(), 2);
+		GraphConstants.setLineColor(arista.getAttributes(), Color.BLACK);
 		GraphConstants.setRouting(arista.getAttributes(), edgeRouter);
 		GraphConstants.setLineStyle(arista.getAttributes(), GraphConstants.STYLE_SPLINE);
 		arista.setSource(this.portCelda);
