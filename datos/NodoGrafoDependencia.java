@@ -230,7 +230,7 @@ public class NodoGrafoDependencia {
 		GraphConstants.setLineEnd(arista.getAttributes(), GraphConstants.ARROW_TECHNICAL);
 		GraphConstants.setEndFill(arista.getAttributes(), true);
 		GraphConstants.setSelectable(arista.getAttributes(),false);
-		GraphConstants.setLineWidth(arista.getAttributes(), 2);
+		GraphConstants.setLineWidth(arista.getAttributes(), 1);
 		GraphConstants.setLineColor(arista.getAttributes(), Color.BLACK);
 		GraphConstants.setRouting(arista.getAttributes(), edgeRouter);
 		GraphConstants.setLineStyle(arista.getAttributes(), GraphConstants.STYLE_SPLINE);

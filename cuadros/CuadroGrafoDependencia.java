@@ -77,23 +77,17 @@ public class CuadroGrafoDependencia extends Thread implements
 		this.dialogo.getContentPane().add(panel);
 		this.dialogo.setTitle("Grafo de Dependencia");
 		
-		// Ubicamos y dimensionamos el cuadro según la resolución de pantalla configurada.
-		int[] tamanio = Conf.getTamanoMonitor();
-		tamanio[0] = tamanio[0] * PORCENTAJE_PANTALLA / 100;
-		tamanio[1] = tamanio[1] * PORCENTAJE_PANTALLA / 100;
-		dialogo.setSize(tamanio[0], tamanio[1]);
-		
-		int[] ubicacion = Conf.ubicarCentro(tamanio[0], tamanio[1]);
-		dialogo.setLocation(ubicacion[0], ubicacion[1]);
-		
         this.grafoDependencia = new GrafoDependencia(this.ventana.trazaCompleta, this.nombreMetodo);
         this.representacionGrafo = this.grafoDependencia.obtenerRepresentacionGrafo();
                     
         this.representacionGrafoScroll = new JScrollPane(this.representacionGrafo);
         this.dialogo.add(this.representacionGrafoScroll);
-		
-		//dialogo.setIconImage(new ImageIcon(icono).getImage());
-        this.dialogo.setResizable(false);
+        
+        this.dialogo.setSize(representacionGrafo.getSize());	
+     	int[] ubicacion = Conf.ubicarCentro(representacionGrafo.getSize().width, representacionGrafo.getSize().height);
+     	this.dialogo.setLocation(ubicacion[0], ubicacion[1]);
+     		
+        this.dialogo.setResizable(true);
 		this.dialogo.setVisible(true);
 	}
 

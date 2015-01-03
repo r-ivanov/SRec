@@ -76,7 +76,7 @@ public class NonCollidingEdgeRouter extends LoopRouting {
 		
 		double margenColision = GraphConstants.getCollisionMargin(sourceCell.getAllAttributes());
 		
-		rectangulos = resolverColisionesEntreRectangulos(rectangulos, margenColision * 2);	
+		rectangulos = resolverColisionesEntreRectangulos(rectangulos, margenColision);	
 		List<Rectangle2D> copiaRectangulos = new ArrayList<Rectangle2D>(rectangulos);
 		for (Rectangle2D rectangulo : copiaRectangulos) {
 			if (this.obtenerRectanguloConMargen(sourceCell.getBounds(), margenColision).intersects(rectangulo) ||

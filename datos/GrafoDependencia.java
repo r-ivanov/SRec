@@ -1,6 +1,7 @@
 package datos;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -8,14 +9,19 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import org.jgraph.JGraph;
 import org.jgraph.event.GraphModelEvent;
 import org.jgraph.event.GraphModelListener;
+import org.jgraph.event.GraphSelectionEvent;
+import org.jgraph.event.GraphSelectionListener;
 import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
+import org.jgraph.graph.Port;
 
 import conf.Conf;
 import utilidades.MatrizDinamica;
@@ -124,7 +130,7 @@ public class GrafoDependencia {
 	private DefaultGraphCell crearLineaParaTabla(int xInicial, int yInicial, int longitud, boolean vertical) {
 		DefaultGraphCell linea = new DefaultGraphCell("");
 		GraphConstants.setDisconnectable(linea.getAttributes(), false);
-		GraphConstants.setMoveable(linea.getAttributes(), true);
+		GraphConstants.setMoveable(linea.getAttributes(), false);
 		GraphConstants.setSelectable(linea.getAttributes(), false);
 		GraphConstants.setEditable(linea.getAttributes(), false);
 		GraphConstants.setOpaque(linea.getAttributes(), true);
@@ -171,10 +177,32 @@ public class GrafoDependencia {
 		representacionGrafo.setBackground(Conf.colorPanel);		
 		representacionGrafo.getModel().addGraphModelListener(new GraphModelListener() {
 			@Override
-			public void graphChanged(GraphModelEvent e) {
+			public void graphChanged(final GraphModelEvent e) {
 				representacionGrafo.refreshUI();
 			}
 		});
+
+		representacionGrafo.addGraphSelectionListener(new GraphSelectionListener() {		
+			@Override
+			public void valueChanged(GraphSelectionEvent e) {
+				if(e.isAddedCell()) {					
+					Object[] cells = new Object[1];
+					cells[0] = e.getCell();
+					representacionGrafo.getModel().toFront(cells);					
+					List incomingEdges = representacionGrafo.getGraphLayoutCache().getIncomingEdges(e.getCell(),
+							null, false, true);
+					List outgoingEdges = representacionGrafo.getGraphLayoutCache().getOutgoingEdges(e.getCell(),
+							null, false, true);
+					representacionGrafo.getModel().toFront(incomingEdges.toArray());
+					representacionGrafo.getModel().toFront(outgoingEdges.toArray());
+				}
+			}
+		});
+		
+		int anchuraTotal = this.matrizTabulado.numColumnas() * this.anchuraCuadroMatriz + MARGEN_TABLA * 2;
+		int alturaTotal = this.matrizTabulado.numFilas() * this.alturaCuadroMatriz + MARGEN_TABLA * 2;
+		representacionGrafo.setSize(new Dimension(anchuraTotal, alturaTotal));
+		
 		return representacionGrafo;
 	}
 	
