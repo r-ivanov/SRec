@@ -48,10 +48,11 @@ public class NodoGrafoDependencia {
 		this.dependencias = new ArrayList<NodoGrafoDependencia>();
 		this.aristas = new ArrayList<DefaultEdge>();
 		this.registroActivacion = registroActivacionAsociado;
+		this.portCelda = new DefaultPort();
 		this.inicializarRepresentacion();
 	}
 	
-	private void inicializarRepresentacion() {
+	public void inicializarRepresentacion() {
 		
 		String repEntrada = this.registroActivacion.getEntrada().getRepresentacion();
 		if (repEntrada.length() < 3) {
@@ -61,6 +62,25 @@ public class NodoGrafoDependencia {
 		String repSalida = this.registroActivacion.getSalida().getRepresentacion();
 		if (repSalida.length() < 3) {
 			repSalida = "  " + repSalida + "  ";
+		}
+		
+		
+		// Tamaños
+		int tamanioCadena;
+		if (Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA) {
+			tamanioCadena = repSalida.length() * anchoPixelCaracter;
+		} else if (Conf.elementosVisualizar == Conf.VISUALIZAR_ENTRADA) {
+			tamanioCadena = repEntrada.length() * anchoPixelCaracter;
+		} else {
+			tamanioCadena = Math.max(repSalida.length(), repEntrada.length()) * anchoPixelCaracter;
+		}
+		
+		int previousX = 0;
+		int previousY = 0;
+		if (this.celdaGrafo != null) {
+			Rectangle2D previousBounds = GraphConstants.getBounds(this.celdaGrafo.getAttributes());
+			previousX = (int) previousBounds.getX();
+			previousY = (int) previousBounds.getY();
 		}
 		
 		this.celdaEntrada = new DefaultGraphCell(repEntrada);
@@ -77,7 +97,9 @@ public class NodoGrafoDependencia {
 		GraphConstants.setGradientColor(
 				this.celdaEntrada.getAttributes(),
 				(Conf.modoColor == 1 ? Conf.colorC2Entrada : Conf.coloresNodo2[this.registroActivacion.getNumMetodo() % 10]));
-		this.marcoCelda(this.celdaEntrada.getAttributes());
+		this.marcoCelda(this.celdaEntrada.getAttributes());	
+		GraphConstants.setBounds(this.celdaEntrada.getAttributes(), new Rectangle(
+				previousX, previousY, tamanioCadena, alturaCelda));
 		
 		this.celdaSalida = new DefaultGraphCell(repSalida);
 		GraphConstants.setDisconnectable(this.celdaSalida.getAttributes(), false);
@@ -93,22 +115,25 @@ public class NodoGrafoDependencia {
 		GraphConstants.setGradientColor(
 				this.celdaSalida.getAttributes(),
 				(Conf.modoColor == 1 ? Conf.colorC2Salida : Conf.coloresNodo2[this.registroActivacion.getNumMetodo() % 10]));
-		this.marcoCelda(this.celdaSalida.getAttributes());
-		
-		// Tamaños
-		int tamanioCadena = Math.max(repEntrada.length(), repSalida.length()) * anchoPixelCaracter;
-		GraphConstants.setBounds(this.celdaEntrada.getAttributes(), new Rectangle(
-				0, 0, tamanioCadena, alturaCelda));
+		this.marcoCelda(this.celdaSalida.getAttributes());		
 		GraphConstants.setBounds(this.celdaSalida.getAttributes(), new Rectangle(
-				0, alturaCelda, tamanioCadena, alturaCelda));
-		
+				previousX, previousY + (Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA ? 0 : alturaCelda), tamanioCadena, alturaCelda));
 		
 		this.celdaGrafo = new DefaultGraphCell();
-		this.celdaGrafo.add(this.celdaEntrada);
-		this.celdaGrafo.add(this.celdaSalida);
+		int celdasVisibles = 0;
+		if (Conf.elementosVisualizar != Conf.VISUALIZAR_SALIDA) {			
+			this.celdaGrafo.add(this.celdaEntrada);
+			celdasVisibles++;
+		}
+		
+		if (Conf.elementosVisualizar != Conf.VISUALIZAR_ENTRADA) {		
+			this.celdaGrafo.add(this.celdaSalida);
+			celdasVisibles++;
+		}
+		
 		GraphConstants.setBounds(this.celdaGrafo.getAttributes(), new Rectangle(
-				0, 0, tamanioCadena, alturaCelda * 2));
-		GraphConstants.setSize(this.celdaGrafo.getAttributes(), new Dimension(tamanioCadena, alturaCelda * 2));
+				previousX, previousY, tamanioCadena, alturaCelda * celdasVisibles));
+		GraphConstants.setSize(this.celdaGrafo.getAttributes(), new Dimension(tamanioCadena, alturaCelda * celdasVisibles));
 		GraphConstants.setDisconnectable(this.celdaGrafo.getAttributes(), false);
 		GraphConstants.setMoveable(this.celdaGrafo.getAttributes(), true);
 		GraphConstants.setSelectable(this.celdaGrafo.getAttributes(), true);
@@ -117,8 +142,7 @@ public class NodoGrafoDependencia {
 		GraphConstants.setAutoSize(this.celdaGrafo.getAttributes(), false);
 		GraphConstants.setSizeable(this.celdaGrafo.getAttributes(), false);
 		GraphConstants.setCollisionMargin(this.celdaGrafo.getAttributes(), margenColision);
-				
-		this.portCelda = new DefaultPort();
+		
 		this.celdaGrafo.add(this.portCelda);
 	}
 	
@@ -157,10 +181,14 @@ public class NodoGrafoDependencia {
 		Rectangle2D bounds = GraphConstants.getBounds(this.celdaGrafo.getAttributes());
 		GraphConstants.setBounds(this.celdaGrafo.getAttributes(),
 				new Rectangle2D.Double(bounds.getX(), bounds.getY(), anchura, bounds.getHeight()));
+		
+		Rectangle2D boundsEntrada = GraphConstants.getBounds(this.celdaEntrada.getAttributes());
 		GraphConstants.setBounds(this.celdaEntrada.getAttributes(),
-				new Rectangle2D.Double(bounds.getX(), bounds.getY(), anchura, alturaCelda));
+				new Rectangle2D.Double(boundsEntrada.getX(), boundsEntrada.getY(), anchura, alturaCelda));
+		
+		Rectangle2D boundsSalida = GraphConstants.getBounds(this.celdaSalida.getAttributes());
 		GraphConstants.setBounds(this.celdaSalida.getAttributes(),
-				new Rectangle2D.Double(bounds.getX(), bounds.getY() + alturaCelda, anchura, alturaCelda));
+				new Rectangle2D.Double(boundsSalida.getX(), boundsSalida.getY(), anchura, alturaCelda));
 	}
 	
 	public double getAnchura() {	
@@ -182,7 +210,7 @@ public class NodoGrafoDependencia {
 		GraphConstants.setBounds(this.celdaEntrada.getAttributes(),
 				new Rectangle(x, y, dimX, alturaCelda));
 		GraphConstants.setBounds(this.celdaSalida.getAttributes(),
-				new Rectangle(x, y + alturaCelda, dimX, alturaCelda));
+				new Rectangle(x, y + (Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA ? 0 : alturaCelda), dimX, alturaCelda));
 	}
 
 	public boolean equals(NodoGrafoDependencia nodo) {
@@ -227,10 +255,10 @@ public class NodoGrafoDependencia {
 	
 	public void addDependencia(NodoGrafoDependencia nodo) {		
 		DefaultEdge arista = new DefaultEdge();
-		GraphConstants.setLineEnd(arista.getAttributes(), GraphConstants.ARROW_TECHNICAL);
+		GraphConstants.setLineEnd(arista.getAttributes(), GraphConstants.ARROW_CLASSIC);
 		GraphConstants.setEndFill(arista.getAttributes(), true);
 		GraphConstants.setSelectable(arista.getAttributes(),false);
-		GraphConstants.setLineWidth(arista.getAttributes(), 1);
+		GraphConstants.setLineWidth(arista.getAttributes(), 2);
 		GraphConstants.setLineColor(arista.getAttributes(), Color.BLACK);
 		GraphConstants.setRouting(arista.getAttributes(), edgeRouter);
 		GraphConstants.setLineStyle(arista.getAttributes(), GraphConstants.STYLE_SPLINE);

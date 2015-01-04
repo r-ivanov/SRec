@@ -283,6 +283,28 @@
 		<T valor="Configuraci[oacute]n de zoom: ajuste" idioma="es" id="BARRA_HERR_TTT24"/>
 		<T valor="Zoom configuration: adjust" idioma="en" id="BARRA_HERR_TTT24"/>
 		
+		<!-- Grafo de dependencia -->
+		
+		<T valor="Dibujar matriz sobre el grafo" idioma="es" id="GP_DIBUJAR_MATRIZ"/>
+		<T valor="Draw matrix on graph" idioma="en" id="GP_DIBUJAR_MATRIZ"/>	
+		<T valor="Reorganizar nodos del grafo en una matriz" idioma="es" id="GP_TABULAR_MATRIZ"/>
+		<T valor="Reorganize graph nodos into a matrix" idioma="en" id="GP_TABULAR_MATRIZ"/>
+		
+		<T valor="Datos de entrada y salida..." idioma="es" id="GP_DATOS_ENTRADA"/>
+		<T valor="Input and output data..." idioma="en" id="GP_DATOS_ENTRADA"/>
+		<T valor="Par[aacute]metros..." idioma="es" id="GP_PARAMETROS"/>
+		<T valor="Parameters..." idioma="en" id="GP_PARAMETROS"/>
+		
+		<T valor="Formato tipogr[aacute]fico..." idioma="es" id="GP_FORMATO"/>
+		<T valor="Typographical format..." idioma="en" id="GP_FORMATO"/>
+		<T valor="Configuraci[oacute]n de zoom: aumento" idioma="es" id="GP_AUMENTO_ZOOM"/>
+		<T valor="Zoom configuration: increase" idioma="en" id="GP_AUMENTO_ZOOM"/>
+		<T valor="Configuraci[oacute]n de zoom: disminuci[oacute]n" idioma="es" id="GP_DISMINUCION_ZOOM"/>
+		<T valor="Zoom configuration: decrease" idioma="en" id="GP_DISMINUCION_ZOOM"/>
+		<T valor="Configuraci[oacute]n de zoom: ajuste" idioma="es" id="GP_AJUSTE_ZOOM"/>
+		<T valor="Zoom configuration: adjust" idioma="en" id="GP_AJUSTE_ZOOM"/>
+		
+		
 		<T valor="Ubicaci[oacute]n de vistas y paneles..." idioma="es" id="BARRA_HERR_TTT25"/>
 		<T valor="Views and panels location..." idioma="en" id="BARRA_HERR_TTT25"/>
 		

@@ -28,7 +28,11 @@ import utilidades.MatrizDinamica;
 
 public class GrafoDependencia {
 	
+	private static final int ANCHO_PIXEL_CARACTER = 13;
+	private static final int TAM_FUENTE = 20;
+	
 	private static final int MARGEN_TABLA = 70;
+	private static final int MARGEN_INDICES = 10;
 	private static final int TAMANIO_MARCADORES_EJES = 20;
 	private static final int MARGEN_NODOS_ANCHURA = 50;
 	private static final int MARGEN_NODOS_ALTURA = 30;
@@ -38,17 +42,20 @@ public class GrafoDependencia {
 	private MatrizDinamica<NodoGrafoDependencia> matrizTabulado;
 	private int anchuraCuadroMatriz;
 	private int alturaCuadroMatriz;
-	private boolean dibujarTabla;
+	
+	private boolean nodosPosicionados;
+	
+	private boolean dibujarTabla = true;
+	private int numeroFilasTabla = 7;
+	private int numeroColumnasTabla = 7;
 	
 	public GrafoDependencia(Traza traza, String nombreMetodo) {
 		
 		this.nodos = new ArrayList<NodoGrafoDependencia>();
 		this.nombreMetodo = nombreMetodo;
-		this.dibujarTabla = false;
 		
 		this.insertarNodos(null, traza.getRaiz(), new ArrayList<NodoGrafoDependencia>());		
-		this.ajustarNodosAMismaAnchuraYCalcularTamanioCuadro();
-		this.tabularGrafoConOrganizacionPorDefecto();
+		this.crearMatrizTabuladoConOrganizacionPorDefecto();
 	}
 	
 	private void ajustarNodosAMismaAnchuraYCalcularTamanioCuadro() {
@@ -144,37 +151,43 @@ public class GrafoDependencia {
 		return linea;
 	}
 	
+	private DefaultGraphCell crearIndiceParaTabla(int valor, boolean fila) {
+		
+		String valorString = (fila ? "y=" : "x=") + String.valueOf(valor);
+		DefaultGraphCell indice = new DefaultGraphCell(valorString);
+		GraphConstants.setDisconnectable(indice.getAttributes(), false);
+		GraphConstants.setMoveable(indice.getAttributes(), false);
+		GraphConstants.setSelectable(indice.getAttributes(), false);
+		GraphConstants.setEditable(indice.getAttributes(), false);
+		GraphConstants.setFont(indice.getAttributes(), new Font("Arial",Font.BOLD, TAM_FUENTE));
+		GraphConstants.setBackground(indice.getAttributes(), Conf.colorPanel);
+		GraphConstants.setForeground(indice.getAttributes(), Color.LIGHT_GRAY);
+		GraphConstants.setOpaque(indice.getAttributes(), true);
+		
+		int anchura = valorString.length() * ANCHO_PIXEL_CARACTER;
+		int altura = TAM_FUENTE;
+		
+		int x = 0;
+		int y = 0;
+		if (fila) {
+			x = MARGEN_TABLA - MARGEN_INDICES - anchura;
+			y = MARGEN_TABLA + this.alturaCuadroMatriz * valor + this.alturaCuadroMatriz / 2 - altura / 2;
+		} else {
+			x = MARGEN_TABLA + this.anchuraCuadroMatriz * valor + this.anchuraCuadroMatriz / 2 - anchura / 2;
+			y = MARGEN_TABLA - MARGEN_INDICES - altura;
+		}		
+		GraphConstants.setBounds(indice.getAttributes(), new Rectangle(x, y, anchura, altura));
+		
+		return indice;
+	}
+	
 	public JGraph obtenerRepresentacionGrafo() {
 		
 		DefaultGraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,new DefaultCellViewFactory());
 		final JGraph representacionGrafo = new JGraph(model, view);
 		representacionGrafo.setMarqueeHandler(null);
-		
-		if (this.dibujarTabla || true) {
-			for (int fila = 0; fila <= this.matrizTabulado.numFilas(); fila++) {
-				DefaultGraphCell linea = this.crearLineaParaTabla(
-						MARGEN_TABLA - TAMANIO_MARCADORES_EJES,
-						MARGEN_TABLA + fila * this.alturaCuadroMatriz,
-						this.matrizTabulado.numColumnas() * this.anchuraCuadroMatriz + TAMANIO_MARCADORES_EJES,
-						false);
-				representacionGrafo.getGraphLayoutCache().insert(linea);
-			}			
-			for (int columna = 0; columna <= this.matrizTabulado.numColumnas(); columna++) {
-				DefaultGraphCell linea = this.crearLineaParaTabla(
-						MARGEN_TABLA + columna * this.anchuraCuadroMatriz,
-						MARGEN_TABLA - TAMANIO_MARCADORES_EJES,
-						this.matrizTabulado.numFilas() * this.alturaCuadroMatriz + TAMANIO_MARCADORES_EJES,
-						true);
-				representacionGrafo.getGraphLayoutCache().insert(linea);
-			}
-		}
-		
-		for (NodoGrafoDependencia nodo : this.nodos) {
-			representacionGrafo.getGraphLayoutCache().insert(nodo.obtenerCeldasDelNodoParaGrafo().toArray());
-		}
-		
-		representacionGrafo.setBackground(Conf.colorPanel);		
+					
 		representacionGrafo.getModel().addGraphModelListener(new GraphModelListener() {
 			@Override
 			public void graphChanged(final GraphModelEvent e) {
@@ -198,21 +211,78 @@ public class GrafoDependencia {
 				}
 			}
 		});
+
+		representacionGrafo.setBackground(Conf.colorPanel);
 		
-		int anchuraTotal = this.matrizTabulado.numColumnas() * this.anchuraCuadroMatriz + MARGEN_TABLA * 2;
-		int alturaTotal = this.matrizTabulado.numFilas() * this.alturaCuadroMatriz + MARGEN_TABLA * 2;
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			nodo.inicializarRepresentacion();
+		}	
+		this.ajustarNodosAMismaAnchuraYCalcularTamanioCuadro();
+		
+		if (this.dibujarTabla) {
+			int tamanioMarcadorEjesParaFila = this.numeroFilasTabla > 1 ? TAMANIO_MARCADORES_EJES : 0; 
+			for (int fila = 0; fila <= this.numeroFilasTabla; fila++) {
+				DefaultGraphCell linea = this.crearLineaParaTabla(
+						MARGEN_TABLA - tamanioMarcadorEjesParaFila,
+						MARGEN_TABLA + fila * this.alturaCuadroMatriz,
+						this.numeroColumnasTabla * this.anchuraCuadroMatriz + tamanioMarcadorEjesParaFila,
+						false);
+				representacionGrafo.getGraphLayoutCache().insert(linea);
+				if (fila != this.numeroFilasTabla && this.numeroFilasTabla > 1) {
+					DefaultGraphCell indice = crearIndiceParaTabla(fila, true);
+					representacionGrafo.getGraphLayoutCache().insert(indice);
+				}
+			}
+			int tamanioMarcadorEjesParaColumna = this.numeroColumnasTabla > 1 ? TAMANIO_MARCADORES_EJES : 0;
+			for (int columna = 0; columna <= this.numeroColumnasTabla; columna++) {
+				DefaultGraphCell linea = this.crearLineaParaTabla(
+						MARGEN_TABLA + columna * this.anchuraCuadroMatriz,
+						MARGEN_TABLA - tamanioMarcadorEjesParaColumna,
+						this.numeroFilasTabla * this.alturaCuadroMatriz + tamanioMarcadorEjesParaColumna,
+						true);
+				representacionGrafo.getGraphLayoutCache().insert(linea);
+				if (columna != this.numeroColumnasTabla && this.numeroColumnasTabla > 1) {
+					DefaultGraphCell indice = crearIndiceParaTabla(columna, false);
+					representacionGrafo.getGraphLayoutCache().insert(indice);
+				}
+			}
+		}
+		
+		if (this.dibujarTabla || !this.nodosPosicionados) {
+			this.posicionarNodosSegunTabulado();
+			this.nodosPosicionados = true;
+		}
+		
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			representacionGrafo.getGraphLayoutCache().insert(nodo.obtenerCeldasDelNodoParaGrafo().toArray());
+		}
+		
+		int numColumnas = this.matrizTabulado.numColumnas();
+		if (this.dibujarTabla && this.numeroColumnasTabla > this.matrizTabulado.numColumnas()) {
+			numColumnas = this.numeroColumnasTabla;
+		}
+		
+		int numFilas = this.matrizTabulado.numFilas();
+		if (this.dibujarTabla && this.numeroFilasTabla > this.matrizTabulado.numFilas()) {
+			numFilas = this.numeroFilasTabla;
+		}
+		
+		int anchuraTotal = numColumnas * this.anchuraCuadroMatriz + MARGEN_TABLA * 2;
+		int alturaTotal = numFilas * this.alturaCuadroMatriz + MARGEN_TABLA * 2;
 		representacionGrafo.setSize(new Dimension(anchuraTotal, alturaTotal));
 		
 		return representacionGrafo;
 	}
 	
-	private void tabularGrafoConOrganizacionPorDefecto() {		
+	private void crearMatrizTabuladoConOrganizacionPorDefecto() {		
 		this.matrizTabulado = new MatrizDinamica<NodoGrafoDependencia>();
 		if (this.nodos.size() > 0) {
 			NodoGrafoDependencia raiz = this.nodos.get(0);
 			this.aniadirDependenciasAMatriz(this.matrizTabulado, raiz);
 		}
-		
+	}
+	
+	private void posicionarNodosSegunTabulado() {
 		for (int fila = 0; fila < this.matrizTabulado.numFilas(); fila++) {
 			for (int columna = 0; columna < this.matrizTabulado.numColumnas(); columna++) {
 				NodoGrafoDependencia nodo = this.matrizTabulado.get(fila, columna);
@@ -224,8 +294,10 @@ public class GrafoDependencia {
 		}
 	}
 	
-	public void debeDibujarseTabla(boolean valor) {
-		this.dibujarTabla = valor;
+	public void debeDibujarseTabla(int numeroFilasTabla, int numeroColumnasTabla) {
+		this.dibujarTabla = true;
+		this.numeroFilasTabla = numeroFilasTabla;
+		this.numeroColumnasTabla = numeroColumnasTabla;
 	}
 	
 	private void aniadirDependenciasAMatriz(MatrizDinamica<NodoGrafoDependencia> matriz, NodoGrafoDependencia raiz) {
