@@ -50,7 +50,6 @@ public class GrafoDependencia {
 	
 	private boolean nodosPosicionados;
 	
-	private boolean dibujarTabla;
 	private int numeroFilasTabla;
 	private int numeroColumnasTabla;
 	
@@ -223,7 +222,8 @@ public class GrafoDependencia {
 		representacionGrafo.setBackground(Conf.colorPanel);	
 		this.ajustarNodosAMismaAnchuraYCalcularTamanioCuadro();
 		
-		if (this.dibujarTabla) {
+		boolean dibujarTabla = this.numeroFilasTabla >= 1 && this.numeroColumnasTabla >= 1;
+		if (dibujarTabla) {
 			int tamanioMarcadorEjesParaFila = this.numeroFilasTabla > 1 ? TAMANIO_MARCADORES_EJES : 0; 
 			for (int fila = 0; fila <= this.numeroFilasTabla; fila++) {
 				DefaultGraphCell linea = this.crearLineaParaTabla(
@@ -245,7 +245,8 @@ public class GrafoDependencia {
 						this.numeroFilasTabla * this.alturaCuadroMatriz + tamanioMarcadorEjesParaColumna,
 						true);
 				representacionGrafo.getGraphLayoutCache().insert(linea);
-				if (columna != this.numeroColumnasTabla && this.numeroColumnasTabla > 1) {
+				if (columna != this.numeroColumnasTabla &&
+						(this.numeroColumnasTabla > 1 || this.numeroColumnasTabla == 1 && this.numeroFilasTabla == 1)) {
 					DefaultGraphCell indice = crearIndiceParaTabla(columna, false);
 					representacionGrafo.getGraphLayoutCache().insert(indice);
 				}
@@ -262,12 +263,12 @@ public class GrafoDependencia {
 		}
 		
 		int numColumnas = this.matrizTabulado.numColumnas();
-		if (this.dibujarTabla && this.numeroColumnasTabla > this.matrizTabulado.numColumnas()) {
+		if (dibujarTabla && this.numeroColumnasTabla > this.matrizTabulado.numColumnas()) {
 			numColumnas = this.numeroColumnasTabla;
 		}
 		
 		int numFilas = this.matrizTabulado.numFilas();
-		if (this.dibujarTabla && this.numeroFilasTabla > this.matrizTabulado.numFilas()) {
+		if (dibujarTabla && this.numeroFilasTabla > this.matrizTabulado.numFilas()) {
 			numFilas = this.numeroFilasTabla;
 		}
 		
@@ -310,8 +311,7 @@ public class GrafoDependencia {
 		}
 	}
 	
-	public void debeDibujarseTabla(int numeroFilasTabla, int numeroColumnasTabla) {
-		this.dibujarTabla = true;
+	public void setTamanioTabla(int numeroFilasTabla, int numeroColumnasTabla) {
 		this.numeroFilasTabla = numeroFilasTabla;
 		this.numeroColumnasTabla = numeroColumnasTabla;
 	}
@@ -342,7 +342,7 @@ public class GrafoDependencia {
 		
 		if (!error) {
 			this.matrizTabulado = matriz;
-			this.debeDibujarseTabla(matriz.numFilas(), matriz.numColumnas());
+			this.setTamanioTabla(matriz.numFilas(), matriz.numColumnas());
 			this.nodosPosicionados = false;
 		}
 		

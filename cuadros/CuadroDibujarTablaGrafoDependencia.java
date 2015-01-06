@@ -64,10 +64,10 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 		
 		// Panel general de parámetros
 		this.panelParam = new JPanel(new GridLayout(2, 2));
-		this.panelParam.setBorder(new TitledBorder(Texto.get("CVALORES_VALORES", Conf.idioma)));
+		this.panelParam.setBorder(new TitledBorder(Texto.get("GP_DIBUJAR_TABLA_GRAFO_PANEL", Conf.idioma)));
 		
-		JLabel labelFilas = new JLabel("Filas:");
-		JLabel labelColumnas = new JLabel("Columnas:");
+		JLabel labelFilas = new JLabel(Texto.get("GP_DIBUJAR_TABLA_GRAFO_FILAS", Conf.idioma));
+		JLabel labelColumnas = new JLabel(Texto.get("GP_DIBUJAR_TABLA_GRAFO_COLUMNAS", Conf.idioma));
 		this.textFilas = new JTextField();
 		this.textFilas.addKeyListener(this);
 		this.textColumnas = new JTextField();
@@ -78,12 +78,12 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 		this.panelParam.add(labelColumnas);
 		this.panelParam.add(textColumnas);
 		
-		if (this.filasAnteriores > 1) {
+		if (this.filasAnteriores >= 1) {
 			this.textFilas.setText(String.valueOf(this.filasAnteriores));
 			this.textFilas.setCaretPosition(this.textFilas.getText().length());
 		}
 		
-		if (this.columnasAnteriores > 1) {
+		if (this.columnasAnteriores >= 1) {
 			this.textColumnas.setText(String.valueOf(this.columnasAnteriores));
 			this.textColumnas.setCaretPosition(this.textColumnas.getText().length());
 		}
@@ -108,7 +108,7 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 		this.panel.add(this.panelBoton, BorderLayout.SOUTH);
 
 		this.dialogo.getContentPane().add(this.panel);
-		this.dialogo.setTitle(Texto.get("CVALORES_TITULO", Conf.idioma));
+		this.dialogo.setTitle(Texto.get("GP_DIBUJAR_TABLA_GRAFO_TITULO", Conf.idioma));
 
 		// Preparamos y mostramos cuadro
 		this.dialogo.setSize(new Dimension(ANCHURA_CUADRO, ALTURA_CUADRO));
@@ -140,8 +140,8 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 	
 	private void accionDibujarTabla() {
 		boolean error = false;
-		int filas = 1;
-		int columnas = 1;
+		int filas = 0;
+		int columnas = 0;
 		
 		try {
 			if (this.textFilas.getText().length() != 0) {
@@ -158,20 +158,23 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 			error = true;
 		}
 		
-		if (filas < 1) {
+		if (filas < 0) {
 			error = true;
 		}		
-		if (columnas < 1) {
+		if (columnas < 0) {
 			error = true;
 		}
 		
-		if (columnas == 1 && filas == 1) {
-			error = true;
+		if (filas == 0 && columnas >= 1) {
+			filas = 1;
+		}
+		if (columnas == 0 && filas >= 1) {
+			columnas = 1;
 		}
 		
 		if (error) {
-			new CuadroError(this.ventana, "Error",
-					"Los valores deben ser enteros positivos y especificar al menos uno mayor que 1.");
+			new CuadroError(this.ventana, Texto.get("GP_ERROR_TITULO", Conf.idioma),
+					Texto.get("GP_ERROR_DIBUJAR_TABLA", Conf.idioma));
 		} else {		
 			this.ventana.dibujarTabla(filas, columnas);
 			this.dialogo.setVisible(false);
@@ -197,6 +200,17 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+	}
+
+	/**
+	 * Gestiona los eventos de teclado
+	 * 
+	 * @param e
+	 *            evento de teclado
+	 */
+	@Override
+	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
 		if ((e.getSource() instanceof JButton) && code == KeyEvent.VK_SPACE) {
 			gestionEventoBotones(e);
@@ -225,17 +239,6 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 		} else if (code == KeyEvent.VK_ENTER) {
 			this.accionDibujarTabla();
 		}
-	}
-
-	/**
-	 * Gestiona los eventos de teclado
-	 * 
-	 * @param e
-	 *            evento de teclado
-	 */
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
 	}
 
 	/**

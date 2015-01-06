@@ -24,10 +24,10 @@ import conf.Conf;
 
 public class NodoGrafoDependencia {
 	
-	private static final int anchoPixelCaracter = 13;
-	private static final int alturaCelda = 26;
-	private static final int tamFuente = 20;
-	private static final double margenColision = 10;
+	private static final int ANCHO_PIZEL_CARACTER = 13;
+	private static final int ALTURA_CELDA = 26;
+	private static final int TAM_FUENTE = 20;
+	private static final double MARGEN_COLISION = 10;
 	
 	private static final Edge.Routing edgeRouter;
 	static {
@@ -68,11 +68,11 @@ public class NodoGrafoDependencia {
 		// Tamaños
 		int tamanioCadena;
 		if (Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA) {
-			tamanioCadena = repSalida.length() * anchoPixelCaracter;
+			tamanioCadena = repSalida.length() * ANCHO_PIZEL_CARACTER;
 		} else if (Conf.elementosVisualizar == Conf.VISUALIZAR_ENTRADA) {
-			tamanioCadena = repEntrada.length() * anchoPixelCaracter;
+			tamanioCadena = repEntrada.length() * ANCHO_PIZEL_CARACTER;
 		} else {
-			tamanioCadena = Math.max(repSalida.length(), repEntrada.length()) * anchoPixelCaracter;
+			tamanioCadena = Math.max(repSalida.length(), repEntrada.length()) * ANCHO_PIZEL_CARACTER;
 		}
 		
 		int previousX = 0;
@@ -88,7 +88,7 @@ public class NodoGrafoDependencia {
 		GraphConstants.setMoveable(this.celdaEntrada.getAttributes(), true);
 		GraphConstants.setSelectable(this.celdaEntrada.getAttributes(), false);
 		GraphConstants.setEditable(this.celdaEntrada.getAttributes(), false);
-		GraphConstants.setFont(this.celdaEntrada.getAttributes(), new Font("Arial",Font.BOLD, tamFuente));
+		GraphConstants.setFont(this.celdaEntrada.getAttributes(), new Font("Arial",Font.BOLD, TAM_FUENTE));
 		GraphConstants.setForeground(this.celdaEntrada.getAttributes(), Conf.colorFEntrada);
 		GraphConstants.setOpaque(this.celdaEntrada.getAttributes(), true);
 		GraphConstants.setBackground(
@@ -99,14 +99,14 @@ public class NodoGrafoDependencia {
 				(Conf.modoColor == 1 ? Conf.colorC2Entrada : Conf.coloresNodo2[this.registroActivacion.getNumMetodo() % 10]));
 		this.marcoCelda(this.celdaEntrada.getAttributes());	
 		GraphConstants.setBounds(this.celdaEntrada.getAttributes(), new Rectangle(
-				previousX, previousY, tamanioCadena, alturaCelda));
+				previousX, previousY, tamanioCadena, ALTURA_CELDA));
 		
 		this.celdaSalida = new DefaultGraphCell(repSalida);
 		GraphConstants.setDisconnectable(this.celdaSalida.getAttributes(), false);
 		GraphConstants.setMoveable(this.celdaSalida.getAttributes(), true);
 		GraphConstants.setSelectable(this.celdaSalida.getAttributes(), false);
 		GraphConstants.setEditable(this.celdaSalida.getAttributes(), false);
-		GraphConstants.setFont(this.celdaSalida.getAttributes(), new Font("Arial",Font.BOLD, tamFuente));
+		GraphConstants.setFont(this.celdaSalida.getAttributes(), new Font("Arial",Font.BOLD, TAM_FUENTE));
 		GraphConstants.setForeground(this.celdaSalida.getAttributes(), Conf.colorFSalida);
 		GraphConstants.setOpaque(this.celdaSalida.getAttributes(), true);
 		GraphConstants.setBackground(
@@ -117,7 +117,7 @@ public class NodoGrafoDependencia {
 				(Conf.modoColor == 1 ? Conf.colorC2Salida : Conf.coloresNodo2[this.registroActivacion.getNumMetodo() % 10]));
 		this.marcoCelda(this.celdaSalida.getAttributes());		
 		GraphConstants.setBounds(this.celdaSalida.getAttributes(), new Rectangle(
-				previousX, previousY + (Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA ? 0 : alturaCelda), tamanioCadena, alturaCelda));
+				previousX, previousY + (Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA ? 0 : ALTURA_CELDA), tamanioCadena, ALTURA_CELDA));
 		
 		this.celdaGrafo = new DefaultGraphCell();
 		int celdasVisibles = 0;
@@ -132,8 +132,8 @@ public class NodoGrafoDependencia {
 		}
 		
 		GraphConstants.setBounds(this.celdaGrafo.getAttributes(), new Rectangle(
-				previousX, previousY, tamanioCadena, alturaCelda * celdasVisibles));
-		GraphConstants.setSize(this.celdaGrafo.getAttributes(), new Dimension(tamanioCadena, alturaCelda * celdasVisibles));
+				previousX, previousY, tamanioCadena, ALTURA_CELDA * celdasVisibles));
+		GraphConstants.setSize(this.celdaGrafo.getAttributes(), new Dimension(tamanioCadena, ALTURA_CELDA * celdasVisibles));
 		GraphConstants.setDisconnectable(this.celdaGrafo.getAttributes(), false);
 		GraphConstants.setMoveable(this.celdaGrafo.getAttributes(), true);
 		GraphConstants.setSelectable(this.celdaGrafo.getAttributes(), true);
@@ -141,7 +141,7 @@ public class NodoGrafoDependencia {
 		GraphConstants.setOpaque(this.celdaGrafo.getAttributes(), false);
 		GraphConstants.setAutoSize(this.celdaGrafo.getAttributes(), false);
 		GraphConstants.setSizeable(this.celdaGrafo.getAttributes(), false);
-		GraphConstants.setCollisionMargin(this.celdaGrafo.getAttributes(), margenColision);
+		GraphConstants.setCollisionMargin(this.celdaGrafo.getAttributes(), MARGEN_COLISION);
 		
 		this.celdaGrafo.add(this.portCelda);
 	}
@@ -184,11 +184,11 @@ public class NodoGrafoDependencia {
 		
 		Rectangle2D boundsEntrada = GraphConstants.getBounds(this.celdaEntrada.getAttributes());
 		GraphConstants.setBounds(this.celdaEntrada.getAttributes(),
-				new Rectangle2D.Double(boundsEntrada.getX(), boundsEntrada.getY(), anchura, alturaCelda));
+				new Rectangle2D.Double(boundsEntrada.getX(), boundsEntrada.getY(), anchura, ALTURA_CELDA));
 		
 		Rectangle2D boundsSalida = GraphConstants.getBounds(this.celdaSalida.getAttributes());
 		GraphConstants.setBounds(this.celdaSalida.getAttributes(),
-				new Rectangle2D.Double(boundsSalida.getX(), boundsSalida.getY(), anchura, alturaCelda));
+				new Rectangle2D.Double(boundsSalida.getX(), boundsSalida.getY(), anchura, ALTURA_CELDA));
 	}
 	
 	public double getAnchura() {	
@@ -212,9 +212,9 @@ public class NodoGrafoDependencia {
 		GraphConstants.setBounds(this.celdaGrafo.getAttributes(),
 				new Rectangle(x, y, dimX, dimY));
 		GraphConstants.setBounds(this.celdaEntrada.getAttributes(),
-				new Rectangle(x, y, dimX, alturaCelda));
+				new Rectangle(x, y, dimX, ALTURA_CELDA));
 		GraphConstants.setBounds(this.celdaSalida.getAttributes(),
-				new Rectangle(x, y + (Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA ? 0 : alturaCelda), dimX, alturaCelda));
+				new Rectangle(x, y + (Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA ? 0 : ALTURA_CELDA), dimX, ALTURA_CELDA));
 	}
 
 	public boolean equals(NodoGrafoDependencia nodo) {

@@ -68,14 +68,14 @@ public class CuadroTabularGrafoDependencia extends Thread implements ActionListe
 		
 		// Panel general de parámetros
 		this.panelParam = new JPanel(new GridLayout(3, 2));
-		this.panelParam.setBorder(new TitledBorder(Texto.get("CVALORES_VALORES", Conf.idioma)));
+		this.panelParam.setBorder(new TitledBorder(Texto.get("GP_TABULAR_PANEL", Conf.idioma)));
 		
-		JLabel labelMetodo = new JLabel("Signatura del método: ");
+		JLabel labelMetodo = new JLabel(Texto.get("GP_TABULAR_SIGNATURA", Conf.idioma));
 		JLabel labelSignatura = new JLabel(this.signaturaMetodo);
 		labelSignatura.setFont(labelSignatura.getFont().deriveFont(labelSignatura.getFont().getStyle() | Font.BOLD));
 		
-		JLabel labelFilas = new JLabel("y (Expresión para filas) =");
-		JLabel labelColumnas = new JLabel("x (Expresión para columas) =");
+		JLabel labelFilas = new JLabel(Texto.get("GP_TABULAR_FILAS", Conf.idioma));
+		JLabel labelColumnas = new JLabel(Texto.get("GP_TABULAR_COLUMNAS", Conf.idioma));
 		this.textFilas = new JTextField();
 		if (this.ultimaExpresionParaFila != null) {
 			this.textFilas.setText(this.ultimaExpresionParaFila);
@@ -117,7 +117,7 @@ public class CuadroTabularGrafoDependencia extends Thread implements ActionListe
 		this.panel.add(this.panelBoton, BorderLayout.SOUTH);
 
 		this.dialogo.getContentPane().add(this.panel);
-		this.dialogo.setTitle(Texto.get("CVALORES_TITULO", Conf.idioma));
+		this.dialogo.setTitle(Texto.get("GP_TABULAR_TITULO", Conf.idioma));
 
 		// Preparamos y mostramos cuadro
 		this.dialogo.setSize(new Dimension(ANCHURA_CUADRO, ALTURA_CUADRO));
@@ -155,11 +155,13 @@ public class CuadroTabularGrafoDependencia extends Thread implements ActionListe
 		}
 		
 		if (error) {
-			new CuadroError(this.ventana, "Error", "Debe especificarse al menos una expresión para filas o columnas.");
+			new CuadroError(this.ventana, Texto.get("GP_ERROR_TITULO", Conf.idioma),
+					Texto.get("GP_ERROR_EXPR_REQ", Conf.idioma));
 		} else {		
 			error = this.ventana.tabular(this.textFilas.getText(), this.textColumnas.getText());
 			if (error) {
-				new CuadroError(this.ventana, "Error", "Alguna de las expresiones indicadas es inválida, produce valores inválidos, o hay nodos que colisionan.");
+				new CuadroError(this.ventana, Texto.get("GP_ERROR_TITULO", Conf.idioma),
+						Texto.get("GP_ERROR_EXPR_EVAL", Conf.idioma));
 			} else {
 				this.dialogo.setVisible(false);
 			}
@@ -185,6 +187,17 @@ public class CuadroTabularGrafoDependencia extends Thread implements ActionListe
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+	}
+
+	/**
+	 * Gestiona los eventos de teclado
+	 * 
+	 * @param e
+	 *            evento de teclado
+	 */
+	@Override
+	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
 		if ((e.getSource() instanceof JButton) && code == KeyEvent.VK_SPACE) {
 			gestionEventoBotones(e);
@@ -213,17 +226,6 @@ public class CuadroTabularGrafoDependencia extends Thread implements ActionListe
 		} else if (code == KeyEvent.VK_ENTER) {
 			this.accionTabulado();
 		}
-	}
-
-	/**
-	 * Gestiona los eventos de teclado
-	 * 
-	 * @param e
-	 *            evento de teclado
-	 */
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
 	}
 
 	/**

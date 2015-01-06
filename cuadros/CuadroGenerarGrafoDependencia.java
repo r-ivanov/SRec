@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
+import utilidades.Texto;
 import ventanas.Ventana;
 import ventanas.VentanaGrafoDependencia;
 import botones.BotonAceptar;
@@ -75,9 +76,7 @@ ActionListener, KeyListener {
 
 		JPanel panelRadio = new JPanel();
 		panelRadio.setLayout(new GridLayout(this.numeroFilas, 1));
-		// panelRadio.setBorder(new TitledBorder(Texto.get("CVIS_BORDER",
-		// Conf.idioma)));
-		panelRadio.setBorder(new TitledBorder("Métodos disponibles"));
+		panelRadio.setBorder(new TitledBorder(Texto.get("GP_METODOS_DISPONIBLES", Conf.idioma)));
 
 		ButtonGroup radioButtonGroup = new ButtonGroup();
 		for (int i = 0; i < this.dtb.getNumMetodos(); i++) {
@@ -112,8 +111,7 @@ ActionListener, KeyListener {
 
 		// Preparamos y mostramos cuadro
 		this.dialogo.getContentPane().add(panel);
-		// this.dialogo.setTitle(Texto.get("CVIS_VIS", Conf.idioma));
-		this.dialogo.setTitle("Generar grafo de dependencia");
+		this.dialogo.setTitle(Texto.get("GP_GENERAR_GRAFO", Conf.idioma));
 
 		if (this.ventana.msWindows) {
 			this.dialogo.setSize(ANCHO_CUADRO, this.numeroFilas * 23 + 90);

@@ -38,6 +38,8 @@ import utilidades.Texto;
 public class VentanaGrafoDependencia extends JFrame implements
 		ActionListener, KeyListener {
 	
+	private static final String ICONO = "./imagenes/ico32.gif";
+	
 	private static final double MAX_SCALE = 1.5;
 	private static final double MIN_SCALE = 0.5;
 	private static final double SCALE_INCREMENTO = 0.05;
@@ -74,6 +76,7 @@ public class VentanaGrafoDependencia extends JFrame implements
 			this.ventana = ventana;
 			this.metodo = metodo;
 			
+			this.setIconImage(new ImageIcon(ICONO).getImage());
 			// Panel general
 			BorderLayout bl = new BorderLayout();
 			JPanel panel = new JPanel();
@@ -81,7 +84,7 @@ public class VentanaGrafoDependencia extends JFrame implements
 
 			// Preparamos y mostramos cuadro
 			this.getContentPane().add(panel);
-			this.setTitle("Grafo de Dependencia");
+			this.setTitle(Texto.get("GP_GRAFO_TITULO", Conf.idioma));
 			
 			this.crearBarraDeHerramientas();
 			
@@ -211,7 +214,7 @@ public class VentanaGrafoDependencia extends JFrame implements
 	
 	public void dibujarTabla(int filas, int columnas) {
 		
-		this.grafoDependencia.debeDibujarseTabla(filas, columnas);
+		this.grafoDependencia.setTamanioTabla(filas, columnas);
         this.representacionGrafo = this.grafoDependencia.obtenerRepresentacionGrafo();
         
         this.remove(this.representacionGrafoScroll);        

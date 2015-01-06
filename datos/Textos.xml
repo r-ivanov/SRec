@@ -285,10 +285,51 @@
 		
 		<!-- Grafo de dependencia -->
 		
+		<T valor="M[eacute]todos disponibles" idioma="es" id="GP_METODOS_DISPONIBLES"/>
+		<T valor="Available methods" idioma="en" id="GP_METODOS_DISPONIBLES"/>
+		<T valor="Generar Grafo de Dependencia" idioma="es" id="GP_GENERAR_GRAFO"/>
+		<T valor="Generate Dependency Graph" idioma="en" id="GP_GENERAR_GRAFO"/>
+		
+		<T valor="Grafo de Dependencia" idioma="es" id="GP_GRAFO_TITULO"/>
+		<T valor="Dependency Graph" idioma="en" id="GP_GRAFO_TITULO"/>
+		
+		<T valor="Dibujar Matriz" idioma="es" id="GP_DIBUJAR_TABLA_GRAFO_TITULO"/>
+		<T valor="Draw Matrix" idioma="en" id="GP_DIBUJAR_TABLA_GRAFO_TITULO"/>
+		<T valor="Filas y columnas" idioma="es" id="GP_DIBUJAR_TABLA_GRAFO_PANEL"/>
+		<T valor="Rows and columns" idioma="en" id="GP_DIBUJAR_TABLA_GRAFO_PANEL"/>
+		<T valor="Filas:" idioma="es" id="GP_DIBUJAR_TABLA_GRAFO_FILAS"/>
+		<T valor="Rows:" idioma="en" id="GP_DIBUJAR_TABLA_GRAFO_FILAS"/>	
+		<T valor="Columnas:" idioma="es" id="GP_DIBUJAR_TABLA_GRAFO_COLUMNAS"/>
+		<T valor="Columns:" idioma="en" id="GP_DIBUJAR_TABLA_GRAFO_COLUMNAS"/>
+		
+		<T valor="Error" idioma="es" id="GP_ERROR_TITULO"/>
+		<T valor="Error" idioma="en" id="GP_ERROR_TITULO"/>
+		<T valor="Los valores deben ser enteros positivos y especificar al menos uno mayor que 1." idioma="es" id="GP_ERROR_DIBUJAR_TABLA"/>
+		<T valor="Values must be positive integers and at least one higher than 1 must be specified." idioma="en" id="GP_ERROR_DIBUJAR_TABLA"/>
+		
+		<T valor="Tabular Nodos" idioma="es" id="GP_TABULAR_TITULO"/>
+		<T valor="Tabulate Nodes" idioma="en" id="GP_TABULAR_TITULO"/>
+		<T valor="Expresiones para tabulado" idioma="es" id="GP_TABULAR_PANEL"/>
+		<T valor="Expressions for tabulation" idioma="en" id="GP_TABULAR_PANEL"/>
+		<T valor="Signatura del m[eacute]todo" idioma="es" id="GP_TABULAR_SIGNATURA"/>
+		<T valor="Method signature" idioma="en" id="GP_TABULAR_SIGNATURA"/>	
+		<T valor="y (Expresi[oacute]n para filas) =" idioma="es" id="GP_TABULAR_FILAS"/>
+		<T valor="y (Rows expression) =" idioma="en" id="GP_TABULAR_FILAS"/>
+		<T valor="x (Expresi[oacute]n para columnas) =" idioma="es" id="GP_TABULAR_COLUMNAS"/>
+		<T valor="x (Columns expression) =" idioma="en" id="GP_TABULAR_COLUMNAS"/>
+		
+		<T valor="Debe especificarse al menos una expresi[oacute]n para filas o columnas." idioma="es" id="GP_ERROR_EXPR_REQ"/>
+		<T valor="At least, one expression must be specified for rows or columns." idioma="en" id="GP_ERROR_EXPR_REQ"/>
+		<T valor="Alguna de las expresiones indicadas es inválida, produce valores inválidos, o hay nodos que colisionan." idioma="es" id="GP_ERROR_EXPR_EVAL"/>
+		<T valor="One of the specified expressions is invalid, produces invalid values, or there are nodes that collide." idioma="en" id="GP_ERROR_EXPR_EVAL"/>
+		
+		<T valor="Exportar captura del grafo" idioma="es" id="CA_GUARDEXPORTGRAFO"/>
+		<T valor="Export graph capture" idioma="en" id="CA_GUARDEXPORTGRAFO"/>
+		
 		<T valor="Dibujar matriz sobre el grafo" idioma="es" id="GP_DIBUJAR_MATRIZ"/>
 		<T valor="Draw matrix on graph" idioma="en" id="GP_DIBUJAR_MATRIZ"/>	
-		<T valor="Reorganizar nodos del grafo en una matriz" idioma="es" id="GP_TABULAR_MATRIZ"/>
-		<T valor="Reorganize graph nodos into a matrix" idioma="en" id="GP_TABULAR_MATRIZ"/>
+		<T valor="Tabular nodos del grafo" idioma="es" id="GP_TABULAR_MATRIZ"/>
+		<T valor="Tabulate graph nodes" idioma="en" id="GP_TABULAR_MATRIZ"/>
 		
 		<T valor="Datos de entrada y salida..." idioma="es" id="GP_DATOS_ENTRADA"/>
 		<T valor="Input and output data..." idioma="en" id="GP_DATOS_ENTRADA"/>
