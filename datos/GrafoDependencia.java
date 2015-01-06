@@ -4,11 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.SwingUtilities;
 
 import org.jgraph.JGraph;
@@ -38,10 +42,11 @@ public class GrafoDependencia {
 	private static final int MARGEN_NODOS_ALTURA = 30;
 	
 	private List<NodoGrafoDependencia> nodos;
-	private String nombreMetodo;
 	private MatrizDinamica<NodoGrafoDependencia> matrizTabulado;
 	private int anchuraCuadroMatriz;
 	private int alturaCuadroMatriz;
+	
+	private DatosMetodoBasicos metodo;
 	
 	private boolean nodosPosicionados;
 	
@@ -49,10 +54,12 @@ public class GrafoDependencia {
 	private int numeroFilasTabla;
 	private int numeroColumnasTabla;
 	
-	public GrafoDependencia(Traza traza, String nombreMetodo) {
+	private Dimension tamanioRepresentacion;
+	
+	public GrafoDependencia(Traza traza, DatosMetodoBasicos metodo) {
 		
 		this.nodos = new ArrayList<NodoGrafoDependencia>();
-		this.nombreMetodo = nombreMetodo;
+		this.metodo = metodo;
 		
 		this.insertarNodos(null, traza.getRaiz(), new ArrayList<NodoGrafoDependencia>());		
 		this.crearMatrizTabuladoConOrganizacionPorDefecto();
@@ -94,7 +101,8 @@ public class GrafoDependencia {
 		}
 			
 		/* Resolvemos las dependencias de los nodos hijos */
-		boolean mismoMetodo = this.nombreMetodo.equals(registroActivacion.getNombreMetodo());
+		boolean mismoMetodo = this.metodo.getNombre().equals(registroActivacion.getNombreMetodo()) &&
+				this.metodo.getNumParametrosE() == registroActivacion.getNombreParametros().length;
 		if (!procesado) {
 			if (mismoMetodo) {
 				this.nodos.add(nodo);
@@ -145,8 +153,8 @@ public class GrafoDependencia {
 		GraphConstants.setBounds(linea.getAttributes(), new Rectangle(
 				xInicial,
 				yInicial,
-				vertical ? 1 : longitud,
-				vertical ? longitud : 1
+				vertical ? 2 : longitud,
+				vertical ? longitud : 2
 				));		
 		return linea;
 	}
@@ -265,7 +273,7 @@ public class GrafoDependencia {
 		
 		int anchuraTotal = numColumnas * this.anchuraCuadroMatriz + MARGEN_TABLA * 2;
 		int alturaTotal = numFilas * this.alturaCuadroMatriz + MARGEN_TABLA * 2;
-		representacionGrafo.setSize(new Dimension(anchuraTotal, alturaTotal));
+		this.tamanioRepresentacion = new Dimension(anchuraTotal, alturaTotal);
 		
 		return representacionGrafo;
 	}
@@ -276,6 +284,10 @@ public class GrafoDependencia {
 	
 	public int getNumeroColumnasTabla() {
 		return this.numeroColumnasTabla;
+	}
+	
+	public Dimension getTamanioRepresentacion() {
+		return this.tamanioRepresentacion;
 	}
 	
 	private void crearMatrizTabuladoConOrganizacionPorDefecto() {		
@@ -302,6 +314,59 @@ public class GrafoDependencia {
 		this.dibujarTabla = true;
 		this.numeroFilasTabla = numeroFilasTabla;
 		this.numeroColumnasTabla = numeroColumnasTabla;
+	}
+	
+	public boolean tabular(String expresionParaFila, String expresionParaColumna) {
+		
+		boolean error = false;
+		ScriptEngineManager manager = new ScriptEngineManager();
+		MatrizDinamica<NodoGrafoDependencia> matriz = new MatrizDinamica<NodoGrafoDependencia>();
+		
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			ScriptEngine engine = manager.getEngineByName("js");
+			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
+				engine.put(this.metodo.getNombreParametroE(i), nodo.getParams()[i]);
+			}
+			try {
+				int fila = this.obtenerValorEnteroDeEvaluacion(engine.eval(expresionParaFila));
+				int columna = this.obtenerValorEnteroDeEvaluacion(engine.eval(expresionParaColumna));
+				if (fila < 0 || columna < 0 || matriz.get(fila, columna) != null) {
+					error = true;
+				} else {
+					matriz.set(fila, columna, nodo);
+				}
+			} catch (ScriptException e) {
+				error = true;
+			}
+		}
+		
+		if (!error) {
+			this.matrizTabulado = matriz;
+			this.debeDibujarseTabla(matriz.numFilas(), matriz.numColumnas());
+			this.nodosPosicionados = false;
+		}
+		
+		return error;
+	}
+	
+	private int obtenerValorEnteroDeEvaluacion(Object valorEval) {
+		int valor = -1;
+		if (valorEval == null) {
+			valor = 0;
+		} else if (valorEval instanceof Integer) {
+			valor = ((Integer) valorEval).intValue();
+		} else if (valorEval instanceof Double) {
+			valor = ((Double) valorEval).intValue();
+		} else if (valorEval instanceof Float) {
+			valor = ((Float) valorEval).intValue();
+		} else if (valorEval instanceof String) {
+			String valorFilaString = (String) valorEval;
+			try {
+				valor = Integer.parseInt(valorFilaString);
+			} catch (NumberFormatException formatException) {}
+		}
+		
+		return valor;
 	}
 	
 	private void aniadirDependenciasAMatriz(MatrizDinamica<NodoGrafoDependencia> matriz, NodoGrafoDependencia raiz) {

@@ -2228,7 +2228,7 @@ public class Ventana extends JFrame implements ActionListener {
     	if (this.dtb.getNumMetodos() > 1) {
     		new CuadroGenerarGrafoDependencia(this, this.dtb);
     	} else if (this.dtb.getNumMetodos() == 1) {
-    		new VentanaGrafoDependencia(this, this.dtb.getNombreMetodoEjecucion());
+    		new VentanaGrafoDependencia(this, this.dtb.getMetodo(0));
     	}
     }
 

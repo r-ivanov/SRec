@@ -82,7 +82,7 @@ ActionListener, KeyListener {
 		ButtonGroup radioButtonGroup = new ButtonGroup();
 		for (int i = 0; i < this.dtb.getNumMetodos(); i++) {
 			DatosMetodoBasicos dmb = this.dtb.getMetodo(i);
-			this.botonesMetodos[i] = new JRadioButton(dmb.getNombre());
+			this.botonesMetodos[i] = new JRadioButton(dmb.getInterfaz());
 			this.botonesMetodos[i].addActionListener(this);
 			this.botonesMetodos[i].addKeyListener(this);
 			if (i == 0) {
@@ -141,15 +141,16 @@ ActionListener, KeyListener {
 		if (e.getSource() == this.aceptar) {
 
 			String nombreMetodo = null;
+			int posicionMetodo = 0;
 			for (int i = 0; i < this.botonesMetodos.length; i++) {
 				if (this.botonesMetodos[i].isSelected()) {
-					nombreMetodo = this.botonesMetodos[i].getText();
+					posicionMetodo = i;
 					break;
 				}
 			}
 
 			this.dialogo.setVisible(false);
-			new VentanaGrafoDependencia(this.ventana, nombreMetodo);
+			new VentanaGrafoDependencia(this.ventana, this.dtb.getMetodo(posicionMetodo));
 
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);

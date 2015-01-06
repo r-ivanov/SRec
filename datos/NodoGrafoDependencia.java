@@ -199,6 +199,10 @@ public class NodoGrafoDependencia {
 		return GraphConstants.getSize(this.celdaGrafo.getAttributes()).getHeight();
 	}
 	
+	public Rectangle2D getBounds() {	
+		return GraphConstants.getBounds(this.celdaGrafo.getAttributes());
+	}
+	
 	public void setPosicion(int x, int y) {	
 		Rectangle2D bounds = GraphConstants.getBounds(this.celdaGrafo.getAttributes());
 		
