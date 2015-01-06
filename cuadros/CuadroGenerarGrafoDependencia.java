@@ -14,6 +14,7 @@ import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
 import ventanas.Ventana;
+import ventanas.VentanaGrafoDependencia;
 import botones.BotonAceptar;
 import botones.BotonCancelar;
 import conf.Conf;
@@ -148,7 +149,7 @@ ActionListener, KeyListener {
 			}
 
 			this.dialogo.setVisible(false);
-			new CuadroGrafoDependencia(this.ventana, nombreMetodo);
+			new VentanaGrafoDependencia(this.ventana, nombreMetodo);
 
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);

@@ -45,9 +45,9 @@ public class GrafoDependencia {
 	
 	private boolean nodosPosicionados;
 	
-	private boolean dibujarTabla = true;
-	private int numeroFilasTabla = 7;
-	private int numeroColumnasTabla = 7;
+	private boolean dibujarTabla;
+	private int numeroFilasTabla;
+	private int numeroColumnasTabla;
 	
 	public GrafoDependencia(Traza traza, String nombreMetodo) {
 		
@@ -212,11 +212,7 @@ public class GrafoDependencia {
 			}
 		});
 
-		representacionGrafo.setBackground(Conf.colorPanel);
-		
-		for (NodoGrafoDependencia nodo : this.nodos) {
-			nodo.inicializarRepresentacion();
-		}	
+		representacionGrafo.setBackground(Conf.colorPanel);	
 		this.ajustarNodosAMismaAnchuraYCalcularTamanioCuadro();
 		
 		if (this.dibujarTabla) {
@@ -248,7 +244,7 @@ public class GrafoDependencia {
 			}
 		}
 		
-		if (this.dibujarTabla || !this.nodosPosicionados) {
+		if (!this.nodosPosicionados) {
 			this.posicionarNodosSegunTabulado();
 			this.nodosPosicionados = true;
 		}
@@ -272,6 +268,14 @@ public class GrafoDependencia {
 		representacionGrafo.setSize(new Dimension(anchuraTotal, alturaTotal));
 		
 		return representacionGrafo;
+	}
+	
+	public int getNumeroFilasTabla() {
+		return this.numeroFilasTabla;
+	}
+	
+	public int getNumeroColumnasTabla() {
+		return this.numeroColumnasTabla;
 	}
 	
 	private void crearMatrizTabuladoConOrganizacionPorDefecto() {		

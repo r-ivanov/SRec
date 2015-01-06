@@ -40,7 +40,6 @@ import cuadros.CuadroElegirES;
 import cuadros.CuadroElegirHistorico;
 import cuadros.CuadroError;
 import cuadros.CuadroGenerarGrafoDependencia;
-import cuadros.CuadroGrafoDependencia;
 import cuadros.CuadroIdioma;
 import cuadros.CuadroInfoNodo;
 import cuadros.CuadroInfoTraza;
@@ -2229,7 +2228,7 @@ public class Ventana extends JFrame implements ActionListener {
     	if (this.dtb.getNumMetodos() > 1) {
     		new CuadroGenerarGrafoDependencia(this, this.dtb);
     	} else if (this.dtb.getNumMetodos() == 1) {
-    		new CuadroGrafoDependencia(this, this.dtb.getNombreMetodoEjecucion());
+    		new VentanaGrafoDependencia(this, this.dtb.getNombreMetodoEjecucion());
     	}
     }
 

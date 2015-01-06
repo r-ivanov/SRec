@@ -295,6 +295,9 @@
 		<T valor="Par[aacute]metros..." idioma="es" id="GP_PARAMETROS"/>
 		<T valor="Parameters..." idioma="en" id="GP_PARAMETROS"/>
 		
+		<T valor="Exportar captura..." idioma="es" id="GP_EXPORTAR"/>
+		<T valor="Export capture..." idioma="en" id="GP_EXPORTAR"/>
+		
 		<T valor="Formato tipogr[aacute]fico..." idioma="es" id="GP_FORMATO"/>
 		<T valor="Typographical format..." idioma="en" id="GP_FORMATO"/>
 		<T valor="Configuraci[oacute]n de zoom: aumento" idioma="es" id="GP_AUMENTO_ZOOM"/>

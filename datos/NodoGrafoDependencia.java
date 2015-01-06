@@ -52,7 +52,7 @@ public class NodoGrafoDependencia {
 		this.inicializarRepresentacion();
 	}
 	
-	public void inicializarRepresentacion() {
+	private void inicializarRepresentacion() {
 		
 		String repEntrada = this.registroActivacion.getEntrada().getRepresentacion();
 		if (repEntrada.length() < 3) {
