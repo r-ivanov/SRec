@@ -12,7 +12,6 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,14 +24,11 @@ import org.jgraph.graph.CellView;
 
 import conf.Conf;
 import cuadros.CuadroDibujarTablaGrafoDependencia;
-import cuadros.CuadroOpcionConfVisualizacion;
 import cuadros.CuadroTabularGrafoDependencia;
 import datos.DatosMetodoBasicos;
 import datos.GrafoDependencia;
-import datos.MetodoAlgoritmo;
-import datos.NodoGrafoDependencia;
+import utilidades.FotografoArbol;
 import utilidades.Texto;
-import ventanas.*;
 
 /**
  * Representa el cuadro donde se mostrará el grafo de dependencia.
@@ -82,8 +78,6 @@ public class VentanaGrafoDependencia extends JFrame implements
 			BorderLayout bl = new BorderLayout();
 			JPanel panel = new JPanel();
 			panel.setLayout(bl);
-//			panel.add(panelRadio, BorderLayout.NORTH);
-//			panel.add(panelBotones, BorderLayout.SOUTH);
 
 			// Preparamos y mostramos cuadro
 			this.getContentPane().add(panel);
@@ -155,16 +149,8 @@ public class VentanaGrafoDependencia extends JFrame implements
 		this.botones[1] = new JButton(new ImageIcon("./imagenes/i_tabulado_automatico.gif"));
 		this.botones[1].setToolTipText(Texto.get("GP_TABULAR_MATRIZ", Conf.idioma));
 		
-//		this.botones[2] = new JButton(new ImageIcon("./imagenes/i_entradasalida.gif"));
-//		this.botones[2].setToolTipText(Texto.get("GP_DATOS_ENTRADA", Conf.idioma));
-//		this.botones[3] = new JButton(new ImageIcon("./imagenes/i_vermetodosparam.gif"));
-//		this.botones[3].setToolTipText(Texto.get("GP_PARAMETROS", Conf.idioma));
-		
 		this.botones[2] = new JButton(new ImageIcon("./imagenes/i_exportarestado.gif"));
 		this.botones[2].setToolTipText(Texto.get("GP_EXPORTAR", Conf.idioma));
-		
-//		this.botones[4] = new JButton(new ImageIcon("./imagenes/i_formato.gif"));
-//		this.botones[4].setToolTipText(Texto.get("GP_FORMATO", Conf.idioma));
 		
 		this.botones[3] = new JButton(new ImageIcon("./imagenes/i_zoommas.gif"));
 		this.botones[3].setToolTipText(Texto.get("GP_AUMENTO_ZOOM", Conf.idioma));
@@ -267,6 +253,8 @@ public class VentanaGrafoDependencia extends JFrame implements
 		} else if (e.getSource() == this.botones[1]) {
 			new CuadroTabularGrafoDependencia(this, this.metodo.getInterfaz(), this.ultimaExpresionParaFila,
 					this.ultimaExpresionParaColumna);
+		} else if (e.getSource() == this.botones[2]) {
+			new FotografoArbol().hacerCapturaGrafo(this, this.representacionGrafo);
 		} else if (e.getSource() == this.botones[5]) {
 			this.ajustarGrafoATamanioVentana(false);
 		} else if (e.getSource() == this.botones[4]) {

@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
+
 import conf.*;
 import opciones.*;
 import datos.*;
@@ -42,7 +44,7 @@ public class CuadroPreguntaSobreescribir extends CuadroPregunta implements
 	 *            usarse como parte de los eventos de acción para determinados
 	 *            métodos.
 	 */
-	public CuadroPreguntaSobreescribir(Ventana ventana, String param, Object o,
+	public CuadroPreguntaSobreescribir(JFrame ventana, String param, Object o,
 			JComponent c) {
 		super(ventana, Texto.get("PREG_ARCHEXIST", Conf.idioma), Texto.get(
 				"PREGMEN_ARCHEXIST", Conf.idioma), Texto.get("BOTONACEPTAR",
@@ -82,7 +84,7 @@ public class CuadroPreguntaSobreescribir extends CuadroPregunta implements
 			} else if (this.objeto.getClass().getCanonicalName()
 					.contains("FotografoArbol")) {
 				if (this.param.charAt(0) == '1') {
-					((FotografoArbol) (this.objeto)).hacerCapturaUnica2(
+					((FotografoArbol) (this.objeto)).hacerCapturaUnica2(this.ventana,
 							this.componenteUI);
 				} else if (this.param.charAt(0) == 'A') {
 					((FotografoArbol) (this.objeto)).capturarAnimacionGIF2(

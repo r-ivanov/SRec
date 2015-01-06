@@ -7,11 +7,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 
-import ventanas.Ventana;
 import conf.*;
 import botones.*;
 
@@ -45,7 +45,7 @@ public abstract class CuadroPregunta extends Thread implements ActionListener,
 
 	private BorderLayout bl, bl0, bl1;
 
-	protected Ventana ventana;
+	protected JFrame ventana;
 	protected JDialog d;
 
 	/**
@@ -65,7 +65,7 @@ public abstract class CuadroPregunta extends Thread implements ActionListener,
 	 * @param textoBotonIgnorar
 	 *            Texto que debe mostrar el botón de ignorar.
 	 */
-	public CuadroPregunta(Ventana ventana, String titulo, String etiq,
+	public CuadroPregunta(JFrame ventana, String titulo, String etiq,
 			String textoBotonAceptar, String textoBotonCancelar,
 			String textoBotonIgnorar) {
 		this.d = new JDialog(ventana, true);
@@ -92,7 +92,7 @@ public abstract class CuadroPregunta extends Thread implements ActionListener,
 	 * @param textoBotonCancelar
 	 *            Texto que debe mostrar el botón de cancelar.
 	 */
-	public CuadroPregunta(Ventana ventana, String titulo, String etiq,
+	public CuadroPregunta(JFrame ventana, String titulo, String etiq,
 			String textoBotonAceptar, String textoBotonCancelar) {
 		this.d = new JDialog(ventana, true);
 		this.ventana = ventana;

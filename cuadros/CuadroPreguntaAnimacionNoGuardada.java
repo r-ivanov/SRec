@@ -41,6 +41,10 @@ public class CuadroPreguntaAnimacionNoGuardada extends CuadroPregunta implements
 				.get("NO_GUARDAR", Conf.idioma));
 		this.start();
 	}
+	
+	private Ventana getVentana() {
+		return (Ventana) this.ventana;
+	}
 
 	/**
 	 * Gestiona los eventos de acción.
@@ -52,10 +56,10 @@ public class CuadroPreguntaAnimacionNoGuardada extends CuadroPregunta implements
 	public void actionPerformed(ActionEvent e) {
 		this.d.setVisible(false);
 		if (e.getSource() == this.aceptar) {
-			this.ventana.guardadoTraza();
+			this.getVentana().guardadoTraza();
 		}
 		if (e.getSource() != this.cancelar) {
-			this.ventana.cerrar();
+			this.getVentana().cerrar();
 		}
 	}
 

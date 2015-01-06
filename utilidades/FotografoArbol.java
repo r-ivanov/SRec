@@ -82,7 +82,7 @@ public class FotografoArbol {
 			// *1* Comprobarmos que el fichero existe
 			File f = new File(this.ficheroSalida[0] + this.ficheroSalida[1]);
 			if (!f.exists()) {
-				this.hacerCapturaUnica2(c);
+				this.hacerCapturaUnica2(Ventana.thisventana, c);
 			} else {
 				new CuadroPreguntaSobreescribir(Ventana.thisventana, "1"
 						+ numeroVista, this, c); // null habría que cambiarlo
@@ -171,6 +171,43 @@ public class FotografoArbol {
 			}.start();
 		}
 	}
+	
+	/**
+	 * Permite realizar una captura de un grafo.
+	 */
+	public void hacerCapturaGrafo(JFrame ventana, JGraph grafo) {
+
+		this.ofr = (OpcionFicherosRecientes) this.gOpciones.getOpcion(
+				"OpcionFicherosRecientes", true);
+		this.otg = (OpcionTipoGrafico) this.gOpciones.getOpcion(
+				"OpcionTipoGrafico", true);
+
+		String extensionesImagen[][] = this.otg.getExtensiones();
+
+		String definicionesArchivos[] = new String[3];
+		definicionesArchivos[0] = Texto.get(
+				"ARCHIVO_" + this.otg.getTipos(false)[0], Conf.idioma);
+		definicionesArchivos[1] = Texto.get(
+				"ARCHIVO_" + this.otg.getTipos(false)[1], Conf.idioma);
+		definicionesArchivos[2] = Texto.get(
+				"ARCHIVO_" + this.otg.getTipos(true)[0], Conf.idioma);
+
+		this.ficheroSalida[0] = this.ofr.getDir();
+		this.ficheroSalida = SelecDireccion.cuadroAbrirFichero(
+				ventana,
+				this.ficheroSalida[0],
+				Texto.get("CA_GUARDEXPORT1GIF", Conf.idioma), null,
+				extensionesImagen, definicionesArchivos, 0);
+
+		// *1* Comprobarmos que el fichero existe
+		File f = new File(this.ficheroSalida[0] + this.ficheroSalida[1]);
+		if (!f.exists()) {
+			this.hacerCapturaUnica2(ventana, grafo);
+		} else {
+			new CuadroPreguntaSobreescribir(ventana, "1", this, grafo); // null habría que cambiarlo
+			// seguramente
+		}
+	}
 
 	/**
 	 * Permite realizar una única captura del componente pasado por parámetro en
@@ -179,7 +216,7 @@ public class FotografoArbol {
 	 * @param c
 	 *            Componente del que se tomará la captura.
 	 */
-	public void hacerCapturaUnica2(JComponent c) {
+	public void hacerCapturaUnica2(JFrame jFrame, JComponent c) {
 		// Actualizamos opción de formato gráfico empleado
 		if (this.ficheroSalida[1] != null
 				&& this.ficheroSalida[1].contains(".")) {
@@ -209,7 +246,7 @@ public class FotografoArbol {
 
 			Fotografo.guardarFoto(c, Fotografo.numFormato(path), path);
 
-			new CuadroInformacion(Ventana.thisventana, Texto.get(
+			new CuadroInformacion(jFrame, Texto.get(
 					"INFO_EXPCORRECTT", Conf.idioma), Texto.get(
 					"INFO_EXPCORRECT", Conf.idioma), 550, 100);
 		}

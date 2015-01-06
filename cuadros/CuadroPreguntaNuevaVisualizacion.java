@@ -3,6 +3,7 @@ package cuadros;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+
 import conf.*;
 import datos.*;
 import utilidades.*;
@@ -38,6 +39,10 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements
 		this.accion = accion;
 		this.start();
 	}
+	
+	private Ventana getVentana() {
+		return (Ventana) this.ventana;
+	}
 
 	/**
 	 * Gestiona los eventos de acción.
@@ -49,11 +54,11 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.aceptar) {
 			if (this.accion.equals("cargar")) {
-				new CargadorTraza(this.ventana);
+				new CargadorTraza(this.getVentana());
 			} else if (this.accion.equals("procesar")) {
 				new Preprocesador();
 			} else if (this.accion.equals("procesar de nuevo")) {
-				String direccionCompleta = this.ventana.getClase().getPath();
+				String direccionCompleta = this.getVentana().getClase().getPath();
 				String path[] = new String[2];
 				path[0] = direccionCompleta.substring(0,
 						direccionCompleta.lastIndexOf("\\") + 1);
@@ -61,9 +66,9 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements
 						direccionCompleta.lastIndexOf("\\") + 1,
 						direccionCompleta.length());
 				new Preprocesador(path);
-				this.ventana.setClasePendienteProcesar(false);
+				this.getVentana().setClasePendienteProcesar(false);
 			} else if (this.accion.equals("cargarGIF")) {
-				this.ventana.cargarGIF();
+				this.getVentana().cargarGIF();
 			}
 		}
 

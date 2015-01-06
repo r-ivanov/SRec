@@ -44,6 +44,10 @@ public class CuadroPreguntaSeleccMetodosDYV extends CuadroPregunta implements
 		this.p = p;
 		this.start();
 	}
+	
+	private Ventana getVentana() {
+		return (Ventana) this.ventana;
+	}
 
 	/**
 	 * Gestiona los eventos de acción.
@@ -58,7 +62,7 @@ public class CuadroPreguntaSeleccMetodosDYV extends CuadroPregunta implements
 			if (Conf.fichero_log) {
 				Logger.log_write("¿Habilitar vistas para DYV? Sí");
 			}
-			new CuadroSeleccionMetodos(this.clase, this.ventana, this.p);
+			new CuadroSeleccionMetodos(this.clase, this.getVentana(), this.p);
 		} else {
 			this.p.fase2(this.clase);
 		}
