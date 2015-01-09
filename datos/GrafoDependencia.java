@@ -325,7 +325,23 @@ public class GrafoDependencia {
 		for (NodoGrafoDependencia nodo : this.nodos) {
 			ScriptEngine engine = manager.getEngineByName("js");
 			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
-				engine.put(this.metodo.getNombreParametroE(i), nodo.getParams()[i]);
+				
+				Object valor = null;
+				try {
+					valor = Integer.parseInt(nodo.getParams()[i]);
+				} catch (NumberFormatException formatException) {}
+				
+				if (valor == null) {
+					try {
+						valor = Double.parseDouble(nodo.getParams()[i]);
+					} catch (NumberFormatException formatException) {}
+				}
+				
+				if (valor == null) {
+					valor = nodo.getParams()[i];
+				}
+				
+				engine.put(this.metodo.getNombreParametroE(i), valor);
 			}
 			try {
 				int fila = this.obtenerValorEnteroDeEvaluacion(engine.eval(expresionParaFila));
