@@ -178,7 +178,7 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_ESCAPE) {
+		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_SPACE) {
 			this.detener();
 		}
 	}
