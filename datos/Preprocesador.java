@@ -6,8 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import opciones.GestorOpciones;
 import opciones.OpcionBorradoFicheros;
@@ -610,8 +612,11 @@ public class Preprocesador extends Thread {
 	/**
 	 * Gestiona los detalles necesarios para poder ejecutar el algoritmo de
 	 * forma controlada, tras el procesamiento del mismo
+	 * 
+	 * @param procesoListener Si se especifica un valor distinto de null.
+	 * se notificará a través de este objeto, los resultados del proceso.
 	 */
-	public synchronized void ejecutarAlgoritmo() {
+	public synchronized void ejecutarAlgoritmo(PreprocesadorEjecucionListener procesoListener) {
 		// Desde la clase ClaseAlgoritmo de la ventana, debemos sacar el ID2,
 		// que nos dará el nombre del .class que tenemos que analizar
 		// extraemos por ahí sus Method, etc. e identificamos el que ha sido
@@ -646,14 +651,9 @@ public class Preprocesador extends Thread {
 			clasesParametros[j]= (Class)tipos[j];
 		
 		ParametrosParser parametrosParser = new ParametrosParser(metodoAlgoritmo);
-		
 		String[][] matrizParametros = parametrosParser.obtenerMatrizParametros();	
-		if (matrizParametros.length > 1) {
-			FamiliaEjecuciones.getInstance().habilitar();
-		} else {
-			FamiliaEjecuciones.getInstance().deshabilitar();
-		}
 		
+		List<Ejecucion> ejecuciones = new ArrayList<Ejecucion>();
 		for (int numeroEjecucion = 0; numeroEjecucion < matrizParametros.length; numeroEjecucion++) {
 			
 			Object[] valoresParametros = new Object[tipos.length];
@@ -703,22 +703,18 @@ public class Preprocesador extends Thread {
 						this.claseAlgoritmo, metodoAlgoritmo));
 				traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
 				traza_diferido.setTitulo(tituloPanel);
-				Ejecucion e = new Ejecucion(traza_diferido);
 				
-				if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
-					FamiliaEjecuciones.getInstance().addEjecucion(e);
-				} else {						
-					vv.visualizarEjecucion(e, true);
-				}
+				Ejecucion e = new Ejecucion(traza_diferido);	
+				ejecuciones.add(e);
 			}
 		}
 		
-		if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
-			FamiliaEjecuciones.getInstance().setPrimeraEjecucionActiva();
-		}
-
 		File file = new File(ficherosinex + ahora + ".class");
 		file.delete();
+		
+		if (procesoListener != null) {
+			procesoListener.ejecucionFinalizada(ejecuciones, matrizParametros.length == ejecuciones.size());
+		}
 	}
 	
 	/**

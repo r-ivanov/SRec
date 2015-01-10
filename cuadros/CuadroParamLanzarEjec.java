@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.swing.border.TitledBorder;
@@ -19,6 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.text.JTextComponent;
 
 import conf.*;
@@ -456,8 +458,50 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 		}
 		Ventana.thisventana.setClase(this.clase);
 		this.dialogo.setVisible(false);
-		this.p.ejecutarAlgoritmo();
-
+		
+		final CuadroProceso cuadroProceso = new CuadroProceso(Ventana.thisventana,
+				Texto.get("CP_ESPERE", Conf.idioma), Texto.get("CP_EJECUTANDO", Conf.idioma));
+		
+		Thread proceso = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					p.ejecutarAlgoritmo(new PreprocesadorEjecucionListener() {
+						@Override
+						public void ejecucionFinalizada(final List<Ejecucion> ejecuciones, final boolean satisfactoria) {					
+							SwingUtilities.invokeLater(new Runnable() {						
+								@Override
+								public void run() {
+									cuadroProceso.cerrar();
+									if (satisfactoria) {
+										if (ejecuciones.size() > 1) {
+											FamiliaEjecuciones.getInstance().habilitar();
+											for (Ejecucion e : ejecuciones) {
+												FamiliaEjecuciones.getInstance().addEjecucion(e);
+											}
+											FamiliaEjecuciones.getInstance().setPrimeraEjecucionActiva();
+										} else {
+											FamiliaEjecuciones.getInstance().deshabilitar();
+											if (ejecuciones.size() > 0) {
+												Ventana.thisventana.visualizarEjecucion(ejecuciones.get(0), true);
+											}
+										}
+									}
+								}
+							});
+						}
+					});
+				} catch (Throwable e) {
+					/* Debido a que el thread puede detenerse de manera no controlada en cualquier momento,
+					 * ignorar cualquier error posible. */
+				}
+			}
+		});	
+		proceso.setPriority(Thread.MIN_PRIORITY);
+		
+		cuadroProceso.setProceso(proceso);
+		proceso.start();
+		
 		return true;
 	}
 

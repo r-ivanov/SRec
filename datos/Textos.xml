@@ -583,7 +583,9 @@
 		<T valor="Creando panel..." idioma="es" id="CP_CREARPAN"/>
 		<T valor="Creating panel..." idioma="en" id="CP_CREARPAN"/>		
 		<T valor="Procesando..." idioma="es" id="CP_PROCES"/>
-		<T valor="Processing..." idioma="en" id="CP_PROCES"/>		
+		<T valor="Processing..." idioma="en" id="CP_PROCES"/>
+		<T valor="Ejecutando Algoritmo" idioma="es" id="CP_EJECUTANDO"/>
+		<T valor="Executing Algorithm" idioma="en" id="CP_EJECUTANDO"/>			
 		<T valor="Progreso de procesamiento..." idioma="es" id="CP_PROGPROC"/>
 		<T valor="Processing progress..." idioma="en" id="CP_PROGPROC"/>		
 		<T valor="Ejecutando..." idioma="es" id="CP_EJEC"/>

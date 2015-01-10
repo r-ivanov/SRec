@@ -123,6 +123,8 @@ public class Ejecutador {
 													+ ": "
 													+ causa
 													+ ".");
+								} else if (causa.contains("ThreadDeath")) { 
+									/* Esperado si el usuario ha cancelado la ejecución */
 								} else {
 									ce = new CuadroError(
 											Ventana.thisventana,
