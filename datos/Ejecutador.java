@@ -30,11 +30,11 @@ public class Ejecutador {
 	 *            parametros
 	 * @param parametros
 	 *            parametros que se le pasarán al método que se va a invocar
-	 * @return true si la ejecución resulta satisfactoria
+	 * @return Mensaje de error si hubo alguno, null en caso contrario.
 	 */
-	public static boolean ejecutar(String clase, String metodo,
+	public static String ejecutar(String clase, String metodo,
 			Class cparametros[], Object parametros[]) {
-		CuadroError ce;
+		
 		Class c = null;
 		ClassLoader cl = ClassLoader.getSystemClassLoader();
 
@@ -67,22 +67,13 @@ public class Ejecutador {
 						Class cm = mm[x].getDeclaringClass();
 
 						if (cm.isInterface()) {
-							ce = new CuadroError(Ventana.thisventana,
-									Texto.get("ERROR_EJEC", Conf.idioma),
-									Texto.get("ERROR_CLASEINTERFAZ",
-											Conf.idioma));
+							return Texto.get("ERROR_CLASEINTERFAZ", Conf.idioma);
 						} else if (cm.isArray()) {
-							ce = new CuadroError(Ventana.thisventana,
-									Texto.get("ERROR_EJEC", Conf.idioma),
-									Texto.get("ERROR_CLASEARRAY", Conf.idioma));
+							return Texto.get("ERROR_CLASEARRAY", Conf.idioma);
 						} else if (cm.isEnum()) {
-							ce = new CuadroError(Ventana.thisventana,
-									Texto.get("ERROR_EJEC", Conf.idioma),
-									Texto.get("ERROR_CLASEENUM", Conf.idioma));
+							return Texto.get("ERROR_CLASEENUM", Conf.idioma);
 						} else if (cm.isPrimitive()) {
-							ce = new CuadroError(Ventana.thisventana,
-									Texto.get("ERROR_EJEC", Conf.idioma),
-									Texto.get("ERROR_CLASEPRIM", Conf.idioma));
+							return Texto.get("ERROR_CLASEPRIM", Conf.idioma);
 						} else {
 							boolean instanciacion = false;
 							try {
@@ -92,60 +83,38 @@ public class Ejecutador {
 							} catch (IllegalAccessException iae) {
 							}
 							try {
+								RegistroActivacion.reinicializar();
 								if (instanciacion) {
 									// Esta es la correcta
 									mm[x].invoke(o, parametros);
 								} else {
 									mm[x].invoke(new Object(), parametros);
 								}
-								return true;
+								return null;
 							} catch (java.lang.OutOfMemoryError oome) {
-								ce = new CuadroError(Ventana.thisventana,
-										Texto.get("ERROR_EJEC", Conf.idioma),
-										Texto.get("ERROR_JAVASINMEM",
-												Conf.idioma));
+								return Texto.get("ERROR_JAVASINMEM", Conf.idioma);
 							} catch (IllegalAccessException iae) {
-								ce = new CuadroError(Ventana.thisventana,
-										Texto.get("ERROR_EJEC", Conf.idioma),
-										Texto.get("ERROR_ILEGALDATOS",
-												Conf.idioma));
+								return Texto.get("ERROR_ILEGALDATOS", Conf.idioma);
 							} catch (InvocationTargetException ite) {
 								Traza traza = Traza.singleton();
 								traza.vaciarTraza();
 								String causa = "" + ite.getCause() + "";
 								if (causa.contains("emory")
 										|| causa.contains("heap space")) {
-									ce = new CuadroError(
-											Ventana.thisventana,
-											Texto.get("ERROR_EJEC", Conf.idioma),
-											Texto.get("ERROR_METEXP",
-													Conf.idioma)
-													+ ": "
-													+ causa
-													+ ".");
+									return Texto.get("ERROR_METEXP", Conf.idioma) + ": " + causa + ".";
 								} else if (causa.contains("ThreadDeath")) { 
 									/* Esperado si el usuario ha cancelado la ejecución */
 								} else {
-									ce = new CuadroError(
-											Ventana.thisventana,
-											Texto.get("ERROR_EJEC", Conf.idioma),
-											Texto.get("ERROR_METEXP",
-													Conf.idioma)
-													+ ": "
-													+ causa
-													+ ".");
+									return Texto.get("ERROR_METEXP", Conf.idioma) + ": " + causa + ".";
 								}
 							} catch (Exception e) {
-								ce = new CuadroError(Ventana.thisventana,
-										Texto.get("ERROR_EJEC", Conf.idioma),
-										Texto.get("ERROR_METERR", Conf.idioma)
-												+ ": " + e.getCause());
+								return Texto.get("ERROR_METERR", Conf.idioma) + ": " + e.getCause();
 							}
 						}
 					}
 				}
 			}
 		}
-		return false;
+		return Texto.get("ERROR_DESCONOCIDO", Conf.idioma);
 	}
 }

@@ -348,6 +348,11 @@
 		<T valor="Configuraci[oacute]n de zoom: ajuste" idioma="es" id="GP_AJUSTE_ZOOM"/>
 		<T valor="Zoom configuration: adjust" idioma="en" id="GP_AJUSTE_ZOOM"/>
 		
+		<T valor="La ejecución produce demasiados nodos!" idioma="es" id="DEMASIADOS_NODOS"/>
+		<T valor="Execution produces too many nodes!" idioma="en" id="DEMASIADOS_NODOS"/>
+		
+		<T valor="Error Desconocido!" idioma="es" id="ERROR_DESCONOCIDO"/>
+		<T valor="Unknown Error!" idioma="en" id="ERROR_DESCONOCIDO"/>
 		
 		<T valor="Ubicaci[oacute]n de vistas y paneles..." idioma="es" id="BARRA_HERR_TTT25"/>
 		<T valor="Views and panels location..." idioma="en" id="BARRA_HERR_TTT25"/>

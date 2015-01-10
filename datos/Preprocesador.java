@@ -692,8 +692,11 @@ public class Preprocesador extends Thread {
 				this.wait(250);
 			} catch (InterruptedException ie) {
 			}
-			if (Ejecutador.ejecutar(this.claseAlgoritmo.getId2(),
-					metodoEjecutar.getName(), clasesParametros, valoresParametros)) {
+			
+			String error = Ejecutador.ejecutar(this.claseAlgoritmo.getId2(),
+					metodoEjecutar.getName(), clasesParametros, valoresParametros);
+			
+			if (error == null) {
 				Traza traza_diferido = null;
 				traza_diferido = traza.copiar();
 				traza_diferido.setIDTraza(ahora);
@@ -706,6 +709,9 @@ public class Preprocesador extends Thread {
 				
 				Ejecucion e = new Ejecucion(traza_diferido);	
 				ejecuciones.add(e);
+			} else {
+				new CuadroError(Ventana.thisventana, Texto.get("ERROR_EJEC", Conf.idioma), error);
+				break;
 			}
 		}
 		
