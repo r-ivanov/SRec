@@ -320,8 +320,13 @@
 		
 		<T valor="Debe especificarse al menos una expresi[oacute]n para filas o columnas." idioma="es" id="GP_ERROR_EXPR_REQ"/>
 		<T valor="At least, one expression must be specified for rows or columns." idioma="en" id="GP_ERROR_EXPR_REQ"/>
-		<T valor="Alguna de las expresiones indicadas es inválida, produce valores inválidos, o hay nodos que colisionan." idioma="es" id="GP_ERROR_EXPR_EVAL"/>
-		<T valor="One of the specified expressions is invalid, produces invalid values, or there are nodes that collide." idioma="en" id="GP_ERROR_EXPR_EVAL"/>
+		
+		<T valor="Al menos dos elementos coinciden en la posición" idioma="es" id="GP_ERROR_POSICIONAR"/>
+		<T valor="At least two elements collide in position" idioma="en" id="GP_ERROR_POSICIONAR"/>	
+		<T valor="La expresión indicada no es correcta" idioma="es" id="GP_EXPR_INVALIDA"/>
+		<T valor="Expression is not correct" idioma="en" id="GP_EXPR_INVALIDA"/>	
+		<T valor="La expresión indicada genera valores no enteros o negativos" idioma="es" id="GP_EXPR_NEGATIVOS"/>
+		<T valor="Expression generates negative or non integer values" idioma="en" id="GP_EXPR_NEGATIVOS"/>
 		
 		<T valor="Exportar captura del grafo" idioma="es" id="CA_GUARDEXPORTGRAFO"/>
 		<T valor="Export graph capture" idioma="en" id="CA_GUARDEXPORTGRAFO"/>

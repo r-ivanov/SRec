@@ -26,6 +26,8 @@ import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
 
 import utilidades.MatrizDinamica;
+import utilidades.ServiciosString;
+import utilidades.Texto;
 import conf.Conf;
 
 /**
@@ -459,11 +461,11 @@ public class GrafoDependencia {
 	 * @param expresionParaFila
 	 * @param expresionParaColumna
 	 * 
-	 * @return true si la tabulación fue exitosa, false en caso contrario.
+	 * @return Mensaje de error si ocurrió algun error, null en caso contrario.
 	 */
-	public boolean tabular(String expresionParaFila, String expresionParaColumna) {
+	public String tabular(String expresionParaFila, String expresionParaColumna) {
 
-		boolean error = false;
+		String mensajeError = null;
 		ScriptEngineManager manager = new ScriptEngineManager();
 		MatrizDinamica<NodoGrafoDependencia> matriz = new MatrizDinamica<NodoGrafoDependencia>();
 
@@ -472,20 +474,80 @@ public class GrafoDependencia {
 			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
 
 				Object valor = null;
+				String paramString = nodo.getParams()[i].trim();
 				try {
-					valor = Integer.parseInt(nodo.getParams()[i]);
+					valor = Integer.parseInt(paramString);
 				} catch (NumberFormatException formatException) {
 				}
 
 				if (valor == null) {
 					try {
-						valor = Double.parseDouble(nodo.getParams()[i]);
+						valor = Long.parseLong(paramString);
 					} catch (NumberFormatException formatException) {
 					}
 				}
 
 				if (valor == null) {
-					valor = nodo.getParams()[i];
+					try {
+						valor = Double.parseDouble(paramString);
+					} catch (NumberFormatException formatException) {
+					}
+				}
+
+				if (valor == null
+						&& (paramString.startsWith("'") && paramString
+								.endsWith("'"))) {
+					valor = paramString.charAt(1);
+				}
+
+				if (valor == null
+						&& (paramString.startsWith("\"") && paramString
+								.endsWith("\""))) {
+					valor = paramString.substring(1, paramString.length() - 1);
+				}
+
+				if (valor == null
+						&& (paramString.equals("true") || paramString
+								.equals("false"))) {
+					valor = Boolean.parseBoolean(paramString);
+				}
+
+				/* Listas */
+				if (valor == null && paramString.startsWith("{")
+						&& paramString.endsWith("}")) {
+
+					String listaString = paramString.replace("{", "")
+							.replace("}", "").trim();
+
+					valor = ServiciosString.extraerValoresInt(listaString, ',');
+					if (valor == null) {
+						valor = ServiciosString.extraerValoresLong(listaString,
+								',');
+					}
+					if (valor == null) {
+						valor = ServiciosString.extraerValoresDouble(
+								listaString, ',');
+					}
+					if (valor == null && listaString.startsWith("'")) {
+						String listaChars = listaString.replace("'", "");
+						valor = ServiciosString.extraerValoresChar(listaChars,
+								',');
+					}
+					if (valor == null && listaString.startsWith("\"")) {
+						String listaStrings = listaString.replace("\"", "");
+						valor = ServiciosString.extraerValoresString(
+								listaStrings, ',');
+					}
+					if (valor == null
+							&& (listaString.startsWith("true") || listaString
+									.startsWith("false"))) {
+						valor = ServiciosString.extraerValoresBoolean(
+								listaString, ',');
+					}
+				}
+
+				if (valor == null) {
+					valor = paramString;
 				}
 
 				engine.put(this.metodo.getNombreParametroE(i), valor);
@@ -495,24 +557,28 @@ public class GrafoDependencia {
 						.eval(expresionParaFila));
 				int columna = this.obtenerValorEnteroDeEvaluacion(engine
 						.eval(expresionParaColumna));
-				if (fila < 0 || columna < 0
-						|| matriz.get(fila, columna) != null) {
-					error = true;
+				if (fila < 0 || columna < 0) {
+					mensajeError = Texto.get("GP_EXPR_NEGATIVOS", Conf.idioma);
+				} else if (matriz.get(fila, columna) != null) {
+					mensajeError = Texto
+							.get("GP_ERROR_POSICIONAR", Conf.idioma)
+							+ " x="
+							+ columna + ", y=" + fila;
 				} else {
 					matriz.set(fila, columna, nodo);
 				}
 			} catch (ScriptException e) {
-				error = true;
+				mensajeError = Texto.get("GP_EXPR_INVALIDA", Conf.idioma);
 			}
 		}
 
-		if (!error) {
+		if (mensajeError == null) {
 			this.matrizTabulado = matriz;
 			this.setTamanioTabla(matriz.numFilas(), matriz.numColumnas());
 			this.nodosPosicionados = false;
 		}
 
-		return error;
+		return mensajeError;
 	}
 
 	/**
@@ -531,6 +597,8 @@ public class GrafoDependencia {
 			valor = 0;
 		} else if (valorEval instanceof Integer) {
 			valor = ((Integer) valorEval).intValue();
+		} else if (valorEval instanceof Long) {
+			valor = ((Long) valorEval).intValue();
 		} else if (valorEval instanceof Double) {
 			valor = ((Double) valorEval).intValue();
 		} else if (valorEval instanceof Float) {

@@ -280,14 +280,14 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 	 * @param expresionParaFila
 	 * @param expresionParaColumna
 	 * 
-	 * @return true si la tabulación fue exitosa, false en caso contrario.
+	 * @return Mensaje de error si ocurrió algun error, null en caso contrario.
 	 */
-	public boolean tabular(String expresionParaFila, String expresionParaColumna) {
+	public String tabular(String expresionParaFila, String expresionParaColumna) {
 		this.ultimaExpresionParaFila = expresionParaFila;
 		this.ultimaExpresionParaColumna = expresionParaColumna;
-		boolean error = this.grafoDependencia.tabular(expresionParaFila,
+		String mensajeError = this.grafoDependencia.tabular(expresionParaFila,
 				expresionParaColumna);
-		if (!error) {
+		if (mensajeError == null) {
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo();
 
@@ -299,7 +299,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 			this.ajustarGrafoATamanioVentana(true);
 			this.revalidate();
 		}
-		return error;
+		return mensajeError;
 	}
 
 	@Override

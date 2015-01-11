@@ -103,6 +103,15 @@ public abstract class CuadroPregunta extends Thread implements ActionListener,
 	}
 	
 	/**
+	 * Devuelve el diálogo asociado.
+	 * 
+	 * @return Diálogo asociado.
+	 */
+	protected JDialog getDialogo() {
+		return this.d;
+	}
+	
+	/**
 	 * Ejecuta el thread asociado al cuadro.
 	 */
 	@Override

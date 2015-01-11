@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.WindowConstants;
+
 import conf.*;
 import datos.*;
 import utilidades.*;
@@ -40,6 +42,7 @@ public class CuadroPreguntaSeleccMetodosDYV extends CuadroPregunta implements
 		super(ventana, Texto.get("PREG_SELECCMETODOSDYV", Conf.idioma), Texto
 				.get("PREGMEN_SELECCMETODOSDYV", Conf.idioma), Texto.get("SI",
 				Conf.idioma), Texto.get("NO", Conf.idioma));
+		this.getDialogo().setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.clase = clase;
 		this.p = p;
 		this.start();

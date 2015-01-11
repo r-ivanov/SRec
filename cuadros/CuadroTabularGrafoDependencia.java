@@ -35,7 +35,7 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 		ActionListener, KeyListener, MouseListener {
 
 	private static final int ALTURA_CUADRO = 150;
-	private static final int ANCHURA_CUADRO = 400;
+	private static final int ANCHURA_CUADRO = 450;
 
 	private VentanaGrafoDependencia ventana;
 	private BotonAceptar aceptar;
@@ -188,26 +188,24 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 	 * usuario ha solicitado el tabulado dadas las expresiones.
 	 */
 	private void accionTabulado() {
-		boolean error = false;
+
+		String mensajeError = null;
 
 		if (this.textFilas.getText().length() == 0
 				&& this.textColumnas.getText().length() == 0) {
-			error = true;
+			mensajeError = Texto.get("GP_ERROR_EXPR_REQ", Conf.idioma);
 		}
 
-		if (error) {
-			new CuadroError(this.ventana, Texto.get("GP_ERROR_TITULO",
-					Conf.idioma), Texto.get("GP_ERROR_EXPR_REQ", Conf.idioma));
-		} else {
-			error = this.ventana.tabular(this.textFilas.getText(),
+		if (mensajeError == null) {
+			mensajeError = this.ventana.tabular(this.textFilas.getText(),
 					this.textColumnas.getText());
-			if (error) {
-				new CuadroError(this.ventana, Texto.get("GP_ERROR_TITULO",
-						Conf.idioma), Texto.get("GP_ERROR_EXPR_EVAL",
-						Conf.idioma));
-			} else {
-				this.dialogo.setVisible(false);
-			}
+		}
+
+		if (mensajeError != null) {
+			new CuadroError(this.ventana, Texto.get("GP_ERROR_TITULO",
+					Conf.idioma), mensajeError);
+		} else {
+			this.dialogo.setVisible(false);
 		}
 	}
 
