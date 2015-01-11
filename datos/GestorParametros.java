@@ -139,6 +139,9 @@ public class GestorParametros {
 			} else {
 				int array[] = valoresIntArray(s);
 				o = array;
+				if (o == null) {
+					o = new int[0];
+				}
 			}
 		} else if (c.getCanonicalName().contains("short[]")) // Si es short[]
 		{
@@ -150,6 +153,9 @@ public class GestorParametros {
 			} else {
 				short array[] = valoresShortArray(s);
 				o = array;
+				if (o == null) {
+					o = new short[0];
+				}
 			}
 		} else if (c.getCanonicalName().contains("long[]")) // Si es long[]
 		{
@@ -161,6 +167,9 @@ public class GestorParametros {
 			} else {
 				long array[] = valoresLongArray(s);
 				o = array;
+				if (o == null) {
+					o = new long[0];
+				}
 			}
 		}
 
@@ -174,6 +183,9 @@ public class GestorParametros {
 			} else {
 				double array[] = valoresDoubleArray(s);
 				o = array;
+				if (o == null) {
+					o = new double[0];
+				}
 			}
 		} else if (c.getCanonicalName().contains("float[]")) // Si es float[]
 		{
@@ -185,6 +197,9 @@ public class GestorParametros {
 			} else {
 				float array[] = valoresFloatArray(s);
 				o = array;
+				if (o == null) {
+					o = new float[0];
+				}
 			}
 		} else if (c.getCanonicalName().contains("byte[]")) // Si es byte[]
 		{
@@ -196,6 +211,9 @@ public class GestorParametros {
 			} else {
 				float array[] = valoresFloatArray(s);
 				o = array;
+				if (o == null) {
+					o = new byte[0];
+				}
 			}
 		} else if (c.getCanonicalName().contains("java.lang.String[]")) // Si es
 			// String[]
@@ -208,6 +226,9 @@ public class GestorParametros {
 			} else {
 				String array[] = valoresStringArray(s);
 				o = (array);
+				if (o == null) {
+					o = new String[0];
+				}
 			}
 		} else if (c.getCanonicalName().contains("char[]")) // Si es char[]
 		{
@@ -219,6 +240,9 @@ public class GestorParametros {
 			} else {
 				char arrayCaracteres[] = valoresCharArray(s);
 				o = arrayCaracteres;
+				if (o == null) {
+					o = new char[0];
+				}
 			}
 		} else if (c.getCanonicalName().contains("boolean[]")) // Si es
 			// boolean[]
@@ -231,6 +255,9 @@ public class GestorParametros {
 			} else {
 				boolean arrayBooleanos[] = valoresBooleanArray(s);
 				o = arrayBooleanos;
+				if (o == null) {
+					o = new boolean[0];
+				}
 			}
 		} else if (depurar) {
 			System.out.println("No asignamos ???????? a 'o'");
@@ -1025,7 +1052,7 @@ public class GestorParametros {
 			return null;
 		}
 		s = s.substring(1, s.length() - 1);
-		if (s.charAt(0) == ',' || s.charAt(s.length() - 1) == ',') {
+		if (s.length() == 0 || s.charAt(0) == ',' || s.charAt(s.length() - 1) == ',') {
 			return null;
 		}
 
