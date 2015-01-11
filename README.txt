@@ -5,7 +5,37 @@
 SRec v1.6 (Programación Dinámica)
 ==================================================
 
+- Se ha añadido funcionalidad para generar grafos de dependencia en SRec.
 
+- Según se visualizan ejecuciones, el usuario ahora dispone de un nuevo botón que permite generar con una organización
+automática el conjunto de nodos que forman el grafo de dependencia de la ejecución actual.
+
+- Si la ejecución actual se compone de distintos métodos, el usuario puede elegir previamente el método para el que generar
+el grafo de dependencia.
+
+- Se ha añadido soporte para aristas no lineales en SRec, ahora se dispone de un nuevo enrutador de aristas que dibuja aristas
+parabólicas que rodean los nodos si la trayectoria de la arista atraviesa alguno de los nodos.
+
+- Se ha añadido funcionalidad para que el usuario pueda reorganizar manualmente los nodos del grafo.
+
+- Se ha añadido funcionalidad para que los nodos del grafo respeten los valores de configuración para visibilidad de valores de entrada,
+de salida, o ambos. Así como los valores de configuración para visibilidad de parámetros.
+
+- Se ha añadido funcionalidad para que el usuario pueda especificar un valor de filas y columnas para dibujar detrás del grafo de dependencia,
+una matriz donde el usuario pueda reorganizar los nodos y tabularlos manualmente.
+
+- Se ha añadido funcionalidad para que el usuario pueda tabular automáticamente los nodos del grafo de dependencia en una matriz, dadas
+cualquier expresión para filas y una expresión para columnas, pudiendo relacionar los parámetros de entrada con los índices de la matriz.
+
+- Se ha añadido funcionalidad para que el usuario pueda exportar una captura del grafo de dependencia.
+
+- Se ha añadido funcionalidad para que el usuario pueda aumentar, reducir, y ajusta el tamaño de zoom de la ventana del grafo de dependencia.
+
+- Se ha añadido un cuadro de proceso para cuando el algoritmo se está ejecutando, con un botón cancelar que permite detener la ejecución
+en cualquier momento. También se ha limitado el número de nodos que puede generar un algoritmo a 350, de modo que puedan evitarse errores
+debidos a falta de memoria cuando las ejecuciones de algoritmos son exageradamente grandes.
+
+- Se han modificado algunos de los iconos de la aplicación para que resulten más intuitivos.
 
 SRec v1.5 (Múltiples Visualizaciones)
 ==================================================
