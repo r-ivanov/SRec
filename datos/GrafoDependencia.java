@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -453,7 +454,87 @@ public class GrafoDependencia {
 		this.numeroFilasTabla = numeroFilasTabla;
 		this.numeroColumnasTabla = numeroColumnasTabla;
 	}
+	
+	private Object obtenerValorConTipo(String valorAParsear) {
+		
+		Object valor = null;
+		String paramString = valorAParsear.trim();
+		
+		try {
+			valor = Integer.parseInt(paramString);
+		} catch (NumberFormatException formatException) {
+		}
 
+		if (valor == null) {
+			try {
+				valor = Long.parseLong(paramString);
+			} catch (NumberFormatException formatException) {
+			}
+		}
+
+		if (valor == null) {
+			try {
+				valor = Double.parseDouble(paramString);
+			} catch (NumberFormatException formatException) {
+			}
+		}
+
+		if (valor == null
+				&& (paramString.startsWith("'") && paramString
+						.endsWith("'") && paramString.length() > 1)) {
+			valor = paramString.charAt(1);
+		}
+
+		if (valor == null
+				&& (paramString.startsWith("\"") && paramString
+						.endsWith("\"") && paramString.length() > 1)) {
+			valor = paramString.substring(1, paramString.length() - 1);
+		}
+
+		if (valor == null
+				&& (paramString.equals("true") || paramString
+						.equals("false"))) {
+			valor = Boolean.parseBoolean(paramString);
+		}
+
+		/* Listas */
+		if (valor == null && paramString.startsWith("{")
+				&& paramString.endsWith("}") && paramString.length() > 1) {
+
+			String listaString = paramString.substring(1, paramString.length() - 1).trim();
+			List<String> valoresStringLista = ParametrosParser.reemplazarYPartirValores(listaString);
+			
+			Class claseLista = Object.class;
+			if (valoresStringLista.size() > 0) {			
+				Class tipoElementos = this.obtenerValorConTipo(valoresStringLista.get(0)).getClass();			
+				if (tipoElementos.equals(Integer.class)) {
+					claseLista = int.class;
+				} else if (tipoElementos.equals(Long.class)) {
+					claseLista = long.class;
+				} else if (tipoElementos.equals(Double.class)) {
+					claseLista = double.class;
+				} else if (tipoElementos.equals(Character.class)) {
+					claseLista = char.class;
+				} else if (tipoElementos.equals(String.class)) {
+					claseLista = String.class;
+				} else if (tipoElementos.equals(Boolean.class)) {
+					claseLista = Boolean.class;
+				}
+			}
+			
+			valor = Array.newInstance(claseLista, valoresStringLista.size());
+			for (int i = 0; i < valoresStringLista.size(); i++) {
+				Array.set(valor, i, this.obtenerValorConTipo(valoresStringLista.get(i)));
+			}
+		}
+
+		if (valor == null) {
+			valor = paramString;
+		}
+		
+		return valor;
+	}
+	
 	/**
 	 * Tabula automáticamente los nodos del grafo, dada una expresión para filas
 	 * y otra para columnas.
@@ -472,85 +553,7 @@ public class GrafoDependencia {
 		for (NodoGrafoDependencia nodo : this.nodos) {
 			ScriptEngine engine = manager.getEngineByName("js");
 			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
-
-				Object valor = null;
-				String paramString = nodo.getParams()[i].trim();
-				try {
-					valor = Integer.parseInt(paramString);
-				} catch (NumberFormatException formatException) {
-				}
-
-				if (valor == null) {
-					try {
-						valor = Long.parseLong(paramString);
-					} catch (NumberFormatException formatException) {
-					}
-				}
-
-				if (valor == null) {
-					try {
-						valor = Double.parseDouble(paramString);
-					} catch (NumberFormatException formatException) {
-					}
-				}
-
-				if (valor == null
-						&& (paramString.startsWith("'") && paramString
-								.endsWith("'"))) {
-					valor = paramString.charAt(1);
-				}
-
-				if (valor == null
-						&& (paramString.startsWith("\"") && paramString
-								.endsWith("\""))) {
-					valor = paramString.substring(1, paramString.length() - 1);
-				}
-
-				if (valor == null
-						&& (paramString.equals("true") || paramString
-								.equals("false"))) {
-					valor = Boolean.parseBoolean(paramString);
-				}
-
-				/* Listas */
-				if (valor == null && paramString.startsWith("{")
-						&& paramString.endsWith("}")) {
-
-					String listaString = paramString.replace("{", "")
-							.replace("}", "").trim();
-
-					valor = ServiciosString.extraerValoresInt(listaString, ',');
-					if (valor == null) {
-						valor = ServiciosString.extraerValoresLong(listaString,
-								',');
-					}
-					if (valor == null) {
-						valor = ServiciosString.extraerValoresDouble(
-								listaString, ',');
-					}
-					if (valor == null && listaString.startsWith("'")) {
-						String listaChars = listaString.replace("'", "");
-						valor = ServiciosString.extraerValoresChar(listaChars,
-								',');
-					}
-					if (valor == null && listaString.startsWith("\"")) {
-						String listaStrings = listaString.replace("\"", "");
-						valor = ServiciosString.extraerValoresString(
-								listaStrings, ',');
-					}
-					if (valor == null
-							&& (listaString.startsWith("true") || listaString
-									.startsWith("false"))) {
-						valor = ServiciosString.extraerValoresBoolean(
-								listaString, ',');
-					}
-				}
-
-				if (valor == null) {
-					valor = paramString;
-				}
-
-				engine.put(this.metodo.getNombreParametroE(i), valor);
+				engine.put(this.metodo.getNombreParametroE(i), this.obtenerValorConTipo(nodo.getParams()[i]));
 			}
 			try {
 				int fila = this.obtenerValorEnteroDeEvaluacion(engine
@@ -605,9 +608,17 @@ public class GrafoDependencia {
 			valor = ((Float) valorEval).intValue();
 		} else if (valorEval instanceof String) {
 			String valorFilaString = (String) valorEval;
+			
 			try {
 				valor = Integer.parseInt(valorFilaString);
 			} catch (NumberFormatException formatException) {
+			}
+			
+			if (valor < 0) {
+				try {
+					valor = Double.valueOf(Double.parseDouble(valorFilaString)).intValue();
+				} catch (NumberFormatException formatException) {
+				}
 			}
 		}
 
