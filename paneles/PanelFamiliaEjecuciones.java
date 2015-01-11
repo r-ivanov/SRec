@@ -10,31 +10,58 @@ import javax.swing.event.ChangeListener;
 import conf.Conf;
 import datos.FamiliaEjecuciones;
 
+/**
+ * Panel que contiene una familia de ejecuciones.
+ * 
+ * @author David Pastor Herranz
+ */
 public class PanelFamiliaEjecuciones extends JScrollPane {
 
 	private static final long serialVersionUID = 1668056497167133807L;
-	
+
 	private static final int MARGEN_INFERIOR = 20;
 	private static final int MARGEN_LATERAL = 20;
 
 	private final PanelGrafos panelGrafos;
 
+	/**
+	 * Devuelve una nueva instancia del panel.
+	 * 
+	 * @param familiaEjecuciones
+	 *            Familia de ejecuciones a representar.
+	 */
 	public PanelFamiliaEjecuciones(FamiliaEjecuciones familiaEjecuciones) {
 		this.panelGrafos = new PanelGrafos(familiaEjecuciones);
 		this.setViewportView(this.panelGrafos);
-		this.getViewport().addChangeListener(new ChangeListener() {						
+		this.getViewport().addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				getHorizontalScrollBar().setEnabled(
-                        getViewport().getWidth() <
-                        getViewport().getView().getWidth());
-				getVerticalScrollBar().setEnabled(
-                        getViewport().getHeight() <
-                        getViewport().getView().getHeight());
+				PanelFamiliaEjecuciones.this
+				.getHorizontalScrollBar()
+				.setEnabled(
+						PanelFamiliaEjecuciones.this.getViewport()
+						.getWidth() < PanelFamiliaEjecuciones.this
+						.getViewport().getView().getWidth());
+				PanelFamiliaEjecuciones.this
+				.getVerticalScrollBar()
+				.setEnabled(
+						PanelFamiliaEjecuciones.this.getViewport()
+						.getHeight() < PanelFamiliaEjecuciones.this
+						.getViewport().getView().getHeight());
 			}
 		});
 	}
 
+	/**
+	 * Pinta la familia de ejecuciones dado un tamaño y una orientación.
+	 * 
+	 * @param size
+	 *            Altura del panel si la orientación es horizontal, o Anchura si
+	 *            es vertical.
+	 * @param orientacion
+	 *            Orientación del panel, Conf.PANEL_HORIZONTAL o
+	 *            Conf.PANEL_VERTICAL.
+	 */
 	public void pintar(int size, int orientacion) {
 		if (orientacion == Conf.PANEL_HORIZONTAL) {
 			this.setMinimumSize(new Dimension(0, size));

@@ -458,12 +458,14 @@ public class Preprocesador extends Thread {
 					Texto.get("ERROR_ARCHNE", Conf.idioma));
 		}
 	}
-	
+
 	/**
 	 * Una vez procesado el fichero, este método se encargará de insertar las
-	 * llamadas necesarias en el xml para procesar la clase final que será ejecutada.
+	 * llamadas necesarias en el xml para procesar la clase final que será
+	 * ejecutada.
 	 * 
-	 * @param clase Clase a ser procesada.
+	 * @param clase
+	 *            Clase a ser procesada.
 	 */
 	public synchronized void fase2(ClaseAlgoritmo clase) {
 
@@ -613,10 +615,12 @@ public class Preprocesador extends Thread {
 	 * Gestiona los detalles necesarios para poder ejecutar el algoritmo de
 	 * forma controlada, tras el procesamiento del mismo
 	 * 
-	 * @param procesoListener Si se especifica un valor distinto de null.
-	 * se notificará a través de este objeto, los resultados del proceso.
+	 * @param procesoListener
+	 *            Si se especifica un valor distinto de null. se notificará a
+	 *            través de este objeto, los resultados del proceso.
 	 */
-	public synchronized void ejecutarAlgoritmo(PreprocesadorEjecucionListener procesoListener) {
+	public synchronized void ejecutarAlgoritmo(
+			PreprocesadorEjecucionListener procesoListener) {
 		// Desde la clase ClaseAlgoritmo de la ventana, debemos sacar el ID2,
 		// que nos dará el nombre del .class que tenemos que analizar
 		// extraemos por ahí sus Method, etc. e identificamos el que ha sido
@@ -646,31 +650,34 @@ public class Preprocesador extends Thread {
 		for (int j = 0; j < tipos.length; j++) {
 			clasesParametros[j] = (Class) tipos[j];
 		}
-		
-		for (int j=0; j<tipos.length; j++)
-			clasesParametros[j]= (Class)tipos[j];
-		
-		ParametrosParser parametrosParser = new ParametrosParser(metodoAlgoritmo);
-		String[][] matrizParametros = parametrosParser.obtenerMatrizParametros();	
-		
+
+		for (int j = 0; j < tipos.length; j++)
+			clasesParametros[j] = (Class) tipos[j];
+
+		ParametrosParser parametrosParser = new ParametrosParser(
+				metodoAlgoritmo);
+		String[][] matrizParametros = parametrosParser
+				.obtenerMatrizParametros();
+
 		List<Ejecucion> ejecuciones = new ArrayList<Ejecucion>();
 		for (int numeroEjecucion = 0; numeroEjecucion < matrizParametros.length; numeroEjecucion++) {
-			
+
 			Object[] valoresParametros = new Object[tipos.length];
-	
+
 			for (int i = 0; i < valoresParametros.length; i++) {
 				try {
-					valoresParametros[i] = GestorParametros
-							.asignarParam(matrizParametros[numeroEjecucion][i], clasesParametros[i]);
+					valoresParametros[i] = GestorParametros.asignarParam(
+							matrizParametros[numeroEjecucion][i],
+							clasesParametros[i]);
 				} catch (java.lang.Exception ex) {
 					ex.printStackTrace();
 					System.out
 							.println("Excepcion en Preprocesador, llamada a 'asignarParam' (i="
 									+ i + ")");
 				}
-	
+
 			}
-	
+
 			String tituloPanel = "";
 			tituloPanel = tituloPanel + metodoEjecutar.getName() + " ( ";
 			if (valoresParametros != null) {
@@ -684,18 +691,19 @@ public class Preprocesador extends Thread {
 				}
 			}
 			tituloPanel = tituloPanel + " )";
-	
+
 			Traza traza = Traza.singleton();
 			traza.vaciarTraza();
-	
+
 			try {
 				this.wait(250);
 			} catch (InterruptedException ie) {
 			}
-			
+
 			String error = Ejecutador.ejecutar(this.claseAlgoritmo.getId2(),
-					metodoEjecutar.getName(), clasesParametros, valoresParametros);
-			
+					metodoEjecutar.getName(), clasesParametros,
+					valoresParametros);
+
 			if (error == null) {
 				Traza traza_diferido = null;
 				traza_diferido = traza.copiar();
@@ -704,34 +712,43 @@ public class Preprocesador extends Thread {
 				traza_diferido.setArchivo(this.claseAlgoritmo.getPath());
 				traza_diferido.setTecnicas(MetodoAlgoritmo.tecnicasEjecucion(
 						this.claseAlgoritmo, metodoAlgoritmo));
-				traza_diferido.setNombreMetodoEjecucion(metodoEjecutar.getName());
+				traza_diferido.setNombreMetodoEjecucion(metodoEjecutar
+						.getName());
 				traza_diferido.setTitulo(tituloPanel);
-				
-				Ejecucion e = new Ejecucion(traza_diferido);	
+
+				Ejecucion e = new Ejecucion(traza_diferido);
 				ejecuciones.add(e);
 			} else {
-				new CuadroError(Ventana.thisventana, Texto.get("ERROR_EJEC", Conf.idioma), error);
+				new CuadroError(Ventana.thisventana, Texto.get("ERROR_EJEC",
+						Conf.idioma), error);
 				break;
 			}
 		}
-		
+
 		File file = new File(ficherosinex + ahora + ".class");
 		file.delete();
-		
+
 		if (procesoListener != null) {
-			procesoListener.ejecucionFinalizada(ejecuciones, matrizParametros.length == ejecuciones.size());
+			procesoListener.ejecucionFinalizada(ejecuciones,
+					matrizParametros.length == ejecuciones.size());
 		}
 	}
-	
+
 	/**
 	 * Genera un identificador único dada una fecha concreta.
 	 * 
-	 * @param dia Dia
-	 * @param mes Mes
-	 * @param anyo Año
-	 * @param h Hora
-	 * @param m Minutos
-	 * @param s Segundos
+	 * @param dia
+	 *            Dia
+	 * @param mes
+	 *            Mes
+	 * @param anyo
+	 *            Año
+	 * @param h
+	 *            Hora
+	 * @param m
+	 *            Minutos
+	 * @param s
+	 *            Segundos
 	 * 
 	 * @return Código único.
 	 */
@@ -755,12 +772,15 @@ public class Preprocesador extends Thread {
 
 		return "__codSRec__" + anyo + mes + dia + h + m + s;
 	}
-	
+
 	/**
-	 * Dada la representación de un método del algoritmo, determina el método a ejecutar de la clase.
+	 * Dada la representación de un método del algoritmo, determina el método a
+	 * ejecutar de la clase.
 	 * 
-	 * @param metodoAlgoritmo Información del método.
-	 * @param metodos Lista de métodos disponibles.
+	 * @param metodoAlgoritmo
+	 *            Información del método.
+	 * @param metodos
+	 *            Lista de métodos disponibles.
 	 * 
 	 * @return Método a ejecutar.
 	 */
@@ -796,14 +816,17 @@ public class Preprocesador extends Thread {
 
 		return metodoEjecutar;
 	}
-	
+
 	/**
 	 * Determina si las dimensiones de una clase son las correctas.
 	 * 
-	 * @param claseCanonica Nombre canónico de la clase.
-	 * @param numero Número de dimensiones esperado.
+	 * @param claseCanonica
+	 *            Nombre canónico de la clase.
+	 * @param numero
+	 *            Número de dimensiones esperado.
 	 * 
-	 * @return true si las dimensiones son las esperadas, false en caso contrario.
+	 * @return true si las dimensiones son las esperadas, false en caso
+	 *         contrario.
 	 */
 	private boolean dimensionesCorrectas(String claseCanonica, int numero) {
 		int vecesEncontradas = 0;

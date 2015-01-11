@@ -2224,6 +2224,10 @@ public class Ventana extends JFrame implements ActionListener {
 				this.p);
 	}
 	
+	/**
+	 * Gestiona las acciones necesarias cuando el usuario desea generar
+	 * un grafo de dependencia para la ejecución actual.
+	 */
     private void generarGrafoDependencia() {
     	if (this.dtb.getNumMetodos() > 1) {
     		new CuadroGenerarGrafoDependencia(this, this.dtb);

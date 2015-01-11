@@ -352,13 +352,22 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 
 		}
 	}
-
+	
+	/**
+	 * Establece el elemento que debe mostrarse con focus al inicio.
+	 */
 	private void foco() {
 		this.cuadrosvalores[0].requestFocusInWindow();
 		this.cuadrosvalores[0].requestFocus();
 		this.mostrarvalores[0].transferFocus();
 	}
 	
+	/**
+	 * Comprueba si los valores introducidos son correctos, y de ser así
+	 * los asigna a los valores de ejecución del método.
+	 * 
+	 * @return true si los valores son correctos, false en caso contrario.
+	 */
 	private boolean comprobarYAsignarValores() {
 		for (int i = 0; i < this.metodo.getNumeroParametros(); i++) {
 			String texto = (String) (this.cuadrosvalores[i]

@@ -21,6 +21,12 @@ import conf.Conf;
 import datos.Ejecucion;
 import datos.FamiliaEjecuciones;
 
+/**
+ * Panel que permite visualizar la captura de un determinado árbol, este panel
+ * se utilizará como parte de un panel que contenga una secuencia de árboles.
+ * 
+ * @author David Pastor Herranz
+ */
 public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 
 	private static final long serialVersionUID = 5487058416021891922L;
@@ -34,6 +40,18 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 
 	private BufferedImage snapshot;
 
+	/**
+	 * Crea una nueva instancia del panel.
+	 * 
+	 * @param familiaEjecuciones
+	 *            Familia de ejecuciones a la que pertenece el árbol a pintar.
+	 * @param ejecucion
+	 *            Ejecución concreta que corresponde al árbol a pintar.
+	 * @param anchura
+	 *            Anchura de la captura.
+	 * @param altura
+	 *            Altura de la captura.
+	 */
 	public PanelSnapshotGrafo(FamiliaEjecuciones familiaEjecuciones,
 			Ejecucion ejecucion, int anchura, int altura) {
 		this.setBackground(Conf.colorPanel);
@@ -154,7 +172,8 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		JRootPane rootPane = this.getRootPane();
 		if (rootPane != null) {
-			rootPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			rootPane.setCursor(Cursor
+					.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
 	}
 
@@ -165,7 +184,7 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 	 *            evento de ratón
 	 */
 	@Override
-	public void mousePressed(MouseEvent e) { 
+	public void mousePressed(MouseEvent e) {
 
 	}
 

@@ -14,6 +14,12 @@ import conf.Conf;
 import datos.Ejecucion;
 import datos.FamiliaEjecuciones;
 
+/**
+ * Panel que permite organizar visualmente distintos árboles, dada una familia
+ * de ejecuciones a visualizar.
+ * 
+ * @author David Pastor Herranz
+ */
 public class PanelGrafos extends JPanel implements Scrollable {
 
 	private static final long serialVersionUID = -6270875064574073828L;
@@ -34,10 +40,26 @@ public class PanelGrafos extends JPanel implements Scrollable {
 	private int anchuraTotal;
 	private int alturaTotal;
 
+	/**
+	 * Crea una nueva instancia.
+	 * 
+	 * @param familiaEjecuciones
+	 *            Familia de ejecuciones a visualizar.
+	 */
 	public PanelGrafos(FamiliaEjecuciones familiaEjecuciones) {
 		this.familiaEjecuciones = familiaEjecuciones;
 	}
 
+	/**
+	 * Pinta la familia de ejecuciones dado un tamaño y una orientación.
+	 * 
+	 * @param tamanio
+	 *            Altura del panel si la orientación es horizontal, o Anchura si
+	 *            es vertical.
+	 * @param orientacion
+	 *            Orientación del panel, Conf.PANEL_HORIZONTAL o
+	 *            Conf.PANEL_VERTICAL.
+	 */
 	public void pintar(int tamanio, int orientacion) {
 		this.removeAll();
 
@@ -80,15 +102,24 @@ public class PanelGrafos extends JPanel implements Scrollable {
 	@Override
 	public int getScrollableUnitIncrement(Rectangle visibleRect,
 			int orientation, int direction) {
-		return getIncrement(orientation);
+		return this.getIncrement(orientation);
 	}
 
 	@Override
 	public int getScrollableBlockIncrement(Rectangle visibleRect,
 			int orientation, int direction) {
-		return getIncrement(orientation);
+		return this.getIncrement(orientation);
 	}
 
+	/**
+	 * Devuelve el incremento de scroll que debe aplicarse cada vez que se
+	 * scrollea hacia un lado o el otro.
+	 * 
+	 * @param orientation
+	 *            Orientación del panel.
+	 * 
+	 * @return Incremento a aplicar.
+	 */
 	private int getIncrement(int orientation) {
 		if (orientation == Adjustable.HORIZONTAL) {
 			return this.anchuraElemento / 2;

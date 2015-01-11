@@ -7,56 +7,83 @@ import java.util.regex.Pattern;
 
 import utilidades.ServiciosString;
 
+/**
+ * Permite parsear parámetros de entrada para una ejecución, determinando el
+ * número de ejecuciones necesarias.
+ * 
+ * @author David Pastor Herranz
+ */
 public class ParametrosParser {
-	
+
 	private MetodoAlgoritmo metodoAlgoritmo;
-	
+
+	/**
+	 * Devuelve una nueva instancia.
+	 * 
+	 * @param metodoAlgoritmo
+	 *            Método algoritmo asociado.
+	 */
 	public ParametrosParser(MetodoAlgoritmo metodoAlgoritmo) {
 		this.metodoAlgoritmo = metodoAlgoritmo;
 	}
-	
+
+	/**
+	 * Determina el número de ejecuciones necesarias para los parámetros de
+	 * entrada especificados.
+	 * 
+	 * @return Número de ejecuciones necesarias.
+	 */
 	private int determinarCombinaciones() {
 		int combinaciones = 1;
 		for (int i = 0; i < this.metodoAlgoritmo.getNumeroParametros(); i++) {
 			String valorParametro = this.metodoAlgoritmo.getParamValor(i);
 			int numeroValores = reemplazarYPartirValores(valorParametro).size();
-			combinaciones *= numeroValores; 
-		}		
+			combinaciones *= numeroValores;
+		}
 		return combinaciones;
 	}
-	
+
+	/**
+	 * Dado un valor para un parámetro de entrada, si este contiene múltiples
+	 * parámetros, los parte y devuelve los distintos parámetros separados en
+	 * una lista.
+	 * 
+	 * @param cadenaEntrada
+	 * 
+	 * @return Lista de valores
+	 */
 	public static List<String> reemplazarYPartirValores(String cadenaEntrada) {
-		
+
 		Pattern p = Pattern.compile("(-?[0-9]+)\\.\\.(-?[0-9]+)");
-	    Matcher matcher = p.matcher(cadenaEntrada);    
-	    StringBuffer sb = new StringBuffer(cadenaEntrada.length());
-	    while (matcher.find()) {
-	    	int digito1 = Integer.parseInt(matcher.group(1));
-	    	int digito2 = Integer.parseInt(matcher.group(2));
-	    	String secuencia = "";
-	    	
-	    	if (digito2 >= digito1) {
-	    		/* Rango creciente */
-		    	for (int i = digito1; i <= digito2; i++) {
-		    		secuencia += i;
-		    		if (i != digito2) {
-		    			secuencia += ","; 
-		    		}
-		    	}
-	    	} else {
-	    		/* Rango decreciente */
-	    		for (int i = digito1; i >= digito2; i--) {
-		    		secuencia += i;
-		    		if (i != digito2) {
-		    			secuencia += ","; 
-		    		}
-		    	}
-	    	}
-	    	matcher.appendReplacement(sb, Matcher.quoteReplacement(secuencia));
-	    }
-	    matcher.appendTail(sb);    
-	    cadenaEntrada = sb.toString();
-		
+		Matcher matcher = p.matcher(cadenaEntrada);
+		StringBuffer sb = new StringBuffer(cadenaEntrada.length());
+		while (matcher.find()) {
+			int digito1 = Integer.parseInt(matcher.group(1));
+			int digito2 = Integer.parseInt(matcher.group(2));
+			String secuencia = "";
+
+			if (digito2 >= digito1) {
+				/* Rango creciente */
+				for (int i = digito1; i <= digito2; i++) {
+					secuencia += i;
+					if (i != digito2) {
+						secuencia += ",";
+					}
+				}
+			} else {
+				/* Rango decreciente */
+				for (int i = digito1; i >= digito2; i--) {
+					secuencia += i;
+					if (i != digito2) {
+						secuencia += ",";
+					}
+				}
+			}
+			matcher.appendReplacement(sb, Matcher.quoteReplacement(secuencia));
+		}
+		matcher.appendTail(sb);
+		cadenaEntrada = sb.toString();
+
 		ArrayList<String> valores = new ArrayList<String>();
 		int balanceoArray = 0;
 		boolean enCadena = false;
@@ -74,49 +101,86 @@ public class ParametrosParser {
 				ultimoValor = i + 1;
 			}
 		}
-		valores.add(cadenaEntrada.substring(ultimoValor, cadenaEntrada.length()).trim());
-		
+		valores.add(cadenaEntrada
+				.substring(ultimoValor, cadenaEntrada.length()).trim());
+
 		return valores;
 	}
-	
-	public static boolean comprobarValoresParametro(List<String> valores, String tipo, int dim) {
+
+	/**
+	 * Determina si los valores pasados por parámetro, cumplen las restricciones
+	 * de tipo y dimensión especificadas.
+	 * 
+	 * @param valores
+	 *            Lista de valores de entrada.
+	 * @param tipo
+	 *            Tipo de los valores.
+	 * @param dim
+	 *            Dimensión de los valores.
+	 * 
+	 * @return true si todos los valores son del tipo y dimensión especificados.
+	 */
+	public static boolean comprobarValoresParametro(List<String> valores,
+			String tipo, int dim) {
 		for (int i = 0; i < valores.size(); i++) {
 			if (!ServiciosString.esDeTipoCorrecto(valores.get(i), tipo, dim)) {
 				return false;
 			}
-		}	
+		}
 		return true;
 	}
-	
+
+	/**
+	 * Devuelve una matriz con el producto cartesiano de todos los valores
+	 * especificados para todos los parámetros, representando en cada fila, los
+	 * valores de cada ejecución individual.
+	 * 
+	 * @return Matriz con valores de ejecución por cada fila.
+	 */
 	public String[][] obtenerMatrizParametros() {
 		int combinaciones = this.determinarCombinaciones();
 		String[][] matrizParametros = new String[combinaciones][];
-		
+
 		for (int i = 0; i < combinaciones; i++) {
-			matrizParametros[i] = new String[this.metodoAlgoritmo.getNumeroParametros()];
+			matrizParametros[i] = new String[this.metodoAlgoritmo
+					.getNumeroParametros()];
 		}
-		
+
 		int productoCombinacionesAcumulado = 1;
-		for (int numeroParametro = 0; numeroParametro < this.metodoAlgoritmo.getNumeroParametros(); numeroParametro++) {
-			String valorParametro = this.metodoAlgoritmo.getParamValor(numeroParametro);
+		for (int numeroParametro = 0; numeroParametro < this.metodoAlgoritmo
+				.getNumeroParametros(); numeroParametro++) {
+			String valorParametro = this.metodoAlgoritmo
+					.getParamValor(numeroParametro);
 			List<String> valores = reemplazarYPartirValores(valorParametro);
-			
-			int repeticionesPorValor = combinaciones / valores.size() / productoCombinacionesAcumulado;
+
+			int repeticionesPorValor = combinaciones / valores.size()
+					/ productoCombinacionesAcumulado;
 			productoCombinacionesAcumulado *= valores.size();
-			
+
 			for (int i = 0; i < combinaciones; i++) {
 				int posicionValor = (i / repeticionesPorValor) % valores.size();
-				matrizParametros[i][numeroParametro] = valores.get(posicionValor);
+				matrizParametros[i][numeroParametro] = valores
+						.get(posicionValor);
 			}
 		}
-		
+
 		return matrizParametros;
 	}
-	
+
+	/**
+	 * Devuelve el nombre de los parámetros de entrada.
+	 * 
+	 * @return Lista con el nombre de los parámetros de entrada.
+	 */
 	public String[] obtenerNombresParametros() {
 		return this.metodoAlgoritmo.getNombreParametros();
 	}
-	
+
+	/**
+	 * Devuelve el nombre del método.
+	 * 
+	 * @return Nombre del método.
+	 */
 	public String obtenerNombreMetodo() {
 		return this.metodoAlgoritmo.getNombre();
 	}

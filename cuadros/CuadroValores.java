@@ -1,7 +1,7 @@
 package cuadros;
 
-import java.awt.BorderLayout;
 import java.awt.AWTEvent;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,19 +9,21 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.border.TitledBorder;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.TitledBorder;
 
-import conf.*;
-import botones.*; 
-import datos.*;
-import utilidades.*;
-import ventanas.*;
+import utilidades.TableColumnSizer;
+import utilidades.Texto;
+import ventanas.Ventana;
+import botones.BotonTexto;
+import conf.Conf;
+import datos.ParametrosParser;
 
 /**
  * Implementa el cuadro que muestra los distintos parámetros de ejecuciones.
@@ -30,61 +32,73 @@ import ventanas.*;
  */
 public class CuadroValores extends Thread implements ActionListener,
 		KeyListener, MouseListener {
-	
+
 	private static final int VIEWPORT_FILAS_MAXIMAS = 10;
-	
+
 	private Ventana ventana;
 	private BotonTexto cerrar;
 
 	private JPanel panel, panelBoton, panelParam;
 	private JDialog dialogo;
-	
+
 	private ParametrosParser parametrosParser;
 
 	/**
-	 * Crea un nuevo cuadro que recoge los parámetros desde la interfaz y
-	 * permite lanzar una ejecución.
+	 * Crea una nueva instancia del cuadro.
 	 * 
 	 * @param ventana
 	 *            Ventana a la que quedará asociado el cuadro.
 	 * 
-	 * @param metodo
-	 *            método que se ha seleccionado para modificar sus valores de
-	 *            entrada
-	 * @param clase
-	 *            Clase a la que pertenece el método para la que se introducirán
-	 *            los parámetros.
 	 * @param p
-	 *            Preprocesador que permitirá lanzar la ejecución una vez
-	 *            seleccionados los parámetros.
+	 *            Parser para los parámetros.
 	 */
 	public CuadroValores(Ventana ventana, ParametrosParser p) {
 
 		this.dialogo = new JDialog(ventana, true);
-		this.ventana = ventana;	
+		this.ventana = ventana;
 		this.parametrosParser = p;
 
 		this.start();
 	}
-	
-	private static String[][] obtenerMatrizParametrosConNumeroDeFila(String[][] matrizParametros) {
+
+	/**
+	 * Devuelve una matriz con los valores de los parámetros incluyendo el
+	 * número de fila en la primera columna de la matriz.
+	 * 
+	 * @param matrizParametros
+	 *            Matriz de parámetros sin número de fila.
+	 * 
+	 * @return Matriz de parámetros con número de fila.
+	 */
+	private static String[][] obtenerMatrizParametrosConNumeroDeFila(
+			String[][] matrizParametros) {
 		String[][] parametrosConNumeroDeFila = new String[matrizParametros.length][];
 		for (int i = 0; i < matrizParametros.length; i++) {
 			String[] filaParametros = new String[matrizParametros[i].length + 1];
 			filaParametros[0] = "<html><b>" + (i + 1) + "</b></html>";
 			for (int j = 0; j < matrizParametros[i].length; j++) {
-				filaParametros[j+1] = matrizParametros[i][j];
+				filaParametros[j + 1] = matrizParametros[i][j];
 			}
 			parametrosConNumeroDeFila[i] = filaParametros;
 		}
 		return parametrosConNumeroDeFila;
 	}
-	
-	private static String[] obtenerListaParametrosConCabeceraDeEjecucion(String[] nombreParametros) {
+
+	/**
+	 * Devuelve la lista de nombres de parámetros incluyendo la cabecera en la
+	 * primera columna.
+	 * 
+	 * @param nombreParametros
+	 *            Nombres de parámetros.
+	 * 
+	 * @return Nombres de parámetros con la cabecera en la primera columna.
+	 */
+	private static String[] obtenerListaParametrosConCabeceraDeEjecucion(
+			String[] nombreParametros) {
 		String[] nombreParametrosConNumero = new String[nombreParametros.length + 1];
 		nombreParametrosConNumero[0] = "<html><b>#</b></html>";
 		for (int i = 0; i < nombreParametros.length; i++) {
-			nombreParametrosConNumero[i+1] = nombreParametros[i];
+			nombreParametrosConNumero[i + 1] = nombreParametros[i];
 		}
 		return nombreParametrosConNumero;
 	}
@@ -95,21 +109,25 @@ public class CuadroValores extends Thread implements ActionListener,
 	@Override
 	public void run() {
 
-		// Panel general de parámetros			
+		// Panel general de parámetros
 		BorderLayout bl = new BorderLayout();
 		this.panelParam = new JPanel();
 		this.panelParam.setLayout(bl);
-		this.panelParam.setBorder(new TitledBorder(Texto.get("CVALORES_VALORES", Conf.idioma)));
-		
-		String[][] matrizParametros = obtenerMatrizParametrosConNumeroDeFila(this.parametrosParser.obtenerMatrizParametros());		
-		String[] nombreParametros = obtenerListaParametrosConCabeceraDeEjecucion(this.parametrosParser.obtenerNombresParametros());		
+		this.panelParam.setBorder(new TitledBorder(Texto.get(
+				"CVALORES_VALORES", Conf.idioma)));
+
+		String[][] matrizParametros = obtenerMatrizParametrosConNumeroDeFila(this.parametrosParser
+				.obtenerMatrizParametros());
+		String[] nombreParametros = obtenerListaParametrosConCabeceraDeEjecucion(this.parametrosParser
+				.obtenerNombresParametros());
 		JTable tabla = new JTable(matrizParametros, nombreParametros);
 		tabla.setEnabled(false);
-		
+
 		TableColumnSizer.setColumnsWidthToFit(tabla, true, false);
 		Dimension tamanioTabla = TableColumnSizer
-				.getPreferredScrollableViewportSize(tabla, Math.min(matrizParametros.length, VIEWPORT_FILAS_MAXIMAS));
-		
+				.getPreferredScrollableViewportSize(tabla, Math.min(
+						matrizParametros.length, VIEWPORT_FILAS_MAXIMAS));
+
 		JScrollPane scrollPane = new JScrollPane(tabla);
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		tabla.setPreferredScrollableViewportSize(tamanioTabla);
@@ -128,7 +146,7 @@ public class CuadroValores extends Thread implements ActionListener,
 		// Panel general
 		bl = new BorderLayout();
 		this.panel = new JPanel();
-		this.panel.setLayout(bl);		
+		this.panel.setLayout(bl);
 
 		this.panel.add(this.panelParam, BorderLayout.NORTH);
 		this.panel.add(this.panelBoton, BorderLayout.SOUTH);
@@ -137,8 +155,10 @@ public class CuadroValores extends Thread implements ActionListener,
 		this.dialogo.setTitle(Texto.get("CVALORES_TITULO", Conf.idioma));
 
 		// Preparamos y mostramos cuadro
-		Dimension tamanioPanel = new Dimension(tamanioTabla.width + 10, tamanioTabla.height + 110);
-		int coord[] = Conf.ubicarCentro(tamanioPanel.width, tamanioPanel.height);
+		Dimension tamanioPanel = new Dimension(tamanioTabla.width + 10,
+				tamanioTabla.height + 110);
+		int coord[] = Conf
+				.ubicarCentro(tamanioPanel.width, tamanioPanel.height);
 		this.dialogo.setLocation(coord[0], coord[1]);
 		this.dialogo.setSize(tamanioPanel);
 		this.dialogo.setResizable(false);
@@ -153,11 +173,12 @@ public class CuadroValores extends Thread implements ActionListener,
 	public JDialog getJDialog() {
 		return this.dialogo;
 	}
-	
+
 	/**
 	 * Gestiona los eventos realizados sobre los botones.
 	 * 
-	 * @param e evento.
+	 * @param e
+	 *            evento.
 	 */
 	private void gestionEventoBotones(AWTEvent e) {
 		if (e.getSource() == this.cerrar) {
@@ -173,7 +194,7 @@ public class CuadroValores extends Thread implements ActionListener,
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 	}
 
 	/**
@@ -197,7 +218,7 @@ public class CuadroValores extends Thread implements ActionListener,
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
 		if ((e.getSource() instanceof JButton) && code == KeyEvent.VK_SPACE) {
-			gestionEventoBotones(e);
+			this.gestionEventoBotones(e);
 		} else if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
 		}
@@ -211,7 +232,7 @@ public class CuadroValores extends Thread implements ActionListener,
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
 
 	/**
@@ -222,7 +243,7 @@ public class CuadroValores extends Thread implements ActionListener,
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+
 	}
 
 	/**
@@ -267,7 +288,7 @@ public class CuadroValores extends Thread implements ActionListener,
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() instanceof JButton) {
-			gestionEventoBotones(e);
+			this.gestionEventoBotones(e);
 		}
 	}
 }

@@ -118,6 +118,16 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 		this.dialogo.setVisible(true);
 	}
 	
+	/**
+	 * Devuelve las coordenadas para colocar el cuadro en el centro de la
+	 * ventana asociada.
+	 * 
+	 * @param anchura
+	 * @param altura
+	 * 
+	 * @return Coordenadas para colocar el cuadro en el centro de la ventana
+	 *         asociada.
+	 */
 	private int[] ubicarCentroVentana(int anchura, int altura) {
 		int[] coord = new int[2];
 		coord[0] = (this.ventana.getX() + this.ventana.getWidth() / 2) - anchura / 2;
@@ -138,6 +148,10 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 		}
 	}
 	
+	/**
+	 * Gestiona las acciones correspondientes cuando el usuario ha solicitado
+	 * dibujar una tabla con un número de filas y columnas.
+	 */
 	private void accionDibujarTabla() {
 		boolean error = false;
 		int filas = 0;

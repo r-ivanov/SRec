@@ -93,7 +93,7 @@ public class FotografoArbol {
 					Conf.idioma), Texto.get("ERROR_NOVISCAPT", Conf.idioma));
 		}
 	}
-	
+
 	/**
 	 * Permite realizar una captura de cada ejecución activa cuando la
 	 * visualización múltiple se encuentra activada.
@@ -113,8 +113,8 @@ public class FotografoArbol {
 				"ARCHIVO_" + otg.getTipos(false)[0], Conf.idioma);
 		definicionesArchivos[1] = Texto.get(
 				"ARCHIVO_" + otg.getTipos(false)[1], Conf.idioma);
-		definicionesArchivos[2] = Texto.get("ARCHIVO_"
-				+ otg.getTipos(true)[0], Conf.idioma);
+		definicionesArchivos[2] = Texto.get("ARCHIVO_" + otg.getTipos(true)[0],
+				Conf.idioma);
 
 		String ficheroSalida[] = new String[2];
 		ficheroSalida[0] = ofr.getDir();
@@ -123,19 +123,20 @@ public class FotografoArbol {
 				extensionesImagen, definicionesArchivos, 0);
 
 		if (ficheroSalida[1] != null) {
-			
+
 			// Actualizamos opción de ficheros recientes (para mantener
 			// último directorio)
 			ofr = (OpcionFicherosRecientes) gOpciones.getOpcion(
 					"OpcionFicherosRecientes", true);
 			ofr.setDir(ficheroSalida[0]);
 			gOpciones.setOpcion(ofr, 2);
-						
+
 			// Actualizamos opción de formato gráfico empleado
 			final String extension;
 			if (ficheroSalida[1].contains(".")) {
-				extension = ficheroSalida[1]
-						.substring(ficheroSalida[1].lastIndexOf(".") + 1, ficheroSalida[1].length());
+				extension = ficheroSalida[1].substring(
+						ficheroSalida[1].lastIndexOf(".") + 1,
+						ficheroSalida[1].length());
 				otg.setTipoUsado(extension);
 				gOpciones.setOpcion(otg, 2);
 			} else {
@@ -146,23 +147,31 @@ public class FotografoArbol {
 			final String pathParcial = ficheroSalida[0]
 					+ ficheroSalida[1].substring(0,
 							ficheroSalida[1].lastIndexOf("."));
-			
+
 			new Thread() {
 				@Override
-				public synchronized void run() {				
-					Iterator<Ejecucion> iteradorEjecuciones = FamiliaEjecuciones.getInstance().getEjecuciones();
+				public synchronized void run() {
+					Iterator<Ejecucion> iteradorEjecuciones = FamiliaEjecuciones
+							.getInstance().getEjecuciones();
 					while (iteradorEjecuciones.hasNext()) {
-						
+
 						Ejecucion e = iteradorEjecuciones.next();
-						String path = pathParcial + "_" +
-								e.obtenerTrazaCompleta().getTitulo().replace(" ", "")
-									.replaceAll("[^a-zA-Z0-9\\.\\-\\(\\)\\,\\{\\}]", "_")
-								+ "." + extension;
-						
-						JGraph grafo = e.obtenerGrafo();						
-						BufferedImage snapshotOriginal = grafo.getImage(grafo.getBackground(), 0);
-						grafo.setSize(snapshotOriginal.getWidth() + 50, snapshotOriginal.getHeight() + 30);				
-						Fotografo.guardarFoto(grafo, Fotografo.numFormato(path), path);
+						String path = pathParcial
+								+ "_"
+								+ e.obtenerTrazaCompleta()
+										.getTitulo()
+										.replace(" ", "")
+										.replaceAll(
+												"[^a-zA-Z0-9\\.\\-\\(\\)\\,\\{\\}]",
+												"_") + "." + extension;
+
+						JGraph grafo = e.obtenerGrafo();
+						BufferedImage snapshotOriginal = grafo.getImage(
+								grafo.getBackground(), 0);
+						grafo.setSize(snapshotOriginal.getWidth() + 50,
+								snapshotOriginal.getHeight() + 30);
+						Fotografo.guardarFoto(grafo,
+								Fotografo.numFormato(path), path);
 					}
 					new CuadroInformacion(Ventana.thisventana, Texto.get(
 							"INFO_EXPCORRECTT", Conf.idioma), Texto.get(
@@ -171,9 +180,14 @@ public class FotografoArbol {
 			}.start();
 		}
 	}
-	
+
 	/**
 	 * Permite realizar una captura de un grafo.
+	 * 
+	 * @param ventana
+	 *            Ventana a la que quedarán asociados los cuadros.
+	 * @param grafo
+	 *            Grafo del cual obtendremos la captura.
 	 */
 	public void hacerCapturaGrafo(JFrame ventana, JGraph grafo) {
 
@@ -193,8 +207,7 @@ public class FotografoArbol {
 				"ARCHIVO_" + this.otg.getTipos(true)[0], Conf.idioma);
 
 		this.ficheroSalida[0] = this.ofr.getDir();
-		this.ficheroSalida = SelecDireccion.cuadroAbrirFichero(
-				ventana,
+		this.ficheroSalida = SelecDireccion.cuadroAbrirFichero(ventana,
 				this.ficheroSalida[0],
 				Texto.get("CA_GUARDEXPORTGRAFO", Conf.idioma), null,
 				extensionesImagen, definicionesArchivos, 0);
@@ -204,7 +217,10 @@ public class FotografoArbol {
 		if (!f.exists()) {
 			this.hacerCapturaUnica2(ventana, grafo);
 		} else {
-			new CuadroPreguntaSobreescribir(ventana, "1", this, grafo); // null habría que cambiarlo
+			new CuadroPreguntaSobreescribir(ventana, "1", this, grafo); // null
+																		// habría
+																		// que
+																		// cambiarlo
 			// seguramente
 		}
 	}
@@ -246,9 +262,9 @@ public class FotografoArbol {
 
 			Fotografo.guardarFoto(c, Fotografo.numFormato(path), path);
 
-			new CuadroInformacion(jFrame, Texto.get(
-					"INFO_EXPCORRECTT", Conf.idioma), Texto.get(
-					"INFO_EXPCORRECT", Conf.idioma), 550, 100);
+			new CuadroInformacion(jFrame, Texto.get("INFO_EXPCORRECTT",
+					Conf.idioma), Texto.get("INFO_EXPCORRECT", Conf.idioma),
+					550, 100);
 		}
 
 	}

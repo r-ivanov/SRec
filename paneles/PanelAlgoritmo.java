@@ -593,6 +593,13 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		nyp = null;
 	}
 	
+	/**
+	 * Permite actualizar la UI de la familia de árboles, tras cualquier
+	 * cambio en la resolución, tamaño o configuración.
+	 * 
+	 * @param forzar Si debe repintarse aunque según los cambios introducidos
+	 * no sea estrictamente necesario actualizar la UI.
+	 */
 	private void actualizarFamiliaEjecuciones(boolean forzar) {
 		int tamanio;
 		int dividerLocation;

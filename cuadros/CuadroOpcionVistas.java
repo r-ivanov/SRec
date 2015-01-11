@@ -8,21 +8,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.border.TitledBorder;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.border.TitledBorder;
 
-import conf.*;
+import opciones.GestorOpciones;
+import opciones.OpcionVistas;
+import opciones.Vista;
+import utilidades.Arrays;
+import utilidades.Texto;
+import ventanas.Ventana;
+import botones.BotonAceptar;
+import botones.BotonCancelar;
+import conf.Conf;
 import datos.FamiliaEjecuciones;
 import datos.MetodoAlgoritmo;
-import botones.*;
-import opciones.*;
-import utilidades.*;
-import ventanas.*;
 
 /**
  * Permite configurar la disposición de las vistas de visualización de la
@@ -32,7 +36,7 @@ import ventanas.*;
  * @version 2006-2007
  */
 public class CuadroOpcionVistas extends Thread implements ActionListener,
-		KeyListener {
+KeyListener {
 	static final long serialVersionUID = 07;
 
 	private static final int ANCHO_CUADRO = 300;
@@ -122,7 +126,7 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 			panelVistas.add(panelVista);
 		}
 
-		actualizarInterfazRadioButton();
+		this.actualizarInterfazRadioButton();
 
 		if (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV, this.ventana
 				.getTraza().getTecnicas())) {
@@ -209,9 +213,11 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 	 */
 	private void actualizarInterfazRadioButton() {
 		int numVistas = Vista.codigos.length;
-		
-		/* Deshabilitamos la configuración de disposición de vistas
-		 * cuando la Familia de ejecuciones está activa */
+
+		/*
+		 * Deshabilitamos la configuración de disposición de vistas cuando la
+		 * Familia de ejecuciones está activa
+		 */
 		if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
 			for (int i = 0; i < numVistas; i++) {
 				this.selec1[i].setEnabled(false);
@@ -219,7 +225,7 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 			}
 			return;
 		}
-		
+
 		if (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV, this.ventana
 				.getTraza().getTecnicas())) {
 			// En rec tenemos 3 vistas
@@ -276,7 +282,7 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		getValores();
+		this.getValores();
 
 		if (e.getSource() == this.aceptar) {
 			this.dialogo.setVisible(false);
@@ -284,7 +290,7 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
 		} else if (e.getSource() instanceof JRadioButton) {
-			actualizarInterfazRadioButton();
+			this.actualizarInterfazRadioButton();
 
 			final boolean[] panel1activos = new boolean[Vista.codigos.length];
 			for (int i = 0; i < Vista.codigos.length; i++) {
@@ -295,17 +301,16 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 				@Override
 				public synchronized void run() {
 					try {
-						wait(300);
+						this.wait(300);
 					} catch (java.lang.InterruptedException ie) {
 					}
 					CuadroOpcionVistas.this.ventana
-							.ubicarYDistribuirPaneles(
-									(CuadroOpcionVistas.this.selecPanel
-											.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
-											: Conf.PANEL_HORIZONTAL));
+					.ubicarYDistribuirPaneles((CuadroOpcionVistas.this.selecPanel
+							.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
+									: Conf.PANEL_HORIZONTAL));
 				}
 			}.start();
-			
+
 			this.gOpciones.setOpcion(this.ov, 2);
 			Conf.setConfiguracionVistas();
 
@@ -316,12 +321,12 @@ public class CuadroOpcionVistas extends Thread implements ActionListener,
 				this.ov.setDisposicion(Conf.PANEL_HORIZONTAL);
 			}
 			this.ventana
-					.distribuirPaneles((this.selecPanel.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
-							: Conf.PANEL_HORIZONTAL));
-			
+			.distribuirPaneles((this.selecPanel.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
+					: Conf.PANEL_HORIZONTAL));
+
 			this.gOpciones.setOpcion(this.ov, 2);
 			Conf.setConfiguracionVistas();
-			
+
 			if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
 				FamiliaEjecuciones.getInstance().recargarEjecucionActiva();
 			}

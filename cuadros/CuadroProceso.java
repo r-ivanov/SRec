@@ -8,43 +8,45 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.border.TitledBorder;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
 
-import botones.BotonCancelar;
-import conf.*;
 import utilidades.AnimatedIcon;
 import utilidades.TextIcon;
 import ventanas.Ventana;
+import botones.BotonCancelar;
+import conf.Conf;
 
 /**
- * Implementa el cuadro de proceso que informa que un proceso de carga
- * se está llevando a cabo.
+ * Implementa el cuadro de proceso que informa que un proceso de carga se está
+ * llevando a cabo.
  * 
  * @author David Pastor Herranz
  */
-public class CuadroProceso extends Thread implements ActionListener, KeyListener, MouseListener{
+public class CuadroProceso extends Thread implements ActionListener,
+		KeyListener, MouseListener {
 
 	private static final int ANCHO_CUADRO = 250;
 	private static final int ALTO_CUADRO = 90;
 
 	private JLabel etiqueta;
 	private JPanel panel, panelTexto, panelBoton;
-	
+
 	private BotonCancelar cancelar;
 
 	private JDialog dialogo;
 
 	private String nombre, texto;
 	private AnimatedIcon animacion;
-	
+
 	private Thread proceso;
 
 	/**
-	 * Genera un nuevo cuadro de progreso.
+	 * Genera un nuevo cuadro de proceso.
 	 * 
 	 * @param Ventana
 	 *            Ventana a la que quedará asociado el cuadro.
@@ -59,24 +61,25 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 		this.dialogo = new JDialog(ventana, true);
 		this.dialogo.addKeyListener(this);
 		this.dialogo.addMouseListener(this);
-		
+
 		this.nombre = nombre;
 		this.texto = texto;
-		
+
 		this.etiqueta = new JLabel();
-		
+
 		this.cancelar = new BotonCancelar();
 		this.cancelar.addKeyListener(this);
 		this.cancelar.addMouseListener(this);
-		
+
 		this.start();
 	}
-	
+
 	/**
-	 * Relaciona un determinado proceso con el cuadro, para
-	 * ser gestionado desde el cuadro.
+	 * Relaciona un determinado proceso con el cuadro, para ser gestionado desde
+	 * el cuadro.
 	 * 
-	 * @param proceso Proceso que gestiona el cuadro.
+	 * @param proceso
+	 *            Proceso que gestiona el cuadro.
 	 */
 	public void setProceso(Thread proceso) {
 		this.proceso = proceso;
@@ -87,7 +90,7 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 	 */
 	@Override
 	public void run() {
-		
+
 		// Panel de texto
 		this.panelTexto = new JPanel();
 		this.panelTexto.setBorder(new TitledBorder(""));
@@ -104,19 +107,19 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 		this.panel.addKeyListener(this);
 
 		// Inicializacion de valores
-		this.etiqueta.setText(texto);
-		this.etiqueta.setHorizontalTextPosition( JLabel.LEADING );
+		this.etiqueta.setText(this.texto);
+		this.etiqueta.setHorizontalTextPosition(SwingConstants.LEADING);
 		this.animacion = new AnimatedIcon(this.etiqueta);
-		this.animacion.setAlignmentX( AnimatedIcon.LEFT );
-		this.animacion.addIcon( new TextIcon(this.etiqueta, ".") );
-		this.animacion.addIcon( new TextIcon(this.etiqueta, "..") );
-		this.animacion.addIcon( new TextIcon(this.etiqueta, "...") );
-		this.animacion.addIcon( new TextIcon(this.etiqueta, "....") );
-		this.etiqueta.setIcon(this.animacion);		
+		this.animacion.setAlignmentX(AnimatedIcon.LEFT);
+		this.animacion.addIcon(new TextIcon(this.etiqueta, "."));
+		this.animacion.addIcon(new TextIcon(this.etiqueta, ".."));
+		this.animacion.addIcon(new TextIcon(this.etiqueta, "..."));
+		this.animacion.addIcon(new TextIcon(this.etiqueta, "...."));
+		this.etiqueta.setIcon(this.animacion);
 		this.animacion.start();
 
 		this.dialogo
-				.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		// Preparamos y mostramos cuadro
 		this.dialogo.getContentPane().add(this.panel);
@@ -129,7 +132,8 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 	}
 
 	/**
-	 * Detiene la ejecución y hace invisible el cuadro, una vez ha finalizado el procesamiento
+	 * Detiene la ejecución y hace invisible el cuadro, una vez ha finalizado el
+	 * procesamiento
 	 */
 	private void detener() {
 		if (this.proceso != null) {
@@ -138,7 +142,7 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 		}
 		this.cerrar();
 	}
-	
+
 	/**
 	 * Cierra el cuadro de dialogo;
 	 */
@@ -146,7 +150,7 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 		this.animacion.stop();
 		this.dialogo.setVisible(false);
 	}
-	
+
 	/**
 	 * Gestiona los eventos de acción
 	 * 
@@ -178,7 +182,8 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_SPACE) {
+		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ESCAPE
+				|| code == KeyEvent.VK_SPACE) {
 			this.detener();
 		}
 	}
@@ -191,7 +196,7 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
 
 	/**
@@ -235,7 +240,7 @@ public class CuadroProceso extends Thread implements ActionListener, KeyListener
 	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+
 	}
 
 	/**

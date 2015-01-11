@@ -40,6 +40,11 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements
 		this.start();
 	}
 	
+	/**
+	 * Devuelve la ventana asociada.
+	 * 
+	 * @return Ventana asociada.
+	 */
 	private Ventana getVentana() {
 		return (Ventana) this.ventana;
 	}

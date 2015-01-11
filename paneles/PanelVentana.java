@@ -140,8 +140,6 @@ public class PanelVentana extends JPanel {
     /**
      * Abre los paneles necesarios para visualizar la traza cuando
      * ya se encuentra un algoritmo cargado.
-     * 
-     * @param traza Traza que será visualizada.
      */
     public void mostrarEjecucionTraza() throws Exception
     {
