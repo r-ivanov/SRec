@@ -2825,6 +2825,7 @@ public class Ventana extends JFrame implements ActionListener {
 		if (Conf.fichero_log) {
 			this.log_close();
 		}
+		borrarArchivosInservibles();
 		System.exit(0);
 	}
 
