@@ -18,6 +18,7 @@ import org.jgraph.event.GraphModelEvent;
 import org.jgraph.event.GraphModelListener;
 import org.jgraph.event.GraphSelectionEvent;
 import org.jgraph.event.GraphSelectionListener;
+import org.jgraph.graph.CellView;
 import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultGraphModel;
@@ -371,6 +372,11 @@ public class GrafoDependencia {
 				+ MARGEN_TABLA * 2;
 		int alturaTotal = numFilas * this.alturaCuadroMatriz + MARGEN_TABLA * 2;
 		this.tamanioRepresentacion = new Dimension(anchuraTotal, alturaTotal);
+
+		for (CellView cell : representacionGrafo.getGraphLayoutCache()
+				.getAllViews()) {
+			cell.update(representacionGrafo.getGraphLayoutCache());
+		}
 
 		return representacionGrafo;
 	}

@@ -295,7 +295,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 			this.representacionGrafoScroll = new JScrollPane(
 					this.representacionGrafo);
 			this.add(this.representacionGrafoScroll);
-
+			
 			this.ajustarGrafoATamanioVentana(true);
 			this.revalidate();
 		}

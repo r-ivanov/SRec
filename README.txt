@@ -22,7 +22,7 @@ parabólicas que rodean los nodos si la trayectoria de la arista atraviesa alguno
 de salida, o ambos. Así como los valores de configuración para visibilidad de parámetros.
 
 - Se ha añadido funcionalidad para que el usuario pueda especificar un valor de filas y columnas para dibujar detrás del grafo de dependencia,
-una matriz donde el usuario pueda reorganizar los nodos y tabularlos manualmente.
+una matriz donde el usuario pueda reorganizar los nodos y tabularlos manualmente. 
 
 - Se ha añadido funcionalidad para que el usuario pueda tabular automáticamente los nodos del grafo de dependencia en una matriz, dadas
 cualquier expresión para filas y una expresión para columnas, pudiendo relacionar los parámetros de entrada con los índices de la matriz.
