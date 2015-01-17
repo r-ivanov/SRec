@@ -110,6 +110,8 @@ de parámetros.
 - Se han corregido diversos problemas de concurrencia en la visualización de árboles que provocaban que la aplicación presentara inconsistencias
 y hacían que en ciertas ocasiones algunas aristas entre nodos no se pintaran correctamente.
 
+- Se ha añadido funcionalidad para exportar capturas de las familias de ejecuciones.
+
 SRec v1.4 (Limpieza, Documentación, Sistema de build y Bugfixing)
 =================================================================
 
