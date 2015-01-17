@@ -32,10 +32,14 @@ cualquier expresión para filas y una expresión para columnas, pudiendo relaciona
 - Se ha añadido funcionalidad para que el usuario pueda aumentar, reducir, y ajusta el tamaño de zoom de la ventana del grafo de dependencia.
 
 - Se ha añadido un cuadro de proceso para cuando el algoritmo se está ejecutando, con un botón cancelar que permite detener la ejecución
-en cualquier momento. También se ha limitado el número de nodos que puede generar un algoritmo a 350, de modo que puedan evitarse errores
+en cualquier momento.
+
+- Se ha limitado el número de nodos que puede generar un algoritmo a 350, de modo que puedan evitarse errores
 debidos a falta de memoria cuando las ejecuciones de algoritmos son exageradamente grandes.
 
 - Se han modificado algunos de los iconos de la aplicación para que resulten más intuitivos.
+
+- Ahora, al salir de la aplicación también se borran ficheros intermedios generados por SRec.
 
 SRec v1.5 (Múltiples Visualizaciones)
 ==================================================
