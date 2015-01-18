@@ -104,6 +104,7 @@ public class Ejecutador {
 									return Texto.get("ERROR_METEXP", Conf.idioma) + ": " + causa + ".";
 								} else if (causa.contains("ThreadDeath")) { 
 									/* Esperado si el usuario ha cancelado la ejecución */
+									return "Cancelado";
 								} else {
 									return Texto.get("ERROR_METEXP", Conf.idioma) + ": " + causa + ".";
 								}

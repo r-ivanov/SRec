@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import paneles.PanelAlgoritmo;
 import utilidades.ServiciosString;
-import utilidades.Texto;
 import conf.Conf;
 
 /**
@@ -17,9 +16,7 @@ import conf.Conf;
  */
 public class RegistroActivacion {
 	private static boolean depurar = false;
-	
-	private int MAX_REGISTROS_ACTIVACION = 350;
-	
+
 	private static final long serialVersionUID = 2L;
 
 	private static int nodoID = 0; // Va contando número de nodos que se crean,
@@ -120,10 +117,6 @@ public class RegistroActivacion {
 
 		this.nID = RegistroActivacion.nodoID;
 		RegistroActivacion.nodoID++;
-		
-		if (RegistroActivacion.nodoID >= MAX_REGISTROS_ACTIVACION) {
-			throw new RuntimeException(Texto.get("DEMASIADOS_NODOS", Conf.idioma));
-		}
 	}
 
 	/**
