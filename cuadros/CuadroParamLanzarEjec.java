@@ -501,6 +501,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 						}
 					});
 				} catch (Throwable e) {
+					System.gc();
 					/* Debido a que el thread puede detenerse de manera no controlada en cualquier momento,
 					 * ignorar cualquier error posible. */
 				}

@@ -719,8 +719,10 @@ public class Preprocesador extends Thread {
 				Ejecucion e = new Ejecucion(traza_diferido);
 				ejecuciones.add(e);
 			} else if (error.equals("Cancelado")) {
+				System.gc();
 				break;
 			} else {
+				System.gc();
 				new CuadroError(Ventana.thisventana, Texto.get("ERROR_EJEC",
 						Conf.idioma), error);
 				break;
