@@ -549,6 +549,15 @@
 		<T valor="[iquest]Desea activar las vistas de Divide y Vencer[aacute]s para alg[uacute]n m[eacute]todo?" idioma="es" id="PREGMEN_SELECCMETODOSDYV"/>
 		<T valor="Do you want to activate Divide and conquer views for any method?" idioma="en" id="PREGMEN_SELECCMETODOSDYV"/>
 		
+		<T valor="La ejecuci[oacute]n produce demasiados nodos" idioma="es" id="PREG_DEMASIADOS_NODOS_TITULO"/>
+		<T valor="Execution produces too many nodes" idioma="es" id="PREG_DEMASIADOS_NODOS_TITULO"/>
+		
+		<T valor="Si contin[uacute]a con la visualizaci[oacute]n, la aplicaci[oacute]n podría no responder correctamente. ¿Desea continuar de todos modos?" idioma="es" id="PREG_DEMASIADOS_NODOS_BODY"/>
+		<T valor="If you continue, application could not respond correctly. ¿Are you sure to continue anyway?" idioma="es" id="PREG_DEMASIADOS_NODOS_BODY"/>
+		
+		<T valor="[iquest]Desea activar las vistas de Divide y Vencer[aacute]s para alg[uacute]n m[eacute]todo?" idioma="es" id="PREGMEN_SELECCMETODOSDYV"/>
+		<T valor="Do you want to activate Divide and conquer views for any method?" idioma="en" id="PREGMEN_SELECCMETODOSDYV"/>
+		
 		<!-- Excepciones -->
 		<T valor="Error en informaci[oacute]n de configuraci[oacute]n de opciones." idioma="es" id="EXCEP_INFOCONF"/>
 		<T valor="Error in the information about configuration." idioma="en" id="EXCEP_INFOCONF"/>		

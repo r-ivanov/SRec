@@ -42,6 +42,8 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	private static final int ANCHO_CUADRO = 550;
 	private static final int ALTO_CUADRO = 92;
 	private static final int ALTURA_PISO = 23;
+	
+	private static final int NUM_NODOS_MAX = 350;
 
 	private CuadroGenerarAleatorio cga = null;
 
@@ -474,37 +476,57 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 		Thread proceso = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					p.ejecutarAlgoritmo(new PreprocesadorEjecucionListener() {
-						@Override
-						public void ejecucionFinalizada(final List<Ejecucion> ejecuciones, final boolean satisfactoria) {					
-							SwingUtilities.invokeLater(new Runnable() {						
-								@Override
-								public void run() {
-									cuadroProceso.cerrar();
-									if (satisfactoria) {
-										if (ejecuciones.size() > 1) {
-											FamiliaEjecuciones.getInstance().habilitar();
-											for (Ejecucion e : ejecuciones) {
-												FamiliaEjecuciones.getInstance().addEjecucion(e);
-											}
-											FamiliaEjecuciones.getInstance().setPrimeraEjecucionActiva();
-										} else {
-											FamiliaEjecuciones.getInstance().deshabilitar();
-											if (ejecuciones.size() > 0) {
-												Ventana.thisventana.visualizarEjecucion(ejecuciones.get(0), true);
-											}
+				p.ejecutarAlgoritmo(new PreprocesadorEjecucionListener() {
+					@Override
+					public void ejecucionFinalizada(final List<Ejecucion> ejecuciones, final boolean satisfactoria) {					
+						SwingUtilities.invokeLater(new Runnable() {						
+							@Override
+							public void run() {
+								cuadroProceso.cerrar();
+								if (satisfactoria) {
+									
+									boolean demasiadosNodos = false;
+									for (Ejecucion ejecucion: ejecuciones) {
+										if (ejecucion.numeroNodos() > 350) {
+											demasiadosNodos = true;
+											break;
 										}
 									}
+									
+									Runnable accion = new Runnable() {								
+										@Override
+										public void run() {
+											try {
+												if (ejecuciones.size() > 1) {
+													FamiliaEjecuciones.getInstance().habilitar();
+													for (Ejecucion e : ejecuciones) {
+														FamiliaEjecuciones.getInstance().addEjecucion(e);
+													}
+													FamiliaEjecuciones.getInstance().setPrimeraEjecucionActiva();
+												} else {
+													FamiliaEjecuciones.getInstance().deshabilitar();
+													if (ejecuciones.size() > 0) {
+														Ventana.thisventana.visualizarEjecucion(ejecuciones.get(0), true);
+													}
+												}
+											} catch (Throwable e) {
+												System.gc();
+												/* Debido a que el thread puede detenerse de manera no controlada en cualquier momento,
+												 * ignorar cualquier error posible. */
+											}
+										}
+									};
+									
+									if (demasiadosNodos) {
+										new CuadroPreguntaDemasiadosNodos(Ventana.thisventana, accion);
+									} else {
+										accion.run();
+									}
 								}
-							});
-						}
-					});
-				} catch (Throwable e) {
-					System.gc();
-					/* Debido a que el thread puede detenerse de manera no controlada en cualquier momento,
-					 * ignorar cualquier error posible. */
-				}
+							}
+						});
+					}
+				});
 			}
 		});	
 		proceso.setPriority(Thread.MIN_PRIORITY);

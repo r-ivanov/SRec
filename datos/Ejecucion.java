@@ -34,6 +34,15 @@ public class Ejecucion {
 		this.traza.asignarNumeroMetodo();
 		this.actualizarVisibilidad();
 	}
+	
+	/**
+	 * Devuelve el número de nodos totales de la ejecución.
+	 * 
+	 * @return int Nodos Totales.
+	 */
+	public int numeroNodos() {
+		return this.traza.getNumNodos();
+	}
 
 	/**
 	 * Devuelve una copia de la traza que se usó para crear la ejecución.
