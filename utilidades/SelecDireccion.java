@@ -1,9 +1,13 @@
 package utilidades;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.io.File;
 
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -216,7 +220,7 @@ public class SelecDireccion {
 			String[] definiciones, int load, boolean soloDirectorio) {
 		String nombres[] = new String[2];
 
-		JFileChooser jfc = new JFileChooser(path);
+		final JFileChooser jfc = new JFileChooser(path);
 		jfc.setDialogTitle(titulo);
 		String boton = "";
 		int tipo = 0;
@@ -232,8 +236,23 @@ public class SelecDireccion {
 			jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		}
 
-		jfc.setDialogType(tipo);
-
+		jfc.setDialogType(tipo);		
+        AbstractAction a=new AbstractAction() {
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                	File selectedFile = jfc.getSelectedFile();
+                    if(selectedFile != null) {                 	
+                        java.nio.file.Files.delete(selectedFile.toPath());
+                        jfc.rescanCurrentDirectory();
+                    }
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        jfc.getActionMap().put("delAction",a);
+        jfc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DELETE"),"delAction");
+		
 		FileNameExtensionFilter filtros[] = new FileNameExtensionFilter[definiciones.length];
 
 		if (definiciones[0] != null && extensiones[0] != null
