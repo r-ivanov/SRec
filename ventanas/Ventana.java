@@ -52,7 +52,7 @@ import cuadros.CuadroOpcionConfVisualizacion;
 import cuadros.CuadroOpcionMVJava;
 import cuadros.CuadroOpcionVistas;
 import cuadros.CuadroParamLanzarEjec;
-import cuadros.CuadroPreguntaAnimacionNoGuardada;
+import cuadros.CuadroPreguntaSalirAplicacion;
 import cuadros.CuadroPreguntaEdicionNoGuardada;
 import cuadros.CuadroPreguntaNuevaVisualizacion;
 import cuadros.CuadroPreguntaSobreescribir;
@@ -85,7 +85,6 @@ public class Ventana extends JFrame implements ActionListener {
 	public boolean msWindows = false; // 1=Microsoft Windows 0= otros
 	private static final boolean depurar = false;
 
-	private boolean animacionPendienteGuardar = false;
 	private boolean clasePendienteGuardar = false;
 	private boolean clasePendienteProcesar = false;
 
@@ -1916,10 +1915,6 @@ public class Ventana extends JFrame implements ActionListener {
 
 			this.habilitarOpcionesAnimacion(true);
 
-			if (this.claseAlgoritmo != null) {
-				this.animacionPendienteGuardar = true;
-			}
-
 		} catch (OutOfMemoryError oome) {
 			new CuadroError(this, Texto.get("ERROR_EJEC", Conf.idioma),
 					Texto.get("ERROR_NOMEMSUF", Conf.idioma));
@@ -1955,10 +1950,6 @@ public class Ventana extends JFrame implements ActionListener {
 			}
 
 			this.habilitarOpcionesAnimacion(true);
-
-			if (this.claseAlgoritmo != null) {
-				this.animacionPendienteGuardar = true;
-			}
 			
 			panelVentana.mostrarEjecucionTraza();
 
@@ -2243,7 +2234,6 @@ public class Ventana extends JFrame implements ActionListener {
 	public void cerrarVentana() {
 		this.habilitarOpcionesAnimacion(false);
 
-		this.animacionPendienteGuardar = false;
 		this.traza = null;
 
 		if (Ventana.thisventana.getClase() == null) {
@@ -2795,27 +2785,11 @@ public class Ventana extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * Establece la animación como pendiente de guardar o no.
-	 * 
-	 * @param valor
-	 *            True para marcar como pendiente de guardar, false en caso
-	 *            contrario.
-	 */
-	public void setAnimacionPendienteGuardar(boolean valor) {
-		this.animacionPendienteGuardar = valor;
-	}
-
-	/**
 	 * Cuando el usuario desea cerrar la aplicación, este método permite
-	 * advertirle de que la animación no ha sido guardada.
+	 * al usuario confirmar si desea salir o no de la aplicación.
 	 */
-	private void consultaGuardado() {
-		if (this.animacionPendienteGuardar) {
-			new CuadroPreguntaAnimacionNoGuardada(this);
-		} else {
-			this.cerrar();
-		}
-
+	private void consultaSalir() {
+		new CuadroPreguntaSalirAplicacion(this);
 	}
 
 	/**
@@ -2915,7 +2889,7 @@ public class Ventana extends JFrame implements ActionListener {
 	public void activarCierre() {
 
 		if (this.getTraza() != null) {
-			this.consultaGuardado();
+			this.consultaSalir();
 		} else {
 			Ventana.borrarArchivosInservibles();
 			this.log_close();

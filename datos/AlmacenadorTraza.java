@@ -170,8 +170,6 @@ public class AlmacenadorTraza {
 			ManipulacionElement.writeXmlFile(documento, this.fichero[0]
 					+ this.fichero[1]);
 			this.cuadroProgreso.cerrar();
-
-			this.vv.setAnimacionPendienteGuardar(false);
 		}
 	}
 

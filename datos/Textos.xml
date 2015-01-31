@@ -524,6 +524,12 @@
 		<T valor="The Java virtual machine was configured successfully" idioma="en" id="INFO_MVJAVA"/>
 		
 		<!-- Mensajes pregunta -->
+		
+		<T valor="Salir de SRec?" idioma="es" id="PREG_SALIR_TITULO"/>
+		<T valor="Exit SRec?" idioma="en" id="PREG_SALIR_TITULO"/>
+		<T valor="Hay una animación en curso. ¿Estás seguro de que quieres abandonar la aplicación?" idioma="es" id="PREG_SALIR_BODY"/>
+		<T valor="There is an animation running. Are you sure you want to leave the application?" idioma="en" id="PREG_SALIR_BODY"/>
+		
 		<T valor="[iquest]Descartar la visualizaci[oacute]n actual?" idioma="es" id="PREG_DESCART"/>
 		<T valor="Discard the current visualization?" idioma="en" id="PREG_DESCART"/>			
 		<T valor="Pulse 'Aceptar' para descartar la visualizaci[oacute]n actual y seguir adelante. Pulse 'Cancelar' para cerrar este cuadro." idioma="es" id="PREGMEN_DESCART"/>
