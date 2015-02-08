@@ -148,12 +148,15 @@ public class Ejecucion {
 
 		Traza traza = this.obtenerTrazaConPodaParaVisibilidad();
 		traza.todoVisible();
-
-		NombresYPrefijos nyp = new NombresYPrefijos();
-		String[] nombresMetodos = traza.getNombresMetodos();
-		String prefijos[] = ServiciosString.obtenerPrefijos(nombresMetodos);
-		for (int i = 0; i < nombresMetodos.length; i++) {
-			nyp.add(nombresMetodos[i], prefijos[i]);
+		
+		NombresYPrefijos nyp = null;
+		if (this.traza.getNumMetodos() > 1) { 
+			nyp = new NombresYPrefijos();
+			String[] nombresMetodos = traza.getNombresMetodos();
+			String prefijos[] = ServiciosString.obtenerPrefijos(nombresMetodos);
+			for (int i = 0; i < nombresMetodos.length; i++) {
+				nyp.add(nombresMetodos[i], prefijos[i]);
+			}
 		}
 
 		ContenedorArbol c = new ContenedorArbol(traza.getRaiz(), grafo, nyp, 1);
