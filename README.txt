@@ -41,6 +41,16 @@ debidos a falta de memoria cuando las ejecuciones de algoritmos son exageradamen
 
 - Ahora, al salir de la aplicación también se borran ficheros intermedios generados por SRec.
 
+- Se ha modificado el comportamiento del diálogo de alerta que se mostraba al intentar cerrar la aplicación,
+ahora, si la aplicación se encuentra mostrando una animación, se le alerta de que hay una animación en curso
+antes de cerrar la aplicación, independientemente de las exportaciones que haya realizado el usuario.
+
+- Al seleccionar un nuevo método para ejecutar, ahora no se recarga el panel del editor, manteniendo su estado.
+
+- Los datos del diálogo de generación de valores aleatorios, ahora se mantienen entre distintas ejecuciones de un mismo método.
+
+- El directorio que recuerda la aplicación para exportaciones es ahora distinto del de carga de clases java.
+
 SRec v1.5 (Múltiples Visualizaciones)
 ==================================================
 
