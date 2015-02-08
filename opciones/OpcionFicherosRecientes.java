@@ -24,12 +24,15 @@ public class OpcionFicherosRecientes extends Opcion {
 
 	// Path último fichero XML
 	private String dirXML = ".\\";
+	
+	// Path último fichero exportaciones
+	private String dirExport = ".\\";
 
 	/**
 	 * Constructor: crea una nueva opción vacía
 	 */
 	public OpcionFicherosRecientes() {
-		this(".\\", ".\\");
+		this(".\\", ".\\", ".\\");
 	}
 
 	/**
@@ -58,13 +61,16 @@ public class OpcionFicherosRecientes extends Opcion {
 	 *            directorio en el que se leyó/guardó el último fichero XML por
 	 *            parte de la aplicación
 	 */
-	public OpcionFicherosRecientes(String dir, String dirXML) {
+	public OpcionFicherosRecientes(String dir, String dirXML, String dirExport) {
 		super("OpcionFicherosRecientes");
 		if (dir.length() > 3) {
 			this.setDir(dir);
 		}
 		if (dirXML.length() > 3) {
 			this.setDirXML(dirXML);
+		}
+		if (dirExport.length() > 3) {
+			this.setDirExport(dirExport);
 		}
 		this.ficheros = new String[TAMANO];
 		this.reinicializarFicheros();
@@ -125,6 +131,18 @@ public class OpcionFicherosRecientes extends Opcion {
 	public void setDirXML(String dirXML) {
 		this.dirXML = dirXML;
 	}
+	
+	/**
+	 * Asigna el directorio del último fichero usado por parte de la aplicación
+	 * para exportar ficheros.
+	 * 
+	 * @param dir
+	 *            directorio en el que se leyó el último fichero por parte de la
+	 *            aplicación
+	 */
+	public void setDirExport(String dirExport) {
+		this.dirExport = dirExport;
+	}
 
 	/**
 	 * Asigna los nombres de ficheros abiertos recientemente por la aplicación
@@ -157,6 +175,16 @@ public class OpcionFicherosRecientes extends Opcion {
 	 */
 	public String getDirXML() {
 		return this.dirXML;
+	}
+	
+	/**
+	 * Devuelve el directorio del último fichero usado por parte de la
+	 * aplicación para exportaciones.
+	 * 
+	 * @return directorio del último fichero usado por parte de la aplicación
+	 */
+	public String getDirExport() {
+		return this.dirExport;
 	}
 
 	/**
@@ -265,9 +293,13 @@ public class OpcionFicherosRecientes extends Opcion {
 
 		Element e02 = d.createElement("dirxml");
 		e02.setAttribute("valor", this.getDirXML());
+		
+		Element e03 = d.createElement("dirExport");
+		e03.setAttribute("valor", this.getDirExport());
 
 		e.appendChild(e01);
 		e.appendChild(e02);
+		e.appendChild(e03);
 
 		return e;
 	}
@@ -281,5 +313,9 @@ public class OpcionFicherosRecientes extends Opcion {
 		elements = ManipulacionElement.nodeListToElementArray(e
 				.getElementsByTagName("dirxml"));
 		this.setDirXML(elements[0].getAttribute("valor"));
+		
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("dirExport"));
+		this.setDirExport(elements[0].getAttribute("valor"));
 	}
 }

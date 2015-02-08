@@ -1998,7 +1998,7 @@ public class Ventana extends JFrame implements ActionListener {
 		extensiones[0][0] = "gif";
 		String[] definiciones = { Texto.get("ARCHIVO_GIF", Conf.idioma) };
 
-		this.ficheroGIF = SelecDireccion.cuadroAbrirFichero(ofr.getDir(),
+		this.ficheroGIF = SelecDireccion.cuadroAbrirFichero(ofr.getDirExport(),
 				Texto.get("CA_CARGVISGIF", Conf.idioma), null, extensiones,
 				definiciones, 0);
 
@@ -2213,14 +2213,20 @@ public class Ventana extends JFrame implements ActionListener {
 	 * parámetros para una nueva visualización.
 	 */
 	private void introducirParametros() {
+		
 		CuadroGenerarAleatorio cuadroGenerarAleatorio = null;
 		if (this.cuadroLanzarEjec != null) {
 			cuadroGenerarAleatorio = this.cuadroLanzarEjec.getCga();
 		}
+		
 		this.cuadroLanzarEjec = new CuadroParamLanzarEjec(this,
 			this.claseAlgoritmo.getMetodoPrincipal(), this.claseAlgoritmo,
 			this.p);
-		this.cuadroLanzarEjec.setCga(cuadroGenerarAleatorio);
+		
+		if (cuadroGenerarAleatorio != null) {
+			cuadroGenerarAleatorio.setCuadroParamLanzarEjec(this.cuadroLanzarEjec);
+			this.cuadroLanzarEjec.setCga(cuadroGenerarAleatorio);
+		}
 	}
 	
 	/**

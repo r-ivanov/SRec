@@ -267,6 +267,15 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener,
 		this.dialogo.setResizable(false);
 		this.dialogo.setVisible(true);
 	}
+	
+	/**
+	 * Establece el cuadro pasado por parámetro, como destino de los valores generados.
+	 * 
+	 * @param cuadroParamLanzarEjec Cuadro para lanzar ejecuciones.
+	 */
+	public void setCuadroParamLanzarEjec(CuadroParamLanzarEjec cuadroParamLanzarEjec) {
+		this.cple = cuadroParamLanzarEjec;
+	}
 
 	/**
 	 * Determina el número de parámetros que son arrays.

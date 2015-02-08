@@ -305,6 +305,8 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			this.ventana.setClase(this.clase);
 			this.dialogo.setVisible(false);
 
+			// Cerramos la visualización actual.
+			this.ventana.cerrarVistas();
 			// Escribir signatura del método seleccionado
 			this.ventana.setValoresPanelControl(ma.getRepresentacion());
 			// Habilitamos la opcion para asignar parametros y ejecutar

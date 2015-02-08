@@ -73,7 +73,7 @@ public class FotografoArbol {
 			definicionesArchivos[2] = Texto.get(
 					"ARCHIVO_" + this.otg.getTipos(true)[0], Conf.idioma);
 
-			this.ficheroSalida[0] = this.ofr.getDir();
+			this.ficheroSalida[0] = this.ofr.getDirExport();
 			this.ficheroSalida = SelecDireccion.cuadroAbrirFichero(
 					this.ficheroSalida[0],
 					Texto.get("CA_GUARDEXPORT1GIF", Conf.idioma), null,
@@ -117,7 +117,7 @@ public class FotografoArbol {
 				Conf.idioma);
 
 		String ficheroSalida[] = new String[2];
-		ficheroSalida[0] = ofr.getDir();
+		ficheroSalida[0] = ofr.getDirExport();
 		ficheroSalida = SelecDireccion.cuadroAbrirFichero(ficheroSalida[0],
 				Texto.get("CA_GUARDEXPORTEJECUCIONES", Conf.idioma), null,
 				extensionesImagen, definicionesArchivos, 0);
@@ -128,7 +128,7 @@ public class FotografoArbol {
 			// último directorio)
 			ofr = (OpcionFicherosRecientes) gOpciones.getOpcion(
 					"OpcionFicherosRecientes", true);
-			ofr.setDir(ficheroSalida[0]);
+			ofr.setDirExport(ficheroSalida[0]);
 			gOpciones.setOpcion(ofr, 2);
 
 			// Actualizamos opción de formato gráfico empleado
@@ -206,7 +206,7 @@ public class FotografoArbol {
 		definicionesArchivos[2] = Texto.get(
 				"ARCHIVO_" + this.otg.getTipos(true)[0], Conf.idioma);
 
-		this.ficheroSalida[0] = this.ofr.getDir();
+		this.ficheroSalida[0] = this.ofr.getDirExport();
 		this.ficheroSalida = SelecDireccion.cuadroAbrirFichero(ventana,
 				this.ficheroSalida[0],
 				Texto.get("CA_GUARDEXPORTGRAFO", Conf.idioma), null,
@@ -255,7 +255,7 @@ public class FotografoArbol {
 			// directorio)
 			this.ofr = (OpcionFicherosRecientes) this.gOpciones.getOpcion(
 					"OpcionFicherosRecientes", true);
-			this.ofr.setDir(this.ficheroSalida[0]);
+			this.ofr.setDirExport(this.ficheroSalida[0]);
 			this.gOpciones.setOpcion(this.ofr, 2);
 
 			final String path = this.ficheroSalida[0] + this.ficheroSalida[1];
@@ -298,7 +298,7 @@ public class FotografoArbol {
 					+ otg.getTipos(true)[0], Conf.idioma);
 
 			String ficheroSalida[] = new String[2];
-			ficheroSalida[0] = ofr.getDir();
+			ficheroSalida[0] = ofr.getDirExport();
 			ficheroSalida = SelecDireccion.cuadroAbrirFichero(ficheroSalida[0],
 					Texto.get("CA_GUARDEXPORTMULTGIF", Conf.idioma), null,
 					extensionesImagen, definicionesArchivos, 0);
@@ -327,7 +327,7 @@ public class FotografoArbol {
 				// último directorio)
 				ofr = (OpcionFicherosRecientes) gOpciones.getOpcion(
 						"OpcionFicherosRecientes", true);
-				ofr.setDir(ficheroSalida[0]);
+				ofr.setDirExport(ficheroSalida[0]);
 				gOpciones.setOpcion(ofr, 2);
 
 				Ventana.thisventana.deshabilitarOpcionesVentana();
@@ -448,7 +448,7 @@ public class FotografoArbol {
 					"OpcionFicherosRecientes", true);
 
 			this.ficheroSalida = new String[2];
-			this.ficheroSalida[0] = this.ofr.getDir();
+			this.ficheroSalida[0] = this.ofr.getDirExport();
 			this.ficheroSalida = SelecDireccion.cuadroAbrirFichero(
 					this.ficheroSalida[0],
 					Texto.get("CA_GUARDEXPORTGIF", Conf.idioma), null, "gif",
@@ -499,7 +499,7 @@ public class FotografoArbol {
 			// directorio)
 			this.ofr = (OpcionFicherosRecientes) this.gOpciones.getOpcion(
 					"OpcionFicherosRecientes", true);
-			this.ofr.setDir(this.ficheroSalida[0]);
+			this.ofr.setDirExport(this.ficheroSalida[0]);
 			this.gOpciones.setOpcion(this.ofr, 2);
 
 			Ventana.thisventana.deshabilitarOpcionesVentana();
