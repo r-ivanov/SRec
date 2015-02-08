@@ -46,7 +46,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	private static final int NUM_NODOS_MAX = 350;
 
 	private CuadroGenerarAleatorio cga = null;
-
+	
 	private JLabel[] etiquetas;
 	private JComboBox<String>[] cuadrosvalores;
 	private JCheckBox[] mostrarvalores;
@@ -353,6 +353,14 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 			this.foco();
 
 		}
+	}
+	
+	public CuadroGenerarAleatorio getCga() {
+		return cga;
+	}
+
+	public void setCga(CuadroGenerarAleatorio cga) {
+		this.cga = cga;
 	}
 	
 	/**

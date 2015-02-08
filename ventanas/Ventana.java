@@ -39,6 +39,7 @@ import cuadros.CuadroBuscarLlamada;
 import cuadros.CuadroElegirES;
 import cuadros.CuadroElegirHistorico;
 import cuadros.CuadroError;
+import cuadros.CuadroGenerarAleatorio;
 import cuadros.CuadroGenerarGrafoDependencia;
 import cuadros.CuadroIdioma;
 import cuadros.CuadroInfoNodo;
@@ -143,6 +144,8 @@ public class Ventana extends JFrame implements ActionListener {
 	private static GestorVentanaSRec gestorVentana = new GestorVentanaSRec();
 
 	public int[] tamPantalla;
+	
+	private CuadroParamLanzarEjec cuadroLanzarEjec;
 
 	/**
 	 * Crea una nueva instancia de la ventana de la aplicación.
@@ -2210,9 +2213,14 @@ public class Ventana extends JFrame implements ActionListener {
 	 * parámetros para una nueva visualización.
 	 */
 	private void introducirParametros() {
-		new CuadroParamLanzarEjec(this,
-				this.claseAlgoritmo.getMetodoPrincipal(), this.claseAlgoritmo,
-				this.p);
+		CuadroGenerarAleatorio cuadroGenerarAleatorio = null;
+		if (this.cuadroLanzarEjec != null) {
+			cuadroGenerarAleatorio = this.cuadroLanzarEjec.getCga();
+		}
+		this.cuadroLanzarEjec = new CuadroParamLanzarEjec(this,
+			this.claseAlgoritmo.getMetodoPrincipal(), this.claseAlgoritmo,
+			this.p);
+		this.cuadroLanzarEjec.setCga(cuadroGenerarAleatorio);
 	}
 	
 	/**
@@ -2464,6 +2472,7 @@ public class Ventana extends JFrame implements ActionListener {
 		GestorVentanaSRec.habilitaMenuItem(this.menus[0],
 				Texto.get("MENU_ARCH_15", Conf.idioma), valor);
 		this.botones[29].setEnabled(valor);
+		this.cuadroLanzarEjec = null;
 	}
 
 	/**
