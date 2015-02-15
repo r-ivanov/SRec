@@ -34,8 +34,9 @@ cualquier expresión para filas y una expresión para columnas, pudiendo relaciona
 - Se ha añadido un cuadro de proceso para cuando el algoritmo se está ejecutando, con un botón cancelar que permite detener la ejecución
 en cualquier momento.
 
-- Se ha limitado el número de nodos que puede generar un algoritmo a 350, de modo que puedan evitarse errores
-debidos a falta de memoria cuando las ejecuciones de algoritmos son exageradamente grandes.
+- cuando el número de nodos que genera un algoritmo es superior a 350, se le informa explícitamente al usuario
+de ello antes de generar la animación, solicitándole permiso para continuar, de modo que tenga constancia de
+que la aplicación podría no responer correctamente con ejecuciones exageradamente grandes.
 
 - Se han modificado algunos de los iconos de la aplicación para que resulten más intuitivos.
 
