@@ -1659,6 +1659,13 @@ public class GeneradorJava {
 								+ "]";
 			}
 		}
+		
+		for (int i = 0; i < el.length; i++) {
+			if (el[i].getNodeName().equals("array-initializer")) {
+				s = s + stringArrayInitializer(el[i],
+						ManipulacionElement.getChildElements(el[i]));
+			}
+		}
 
 		return conv(s);
 	}

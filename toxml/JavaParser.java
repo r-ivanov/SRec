@@ -2974,6 +2974,7 @@ public class JavaParser implements JavaParserConstants {
           }
         }
         temp = ArrayInitializer();
+        element.addChild(temp);
         break;
       default:
         jj_consume_token(-1);
