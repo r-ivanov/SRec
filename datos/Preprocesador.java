@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -243,16 +245,20 @@ public class Preprocesador extends Thread {
 				// fichero seleccionado por el usuario
 				// A partir de Java 7, Runtime.exec recibe un array de Strings
 				if (!this.obf.getfClass()) {
-					String aux[] = new String[2];
+					String aux[] = new String[4];
 					aux[0] = "\"" + this.omvj.getDir() + "javac\"";
 					aux[1] = "\"" + fichero[0] + fichero[1] + "\"";
+					aux[2] = "-classpath";
+					aux[3] = getRunningPath();
 					LlamadorSistema.ejecucionArray(aux);
 				}
-				String aux[] = new String[4];
+				String aux[] = new String[6];
 				aux[0] = "\"" + this.omvj.getDir() + "javac\"";
 				aux[1] = "-d";
 				aux[2] = ".\\";
 				aux[3] = "\"" + fichero[0] + fichero[1] + "\"";
+				aux[4] = "-classpath";
+				aux[5] = getRunningPath();
 				String salidaCompilador = LlamadorSistema.ejecucionArray(aux);
 				// String
 
@@ -352,21 +358,25 @@ public class Preprocesador extends Thread {
 							Texto.get("CP_PROCES", Conf.idioma), 65);
 
 					if (!this.obf.getfClass()) {
-						String aux2[] = new String[2];
+						String aux2[] = new String[4];
 						aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
 						aux2[1] = "\""
 								+ fichero[0]
 								+ fichero[1].replace(".java", this.codigoPrevio
 										+ ".java") + "\"";
+						aux2[2] = "-classpath";
+						aux2[3] = getRunningPath();
 						LlamadorSistema.ejecucionArray(aux2);
 					}
-					String aux2[] = new String[4];
+					String aux2[] = new String[6];
 					aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
 					aux2[1] = "-d";
 					aux2[2] = ".\\";
 					aux2[3] = "\""
 							+ fichero[1].replace(".java", this.codigoPrevio
 									+ ".java") + "\"";
+					aux2[4] = "-classpath";
+					aux2[5] = getRunningPath();
 					salidaCompilador = LlamadorSistema.ejecucionArray(aux2);
 					this.compilado = salidaCompilador.length() < 4;
 
@@ -533,21 +543,25 @@ public class Preprocesador extends Thread {
 			this.compilado = true;
 
 			if (!this.obf.getfClasszv()) {
-				String aux3[] = new String[4];
+				String aux3[] = new String[6];
 				aux3[0] = "\"" + this.omvj.getDir() + "javac\"";
 				aux3[1] = "-d";
 				aux3[2] = "\"" + fichero[0] + "\\";
 				aux3[3] = "\" SRec_" + fich2;
+				aux3[4] = "-classpath";
+				aux3[5] = getRunningPath();
 				LlamadorSistema.ejecucionArray(aux3);
 			}
 			this.cuadroProgreso.setValores(Texto.get("CP_PROCES", Conf.idioma),
 					85);
 
-			String aux3[] = new String[4];
+			String aux3[] = new String[6];
 			aux3[0] = "\"" + this.omvj.getDir() + "javac\"";
 			aux3[1] = "-d";
 			aux3[2] = ".\\";
 			aux3[3] = "SRec_" + fich2;
+			aux3[4] = "-classpath";
+			aux3[5] = getRunningPath();
 			String salidaCompilador = LlamadorSistema.ejecucionArray(aux3);
 			// String
 
@@ -736,6 +750,19 @@ public class Preprocesador extends Thread {
 			procesoListener.ejecucionFinalizada(ejecuciones,
 					matrizParametros.length == ejecuciones.size());
 		}
+	}
+	
+	/**
+	 * Devuelve el path desde el que se está ejecutando la aplicación.
+	 * 
+	 * @return Path desde donde se está ejecutando la aplicación
+	 */
+	private String getRunningPath() {
+		try {
+			String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+			return URLDecoder.decode(path, "UTF-8");
+		} catch (Throwable throwable) {}
+		return ".";
 	}
 
 	/**

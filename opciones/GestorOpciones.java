@@ -86,53 +86,31 @@ public class GestorOpciones {
 		Element eInicial = this.documento.createElement("Opciones");
 		this.documento.appendChild(eInicial);
 
-		// Recorremos el directorio de la aplicacion para buscar sus propios
-		// .class que implementen opciones
-		// así no tendremos que retocar esta clase cada vez que insertemos una
-		// opción nueva a la aplicación
-
-		// Nos situamos sobre directorio de la aplicación
-		File directorioAplicacion = null;
-		try {
-			directorioAplicacion = new File(".\\opciones");
-		} catch (Exception exc) {
-		}
-
-		// Listamos todos sus ficheros
-		File clases[] = directorioAplicacion.listFiles();
-
 		// Recorremos el array para detectar las clases que nos interesan
-		for (int i = 0; i < clases.length; i++) {
-			if (clases[i].getName().contains(".class")
-					&& clases[i].getName().contains("Opcion")
-					&& clases[i].getName().indexOf("Opcion") == 0
-					&& clases[i].getName().length() > 12) {
-				Class clase = null;
-				Object opcion = null;
-				try {
-					clase = Class.forName("opciones."
-							+ clases[i].getName().replace(".class", ""));
-					opcion = clase.newInstance();
-
-				} catch (java.lang.ClassNotFoundException cnfe) {
-					System.out
-					.println("GestorOpciones.crearArchivo ClassNotFoundException");
-				} catch (java.lang.InstantiationException ie) {
-					System.out
-					.println("GestorOpciones.crearArchivo InstantiationException");
-				} catch (java.lang.IllegalAccessException iae) {
-					System.out
-					.println("GestorOpciones.crearArchivo IllegalAccessException");
-				}
-
-				if (opcion == null) {
-					System.out
-					.println("GestorOpciones.crearArchivo opcion=null");
-				}
-
-				this.anadirOpcion(((Opcion) opcion)
-						.getRepresentacionElement(this.documento));
+		for (int i = 0; i < clasesOpciones.length; i++) {
+			Class clase = null;
+			Object opcion = null;
+			try {
+				clase = Class.forName("opciones." + clasesOpciones[i]);
+				opcion = clase.newInstance();
+			} catch (java.lang.ClassNotFoundException cnfe) {
+				System.out
+				.println("GestorOpciones.crearArchivo ClassNotFoundException");
+			} catch (java.lang.InstantiationException ie) {
+				System.out
+				.println("GestorOpciones.crearArchivo InstantiationException");
+			} catch (java.lang.IllegalAccessException iae) {
+				System.out
+				.println("GestorOpciones.crearArchivo IllegalAccessException");
 			}
+
+			if (opcion == null) {
+				System.out
+				.println("GestorOpciones.crearArchivo opcion=null");
+			}
+
+			this.anadirOpcion(((Opcion) opcion)
+					.getRepresentacionElement(this.documento));
 		}
 	}
 

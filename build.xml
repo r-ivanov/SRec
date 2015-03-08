@@ -28,12 +28,7 @@
 		</copy>
 
     	<copy todir="release/datos">
-			<fileset dir="bin/datos" />
     		<fileset file="datos/Textos.xml" />
-		</copy>
-    	
-    	<copy todir="release/opciones">
-			<fileset dir="bin/opciones" />
 		</copy>
     	
     	<mkdir dir="build_tmp" />  		
