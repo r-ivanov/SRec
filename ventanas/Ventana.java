@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -139,8 +140,6 @@ public class Ventana extends JFrame implements ActionListener {
 
 	public boolean barraHerramientasVisible = true;
 
-	private static String icono = "./imagenes/ico32.gif";
-
 	private static GestorVentanaSRec gestorVentana = new GestorVentanaSRec();
 
 	public int[] tamPantalla;
@@ -263,8 +262,9 @@ public class Ventana extends JFrame implements ActionListener {
 			Conf.altoBoton = 23;
 		} catch (Exception evt1) {
 		}
-
+		
 		// Colocamos icono para la ventana
+		URL icono = getClass().getClassLoader().getResource("imagenes/ico32.gif");
 		this.setIconImage(new ImageIcon(icono).getImage());
 
 		// menus
@@ -584,14 +584,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_VISU_18", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_estadoInicial.gif");
+							getClass().getClassLoader().getResource("imagenes/i_estadoInicial.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[1],
 							Texto.get("MENU_VISU_18", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_estadoInicial_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_estadoInicial_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -615,14 +615,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_VISU_19", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_idMetodo.gif");
+							getClass().getClassLoader().getResource("imagenes/i_idMetodo.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[1],
 							Texto.get("MENU_VISU_19", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_idMetodo_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_idMetodo_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -701,14 +701,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_FILT_03", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_mostrarsubarbol.gif");
+							getClass().getClassLoader().getResource("imagenes/i_mostrarsubarbol.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[5],
 							Texto.get("MENU_FILT_03", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_mostrarsubarbol_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_mostrarsubarbol_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -751,14 +751,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_ARBL_00", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_arbolcolapsado.gif");
+							getClass().getClassLoader().getResource("imagenes/i_arbolcolapsado.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[6],
 							Texto.get("MENU_ARBL_00", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_arbolcolapsado_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_arbolcolapsado_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -782,14 +782,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_ARBL_04", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_visualizacionDinamica.gif");
+							getClass().getClassLoader().getResource("imagenes/i_visualizacionDinamica.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[6],
 							Texto.get("MENU_ARBL_04", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_visualizacionDinamica_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_visualizacionDinamica_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -813,14 +813,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_ARBL_01", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_mostrarvisor.gif");
+							getClass().getClassLoader().getResource("imagenes/i_mostrarvisor.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[6],
 							Texto.get("MENU_ARBL_01", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_mostrarvisor_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_mostrarvisor_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -844,14 +844,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_ARBL_03", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_ajustarVisor.gif");
+							getClass().getClassLoader().getResource("imagenes/i_ajustarVisor.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[6],
 							Texto.get("MENU_ARBL_03", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_ajustarVisor_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_ajustarVisor_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -876,14 +876,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_ARBL_02", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_estructuraarbol.gif");
+							getClass().getClassLoader().getResource("imagenes/i_estructuraarbol.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[6],
 							Texto.get("MENU_ARBL_02", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_estructuraarbol_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_estructuraarbol_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -908,14 +908,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_TRAZ_00", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_sangrado.gif");
+							getClass().getClassLoader().getResource("imagenes/i_sangrado.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[7],
 							Texto.get("MENU_TRAZ_00", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_sangrado_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_sangrado_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -940,14 +940,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_TRAZ_02", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_ligarescrono.gif");
+							getClass().getClassLoader().getResource("imagenes/i_ligarescrono.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[7],
 							Texto.get("MENU_TRAZ_02", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_ligarescrono_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_ligarescrono_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -971,14 +971,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_TRAZ_03", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_soloestructuraprincipal.gif");
+							getClass().getClassLoader().getResource("imagenes/i_soloestructuraprincipal.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[7],
 							Texto.get("MENU_TRAZ_03", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_soloestructuraprincipal_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_soloestructuraprincipal_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -1003,14 +1003,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_TRAZ_04", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_estructcompletacrono.gif");
+							getClass().getClassLoader().getResource("imagenes/i_estructcompletacrono.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[7],
 							Texto.get("MENU_TRAZ_04", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_estructcompletacrono_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_estructcompletacrono_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			}
@@ -1646,14 +1646,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_TRAZ_02", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_ligarescrono.gif");
+							getClass().getClassLoader().getResource("imagenes/i_ligarescrono.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[7],
 							Texto.get("MENU_TRAZ_02", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_ligarescrono_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_ligarescrono_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			} else if (fuente == this.botones[33]) // Árbol de recursión >
@@ -1678,14 +1678,14 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("MENU_ARBL_02", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_estructuraarbol.gif");
+							getClass().getClassLoader().getResource("imagenes/i_estructuraarbol.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
 							this.menus[6],
 							Texto.get("MENU_ARBL_02", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
-							"./imagenes/i_estructuraarbol_des.gif");
+							getClass().getClassLoader().getResource("imagenes/i_estructuraarbol_des.gif"));
 				}
 				this.actualizarVisualizacion();
 			} else if (fuente == this.botones[34]) // Información > Información

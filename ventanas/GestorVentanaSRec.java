@@ -3,6 +3,7 @@ package ventanas;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -112,19 +113,22 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 
 		String nombreMenuArchivo = Texto.get("MENU_ARCH_N", Conf.idioma);
 		char mnMenuArchivo = mnemotecnicos.charAt(mnemotecnicos.length() - 1);
-		String iconosArchivo[] = { "./imagenes/i_nuevaclase.gif",
-				"./imagenes/i_guardarclase.gif", "./imagenes/i_abrirclase.gif",
-				"./imagenes/i_compilarclase.gif",
-				"./imagenes/i_seleccionmetodo.gif",
-				"./imagenes/i_nuevavisualizacion.gif",
-				"./imagenes/i_abrirvisualizacion.gif",
-				"./imagenes/i_cargargif.gif",
-				"./imagenes/i_guardarvisualizacion.gif",
-				"./imagenes/i_exportaranimacion.gif",
-				"./imagenes/i_exportarestados.gif",
-				"./imagenes/i_exportarestado.gif",
-				"./imagenes/i_exportar_ejecuciones.gif",
-				"./imagenes/i_exportartraza.gif", "./imagenes/i_cerrar.gif" };
+		URL iconosArchivo[] = {
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_nuevaclase.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_guardarclase.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_abrirclase.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_compilarclase.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_seleccionmetodo.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_nuevavisualizacion.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_abrirvisualizacion.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_cargargif.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_guardarvisualizacion.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_exportaranimacion.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_exportarestados.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_exportarestado.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_exportar_ejecuciones.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_exportartraza.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_cerrar.gif") };
 		int sepArchivo[] = { 3, 8, 12 }; // Separador debajo de las cuarta,
 		// séptima y décima opción de menú
 		// (contamos desde cero)
@@ -194,9 +198,12 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		String nombreMenuAnimacion = Texto.get("MENU_VISU_N", Conf.idioma);
 		char mnMenuAnimacion = mnemotecnicos.charAt(mnemotecnicos.length() - 1);
 
-		String iconosAnimacion[] = { "./imagenes/i_idMetodo_des.gif",
-				"./imagenes/i_estadoInicial.gif", "./imagenes/i_formato.gif",
-				"./imagenes/i_zoom.gif", "./imagenes/i_ubicacionpaneles.gif" };
+		URL iconosAnimacion[] = {
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_idMetodo_des.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_estadoInicial.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_formato.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoom.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ubicacionpaneles.gif") };
 		int sepAnimacion[] = {}; // Separador debajo de la primera opción de
 		// menú (contamos desde cero)
 		KeyStroke ksAnimacion[] = {
@@ -232,12 +239,13 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		String nombreMenuFiltrado = Texto.get("MENU_FILT_N", Conf.idioma);
 		char mnMenuFiltrado = mnemotecnicos.charAt(mnemotecnicos.length() - 1);
 
-		String iconosFiltrado[] = { "./imagenes/i_entradasalida.gif",
-				"./imagenes/i_vermetodosparam.gif",
-				"./imagenes/i_nodoshistoricos.gif",
-				"./imagenes/i_mostrarsubarbol_des.gif",
-				"./imagenes/i_llamadasmarcar.gif",
-				"./imagenes/i_llamadasdesmarcar.gif", };
+		URL iconosFiltrado[] = {
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_entradasalida.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_vermetodosparam.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_nodoshistoricos.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_mostrarsubarbol_des.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_llamadasmarcar.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_llamadasdesmarcar.gif")};
 		int sepFiltrado[] = { 3 }; // Separador debajo de la primera opción de
 		// menú (contamos desde cero)
 		KeyStroke ksFiltrado[] = { null, null, null, null, null, null };
@@ -270,11 +278,12 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		String nombreMenuArbol = Texto.get("MENU_ARBL_N", Conf.idioma);
 		char mnMenuArbol = mnemotecnicos.charAt(mnemotecnicos.length() - 1);
 
-		String iconosArbol[] = { "./imagenes/i_arbolcolapsado_des.gif",
-				"./imagenes/i_visualizacionDinamica.gif",
-				"./imagenes/i_mostrarvisor.gif",
-				"./imagenes/i_ajustarVisor.gif",
-		"./imagenes/i_estructuraarbol.gif" };
+		URL iconosArbol[] = {
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_arbolcolapsado_des.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_visualizacionDinamica.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_mostrarvisor.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ajustarVisor.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_estructuraarbol.gif") };
 		int sepArbol[] = {}; // Separador debajo de la primera opción de menú
 		// (contamos desde cero)
 		KeyStroke ksArbol[] = { null, null, null, null, null };
@@ -296,10 +305,11 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		String nombreMenuTraza = Texto.get("MENU_TRAZ_N", Conf.idioma);
 		char mnMenuTraza = mnemotecnicos.charAt(mnemotecnicos.length() - 1);
 
-		String iconosTraza[] = { "./imagenes/i_sangrado.gif",
-				"./imagenes/i_ligarescrono.gif",
-				"./imagenes/i_soloestructuraprincipal.gif",
-				"./imagenes/i_estructcompletacrono_des.gif", };
+		URL iconosTraza[] = {
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_sangrado.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ligarescrono.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_soloestructuraprincipal.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_estructcompletacrono_des.gif") };
 		int sepTraza[] = {}; // Separador debajo de la primera opción de menú
 		// (contamos desde cero)
 		KeyStroke ksTraza[] = { null, null, null, null };
@@ -321,8 +331,9 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		String nombreMenuInformacion = Texto.get("MENU_INFO_N", Conf.idioma);
 		char mnMenuInformacion = mnemotecnicos
 				.charAt(mnemotecnicos.length() - 1);
-		String iconosInformacion[] = { "./imagenes/i_infovisualizacion.gif",
-				"./imagenes/i_infonodo.gif", };
+		URL iconosInformacion[] = {
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_infovisualizacion.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_infonodo.gif") };
 		int sepInformacion[] = {}; // Separador debajo de la primera opción de
 		// menú (contamos desde cero)
 		KeyStroke ksInformacion[] = { null, null, };
@@ -358,12 +369,16 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		String nombreMenuConfiguracion = Texto.get("MENU_CONF_N", Conf.idioma);
 		char mnMenuConfiguracion = mnemotecnicos
 				.charAt(mnemotecnicos.length() - 1);
-		String iconosConfiguracion[] = { "./imagenes/i_vacio.gif",
-				"./imagenes/i_vacio.gif", "./imagenes/i_vacio.gif",
-				"./imagenes/i_vacio.gif", "./imagenes/i_vacio.gif",
-				"./imagenes/i_archivosintermedios.gif",
-				"./imagenes/i_mvjava.gif", "./imagenes/i_idioma.gif",
-				"./imagenes/i_verbarrahh.gif", };
+		URL iconosConfiguracion[] = {
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_vacio.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_vacio.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_vacio.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_vacio.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_vacio.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_archivosintermedios.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_mvjava.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_idioma.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_verbarrahh.gif") };
 		int sepConfiguracion[] = { 3, 6 }; // Separador debajo de la primera
 		// opción de menú (contamos desde
 		// cero)
@@ -401,8 +416,9 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 
 		String nombreMenuAyuda = Texto.get("MENU_AYUD_N", Conf.idioma);
 		char mnMenuAyuda = mnemotecnicos.charAt(mnemotecnicos.length() - 1);
-		String iconosAyuda[] = { "./imagenes/i_srecayuda.gif",
-		"./imagenes/i_srec.gif" };
+		URL iconosAyuda[] = {
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_srecayuda.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_srec.gif") };
 		KeyStroke ksAyuda[] = {
 				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0),
 				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,
@@ -448,7 +464,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 	 *            Accesos de teclado para cada opción.
 	 */
 	private static JMenu creaMenu(String nombreOpciones[],
-			char mnemotecOpciones[], String iconos[], String nombreMenu,
+			char mnemotecOpciones[], URL iconos[], String nombreMenu,
 			char mnemotecMenu, int separadores[], KeyStroke ks[]) {
 		JMenuItem items[] = new JMenuItem[nombreOpciones.length];
 
@@ -845,7 +861,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 	 *            Path del icono para el elemento.
 	 */
 	protected static void iconoMenuItem(JMenu menu, String nombreElemento,
-			String path) {
+			URL path) {
 		JMenuItem items[] = new JMenuItem[menu.getItemCount()];
 
 		for (int i = 0; i < items.length; i++) {
@@ -871,83 +887,94 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		JButton[] botones = new JButton[36];
 
 		// Grupo archivo Java
-		botones[0] = new JButton(new ImageIcon("./imagenes/i_nuevaclase.gif"));
-		botones[1] = new JButton(new ImageIcon("./imagenes/i_abrirclase.gif"));
-		botones[2] = new JButton(new ImageIcon("./imagenes/i_guardarclase.gif"));
-		botones[3] = new JButton(
-				new ImageIcon("./imagenes/i_compilarclase.gif"));
+		botones[0] = new JButton(new ImageIcon(GestorVentanaSRec.class
+				.getClassLoader().getResource("imagenes/i_nuevaclase.gif")));
+		botones[1] = new JButton(new ImageIcon(GestorVentanaSRec.class
+				.getClassLoader().getResource("imagenes/i_abrirclase.gif")));
+		botones[2] = new JButton(new ImageIcon(GestorVentanaSRec.class
+				.getClassLoader().getResource("imagenes/i_guardarclase.gif")));
+		botones[3] = new JButton(new ImageIcon(GestorVentanaSRec.class
+				.getClassLoader().getResource("imagenes/i_compilarclase.gif")));
 
 		// Grupo animación
 		botones[28] = new JButton(new ImageIcon(
-				"./imagenes/i_seleccionmetodo.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_seleccionmetodo.gif")));
 		botones[29] = new JButton(new ImageIcon(
-				"./imagenes/i_nuevavisualizacion.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_nuevavisualizacion.gif")));
         botones[35]=new JButton(new ImageIcon(
-        		"./imagenes/i_generargrafodependencia.gif"));
+        		GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_generargrafodependencia.gif")));
 		// Grupo animación - No visibles
 		botones[4] = new JButton(new ImageIcon(
-				"./imagenes/i_nuevavisualizacion.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_nuevavisualizacion.gif")));
 		botones[5] = new JButton(new ImageIcon(
-				"./imagenes/i_abrirvisualizacion.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_abrirvisualizacion.gif")));
 		botones[6] = new JButton(new ImageIcon(
-				"./imagenes/i_guardarvisualizacion.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_guardarvisualizacion.gif")));
 
 		// Grupo exportación
 		botones[7] = new JButton(new ImageIcon(
-				"./imagenes/i_exportaranimacion.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_exportaranimacion.gif")));
 		botones[9] = new JButton(new ImageIcon(
-				"./imagenes/i_exportarestado.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_exportarestado.gif")));
 		// Grupo exportación - No visibles
 		botones[8] = new JButton(new ImageIcon(
-				"./imagenes/i_exportarestados.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_exportarestados.gif")));
 
 		// Grupo opciones 1
 		botones[10] = new JButton(new ImageIcon(
-				"./imagenes/i_entradasalida.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_entradasalida.gif")));
 		botones[11] = new JButton(new ImageIcon(
-				"./imagenes/i_vermetodosparam.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_vermetodosparam.gif")));
 		botones[30] = new JButton(new ImageIcon(
-				"./imagenes/i_llamadasmarcar.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_llamadasmarcar.gif")));
 		botones[31] = new JButton(new ImageIcon(
-				"./imagenes/i_llamadasdesmarcar.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_llamadasdesmarcar.gif")));
 		// Grupo opciones 1 - No Visibles
 		botones[12] = new JButton(new ImageIcon(
-				"./imagenes/i_nodoshistoricos.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_nodoshistoricos.gif")));
 		botones[13] = new JButton(new ImageIcon(
-				"./imagenes/i_mostrarsubarbol.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_mostrarsubarbol.gif")));
 
 		// Grupo opciones 2
-		botones[14] = new JButton(
-				new ImageIcon("./imagenes/i_mostrarvisor.gif"));
-		botones[32] = new JButton(
-				new ImageIcon("./imagenes/i_ligarescrono.gif"));
+		botones[14] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_mostrarvisor.gif")));
+		botones[32] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ligarescrono.gif")));
 		botones[33] = new JButton(new ImageIcon(
-				"./imagenes/i_estructuraarbol.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_estructuraarbol.gif")));
 		botones[34] = new JButton(new ImageIcon(
-				"./imagenes/i_infovisualizacion.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_infovisualizacion.gif")));
 
 		// Grupo opciones 2 - No Visibles
 		botones[15] = new JButton(new ImageIcon(
-				"./imagenes/i_estructuraarbol.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_estructuraarbol.gif")));
 		botones[16] = new JButton(new ImageIcon(
-				"./imagenes/i_estructcompletacrono.gif"));
-		botones[17] = new JButton(
-				new ImageIcon("./imagenes/i_ligarescrono.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_estructcompletacrono.gif")));
+		botones[17] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ligarescrono.gif")));
 		botones[18] = new JButton(new ImageIcon(
-				"./imagenes/i_arbolcolapsado.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_arbolcolapsado.gif")));
 
 		// Grupo formato
-		botones[19] = new JButton(new ImageIcon("./imagenes/i_formato.gif"));
-		botones[20] = new JButton(new ImageIcon("./imagenes/i_zoom.gif"));
-		botones[21] = new JButton(new ImageIcon("./imagenes/i_zoommas1.gif"));
-		botones[22] = new JButton(new ImageIcon("./imagenes/i_zoommenos1.gif"));
-		botones[23] = new JButton(new ImageIcon("./imagenes/i_zoomajuste1.gif"));
-		botones[24] = new JButton(new ImageIcon("./imagenes/i_zoommas2.gif"));
-		botones[25] = new JButton(new ImageIcon("./imagenes/i_zoommenos2.gif"));
-		botones[26] = new JButton(new ImageIcon("./imagenes/i_zoomajuste2.gif"));
+		botones[19] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_formato.gif")));
+		botones[20] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoom.gif")));
+		botones[21] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoommas1.gif")));
+		botones[22] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoommenos1.gif")));
+		botones[23] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoomajuste1.gif")));
+		botones[24] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoommas2.gif")));
+		botones[25] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoommenos2.gif")));
+		botones[26] = new JButton(new ImageIcon(
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoomajuste2.gif")));
 		// Grupo formato - No Visibles
 		botones[27] = new JButton(new ImageIcon(
-				"./imagenes/i_ubicacionpaneles.gif"));
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ubicacionpaneles.gif")));
 
 		GestorVentanaSRec.setToolTipTextBHH(botones);
 

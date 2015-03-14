@@ -119,7 +119,7 @@ public abstract class CuadroPregunta extends Thread implements ActionListener,
 
 		// Etiqueta para icono
 		this.panelImagen = new JPanel();
-		this.imagen = new JLabel(new ImageIcon("imagenes/alarma.gif"));
+		this.imagen = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("imagenes/alarma.gif")));
 		this.imagen.addKeyListener(this);
 		this.imagen.setHorizontalAlignment(0);
 		this.imagen.setVerticalAlignment(0);

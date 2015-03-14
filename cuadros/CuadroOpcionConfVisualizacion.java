@@ -560,7 +560,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		// Panel etiquetaImagen
 		JPanel panelEtiquetaImagen = new JPanel();
 		JLabel etiqImagen = new JLabel(new ImageIcon(
-				"./imagenes/cuadroconf_flechas.gif"));
+				getClass().getClassLoader().getResource("imagenes/cuadroconf_flechas.gif")));
 		panelEtiquetaImagen.add(etiqImagen);
 
 		panelFlecha.add(panelJCBs, BorderLayout.NORTH);
@@ -624,7 +624,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		// Panel etiquetaImagen
 		JPanel panelEtiquetaImagen2 = new JPanel();
 		JLabel etiqImagen2 = new JLabel(new ImageIcon(
-				"./imagenes/cuadroconf_bordes.gif"));
+				getClass().getClassLoader().getResource("imagenes/cuadroconf_bordes.gif")));
 		panelEtiquetaImagen2.add(etiqImagen2);
 
 		panelCaracteristicas.add(panelJCBs2, BorderLayout.NORTH);
@@ -685,7 +685,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		// Panel etiquetaImagen
 		JPanel panelEtiquetaImagen3 = new JPanel();
 		JLabel etiqImagen3 = new JLabel(new ImageIcon(
-				"./imagenes/cuadroconf_distancias.gif"));
+				getClass().getClassLoader().getResource("imagenes/cuadroconf_distancias.gif")));
 		panelEtiquetaImagen3.add(etiqImagen3);
 
 		panelDistancias.add(panelJCBs3, BorderLayout.NORTH);

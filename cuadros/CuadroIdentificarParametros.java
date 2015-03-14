@@ -436,9 +436,9 @@ public class CuadroIdentificarParametros extends Thread implements
 			this.panelIzqda.removeAll();
 			this.panelIzqda.add(this.panelParamEstructura, BorderLayout.NORTH);
 
-			Icon imagen = new ImageIcon(
+			Icon imagen = new ImageIcon(getClass().getClassLoader().getResource(
 					this.numCampos == 2 ? "imagenes/esquema_array.png"
-							: "imagenes/esquema_matriz.png");
+							: "imagenes/esquema_matriz.png"));
 			JLabel etiquetaImagen = new JLabel();
 			etiquetaImagen.setIcon(imagen);
 

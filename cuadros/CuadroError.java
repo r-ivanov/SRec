@@ -132,7 +132,8 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 
 		// Etiqueta para icono
 		this.panelImagen = new JPanel();
-		this.imagen = new JLabel(new ImageIcon("imagenes/error.gif"));
+		this.imagen = new JLabel(new ImageIcon(getClass().getClassLoader()
+				.getResource("imagenes/error.gif")));
 		this.imagen.addKeyListener(this);
 		this.imagen.setHorizontalAlignment(0);
 		this.imagen.setVerticalAlignment(0);

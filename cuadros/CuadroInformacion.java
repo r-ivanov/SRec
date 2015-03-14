@@ -78,7 +78,8 @@ public class CuadroInformacion extends Thread implements ActionListener,
 
 		// Etiqueta para icono
 		this.panelImagen = new JPanel();
-		this.imagen = new JLabel(new ImageIcon("imagenes/info.gif"));
+		this.imagen = new JLabel(new ImageIcon(getClass()
+				.getClassLoader().getResource("imagenes/info.gif")));
 		this.imagen.addKeyListener(this);
 		this.imagen.setHorizontalAlignment(0);
 		this.imagen.setVerticalAlignment(0);

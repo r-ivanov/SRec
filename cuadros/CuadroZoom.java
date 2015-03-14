@@ -257,18 +257,18 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 		cuadros[indice].setToolTipText(Texto.get("CZ_REG100", Conf.idioma));
 
 		this.zoommas[indice] = new BotonIcono(new ImageIcon(
-				"./imagenes/icono_zoommas.gif"), TAM_BOTON, TAM_BOTON);
+				getClass().getClassLoader().getResource("imagenes/icono_zoommas.gif")), TAM_BOTON, TAM_BOTON);
 		this.zoommas[indice].addActionListener(this);
 		this.zoommas[indice].setToolTipText(Texto.get("CZ_MAS5", Conf.idioma));
 
 		this.zoommenos[indice] = new BotonIcono(new ImageIcon(
-				"./imagenes/icono_zoommenos.gif"), TAM_BOTON, TAM_BOTON);
+				getClass().getClassLoader().getResource("imagenes/icono_zoommenos.gif")), TAM_BOTON, TAM_BOTON);
 		this.zoommenos[indice].addActionListener(this);
 		this.zoommenos[indice].setToolTipText(Texto
 				.get("CZ_MENS5", Conf.idioma));
 
 		this.zoomajuste[indice] = new BotonIcono(new ImageIcon(
-				"./imagenes/icono_zoomajuste.gif"), TAM_BOTON, TAM_BOTON);
+				getClass().getClassLoader().getResource("imagenes/icono_zoomajuste.gif")), TAM_BOTON, TAM_BOTON);
 		this.zoomajuste[indice].addActionListener(this);
 		this.zoomajuste[indice].setToolTipText(Texto.get("CZ_AJUST",
 				Conf.idioma));

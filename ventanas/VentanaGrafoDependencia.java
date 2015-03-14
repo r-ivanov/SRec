@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,7 +41,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 
 	private static final long serialVersionUID = -7397386753145487405L;
 
-	private static final String ICONO = "./imagenes/ico32.gif";
+	private static final URL ICONO = VentanaGrafoDependencia.class.getClassLoader().getResource("imagenes/ico32.gif");
 
 	private static final double MAX_SCALE = 1.5;
 	private static final double MIN_SCALE = 0.5;
@@ -174,28 +175,29 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 
 		this.botones = new JButton[6];
 
-		this.botones[0] = new JButton(
-				new ImageIcon("./imagenes/i_tabulado.gif"));
+		this.botones[0] = new JButton(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/i_tabulado.gif")));
 		this.botones[0].setToolTipText(Texto.get("GP_DIBUJAR_MATRIZ",
 				Conf.idioma));
 		this.botones[1] = new JButton(new ImageIcon(
-				"./imagenes/i_tabulado_automatico.gif"));
+				getClass().getClassLoader().getResource("imagenes/i_tabulado_automatico.gif")));
 		this.botones[1].setToolTipText(Texto.get("GP_TABULAR_MATRIZ",
 				Conf.idioma));
 
 		this.botones[2] = new JButton(new ImageIcon(
-				"./imagenes/i_exportarestado.gif"));
+				getClass().getClassLoader().getResource("imagenes/i_exportarestado.gif")));
 		this.botones[2].setToolTipText(Texto.get("GP_EXPORTAR", Conf.idioma));
 
-		this.botones[3] = new JButton(new ImageIcon("./imagenes/i_zoommas.gif"));
+		this.botones[3] = new JButton(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/i_zoommas.gif")));
 		this.botones[3].setToolTipText(Texto
 				.get("GP_AUMENTO_ZOOM", Conf.idioma));
 		this.botones[4] = new JButton(new ImageIcon(
-				"./imagenes/i_zoommenos.gif"));
+				getClass().getClassLoader().getResource("imagenes/i_zoommenos.gif")));
 		this.botones[4].setToolTipText(Texto.get("GP_DISMINUCION_ZOOM",
 				Conf.idioma));
 		this.botones[5] = new JButton(new ImageIcon(
-				"./imagenes/i_zoomajuste.gif"));
+				getClass().getClassLoader().getResource("imagenes/i_zoomajuste.gif")));
 		this.botones[5]
 				.setToolTipText(Texto.get("GP_AJUSTE_ZOOM", Conf.idioma));
 

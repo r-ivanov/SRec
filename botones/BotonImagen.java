@@ -1,6 +1,8 @@
 package botones;
 
 import java.awt.Dimension;
+import java.net.URL;
+
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
@@ -18,9 +20,9 @@ public class BotonImagen extends JButton {
 	private boolean ratonEstaSobreBoton = false;
 	private boolean mostrarPulsado = false;
 
-	private String pathImagenBotonHabilitado;
-	private String pathImagenBotonDeshabilitado;
-	private String pathImagenRatonSobreBoton;
+	private URL pathImagenBotonHabilitado;
+	private URL pathImagenBotonDeshabilitado;
+	private URL pathImagenRatonSobreBoton;
 
 	/**
 	 * Construye un nuevo botón dadas las distintas imágenes que deberá mostrar
@@ -41,9 +43,9 @@ public class BotonImagen extends JButton {
 	 * @param alto
 	 *            alto del botón.
 	 */
-	public BotonImagen(String pathImagenBotonHabilitado,
-			String pathImagenRatonSobreBoton,
-			String pathImagenBotonDeshabilitado, int ancho, int alto) {
+	public BotonImagen(URL pathImagenBotonHabilitado,
+			URL pathImagenRatonSobreBoton,
+			URL pathImagenBotonDeshabilitado, int ancho, int alto) {
 		super(new ImageIcon(pathImagenBotonHabilitado));
 		this.pathImagenBotonHabilitado = pathImagenBotonHabilitado;
 		this.pathImagenRatonSobreBoton = pathImagenRatonSobreBoton;

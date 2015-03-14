@@ -68,18 +68,20 @@ public class VisorAyuda extends Thread implements ActionListener,
 		this.frame = new JFrame(Texto.get("VA_AYUDA", Conf.idioma));
 
 		// Botones
-		this.atras = new BotonImagen("imagenes/boton_atrasayuda_verde.gif",
-				"imagenes/boton_atrasayuda_naranja.gif",
-				"imagenes/boton_atrasayuda_rojo.gif",
+		this.atras = new BotonImagen(
+				getClass().getClassLoader().getResource("imagenes/boton_atrasayuda_verde.gif"),
+				getClass().getClassLoader().getResource("imagenes/boton_atrasayuda_naranja.gif"),
+				getClass().getClassLoader().getResource("imagenes/boton_atrasayuda_rojo.gif"),
 				Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 		this.adelante = new BotonImagen(
-				"imagenes/boton_adelanteayuda_verde.gif",
-				"imagenes/boton_adelanteayuda_naranja.gif",
-				"imagenes/boton_adelanteayuda_rojo.gif",
+				getClass().getClassLoader().getResource("imagenes/boton_adelanteayuda_verde.gif"),
+				getClass().getClassLoader().getResource("imagenes/boton_adelanteayuda_naranja.gif"),
+				getClass().getClassLoader().getResource("imagenes/boton_adelanteayuda_rojo.gif"),
 				Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
-		this.indice = new BotonImagen("imagenes/boton_indice_verde.gif",
-				"imagenes/boton_indice_naranja.gif",
-				"imagenes/boton_indice_rojo.gif", Conf.botonVisualizacionAncho,
+		this.indice = new BotonImagen(
+				getClass().getClassLoader().getResource("imagenes/boton_indice_verde.gif"),
+				getClass().getClassLoader().getResource("imagenes/boton_indice_naranja.gif"),
+				getClass().getClassLoader().getResource("imagenes/boton_indice_rojo.gif"), Conf.botonVisualizacionAncho,
 				Conf.botonVisualizacionAlto);
 
 		this.atras.addMouseListener(this);
@@ -124,7 +126,7 @@ public class VisorAyuda extends Thread implements ActionListener,
 		this.adelante.deshabilitar();
 		this.atras.deshabilitar();
 
-		this.frame.setIconImage(new ImageIcon("./imagenes/icono_ayuda.gif")
+		this.frame.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("imagenes/icono_ayuda.gif"))
 				.getImage());
 		this.frame.setVisible(true);
 		this.frame.setResizable(false);

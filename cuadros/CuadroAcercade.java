@@ -58,7 +58,8 @@ public class CuadroAcercade extends Thread implements ActionListener,
 
 		// Etiqueta con la imagen
 		this.etiquetaImagen = new JLabel();
-		Icon imagen = new ImageIcon("imagenes/cuadro_acercade.gif");
+		Icon imagen = new ImageIcon(getClass().getClassLoader().getResource(
+				"imagenes/cuadro_acercade.gif"));
 		this.etiquetaImagen.setIcon(imagen);
 		this.etiquetaImagen.addKeyListener(this);
 		this.etiquetaImagen.setToolTipText(Texto.get("URJC_SREC", Conf.idioma));

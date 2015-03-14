@@ -34,47 +34,67 @@ public class PanelBotonesVisualizacionArbol extends JPanel implements
 	static final long serialVersionUID = 12;
 
 	// Botones manuales de retroceso
-	private BotonImagen retrocM = new BotonImagen("imagenes/ba_salto_at_v.gif",
-			"imagenes/ba_salto_at_n.gif", "imagenes/ba_salto_at_r.gif",
+	private BotonImagen retrocM = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_salto_at_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_salto_at_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_salto_at_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
-	private BotonImagen retrocF = new BotonImagen("imagenes/ba_extr_at_v.gif",
-			"imagenes/ba_extr_at_n.gif", "imagenes/ba_extr_at_r.gif",
+	private BotonImagen retrocF = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_extr_at_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_extr_at_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_extr_at_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
-	private BotonImagen retroc = new BotonImagen("imagenes/ba_paso_at_v.gif",
-			"imagenes/ba_paso_at_n.gif", "imagenes/ba_paso_at_r.gif",
+	private BotonImagen retroc = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_paso_at_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_paso_at_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_paso_at_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
 	// Botones de animacion
-	private BotonImagen aat = new BotonImagen("imagenes/ba_anim_at_v.gif",
-			"imagenes/ba_anim_at_n.gif", "imagenes/ba_anim_at_r.gif",
+	private BotonImagen aat = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_anim_at_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_anim_at_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_anim_at_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
-	private BotonImagen parar = new BotonImagen("imagenes/ba_pausa_v.gif",
-			"imagenes/ba_pausa_n.gif", "imagenes/ba_pausa_r.gif",
+	private BotonImagen parar = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_pausa_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_pausa_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_pausa_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
-	private BotonImagen aad = new BotonImagen("imagenes/ba_anim_ad_v.gif",
-			"imagenes/ba_anim_ad_n.gif", "imagenes/ba_anim_ad_r.gif",
+	private BotonImagen aad = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_anim_ad_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_anim_ad_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_anim_ad_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
 	// Botones manuales de avance
-	private BotonImagen avance = new BotonImagen("imagenes/ba_paso_ad_v.gif",
-			"imagenes/ba_paso_ad_n.gif", "imagenes/ba_paso_ad_r.gif",
+	private BotonImagen avance = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_paso_ad_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_paso_ad_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_paso_ad_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
-	private BotonImagen avanceF = new BotonImagen("imagenes/ba_extr_ad_v.gif",
-			"imagenes/ba_extr_ad_n.gif", "imagenes/ba_extr_ad_r.gif",
+	private BotonImagen avanceF = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_extr_ad_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_extr_ad_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_extr_ad_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
-	private BotonImagen avanceM = new BotonImagen("imagenes/ba_salto_ad_v.gif",
-			"imagenes/ba_salto_ad_n.gif", "imagenes/ba_salto_ad_r.gif",
+	private BotonImagen avanceM = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_salto_ad_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_salto_ad_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_salto_ad_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
 	// Botón de cierre
-	private BotonImagen cerrar = new BotonImagen("imagenes/ba_cerrar_v.gif",
-			"imagenes/ba_cerrar_n.gif", "imagenes/ba_cerrar_r.gif",
+	private BotonImagen cerrar = new BotonImagen(
+			getClass().getClassLoader().getResource("imagenes/ba_cerrar_v.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_cerrar_n.gif"),
+			getClass().getClassLoader().getResource("imagenes/ba_cerrar_r.gif"),
 			Conf.botonVisualizacionAncho, Conf.botonVisualizacionAlto);
 
 	private JTextField campoSeg = new JTextField(3);

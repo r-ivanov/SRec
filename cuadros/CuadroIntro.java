@@ -44,8 +44,8 @@ public class CuadroIntro extends Thread {
 	public synchronized void run() {
 		// Etiqueta 1
 		this.etiqueta1 = new JLabel();
-		Icon imagen = new ImageIcon("imagenes/ImagenIntro_" + idiomaImagen()
-				+ ".png");
+		Icon imagen = new ImageIcon(getClass().getClassLoader().getResource(
+				"imagenes/ImagenIntro_" + idiomaImagen() + ".png"));
 		this.etiqueta1.setIcon(imagen);
 
 		// Panel general

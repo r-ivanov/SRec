@@ -23,7 +23,7 @@
 			<fileset dir="ayuda/imagenes" />
 		</copy>
     	
-    	<copy todir="release/imagenes">
+    	<copy todir="bin/imagenes">
 			<fileset dir="imagenes" />
 		</copy>
 
