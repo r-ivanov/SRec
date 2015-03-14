@@ -50,7 +50,7 @@ public class ContenedorArbol {
 
 	private boolean tieneHijos = false;
 
-	private float anchoPixelCaracter = (float) 11.0;
+	private float anchoPixelCaracter = (float) 12;
 
 	private int minimoIzquierda = -1; // valor mínimo que un nodo y sus subnodos
 	// pueden
