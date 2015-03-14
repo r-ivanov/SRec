@@ -90,39 +90,23 @@ public class Ejecucion {
 	 */
 	private DatosTrazaBasicos obtenerDTBConVisibilidadParaTraza() {
 
-		DatosTrazaBasicos datosActuales = Ventana.getInstance().getDTB();
+		ClaseAlgoritmo claseAlgoritmo = Ventana.getInstance().getClase();
 		DatosTrazaBasicos datosNuevos = new DatosTrazaBasicos(this.traza);
 
-		if (datosActuales != null
-				&& datosActuales.getNombreMetodoEjecucion() != null
-				&& datosActuales.getNombreMetodoEjecucion().equals(
-						datosNuevos.getNombreMetodoEjecucion())) {
-
-			if (datosActuales.getNumMetodos() == datosNuevos.getNumMetodos()) {
-
-				for (int i = 0; i < datosActuales.getNumMetodos(); i++) {
-
-					DatosMetodoBasicos metodoActual = datosActuales
-							.getMetodo(i);
-					DatosMetodoBasicos metodoNuevo = datosNuevos.getMetodo(i);
-
-					if (metodoActual.esIgual(metodoNuevo)) {
-
-						metodoNuevo.setEsVisible(metodoActual.getEsVisible());
-
-						for (int indiceEntrada = 0; indiceEntrada < metodoActual
-								.getNumParametrosE(); indiceEntrada++) {
-							metodoNuevo
-									.setVisibilidadE(metodoActual
-											.getVisibilidadE(indiceEntrada),
+		if (claseAlgoritmo != null) {
+			for (DatosMetodoBasicos metodo : datosNuevos.getMetodos()) {
+				for (MetodoAlgoritmo metodoAlgoritmo : claseAlgoritmo.getMetodos()) {
+					if (metodo.esIgual(metodoAlgoritmo)) {
+						
+						metodo.setEsVisible(metodoAlgoritmo.getMarcadoVisualizar());
+						
+						for (int indiceEntrada = 0; indiceEntrada < metodo.getNumParametrosE(); indiceEntrada++) {
+							metodo.setVisibilidadE(metodoAlgoritmo.getVisibilidadEntrada(indiceEntrada),
 											indiceEntrada);
 						}
-
-						for (int indiceSalida = 0; indiceSalida < metodoActual
-								.getNumParametrosS(); indiceSalida++) {
-							metodoNuevo.setVisibilidadS(
-									metodoActual.getVisibilidadS(indiceSalida),
-									indiceSalida);
+						for (int indiceSalida = 0; indiceSalida < metodo.getNumParametrosE(); indiceSalida++) {
+							metodo.setVisibilidadS(metodoAlgoritmo.getVisibilidadSalida(indiceSalida),
+											indiceSalida);
 						}
 					}
 				}

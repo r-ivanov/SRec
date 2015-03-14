@@ -1,6 +1,7 @@
 package datos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import utilidades.ServiciosString;
 
@@ -530,6 +531,73 @@ public class DatosMetodoBasicos {
 			if (this.dimS[i] != dmt.dimS[i]) {
 				return false;
 			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Permite comprar el contenido de dos arrays de strings.
+	 * 
+	 * @param array1
+	 * @param array2
+	 * 
+	 * @return true si son iguales, false en caso contrario.
+	 */
+	private boolean arraysIguales(Object[] array1, Object[] array2) {
+		boolean iguales = array1.length == array2.length;
+		if (iguales) {
+			for (int i = 0; i < array1.length; i++) {
+				if (!array1[i].equals(array2[i])) {
+					iguales = false;
+					break;
+				}
+			}
+		}
+		return iguales;
+	}
+	
+	/**
+	 * Permite comprar el contenido de dos arrays de enteros.
+	 * 
+	 * @param array1
+	 * @param array2
+	 * 
+	 * @return true si son iguales, false en caso contrario.
+	 */
+	private boolean arraysEnterosIguales(int[] array1, int[] array2) {
+		boolean iguales = array1.length == array2.length;
+		if (iguales) {
+			for (int i = 0; i < array1.length; i++) {
+				if (array1[i] != array2[i]) {
+					iguales = false;
+					break;
+				}
+			}
+		}
+		return iguales;
+	}
+	
+	/**
+	 * Permite comparar el método con otro para determinar si son iguales
+	 * (Sin tener en cuenta la visibilidad que presentan).
+	 * 
+	 * @param dmt Objeto con el que comparar.
+	 * 
+	 * @return true si son iguales (Ignorando visibilidad), false en caso contrario.
+	 */
+	public boolean esIgual(MetodoAlgoritmo metodoAlgoritmo) {
+		
+		if (!ServiciosString.sonIguales(this.nombre, metodoAlgoritmo.getNombre())) {
+			return false;
+		}
+		
+		if (!arraysIguales(this.tipoParamE.toArray(), metodoAlgoritmo.getTiposParametros())) {
+			return false;
+		}
+		
+		if (!arraysEnterosIguales(this.dimE, metodoAlgoritmo.getDimParametros())) {
+			return false;
 		}
 		
 		return true;

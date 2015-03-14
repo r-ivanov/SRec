@@ -3,7 +3,6 @@ package cuadros;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,7 +10,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.JCheckBox;
-
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -419,6 +417,27 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 					this.dtb.getMetodo(i).setVisibilidadS(
 							this.botonesParametros[i][j].isSelected(),
 							j - this.botonesParametros[i].length / 2);
+				}
+			}
+		}
+		
+		ClaseAlgoritmo claseAlgoritmo = Ventana.getInstance().getClase();
+		if (claseAlgoritmo != null) {
+			for (DatosMetodoBasicos metodo : this.dtb.getMetodos()) {
+				for (MetodoAlgoritmo metodoAlgoritmo : claseAlgoritmo.getMetodos()) {
+					if (metodo.esIgual(metodoAlgoritmo)) {
+						
+						metodoAlgoritmo.setMarcadoVisualizar(metodo.getEsVisible());
+						
+						for (int indiceEntrada = 0; indiceEntrada < metodo.getNumParametrosE(); indiceEntrada++) {
+							metodoAlgoritmo.setVisibilidadEntrada(metodo.getVisibilidadE(indiceEntrada),
+											indiceEntrada);
+						}
+						for (int indiceSalida = 0; indiceSalida < metodo.getNumParametrosE(); indiceSalida++) {
+							metodoAlgoritmo.setVisibilidadSalida(metodo.getVisibilidadS(indiceSalida),
+											indiceSalida);
+						}
+					}
 				}
 			}
 		}
