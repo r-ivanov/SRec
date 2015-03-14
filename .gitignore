@@ -11,4 +11,5 @@ datos/opdefecto.xml
 # Directorios de build
 build/**
 release/**
+bin/**
 build_tmp/**
