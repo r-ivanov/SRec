@@ -33,33 +33,23 @@ public class VisorAyuda extends Thread implements ActionListener,
 	private JFrame frame;
 	private JEditorPane pane;
 
-	private String fichero;
-	private String index;
+	private URL fichero;
+	private URL index;
 
 	private BotonImagen atras;
 	private BotonImagen adelante;
 	private BotonImagen indice;
 
-	private String pilaAt[] = new String[0]; // Pila para ir hacia atrás
-	private String pilaAd[] = new String[0]; // Pila para ir hacia adelante
+	private URL pilaAt[] = new URL[0]; // Pila para ir hacia atrás
+	private URL pilaAd[] = new URL[0]; // Pila para ir hacia adelante
 
 	private final int anchoCuadro = 750;
 	private final int altoCuadro = 570;
 	
 	/**
-	 * Construye un nuevo Visor de ayuda cargando el fichero html principal.
+	 * Construye un nuevo Visor de ayuda.
 	 */
 	public VisorAyuda() {
-		this("index.html");
-	}
-	
-	/**
-	 * Construye un nuevo Visor de ayuda cargando el fichero pasado por parámetro.
-	 * 
-	 * @param s Fichero a visualizar
-	 */
-	public VisorAyuda(String s) {
-		this.fichero = s;
 		this.start();
 	}
 
@@ -103,11 +93,8 @@ public class VisorAyuda extends Thread implements ActionListener,
 		panelSuperior.add(panelBotones, BorderLayout.WEST);
 		this.frame.getContentPane().add(panelSuperior, "North");
 
-		File f = new File("");
-		this.fichero = "file:///" + f.getAbsolutePath() + "\\ayuda\\"
-				+ this.fichero;
-		this.index = "file:///" + f.getAbsolutePath() + "\\ayuda\\"
-				+ Conf.idioma + "_index.html";
+		this.fichero = getClass().getClassLoader().getResource("ayuda/" + Conf.idioma + "_index.html");
+		this.index = getClass().getClassLoader().getResource("ayuda/" + Conf.idioma + "_index.html");
 
 		this.pane = new JEditorPane();
 		this.pane.setEditable(false);
@@ -116,8 +103,7 @@ public class VisorAyuda extends Thread implements ActionListener,
 			this.pane.setPage(this.index);
 		} catch (IOException e) {
 			try {
-				this.pane.setPage("file:///" + f.getAbsolutePath()
-						+ "\\ayuda\\" + "error.html");
+				this.pane.setPage(getClass().getClassLoader().getResource("ayuda/error.html"));
 			} catch (IOException e2) {
 				System.out.println("VisorAyuda fichero no encontrado");
 			}
@@ -177,9 +163,7 @@ public class VisorAyuda extends Thread implements ActionListener,
 	public void mousePressed(MouseEvent e) {
 		if (e.getSource() == this.indice) {
 			// Reinicializamos cuál debe ser el index, por si ha cambiado idioma
-			File f = new File("");
-			this.index = "file:///" + f.getAbsolutePath() + "\\ayuda\\"
-					+ Conf.idioma + "_index.html";
+			this.index = getClass().getClassLoader().getResource("ayuda/" + Conf.idioma + "_index.html");
 			// Fin reinicializacion
 
 			if (!this.fichero.equals(this.index)) {
@@ -189,8 +173,7 @@ public class VisorAyuda extends Thread implements ActionListener,
 				this.pane.setPage(this.index);
 			} catch (IOException ioe) {
 				try {
-					this.pane.setPage("file:///" + f.getAbsolutePath()
-							+ "\\ayuda\\" + "error.html");
+					this.pane.setPage(getClass().getClassLoader().getResource("ayuda/error.html"));
 				} catch (IOException e2) {
 					System.out.println("VisorAyuda fichero no encontrado");
 				}
@@ -227,7 +210,7 @@ public class VisorAyuda extends Thread implements ActionListener,
 			// No hacer nada
 		} else if (type == HyperlinkEvent.EventType.ACTIVATED) {
 			this.anadirAt(this.fichero);
-			this.fichero = url.toExternalForm();
+			this.fichero = url;
 			Runnable runner = new Runnable() {
 				@Override
 				public void run() {
@@ -257,15 +240,15 @@ public class VisorAyuda extends Thread implements ActionListener,
 	 * Elimina los elementos disponibles en la pila de páginas posteriores.
 	 */
 	private void borrarAd() {
-		this.pilaAd = new String[0];
+		this.pilaAd = new URL[0];
 	}
 	
 	/**
 	 * Añade un elemento en la pila de páginas anteriores.
 	 */
-	private void anadirAt(String f) {
+	private void anadirAt(URL f) {
 		if (this.pilaAt.length == 0 || !(f.equals(this.pilaAt[0]))) {
-			String pilaAux[] = new String[this.pilaAt.length + 1];
+			URL pilaAux[] = new URL[this.pilaAt.length + 1];
 			pilaAux[0] = f;
 			for (int i = 0; i < this.pilaAt.length; i++) {
 				pilaAux[i + 1] = this.pilaAt[i];
@@ -277,9 +260,9 @@ public class VisorAyuda extends Thread implements ActionListener,
 	/**
 	 * Añade un elemento en la pila de páginas posteriores.
 	 */
-	private void anadirAd(String f) {
+	private void anadirAd(URL f) {
 		if (this.pilaAd.length == 0 || !(f.equals(this.pilaAd[0]))) {
-			String pilaAux[] = new String[this.pilaAd.length + 1];
+			URL pilaAux[] = new URL[this.pilaAd.length + 1];
 			pilaAux[0] = f;
 			for (int i = 0; i < this.pilaAd.length; i++) {
 				pilaAux[i + 1] = this.pilaAd[i];
@@ -293,10 +276,10 @@ public class VisorAyuda extends Thread implements ActionListener,
 	 * 
 	 * @return Página anterior
 	 */
-	private String extraerAt() {
+	private URL extraerAt() {
 		if (this.pilaAt.length > 0) {
-			String pos0 = this.pilaAt[0];
-			String pilaAux[] = new String[this.pilaAt.length - 1];
+			URL pos0 = this.pilaAt[0];
+			URL pilaAux[] = new URL[this.pilaAt.length - 1];
 			for (int i = 0; i < pilaAux.length; i++) {
 				pilaAux[i] = this.pilaAt[i + 1];
 			}
@@ -316,10 +299,10 @@ public class VisorAyuda extends Thread implements ActionListener,
 	 * 
 	 * @return Página anterior
 	 */
-	private String extraerAd() {
+	private URL extraerAd() {
 		if (this.pilaAd.length > 0) {
-			String pos0 = this.pilaAd[0];
-			String pilaAux[] = new String[this.pilaAd.length - 1];
+			URL pos0 = this.pilaAd[0];
+			URL pilaAux[] = new URL[this.pilaAd.length - 1];
 			for (int i = 0; i < pilaAux.length; i++) {
 				pilaAux[i] = this.pilaAd[i + 1];
 			}

@@ -1049,11 +1049,6 @@ public class Ventana extends JFrame implements ActionListener {
 				obf.setLOG(!obf.getLOG());
 				gOpciones.setOpcion(obf, 2);
 				Conf.setFicheros();
-				if (Conf.fichero_log) {
-					this.log_open();
-				} else {
-					this.log_close();
-				}
 			}
 
 			// Configuración > Archivos intermedios...
@@ -1161,7 +1156,7 @@ public class Ventana extends JFrame implements ActionListener {
 				if (Conf.fichero_log) {
 					this.log_write("Ayuda > Temas de ayuda...");
 				}
-				new VisorAyuda(Conf.idioma + "_index.html");
+				new VisorAyuda();
 			}
 
 			// Ayuda > Sobre SRec
@@ -2948,22 +2943,24 @@ public class Ventana extends JFrame implements ActionListener {
 	 * Registra en el fichero de log un inicio de sesión en SRec.
 	 */
 	private void log_open() {
-		Logger.log_write("----------------- INICIO DE SESION "
-				+ ServiciosString.direccionIP());
+		this.log_write("----------------- INICIO DE SESION " +
+				ServiciosString.direccionIP());
 	}
 
 	/**
 	 * Permite registrar eventos en el fichero de log.
 	 */
 	private void log_write(String s) {
-		Logger.log_write(s);
+		if (Conf.fichero_log) {
+			Logger.log_write(s);
+		}
 	}
 
 	/**
 	 * Registra en el fichero de log un final de sesión en SRec.
 	 */
 	private void log_close() {
-		Logger.log_write("----------------- FIN DE SESION "
-				+ ServiciosString.direccionIP() + "\r\n\r\n\r\n");
+		this.log_write("----------------- FIN DE SESION " +
+				ServiciosString.direccionIP() + "\r\n\r\n\r\n");
 	}
 }

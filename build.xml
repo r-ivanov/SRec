@@ -15,11 +15,11 @@
     <target name="jar" description="Genera el JAR ejecutable" depends="clean,compile">
     	<mkdir dir="release" />
     	
-    	<copy todir="release/ayuda">
+    	<copy todir="bin/ayuda">
     	    <fileset dir="ayuda" />
     	</copy>
     	
-    	<copy todir="release/ayuda/imagenes">
+    	<copy todir="bin/ayuda/imagenes">
 			<fileset dir="ayuda/imagenes" />
 		</copy>
     	
