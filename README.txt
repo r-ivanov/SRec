@@ -2,6 +2,18 @@
 *     HISTORIAL DE MODIFICACIONES    *
 **************************************
 
+SRec v1.6.1 (Nuevas mejoras)
+==================================================
+
+- Solucionado un problema con la librería de parsing de código, que no reconocía
+algunos formatos de inicialización de arrays.
+
+- Se han corregido los problemas que no permitían exportar SRec en un único jar. Desde
+esta versión, SRec puede distribuirse como un artefacto jar directamente.
+
+- Se han corregido problemas relacionados con inconsistencias de la visibilidad de métodos y
+parámetros en los distintos diálogos de la aplicación.
+
 SRec v1.6 (Programación Dinámica)
 ==================================================
 
