@@ -104,7 +104,7 @@ public class Ejecucion {
 							metodo.setVisibilidadE(metodoAlgoritmo.getVisibilidadEntrada(indiceEntrada),
 											indiceEntrada);
 						}
-						for (int indiceSalida = 0; indiceSalida < metodo.getNumParametrosE(); indiceSalida++) {
+						for (int indiceSalida = 0; indiceSalida < metodo.getNumParametrosS(); indiceSalida++) {
 							metodo.setVisibilidadS(metodoAlgoritmo.getVisibilidadSalida(indiceSalida),
 											indiceSalida);
 						}

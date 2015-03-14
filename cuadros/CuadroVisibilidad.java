@@ -433,7 +433,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 							metodoAlgoritmo.setVisibilidadEntrada(metodo.getVisibilidadE(indiceEntrada),
 											indiceEntrada);
 						}
-						for (int indiceSalida = 0; indiceSalida < metodo.getNumParametrosE(); indiceSalida++) {
+						for (int indiceSalida = 0; indiceSalida < metodo.getNumParametrosS(); indiceSalida++) {
 							metodoAlgoritmo.setVisibilidadSalida(metodo.getVisibilidadS(indiceSalida),
 											indiceSalida);
 						}

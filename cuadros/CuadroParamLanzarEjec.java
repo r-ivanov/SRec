@@ -160,7 +160,8 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 							+ this.metodo.getTipoParametro(i)
 							+ ServiciosString.cadenaDimensiones(this.metodo
 									.getDimParametro(i)) + ")");
-					this.mostrarvalores[i].setSelected(true);
+					this.mostrarvalores[i].setSelected(this.metodo
+							.getVisibilidadEntrada(i));
 					this.mostrarvalores[i].setToolTipText(Texto.get(
 							"CPARAM_CASILVIS", Conf.idioma));
 					this.mostrarvalores[i].addKeyListener(this);
