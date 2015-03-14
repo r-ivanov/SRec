@@ -27,7 +27,7 @@
 			<fileset dir="imagenes" />
 		</copy>
 
-    	<copy todir="release/datos">
+    	<copy todir="bin/datos">
     		<fileset file="datos/Textos.xml" />
 		</copy>
     	

@@ -21,7 +21,8 @@ public class Texto {
 	 *         nombre del idioma, y la columna 1 al identificador del idioma.
 	 */
 	public static String[][] idiomasDisponibles() {
-		Document documento = ManipulacionElement.getDocumento(ficheroTextos);
+		Document documento = ManipulacionElement.getDocumento(
+				Texto.class.getClassLoader().getResourceAsStream(ficheroTextos));
 		Element eDocument = documento.getDocumentElement();
 
 		Element eIdiomas[] = ManipulacionElement
@@ -49,7 +50,8 @@ public class Texto {
 	 * @return Identificador del texto.
 	 */
 	public static String getCodigo(String texto, String idioma) {
-		Document documento = ManipulacionElement.getDocumento(ficheroTextos);
+		Document documento = ManipulacionElement.getDocumento(
+				Texto.class.getClassLoader().getResourceAsStream(ficheroTextos));
 		Element eDocument = documento.getDocumentElement();
 
 		// Buscamos texto y devolvemos
@@ -78,7 +80,8 @@ public class Texto {
 	 * @return Texto asociado.
 	 */
 	public static String get(String codigo, String idioma) {
-		Document documento = ManipulacionElement.getDocumento(ficheroTextos);
+		Document documento = ManipulacionElement.getDocumento(
+				Texto.class.getClassLoader().getResourceAsStream(ficheroTextos));
 		Element eDocument = documento.getDocumentElement();
 
 		// Buscamos texto y devolvemos
@@ -115,7 +118,8 @@ public class Texto {
 	 * @return Textos asociados.
 	 */
 	public static String[] get(String[] codigos, String idioma) {
-		Document documento = ManipulacionElement.getDocumento(ficheroTextos);
+		Document documento = ManipulacionElement.getDocumento(
+				Texto.class.getClassLoader().getResourceAsStream(ficheroTextos));
 		Element eDocument = documento.getDocumentElement();
 
 		String[] cadenas = new String[codigos.length];

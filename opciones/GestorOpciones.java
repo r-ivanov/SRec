@@ -20,8 +20,9 @@ import utilidades.ServiciosString;
 public class GestorOpciones {
 
 	private Opcion opcion;
-	private static String direccion = "datos/opciones.xml";
-	private static String dirdefecto = "datos/opdefecto.xml";
+	private static String directorio = "datos";
+	private static String direccion = directorio + "/opciones.xml";
+	private static String dirdefecto = directorio + "/opdefecto.xml";
 
 	private static String[] clasesOpciones = { "OpcionBorradoFicheros",
 		"OpcionConfVisualizacion", "OpcionFicherosRecientes",
@@ -29,7 +30,17 @@ public class GestorOpciones {
 		"OpcionTipoGrafico", "OpcionVistas" };
 
 	private Document documento;
-
+	
+	/**
+	 * Crea el directorio de datos.
+	 */
+	public static void crearDirectorioDatosSiNoExiste() {
+		File file = new File(directorio);
+		if (!file.exists()) {
+			file.mkdir();
+		}
+	}
+	
 	/**
 	 * Determina si actualmente existe el archivo de opciones.
 	 * 

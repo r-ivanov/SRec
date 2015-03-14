@@ -2,6 +2,10 @@ package utilidades;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -89,6 +93,31 @@ public class ManipulacionElement {
 		try {
 			builder = factory.newDocumentBuilder();
 			documento = builder.parse(new File(fichero));
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return documento;
+	}
+	
+	/**
+	 * Obtiene el Document de un input stream en formato XML
+	 * 
+	 * @param inputStream
+	 *            input stream del fichero XML
+	 * @return Document del input stream pasado como parámetro.
+	 */
+	public static Document getDocumento(InputStream inputStream) {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = null;
+		Document documento = null;
+
+		try {
+			builder = factory.newDocumentBuilder();
+			documento = builder.parse(inputStream);
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
