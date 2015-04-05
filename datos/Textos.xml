@@ -304,8 +304,8 @@
 		
 		<T valor="Error" idioma="es" id="GP_ERROR_TITULO"/>
 		<T valor="Error" idioma="en" id="GP_ERROR_TITULO"/>
-		<T valor="Los valores deben ser enteros positivos y especificar al menos uno mayor que 1." idioma="es" id="GP_ERROR_DIBUJAR_TABLA"/>
-		<T valor="Values must be positive integers and at least one higher than 1 must be specified." idioma="en" id="GP_ERROR_DIBUJAR_TABLA"/>
+		<T valor="Los valores deben ser enteros positivos." idioma="es" id="GP_ERROR_DIBUJAR_TABLA"/>
+		<T valor="Values must be positive integers." idioma="en" id="GP_ERROR_DIBUJAR_TABLA"/>
 		
 		<T valor="Tabular Nodos" idioma="es" id="GP_TABULAR_TITULO"/>
 		<T valor="Tabulate Nodes" idioma="en" id="GP_TABULAR_TITULO"/>
