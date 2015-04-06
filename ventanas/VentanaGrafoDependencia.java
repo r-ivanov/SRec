@@ -106,6 +106,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 		this.setMinimumSize(new Dimension(Conf.anchoPantalla
 				* PORCENTAJE_PANTALLA_MINIMO / 100, Conf.altoPantalla
 				* PORCENTAJE_PANTALLA_MINIMO / 100));
+		this.setMaximumSize(new Dimension(Conf.anchoPantalla, Conf.altoPantalla));
 		this.setResizable(true);
 		this.setVisible(true);
 	}
@@ -139,12 +140,14 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 			int anchura = Math.min(Conf.anchoPantalla
 					* PORCENTAJE_PANTALLA_MAXIMO / 100, tamanioGrafo.width
 					+ WINDOW_WIDTH_MARGIN);
-			anchura = Math.max(this.getMinimumSize().width, anchura);
+			anchura = Math.max(Conf.anchoPantalla
+					* PORCENTAJE_PANTALLA_MINIMO / 100, anchura);
 
 			int altura = Math.min(Conf.altoPantalla
 					* PORCENTAJE_PANTALLA_MAXIMO / 100, tamanioGrafo.height
 					+ WINDOW_HEIGHT_MARGIN);
-			altura = Math.max(this.getMinimumSize().height, altura);
+			altura = Math.max(Conf.altoPantalla
+					* PORCENTAJE_PANTALLA_MINIMO / 100, altura);
 
 			tamanioVentana = new Dimension(anchura, altura);
 			this.setSize(tamanioVentana);
