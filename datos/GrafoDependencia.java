@@ -555,9 +555,11 @@ public class GrafoDependencia {
 			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
 				engine.put(this.metodo.getNombreParametroE(i), this.obtenerValorConTipo(nodo.getParams()[i]));
 			}
+			boolean filaEvaluada = false;
 			try {
 				int fila = this.obtenerValorEnteroDeEvaluacion(engine
 						.eval(expresionParaFila));
+				filaEvaluada = true;
 				int columna = this.obtenerValorEnteroDeEvaluacion(engine
 						.eval(expresionParaColumna));
 				if (fila < 0 || columna < 0) {
@@ -571,7 +573,10 @@ public class GrafoDependencia {
 					matriz.set(fila, columna, nodo);
 				}
 			} catch (ScriptException e) {
-				mensajeError = Texto.get("GP_EXPR_INVALIDA", Conf.idioma);
+				String expresion = filaEvaluada ? expresionParaColumna : expresionParaFila;
+				mensajeError = "<html><p align=\"center\">" + Texto.get("GP_EXPR_INVALIDA", Conf.idioma) + " \"" + expresion +
+						"\" " + Texto.get("GP_EXPR_INVALIDA_2", Conf.idioma) + "</p><p align=\"center\">" + e.getMessage() +
+						"</p></html>";
 			}
 		}
 

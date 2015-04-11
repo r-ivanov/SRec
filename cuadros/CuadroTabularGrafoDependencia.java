@@ -203,7 +203,7 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 
 		if (mensajeError != null) {
 			new CuadroError(this.ventana, Texto.get("GP_ERROR_TITULO",
-					Conf.idioma), mensajeError);
+					Conf.idioma), mensajeError, 550, 125);
 		} else {
 			this.dialogo.setVisible(false);
 		}

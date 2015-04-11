@@ -323,8 +323,10 @@
 		
 		<T valor="Al menos dos elementos coinciden en la posición" idioma="es" id="GP_ERROR_POSICIONAR"/>
 		<T valor="At least two elements collide in position" idioma="en" id="GP_ERROR_POSICIONAR"/>	
-		<T valor="La expresión indicada no es correcta" idioma="es" id="GP_EXPR_INVALIDA"/>
-		<T valor="Expression is not correct" idioma="en" id="GP_EXPR_INVALIDA"/>	
+		<T valor="La expresi[oacute]n" idioma="es" id="GP_EXPR_INVALIDA"/>
+		<T valor="Expression" idioma="en" id="GP_EXPR_INVALIDA"/>
+		<T valor="no es correcta:" idioma="es" id="GP_EXPR_INVALIDA_2"/>
+		<T valor="is not correct:" idioma="en" id="GP_EXPR_INVALIDA_2"/>
 		<T valor="La expresión indicada genera valores no enteros o negativos" idioma="es" id="GP_EXPR_NEGATIVOS"/>
 		<T valor="Expression generates negative or non integer values" idioma="en" id="GP_EXPR_NEGATIVOS"/>
 		
