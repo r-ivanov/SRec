@@ -54,7 +54,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 	// Num. selectores en pestaña 2
 	private static final int NUM_SELECTORES_2 = Conf.numColoresMetodos;
 	// Num. selectores en pestaña 3
-	private static final int NUM_SELECTORES_3 = 13;
+	private static final int NUM_SELECTORES_3 = 14;
 
 	private final static String CREANDO_PANEL = Texto.get("CP_CREARPAN",
 			Conf.idioma);
@@ -147,7 +147,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				"COCV_DISTCELDV", "COCV_FUENTCOD", "COCV_FUENT",
 				"COCV_FUENTTAM", "COCV_FUENTTR", "COCV_ETIQ_4",
 				"COCV_ETIQ_ARBPILCODTRATTT", "COCV_ETIQ_TAMFORTTT",
-				"COCV_FORMATO", "COCV_COL_RESA"
+				"COCV_FORMATO", "COCV_COL_RESA", "COCV_COL_SEL_ARBOL"
 
 		// 26 a 28 no se están usando
 		// 29 a 32 se podrían no estar usando (comprobar)
@@ -425,6 +425,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		this.selectores3[10] = new JRadioButton(textos[22]);
 		this.selectores3[11] = new JRadioButton(textos[25]);
 		this.selectores3[12] = new JRadioButton(textos[65]);
+		this.selectores3[13] = new JRadioButton(textos[66]);
 
 		this.selectores3[0].setSelected(true);
 
@@ -943,6 +944,9 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			case 12:
 				color = this.ocv.getColorResaltado();
 				break;
+			case 13:
+				color = this.ocv.getColorMarcoFamilia();
+				break;
 			default:
 				color[0] = color[1] = color[2] = 0;
 			}
@@ -1055,6 +1059,9 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		c = this.etiqColores3[12].getBackground();
 		this.ocv.setColorResaltado(c.getRed(), c.getGreen(), c.getBlue());
+		
+		c = this.etiqColores3[13].getBackground();
+		this.ocv.setColorMarcoFamilia(c.getRed(), c.getGreen(), c.getBlue());
 
 		this.ocv.setGrosorActual(this.grosorMarco.getSelectedIndex());
 		this.ocv.setGrosorFlecha(this.grosorFlecha.getSelectedIndex() + 1);

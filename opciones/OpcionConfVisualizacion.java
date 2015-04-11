@@ -131,6 +131,11 @@ public class OpcionConfVisualizacion extends Opcion {
 	// (iluminados)
 	private int colorResaltadoB = 0; // Valor B para color nodos buscados
 	// (iluminados)
+	
+	// Color marco de familias de árboles
+	private int colorMarcoFamiliaR = 0; // Valor R
+	private int colorMarcoFamiliaG = 0; // Valor G
+	private int colorMarcoFamiliaB = 204; // Valor B
 
 	// Colores para el modo 2
 
@@ -566,6 +571,22 @@ public class OpcionConfVisualizacion extends Opcion {
 		this.colorResaltadoG = g;
 		this.colorResaltadoB = b;
 	}
+	
+	/**
+	 * Permite establecer el color del marco de la familia de árboles.
+	 * 
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
+	 */
+	public void setColorMarcoFamilia(int r, int g, int b) {
+		this.colorMarcoFamiliaR = r;
+		this.colorMarcoFamiliaG = g;
+		this.colorMarcoFamiliaB = b;
+	}
 
 	/**
 	 * Permite establecer el modo de colores, el habitual, o el de
@@ -971,6 +992,19 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorResaltadoB;
 		return color;
 	}
+	
+	/**
+	 * Devuelve el color del marco de la familia de árboles.
+	 * 
+	 * @return array de enteros con los componentes (R, G y B) respectivamente.
+	 */
+	public int[] getColorMarcoFamilia() {
+		int color[] = new int[3];
+		color[0] = this.colorMarcoFamiliaR;
+		color[1] = this.colorMarcoFamiliaG;
+		color[2] = this.colorMarcoFamiliaB;
+		return color;
+	}
 
 	/**
 	 * Devuelve la fuente usada en la vista de código.
@@ -1172,6 +1206,12 @@ public class OpcionConfVisualizacion extends Opcion {
 		e34.setAttribute("r", "" + this.colorResaltadoR);
 		e34.setAttribute("g", "" + this.colorResaltadoG);
 		e34.setAttribute("b", "" + this.colorResaltadoB);
+		
+		// Marco de selección de múltiples visualizaciones.
+		Element e35 = d.createElement("colorMarcoFamilia");
+		e35.setAttribute("r", "" + this.colorMarcoFamiliaR);
+		e35.setAttribute("g", "" + this.colorMarcoFamiliaG);
+		e35.setAttribute("b", "" + this.colorMarcoFamiliaB);
 
 		// Modo de color
 		Element e14 = d.createElement("modoColor");
@@ -1220,6 +1260,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		e.appendChild(e32);
 		e.appendChild(e33);
 		e.appendChild(e34);
+		e.appendChild(e35);
 
 		// Colores Modo 2
 		for (int i = 0; i < Conf.numColoresMetodos; i++) {
@@ -1372,6 +1413,12 @@ public class OpcionConfVisualizacion extends Opcion {
 		elements = ManipulacionElement.nodeListToElementArray(e
 				.getElementsByTagName("colorResaltado"));
 		this.setColorResaltado(Integer.parseInt(elements[0].getAttribute("r")),
+				Integer.parseInt(elements[0].getAttribute("g")),
+				Integer.parseInt(elements[0].getAttribute("b")));
+		
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("colorMarcoFamilia"));
+		this.setColorMarcoFamilia(Integer.parseInt(elements[0].getAttribute("r")),
 				Integer.parseInt(elements[0].getAttribute("g")),
 				Integer.parseInt(elements[0].getAttribute("b")));
 

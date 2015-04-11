@@ -947,7 +947,8 @@
 		<T valor="Searched nodes" idioma="en" id="COCV_COL_ILUM"/>
 		<T valor="Nodos resaltados" idioma="es" id="COCV_COL_RESA"/>
 		<T valor="Highlight nodes" idioma="en" id="COCV_COL_RESA"/>
-		
+		<T valor="Marco de selecci[oacute]n de [aacute]rbol" idioma="es" id="COCV_COL_SEL_ARBOL"/>
+		<T valor="Tree selector frame" idioma="en" id="COCV_COL_SEL_ARBOL"/>
 		
 		<T valor="Vista C[oacute]digo: palabras reservadas" idioma="es" id="COCV_PALRESERV"/>
 		<T valor="Code panel: reserved words" idioma="en" id="COCV_PALRESERV"/>

@@ -116,8 +116,8 @@ public class PanelSnapshotGrafo extends JPanel implements MouseListener {
 		if (this.familiaEjecuciones.esEjecucionActiva(this.ejecucion)) {
 			/* Pintamos el rectángulo de selección */
 			g2d.setStroke(new BasicStroke(BORDE_SELECCION));
-			g2d.setPaint(new GradientPaint(80, 100, Conf.colorC1Entrada, 8, 20,
-					Conf.colorC1Salida, true));
+			g2d.setPaint(new GradientPaint(80, 100, Conf.colorMarcoFamilia, 8, 20,
+					Conf.colorMarcoFamilia, true));
 			g2d.draw(new Rectangle2D.Double(0, 0, this.anchura, this.altura));
 		}
 	}

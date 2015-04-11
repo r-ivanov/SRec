@@ -193,6 +193,9 @@ public class Conf {
 
 	// Nodos resaltados
 	public static Color colorResaltado = new Color(204, 204, 0);
+	
+	// Marco familia de ejecuciones
+	public static Color colorMarcoFamilia = new Color(0, 0, 204);
 
 	public static Color[] degradadosEstructuraEC1 = null;
 	public static Color[] degradadosEstructuraSC1 = null;
@@ -505,6 +508,9 @@ public class Conf {
 
 		color = ocv.getColorResaltado();
 		colorResaltado = new Color(color[0], color[1], color[2]);
+		
+		color = ocv.getColorMarcoFamilia();
+		colorMarcoFamilia = new Color(color[0], color[1], color[2]);
 
 		zoomArbol = ocv.getZoomArbol();
 		zoomPila = ocv.getZoomPila();
