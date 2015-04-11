@@ -27,12 +27,15 @@ public class OpcionFicherosRecientes extends Opcion {
 	
 	// Path último fichero exportaciones
 	private String dirExport = ".\\";
+	
+	// Path último fichero configuraciones
+	private String dirConfig = ".\\datos\\";
 
 	/**
 	 * Constructor: crea una nueva opción vacía
 	 */
 	public OpcionFicherosRecientes() {
-		this(".\\", ".\\", ".\\");
+		this(".\\", ".\\", ".\\", ".\\datos\\");
 	}
 
 	/**
@@ -60,8 +63,13 @@ public class OpcionFicherosRecientes extends Opcion {
 	 * @param dirXML
 	 *            directorio en el que se leyó/guardó el último fichero XML por
 	 *            parte de la aplicación
+	 * @param dirExport
+	 *            directorio en el que se realizó alguna exportación por
+	 *            parte de la aplicación
+	 * @param dirConfig
+	 *            directorio en el que se realizó algún guardado de configuración.
 	 */
-	public OpcionFicherosRecientes(String dir, String dirXML, String dirExport) {
+	public OpcionFicherosRecientes(String dir, String dirXML, String dirExport, String dirConfig) {
 		super("OpcionFicherosRecientes");
 		if (dir.length() > 3) {
 			this.setDir(dir);
@@ -71,6 +79,9 @@ public class OpcionFicherosRecientes extends Opcion {
 		}
 		if (dirExport.length() > 3) {
 			this.setDirExport(dirExport);
+		}
+		if (dirConfig.length() > 3) {
+			this.setDirConfig(dirConfig);
 		}
 		this.ficheros = new String[TAMANO];
 		this.reinicializarFicheros();
@@ -143,6 +154,18 @@ public class OpcionFicherosRecientes extends Opcion {
 	public void setDirExport(String dirExport) {
 		this.dirExport = dirExport;
 	}
+	
+	/**
+	 * Asigna el directorio del último fichero usado por parte de la aplicación
+	 * para guardar ficheros de configuración.
+	 * 
+	 * @param dir
+	 *            directorio en el que se leyó el último fichero de configuración por
+	 *            parte de la aplicación
+	 */
+	public void setDirConfig(String dirConfig) {
+		this.dirConfig = dirConfig;
+	}
 
 	/**
 	 * Asigna los nombres de ficheros abiertos recientemente por la aplicación
@@ -185,6 +208,16 @@ public class OpcionFicherosRecientes extends Opcion {
 	 */
 	public String getDirExport() {
 		return this.dirExport;
+	}
+	
+	/**
+	 * Devuelve el directorio del último fichero usado por parte de la
+	 * aplicación para configuraciones.
+	 * 
+	 * @return directorio del último fichero usado por parte de la aplicación
+	 */
+	public String getDirConfig() {
+		return this.dirConfig;
 	}
 
 	/**
@@ -296,10 +329,14 @@ public class OpcionFicherosRecientes extends Opcion {
 		
 		Element e03 = d.createElement("dirExport");
 		e03.setAttribute("valor", this.getDirExport());
+		
+		Element e04 = d.createElement("dirConfig");
+		e04.setAttribute("valor", this.getDirConfig());
 
 		e.appendChild(e01);
 		e.appendChild(e02);
 		e.appendChild(e03);
+		e.appendChild(e04);
 
 		return e;
 	}
@@ -317,5 +354,9 @@ public class OpcionFicherosRecientes extends Opcion {
 		elements = ManipulacionElement.nodeListToElementArray(e
 				.getElementsByTagName("dirExport"));
 		this.setDirExport(elements[0].getAttribute("valor"));
+		
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("dirConfig"));
+		this.setDirConfig(elements[0].getAttribute("valor"));
 	}
 }

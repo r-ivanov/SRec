@@ -1105,7 +1105,7 @@ public class Ventana extends JFrame implements ActionListener {
 				}
 				OpcionFicherosRecientes ofr = (OpcionFicherosRecientes) this.gOpciones
 						.getOpcion("OpcionFicherosRecientes", true);
-				String fich[] = SelecDireccion.cuadroAbrirFichero(ofr.getDir(),
+				String fich[] = SelecDireccion.cuadroAbrirFichero(ofr.getDirConfig(),
 						Texto.get("CA_CARCONF", Conf.idioma), null, "xml",
 						Texto.get("ARCHIVO_XML", Conf.idioma), 1);
 
@@ -1115,6 +1115,8 @@ public class Ventana extends JFrame implements ActionListener {
 					File f = new File(fich[0] + fich[1]);
 					if (f.exists()) {
 						if (this.gOpciones.cargarArchivo(fich[0] + fich[1])) {
+							ofr.setDirConfig(fich[0]);
+							this.gOpciones.setOpcion(ofr, 2);
 							Conf.setValoresOpsVisualizacion(false);
 							Conf.setValoresVisualizacion();
 							this.panelVentana.refrescarFormato();
@@ -2781,12 +2783,14 @@ public class Ventana extends JFrame implements ActionListener {
 	private void guardarConfiguracionOpciones() {
 		OpcionFicherosRecientes ofr = (OpcionFicherosRecientes) this.gOpciones
 				.getOpcion("OpcionFicherosRecientes", true);
-		String fich[] = SelecDireccion.cuadroAbrirFichero(ofr.getDir(),
+		String fich[] = SelecDireccion.cuadroAbrirFichero(ofr.getDirConfig(),
 				Texto.get("CA_GUARCONF", Conf.idioma), null, "xml",
 				Texto.get("ARCHIVO_XML", Conf.idioma), 0);
 
 		if (fich != null && fich[1] != null) {
 			File f = new File(fich[0] + fich[1]);
+			ofr.setDirConfig(fich[0]);
+			this.gOpciones.setOpcion(ofr, 2);
 			if (!f.exists()) {
 				this.gOpciones.crearArchivo(fich[0] + fich[1]);
 			} else {
