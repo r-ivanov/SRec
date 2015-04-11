@@ -1046,16 +1046,16 @@
 		<!-- Cuadro Opcion MVJava -->
 		<T valor="Escriba aqu[iacute] la direcci[oacute]n" idioma="es" id="COMVJ_ESCRDIR"/>
 		<T valor="Write here the complete path" idioma="en" id="COMVJ_ESCRDIR"/>
-		<T valor="Escriba una direcci[oacute]n v[aacute]lida para la m[aacute]quina virtual de Java." idioma="es" id="COMVJ_ESCRDIRVAL"/>
-		<T valor="Write a valid complete path for the Java virtual machine." idioma="en" id="COMVJ_ESCRDIRVAL"/>
-		<T valor="Examina el disco para encontrar la m[aacute]quina virtual de Java." idioma="es" id="COMVJ_ESCRDIRVALTTT"/>
-		<T valor="Browse the file system to find the Java virtual machine" idioma="en" id="COMVJ_ESCRDIRVALTTT"/>
-		<T valor="Introduzca una direcci[oacute]n v[aacute]lida para la m[aacute]quina virtual de Java" idioma="es" id="COMVJ_ESCRDIRVALTTT2"/>
-		<T valor="Introduce a valid path for the Java virtual machine" idioma="en" id="COMVJ_ESCRDIRVALTTT2"/>
-		<T valor="Para configurar correctamente SRec, seleccione una M[aacute]quina Virtual de Java" idioma="es" id="COMVJ_ESCRDIRVALTTT3"/>
-		<T valor="In order to configure SRec, please provide a Java Virtual Machine" idioma="en" id="COMVJ_ESCRDIRVALTTT3"/>
-		<T valor="Selecci[oacute]n de M[aacute]quina Virtual de Java" idioma="es" id="COMVJ_SELECTITULO"/>
-		<T valor="Selection of the Java virtual machine" idioma="en" id="COMVJ_SELECTITULO"/>
+		<T valor="Escriba una direcci[oacute]n v[aacute]lida para la m[aacute]quina virtual de Java JDK." idioma="es" id="COMVJ_ESCRDIRVAL"/>
+		<T valor="Write a valid complete path for the JDK Java virtual machine." idioma="en" id="COMVJ_ESCRDIRVAL"/>
+		<T valor="Examina el disco para encontrar la m[aacute]quina virtual de Java JDK." idioma="es" id="COMVJ_ESCRDIRVALTTT"/>
+		<T valor="Browse the file system to find the Java virtual machine JDK" idioma="en" id="COMVJ_ESCRDIRVALTTT"/>
+		<T valor="Introduzca una direcci[oacute]n v[aacute]lida para la m[aacute]quina virtual de Java (JDK)" idioma="es" id="COMVJ_ESCRDIRVALTTT2"/>
+		<T valor="Introduce a valid path for the Java virtual machine (JDK)" idioma="en" id="COMVJ_ESCRDIRVALTTT2"/>
+		<T valor="Para configurar correctamente SRec, seleccione una M[aacute]quina Virtual de Java (JDK)" idioma="es" id="COMVJ_ESCRDIRVALTTT3"/>
+		<T valor="In order to configure SRec, please provide a Java Virtual Machine (JDK)" idioma="en" id="COMVJ_ESCRDIRVALTTT3"/>
+		<T valor="Selecci[oacute]n de M[aacute]quina Virtual de Java - JDK" idioma="es" id="COMVJ_SELECTITULO"/>
+		<T valor="Selection of the Java virtual machine - JDK" idioma="en" id="COMVJ_SELECTITULO"/>
 
 		
 		<!-- Cuadro Crear clase nueva -->
