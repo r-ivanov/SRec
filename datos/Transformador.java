@@ -1950,7 +1950,7 @@ public class Transformador {
 
 				datosMetodos[j] = datosMetodoLlamada(elem, var, c);
 
-				if (datosMetodos[j] != null) {
+				if (datosMetodos[j] != null && metodoActual != null) {
 					metodoActual.setMetodoLlamado(datosMetodos[j].getID());
 					// System.out.println("   Metodo ("+j+"): "+datosMetodos[j].getID());
 				}

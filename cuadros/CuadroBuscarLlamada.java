@@ -252,34 +252,46 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 	 */
 	private boolean valoresCorrectos() {
 		int numMetodo = numMetodoSeleccionado();
+		DatosMetodoBasicos datosMetodo = this.dtb.getMetodo(numMetodo);
+		String[] tiposE = datosMetodo.getTipoParametrosE();
+		String[] tiposS = datosMetodo.getTipoParametrosS();
+		int[] dimE = datosMetodo.getDimE();
+		int[] dimS = datosMetodo.getDimS();
+		
+		int posic = 0;
 
-		String[] tiposE = this.dtb.getMetodo(numMetodo).getTipoParametrosE();
-		String[] tiposS = this.dtb.getMetodo(numMetodo).getTipoParametrosS();
-		int[] dimE = this.dtb.getMetodo(numMetodo).getDimE();
-		int[] dimS = this.dtb.getMetodo(numMetodo).getDimS();
-
-		String[] tipos = new String[tiposE.length + tiposS.length];
-		int[] dim = new int[dimE.length + dimS.length];
-
-		for (int i = 0; i < tiposE.length; i++) {
-			tipos[i] = tiposE[i];
-			dim[i] = dimE[i];
-		}
-
-		for (int i = 0; i < tiposS.length; i++) {
-			tipos[i + tiposE.length] = tiposS[i];
-			dim[i + dimE.length] = dimS[i];
-		}
-
-		for (int i = 0; i < this.campos.length; i++) {
-			if (this.campos[i] != null
-					&& this.campos[i].getSelectedItem().toString().length() > 0) {
-				if (!ServiciosString.esDeTipoCorrecto(this.campos[i]
-						.getSelectedItem().toString(), tipos[i], dim[i])) {
-					return false;
+		if (Conf.elementosVisualizar == Conf.VISUALIZAR_TODO
+				|| Conf.elementosVisualizar == Conf.VISUALIZAR_ENTRADA) {
+			for (int i = 0; i < datosMetodo.getNumParametrosE(); i++) {
+				if (datosMetodo.getVisibilidadE(i)) {
+					if (this.campos[posic] != null
+							&& this.campos[posic].getSelectedItem().toString().length() > 0) {
+						if (!ServiciosString.esDeTipoCorrecto(this.campos[posic]
+								.getSelectedItem().toString(), tiposE[i], dimE[i])) {
+							return false;
+						}
+					}
+					posic++;
 				}
 			}
 		}
+
+		if (Conf.elementosVisualizar == Conf.VISUALIZAR_TODO
+				|| Conf.elementosVisualizar == Conf.VISUALIZAR_SALIDA) {
+			for (int i = 0; i < datosMetodo.getNumParametrosS(); i++) {
+				if (datosMetodo.getVisibilidadS(i)) {
+					if (this.campos[posic] != null
+							&& this.campos[posic].getSelectedItem().toString().length() > 0) {
+						if (!ServiciosString.esDeTipoCorrecto(this.campos[posic]
+								.getSelectedItem().toString(), tiposS[i], dimS[i])) {
+							return false;
+						}
+					}
+					posic++;
+				}
+			}
+		}
+		
 		return true;
 	}
 

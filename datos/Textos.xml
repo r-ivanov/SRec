@@ -1206,6 +1206,8 @@
 		<T valor="Check the cell for visualize this parameter en this visualization" idioma="en" id="CPARAM_CASILVIS"/>	
 		<T valor="Inserci[oacute]n de valores para" idioma="es" id="CPARAM_INSERVPAR"/>
 		<T valor="Insert values for" idioma="en" id="CPARAM_INSERVPAR"/>
+		<T valor="(para valores m[uacute]ltiples, separar con comas)" idioma="es" id="CPARAM_INSER_MULTIPLE"/>
+		<T valor="(for multiple values, use commas)" idioma="en" id="CPARAM_INSER_MULTIPLE"/>
 		<T valor="Valores" idioma="es" id="CVALORES_TITULO"/>
 		<T valor="Values" idioma="en" id="CVALORES_TITULO"/>
 		<T valor="Valores de ejecución:" idioma="es" id="CVALORES_VALORES"/>

@@ -270,7 +270,9 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 			this.panelParam.setBorder(new TitledBorder(Texto.get(
 					"CPARAM_INSERVPAR", Conf.idioma)
 					+ " "
-					+ this.metodo.getNombre()));
+					+ this.metodo.getNombre()
+					+ " "
+					+ Texto.get("CPARAM_INSER_MULTIPLE", Conf.idioma)));
 			this.panelParam.add(panelEtiquetas, BorderLayout.WEST);
 			this.panelParam.add(panelCuadros, BorderLayout.CENTER);
 
