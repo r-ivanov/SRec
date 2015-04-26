@@ -14,6 +14,29 @@ esta versión, SRec puede distribuirse como un artefacto jar directamente.
 - Se han corregido problemas relacionados con inconsistencias de la visibilidad de métodos y
 parámetros en los distintos diálogos de la aplicación.
 
+- Se han introducido arreglos para problemas detectados con el tamaño de la ventana del
+grafo de dependencia.
+
+- Se han corregido algunos textos de la aplicación para hacer la introducción de parámetros
+y la selección de la máquina JDK más orientativa.
+
+- Se han introducido cambios para mantener directorios recordados para ficheros de configuración.
+
+- Se ha hecho que el marco de selección del árbol sea de un solo color y configurable a través
+de "Formato tipográfico"
+
+- Se han introducido cambios para dar más informaciñon cuando falla la evaluación de una
+expresión para el tabulado de grafos de dependencia.
+
+- Se han corregido problemas relacionados con el cuadro de búsqueda de llamadas cuando
+algún parámetro se marcaba como oculto.
+
+- Se han corregido un problema que no permitía la compilación de clases con métodos sin
+parámetros.
+
+- Se ha actualizado el manual de usuario con los cambios más importantes y se han actualizado
+las imágenes de ayuda.
+
 SRec v1.6 (Programación Dinámica)
 ==================================================
 
