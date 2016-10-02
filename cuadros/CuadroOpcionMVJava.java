@@ -1,7 +1,8 @@
 package cuadros;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -39,9 +41,6 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener,
 	private BotonAceptar aceptar;
 	private BotonCancelar cancelar;
 	private JPanel panel, panelBoton, panelpanelElementos, panelElementos;
-
-	private BorderLayout bl;
-	private GridLayout gl;
 
 	private Ventana ventana;
 	private JDialog dialogo;
@@ -102,8 +101,9 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener,
 		this.campoDireccion.addKeyListener(this);
 		this.campoDireccion.setToolTipText(Texto.get("COMVJ_ESCRDIRVAL",
 				Conf.idioma));
-
+		this.campoDireccion.setMinimumSize(new Dimension(ANCHO_CUADRO/2, 20));
 		this.examinar = new BotonTexto(Texto.get("BOTONEXAMINAR", Conf.idioma));
+		
 		// examinar.addActionListener(this);
 		this.examinar.addKeyListener(this);
 		this.examinar.addMouseListener(this);
@@ -112,18 +112,29 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener,
 
 		// Panel de elementos
 		this.panelElementos = new JPanel();
-		this.panelElementos.add(this.campoDireccion);
-		this.panelElementos.add(this.examinar);
-		this.panelElementos.setSize(120, 45);
-
+		panelElementos.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 3;
+		this.panelElementos.add(this.campoDireccion,c);
+		c = new GridBagConstraints();
+		c.gridx = 3;
+		c.gridy = 0;
+		this.panelElementos.add(this.examinar,c);
+		this.panelElementos.setPreferredSize(new Dimension(ANCHO_CUADRO,ALTO_CUADRO/4));
+		
 		// Panel de panel de Elementos
-		this.gl = new GridLayout(1, 1);
 		this.panelpanelElementos = new JPanel();
-		this.panelpanelElementos.setLayout(this.gl);
+		this.panelpanelElementos.setLayout(new GridBagLayout());
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
 		this.panelpanelElementos.setBorder(new TitledBorder(
 				this.textoIndicativo));
-		this.panelpanelElementos.add(this.panelElementos);
-
+		this.panelpanelElementos.add(this.panelElementos,c);
+		this.panelpanelElementos.setPreferredSize(panelpanelElementos.getPreferredSize());
+		
 		// Botón Aceptar
 		this.aceptar = new BotonAceptar();// aceptar=new JButton ("Aceptar");
 		// aceptar.addActionListener(this);
@@ -141,25 +152,40 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener,
 
 		// Panel para el botón
 		this.panelBoton = new JPanel();
-		this.panelBoton.add(this.aceptar);
-		this.panelBoton.add(this.cancelar);
-
+		panelBoton.setLayout(new GridBagLayout());
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		this.panelBoton.add(this.aceptar,c);
+		c = new GridBagConstraints();
+		c.gridx = 1;
+		c.gridy = 0;
+		this.panelBoton.add(this.cancelar,c);
+		this.panelBoton.setBorder(new EmptyBorder(0, 0, 5, 0));
+		
 		// Panel general
-		this.bl = new BorderLayout();
 		this.panel = new JPanel();
-		this.panel.setLayout(this.bl);
-
-		this.panel.add(this.panelpanelElementos, BorderLayout.NORTH);
-		this.panel.add(this.panelBoton, BorderLayout.SOUTH);
-
+		this.panel.setLayout(new GridBagLayout());
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		this.panel.add(this.panelpanelElementos, c);
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 1;
+		this.panel.add(this.panelBoton, c);
+		this.panel.setPreferredSize(panel.getPreferredSize());		
 		this.dialogo.getContentPane().add(this.panel);
+		
 
 		// Preparamos y mostramos cuadro
 		int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
 		this.dialogo.setLocation(coord[0], coord[1]);
 		this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
-		this.dialogo.setResizable(false);
+		this.dialogo.setResizable(true);
 		this.dialogo.setTitle(Texto.get("COMVJ_SELECTITULO", Conf.idioma));
+		this.dialogo.validate();
+		this.dialogo.pack();		
 		this.dialogo.setVisible(true);
 		this.dialogo.setAlwaysOnTop(true);
 	}
