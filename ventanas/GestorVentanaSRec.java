@@ -135,7 +135,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		KeyStroke ksArchivo[] = {
 				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E,
 						java.awt.Event.CTRL_MASK),
-						KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E,
+						KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,
 								java.awt.Event.CTRL_MASK),
 								KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P,
 										java.awt.Event.CTRL_MASK),
@@ -421,7 +421,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_srec.gif") };
 		KeyStroke ksAyuda[] = {
 				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0),
-				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,
+				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A,
 						java.awt.Event.CTRL_MASK) };
 		menus[4] = creaMenu(noAyuda, mnAyuda, iconosAyuda, nombreMenuAyuda,
 				mnMenuAyuda, null, ksAyuda);
