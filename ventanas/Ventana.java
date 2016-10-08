@@ -52,6 +52,7 @@ import cuadros.CuadroNuevaClase;
 import cuadros.CuadroOpcionBorradoFicheros;
 import cuadros.CuadroOpcionConfVisualizacion;
 import cuadros.CuadroOpcionMVJava;
+import cuadros.CuadroOpcionMVJavaEncontradas;
 import cuadros.CuadroOpcionVistas;
 import cuadros.CuadroParamLanzarEjec;
 import cuadros.CuadroPreguntaSalirAplicacion;
@@ -322,8 +323,7 @@ public class Ventana extends JFrame implements ActionListener {
 		OpcionMVJava omvj = (OpcionMVJava) this.gOpciones.getOpcion(
 				"OpcionMVJava", true);
 		if (!omvj.getValida()) {
-			String maquinas[] = BuscadorMVJava.buscador(true);
-
+			String maquinas[] = BuscadorMVJava.buscador(true,true);
 			int contadorMaquinas = 0;
 			while (!omvj.getValida() && contadorMaquinas < maquinas.length) {
 				omvj.setDir(maquinas[contadorMaquinas]);
@@ -332,9 +332,7 @@ public class Ventana extends JFrame implements ActionListener {
 			}
 
 			if (!omvj.getValida()) {
-				// A true para indicar que cargue un texto más explicativo para
-				// la primera ejecución.
-				new CuadroOpcionMVJava(this, true);
+				this.newSeleccionJVM();				
 			}
 		}
 
@@ -1064,7 +1062,7 @@ public class Ventana extends JFrame implements ActionListener {
 				if (Conf.fichero_log) {
 					this.log_write("Configuración > Máquina Virtual Java...");
 				}
-				new CuadroOpcionMVJava(this, false);
+				this.newSeleccionJVM();
 			}
 
 			// Configuración > Idioma...
@@ -2966,5 +2964,25 @@ public class Ventana extends JFrame implements ActionListener {
 	private void log_close() {
 		this.log_write("----------------- FIN DE SESION " +
 				ServiciosString.direccionIP() + "\r\n\r\n\r\n");
+	}
+	
+	/**
+	 * Permite generar los dos cuadros de diálogo para seleccionar máquina virtual
+	 * (Para no replicar código, se utiliza dos veces)
+	 */
+	private void newSeleccionJVM(){
+		
+		// Buscamos cualquier versión de JDK y dejamos al usuario
+		// elegir el que quiera
+		String[] maquinas = BuscadorMVJava.buscador(true,false);
+		
+		// A true para indicar que cargue un texto más explicativo para
+		// la primera ejecución.
+		
+		if(maquinas.length>0){					
+			new CuadroOpcionMVJavaEncontradas(maquinas,this);
+		}else{				
+			new CuadroOpcionMVJava(this, true);
+		}
 	}
 }

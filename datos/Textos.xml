@@ -1059,7 +1059,16 @@
 		<T valor="In order to configure SRec, please provide a Java Virtual Machine (JDK)" idioma="en" id="COMVJ_ESCRDIRVALTTT3"/>
 		<T valor="Selecci[oacute]n de M[aacute]quina Virtual de Java - JDK" idioma="es" id="COMVJ_SELECTITULO"/>
 		<T valor="Selection of the Java virtual machine - JDK" idioma="en" id="COMVJ_SELECTITULO"/>
-
+		
+		<!-- Cuadro Seleccion MVJava encontradas -->
+		<T valor="Selecci[oacute]n M[aacute]quina Virtual de Java encontradas - JDK" idioma="es" id="CSMVE_SELECTITULO"/>
+		<T valor="Selection of the Java virtual machine found - JDK" idioma="en" id="CSMVE_SELECTITULO"/>
+		
+		<T valor="Seleccione una opci[oacute]n para configurar la M[aacute]quina Virtual de Java (JDK)" idioma="es" id="CSMVE_TEXTO"/>
+		<T valor="Select an option for configure Java Virtual Machine (JDK)" idioma="en" id="CSMVE_TEXTO"/>
+		
+		<T valor="Seleccionar manualmente M[aacute]quina Virtual de Java" idioma="es" id="CSMVE_MANUAL"/>
+		<T valor="Manually select Java Virtual Machine" idioma="en" id="CSMVE_MANUAL"/>
 		
 		<!-- Cuadro Crear clase nueva -->
 		<T valor="Crear una clase Java nueva" idioma="es" id="CCCN_CREARCLASE"/>
