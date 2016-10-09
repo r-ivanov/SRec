@@ -279,7 +279,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		char mnMenuArbol = mnemotecnicos.charAt(mnemotecnicos.length() - 1);
 
 		URL iconosArbol[] = {
-				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_arbolcolapsado_des.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_arbolcolapsado.gif"),
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_visualizacionDinamica.gif"),
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_mostrarvisor.gif"),
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ajustarVisor.gif"),

@@ -35,7 +35,7 @@ public class OpcionOpsVisualizacion extends Opcion {
 	private boolean mostrarEstructCompletaCrono = false;
 	private boolean mostrarSalidaLigadaEntrada = false;
 
-	private boolean mostrarArbolColapsado = false;
+	private boolean mostrarArbolColapsado = true;
 
 	private boolean sangrado = true;
 	private boolean idMetodoTraza = false;
