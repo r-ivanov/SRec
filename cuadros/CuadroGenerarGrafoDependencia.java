@@ -84,7 +84,7 @@ ActionListener, KeyListener {
 			this.botonesMetodos[i] = new JRadioButton(dmb.getInterfaz());
 			this.botonesMetodos[i].addActionListener(this);
 			this.botonesMetodos[i].addKeyListener(this);
-			if (i == 0) {
+			if (i == this.dtb.getNumMetodos()-1) {
 				this.botonesMetodos[i].setSelected(true);
 			}
 			radioButtonGroup.add(this.botonesMetodos[i]);
