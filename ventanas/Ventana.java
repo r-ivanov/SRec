@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -69,6 +70,7 @@ import datos.ClaseAlgoritmo;
 import datos.DatosTrazaBasicos;
 import datos.Ejecucion;
 import datos.FamiliaEjecuciones;
+import datos.MetodoAlgoritmo;
 import datos.Preprocesador;
 import datos.Traza;
 
@@ -2118,6 +2120,13 @@ public class Ventana extends JFrame implements ActionListener {
 		if (clase == null) {
 			this.panelVentana.cerrarPanelCodigo();
 		}
+		
+		//	Si solo hay un método deshabilitamos botón de selección de método
+		//		y llamamos a recoger método unico
+		if(this.claseAlgoritmo!=null && this.claseAlgoritmo.getNumMetodos()==1){			
+			this.botones[28].setEnabled(false);
+			this.recogerMetodoUnico();
+		}
 	}
 
 	/**
@@ -2460,6 +2469,49 @@ public class Ventana extends JFrame implements ActionListener {
 		this.botones[28].setEnabled(valor);
 		if (!valor) {
 			this.setClaseHabilitadaAnimacion(false);
+		}
+		
+	}
+	
+	/**
+	 * Recoge la selección del único método existente y lo establece
+	 * para posteriormente permitir su ejecución desde la ventana.
+	 */
+	private void recogerMetodoUnico() {
+		boolean errorProducido = false;
+		ArrayList<MetodoAlgoritmo> metodos = new ArrayList<MetodoAlgoritmo>(
+				0);
+		
+		//	Obtenemos el método
+		metodos = this.claseAlgoritmo.getMetodosProcesados();
+		
+		// Actualizar cuál es el método principal
+		this.claseAlgoritmo.borrarMarcadoPrincipal();
+		
+		metodos.get(0).setMarcadoPrincipal(true);
+		metodos.get(0).setMarcadoVisualizar(true);
+		this.claseAlgoritmo.addMetodo(metodos.get(0));
+		
+
+		if (!errorProducido) {
+			// Actualizamos la clase
+			MetodoAlgoritmo ma = this.claseAlgoritmo.getMetodoPrincipal();
+			if (Conf.fichero_log) {
+				String mensaje = "Método seleccionado: "
+						+ ma.getRepresentacion();
+				Logger.log_write(mensaje);				
+			}
+			//this.setClase(this.claseAlgoritmo);
+
+			// Cerramos la visualización actual.
+			this.cerrarVistas();
+			// Escribir signatura del método seleccionado
+			this.setValoresPanelControl(ma.getRepresentacion());
+			// Habilitamos la opcion para asignar parametros y ejecutar
+			this.setClaseHabilitadaAnimacion(true);
+			this.setClasePendienteGuardar(false);
+            // Deshabilitamos las opciones de la animación por si estuviesen activas.
+            this.habilitarOpcionesAnimacion(false);
 		}
 	}
 

@@ -267,9 +267,9 @@ public class ClaseAlgoritmo {
 	public boolean potencialMetodoDYV() {
 		for (MetodoAlgoritmo m : this.metodos) {
 			int[] dimParam = m.getDimParametros();
-
+			
 			for (int i = 0; i < dimParam.length; i++) {
-				if (dimParam[i] > 0) {
+				if (dimParam[i] > 0) {					
 					return true;
 				}
 			}
