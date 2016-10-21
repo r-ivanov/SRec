@@ -264,7 +264,6 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 	 *            Número de columnas.
 	 */
 	public void dibujarTabla(int filas, int columnas) {
-
 		this.grafoDependencia.setTamanioTabla(filas, columnas);
 		this.representacionGrafo = this.grafoDependencia
 				.obtenerRepresentacionGrafo();
@@ -275,7 +274,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 		this.add(this.representacionGrafoScroll);
 
 		this.ajustarGrafoATamanioVentana(true);
-		this.revalidate();
+		this.revalidate();	
 	}
 
 	/**
