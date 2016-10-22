@@ -313,10 +313,10 @@
 		<T valor="Expressions for tabulation" idioma="en" id="GP_TABULAR_PANEL"/>
 		<T valor="Signatura del m[eacute]todo" idioma="es" id="GP_TABULAR_SIGNATURA"/>
 		<T valor="Method signature" idioma="en" id="GP_TABULAR_SIGNATURA"/>	
-		<T valor="y (Expresi[oacute]n para filas) =" idioma="es" id="GP_TABULAR_FILAS"/>
-		<T valor="y (Rows expression) =" idioma="en" id="GP_TABULAR_FILAS"/>
-		<T valor="x (Expresi[oacute]n para columnas) =" idioma="es" id="GP_TABULAR_COLUMNAS"/>
-		<T valor="x (Columns expression) =" idioma="en" id="GP_TABULAR_COLUMNAS"/>
+		<T valor="Expresi[oacute]n para filas =" idioma="es" id="GP_TABULAR_FILAS"/>
+		<T valor="Rows expression =" idioma="en" id="GP_TABULAR_FILAS"/>
+		<T valor="Expresi[oacute]n para columnas =" idioma="es" id="GP_TABULAR_COLUMNAS"/>
+		<T valor="Columns expression =" idioma="en" id="GP_TABULAR_COLUMNAS"/>
 		
 		<T valor="Debe especificarse al menos una expresi[oacute]n para filas o columnas." idioma="es" id="GP_ERROR_EXPR_REQ"/>
 		<T valor="At least, one expression must be specified for rows or columns." idioma="en" id="GP_ERROR_EXPR_REQ"/>
