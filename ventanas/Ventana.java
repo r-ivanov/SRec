@@ -2124,7 +2124,7 @@ public class Ventana extends JFrame implements ActionListener {
 		//	Si solo hay un método deshabilitamos botón de selección de método
 		//		y llamamos a recoger método unico
 		if(this.claseAlgoritmo!=null && this.claseAlgoritmo.getNumMetodos()==1){			
-			this.botones[28].setEnabled(false);
+//			this.botones[28].setEnabled(false);
 			this.recogerMetodoUnico();
 		}
 	}
