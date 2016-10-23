@@ -61,6 +61,9 @@ public class GrafoDependencia {
 	private int numeroColumnasTabla;
 
 	private Dimension tamanioRepresentacion;
+	
+	private String expresionParaFila;
+	private String expresionParaColumna;
 
 	/**
 	 * Devuelve una nueva instancia de un grafo.
@@ -234,8 +237,12 @@ public class GrafoDependencia {
 	 * @return Celda para el grafo que representa el índice.
 	 */
 	private DefaultGraphCell crearIndiceParaTabla(int valor, boolean fila) {
-
-		String valorString = String.valueOf(valor);
+		String valorString;
+		if(this.expresionParaFila!=null && this.expresionParaColumna!=null){
+			valorString = String.valueOf(valor);
+		}else{
+			valorString = (fila ? "y=":"x=")+String.valueOf(valor);
+		}
 		DefaultGraphCell indice = new DefaultGraphCell(valorString);
 		GraphConstants.setDisconnectable(indice.getAttributes(), false);
 		GraphConstants.setMoveable(indice.getAttributes(), false);
@@ -349,78 +356,9 @@ public class GrafoDependencia {
 				}
 			}
 			
-			//	Líneas invisibles para unir los títulos de las etiquetas de filas y columnas
-			
-			DefaultGraphCell lineaX1 = new DefaultGraphCell("");
-			GraphConstants.setDisconnectable(lineaX1.getAttributes(), false);
-			GraphConstants.setMoveable(lineaX1.getAttributes(), false);
-			GraphConstants.setSelectable(lineaX1.getAttributes(), false);
-			GraphConstants.setEditable(lineaX1.getAttributes(), false);
-			GraphConstants.setOpaque(lineaX1.getAttributes(), false);
-			GraphConstants.setBounds(lineaX1.getAttributes(), new Rectangle(GrafoDependencia.MARGEN_TABLA, 0,
-					2,GrafoDependencia.MARGEN_TABLA/2));
-			DefaultPort port0 = new DefaultPort();
-			lineaX1.add(port0);			
-			
-			DefaultGraphCell lineaX2 = new DefaultGraphCell("");
-			GraphConstants.setDisconnectable(lineaX2.getAttributes(), false);
-			GraphConstants.setMoveable(lineaX2.getAttributes(), false);
-			GraphConstants.setSelectable(lineaX2.getAttributes(), false);
-			GraphConstants.setEditable(lineaX2.getAttributes(), false);
-			GraphConstants.setOpaque(lineaX2.getAttributes(), false);
-			GraphConstants.setBounds(lineaX2.getAttributes(), new Rectangle(GrafoDependencia.MARGEN_TABLA+this.getNumeroColumnasTabla()*this.anchuraCuadroMatriz, 0,
-					2,GrafoDependencia.MARGEN_TABLA/2));
-			DefaultPort port1 = new DefaultPort();
-			lineaX2.add(port1);			
-			
-			DefaultGraphCell lineaY1 = new DefaultGraphCell("");
-			GraphConstants.setDisconnectable(lineaY1.getAttributes(), false);
-			GraphConstants.setMoveable(lineaY1.getAttributes(), false);
-			GraphConstants.setSelectable(lineaY1.getAttributes(), false);
-			GraphConstants.setEditable(lineaY1.getAttributes(), false);
-			GraphConstants.setOpaque(lineaY1.getAttributes(), false);
-			GraphConstants.setBounds(lineaY1.getAttributes(), new Rectangle(1,GrafoDependencia.MARGEN_TABLA,
-					GrafoDependencia.MARGEN_TABLA/2,2));
-			DefaultPort port2 = new DefaultPort();
-			lineaY1.add(port2);			
-			
-			DefaultGraphCell lineaY2 = new DefaultGraphCell("");
-			GraphConstants.setDisconnectable(lineaY2.getAttributes(), false);
-			GraphConstants.setMoveable(lineaY2.getAttributes(), false);
-			GraphConstants.setSelectable(lineaY2.getAttributes(), false);
-			GraphConstants.setEditable(lineaY2.getAttributes(), false);
-			GraphConstants.setOpaque(lineaY2.getAttributes(), false);
-			GraphConstants.setBounds(lineaY2.getAttributes(), new Rectangle(0,GrafoDependencia.MARGEN_TABLA+this.getNumeroFilasTabla()*this.alturaCuadroMatriz,
-					GrafoDependencia.MARGEN_TABLA/2,2));
-			
-			DefaultPort port3 = new DefaultPort();
-			lineaY2.add(port3);			
-			
-			//	Títulos con flechas para cada eje
-			
-			DefaultEdge edgeX = new DefaultEdge(new String(Texto.get("GRAFO_LABEL_X", Conf.idioma)));
-			edgeX.setSource(lineaX1.getChildAt(0));
-			edgeX.setTarget(lineaX2.getChildAt(0));
-			GraphConstants.setEndFill(edgeX.getAttributes(), true);
-			GraphConstants.setLabelAlongEdge(edgeX.getAttributes(), true);
-			GraphConstants.setMoveable(edgeX.getAttributes(), false);
-			GraphConstants.setLineEnd(edgeX.getAttributes(), GraphConstants.ARROW_TECHNICAL);
-			
-			DefaultEdge edgeY = new DefaultEdge(new String(Texto.get("GRAFO_LABEL_Y", Conf.idioma)));
-			edgeY.setSource(lineaY1.getChildAt(0));
-			edgeY.setTarget(lineaY2.getChildAt(0));
-			GraphConstants.setEndFill(edgeY.getAttributes(), true);
-			GraphConstants.setLabelAlongEdge(edgeY.getAttributes(), true);
-			GraphConstants.setMoveable(edgeY.getAttributes(), false);
-			GraphConstants.setLineEnd(edgeY.getAttributes(), GraphConstants.ARROW_TECHNICAL);
-			
-			//	Añadimos elementos
-			representacionGrafo.getGraphLayoutCache().insert(lineaX1);
-			representacionGrafo.getGraphLayoutCache().insert(lineaX2);
-			representacionGrafo.getGraphLayoutCache().insert(lineaY1);
-			representacionGrafo.getGraphLayoutCache().insert(lineaY2);
-			representacionGrafo.getGraphLayoutCache().insert(edgeX);
-			representacionGrafo.getGraphLayoutCache().insert(edgeY);
+			if(this.expresionParaFila!=null && this.expresionParaColumna!=null){
+				this.insertarEjesTabularGrafo(representacionGrafo);
+			}			
 			
 		}		
 		
@@ -459,6 +397,98 @@ public class GrafoDependencia {
 		return representacionGrafo;
 	}
 
+	/**
+	 * Inserta los ejes con el nombre de la expresión para filas y columnas
+	 * 		establecida por el usuario
+	 * @param representacionGrafo Grafo donde vamos a insertarlo
+	 */
+	private void insertarEjesTabularGrafo(JGraph representacionGrafo){
+		//	Líneas invisibles para unir los títulos de las etiquetas de filas y columnas
+	
+		DefaultGraphCell lineaX1 = new DefaultGraphCell("");
+		GraphConstants.setDisconnectable(lineaX1.getAttributes(), false);
+		GraphConstants.setMoveable(lineaX1.getAttributes(), false);
+		GraphConstants.setSelectable(lineaX1.getAttributes(), false);
+		GraphConstants.setEditable(lineaX1.getAttributes(), false);
+		GraphConstants.setOpaque(lineaX1.getAttributes(), false);
+		GraphConstants.setBounds(lineaX1.getAttributes(), new Rectangle(GrafoDependencia.MARGEN_TABLA, 0,
+				2,GrafoDependencia.MARGEN_TABLA/2));
+		DefaultPort port0 = new DefaultPort();
+		lineaX1.add(port0);			
+		
+		DefaultGraphCell lineaX2 = new DefaultGraphCell("");
+		GraphConstants.setDisconnectable(lineaX2.getAttributes(), false);
+		GraphConstants.setMoveable(lineaX2.getAttributes(), false);
+		GraphConstants.setSelectable(lineaX2.getAttributes(), false);
+		GraphConstants.setEditable(lineaX2.getAttributes(), false);
+		GraphConstants.setOpaque(lineaX2.getAttributes(), false);
+		GraphConstants.setBounds(lineaX2.getAttributes(), new Rectangle(GrafoDependencia.MARGEN_TABLA+this.getNumeroColumnasTabla()*this.anchuraCuadroMatriz, 0,
+				2,GrafoDependencia.MARGEN_TABLA/2));
+		DefaultPort port1 = new DefaultPort();
+		lineaX2.add(port1);			
+		
+		DefaultGraphCell lineaY1 = new DefaultGraphCell("");
+		GraphConstants.setDisconnectable(lineaY1.getAttributes(), false);
+		GraphConstants.setMoveable(lineaY1.getAttributes(), false);
+		GraphConstants.setSelectable(lineaY1.getAttributes(), false);
+		GraphConstants.setEditable(lineaY1.getAttributes(), false);
+		GraphConstants.setOpaque(lineaY1.getAttributes(), false);
+		GraphConstants.setBounds(lineaY1.getAttributes(), new Rectangle(1,GrafoDependencia.MARGEN_TABLA,
+				GrafoDependencia.MARGEN_TABLA/2,2));
+		DefaultPort port2 = new DefaultPort();
+		lineaY1.add(port2);			
+		
+		DefaultGraphCell lineaY2 = new DefaultGraphCell("");
+		GraphConstants.setDisconnectable(lineaY2.getAttributes(), false);
+		GraphConstants.setMoveable(lineaY2.getAttributes(), false);
+		GraphConstants.setSelectable(lineaY2.getAttributes(), false);
+		GraphConstants.setEditable(lineaY2.getAttributes(), false);
+		GraphConstants.setOpaque(lineaY2.getAttributes(), false);
+		GraphConstants.setBounds(lineaY2.getAttributes(), new Rectangle(0,GrafoDependencia.MARGEN_TABLA+this.getNumeroFilasTabla()*this.alturaCuadroMatriz,
+				GrafoDependencia.MARGEN_TABLA/2,2));
+		
+		DefaultPort port3 = new DefaultPort();
+		lineaY2.add(port3);			
+		
+		//	Títulos con flechas para cada eje
+		
+		DefaultEdge edgeX = new DefaultEdge(new String(this.expresionParaColumna));
+		edgeX.setSource(lineaX1.getChildAt(0));
+		edgeX.setTarget(lineaX2.getChildAt(0));
+		GraphConstants.setEndFill(edgeX.getAttributes(), true);
+		GraphConstants.setLabelAlongEdge(edgeX.getAttributes(), true);
+		GraphConstants.setMoveable(edgeX.getAttributes(), false);
+		GraphConstants.setLineEnd(edgeX.getAttributes(), GraphConstants.ARROW_TECHNICAL);
+		GraphConstants.setFont(edgeX.getAttributes(), new Font("Arial",
+				Font.BOLD, TAM_FUENTE));			
+		GraphConstants.setLineColor(edgeX.getAttributes(), Color.WHITE);
+		GraphConstants.setSelectable(edgeX.getAttributes(), false);
+		GraphConstants.setEditable(edgeX.getAttributes(), false);
+		GraphConstants.setForeground(edgeX.getAttributes(), Color.LIGHT_GRAY);
+		
+		DefaultEdge edgeY = new DefaultEdge(new String(this.expresionParaFila));
+		edgeY.setSource(lineaY1.getChildAt(0));
+		edgeY.setTarget(lineaY2.getChildAt(0));
+		GraphConstants.setEndFill(edgeY.getAttributes(), true);
+		GraphConstants.setLabelAlongEdge(edgeY.getAttributes(), true);
+		GraphConstants.setMoveable(edgeY.getAttributes(), false);
+		GraphConstants.setLineEnd(edgeY.getAttributes(), GraphConstants.ARROW_TECHNICAL);
+		GraphConstants.setFont(edgeY.getAttributes(), new Font("Arial",
+				Font.BOLD, TAM_FUENTE));
+		GraphConstants.setLineColor(edgeY.getAttributes(), Color.WHITE);
+		GraphConstants.setSelectable(edgeY.getAttributes(), false);
+		GraphConstants.setEditable(edgeY.getAttributes(), false);
+		GraphConstants.setForeground(edgeY.getAttributes(), Color.LIGHT_GRAY);
+		
+		//	Añadimos elementos
+		representacionGrafo.getGraphLayoutCache().insert(lineaX1);
+		representacionGrafo.getGraphLayoutCache().insert(lineaX2);
+		representacionGrafo.getGraphLayoutCache().insert(lineaY1);
+		representacionGrafo.getGraphLayoutCache().insert(lineaY2);
+		representacionGrafo.getGraphLayoutCache().insert(edgeX);
+		representacionGrafo.getGraphLayoutCache().insert(edgeY);
+	}
+		
 	/**
 	 * Devuelve el número de filas especificado para la matriz de tabulado.
 	 * 
@@ -624,7 +654,9 @@ public class GrafoDependencia {
 		String mensajeError = null;
 		ScriptEngineManager manager = new ScriptEngineManager();
 		MatrizDinamica<NodoGrafoDependencia> matriz = new MatrizDinamica<NodoGrafoDependencia>();
-
+		this.expresionParaFila = expresionParaFila;
+		this.expresionParaColumna = expresionParaColumna;
+		
 		for (NodoGrafoDependencia nodo : this.nodos) {
 			ScriptEngine engine = manager.getEngineByName("js");
 			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
