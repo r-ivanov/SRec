@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import toxml.JavaParser;
 import utilidades.ManipulacionElement;
 import utilidades.ServiciosString;
 
@@ -616,7 +617,7 @@ public class Transformador {
 			System.out.println("   Nombre: [" + e.getAttribute("name") + "]");
 		}
 
-		if (!nombreM.equals(nombreE)) {
+		if (!nombreM.equals(JavaParser.convReverse(nombreE))) {
 			return false;
 		}
 

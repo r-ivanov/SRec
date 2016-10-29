@@ -7475,5 +7475,29 @@ public class JavaParser implements JavaParserConstants {
 	
 		return s;
 	}
+	
+	public static String convReverse(String s)
+	{
+		// Añadido para permitir los signos '<' y '>' en strings
+		s=s.replace("[[signomenos]]","<");
+		s=s.replace("[[signomas]]",">");
+	
+		// Añadido para permitir caracteres basicos acentuados
+		s=s.replace("[[a_acentuado]]","á");
+		s=s.replace("[[e_acentuado]]","é");
+		s=s.replace("[[i_acentuado]]","í");
+		s=s.replace("[[o_acentuado]]","ó");
+		s=s.replace("[[u_acentuado]]","ú");
+		s=s.replace("[[A_acentuado]]","Á");
+		s=s.replace("[[E_acentuado]]","É");
+		s=s.replace("[[I_acentuado]]","Í");
+		s=s.replace("[[O_acentuado]]","Ó");
+		s=s.replace("[[U_acentuado]]","Ú");
+		s=s.replace("[[n_sombrero]]","ñ");
+		s=s.replace("[[N_sombrero]]","Ñ");
+		s=s.replace("[[comillas]]","\"");
+	
+		return s;
+	}
  
 }

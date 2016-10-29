@@ -2,6 +2,7 @@ package datos;
 
 import java.util.ArrayList;
 
+import toxml.JavaParser;
 import utilidades.Arrays;
 import utilidades.ServiciosString;
 
@@ -110,7 +111,7 @@ public class MetodoAlgoritmo {
 	public MetodoAlgoritmo(String nombre, String tipo, int dimRetorno,
 			String paramNombre[], String paramTipo[], int paramDim[],
 			int tecnica) {
-		this.nombre = nombre;
+		this.setNombre(nombre);
 		this.tipo = tipo;
 		this.dimRetorno = dimRetorno;
 		this.paramNombre = paramNombre;
@@ -547,7 +548,7 @@ public class MetodoAlgoritmo {
 	 *            Nombre del método
 	 */
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.nombre = JavaParser.convReverse(nombre);
 	}
 
 	/**
