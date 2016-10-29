@@ -22,6 +22,7 @@ import org.w3c.dom.Document;
 
 import paneles.PanelCompilador;
 import toxml.Java2XML;
+import toxml.JavaParser;
 import utilidades.GeneradorJava;
 import utilidades.LlamadorSistema;
 import utilidades.Logger;
@@ -90,9 +91,10 @@ public class Preprocesador extends Thread {
 	 *            nombre del fichero que hay que preprocesar
 	 */
 	public Preprocesador(String path, String nombre) {
-		if (path != null && nombre != null) {
+		String nombreModif = JavaParser.convReverse(nombre);
+		if (path != null && nombreModif != null) {
 			fichero[0] = path.substring(0, path.lastIndexOf("\\") + 1);
-			fichero[1] = nombre;
+			fichero[1] = nombreModif;
 		} else {
 			fichero[0] = null;
 			fichero[1] = null;
@@ -112,9 +114,10 @@ public class Preprocesador extends Thread {
 	 *            terminar de procesar, false en caso contrario.
 	 */
 	public Preprocesador(String path, String nombre, boolean selecMetodo) {
-		if (path != null && nombre != null) {
+		String nombreModif = JavaParser.convReverse(nombre);
+		if (path != null && nombreModif != null) {
 			fichero[0] = path.substring(0, path.lastIndexOf("\\") + 1);
-			fichero[1] = nombre;
+			fichero[1] = nombreModif;
 		} else {
 			fichero[0] = null;
 			fichero[1] = null;
@@ -133,7 +136,7 @@ public class Preprocesador extends Thread {
 		if (path != null && path.length == 2 && path[0] != null
 				&& path[1] != null) {
 			fichero[0] = path[0];
-			fichero[1] = path[1];
+			fichero[1] = JavaParser.convReverse(path[1]);
 		} else {
 			fichero[0] = null;
 			fichero[1] = null;

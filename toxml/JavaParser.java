@@ -7451,7 +7451,11 @@ public class JavaParser implements JavaParserConstants {
   }
 
 
-
+  	/**
+  	 * Convierte un string con carácteres especiales a un string sin ellos
+  	 * @param s	String a convertir con carácteres especiales
+  	 * @return	String convertido sin carácteres especiales
+  	 */
 	public static String conv(String s)
 	{
 		// Añadido para permitir los signos '<' y '>' en strings
@@ -7476,6 +7480,12 @@ public class JavaParser implements JavaParserConstants {
 		return s;
 	}
 	
+	/**
+	 * Deshace los cambios hechos por conv, es decir, convierte un string sin carácteres
+	 * 	especiales a un string con carácteres especiales
+	 * @param s	String a convertir sin carácteres especiales
+	 * @return	String convertido con carácteres especiales
+	 */
 	public static String convReverse(String s)
 	{
 		// Añadido para permitir los signos '<' y '>' en strings
