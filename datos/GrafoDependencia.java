@@ -241,7 +241,7 @@ public class GrafoDependencia {
 		if(this.expresionParaFila!=null && this.expresionParaColumna!=null){
 			valorString = String.valueOf(valor);
 		}else{
-			valorString = (fila ? "y=":"x=")+String.valueOf(valor);
+			valorString = String.valueOf(valor);
 		}
 		DefaultGraphCell indice = new DefaultGraphCell(valorString);
 		GraphConstants.setDisconnectable(indice.getAttributes(), false);
@@ -422,7 +422,16 @@ public class GrafoDependencia {
 		GraphConstants.setSelectable(lineaX2.getAttributes(), false);
 		GraphConstants.setEditable(lineaX2.getAttributes(), false);
 		GraphConstants.setOpaque(lineaX2.getAttributes(), false);
-		GraphConstants.setBounds(lineaX2.getAttributes(), new Rectangle(GrafoDependencia.MARGEN_TABLA+this.getNumeroColumnasTabla()*this.anchuraCuadroMatriz, 0,
+		
+		//	Corrección para cuando texto es mas ancho que el ancho de la tabla
+		String textoX = "Valores de "+this.expresionParaColumna;
+		int textoLongitudX = ANCHO_PIXEL_CARACTER*textoX.length();
+		int limiteTextoX = GrafoDependencia.MARGEN_TABLA+this.getNumeroColumnasTabla()*this.anchuraCuadroMatriz;
+		if(textoLongitudX>limiteTextoX){
+			limiteTextoX = textoLongitudX +1;		
+		}
+		
+		GraphConstants.setBounds(lineaX2.getAttributes(), new Rectangle(limiteTextoX, 0,
 				2,GrafoDependencia.MARGEN_TABLA/2));
 		DefaultPort port1 = new DefaultPort();
 		lineaX2.add(port1);			
@@ -444,7 +453,16 @@ public class GrafoDependencia {
 		GraphConstants.setSelectable(lineaY2.getAttributes(), false);
 		GraphConstants.setEditable(lineaY2.getAttributes(), false);
 		GraphConstants.setOpaque(lineaY2.getAttributes(), false);
-		GraphConstants.setBounds(lineaY2.getAttributes(), new Rectangle(0,GrafoDependencia.MARGEN_TABLA+this.getNumeroFilasTabla()*this.alturaCuadroMatriz,
+		
+		//	Corrección para cuando texto es mas alto que el alto de la tabla
+		String textoY = "Valores de "+this.expresionParaFila;
+		int textoLongitudY = ANCHO_PIXEL_CARACTER*textoY.length();
+		int limiteTextoY = GrafoDependencia.MARGEN_TABLA+this.getNumeroFilasTabla()*this.alturaCuadroMatriz;
+		if(textoLongitudY>limiteTextoY){
+			limiteTextoY = textoLongitudY +1;		
+		}
+		
+		GraphConstants.setBounds(lineaY2.getAttributes(), new Rectangle(0,limiteTextoY,
 				GrafoDependencia.MARGEN_TABLA/2,2));
 		
 		DefaultPort port3 = new DefaultPort();
@@ -452,7 +470,7 @@ public class GrafoDependencia {
 		
 		//	Títulos con flechas para cada eje
 		
-		DefaultEdge edgeX = new DefaultEdge(new String(this.expresionParaColumna));
+		DefaultEdge edgeX = new DefaultEdge(new String(textoX));
 		edgeX.setSource(lineaX1.getChildAt(0));
 		edgeX.setTarget(lineaX2.getChildAt(0));
 		GraphConstants.setEndFill(edgeX.getAttributes(), true);
@@ -466,7 +484,7 @@ public class GrafoDependencia {
 		GraphConstants.setEditable(edgeX.getAttributes(), false);
 		GraphConstants.setForeground(edgeX.getAttributes(), Color.LIGHT_GRAY);
 		
-		DefaultEdge edgeY = new DefaultEdge(new String(this.expresionParaFila));
+		DefaultEdge edgeY = new DefaultEdge(textoY);
 		edgeY.setSource(lineaY1.getChildAt(0));
 		edgeY.setTarget(lineaY2.getChildAt(0));
 		GraphConstants.setEndFill(edgeY.getAttributes(), true);
@@ -479,6 +497,8 @@ public class GrafoDependencia {
 		GraphConstants.setSelectable(edgeY.getAttributes(), false);
 		GraphConstants.setEditable(edgeY.getAttributes(), false);
 		GraphConstants.setForeground(edgeY.getAttributes(), Color.LIGHT_GRAY);
+		
+		
 		
 		//	Añadimos elementos
 		representacionGrafo.getGraphLayoutCache().insert(lineaX1);
