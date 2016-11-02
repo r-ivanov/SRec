@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import utilidades.ManipulacionElement;
+import utilidades.SsooValidator;
 
 /**
  * Opción que permite la asignación de una máquina virtual para la compilación y
@@ -52,7 +53,11 @@ public class OpcionMVJava extends Opcion {
 	 */
 	public boolean setDir(String dir) {
 		if (dir != null) {
-			dir = dir.replace("javac.exe", "java.exe");
+			if(SsooValidator.isWindows()){
+				dir = dir.replace("javac.exe", "java.exe");
+			}else{
+				dir = dir.replace("javac", "java");
+			}
 		}
 
 		this.dir = dir;
@@ -94,7 +99,19 @@ public class OpcionMVJava extends Opcion {
 				this.version = dir.substring(x - 1, z);
 
 				// Verificamos que existe MV
-				File mv = new File(dir + "java");
+				File mv = null;
+				//	Eliminamos último java si existe porque es como el java.exe
+				if(dir.charAt(dir.length()-1)=='a' && 
+						dir.charAt(dir.length()-2)=='v' &&
+						dir.charAt(dir.length()-3)=='a' &&
+						dir.charAt(dir.length()-4)=='j'){
+					this.dir = dir.substring(0, dir.length()-4);
+				}
+				if(SsooValidator.isUnix()){
+					mv = new File(dir);
+				}else{
+					mv = new File(dir + "java");
+				}
 				this.valida = mv.exists();
 			}
 		}
@@ -152,11 +169,22 @@ public class OpcionMVJava extends Opcion {
 	 * @return true si es valida
 	 */
 	public boolean getValida() {
-
-		File mv1 = new File(this.dir + "java.exe");
-		File mv2 = new File(this.dir + "javac.exe");
-		this.valida = mv1.exists() && mv2.exists();
-		return this.valida;
+		File mv1 = null;
+		File mv2 = null;
+		if(SsooValidator.isWindows()){
+			mv1 = new File(this.dir + "java.exe");
+			mv2 = new File(this.dir + "javac.exe");
+		}else if(SsooValidator.isUnix() && this.dir != null){
+			mv1 = new File(this.dir);
+			mv2 = new File(this.dir);
+		}
+		
+		if(mv1 != null && mv2 != null){
+			this.valida = mv1.exists() && mv2.exists();
+			return this.valida;
+		}else{
+			return false;
+		}
 	}
 
 	/**

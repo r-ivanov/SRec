@@ -11,6 +11,7 @@ import org.w3c.dom.NodeList;
 import toxml.JavaParser;
 import utilidades.ManipulacionElement;
 import utilidades.ServiciosString;
+import utilidades.SsooValidator;
 
 /**
  * Gestiona toda la manipulación del árbol DOM, una vez se ha cargado el fichero
@@ -1811,11 +1812,22 @@ public class Transformador {
 
 		pathClase = pathClase.substring(0, pathClase.indexOf("__codSRec__"));
 
-		String auxNombre = pathClase.substring(pathClase.lastIndexOf("\\") + 1,
+		
+		String auxNombre = "";
+		if(SsooValidator.isWindows()){
+			auxNombre = pathClase.substring(pathClase.lastIndexOf("\\") + 1,
 				pathClase.length());
+		}else{
+			auxNombre = pathClase.substring(pathClase.lastIndexOf("/") + 1,
+				pathClase.length());
+		}
 		auxNombre = auxNombre.substring(0, auxNombre.length() / 2);
 
-		pathClase = pathClase.substring(0, pathClase.lastIndexOf("\\") + 1);
+		if(SsooValidator.isWindows()){
+			pathClase = pathClase.substring(0, pathClase.lastIndexOf("\\") + 1);
+		}else{
+			pathClase = pathClase.substring(0, pathClase.lastIndexOf("/") + 1);
+		}
 
 		c = new ClaseAlgoritmo(pathClase + auxNombre + ".java", nombreClase);
 

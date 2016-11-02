@@ -29,6 +29,7 @@ import utilidades.Logger;
 import utilidades.ManipulacionElement;
 import utilidades.SelecDireccion;
 import utilidades.ServiciosString;
+import utilidades.SsooValidator;
 import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
@@ -249,17 +250,29 @@ public class Preprocesador extends Thread {
 				// A partir de Java 7, Runtime.exec recibe un array de Strings
 				if (!this.obf.getfClass()) {
 					String aux[] = new String[4];
-					aux[0] = "\"" + this.omvj.getDir() + "javac\"";
-					aux[1] = "\"" + fichero[0] + fichero[1] + "\"";
+					if(!SsooValidator.isUnix()){	//	No Linux
+						aux[0] = "\"" + this.omvj.getDir() + "javac\"";
+						aux[1] = "\"" + fichero[0] + fichero[1] + "\"";
+					}else{							//	Si linux
+						aux[0] = this.omvj.getDir() + "javac";
+						aux[1] = fichero[0] + fichero[1];
+					}
+					
 					aux[2] = "-classpath";
 					aux[3] = getRunningPath();
 					LlamadorSistema.ejecucionArray(aux);
 				}
 				String aux[] = new String[6];
-				aux[0] = "\"" + this.omvj.getDir() + "javac\"";
+				if(!SsooValidator.isUnix()){	//	No Linux
+					aux[0] = "\"" + this.omvj.getDir() + "javac\"";
+					aux[2] = ".\\";
+					aux[3] = "\"" + fichero[0] + fichero[1] + "\"";
+				}else{							//	Si linux
+					aux[0] = this.omvj.getDir() + "javac";
+					aux[2] = "./";
+					aux[3] = fichero[0] + fichero[1];
+				}
 				aux[1] = "-d";
-				aux[2] = ".\\";
-				aux[3] = "\"" + fichero[0] + fichero[1] + "\"";
 				aux[4] = "-classpath";
 				aux[5] = getRunningPath();
 				String salidaCompilador = LlamadorSistema.ejecucionArray(aux);
@@ -362,22 +375,39 @@ public class Preprocesador extends Thread {
 
 					if (!this.obf.getfClass()) {
 						String aux2[] = new String[4];
-						aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
-						aux2[1] = "\""
-								+ fichero[0]
-								+ fichero[1].replace(".java", this.codigoPrevio
-										+ ".java") + "\"";
+						
+						if(!SsooValidator.isUnix()){	//	No Linux
+							aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
+							aux2[1] = "\""
+									+ fichero[0]
+									+ fichero[1].replace(".java", this.codigoPrevio
+											+ ".java") + "\"";
+						}else{							//	Si linux
+							aux2[0] = this.omvj.getDir() + "javac";
+							aux2[1] = fichero[0]
+									+ fichero[1].replace(".java", this.codigoPrevio
+											+ ".java");
+						}
+						
 						aux2[2] = "-classpath";
 						aux2[3] = getRunningPath();
 						LlamadorSistema.ejecucionArray(aux2);
 					}
 					String aux2[] = new String[6];
-					aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
-					aux2[1] = "-d";
-					aux2[2] = ".\\";
-					aux2[3] = "\""
-							+ fichero[1].replace(".java", this.codigoPrevio
-									+ ".java") + "\"";
+					if(!SsooValidator.isUnix()){	//	No Linux
+						aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
+						aux2[2] = ".\\";
+						aux2[3] = "\""
+								+ fichero[1].replace(".java", this.codigoPrevio
+										+ ".java") + "\"";
+					}else{							//	Si linux
+						aux2[0] = this.omvj.getDir() + "javac";
+						aux2[2] = "./";
+						aux2[3] = fichero[1].replace(".java", this.codigoPrevio
+										+ ".java");
+					}
+					aux2[1] = "-d";					
+					
 					aux2[4] = "-classpath";
 					aux2[5] = getRunningPath();
 					salidaCompilador = LlamadorSistema.ejecucionArray(aux2);
@@ -547,7 +577,11 @@ public class Preprocesador extends Thread {
 
 			if (!this.obf.getfClasszv()) {
 				String aux3[] = new String[6];
-				aux3[0] = "\"" + this.omvj.getDir() + "javac\"";
+				if(!SsooValidator.isUnix()){	//	No Linux
+					aux3[0] = "\"" + this.omvj.getDir() + "javac\"";
+				}else{							//	Si linux
+					aux3[0] = this.omvj.getDir() + "javac";
+				}
 				aux3[1] = "-d";
 				aux3[2] = "\"" + fichero[0] + "\\";
 				aux3[3] = "\" SRec_" + fich2;
@@ -559,9 +593,14 @@ public class Preprocesador extends Thread {
 					85);
 
 			String aux3[] = new String[6];
-			aux3[0] = "\"" + this.omvj.getDir() + "javac\"";
+			if(!SsooValidator.isUnix()){	//	No Linux
+				aux3[0] = "\"" + this.omvj.getDir() + "javac\"";
+				aux3[2] = ".\\";
+			}else{							//	Si linux
+				aux3[0] = this.omvj.getDir() + "javac";
+				aux3[2] = "./";
+			}
 			aux3[1] = "-d";
-			aux3[2] = ".\\";
 			aux3[3] = "SRec_" + fich2;
 			aux3[4] = "-classpath";
 			aux3[5] = getRunningPath();

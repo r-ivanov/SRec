@@ -30,8 +30,6 @@ import opciones.*;
 import utilidades.*;
 import ventanas.*;
 
-import utilidades.BuscadorMVJava;
-
 /**
  * Implementa el cuadro que permite configurar la opción de Máquina virtual de
  * java
@@ -338,9 +336,19 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener,
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
 		} else if (e.getSource() == this.examinar) {
+			String autorellenado = "";
+			String definicion = null;
+			String extension = null;
+			if(SsooValidator.isWindows()){
+				autorellenado = "java.exe";
+				definicion = Texto.get("ARCHIVO_EXE", Conf.idioma);
+				extension = "exe";
+			}else{
+				autorellenado = "java";
+			}
 			this.fichero = SelecDireccion.cuadroAbrirFichero(this.fichero[0],
-					Texto.get("COMVJ_SELECTITULO", Conf.idioma), "java.exe",
-					"exe", Texto.get("ARCHIVO_EXE", Conf.idioma), 1);
+					Texto.get("COMVJ_SELECTITULO", Conf.idioma), autorellenado,
+					extension, definicion, 1);
 			// *1* Comprobar que fichero existe
 			if (this.fichero[1] != null) {
 				this.campoDireccion.setText(this.fichero[0] + this.fichero[1]);					

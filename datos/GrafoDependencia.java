@@ -248,8 +248,8 @@ public class GrafoDependencia {
 		GraphConstants.setMoveable(indice.getAttributes(), false);
 		GraphConstants.setSelectable(indice.getAttributes(), false);
 		GraphConstants.setEditable(indice.getAttributes(), false);
-		GraphConstants.setFont(indice.getAttributes(), new Font("Arial",
-				Font.BOLD, TAM_FUENTE));
+//		GraphConstants.setFont(indice.getAttributes(), new Font("Arial",
+//				Font.BOLD, TAM_FUENTE));
 		GraphConstants.setBackground(indice.getAttributes(), Conf.colorPanel);
 		GraphConstants.setForeground(indice.getAttributes(), Color.LIGHT_GRAY);
 		GraphConstants.setOpaque(indice.getAttributes(), true);
