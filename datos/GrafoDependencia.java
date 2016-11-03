@@ -424,7 +424,10 @@ public class GrafoDependencia {
 		GraphConstants.setOpaque(lineaX2.getAttributes(), false);
 		
 		//	Corrección para cuando texto es mas ancho que el ancho de la tabla
-		String textoX = "Valores de "+this.expresionParaColumna;
+		String textoX = "";
+		if(this.expresionParaColumna != null && !this.expresionParaColumna.equals("")){
+			textoX = "Valores de "+this.expresionParaColumna;
+		}		
 		int textoLongitudX = ANCHO_PIXEL_CARACTER*textoX.length();
 		int limiteTextoX = GrafoDependencia.MARGEN_TABLA+this.getNumeroColumnasTabla()*this.anchuraCuadroMatriz;
 		if(textoLongitudX>limiteTextoX){
@@ -455,7 +458,10 @@ public class GrafoDependencia {
 		GraphConstants.setOpaque(lineaY2.getAttributes(), false);
 		
 		//	Corrección para cuando texto es mas alto que el alto de la tabla
-		String textoY = "Valores de "+this.expresionParaFila;
+		String textoY = "";
+		if(this.expresionParaFila != null && !this.expresionParaFila.equals("")){
+			textoY = "Valores de "+this.expresionParaColumna;
+		}
 		int textoLongitudY = ANCHO_PIXEL_CARACTER*textoY.length();
 		int limiteTextoY = GrafoDependencia.MARGEN_TABLA+this.getNumeroFilasTabla()*this.alturaCuadroMatriz;
 		if(textoLongitudY>limiteTextoY){
