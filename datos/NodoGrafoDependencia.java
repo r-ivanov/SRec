@@ -380,6 +380,23 @@ public class NodoGrafoDependencia {
 		return this.arraysIguales(this.registroActivacion.getParametros(),
 				nodo.registroActivacion.getParametros());
 	}
+	
+	/**
+	 * Devuelve el valor del parámetro de entrada especificado en "parametro"
+	 * 		para el nodo "nodo"
+	 * @param nodo	Nodo del que queremos obtener el valor del parámetro
+	 * @param parametro	Parámetro del que queremos obtener el valor
+	 * @return	Valor del parámetro especificado en "parametro" para el nodo "nodo"
+	 */
+	public String getValorParametro(NodoGrafoDependencia nodo, String parametro){
+		String[] nombreParametros = nodo.registroActivacion.getNombreParametros();
+		for(int i=0;i<nombreParametros.length;i++){
+			if(nombreParametros[i].equals(parametro)){
+				return nodo.registroActivacion.getEntradasString()[i];
+			}
+		}
+		return new String("");
+	}
 
 	/**
 	 * Permite comprar el contenido de dos arrays.

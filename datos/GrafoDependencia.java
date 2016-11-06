@@ -234,16 +234,19 @@ public class GrafoDependencia {
 	 * @param fila
 	 *            true si se trata de una fila, false si es una columna.
 	 *            
-	 * @param invertirEjes
-	 * 			Permite saber si queremos invertir los indices de los ejes o no            
+	 * @param invertirFilas
+	 * 				True si queremos orden decreciente, false si queremos orden creciente (para filas)
+	 * 
+	 * @param invertirColumnas
+	 * 				True si queremos orden decreciente, false si queremos orden creciente (para columnas)
 	 * 
 	 * @return Celda para el grafo que representa el índice.
 	 */
-	private DefaultGraphCell crearIndiceParaTabla(int valor, boolean fila, boolean invertirEjes) {
+	private DefaultGraphCell crearIndiceParaTabla(int valor, boolean fila, boolean invertirFilas, boolean invertirColumnas) {
 		String valorString;
-		if(invertirEjes && fila){
+		if(invertirFilas && fila){
 			valorString = String.valueOf(this.numeroFilasTabla-valor-1);
-		}else if(invertirEjes && !fila){
+		}else if(invertirColumnas && !fila){
 			valorString = String.valueOf(this.numeroColumnasTabla-valor-1);
 		}else{
 			valorString = String.valueOf(valor);
@@ -327,7 +330,8 @@ public class GrafoDependencia {
 
 		boolean dibujarTabla = this.numeroFilasTabla >= 1
 				&& this.numeroColumnasTabla >= 1;
-		if (dibujarTabla) {
+		boolean[] invertirEjes = this.invertirEjes();
+		if (dibujarTabla) {			
 			int tamanioMarcadorEjesParaFila = this.numeroFilasTabla > 1 ? TAMANIO_MARCADORES_EJES
 					: 0;
 			for (int fila = 0; fila <= this.numeroFilasTabla; fila++) {
@@ -339,7 +343,7 @@ public class GrafoDependencia {
 				representacionGrafo.getGraphLayoutCache().insert(linea);
 				if (fila != this.numeroFilasTabla && this.numeroFilasTabla > 1) {
 					DefaultGraphCell indice = this.crearIndiceParaTabla(fila,
-							true, esTabulado);
+							true, invertirEjes[0],invertirEjes[1]);
 					representacionGrafo.getGraphLayoutCache().insert(indice);
 				}
 			}
@@ -356,7 +360,7 @@ public class GrafoDependencia {
 						&& (this.numeroColumnasTabla > 1 || this.numeroColumnasTabla == 1
 								&& this.numeroFilasTabla == 1)) {
 					DefaultGraphCell indice = this.crearIndiceParaTabla(
-							columna, false, esTabulado);
+							columna, false, invertirEjes[0],invertirEjes[1]);
 					representacionGrafo.getGraphLayoutCache().insert(indice);
 				}
 			}
@@ -368,7 +372,11 @@ public class GrafoDependencia {
 		}		
 		
 		if (!this.nodosPosicionados) {
-			this.posicionarNodosSegunTabulado(esTabulado);
+			if(esTabulado){
+				this.posicionarNodosSegunTabulado(invertirEjes[0],invertirEjes[1]);
+			}else{
+				this.posicionarNodosSegunTabulado(false,false);
+			}
 			this.nodosPosicionados = true;
 		}
 
@@ -562,28 +570,35 @@ public class GrafoDependencia {
 	 * Posiciona los nodos del grafo según lo que especifique la matriz de
 	 * tabulado actual.
 	 * 
-	 * @param esTabulado Indica si se genera al pulsar "Tabular nodos del grafo" o no
+	 * @param invertirFilas False = Orden creciente, True = Orden decreciente para filas
+	 * @param invertirColumnas False = Orden creciente, True = Orden decreciente para columnas
 	 */
-	private void posicionarNodosSegunTabulado(boolean esTabulado) {
+	private void posicionarNodosSegunTabulado(boolean invertirFilas, boolean invertirColumnas) {
 		for (int fila = 0; fila < this.matrizTabulado.numFilas(); fila++) {
 			for (int columna = 0; columna < this.matrizTabulado.numColumnas(); columna++) {
 				NodoGrafoDependencia nodo = this.matrizTabulado.get(fila,
 						columna);
 				if (nodo != null) {
 					int x,y;
-					if(!esTabulado){	//	Representación visual "tabla por defecto"
-						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
-							+ columna * this.anchuraCuadroMatriz;
+					
+					if(invertirFilas){
 						y = MARGEN_TABLA
-							+ MARGEN_NODOS_ALTURA + fila
-							* this.alturaCuadroMatriz;
-					}else{				//	Representación visual "tabla tabular nodos grafo"
+								+ MARGEN_NODOS_ALTURA + (this.matrizTabulado.numFilas()-1-fila)
+								* this.alturaCuadroMatriz;
+					}else{
+						y = MARGEN_TABLA
+								+ MARGEN_NODOS_ALTURA + fila
+								* this.alturaCuadroMatriz;
+					}
+					
+					if(invertirColumnas){
 						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
 								+ (this.matrizTabulado.numColumnas()-1-columna) * this.anchuraCuadroMatriz;
-						y = MARGEN_TABLA
-							+ MARGEN_NODOS_ALTURA + (this.matrizTabulado.numFilas()-1-fila)
-							* this.alturaCuadroMatriz;
+					}else{
+						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
+								+ columna * this.anchuraCuadroMatriz;
 					}
+					
 					nodo.setPosicion(x, y);					
 				}
 			}
@@ -885,5 +900,42 @@ public class GrafoDependencia {
 			}
 		}
 		return posicion;
+	}
+	
+	/**
+	 * Heurística que intenta obtener la mejor representación del grafo tabulado automáticamente
+	 * 
+	 * @return Array de booleanos donde la primera posición indica si las filas deben estar
+	 * 		en orden creciente (true) o en orden decreciente(false) y la segunda posición 
+	 * 		indica si las columnas deben estar en orden creciente (true) o en orden decreciente(false)
+	 */
+	private boolean[] invertirEjes(){
+		//	Miramos si es necesario invertir los ejes de la fila y/o de las columnas
+		NodoGrafoDependencia raiz = this.nodos.get(0);
+		String nombreFilaPadre = this.expresionParaFila;
+		String nombreColumnaPadre = this.expresionParaColumna;
+		String valorFilaPadre = raiz.getValorParametro(raiz, nombreFilaPadre);
+		String valorColumnaPadre = raiz.getValorParametro(raiz,	nombreColumnaPadre);
+		List<NodoGrafoDependencia> listaHijos = raiz.getDependencias();
+		boolean[] retorno = new boolean[2];
+		retorno[0] = false;
+		retorno[1] = false;
+		for(NodoGrafoDependencia nodoHijo:listaHijos){
+			String valorFilaHijo = raiz.getValorParametro(nodoHijo, nombreFilaPadre);
+			String valorColumnaHijo = raiz.getValorParametro(nodoHijo,	nombreColumnaPadre);
+			//	Si el valor de la fila del hijo de la raiz es menor 
+			//	implica que las filas van en orden decreciente, invertimos
+			try{
+				if(Integer.parseInt(valorFilaHijo)<Integer.parseInt(valorFilaPadre)){
+					retorno[0] = true;
+				}
+				if(Integer.parseInt(valorColumnaHijo)<Integer.parseInt(valorColumnaPadre)){
+					retorno[1] = true;
+				}
+			}catch(Exception e){
+				continue;
+			}
+		}
+		return retorno;
 	}
 }
