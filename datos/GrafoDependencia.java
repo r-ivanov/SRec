@@ -233,13 +233,18 @@ public class GrafoDependencia {
 	 *            indice para filas o columnas.
 	 * @param fila
 	 *            true si se trata de una fila, false si es una columna.
+	 *            
+	 * @param invertirEjes
+	 * 			Permite saber si queremos invertir los indices de los ejes o no            
 	 * 
 	 * @return Celda para el grafo que representa el índice.
 	 */
-	private DefaultGraphCell crearIndiceParaTabla(int valor, boolean fila) {
+	private DefaultGraphCell crearIndiceParaTabla(int valor, boolean fila, boolean invertirEjes) {
 		String valorString;
-		if(this.expresionParaFila!=null && this.expresionParaColumna!=null){
-			valorString = String.valueOf(valor);
+		if(invertirEjes && fila){
+			valorString = String.valueOf(this.numeroFilasTabla-valor-1);
+		}else if(invertirEjes && !fila){
+			valorString = String.valueOf(this.numeroColumnasTabla-valor-1);
 		}else{
 			valorString = String.valueOf(valor);
 		}
@@ -276,10 +281,10 @@ public class GrafoDependencia {
 
 	/**
 	 * Devuelve la representación visual del grafo de dependencia.
-	 * 
+	 * @param esTabulado Indica si se genera al pulsar "Tabular nodos del grafo" o no
 	 * @return Representación visual del grafo.
 	 */
-	public JGraph obtenerRepresentacionGrafo() {
+	public JGraph obtenerRepresentacionGrafo(boolean esTabulado) {
 
 		DefaultGraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
@@ -334,7 +339,7 @@ public class GrafoDependencia {
 				representacionGrafo.getGraphLayoutCache().insert(linea);
 				if (fila != this.numeroFilasTabla && this.numeroFilasTabla > 1) {
 					DefaultGraphCell indice = this.crearIndiceParaTabla(fila,
-							true);
+							true, esTabulado);
 					representacionGrafo.getGraphLayoutCache().insert(indice);
 				}
 			}
@@ -351,7 +356,7 @@ public class GrafoDependencia {
 						&& (this.numeroColumnasTabla > 1 || this.numeroColumnasTabla == 1
 								&& this.numeroFilasTabla == 1)) {
 					DefaultGraphCell indice = this.crearIndiceParaTabla(
-							columna, false);
+							columna, false, esTabulado);
 					representacionGrafo.getGraphLayoutCache().insert(indice);
 				}
 			}
@@ -363,7 +368,7 @@ public class GrafoDependencia {
 		}		
 		
 		if (!this.nodosPosicionados) {
-			this.posicionarNodosSegunTabulado();
+			this.posicionarNodosSegunTabulado(esTabulado);
 			this.nodosPosicionados = true;
 		}
 
@@ -460,7 +465,7 @@ public class GrafoDependencia {
 		//	Corrección para cuando texto es mas alto que el alto de la tabla
 		String textoY = "";
 		if(this.expresionParaFila != null && !this.expresionParaFila.equals("")){
-			textoY = "Valores de "+this.expresionParaColumna;
+			textoY = "Valores de "+this.expresionParaFila;
 		}
 		int textoLongitudY = ANCHO_PIXEL_CARACTER*textoY.length();
 		int limiteTextoY = GrafoDependencia.MARGEN_TABLA+this.getNumeroFilasTabla()*this.alturaCuadroMatriz;
@@ -474,7 +479,7 @@ public class GrafoDependencia {
 		DefaultPort port3 = new DefaultPort();
 		lineaY2.add(port3);			
 		
-		//	Títulos con flechas para cada eje
+		//	Títulos para cada eje
 		
 		DefaultEdge edgeX = new DefaultEdge(new String(textoX));
 		edgeX.setSource(lineaX1.getChildAt(0));
@@ -556,17 +561,30 @@ public class GrafoDependencia {
 	/**
 	 * Posiciona los nodos del grafo según lo que especifique la matriz de
 	 * tabulado actual.
+	 * 
+	 * @param esTabulado Indica si se genera al pulsar "Tabular nodos del grafo" o no
 	 */
-	private void posicionarNodosSegunTabulado() {
+	private void posicionarNodosSegunTabulado(boolean esTabulado) {
 		for (int fila = 0; fila < this.matrizTabulado.numFilas(); fila++) {
 			for (int columna = 0; columna < this.matrizTabulado.numColumnas(); columna++) {
 				NodoGrafoDependencia nodo = this.matrizTabulado.get(fila,
 						columna);
 				if (nodo != null) {
-					nodo.setPosicion(MARGEN_TABLA + MARGEN_NODOS_ANCHURA
-							+ columna * this.anchuraCuadroMatriz, MARGEN_TABLA
+					int x,y;
+					if(!esTabulado){	//	Representación visual "tabla por defecto"
+						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
+							+ columna * this.anchuraCuadroMatriz;
+						y = MARGEN_TABLA
 							+ MARGEN_NODOS_ALTURA + fila
-							* this.alturaCuadroMatriz);
+							* this.alturaCuadroMatriz;
+					}else{				//	Representación visual "tabla tabular nodos grafo"
+						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
+								+ (this.matrizTabulado.numColumnas()-1-columna) * this.anchuraCuadroMatriz;
+						y = MARGEN_TABLA
+							+ MARGEN_NODOS_ALTURA + (this.matrizTabulado.numFilas()-1-fila)
+							* this.alturaCuadroMatriz;
+					}
+					nodo.setPosicion(x, y);					
 				}
 			}
 		}

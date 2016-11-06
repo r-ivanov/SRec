@@ -95,7 +95,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 		this.grafoDependencia = new GrafoDependencia(
 				this.ventana.trazaCompleta, this.metodo);
 		this.representacionGrafo = this.grafoDependencia
-				.obtenerRepresentacionGrafo();
+				.obtenerRepresentacionGrafo(false);
 
 		this.representacionGrafoScroll = new JScrollPane(
 				this.representacionGrafo);
@@ -266,7 +266,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 	public void dibujarTabla(int filas, int columnas) {
 		this.grafoDependencia.setTamanioTabla(filas, columnas);
 		this.representacionGrafo = this.grafoDependencia
-				.obtenerRepresentacionGrafo();
+				.obtenerRepresentacionGrafo(false);
 
 		this.remove(this.representacionGrafoScroll);
 		this.representacionGrafoScroll = new JScrollPane(
@@ -293,7 +293,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 				expresionParaColumna);
 		if (mensajeError == null) {
 			this.representacionGrafo = this.grafoDependencia
-					.obtenerRepresentacionGrafo();
+					.obtenerRepresentacionGrafo(true);
 
 			this.remove(this.representacionGrafoScroll);
 			this.representacionGrafoScroll = new JScrollPane(
