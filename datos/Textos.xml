@@ -337,6 +337,8 @@
 		<T valor="Draw matrix on graph" idioma="en" id="GP_DIBUJAR_MATRIZ"/>	
 		<T valor="Tabular nodos del grafo" idioma="es" id="GP_TABULAR_MATRIZ"/>
 		<T valor="Tabulate graph nodes" idioma="en" id="GP_TABULAR_MATRIZ"/>
+		<T valor="Invertir flechas del grafo" idioma="es" id="GP_INVERTIR_FLECHAS"/>
+		<T valor="Reverse graph arrows" idioma="en" id="GP_INVERTIR_FLECHAS"/>
 		
 		<T valor="Datos de entrada y salida..." idioma="es" id="GP_DATOS_ENTRADA"/>
 		<T valor="Input and output data..." idioma="en" id="GP_DATOS_ENTRADA"/>

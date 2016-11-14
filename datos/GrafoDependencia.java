@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,7 +49,8 @@ public class GrafoDependencia {
 	private static final int MARGEN_NODOS_ANCHURA = 50;
 	private static final int MARGEN_NODOS_ALTURA = 30;
 
-	private List<NodoGrafoDependencia> nodos;
+	private List<NodoGrafoDependencia> nodos;	
+
 	private MatrizDinamica<NodoGrafoDependencia> matrizTabulado;
 	private int anchuraCuadroMatriz;
 	private int alturaCuadroMatriz;
@@ -937,5 +939,14 @@ public class GrafoDependencia {
 			}
 		}
 		return retorno;
+	}
+	
+	/**
+	 * Obtiene una lista inmodificable de los nodos, para cambiar
+	 * 		la orientación de las aristas
+	 * @return Lista inmodificable de nodos del grafo
+	 */
+	public List<NodoGrafoDependencia> getNodos() {
+		return Collections.unmodifiableList(nodos);
 	}
 }

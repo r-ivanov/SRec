@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,6 +31,7 @@ import cuadros.CuadroDibujarTablaGrafoDependencia;
 import cuadros.CuadroTabularGrafoDependencia;
 import datos.DatosMetodoBasicos;
 import datos.GrafoDependencia;
+import datos.NodoGrafoDependencia;
 
 /**
  * Representa el cuadro donde se mostrará el grafo de dependencia.
@@ -176,7 +178,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 	 */
 	private void crearBarraDeHerramientas() {
 
-		this.botones = new JButton[6];
+		this.botones = new JButton[7];
 
 		this.botones[0] = new JButton(new ImageIcon(
 				getClass().getClassLoader().getResource("imagenes/i_tabulado.gif")));
@@ -203,6 +205,10 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 				getClass().getClassLoader().getResource("imagenes/i_zoomajuste.gif")));
 		this.botones[5]
 				.setToolTipText(Texto.get("GP_AJUSTE_ZOOM", Conf.idioma));
+		this.botones[6] = new JButton(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/i_invertir_flechas_grafo.gif")));
+		this.botones[6]
+				.setToolTipText(Texto.get("GP_INVERTIR_FLECHAS", Conf.idioma));
 
 		// Creamos las barras de herramientas
 		this.barras = new JToolBar[3];
@@ -224,6 +230,7 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 		this.barras[2].add(this.botones[3]);
 		this.barras[2].add(this.botones[4]);
 		this.barras[2].add(this.botones[5]);
+		this.barras[2].add(this.botones[6]);
 
 		this.panelHerramientas = new JPanel();
 		this.panelHerramientas.setLayout(new BorderLayout());
@@ -329,9 +336,30 @@ public class VentanaGrafoDependencia extends JFrame implements ActionListener,
 			double scale = Math.min(this.representacionGrafo.getScale()
 					+ SCALE_INCREMENTO, MAX_SCALE);
 			this.representacionGrafo.setScale(scale);
+		} else if(e.getSource() == this.botones[6]){			
+			this.invertirFlechasGrafo();
 		}
 	}
 
+	/**
+	 * Invierte las flechas del grafo
+	 */
+	private void invertirFlechasGrafo(){
+		List<NodoGrafoDependencia> listaNodos = this.grafoDependencia.getNodos();
+		for(NodoGrafoDependencia nodo:listaNodos){
+			nodo.invertirAristas();					
+		}
+		this.representacionGrafo = this.grafoDependencia
+				.obtenerRepresentacionGrafo(true);
+
+		this.remove(this.representacionGrafoScroll);
+		this.representacionGrafoScroll = new JScrollPane(
+				this.representacionGrafo);
+		this.add(this.representacionGrafoScroll);
+		
+		this.ajustarGrafoATamanioVentana(true);
+		this.revalidate();
+	}
 	@Override
 	public void keyPressed(KeyEvent e) {
 

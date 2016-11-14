@@ -441,6 +441,18 @@ public class NodoGrafoDependencia {
 		this.aristas.add(arista);
 		this.dependencias.add(nodo);
 	}
+	
+	/**
+	 * Permite invertir las aristas / flechas del nodo
+	 */
+	public void invertirAristas(){
+		for(DefaultEdge e:this.aristas){
+			Object origen = e.getSource();
+			Object destino = e.getTarget();
+			e.setSource(destino);
+			e.setTarget(origen);
+		}		
+	}
 
 	/**
 	 * Devuelve las celdas que modelan la representación visual del nodo como
