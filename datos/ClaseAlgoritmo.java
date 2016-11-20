@@ -13,8 +13,10 @@ public class ClaseAlgoritmo {
 	private String nombre_id;
 	private String nombre_id2;
 
-	private ArrayList<MetodoAlgoritmo> metodos = new ArrayList<MetodoAlgoritmo>(
-			0);
+	private ArrayList<MetodoAlgoritmo> metodos = new ArrayList<MetodoAlgoritmo>(0);
+
+	private static MetodoAlgoritmo ultimoMetodoSeleccionado;
+	private static String ultimaClaseSeleccionada;	
 
 	/**
 	 * Permite construir una nueva instancia dados el path de la clase y el
@@ -28,6 +30,13 @@ public class ClaseAlgoritmo {
 	public ClaseAlgoritmo(String path, String nombre) {
 		this.path = path;
 		this.nombre = nombre;
+		//	Si el último método seleccionado pertenece a otra
+		//	clase se borra
+		if(ultimoMetodoSeleccionado != null && ultimaClaseSeleccionada != null &&
+				!nombre.equals(ultimaClaseSeleccionada)){
+			ultimoMetodoSeleccionado=null;
+			ultimaClaseSeleccionada=null;
+		}
 	}
 
 	/**
@@ -61,7 +70,7 @@ public class ClaseAlgoritmo {
 
 		if (this.metodos.size() == 0) {
 			m.setMarcadoPrincipal(true);
-		}
+		}		
 
 		boolean sonIguales = false;
 		int i = 0;
@@ -276,6 +285,61 @@ public class ClaseAlgoritmo {
 		}
 
 		return false;
+	}	
+
+	/**
+	 * Establece el último método seleccionado por el usuario
+	 * @param ultimoMetodoSeleccionado Último método seleccionado por el usuario
+	 * @param ultimaClase Nombre de la clase a la que pertenece el último método seleccionado por el usuario
+	 */
+	public static void setUltimoMetodoSeleccionado(MetodoAlgoritmo ultimoMetodoSeleccionado, String ultimaClase) {
+		ClaseAlgoritmo.ultimoMetodoSeleccionado = ultimoMetodoSeleccionado;
+		ClaseAlgoritmo.ultimaClaseSeleccionada = ultimaClase;
+	}
+	
+	/**
+	 * Obtiene el último método seleccionado por el usuario
+	 * @return Último método seleccionado por el usuario
+	 */
+	public static MetodoAlgoritmo getUltimoMetodoSeleccionado() {
+		return ultimoMetodoSeleccionado;
+	}
+
+	/**
+	 * Compara un método pasado como parámetro con el último método seleccionado por el usuario.
+	 * @param nuevoMetodoAComparar Método a comparar con el último seleccionado
+	 * @param nombreClase Nombre de la clase del método a comparar
+	 * @return Si coinciden el nombre de la clase, nombre del método y
+	 * 	número y tipo de parámetros en el mismo orden TRUE, FALSE caso contrario
+	 */
+	public boolean compararUltimoMetodoSeleccionado(MetodoAlgoritmo nuevoMetodoAComparar, String nombreClase){
+		//	Si el último método seleccionado es null o los nombres de las clases no coinciden
+		//		devolvemos false
+		if(ClaseAlgoritmo.ultimoMetodoSeleccionado == null || !(ClaseAlgoritmo.ultimaClaseSeleccionada.equals(nombreClase))){
+			return false;
+		//	Si no comparamos nombre del método, número y tipo de parámetros
+		}else{
+			//	Nombre y numero de parámetros
+			if(ClaseAlgoritmo.ultimoMetodoSeleccionado.getNombre().equals(nuevoMetodoAComparar.getNombre()) &&
+					ClaseAlgoritmo.ultimoMetodoSeleccionado.getNumeroParametros() == nuevoMetodoAComparar.getNumeroParametros()){
+				//	Comparamos que el tipo de los parámetros sean idénticos y en el mismo orden
+				for(int i=0;i<ClaseAlgoritmo.ultimoMetodoSeleccionado.getNumeroParametros(); i++){
+					if(!ClaseAlgoritmo.ultimoMetodoSeleccionado.getTipoParametro(i).equals(nuevoMetodoAComparar.getTipoParametro(i))){
+						return false;
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+	}
+	
+	/**
+	 * Obtiene el nombre de la última clase cargada
+	 * @return Nombre última clase cargada
+	 */
+	public static String getUltimaClaseSeleccionada() {
+		return ultimaClaseSeleccionada;
 	}
 
 }

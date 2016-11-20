@@ -2127,6 +2127,14 @@ public class Ventana extends JFrame implements ActionListener {
 //			this.botones[28].setEnabled(false);
 			this.recogerMetodoUnico();
 		}
+		
+		//	Si existe un último método marcado por el usuario lo establecemos
+		//		como activo.
+		if(		this.claseAlgoritmo!=null  &&
+				ClaseAlgoritmo.getUltimaClaseSeleccionada() != null &&
+				ClaseAlgoritmo.getUltimoMetodoSeleccionado()!=null){
+			this.recogerUltimoMetodoSeleccionado();
+		}
 	}
 
 	/**
@@ -2514,7 +2522,58 @@ public class Ventana extends JFrame implements ActionListener {
             this.habilitarOpcionesAnimacion(false);
 		}
 	}
+	
+	/**
+	 * Permite establecer como activo el último método seleccionado
+	 * @param ultimoMetodoSeleccionado
+	 */
+	private void recogerUltimoMetodoSeleccionado() {
+		boolean errorProducido = false;
+		ArrayList<MetodoAlgoritmo> metodos = new ArrayList<MetodoAlgoritmo>(0);
+		
+		//	Obtenemos el método
+		metodos = this.claseAlgoritmo.getMetodosProcesados();		
+		
+		// Actualizar cuál es el método principal
+		this.claseAlgoritmo.borrarMarcadoPrincipal();
+		
+		for (int i = 0; i < metodos.size(); i++) {
+			if(claseAlgoritmo.compararUltimoMetodoSeleccionado(metodos.get(i), this.claseAlgoritmo.getNombre())){
+				metodos.get(i).setMarcadoPrincipal(
+						true);
+				metodos.get(i).setMarcadoVisualizar(
+						true);				
+			}else{
+				metodos.get(i).setMarcadoPrincipal(
+						false);
+				metodos.get(i).setMarcadoVisualizar(
+						false);	
+			}
+			this.claseAlgoritmo.addMetodo(metodos.get(i));
+		}
+		
 
+		if (!errorProducido) {
+			// Actualizamos la clase
+			MetodoAlgoritmo ma = this.claseAlgoritmo.getMetodoPrincipal();
+			if (Conf.fichero_log) {
+				String mensaje = "Método seleccionado: "
+						+ ma.getRepresentacion();
+				Logger.log_write(mensaje);				
+			}
+			//this.setClase(this.claseAlgoritmo);
+
+			// Cerramos la visualización actual.
+			this.cerrarVistas();
+			// Escribir signatura del método seleccionado
+			this.setValoresPanelControl(ma.getRepresentacion());
+			// Habilitamos la opcion para asignar parametros y ejecutar
+			this.setClaseHabilitadaAnimacion(true);
+			this.setClasePendienteGuardar(false);
+            // Deshabilitamos las opciones de la animación por si estuviesen activas.
+            this.habilitarOpcionesAnimacion(false);
+		}
+	}
 	/**
 	 * Permite notificar a la ventana si pueden ejecutarse animaciones sobre la
 	 * clase cargada o no.

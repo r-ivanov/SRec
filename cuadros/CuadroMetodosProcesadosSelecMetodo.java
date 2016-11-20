@@ -150,6 +150,10 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 				this.grupoBotones.add(this.botonesRadio[i]);
 				this.botonesRadio[i].setSelected(this.metodos.get(i)
 						.getMarcadoPrincipal());
+				//	Si es el último método seleccionado por el usuario lo marcamos
+				if(this.clase.compararUltimoMetodoSeleccionado(this.metodos.get(i),this.clase.getNombre())){
+					this.botonesRadio[i].setSelected(true);
+				}
 				this.botonesCheck[i].setSelected(this.metodos.get(i)
 						.getMarcadoVisualizar());
 
@@ -287,6 +291,11 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 		// Actualizar cuál es el método principal
 		this.clase.borrarMarcadoPrincipal();
 		for (int i = 0; i < this.numero; i++) {
+			//	Guardamos el último método seleccionado para que SREC
+			//		lo recuerde
+			if(this.botonesRadio[i].isSelected()==true){
+				ClaseAlgoritmo.setUltimoMetodoSeleccionado(this.metodos.get(i),this.clase.getNombre());
+			}
 			this.metodos.get(i).setMarcadoPrincipal(
 					this.botonesRadio[i].isSelected());
 			this.metodos.get(i).setMarcadoVisualizar(
@@ -296,7 +305,7 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 
 		if (!errorProducido) {
 			// Actualizamos la clase
-			MetodoAlgoritmo ma = this.clase.getMetodoPrincipal();
+			MetodoAlgoritmo ma = this.clase.getMetodoPrincipal();			
 			if (Conf.fichero_log) {
 				String mensaje = "Método seleccionado: "
 						+ ma.getRepresentacion();
