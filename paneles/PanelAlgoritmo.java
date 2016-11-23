@@ -584,7 +584,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.panel2.removeAll();
 		
 		separadorVistas.setRightComponent(this.panel2);
-		separadorVistas.setDividerLocation(0.5);
+		int anterior = separadorVistas.getDividerLocation();
+		separadorVistas.setDividerLocation(anterior);
 		separadorVistas.setResizeWeight(0.5);
 		separadorVistas.setOneTouchExpandable(true);
 		separadorVistas.setEnabled(true);
@@ -634,7 +635,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			panelEjecuciones.addComponentListener(this);
 		} else {
 			separadorVistas.setRightComponent(this.panel2);
-			separadorVistas.setDividerLocation(0.5);
+			int anterior = separadorVistas.getDividerLocation();
+			separadorVistas.setDividerLocation(anterior);
 			separadorVistas.setResizeWeight(0.5);
 			separadorVistas.setOneTouchExpandable(true);
 			separadorVistas.setEnabled(true);
