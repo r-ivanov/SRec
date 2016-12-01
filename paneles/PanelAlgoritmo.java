@@ -70,7 +70,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	private JPanel jspArbol;
 
 	private JPanel contenedorCompilador, contenedorCodigo, contenedorTraza,
-	contenedorPila, contenedorArbol, contenedorControl,
+	contenedorPila, contenedorArbol, contenedorControl, contenedorGrafo,
 	contenedorCrono, contenedorEstructura;
 
 	private JTabbedPane panel1, panel2;
@@ -649,6 +649,15 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		} else {
 			this.panel2.add(Texto.get(Vista.codigos[0], Conf.idioma),
 					this.contenedorArbol);
+		}
+		
+		// Vista de grafo
+		if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
+			this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
+					this.contenedorGrafo);
+		} else {
+			this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
+					this.contenedorGrafo);
 		}
 
 		if (Ventana.thisventana.getTraza() != null) // Será null si estamos

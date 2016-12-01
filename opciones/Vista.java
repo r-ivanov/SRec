@@ -9,7 +9,7 @@ public class Vista {
 	public static final int TIPO_DYV = 2;
 
 	public static final String codigos[] = { "V_ARBOL", "V_PILA", "V_TRAZA",
-			"V_ESTRUC" };
+			"V_ESTRUC", "V_GRAFO_DEP" };
 	private String codigo;
 
 	private boolean activa = false;

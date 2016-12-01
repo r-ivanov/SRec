@@ -782,7 +782,9 @@
 		<T valor="Vista cronol[oacute]gica" idioma="es" id="V_CRONO"/>
 		<T valor="Chronological view" idioma="en" id="V_CRONO"/>
 		<T valor="Vista de estructura" idioma="es" id="V_ESTRUC"/>
-		<T valor="Structure view" idioma="en" id="V_ESTRUC"/>	
+		<T valor="Structure view" idioma="en" id="V_ESTRUC"/>
+		<T valor="Vista de grafo" idioma="es" id="V_GRAFO_DEP"/>
+		<T valor="Graph view" idioma="en" id="V_GRAFO_DEP"/>	
 		
 		<T valor="Vistas proporcionadas" idioma="es" id="CVI_VISTASPROP"/>
 		<T valor="Offered views" idioma="en" id="CVI_VISTASPROP"/>	
