@@ -31,7 +31,7 @@ public class OpcionVistas extends Opcion {
 			for (int i = 0; i < Vista.codigos.length; i++) {
 				Vista v = new Vista(Vista.codigos[i]);
 				v.setTipo(i <= 2 ? Vista.TIPO_REC : Vista.TIPO_DYV);
-				if (i == 0 || i==4) {
+				if (i == 0) {
 					v.setPanel(1);
 				} else {
 					v.setPanel(2);

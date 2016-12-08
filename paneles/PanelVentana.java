@@ -73,12 +73,22 @@ public class PanelVentana extends JPanel {
 	public void refrescarZoomPila(int valor) {
 		this.pAlgoritmo.refrescarZoomPila(valor);
 	}
+	
+	/**
+	 * Actualiza el zoom de la visualización (vista de grafo de dependencia)
+	 * 
+	 * @param valor
+	 *            Nuevo valor de zoom.
+	 */
+	public void refrescarZoomPanelGrafoDep(int valor) {
+		this.pAlgoritmo.refrescarZoomGrafoDep(valor);
+	}
 
 	/**
 	 * Actualiza el zoom de una visualización.
 	 * 
 	 * @param vista
-	 *            1 -> pila, 0 -> arbol, 3 -> crono, 4 -> estructura.
+	 *            1 -> pila, 0 -> arbol, 3 -> crono, 4 -> estructura, 5 -> grafo
 	 * @param valor
 	 *            nuevo valor de zoom.
 	 */
@@ -246,6 +256,15 @@ public class PanelVentana extends JPanel {
 	private int[] dimPanelYPila() {
 		return this.pAlgoritmo.dimPanelYPila();
 	}
+	
+	/**
+	 * Devuelve las dimensiones del panel y grafo de dependencia.
+	 * 
+	 * @return {anchura_panel, altura_panel, achura_grafo, altura_grafo}
+	 */
+	private int[] dimPanelYGrafoDep() {
+		return this.pAlgoritmo.dimPanelYGrafoDep();
+	}
 
 	/**
 	 * Devuelve las dimensiones del grafo visible del panel cronológico.
@@ -284,16 +303,17 @@ public class PanelVentana extends JPanel {
 	}
 
 	/**
-	 * Devuelve el tamaño de los paneles de árbol, pila, crono y estructura
+	 * Devuelve el tamaño de los paneles de árbol, pila, grafo dependencia, crono y estructura
 	 * (estos dos últimos, únicamente si la visualización activa es del tipo
 	 * DYV).
 	 * 
 	 * @return {anchura_panel_arbol, altura_panel_arbol, anchura_panel_pila,
 	 *         altura_panel_pila, anchura_panel_crono, altura_panel_crono,
-	 *         anchura_panel_estructura, altura_panel_estructura}
+	 *         anchura_panel_estructura, altura_panel_estructura, anchura_panel_grafoDependencia,
+	 *         altura_panel_grafoDependencia}
 	 */
 	public int[] getTamanoPaneles() {
-		int[] dimensiones = new int[8];
+		int[] dimensiones = new int[10];
 
 		dimensiones[0] = this.dimPanelYGrafo()[0]; // Árbol
 		dimensiones[1] = this.dimPanelYGrafo()[1];
@@ -306,17 +326,20 @@ public class PanelVentana extends JPanel {
 			dimensiones[6] = this.dimPanelYGrafoEstructura()[0]; // Estrutura
 			dimensiones[7] = this.dimPanelYGrafoEstructura()[1];
 		}
+		dimensiones[8] = this.dimPanelYGrafoDep()[0];
+		dimensiones[9] = this.dimPanelYGrafoDep()[1];
 		return dimensiones;
 	}
 
 	/**
-	 * Devuelve el tamaño de los grafos de árbol, pila, crono y estructura
+	 * Devuelve el tamaño de los grafos de árbol, pila, grafo de dependencia, crono, estructura
 	 * (estos dos últimos, únicamente si la visualización activa es del tipo
 	 * DYV).
 	 * 
 	 * @return {anchura_grafo_arbol, altura_grafo_arbol, anchura_grafo_pila,
 	 *         altura_grafo_pila, anchura_grafo_crono, altura_grafo_crono,
-	 *         anchura_grafo_estructura, altura_grafo_estructura}
+	 *         anchura_grafo_estructura, altura_grafo_estructura, anchura_grafo_grafoDependencia,
+	 *         altura_grafo_grafoDependencia}
 	 */
 	public int[] getTamanoGrafos() {
 		int[] dimensiones = new int[10];
@@ -332,6 +355,8 @@ public class PanelVentana extends JPanel {
 			dimensiones[6] = this.dimGrafoVisibleEstructura()[0]; // Estrutura
 			dimensiones[7] = this.dimGrafoVisibleEstructura()[1];
 		}
+		dimensiones[8] = this.dimPanelYGrafoDep()[2];
+		dimensiones[9] = this.dimPanelYGrafoDep()[3];
 		return dimensiones;
 	}
 
@@ -458,6 +483,15 @@ public class PanelVentana extends JPanel {
 	 */
 	public int[] dimGrafoPila() {
 		return this.pAlgoritmo.dimGrafoPila();
+	}
+	
+	/**
+	 * Devuelve las dimensiones del grafo del panel de grafo de dependencia.
+	 * 
+	 * @return {anchura, altura}
+	 */
+	public int[] dimGrafoDep() {
+		return this.pAlgoritmo.dimGrafoDep();
 	}
 
 	/**

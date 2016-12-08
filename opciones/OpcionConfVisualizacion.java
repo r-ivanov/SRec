@@ -187,6 +187,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	// Zoom por defecto
 	private int zoomArbol = -35;
 	private int zoomPila = -20;
+	private int zoomGrafoDep = -20;
 
 	private int zoomCrono = -20;
 	private int zoomEstructura = -20;
@@ -664,6 +665,16 @@ public class OpcionConfVisualizacion extends Opcion {
 	public void setZoomPila(int zoom) {
 		this.zoomPila = zoom;
 	}
+	
+	/**
+	 * Permite establecer el nivel de zoom de la vista de grafo de dependencia.
+	 * 
+	 * @param zoom
+	 *            nivel de zoom.
+	 */
+	public void setZoomGrafoDep(int zoom) {
+		this.zoomGrafoDep = zoom;
+	}
 
 	/**
 	 * Permite establecer el nivel de zoom de la vista cronológica.
@@ -1087,6 +1098,15 @@ public class OpcionConfVisualizacion extends Opcion {
 	public int getZoomPila() {
 		return this.zoomPila;
 	}
+	
+	/**
+	 * Devuelve el nivel de zoom para la vista del grafo de dependencia.
+	 * 
+	 * @return Nivel de zooom para la vista de grafo de dependencia.
+	 */
+	public int getZoomGrafoDep() {
+		return this.zoomGrafoDep;
+	}
 
 	@Override
 	public Element getRepresentacionElement(Document d) {
@@ -1228,6 +1248,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		Element e32 = d.createElement("zoomsDefecto");
 		e32.setAttribute("zoomArbol", "" + this.zoomArbol);
 		e32.setAttribute("zoomPila", "" + this.zoomPila);
+		e32.setAttribute("zoomGrafoDep", "" + this.zoomGrafoDep);
 		e32.setAttribute("zoomCrono", "" + this.zoomCrono);
 		e32.setAttribute("zoomEstructura", "" + this.zoomEstructura);
 

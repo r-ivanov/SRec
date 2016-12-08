@@ -1849,6 +1849,17 @@ public class Ventana extends JFrame implements ActionListener {
 	public void actualizarZoomPila(int valor) {
 		this.panelVentana.refrescarZoomPila(valor);
 	}
+	
+	/**
+	 * Actualiza la información sobre el zoom y actualiza la visualización de la
+	 * pila.
+	 * 
+	 * @param valor
+	 *            Nuevo valor de zoom.
+	 */
+	public void actualizarZoomGrafoDep(int valor) {
+		this.panelVentana.refrescarZoomPanelGrafoDep(valor);
+	}
 
 	/**
 	 * Actualiza la información sobre el zoom y actualiza la visualización de la
@@ -2314,10 +2325,11 @@ public class Ventana extends JFrame implements ActionListener {
 	 * 
 	 * @return {anchura_panel_pila, altura_panel_pila, anchura_panel_principal,
 	 *         altura_panel_principal, anchura_panel_crono, altura_panel_crono,
-	 *         anchura_panel_estructura, altura_panel_estructura}
+	 *         anchura_panel_estructura, altura_panel_estructura,
+	 *         anchura_grafo_grafoDep, altura_grafo_grafoDep}
 	 */
 	public int[] dimensionesPanelesVisualizacion() {
-		int dimensiones[] = new int[8];
+		int dimensiones[] = new int[10];
 
 		int dimE[] = this.panelVentana.dimPanelPila();
 		int dimP[] = this.panelVentana.dimPanelPrincipal();
@@ -2334,6 +2346,9 @@ public class Ventana extends JFrame implements ActionListener {
 		dimensiones[5] = dimV[5];
 		dimensiones[6] = dimV[6];
 		dimensiones[7] = dimV[7];
+		
+		dimensiones[8] = dimV[8];
+		dimensiones[9] = dimV[9];
 
 		return dimensiones;
 	}
@@ -2344,10 +2359,11 @@ public class Ventana extends JFrame implements ActionListener {
 	 * 
 	 * @return {anchura_grafo_pila, altura_grafo_pila, anchura_grafo_arbol,
 	 *         altura_grafo_arbol, anchura_grafo_crono, altura_grafo_crono,
-	 *         anchura_grafo_estructura, altura_grafo_estructura}
+	 *         anchura_grafo_estructura, altura_grafo_estructura, 
+	 *         anchura_grafo_grafoDep, altura_grafo_grafoDep}
 	 */
 	public int[] dimensionesGrafosVisiblesVisualizacion() {
-		int dimensiones[] = new int[8];
+		int dimensiones[] = new int[10];
 
 		int dimP[] = this.panelVentana.dimGrafoPila();
 		int dimA[] = this.panelVentana.dimGrafoVisiblePrincipal();
@@ -2364,6 +2380,9 @@ public class Ventana extends JFrame implements ActionListener {
 		dimensiones[5] = dimV[5];
 		dimensiones[6] = dimV[6];
 		dimensiones[7] = dimV[7];
+		
+		dimensiones[8] = dimV[8];
+		dimensiones[9] = dimV[9];
 
 		return dimensiones;
 	}

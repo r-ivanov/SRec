@@ -49,6 +49,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 
 	private static PanelCodigo pCodigo;
 	private static PanelCompilador pCompilador;
+	private static PanelGrafo pGrafo;
 
 	private static PanelTraza pTraza;
 	private static PanelPila pPila;
@@ -66,7 +67,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	public static NombresYPrefijos nyp = null;
 
 	private static JScrollPane jspCompilador, jspCodigo, jspTraza, jspPila,
-			jspCrono, jspEstructura;
+			jspCrono, jspEstructura, jspGrafo;
 	private JPanel jspArbol;
 
 	private JPanel contenedorCompilador, contenedorCodigo, contenedorTraza,
@@ -136,6 +137,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			pPila = new PanelPila(null);
 			pArbol = new PanelArbol(null);
 			pCrono = new PanelCrono(null);
+			pGrafo = new PanelGrafo();
 		} catch (OutOfMemoryError oome) {
 			pArbol = null;
 			throw oome;
@@ -145,17 +147,20 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			throw e;
 		}
 		jspPila = new JScrollPane(pPila);
-
+		jspGrafo = new JScrollPane(pGrafo);
 		this.jspArbol = new JPanel();
 		this.jspArbol.setLayout(new BorderLayout());
 		this.jspArbol.add(pArbol, BorderLayout.CENTER);
 
 		this.contenedorPila = new JPanel();
 		this.contenedorArbol = new JPanel();
+		this.contenedorGrafo = new JPanel();
 		this.contenedorPila.setLayout(new BorderLayout());
 		this.contenedorPila.add(jspPila, BorderLayout.CENTER);
 		this.contenedorArbol.setLayout(new BorderLayout());
 		this.contenedorArbol.add(this.jspArbol, BorderLayout.CENTER);
+		this.contenedorGrafo.setLayout(new BorderLayout());
+		this.contenedorGrafo.add(jspGrafo,BorderLayout.CENTER);
 
 		jspCrono = new JScrollPane(pCrono);
 		this.contenedorCrono = new JPanel();
@@ -375,7 +380,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		try {
 			pArbol = new PanelArbol(nyp);
 			pPila = new PanelPila(nyp);
-
+			pGrafo = new PanelGrafo();
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
 				Ventana.thisventana.habilitarOpcionesDYV(true);
@@ -423,6 +428,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				.println("\n-Ha saltado una excepcion(PanelAlgoritmo)-\n");
 				pArbol = new PanelArbol(null);
 				pPila = new PanelPila(null);
+				pGrafo = new PanelGrafo();
 				pTraza = new PanelTraza();
 				pCrono = new PanelCrono(null);
 				pEstructura = new PanelEstructura(null);
@@ -436,24 +442,28 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorTraza.removeAll();
 		this.contenedorCrono.removeAll();
 		this.contenedorEstructura.removeAll();
+		this.contenedorGrafo.removeAll();		
 
 		this.jspArbol.removeAll();
 		jspPila.removeAll();
 		jspTraza.removeAll();
 		jspCrono.removeAll();
 		jspEstructura.removeAll();
-
+		jspGrafo.removeAll();
+		
 		this.jspArbol.add(pArbol);
 		jspPila = new JScrollPane(pPila);
 		jspTraza = new JScrollPane(pTraza);
 		jspCrono = new JScrollPane(pCrono);
 		jspEstructura = new JScrollPane(pEstructura);
-
+		jspGrafo = new JScrollPane(pGrafo);
+		
 		this.contenedorArbol.add(this.jspArbol);
 		this.contenedorPila.add(jspPila);
 		this.contenedorTraza.add(jspTraza);
 		this.contenedorCrono.add(jspCrono);
 		this.contenedorEstructura.add(jspEstructura);
+		this.contenedorGrafo.add(jspGrafo);
 
 		this.quitarBordesJSP();
 
@@ -463,6 +473,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorCrono.updateUI();
 		this.contenedorEstructura.updateUI();
 		this.contenedorControl.updateUI();
+		this.contenedorGrafo.updateUI();		
 		this.abriendoVistas = false;
 	}
 
@@ -482,6 +493,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			pArbol = new PanelArbol(ficheroGIF, new ImageIcon(ficheroGIF));
 			pPila = new PanelPila(null);
 			pTraza = new PanelTraza();
+			pGrafo = new PanelGrafo();
 			this.ocupado = true;
 			pControl.setValores(ficheroGIF.substring(
 					ficheroGIF.lastIndexOf("\\") + 1,
@@ -495,6 +507,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				System.out.println("\n-Ha saltado una excepcion-\n");
 				pArbol = new PanelArbol(null);
 				pPila = new PanelPila(null);
+				pGrafo = new PanelGrafo();
 				pTraza = new PanelTraza();
 				pControl = new PanelControl("", this);
 				this.ocupado = false;
@@ -505,18 +518,22 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorArbol.removeAll();
 		this.contenedorPila.removeAll();
 		this.contenedorTraza.removeAll();
-
+		this.contenedorGrafo.removeAll();
+		
 		this.jspArbol.removeAll();
 		jspPila.removeAll();
 		jspTraza.removeAll();
+		jspGrafo.removeAll();
 
 		this.jspArbol.add(pArbol);
 		jspPila = new JScrollPane(pPila);
 		jspTraza = new JScrollPane(pTraza);
-
+		jspGrafo = new JScrollPane(pGrafo);
+		
 		this.contenedorArbol.add(this.jspArbol);
 		this.contenedorPila.add(jspPila);
 		this.contenedorTraza.add(jspTraza);
+		this.contenedorGrafo.add(jspGrafo);
 
 		this.quitarBordesJSP();
 
@@ -524,6 +541,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorPila.updateUI();
 		this.contenedorTraza.updateUI();
 		this.contenedorControl.updateUI();
+		this.contenedorGrafo.updateUI();
 
 		this.abriendoVistas = false;
 	}
@@ -538,6 +556,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			Ventana.thisventana.trazaCompleta = null;
 			pArbol = new PanelArbol(null);
 			pPila = new PanelPila(null);
+			pGrafo = new PanelGrafo();
 			pTraza = new PanelTraza();
 			pCrono = new PanelCrono(null);
 			pControl.setValores("", this);
@@ -551,24 +570,28 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorTraza.removeAll();
 		this.contenedorCrono.removeAll();
 		this.contenedorEstructura.removeAll();
-
+		this.contenedorGrafo.removeAll();
+		
 		this.jspArbol.removeAll();
 		jspPila.removeAll();
 		jspTraza.removeAll();
 		jspCrono.removeAll();
 		jspEstructura.removeAll();
-
+		jspGrafo.removeAll();
+		
 		this.jspArbol.add(pArbol);
 		jspPila = new JScrollPane(pPila);
 		jspTraza = new JScrollPane(pTraza);
 		jspCrono = new JScrollPane(pCrono);
 		jspEstructura = new JScrollPane(pEstructura);
-
+		jspGrafo = new JScrollPane(pGrafo);
+		
 		this.contenedorArbol.add(this.jspArbol);
 		this.contenedorPila.add(jspPila);
 		this.contenedorTraza.add(jspTraza);
 		this.contenedorCrono.add(jspCrono);
 		this.contenedorEstructura.add(jspEstructura);
+		this.contenedorGrafo.add(jspArbol);
 
 		this.quitarBordesJSP();
 
@@ -577,6 +600,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorTraza.updateUI();
 		this.contenedorCrono.updateUI();
 		this.contenedorEstructura.updateUI();
+		this.contenedorGrafo.updateUI();
 
 		this.contenedorControl.updateUI();
 
@@ -649,16 +673,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		} else {
 			this.panel2.add(Texto.get(Vista.codigos[0], Conf.idioma),
 					this.contenedorArbol);
-		}
-		
-		// Vista de grafo
-		if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
-			this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
-					this.contenedorGrafo);
-		} else {
-			this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
-					this.contenedorGrafo);
-		}
+		}	
 
 		if (Ventana.thisventana.getTraza() != null) // Será null si estamos
 			// cargando GIF
@@ -671,6 +686,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				this.panel2.add(Texto.get(Vista.codigos[1], Conf.idioma),
 						this.contenedorPila);
 			}
+			
+			
 
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
@@ -700,6 +717,15 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					this.panel2.add(Texto.get(Vista.codigos[2], Conf.idioma),
 							this.contenedorTraza);
 				}
+			}
+			
+			// Vista de grafo
+			if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
+				this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
+						this.contenedorGrafo);
+			} else {
+				this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
+						this.contenedorGrafo);
 			}
 
 			// Si las vistas de recursividad fueron colocadas todas en un panel
@@ -778,7 +804,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			for (int i = 0; i < hemosActualizado.length; i++) {
 				hemosActualizado[i] = false;
 			}
-
+			
+			//	Pila
 			if (this.panel1.indexOfTab(this.nombresVistas[1]) == this.panel1
 					.getSelectedIndex()
 					|| this.panel2.indexOfTab(this.nombresVistas[1]) == this.panel2
@@ -801,9 +828,11 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				}.start();
 				hemosActualizado[1] = true;
 			}
-
+			
+			//	Crono
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
+				//	Crono
 				if (this.panel1.indexOfTab(this.nombresVistas[2]) == this.panel1
 						.getSelectedIndex()
 						|| this.panel2.indexOfTab(this.nombresVistas[2]) == this.panel2
@@ -827,7 +856,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					hemosActualizado[2] = true;
 				}
 			}
-
+			
+			//	Árbol
 			if (this.panel1.indexOfTab(this.nombresVistas[0]) == this.panel1
 					.getSelectedIndex()
 					|| this.panel2.indexOfTab(this.nombresVistas[0]) == this.panel2
@@ -850,7 +880,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				}.start();
 				hemosActualizado[0] = true;
 			}
-
+			
+			//	Estructura
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
 				if (this.panel1.indexOfTab(this.nombresVistas[3]) == this.panel1
@@ -875,6 +906,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					hemosActualizado[3] = true;
 				}
 			}
+			
+			//	Traza
 			if (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
 				if (this.panel1.indexOfTab(this.nombresVistas[2]) == this.panel1
@@ -885,6 +918,31 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					hemosActualizado[2] = true;
 				}
 			}
+			
+			//	Grafo
+			if (this.panel1.indexOfTab(this.nombresVistas[4]) == this.panel1
+					.getSelectedIndex()
+					|| this.panel2.indexOfTab(this.nombresVistas[4]) == this.panel2
+					.getSelectedIndex()) {
+				new Thread() {
+					@Override
+					public synchronized void run() {
+
+						try {
+							this.wait(240);
+						} catch (java.lang.InterruptedException ie) {
+						}
+						SwingUtilities.invokeLater(new Runnable() {							
+							@Override
+							public void run() {
+								pGrafo.visualizar();
+							}
+						});
+					}
+				}.start();
+				hemosActualizado[1] = true;
+			}
+
 		}
 	}
 
@@ -899,7 +957,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		if (pArbol != null) {
 			pArbol.visualizar(true, true, false);
 			pPila.visualizar();
-
+			pGrafo.visualizar();
 			pCodigo.visualizar(recargarCodigo);
 
 			if (Ventana.thisventana.getTraza() != null
@@ -965,12 +1023,26 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		}
 		this.updateUI();
 	}
+	
+	/**
+	 * Establece el valor de zoom para el panel de grafo
+	 * 
+	 * @param valor
+	 * 			Valor de zoom.
+	 */
+	public void refrescarZoomGrafoDep(int valor){
+		if(pGrafo != null){
+			pGrafo.refrescarZoom(valor);
+			pGrafo.visualizar();
+		}
+		this.updateUI();
+	}
 
 	/**
 	 * Establece el valor de zoom para la vista especificada.
 	 * 
 	 * @param vista
-	 *            1 -> pila, 0 -> arbol, 3 -> crono, 4 -> estructura.
+	 *            1 -> pila, 0 -> arbol, 3 -> crono, 4 -> estructura, 5 -> Grafo dependencia.
 	 * 
 	 * @param valor
 	 *            Valor de zoom.
@@ -1005,6 +1077,13 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				pEstructura.updateUI();
 			}
 			break;
+		case 5:
+			if (pGrafo != null) {
+				pGrafo.refrescarZoom(valor);
+				pGrafo.visualizar();
+				pGrafo.updateUI();
+			}
+			break;
 		}
 	}
 
@@ -1033,6 +1112,15 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 */
 	public int[] dimPanelYPila() {
 		return pPila.dimPanelYPila();
+	}
+	
+	/**
+	 * Devuelve las dimensiones del panel y grafo de la pila.
+	 * 
+	 * @return {anchura_panel, altura_panel, achura_grafo, altura_grafo}
+	 */
+	public int[] dimPanelYGrafoDep() {
+		return pGrafo.dimPanelYGrafoDep();
 	}
 
 	/**
@@ -1083,10 +1171,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	/**
 	 * Devuelve el valor de zoom para cada uno de los paneles.
 	 * 
-	 * @return {zoom_arbol, zoom_pila, zoom_crono, zoom_estructura}
+	 * @return {zoom_arbol, zoom_pila, zoom_crono, zoom_estructura, zoom_grafoDependencia}
 	 */
 	public int[] getZooms() {
-		int zooms[] = new int[4];
+		int zooms[] = new int[5];
 
 		zooms[0] = pArbol.getZoom();
 		zooms[1] = pPila.getZoom();
@@ -1095,6 +1183,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			zooms[2] = pCrono.getZoom();
 			zooms[3] = pEstructura.getZoom();
 		}
+		zooms[4] = pGrafo.getZoom();
 		return zooms;
 	}
 
@@ -1149,6 +1238,19 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 
 		return dim;
 	}
+	
+	/**
+	 * Devuelve las dimensiones del scroll panel de la vista del grafo de dependencia.
+	 * 
+	 * @return {anchura, altura}
+	 */
+	public static int[] dimPanelGrafoDep() {
+		int[] dim = new int[2];
+		dim[0] = jspGrafo.getWidth();
+		dim[1] = jspGrafo.getHeight();
+
+		return dim;
+	}
 
 	/**
 	 * Devuelve las dimensiones del scroll panel principal.
@@ -1183,6 +1285,16 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 */
 	public int[] dimGrafoPila() {
 		return pPila.dimGrafo();
+	}	
+	
+	
+	/**
+	 * Devuelve las dimensiones del grafo del panel de grafo
+	 * 
+	 * @return {anchura, altura}
+	 */
+	public int[] dimGrafoDep(){
+		return pGrafo.dimGrafo();
 	}
 
 	/**
@@ -1291,6 +1403,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			return pCrono;
 		} else if (nombre.equals(Texto.get(Vista.codigos[3], Conf.idioma))) {
 			return pEstructura;
+		}else if(nombre.equals(Texto.get(Vista.codigos[4], Conf.idioma))) {
+			return pGrafo;			
 		} else {
 			return null;
 		}
@@ -1316,7 +1430,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			return pCrono.getGrafo();
 		} else if (nombre.equals(Texto.get(Vista.codigos[3], Conf.idioma))) {
 			return pEstructura.getGrafo();
-		} else {
+		}else if (nombre.equals(Texto.get(Vista.codigos[4], Conf.idioma))) {
+			return pGrafo.getGrafo();
+		}  else {
 			return null;
 		}
 	}
@@ -1325,7 +1441,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 * Devuelve el grafo de la vista indicada por parámetro.
 	 * 
 	 * @param numero
-	 *            0 -> arbol, 1 -> pila, 3 -> crono, 4 -> estructura.
+	 *            0 -> arbol, 1 -> pila, 3 -> crono, 4 -> estructura, 5 -> grafo dependencia.
 	 * 
 	 * @return Grafo
 	 */
@@ -1339,6 +1455,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			return pCrono.getGrafo();
 		case 4:
 			return pEstructura.getGrafo();
+		case 5:
+			return pGrafo.getGrafo();
 		default:
 			return null;
 		}
@@ -1406,6 +1524,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		} else if (nombre.equals(Texto.get(Vista.codigos[3], Conf.idioma))) {
 			pos[0] = (int) jspEstructura.getLocationOnScreen().getX();
 			pos[1] = (int) jspEstructura.getLocationOnScreen().getY();
+		} else if (nombre.equals(Texto.get(Vista.codigos[4], Conf.idioma))) {
+			pos[0] = (int) jspGrafo.getLocationOnScreen().getX();
+			pos[1] = (int) jspGrafo.getLocationOnScreen().getY();
 		}
 
 		return pos;
@@ -1467,6 +1588,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspPila.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jspCrono.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jspEstructura.setBorder(new EmptyBorder(0, 0, 0, 0));
+		jspGrafo.setBorder(new EmptyBorder(0, 0, 0, 0));
 	}
 
 	/**

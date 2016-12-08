@@ -55,6 +55,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 	private static int zoomPila;
 	private static int zoomCrono;
 	private static int zoomEstructura;
+	private static int zoomGrafoDep;
 
 	private static int dimensionesPaneles[];
 	private static int dimensionesGrafos[];
@@ -119,6 +120,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 		zoomPila = pV.getZooms()[1];
 		zoomCrono = pV.getZooms()[2];
 		zoomEstructura = pV.getZooms()[3];
+		zoomGrafoDep = pV.getZooms()[4];
 
 		dimensionesPaneles = pV.getTamanoPaneles();
 		dimensionesGrafos = pV.getTamanoGrafos();
@@ -369,9 +371,11 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 		} else if (i == 1) {
 			barras[i] = new JSlider(-100, 100, zoomPila);
 		} else if (i == 3) {
-			barras[i] = new JSlider(-100, 100, zoomCrono);
-		} else if (i == 4) {
+//			barras[i] = new JSlider(-100, 100, zoomCrono);
 			barras[i] = new JSlider(-100, 100, zoomEstructura);
+		} else if (i == 4) {
+//			barras[i] = new JSlider(-100, 100, zoomEstructura);
+			barras[i] = new JSlider(-100, 100, zoomGrafoDep);
 		}
 
 		if (tipoVariacion == CuadroZoom.MAS5) {
@@ -493,6 +497,21 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 
 			barras[i].setValue(Math.min(valorNuevoAncho, valorNuevoAlto));
 			Conf.setPanelArbolReajustado(true);
+			peticionRefrescar(i);
+		}else if (i == 5) {
+			// Grafo de dependencia
+			double propAncho = (double) dimPaneles[8] / (double) dimGrafos[8];
+			double propAlto = (double) dimPaneles[9] / (double) dimGrafos[9];
+			double porc = Math.min(propAncho, propAlto);
+			int valorNuevo = 0;
+
+			if (dimGrafos[8] > dimPaneles[8] || dimGrafos[9] > dimPaneles[9]) {
+				valorNuevo = ((int) (porc * 100)) - 100;
+			} else {
+				valorNuevo = (int) ((porc - 1) * 100) - 2;
+			}
+
+			barras[i].setValue(valorNuevo);
 			peticionRefrescar(i);
 		}
 	}
@@ -665,13 +684,18 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 			ocv.setZoomPila(valor);
 		} else if (i == 3) {
 			// Si es barra de crono
-			ventana.actualizarZoom(i, valor);
-			ocv.setZoomCrono(valor);
-		} else if (i == 4) {
+//				ventana.actualizarZoom(i, valor);
+//				ocv.setZoomCrono(valor);
+			
 			// Si es barra de estructura
 			ventana.actualizarZoom(i, valor);
 			ocv.setZoomEstructura(valor);
+		} else if (i == 4) {
+			// Si es barra de grafo dependencia
+			ventana.actualizarZoomGrafoDep(valor);
+			ocv.setZoomEstructura(valor);
 		}
+		
 		gOpciones.setOpcion(ocv, 1);
 		Conf.setValoresVisualizacion();
 	}
