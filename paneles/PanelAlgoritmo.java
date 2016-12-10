@@ -1063,14 +1063,14 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				pArbol.updateUI();
 			}
 			break;
-		case 3:
+		case 2:
 			if (pCrono != null) {
 				pCrono.refrescarZoom(valor);
 				pCrono.visualizar();
 				pCrono.updateUI();
 			}
 			break;
-		case 4:
+		case 3:
 			if (pEstructura != null) {
 				pEstructura.refrescarZoom(valor);
 				pEstructura.visualizar();

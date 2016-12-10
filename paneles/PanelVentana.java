@@ -326,7 +326,7 @@ public class PanelVentana extends JPanel {
 			dimensiones[6] = this.dimPanelYGrafoEstructura()[0]; // Estrutura
 			dimensiones[7] = this.dimPanelYGrafoEstructura()[1];
 		}
-		dimensiones[8] = this.dimPanelYGrafoDep()[0];
+		dimensiones[8] = this.dimPanelYGrafoDep()[0];	//	Grafo dependencia
 		dimensiones[9] = this.dimPanelYGrafoDep()[1];
 		return dimensiones;
 	}

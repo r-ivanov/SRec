@@ -125,9 +125,10 @@ class PanelEstructura extends JPanel implements MouseListener {
 	 */
 	public int[] dimGrafoVisible() {
 		int valores[] = new int[2];
-		valores[0] = ce.maximoAnchoVisible() + 10;
-		valores[1] = ce.maximoAltoVisible() + 10;
-
+		if(ce!=null){
+			valores[0] = ce.maximoAnchoVisible() + 10;
+			valores[1] = ce.maximoAltoVisible() + 10;
+		}
 		return valores;
 	}
 
@@ -161,11 +162,13 @@ class PanelEstructura extends JPanel implements MouseListener {
 
 		dim[0] = (int) (this.getSize().getWidth()); // Anchura del panel *
 		dim[1] = (int) (this.getSize().getHeight()); // Altura del panel *
-
-		dim[2] = (int) (graph.getPreferredSize().getWidth()); // Anchura del
-		// grafo
-		dim[3] = (int) (graph.getPreferredSize().getHeight()); // Altura del
-		// grafo
+		//	Solo si grafo no es nulo, si es nulo es que aun no se ha generado y da igual el valor que devolvamos
+		if(graph!=null){	
+			dim[2] = (int) (graph.getPreferredSize().getWidth()); // Anchura del
+			// grafo
+			dim[3] = (int) (graph.getPreferredSize().getHeight()); // Altura del
+			// grafo
+		}
 
 		// * = Las dimensiones del panel sólo son reales si son mayores que las
 		// del grafo. Si son
