@@ -560,5 +560,12 @@ public class PanelVentana extends JPanel {
 	public void setValoresPanelControl(String tituloPanel) {
 		this.pAlgoritmo.setValoresPanelControl(tituloPanel);
 	}
+	
+	/**
+	 * 	Permite abrir la pestaña del grafo de dependencia
+	 */
+	public void abrirPestanaGrafoDependencia(){
+		this.pAlgoritmo.vistaGrafoDependenciaVisible();
+	}
 
 }

@@ -1,6 +1,7 @@
 package paneles;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -88,6 +89,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	private boolean[] vistasActualizadas = new boolean[Vista.codigos.length];
 
 	private NavegacionListener arbolNavegacionListener;
+	
+	private static Boolean grafoActivado = false;
 
 	/**
 	 * Crea un nuevo PanelAlgoritmo
@@ -687,7 +690,18 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 						this.contenedorPila);
 			}
 			
-			
+			// Vista de grafo
+			//	Solo se redibuja la vista si han pulsado previamente 
+			//		el botón de generar grafo de dependencia
+			if(grafoActivado){
+				if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
+					this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
+							this.contenedorGrafo);
+				} else {
+					this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
+							this.contenedorGrafo);
+				}
+			}
 
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
@@ -719,14 +733,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				}
 			}
 			
-			// Vista de grafo
-			if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
-				this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
-						this.contenedorGrafo);
-			} else {
-				this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
-						this.contenedorGrafo);
-			}
+			
 
 			// Si las vistas de recursividad fueron colocadas todas en un panel
 			if (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
@@ -940,7 +947,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 						});
 					}
 				}.start();
-				hemosActualizado[1] = true;
+				hemosActualizado[4] = true;
 			}
 
 		}
@@ -1655,6 +1662,33 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		}
 
 		return vistas;
+	}
+	
+	/**
+	 * Permite establecer la vista/pestaña del grafo de dependencia
+	 * 	como visible, así solo se hará visible cuando pulsen el botón de generar
+	 * 	grafo de dependencia
+	 */
+	public void vistaGrafoDependenciaVisible(){
+		boolean familiaEjecucionesHabilitado = FamiliaEjecuciones.getInstance().estaHabilitado();
+	    
+	    //	Solo si no está abierta la abrimos
+	    if(!grafoActivado){
+			if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
+				this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
+						this.contenedorGrafo);
+			} else {
+				this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
+						this.contenedorGrafo);
+			}
+	    }
+	    
+	    //	Activa se pone siempre
+//		this.setVistaActiva(Texto.get(Vista.codigos[4], Conf.idioma));
+		
+		//	Actualizamos el estado, indica que la pestaña se ha abierto
+		//		por primera vez
+		grafoActivado = true;
 	}
 
 	@Override

@@ -36,7 +36,7 @@ public class OpcionVistas extends Opcion {
 				} else {
 					v.setPanel(2);
 				}
-				v.setActiva(i < 2 ? true : false);
+				v.setActiva(i < 2 ? true : false);				
 				this.vistas.add(v);
 			}
 		}
