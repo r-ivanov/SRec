@@ -148,7 +148,8 @@ ActionListener, KeyListener {
 			}
 
 			this.dialogo.setVisible(false);
-			new VentanaGrafoDependencia(this.ventana, this.dtb.getMetodo(posicionMetodo));
+			new VentanaGrafoDependencia(this.ventana, this.dtb.getMetodo(posicionMetodo)); // <==== Eliminar/Cambiar
+	        this.ventana.abrirPestanaGrafoDependencia();
 
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);

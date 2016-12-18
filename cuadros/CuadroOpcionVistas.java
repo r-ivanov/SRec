@@ -14,11 +14,13 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 
 import opciones.GestorOpciones;
 import opciones.OpcionVistas;
 import opciones.Vista;
+import paneles.PanelAlgoritmo;
 import utilidades.Arrays;
 import utilidades.Texto;
 import ventanas.Ventana;
@@ -114,7 +116,7 @@ KeyListener {
 				this.selec1[i].setSelected(true);
 			} else {
 				this.selec2[i].setSelected(true);
-			}
+			}		
 
 			JPanel panelRadioB = new JPanel();
 			panelRadioB.add(this.selec1[i]);
@@ -192,7 +194,17 @@ KeyListener {
 		}
 		this.dialogo.setResizable(false);
 
-		this.dialogo.setVisible(true);
+		//	Si no han pulsado previamente el botón de generar grafo
+		//	no se activan sus radio buttons
+		if(!PanelAlgoritmo.getGrafoActivado()){
+			this.selec1[4].setEnabled(false);
+			this.selec2[4].setEnabled(false);
+		}else{
+			this.selec1[4].setEnabled(true);
+			this.selec2[4].setEnabled(true);
+		}	
+		
+		this.dialogo.setVisible(true);	
 	}
 
 	/**
@@ -271,7 +283,7 @@ KeyListener {
 					this.selec2[i].setEnabled(false);
 				}
 			}
-		}
+		}		
 	}
 
 	/**
@@ -289,31 +301,32 @@ KeyListener {
 		}
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
-		} else if (e.getSource() instanceof JRadioButton) {
+		} else if (e.getSource() instanceof JRadioButton) {			
 			this.actualizarInterfazRadioButton();
 
 			final boolean[] panel1activos = new boolean[Vista.codigos.length];
 			for (int i = 0; i < Vista.codigos.length; i++) {
 				panel1activos[i] = this.selec1[i].isSelected();
 			}
-
+			
 			new Thread() {
 				@Override
-				public synchronized void run() {
-					try {
-						this.wait(300);
-					} catch (java.lang.InterruptedException ie) {
-					}
-					CuadroOpcionVistas.this.ventana
-					.ubicarYDistribuirPaneles((CuadroOpcionVistas.this.selecPanel
-							.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
-									: Conf.PANEL_HORIZONTAL));
+				public void run() {					
+					SwingUtilities.invokeLater(new Runnable() {							
+						@Override
+						public void run() {							
+							CuadroOpcionVistas.this.ventana
+							.ubicarYDistribuirPaneles((CuadroOpcionVistas.this.selecPanel
+									.getSelectedIndex() == 0 ? Conf.PANEL_VERTICAL
+											: Conf.PANEL_HORIZONTAL));
+						}
+					});
 				}
-			}.start();
+			}.start();			
 
 			this.gOpciones.setOpcion(this.ov, 2);
 			Conf.setConfiguracionVistas();
-
+			
 		} else if (e.getSource() instanceof JComboBox) {
 			if (this.selecPanel.getSelectedIndex() == 0) {
 				this.ov.setDisposicion(Conf.PANEL_VERTICAL);

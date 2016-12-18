@@ -1,7 +1,6 @@
 package paneles;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -90,7 +89,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 
 	private NavegacionListener arbolNavegacionListener;
 	
-	private static Boolean grafoActivado = false;
+	private static Boolean grafoActivado = false;	
 
 	/**
 	 * Crea un nuevo PanelAlgoritmo
@@ -419,8 +418,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				pControl.hacerFinal();
 			} else {
 				// Actualizamos la vista para que se posicione bien sobre el
-				// primer nodo creado
-				this.actualizar();
+				// primer nodo creado				
+				this.actualizar();				
 			}
 
 			this.ocupado = true;
@@ -611,14 +610,16 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.panel2.removeAll();
 		
 		separadorVistas.setRightComponent(this.panel2);
-		int anterior = separadorVistas.getDividerLocation();
-		separadorVistas.setDividerLocation(anterior);
+		int anterior = separadorVistas.getDividerLocation();		
 		separadorVistas.setResizeWeight(0.5);
 		separadorVistas.setOneTouchExpandable(true);
 		separadorVistas.setEnabled(true);
 		FamiliaEjecuciones.getInstance().deshabilitar();
 
 		nyp = null;
+		
+		grafoActivado = false;
+		separadorVistas.setDividerLocation(anterior);
 	}
 	
 	/**
@@ -648,25 +649,23 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 * ubicación y disposición de paneles.
 	 */
 	public void ubicarVistas() {
-		
 		boolean familiaEjecucionesHabilitado = FamiliaEjecuciones.getInstance().estaHabilitado();
-		
+		int anterior = separadorVistas.getDividerLocation();		
 		if (familiaEjecucionesHabilitado) {
-			JScrollPane panelEjecuciones = FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones();
+			JScrollPane panelEjecuciones = FamiliaEjecuciones.getInstance().obtenerPanelEjecuciones();						
 			separadorVistas.setRightComponent(panelEjecuciones);			
-			this.actualizarFamiliaEjecuciones(false);
+			this.actualizarFamiliaEjecuciones(false);			
 			separadorVistas.setResizeWeight(1.0);
 			separadorVistas.setOneTouchExpandable(true);
 			separadorVistas.setEnabled(false);
 			panelEjecuciones.removeComponentListener(this);
 			panelEjecuciones.addComponentListener(this);
-		} else {
-			separadorVistas.setRightComponent(this.panel2);
-			int anterior = separadorVistas.getDividerLocation();
-			separadorVistas.setDividerLocation(anterior);
+			
+		} else {			
+			separadorVistas.setRightComponent(this.panel2);	
 			separadorVistas.setResizeWeight(0.5);
 			separadorVistas.setOneTouchExpandable(true);
-			separadorVistas.setEnabled(true);
+			separadorVistas.setEnabled(true);			
 		}
 		
 		// Vista de árbol
@@ -677,10 +676,11 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			this.panel2.add(Texto.get(Vista.codigos[0], Conf.idioma),
 					this.contenedorArbol);
 		}	
-
+		
 		if (Ventana.thisventana.getTraza() != null) // Será null si estamos
 			// cargando GIF
 		{
+			
 			// Vista de pila
 			if (Conf.getVista(Vista.codigos[1]).getPanel() == 1 || familiaEjecucionesHabilitado) {
 				this.panel1.add(Texto.get(Vista.codigos[1], Conf.idioma),
@@ -688,23 +688,11 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			} else {
 				this.panel2.add(Texto.get(Vista.codigos[1], Conf.idioma),
 						this.contenedorPila);
-			}
+			}			
 			
-			// Vista de grafo
-			//	Solo se redibuja la vista si han pulsado previamente 
-			//		el botón de generar grafo de dependencia
-			if(grafoActivado){
-				if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
-					this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
-							this.contenedorGrafo);
-				} else {
-					this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
-							this.contenedorGrafo);
-				}
-			}
-
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
+				
 				// Vista cronológica
 				if (Conf.getVista(Vista.codigos[2]).getPanel() == 1 || familiaEjecucionesHabilitado) {
 					this.panel1.add(Texto.get(Vista.codigos[2], Conf.idioma),
@@ -723,18 +711,17 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 							this.contenedorEstructura);
 				}
 			} else {
-				// Vista de traza
-				if (Conf.getVista(Vista.codigos[2]).getPanel() == 1 || familiaEjecucionesHabilitado) {
+				
+				// Vista de traza				
+				if (Conf.getVista(Vista.codigos[2]).getPanel() == 1 || familiaEjecucionesHabilitado) {					
 					this.panel1.add(Texto.get(Vista.codigos[2], Conf.idioma),
 							this.contenedorTraza);
-				} else {
+				} else {					
 					this.panel2.add(Texto.get(Vista.codigos[2], Conf.idioma),
-							this.contenedorTraza);
+							this.contenedorTraza);					
 				}
-			}
+			}			
 			
-			
-
 			// Si las vistas de recursividad fueron colocadas todas en un panel
 			if (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas()) && !familiaEjecucionesHabilitado) {
@@ -763,7 +750,21 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					Conf.setConfiguracionVistas();
 				}
 			}
+			
+			// Vista de grafo
+			//	Solo se redibuja la vista si han pulsado previamente 
+			//		el botón de generar grafo de dependencia
+			if(grafoActivado && panel1 != null && panel2 != null){
+				if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
+					this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
+							this.contenedorGrafo);
+				} else {
+					this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
+							this.contenedorGrafo);
+				}
+			}
 		}
+		separadorVistas.setDividerLocation(anterior);		
 	}
 
 	/**
@@ -805,7 +806,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 * panel.
 	 */
 	public void actualizar() {
-		if (Ventana.thisventana.getTraza() != null) {
+		int anterior = separadorVistas.getDividerLocation();
+		if (Ventana.thisventana.getTraza() != null && this.panel1 != null && this.panel2 != null) {
 
 			boolean[] hemosActualizado = new boolean[Vista.codigos.length];
 			for (int i = 0; i < hemosActualizado.length; i++) {
@@ -834,11 +836,11 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					}
 				}.start();
 				hemosActualizado[1] = true;
-			}
+			}			
 			
-			//	Crono
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
+				
 				//	Crono
 				if (this.panel1.indexOfTab(this.nombresVistas[2]) == this.panel1
 						.getSelectedIndex()
@@ -847,7 +849,6 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					new Thread() {
 						@Override
 						public synchronized void run() {
-
 							try {
 								this.wait(20);
 							} catch (java.lang.InterruptedException ie) {
@@ -949,8 +950,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				}.start();
 				hemosActualizado[4] = true;
 			}
-
 		}
+		separadorVistas.setDividerLocation(anterior);
 	}
 
 	/**
@@ -1684,11 +1685,20 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	    }
 	    
 	    //	Activa se pone siempre
-//		this.setVistaActiva(Texto.get(Vista.codigos[4], Conf.idioma));
+		this.setVistaActiva(Texto.get(Vista.codigos[4], Conf.idioma));
 		
 		//	Actualizamos el estado, indica que la pestaña se ha abierto
 		//		por primera vez
 		grafoActivado = true;
+	}
+	
+	/**
+	 * Permite obtener si la pestaña del grafo de dependencia
+	 * 	esta activa o no
+	 * @return True si pestaña activa, false caso contrario 
+	 */
+	public static Boolean getGrafoActivado() {
+		return grafoActivado;
 	}
 
 	@Override
