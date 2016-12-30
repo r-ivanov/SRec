@@ -456,7 +456,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 
 			barras[i].setValue(valorNuevo);
 			peticionRefrescar(i);
-		} else if (i == 3) {
+		} else if (i == 100) {
 			// Crono
 			Conf.setHaciendoAjuste(true);
 
@@ -477,7 +477,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 			barras[i].setValue(Math.min(valorNuevoAncho, valorNuevoAlto));
 			Conf.setPanelArbolReajustado(true);
 			peticionRefrescar(i);
-		} else if (i == 4) {
+		} else if (i == 3) {
 			// Estructura
 			Conf.setHaciendoAjuste(true);
 
@@ -498,7 +498,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 			barras[i].setValue(Math.min(valorNuevoAncho, valorNuevoAlto));
 			Conf.setPanelArbolReajustado(true);
 			peticionRefrescar(i);
-		}else if (i == 5) {
+		}else if (i == 4) {
 			// Grafo de dependencia
 			double propAncho = (double) dimPaneles[8] / (double) dimGrafos[8];
 			double propAlto = (double) dimPaneles[9] / (double) dimGrafos[9];

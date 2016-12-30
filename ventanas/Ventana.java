@@ -113,7 +113,7 @@ public class Ventana extends JFrame implements ActionListener {
 
 	private DatosTrazaBasicos dtb; // Nos ayuda a almacenar/cargar animaciones
 	// con
-	// información básica recopilada de la traza
+	// información básica recopilada de la traza	
 
 	private String fichTraza[];
 
@@ -3123,5 +3123,13 @@ public class Ventana extends JFrame implements ActionListener {
 		}else{				
 			new CuadroOpcionMVJava(this, true);
 		}
+	}
+	
+	/**
+	 * Permite obtener los datos básicos de la traza
+	 * @return	Datos básicos de la traza
+	 */
+	public DatosTrazaBasicos getDtb() {
+		return dtb;
 	}
 }

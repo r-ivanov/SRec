@@ -139,7 +139,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			pPila = new PanelPila(null);
 			pArbol = new PanelArbol(null);
 			pCrono = new PanelCrono(null);
-			pGrafo = new PanelGrafo();
+			pGrafo = new PanelGrafo(null,null);
 		} catch (OutOfMemoryError oome) {
 			pArbol = null;
 			throw oome;
@@ -382,7 +382,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		try {
 			pArbol = new PanelArbol(nyp);
 			pPila = new PanelPila(nyp);
-			pGrafo = new PanelGrafo();
+			pGrafo = new PanelGrafo(null,null);
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
 				Ventana.thisventana.habilitarOpcionesDYV(true);
@@ -430,7 +430,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				.println("\n-Ha saltado una excepcion(PanelAlgoritmo)-\n");
 				pArbol = new PanelArbol(null);
 				pPila = new PanelPila(null);
-				pGrafo = new PanelGrafo();
+				pGrafo = new PanelGrafo(null,null);
 				pTraza = new PanelTraza();
 				pCrono = new PanelCrono(null);
 				pEstructura = new PanelEstructura(null);
@@ -495,7 +495,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			pArbol = new PanelArbol(ficheroGIF, new ImageIcon(ficheroGIF));
 			pPila = new PanelPila(null);
 			pTraza = new PanelTraza();
-			pGrafo = new PanelGrafo();
+			pGrafo = new PanelGrafo(null,null);
 			this.ocupado = true;
 			pControl.setValores(ficheroGIF.substring(
 					ficheroGIF.lastIndexOf("\\") + 1,
@@ -509,7 +509,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				System.out.println("\n-Ha saltado una excepcion-\n");
 				pArbol = new PanelArbol(null);
 				pPila = new PanelPila(null);
-				pGrafo = new PanelGrafo();
+				pGrafo = new PanelGrafo(null,null);
 				pTraza = new PanelTraza();
 				pControl = new PanelControl("", this);
 				this.ocupado = false;
@@ -558,7 +558,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			Ventana.thisventana.trazaCompleta = null;
 			pArbol = new PanelArbol(null);
 			pPila = new PanelPila(null);
-			pGrafo = new PanelGrafo();
+			pGrafo = new PanelGrafo(null,null);
 			pTraza = new PanelTraza();
 			pCrono = new PanelCrono(null);
 			pControl.setValores("", this);
@@ -1675,6 +1675,20 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	    
 	    //	Solo si no está abierta la abrimos
 	    if(!grafoActivado){
+	    	try {
+	    		
+	    		//	Generamos el grafo de dependencia solo cuando pulsan botón de generar, no antes
+				pGrafo = new PanelGrafo(Ventana.thisventana.getDtb().getMetodo(0),Ventana.thisventana);
+				jspGrafo = new JScrollPane(pGrafo);
+
+				this.contenedorGrafo = new JPanel();
+				this.contenedorGrafo.setLayout(new BorderLayout());
+				this.contenedorGrafo.add(jspGrafo,BorderLayout.CENTER);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    	
+	    	//	Ubicamos el grafo en el panel correspondiente
 			if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
 				this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
 						this.contenedorGrafo);
