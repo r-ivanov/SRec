@@ -80,8 +80,7 @@ MouseListener, MouseMotionListener {
 	private double escalaOriginal;
 	private double escalaActual;
 	
-	private int zoom = 0;
-	
+	private int zoom = 0;	
 	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para el grafo.
@@ -94,7 +93,7 @@ MouseListener, MouseMotionListener {
 	 */
 	public PanelGrafo(DatosMetodoBasicos metodo, Ventana ventana) throws Exception {
 		
-		if (Ventana.thisventana.traza != null && metodo != null && ventana != null) {
+		if (Ventana.thisventana.traza != null && metodo != null && ventana != null) {			
 			
 			//	Obtenemos datos básicos del grafo y su representación
 			
@@ -183,7 +182,8 @@ MouseListener, MouseMotionListener {
 	/**
 	 * Obtiene el tamaño que ocupa el grafo en pantalla aunque el usuario
 	 * 	haya desplazado nodos a mano
-	 * @return Array donde [0] = Ancho grafo y [1] = Alto grafo
+	 * 
+	 * @return Array de double donde [0] = Ancho grafo y [1] = Alto grafo
 	 */
 	private double[] obtenerTamanioGrafo(){
 		Dimension tamanioGrafo = this.grafoDependencia
@@ -321,7 +321,7 @@ MouseListener, MouseMotionListener {
 	/**
 	 * Devuelve las dimensiones del grafo.
 	 * 
-	 * @return Array, donde la posición 0 contiene el máximo ancho, y la
+	 * @return Array de int, donde la posición 0 contiene el máximo ancho, y la
 	 *         posición 1 el máximo alto.
 	 */
 	public int[] dimGrafo() {				
@@ -334,19 +334,20 @@ MouseListener, MouseMotionListener {
 	/**
 	 * Devuelve las dimensiones del panel y del grafo.
 	 * 
-	 * @return Array, donde la posición 0 corresponde al ancho de la pestaña , la 1
+	 * @return Array de int, donde la posición 0 corresponde al ancho de la pestaña, la 1
 	 *         al alto de la pestaña, la 2 al ancho del grafo, y la 3 al alto del
 	 *         grafo.
 	 */
 	public int[] dimPanelYGrafoDep() {
 		int dim[] = new int[4];
 
-		dim[0] = (int) (this.getVisibleRect().getWidth()); // Anchura del panel *
-		dim[1] = (int) (this.getVisibleRect().getHeight()); // Altura del panel *
+		dim[0] = (int) (this.getVisibleRect().getWidth()); // Anchura de pestaña
+		dim[1] = (int) (this.getVisibleRect().getHeight()); // Altura de pestaña
 
 		if(this.representacionGrafo != null){
-			dim[2] = (int) (this.obtenerTamanioGrafo()[0]); // Anchura			
-			dim[3] = (int) (this.obtenerTamanioGrafo()[1]); // Altura
+			double[] tamanioGrafo = obtenerTamanioGrafo();
+			dim[2] = (int) (tamanioGrafo[0]); // Anchura			
+			dim[3] = (int) (tamanioGrafo[1]); // Altura
 		}else{
 			dim[2] = 0;
 			dim[3] = 0;
@@ -357,6 +358,7 @@ MouseListener, MouseMotionListener {
 	
 	/**
 	 * Permite refrescar el zoom al valor dado por el parámetro
+	 * 
 	 * @param valor Valor al que queremos ajustar el zoom
 	 */
 	public void refrescarZoom(int valor) {	
@@ -468,71 +470,19 @@ MouseListener, MouseMotionListener {
 		this.panelHerramientas.add(panelInfo, BorderLayout.EAST);
 
 //		this.add(this.panelHerramientas, BorderLayout.NORTH);
+	}	
+
+	/**
+	 * Permite comparar un método pasado como parámetro con el método
+	 * 	que se está visualizando actualmente en la pestaña
+	 * 
+	 * @param nuevoMetodo Método a comparar con el actual
+	 * @return True si nuevoMetodo = metodo que se visualiza actualmente, False caso contrario
+	 */
+	public boolean esIgual(DatosMetodoBasicos nuevoMetodo){
+		return this.metodo.esIgual(nuevoMetodo);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-//	/**
-//	 * Visualiza y redibuja la pila en el panel.
-//	 */
-//	public void visualizar() {
-//		if (Ventana.thisventana.traza != null) {
-//			
-//			if (Ventana.thisventana.traza != null) {
-//				
-//			}
-//		}
-//	}
-//	
-//	/**
-//	 * Devuelve el grafo de la vista.
-//	 * 
-//	 * @return Grafo de la vista.
-//	 */
-//	public JGraph getGrafo() {
-//		
-//	}
-//	
-//	/**
-//	 * Devuelve el nivel de zoom actual.
-//	 * 
-//	 * @return Nivel de zoom actual.
-//	 */
-//	public int getZoom() {						
-//		
-//	}
-//	
-//	/**
-//	 * Devuelve las dimensiones del grafo.
-//	 * 
-//	 * @return Array, donde la posición 0 contiene el máximo ancho, y la
-//	 *         posición 1 el máximo alto.
-//	 */
-//	public int[] dimGrafo() {				//	<=========== Modificar
-//		
-//	}
-//	
-//	/**
-//	 * Devuelve las dimensiones del panel y del grafo.
-//	 * 
-//	 * @return Array, donde la posición 0 corresponde al ancho del panel , la 1
-//	 *         al alto del panel, la 2 al ancho del grafo, y la 3 al alto del
-//	 *         grafo.
-//	 */
-//	public int[] dimPanelYGrafoDep() {			//	<=========== Modificar
-//		
-//	}
-//	
-//	public void refrescarZoom(int valor) {					//	<=========== Hecho en grafo	
-//		
-//	}
-
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub

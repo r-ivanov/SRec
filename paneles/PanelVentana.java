@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import utilidades.Arrays;
 import ventanas.Ventana;
+import datos.DatosMetodoBasicos;
 import datos.MetodoAlgoritmo;
 import datos.Traza;
 
@@ -563,9 +564,12 @@ public class PanelVentana extends JPanel {
 	
 	/**
 	 * 	Permite abrir la pestaña del grafo de dependencia
+	 * 
+	 * @param metodo
+     * 	Método del que queremos generar el grafo de dependencia
 	 */
-	public void abrirPestanaGrafoDependencia(){
-		this.pAlgoritmo.vistaGrafoDependenciaVisible();
+	public void abrirPestanaGrafoDependencia(DatosMetodoBasicos metodo){
+		this.pAlgoritmo.vistaGrafoDependenciaVisible(metodo);
 	}
 
 }

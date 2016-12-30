@@ -67,6 +67,7 @@ import cuadros.CuadroZoom;
 import datos.AlmacenadorTraza;
 import datos.CargadorTraza;
 import datos.ClaseAlgoritmo;
+import datos.DatosMetodoBasicos;
 import datos.DatosTrazaBasicos;
 import datos.Ejecucion;
 import datos.FamiliaEjecuciones;
@@ -2264,15 +2265,18 @@ public class Ventana extends JFrame implements ActionListener {
     	} else if (this.dtb.getNumMetodos() == 1) {
     		new VentanaGrafoDependencia(this, this.dtb.getMetodo(0)); //	<==== Eliminar/Cambiar
     		//	Habilitamos pestaña para el grafo de dependencia
-            this.abrirPestanaGrafoDependencia();
+            this.abrirPestanaGrafoDependencia(this.dtb.getMetodo(0));
     	}    	
     }
     
     /**
      * Permite abrir la pestaña del grafo de dependencia en el panel correspondiente
+     * 
+     * @param metodo
+     * 	Método del que queremos generar el grafo de dependencia
      */
-    public void abrirPestanaGrafoDependencia(){
-    	this.panelVentana.abrirPestanaGrafoDependencia();
+    public void abrirPestanaGrafoDependencia(DatosMetodoBasicos metodo){
+    	this.panelVentana.abrirPestanaGrafoDependencia(metodo);
     }
 
 	/**

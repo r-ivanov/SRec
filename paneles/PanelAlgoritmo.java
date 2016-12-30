@@ -24,6 +24,7 @@ import utilidades.ServiciosString;
 import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
+import datos.DatosMetodoBasicos;
 import datos.FamiliaEjecuciones;
 import datos.MetodoAlgoritmo;
 import eventos.NavegacionListener;
@@ -1669,16 +1670,31 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 * Permite establecer la vista/pestaña del grafo de dependencia
 	 * 	como visible, así solo se hará visible cuando pulsen el botón de generar
 	 * 	grafo de dependencia
+	 * 
+	 * @param metodo
+     * 	Método del que queremos generar el grafo de dependencia
 	 */
-	public void vistaGrafoDependenciaVisible(){
+	public void vistaGrafoDependenciaVisible(DatosMetodoBasicos metodo){
 		boolean familiaEjecucionesHabilitado = FamiliaEjecuciones.getInstance().estaHabilitado();
 	    
-	    //	Solo si no está abierta la abrimos
-	    if(!grafoActivado){
+	    //	Solo abrimos la pestaña si no está abierta o el método es distinto al actual
+	    if(!grafoActivado || (pGrafo!=null && !pGrafo.esIgual(metodo))){
 	    	try {
 	    		
+	    		//	Eliminamos pestaña por si ya estuviera abierta
+
+				if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
+					this.panel1.remove(this.contenedorGrafo);
+				} else {
+					this.panel2.remove(this.contenedorGrafo);
+				}
+				this.contenedorGrafo=null;
+				pGrafo=null;
+				jspGrafo=null;
+	    		
 	    		//	Generamos el grafo de dependencia solo cuando pulsan botón de generar, no antes
-				pGrafo = new PanelGrafo(Ventana.thisventana.getDtb().getMetodo(0),Ventana.thisventana);
+				
+				pGrafo = new PanelGrafo(metodo,Ventana.thisventana);
 				jspGrafo = new JScrollPane(pGrafo);
 
 				this.contenedorGrafo = new JPanel();
