@@ -22,6 +22,7 @@ import conf.*;
 import botones.*; 
 import utilidades.*;
 import ventanas.*;
+import paneles.PanelGrafo;
 
 /**
  * Implementa el cuadro que permite dibujar una matriz para grafos de dependencia.
@@ -34,7 +35,7 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 	private static final int ALTURA_CUADRO = 125;
 	private static final int ANCHURA_CUADRO = 175;
 	
-	private VentanaGrafoDependencia ventana;
+	private Ventana ventana;
 	private BotonAceptar aceptar;
 	private BotonCancelar cancelar;
 	
@@ -46,13 +47,24 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 
 	private JPanel panel, panelBoton, panelParam;
 	private JDialog dialogo;
+	
+	private PanelGrafo pg;
 
-	public CuadroDibujarTablaGrafoDependencia(VentanaGrafoDependencia ventana,
-			int filasAnteriores, int columnasAnteriores) {
+	/**
+	 * Constructor de la clase
+	 * 
+	 * @param ventana 				Ventana donde se abrirá el cuadro
+	 * @param filasAnteriores		Filas anteriores
+	 * @param columnasAnteriores	Columnas anteriores
+	 * @param pg					Panel grafo donde se reflejarán los cambios
+	 */
+	public CuadroDibujarTablaGrafoDependencia(Ventana ventana,
+			int filasAnteriores, int columnasAnteriores, PanelGrafo pg) {
 		this.dialogo = new JDialog(ventana, true);
 		this.ventana = ventana;	
 		this.filasAnteriores = filasAnteriores;
 		this.columnasAnteriores = columnasAnteriores;
+		this.pg = pg;
 		this.start();
 	}
 
@@ -190,7 +202,7 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 			new CuadroError(this.ventana, Texto.get("GP_ERROR_TITULO", Conf.idioma),
 					Texto.get("GP_ERROR_DIBUJAR_TABLA", Conf.idioma));
 		} else {		
-			this.ventana.dibujarTabla(filas, columnas);
+			pg.dibujarTabla(filas, columnas);
 			this.dialogo.setVisible(false);
 		}
 	}

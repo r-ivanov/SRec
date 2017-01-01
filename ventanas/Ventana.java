@@ -2262,8 +2262,7 @@ public class Ventana extends JFrame implements ActionListener {
     private void generarGrafoDependencia() {
     	if (this.dtb.getNumMetodos() > 1) {
     		new CuadroGenerarGrafoDependencia(this, this.dtb);
-    	} else if (this.dtb.getNumMetodos() == 1) {
-    		new VentanaGrafoDependencia(this, this.dtb.getMetodo(0)); //	<==== Eliminar/Cambiar
+    	} else if (this.dtb.getNumMetodos() == 1) {    		
     		//	Habilitamos pestaña para el grafo de dependencia
             this.abrirPestanaGrafoDependencia(this.dtb.getMetodo(0));
     	}    	

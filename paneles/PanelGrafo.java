@@ -18,20 +18,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.plaf.metal.MetalBorders;
 
 import org.jgraph.JGraph;
 import org.jgraph.graph.CellView;
-import org.jgraph.graph.DefaultCellViewFactory;
-import org.jgraph.graph.DefaultGraphModel;
-import org.jgraph.graph.GraphLayoutCache;
-import org.jgraph.graph.GraphModel;
 
 import ventanas.Ventana;
-import ventanas.VentanaGrafoDependencia;
 import conf.Conf;
+import cuadros.CuadroDibujarTablaGrafoDependencia;
+import cuadros.CuadroTabularGrafoDependencia;
 import datos.DatosMetodoBasicos;
 import datos.GrafoDependencia;
 import datos.NodoGrafoDependencia;
@@ -43,23 +39,11 @@ import utilidades.Texto;
  * @author Daniel Arroyo Cortés
  * @version 2016
  */
-class PanelGrafo extends JPanel implements ActionListener, KeyListener,
+public class PanelGrafo extends JPanel implements ActionListener, KeyListener,
 MouseListener, MouseMotionListener {
 	
 	private static final long serialVersionUID = 1L;
-
-	private static final java.net.URL ICONO = VentanaGrafoDependencia.class.getClassLoader().getResource("imagenes/ico32.gif");
-
-	private static final double MAX_SCALE = 1.5;
-	private static final double MIN_SCALE = 0.5;
-//	private static final double SCALE_INCREMENTO = 0.05;
-
-	private static final int WINDOW_WIDTH_MARGIN = 20;
-	private static final int WINDOW_HEIGHT_MARGIN = 80;
-
-//	private static final int PORCENTAJE_PANTALLA_MAXIMO = 75;
-//	private static final int PORCENTAJE_PANTALLA_MINIMO = 30;
-
+	
 	private Ventana ventana;
 
 	private DatosMetodoBasicos metodo;
@@ -70,7 +54,6 @@ MouseListener, MouseMotionListener {
 
 	private GrafoDependencia grafoDependencia;
 	private JGraph representacionGrafo;
-	private JScrollPane representacionGrafoScroll;
 
 	private String ultimaExpresionParaFila;
 	private String ultimaExpresionParaColumna;
@@ -87,6 +70,7 @@ MouseListener, MouseMotionListener {
 	 * 
 	 * @param metodo
 	 * 		Método del que queremos crear el grafo de dependencia
+	 * 
 	 * @param ventana
 	 * 		Ventana a la que está asociada la pestaña, es la principal
 	 * 		y es necesaria para obtener algunos datos
@@ -110,10 +94,7 @@ MouseListener, MouseMotionListener {
 			this.refrescarZoom(-50);	//	Tamaño por defecto del grafo al inicio
 			
 			//	Creamos pestaña	y llamamos a visualizar	
-
-			GraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model,
-					new DefaultCellViewFactory());					
+				
 			this.panel = new JPanel();			
 			this.add(this.panel, BorderLayout.NORTH);
 			
@@ -128,55 +109,6 @@ MouseListener, MouseMotionListener {
 		} else {
 			this.add(new JPanel());
 		}
-	}
-
-	/**
-	 * Ajusta el tamaño del grafo al tamaño de la pestaña.						---> Por definir aun
-	 */
-	private void ajustarGrafoATamanioPestana() {
-
-		Dimension tamanioGrafo = this.grafoDependencia
-				.getTamanioRepresentacion();
-
-		/* Recorremos las vistas activas por si se ha desplazado algún nodo */
-		Rectangle rectangulo = new Rectangle(0, 0, tamanioGrafo.width,
-				tamanioGrafo.height);
-		for (CellView cell : this.representacionGrafo.getGraphLayoutCache()
-				.getAllViews()) {
-			Rectangle2D nodoBounds = cell.getBounds();
-			rectangulo = rectangulo.union(new Rectangle(
-					(int) nodoBounds.getX(), (int) nodoBounds.getY(),
-					(int) nodoBounds.getWidth(), (int) nodoBounds.getHeight()));
-		}
-		tamanioGrafo = new Dimension(rectangulo.width, rectangulo.height);
-
-		Dimension tamanioVentana = new Dimension(
-				(int)Math.round(this.getVisibleRect().getWidth()),
-				(int)Math.round(this.getVisibleRect().getHeight()));	
-		
-		double ratioAnchura = (this.getVisibleRect().getSize().getWidth() - WINDOW_WIDTH_MARGIN)
-				/ tamanioGrafo.getWidth();
-		double ratioAltura = (this.getVisibleRect().getSize().getHeight() - WINDOW_HEIGHT_MARGIN)
-				/ tamanioGrafo.getHeight();
-		double ratioMenor = Math.min(ratioAnchura, ratioAltura);
-
-		double ratio = Math.max(ratioMenor, MIN_SCALE);
-		ratio = Math.min(ratio, MAX_SCALE);
-
-		this.representacionGrafo.setScale(ratio);
-		this.escalaActual = this.representacionGrafo.getScale();
-		
-		
-		System.out.println(this.representacionGrafo.getScale());
-		System.out.println(ratio);
-		System.out.println(tamanioVentana);
-		System.out.println(tamanioGrafo);
-		
-		
-		
-		
-		this.panel.updateUI();
-		this.updateUI();
 	}
 	
 	/**
@@ -205,7 +137,7 @@ MouseListener, MouseMotionListener {
 	}
 	
 	/**
-	 * Dibuja una tabla con un número de filas y columnas.			---> Por definir aun
+	 * Dibuja una tabla con un número de filas y columnas.
 	 * 
 	 * @param filas
 	 *            Número de filas.
@@ -213,25 +145,21 @@ MouseListener, MouseMotionListener {
 	 *            Número de columnas.
 	 */
 	public void dibujarTabla(int filas, int columnas) {
+		this.representacionGrafo = null;
 		this.grafoDependencia.setTamanioTabla(filas, columnas);
 		this.representacionGrafo = this.grafoDependencia
 				.obtenerRepresentacionGrafo(false);
-
-		this.remove(this.representacionGrafoScroll);
-		this.representacionGrafoScroll = new JScrollPane(
-				this.representacionGrafo);
-		this.add(this.representacionGrafoScroll);
-
-		this.ajustarGrafoATamanioPestana();
-		this.revalidate();	
+		this.visualizar();
 	}
 	
 	/**
-	 * Tabula automáticamente los nodos del grafo, dada una expresión para filas	---> Por definir aun
+	 * Tabula automáticamente los nodos del grafo, dada una expresión para filas
 	 * y otra para columnas.
 	 * 
-	 * @param expresionParaFila
-	 * @param expresionParaColumna
+	 * @param expresionParaFila 		
+	 * 		Expresión para las filas
+	 * @param expresionParaColumna		
+	 * 		Expresión para columnas
 	 * 
 	 * @return Mensaje de error si ocurrió algun error, null en caso contrario.
 	 */
@@ -241,22 +169,17 @@ MouseListener, MouseMotionListener {
 		String mensajeError = this.grafoDependencia.tabular(expresionParaFila,
 				expresionParaColumna);
 		if (mensajeError == null) {
+			this.representacionGrafo = null;
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(true);
 
-			this.remove(this.representacionGrafoScroll);
-			this.representacionGrafoScroll = new JScrollPane(
-					this.representacionGrafo);
-			this.add(this.representacionGrafoScroll);
-			
-			this.ajustarGrafoATamanioPestana();
-			this.revalidate();
+			this.visualizar();
 		}
 		return mensajeError;
 	}
 	
 	/**
-	 * Invierte las flechas del grafo										---> Por definir aun
+	 * Invierte las flechas del grafo
 	 */
 	private void invertirFlechasGrafo(){
 		List<NodoGrafoDependencia> listaNodos = this.grafoDependencia.getNodos();
@@ -265,14 +188,8 @@ MouseListener, MouseMotionListener {
 		}
 		this.representacionGrafo = this.grafoDependencia
 				.obtenerRepresentacionGrafo(true);
-
-		this.remove(this.representacionGrafoScroll);
-		this.representacionGrafoScroll = new JScrollPane(
-				this.representacionGrafo);
-		this.add(this.representacionGrafoScroll);
 		
-		this.ajustarGrafoATamanioPestana();
-		this.revalidate();
+		this.visualizar();
 	}
 	
 	/**
@@ -384,44 +301,29 @@ MouseListener, MouseMotionListener {
 	
 	
 	/**
-	 * Crea la barra de herramientas de la ventana.								---> Por definir aun
+	 * Crea la barra de herramientas de la ventana.
 	 */
 	private void crearBarraDeHerramientas() {
 
-		this.botones = new JButton[7];
+		this.botones = new JButton[3];
 
 		this.botones[0] = new JButton(new ImageIcon(
 				getClass().getClassLoader().getResource("imagenes/i_tabulado.gif")));
 		this.botones[0].setToolTipText(Texto.get("GP_DIBUJAR_MATRIZ",
 				Conf.idioma));
+		
 		this.botones[1] = new JButton(new ImageIcon(
 				getClass().getClassLoader().getResource("imagenes/i_tabulado_automatico.gif")));
 		this.botones[1].setToolTipText(Texto.get("GP_TABULAR_MATRIZ",
-				Conf.idioma));
-
+				Conf.idioma));	
+		
 		this.botones[2] = new JButton(new ImageIcon(
-				getClass().getClassLoader().getResource("imagenes/i_exportarestado.gif")));
-		this.botones[2].setToolTipText(Texto.get("GP_EXPORTAR", Conf.idioma));
-
-		this.botones[3] = new JButton(new ImageIcon(
-				getClass().getClassLoader().getResource("imagenes/i_zoommas.gif")));
-		this.botones[3].setToolTipText(Texto
-				.get("GP_AUMENTO_ZOOM", Conf.idioma));
-		this.botones[4] = new JButton(new ImageIcon(
-				getClass().getClassLoader().getResource("imagenes/i_zoommenos.gif")));
-		this.botones[4].setToolTipText(Texto.get("GP_DISMINUCION_ZOOM",
-				Conf.idioma));
-		this.botones[5] = new JButton(new ImageIcon(
-				getClass().getClassLoader().getResource("imagenes/i_zoomajuste.gif")));
-		this.botones[5]
-				.setToolTipText(Texto.get("GP_AJUSTE_ZOOM", Conf.idioma));
-		this.botones[6] = new JButton(new ImageIcon(
 				getClass().getClassLoader().getResource("imagenes/i_invertir_flechas_grafo.gif")));
-		this.botones[6]
+		this.botones[2]
 				.setToolTipText(Texto.get("GP_INVERTIR_FLECHAS", Conf.idioma));
 
 		// Creamos las barras de herramientas
-		this.barras = new JToolBar[3];
+		this.barras = new JToolBar[2];
 		for (int i = 0; i < this.barras.length; i++) {
 			this.barras[i] = new JToolBar(Texto.get("BARRA_HERR", Conf.idioma));
 			this.barras[i].setBorderPainted(true);
@@ -434,13 +336,7 @@ MouseListener, MouseMotionListener {
 		this.barras[0].add(this.botones[1]);
 
 		// Grupo opciones nodos
-		this.barras[1].add(this.botones[2]);
-
-		// Grupo formato
-		this.barras[2].add(this.botones[3]);
-		this.barras[2].add(this.botones[4]);
-		this.barras[2].add(this.botones[5]);
-		this.barras[2].add(this.botones[6]);
+		this.barras[1].add(this.botones[2]);		
 
 		this.panelHerramientas = new JPanel();
 		this.panelHerramientas.setLayout(new BorderLayout());
@@ -545,11 +441,19 @@ MouseListener, MouseMotionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if (e.getSource() == this.botones[0]) {				//	Matriz
+			new CuadroDibujarTablaGrafoDependencia(this.ventana,
+					this.grafoDependencia.getNumeroFilasTabla(),
+					this.grafoDependencia.getNumeroColumnasTabla(),
+					this);
+		} else if (e.getSource() == this.botones[1]) {		//	Tabular
+			new CuadroTabularGrafoDependencia(this.ventana,
+					this.metodo.getInterfaz(),
+					this.ultimaExpresionParaFila,
+					this.ultimaExpresionParaColumna,
+					this);
+		}else if (e.getSource() == this.botones[2]) {		//	Flechas
+			this.invertirFlechasGrafo();
+		}
 	}
-	
-
-	
-
 }

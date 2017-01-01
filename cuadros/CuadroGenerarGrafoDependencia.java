@@ -15,7 +15,6 @@ import javax.swing.border.TitledBorder;
 
 import utilidades.Texto;
 import ventanas.Ventana;
-import ventanas.VentanaGrafoDependencia;
 import botones.BotonAceptar;
 import botones.BotonCancelar;
 import conf.Conf;
@@ -147,8 +146,7 @@ ActionListener, KeyListener {
 				}
 			}
 
-			this.dialogo.setVisible(false);
-			new VentanaGrafoDependencia(this.ventana, this.dtb.getMetodo(posicionMetodo)); // <==== Eliminar/Cambiar
+			this.dialogo.setVisible(false);			
 	        this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodo(posicionMetodo));
 
 		} else if (e.getSource() == this.cancelar) {

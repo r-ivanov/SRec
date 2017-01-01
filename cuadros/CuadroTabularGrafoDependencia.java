@@ -20,10 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import utilidades.Texto;
-import ventanas.VentanaGrafoDependencia;
+import ventanas.Ventana;
 import botones.BotonAceptar;
 import botones.BotonCancelar;
 import conf.Conf;
+import paneles.PanelGrafo;
 
 /**
  * Implementa el cuadro que permite tabular un grafo de dependencia dada una
@@ -37,7 +38,7 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 	private static final int ALTURA_CUADRO = 150;
 	private static final int ANCHURA_CUADRO = 450;
 
-	private VentanaGrafoDependencia ventana;
+	private Ventana ventana;
 	private BotonAceptar aceptar;
 	private BotonCancelar cancelar;
 
@@ -51,6 +52,8 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 
 	private String ultimaExpresionParaFila;
 	private String ultimaExpresionParaColumna;
+	
+	private PanelGrafo pg;
 
 	/**
 	 * Devuelve una nueva instancia del Cuadro.
@@ -63,15 +66,19 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 	 *            Última expresión que se utilizó para la fila.
 	 * @param ultimaExpresionParaColumna
 	 *            Última expresión que se utilizó para la columna.
+	 * @param pg
+	 * 			  PanelGrafo donde se reflejarán los cambios
 	 */
-	public CuadroTabularGrafoDependencia(VentanaGrafoDependencia ventana,
+	public CuadroTabularGrafoDependencia(Ventana ventana,
 			String signaturaMetodo, String ultimaExpresionParaFila,
-			String ultimaExpresionParaColumna) {
+			String ultimaExpresionParaColumna,
+			PanelGrafo pg) {
 		this.dialogo = new JDialog(ventana, true);
 		this.ventana = ventana;
 		this.signaturaMetodo = signaturaMetodo;
 		this.ultimaExpresionParaFila = ultimaExpresionParaFila;
 		this.ultimaExpresionParaColumna = ultimaExpresionParaColumna;
+		this.pg = pg;
 		this.start();
 	}
 
@@ -197,7 +204,7 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 		}
 
 		if (mensajeError == null) {
-			mensajeError = this.ventana.tabular(this.textFilas.getText(),
+			mensajeError = this.pg.tabular(this.textFilas.getText(),
 					this.textColumnas.getText());
 		}
 
