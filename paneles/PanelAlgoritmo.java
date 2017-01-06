@@ -966,7 +966,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		if (pArbol != null) {
 			pArbol.visualizar(true, true, false);
 			pPila.visualizar();
-			pGrafo.visualizar();
+			if(grafoActivado)
+				pGrafo.visualizar2();
 			pCodigo.visualizar(recargarCodigo);
 
 			if (Ventana.thisventana.getTraza() != null

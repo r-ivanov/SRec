@@ -55,8 +55,8 @@ MouseListener, MouseMotionListener {
 	private GrafoDependencia grafoDependencia;
 	private JGraph representacionGrafo;
 
-	private String ultimaExpresionParaFila;
-	private String ultimaExpresionParaColumna;
+	private String ultimaExpresionParaFila;		//	Expresión filas si han tabulado
+	private String ultimaExpresionParaColumna;	//	Expresión columnas si han tabulado
 
 	private JPanel panel;
 
@@ -64,6 +64,16 @@ MouseListener, MouseMotionListener {
 	private double escalaActual;
 	
 	private int zoom = 0;	
+	
+	private int tipoGrafo = -1;	// 	0 - Grafo normal
+								//	1 - Grafo con matriz
+								//	2 - Grafo tabulado
+	
+	private boolean orientacionFlechas = true;	// 	True - Normal
+												//	False - Invertidas
+
+	private int numeroFilas;	//	Nº filas si han dibujado tabla
+	private int numeroColumnas;	//	Nº columnas si han dibujado tabla
 	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para el grafo.
@@ -88,6 +98,7 @@ MouseListener, MouseMotionListener {
 					this.ventana.trazaCompleta, this.metodo);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false);
+			this.tipoGrafo = 0;
 			this.representacionGrafo.setScale(this.representacionGrafo.getScale());
 			this.escalaOriginal = this.representacionGrafo.getScale();
 			this.escalaActual = this.representacionGrafo.getScale();
@@ -149,6 +160,8 @@ MouseListener, MouseMotionListener {
 		this.grafoDependencia.setTamanioTabla(filas, columnas);
 		this.representacionGrafo = this.grafoDependencia
 				.obtenerRepresentacionGrafo(false);
+		this.numeroFilas = filas;
+		this.numeroColumnas = columnas;
 		this.visualizar();
 	}
 	
@@ -180,23 +193,29 @@ MouseListener, MouseMotionListener {
 	
 	/**
 	 * Invierte las flechas del grafo
+	 * 
+	 * @param visualizar
+	 * 		True si queremos visualizar junto con el método los cambios
+	 * 		False caso contrario
 	 */
-	private void invertirFlechasGrafo(){
+	private void invertirFlechasGrafo(boolean visualizar){
 		List<NodoGrafoDependencia> listaNodos = this.grafoDependencia.getNodos();
 		for(NodoGrafoDependencia nodo:listaNodos){
 			nodo.invertirAristas();					
 		}
 		this.representacionGrafo = this.grafoDependencia
 				.obtenerRepresentacionGrafo(true);
-		
-		this.visualizar();
+		this.orientacionFlechas = !this.orientacionFlechas;
+		if(visualizar){
+			this.visualizar();
+		}
 	}
 	
 	/**
 	 * Visualiza y redibuja el grafo en la pestaña.
 	 */
 	public void visualizar() {		
-		if (Ventana.thisventana.traza != null) {
+		if (Ventana.thisventana.traza != null) {			
 			this.representacionGrafo.getModel().addGraphModelListener(null);
 			this.representacionGrafo.addMouseListener(this);
 			this.representacionGrafo.setScale(this.escalaActual);
@@ -214,6 +233,57 @@ MouseListener, MouseMotionListener {
 			this.setBackground(Conf.colorPanel);
 			this.panel.updateUI();
 			this.updateUI();		
+		}
+	}
+	
+	/**
+	 * Permite actualizar el grafo cuando haya un cambio en la traza
+	 * (cambio colores, entrada, salida... etc)
+	 */
+	public void visualizar2(){
+		if (Ventana.thisventana.traza != null) {
+			
+			//	Creamos grafo nuevo siempre, para que cargue la nueva traza
+			//		y/o las nuevas opciones de visualización
+			this.grafoDependencia = new GrafoDependencia(
+					this.ventana.trazaCompleta, this.metodo);
+			this.representacionGrafo = this.grafoDependencia
+					.obtenerRepresentacionGrafo(false);	
+			
+			//	Dejamos las flechas con la orientación que tenían
+			if(!this.orientacionFlechas){
+				this.invertirFlechasGrafo(false);
+				this.orientacionFlechas = !this.orientacionFlechas;
+			}
+			
+			//	Revisamos el tipo de grafo que teníamos creado
+			switch(this.tipoGrafo){
+			
+				//	Grafo normal
+				case 0:						
+									
+					this.visualizar();
+					break;
+				
+				//	Grafo con tabla
+				case 1:	
+					
+					//	Se crea tabla con valor almacenado previamente
+					this.dibujarTabla(this.numeroFilas, this.numeroColumnas);
+					
+					//	No se llama a visualizar porque ya está en dibujar tabla					
+					break;
+				
+				//	Grafo tabulado
+				case 2:	
+			
+					//	Se crea grafo tabulado con valor almacenado previamente
+					this.tabular(this.ultimaExpresionParaFila, this.ultimaExpresionParaColumna);
+					
+					//	No se llama a visualizar porque ya está en dibujar tabla
+					break;
+			}
+			
 		}
 	}
 	
@@ -446,14 +516,16 @@ MouseListener, MouseMotionListener {
 					this.grafoDependencia.getNumeroFilasTabla(),
 					this.grafoDependencia.getNumeroColumnasTabla(),
 					this);
+			this.tipoGrafo = 1;
 		} else if (e.getSource() == this.botones[1]) {		//	Tabular
 			new CuadroTabularGrafoDependencia(this.ventana,
 					this.metodo.getInterfaz(),
 					this.ultimaExpresionParaFila,
 					this.ultimaExpresionParaColumna,
-					this);
+					this);			
+			this.tipoGrafo = 2;
 		}else if (e.getSource() == this.botones[2]) {		//	Flechas
-			this.invertirFlechasGrafo();
+			this.invertirFlechasGrafo(true);
 		}
 	}
 }

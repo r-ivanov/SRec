@@ -66,7 +66,7 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 		this.columnasAnteriores = columnasAnteriores;
 		this.pg = pg;
 		this.start();
-	}
+	}	
 
 	/**
 	 * Ejecuta el thread asociado al cuadro.
@@ -265,7 +265,7 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 		} else if (code == KeyEvent.VK_ENTER) {
 			this.accionDibujarTabla();
 		}
-	}
+	}	
 
 	/**
 	 * Gestiona los eventos de teclado
