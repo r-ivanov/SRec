@@ -94,8 +94,7 @@ MouseListener, MouseMotionListener {
 			this.metodo = metodo;
 			this.ventana = ventana;	
 				
-			this.grafoDependencia = new GrafoDependencia(
-					this.ventana.trazaCompleta, this.metodo);
+			this.grafoDependencia = new GrafoDependencia(this.metodo);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false);
 			this.tipoGrafo = 0;
@@ -245,8 +244,7 @@ MouseListener, MouseMotionListener {
 			
 			//	Creamos grafo nuevo siempre, para que cargue la nueva traza
 			//		y/o las nuevas opciones de visualización
-			this.grafoDependencia = new GrafoDependencia(
-					this.ventana.trazaCompleta, this.metodo);
+			this.grafoDependencia = new GrafoDependencia(this.metodo);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false);	
 			

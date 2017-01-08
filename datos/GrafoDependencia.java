@@ -31,6 +31,7 @@ import org.jgraph.graph.GraphLayoutCache;
 
 import utilidades.MatrizDinamica;
 import utilidades.Texto;
+import ventanas.Ventana;
 import conf.Conf;
 
 /**
@@ -75,13 +76,20 @@ public class GrafoDependencia {
 	 * @param metodo
 	 *            Método para el que obtener los nodos del grafo.
 	 */
-	public GrafoDependencia(Traza traza, DatosMetodoBasicos metodo) {
+	public GrafoDependencia(DatosMetodoBasicos metodo) {		
 
 		this.nodos = new ArrayList<NodoGrafoDependencia>();
 		this.metodo = metodo;
 
-		this.insertarNodos(null, traza.getRaiz(),
+		//	Primero añadimos los de la traza actual
+		this.insertarNodos(null, Ventana.thisventana.getTraza().getRaiz(),
 				new ArrayList<NodoGrafoDependencia>());
+		
+		//	Después añadimos el resto por si quieren visualizar grafos de métodos
+		//		que no se han establecido como visibles
+		this.insertarNodos(null, Ventana.thisventana.trazaCompleta.getRaiz(),
+				new ArrayList<NodoGrafoDependencia>());
+		
 		this.crearMatrizTabuladoConOrganizacionPorDefecto();
 	}
 
@@ -145,7 +153,7 @@ public class GrafoDependencia {
 				&& this.metodo.getNumParametrosE() == registroActivacion
 						.getNombreParametros().length;
 		if (!procesado) {
-			if (mismoMetodo) {
+			if (mismoMetodo && !existeNodo(nodo)) {
 				this.nodos.add(nodo);
 			}
 			for (int i = 0; i < registroActivacion.numHijos(); i++) {
@@ -172,6 +180,23 @@ public class GrafoDependencia {
 		if (!procesado) {
 			procesados.add(nodo);
 		}
+	}
+	
+	/**
+	 * Determina si un nodo existe en la variable nodos de esta clase
+	 * (Para no repetir inserciones de nodo, permite insertar desde varias trazas)
+	 * 
+	 * @param nodoAInsertar Nodo que se pretende insertar
+	 * @return
+	 * 		True si existe el nodo a insertar, False caso contrario
+	 */
+	private boolean existeNodo(NodoGrafoDependencia nodoAInsertar){
+		for(NodoGrafoDependencia nodoActual:this.nodos){
+			if(nodoActual.equals(nodoAInsertar)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

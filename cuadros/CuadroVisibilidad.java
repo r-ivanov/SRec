@@ -446,6 +446,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 		this.ventana.setDTB(this.dtb);
 		this.ventana.actualizarEstadoTrazaCompleta();
 		this.ventana.refrescarOpciones();
+		this.ventana.refrescarFormato();
 		Conf.setRedibujarGrafoArbol(false);
 
 		this.dialogo.setVisible(false);

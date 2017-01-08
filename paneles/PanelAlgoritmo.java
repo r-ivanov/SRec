@@ -573,7 +573,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorTraza.removeAll();
 		this.contenedorCrono.removeAll();
 		this.contenedorEstructura.removeAll();
-		this.contenedorGrafo.removeAll();
+		if(this.contenedorGrafo != null)
+			this.contenedorGrafo.removeAll();
 		
 		this.jspArbol.removeAll();
 		jspPila.removeAll();
@@ -944,7 +945,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 						SwingUtilities.invokeLater(new Runnable() {							
 							@Override
 							public void run() {
-								pGrafo.visualizar();
+								if(pGrafo != null)
+									pGrafo.visualizar();
 							}
 						});
 					}

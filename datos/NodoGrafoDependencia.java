@@ -111,16 +111,26 @@ public class NodoGrafoDependencia {
 		GraphConstants.setForeground(this.celdaEntrada.getAttributes(),
 				Conf.colorFEntrada);
 		GraphConstants.setOpaque(this.celdaEntrada.getAttributes(), true);
-		GraphConstants.setBackground(
-				this.celdaEntrada.getAttributes(),
-				(Conf.modoColor == 1 ? Conf.colorC1Entrada
-						: Conf.coloresNodo[this.registroActivacion
-						                   .getNumMetodo() % 10]));
-		GraphConstants.setGradientColor(
-				this.celdaEntrada.getAttributes(),
-				(Conf.modoColor == 1 ? Conf.colorC2Entrada
-						: Conf.coloresNodo2[this.registroActivacion
-						                    .getNumMetodo() % 10]));
+		
+		if (this.registroActivacion.estaIluminado()) {
+			GraphConstants.setBackground(this.celdaEntrada.getAttributes(),
+					Conf.colorIluminado);
+			GraphConstants.setGradientColor(this.celdaEntrada.getAttributes(),
+					Conf.colorIluminado);
+		} else if (this.registroActivacion.estaResaltado()) {
+			GraphConstants.setBackground(this.celdaEntrada.getAttributes(),
+					Conf.colorResaltado);
+			GraphConstants.setGradientColor(this.celdaEntrada.getAttributes(),
+					Conf.colorResaltado);
+		} else {
+			GraphConstants.setBackground(this.celdaEntrada.getAttributes(),
+					(Conf.modoColor == 1 ? Conf.colorC1Entrada
+							: Conf.coloresNodo[registroActivacion.getNumMetodo() % 10]));
+			GraphConstants.setGradientColor(this.celdaEntrada.getAttributes(),
+					(Conf.modoColor == 1 ? Conf.colorC2Entrada
+							: Conf.coloresNodo2[registroActivacion.getNumMetodo() % 10]));
+		}
+		
 		this.marcoCelda(this.celdaEntrada.getAttributes());
 		GraphConstants
 		.setBounds(this.celdaEntrada.getAttributes(), new Rectangle(
@@ -137,16 +147,25 @@ public class NodoGrafoDependencia {
 		GraphConstants.setForeground(this.celdaSalida.getAttributes(),
 				Conf.colorFSalida);
 		GraphConstants.setOpaque(this.celdaSalida.getAttributes(), true);
-		GraphConstants.setBackground(
-				this.celdaSalida.getAttributes(),
-				(Conf.modoColor == 1 ? Conf.colorC1Salida
-						: Conf.coloresNodo[this.registroActivacion
-						                   .getNumMetodo() % 10]));
-		GraphConstants.setGradientColor(
-				this.celdaSalida.getAttributes(),
-				(Conf.modoColor == 1 ? Conf.colorC2Salida
-						: Conf.coloresNodo2[this.registroActivacion
-						                    .getNumMetodo() % 10]));
+
+		if (this.registroActivacion.estaIluminado()) {
+			GraphConstants.setBackground(this.celdaSalida.getAttributes(),
+					Conf.colorIluminado);
+			GraphConstants.setGradientColor(this.celdaSalida.getAttributes(),
+					Conf.colorIluminado);
+		} else if (this.registroActivacion.estaResaltado()) {
+			GraphConstants.setBackground(this.celdaSalida.getAttributes(),
+					Conf.colorResaltado);
+			GraphConstants.setGradientColor(this.celdaSalida.getAttributes(),
+					Conf.colorResaltado);
+		} else {
+			GraphConstants.setBackground(this.celdaSalida.getAttributes(),
+					(Conf.modoColor == 1 ? Conf.colorC1Salida
+							: Conf.coloresNodo[registroActivacion.getNumMetodo() % 10]));
+			GraphConstants.setGradientColor(this.celdaSalida.getAttributes(),
+					(Conf.modoColor == 1 ? Conf.colorC2Salida
+							: Conf.coloresNodo2[registroActivacion.getNumMetodo() % 10]));
+		}
 		this.marcoCelda(this.celdaSalida.getAttributes());
 		GraphConstants
 		.setBounds(
