@@ -21,6 +21,7 @@ import org.jgraph.graph.GraphConstants;
 import org.jgraph.util.NonCollidingEdgeRouter;
 
 import conf.Conf;
+import utilidades.NombresYPrefijos;
 
 /**
  * Representa un nodo de un grafo de dependencia.
@@ -48,14 +49,20 @@ public class NodoGrafoDependencia {
 
 	private DefaultPort portCelda;
 	private List<DefaultEdge> aristas;
+	private NombresYPrefijos nyp;
 
 	/**
 	 * Devuelve una nueva instancia.
 	 * 
 	 * @param registroActivacionAsociado
-	 *            Registro de activación al que está asociado el nodo.
+	 *	Registro de activación al que está asociado el nodo.
+	 *            
+	 * @param nyp
+	 * 	Nombres y prefijos, para abreviar nombre de métodos si están visibles
+	 *  y es necesario
 	 */
-	public NodoGrafoDependencia(RegistroActivacion registroActivacionAsociado) {
+	public NodoGrafoDependencia(RegistroActivacion registroActivacionAsociado, NombresYPrefijos nyp) {
+		this.nyp = nyp;
 		this.dependencias = new ArrayList<NodoGrafoDependencia>();
 		this.aristas = new ArrayList<DefaultEdge>();
 		this.registroActivacion = registroActivacionAsociado;
@@ -70,12 +77,31 @@ public class NodoGrafoDependencia {
 
 		String repEntrada = this.registroActivacion.getEntrada()
 				.getRepresentacion();
+		
+		if (Conf.idMetodoTraza) {
+			
+			if (this.nyp != null) {
+				repEntrada = this.nyp.getPrefijo(this.registroActivacion.getNombreMetodo())
+						+ ": "+ repEntrada;
+			}else{
+				repEntrada = this.registroActivacion.getNombreMetodo() + ": " + repEntrada;
+			}
+		}
 		if (repEntrada.length() < 3) {
 			repEntrada = "  " + repEntrada + "  ";
 		}
 
 		String repSalida = this.registroActivacion.getSalida()
 				.getRepresentacion();
+
+		if (Conf.idMetodoTraza) {			
+			if (this.nyp != null) {
+				repSalida = this.nyp.getPrefijo(this.registroActivacion.getNombreMetodo())
+						+ ": "+ repSalida;
+			}else{
+				repSalida = this.registroActivacion.getNombreMetodo() + ": "+ repSalida;
+			}
+		}
 		if (repSalida.length() < 3) {
 			repSalida = "  " + repSalida + "  ";
 		}

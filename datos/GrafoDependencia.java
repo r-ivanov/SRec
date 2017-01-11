@@ -30,6 +30,7 @@ import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
 
 import utilidades.MatrizDinamica;
+import utilidades.NombresYPrefijos;
 import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
@@ -67,17 +68,21 @@ public class GrafoDependencia {
 	
 	private String expresionParaFila;
 	private String expresionParaColumna;
+	private NombresYPrefijos nyp;
 
 	/**
 	 * Devuelve una nueva instancia de un grafo.
 	 * 
-	 * @param traza
-	 *            Traza de ejecución asociada.
 	 * @param metodo
-	 *            Método para el que obtener los nodos del grafo.
+	 *	Método para el que obtener los nodos del grafo.
+	 *            
+	 * @param nyp
+	 * 	Nombres y prefijos, para abreviar nombre de métodos si están visibles
+	 *  y es necesario
 	 */
-	public GrafoDependencia(DatosMetodoBasicos metodo) {		
-
+	public GrafoDependencia(DatosMetodoBasicos metodo, NombresYPrefijos nyp) {		
+		
+		this.nyp = nyp;
 		this.nodos = new ArrayList<NodoGrafoDependencia>();
 		this.metodo = metodo;
 
@@ -137,7 +142,7 @@ public class GrafoDependencia {
 			List<NodoGrafoDependencia> procesados) {
 
 		/* Comprobamos si el nodo ya ha sido procesado */
-		NodoGrafoDependencia nodo = new NodoGrafoDependencia(registroActivacion);
+		NodoGrafoDependencia nodo = new NodoGrafoDependencia(registroActivacion, this.nyp);
 		boolean procesado = false;
 		for (NodoGrafoDependencia visitado : procesados) {
 			if (nodo.equals(visitado)) {
@@ -212,7 +217,7 @@ public class GrafoDependencia {
 			RegistroActivacion registroActivacion) {
 		NodoGrafoDependencia nodoObtenido = null;
 		NodoGrafoDependencia nodoObjetivo = new NodoGrafoDependencia(
-				registroActivacion);
+				registroActivacion,this.nyp);
 		for (Iterator<NodoGrafoDependencia> iterator = this.nodos.iterator(); iterator
 				.hasNext();) {
 			NodoGrafoDependencia nodo = iterator.next();

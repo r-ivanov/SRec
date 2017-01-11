@@ -140,7 +140,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			pPila = new PanelPila(null);
 			pArbol = new PanelArbol(null);
 			pCrono = new PanelCrono(null);
-			pGrafo = new PanelGrafo(null,null);
+			pGrafo = new PanelGrafo(null,null,null);
 		} catch (OutOfMemoryError oome) {
 			pArbol = null;
 			throw oome;
@@ -383,7 +383,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		try {
 			pArbol = new PanelArbol(nyp);
 			pPila = new PanelPila(nyp);
-			pGrafo = new PanelGrafo(null,null);
+			pGrafo = new PanelGrafo(null,null,null);
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
 				Ventana.thisventana.habilitarOpcionesDYV(true);
@@ -431,7 +431,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				.println("\n-Ha saltado una excepcion(PanelAlgoritmo)-\n");
 				pArbol = new PanelArbol(null);
 				pPila = new PanelPila(null);
-				pGrafo = new PanelGrafo(null,null);
+				pGrafo = new PanelGrafo(null,null,null);
 				pTraza = new PanelTraza();
 				pCrono = new PanelCrono(null);
 				pEstructura = new PanelEstructura(null);
@@ -496,7 +496,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			pArbol = new PanelArbol(ficheroGIF, new ImageIcon(ficheroGIF));
 			pPila = new PanelPila(null);
 			pTraza = new PanelTraza();
-			pGrafo = new PanelGrafo(null,null);
+			pGrafo = new PanelGrafo(null,null,null);
 			this.ocupado = true;
 			pControl.setValores(ficheroGIF.substring(
 					ficheroGIF.lastIndexOf("\\") + 1,
@@ -510,7 +510,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				System.out.println("\n-Ha saltado una excepcion-\n");
 				pArbol = new PanelArbol(null);
 				pPila = new PanelPila(null);
-				pGrafo = new PanelGrafo(null,null);
+				pGrafo = new PanelGrafo(null,null,null);
 				pTraza = new PanelTraza();
 				pControl = new PanelControl("", this);
 				this.ocupado = false;
@@ -559,7 +559,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			Ventana.thisventana.trazaCompleta = null;
 			pArbol = new PanelArbol(null);
 			pPila = new PanelPila(null);
-			pGrafo = new PanelGrafo(null,null);
+			pGrafo = new PanelGrafo(null,null,null);
 			pTraza = new PanelTraza();
 			pCrono = new PanelCrono(null);
 			pControl.setValores("", this);
@@ -966,10 +966,22 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 */
 	public void refrescarFormato(boolean recargarCodigo) {
 		if (pArbol != null) {
+			this.mostrarNombreMetodos = Ventana.thisventana.traza.getNumMetodos() != 1;
+			if (this.mostrarNombreMetodos) {
+				nyp = new NombresYPrefijos();
+				this.nombresMetodos = Ventana.thisventana.trazaCompleta
+						.getNombresMetodos();
+				String prefijos[] = ServiciosString
+						.obtenerPrefijos(this.nombresMetodos);
+				for (int i = 0; i < this.nombresMetodos.length; i++) {
+					nyp.add(this.nombresMetodos[i], prefijos[i]);
+				}
+			}
 			pArbol.visualizar(true, true, false);
 			pPila.visualizar();
 			if(grafoActivado)
-				pGrafo.visualizar2();
+				pGrafo.visualizar2(nyp);
+			nyp = null;
 			pCodigo.visualizar(recargarCodigo);
 
 			if (Ventana.thisventana.getTraza() != null
@@ -1697,7 +1709,22 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	    		
 	    		//	Generamos el grafo de dependencia solo cuando pulsan botón de generar, no antes
 				
-				pGrafo = new PanelGrafo(metodo,Ventana.thisventana);
+				nyp = null;
+				this.mostrarNombreMetodos = Ventana.thisventana.traza.getNumMetodos() != 1;
+
+				if (this.mostrarNombreMetodos) {
+					nyp = new NombresYPrefijos();
+					this.nombresMetodos = Ventana.thisventana.trazaCompleta
+							.getNombresMetodos();
+					String prefijos[] = ServiciosString
+							.obtenerPrefijos(this.nombresMetodos);
+					for (int i = 0; i < this.nombresMetodos.length; i++) {
+						nyp.add(this.nombresMetodos[i], prefijos[i]);
+					}
+				}
+				
+				pGrafo = new PanelGrafo(metodo,Ventana.thisventana,nyp);
+				nyp = null;
 				jspGrafo = new JScrollPane(pGrafo);
 
 				this.contenedorGrafo = new JPanel();

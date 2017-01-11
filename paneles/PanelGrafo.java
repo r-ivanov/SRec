@@ -31,6 +31,7 @@ import cuadros.CuadroTabularGrafoDependencia;
 import datos.DatosMetodoBasicos;
 import datos.GrafoDependencia;
 import datos.NodoGrafoDependencia;
+import utilidades.NombresYPrefijos;
 import utilidades.Texto;
 
 /**
@@ -74,6 +75,8 @@ MouseListener, MouseMotionListener {
 
 	private int numeroFilas;	//	Nº filas si han dibujado tabla
 	private int numeroColumnas;	//	Nº columnas si han dibujado tabla
+
+	private NombresYPrefijos nyp;
 	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para el grafo.
@@ -84,17 +87,21 @@ MouseListener, MouseMotionListener {
 	 * @param ventana
 	 * 		Ventana a la que está asociada la pestaña, es la principal
 	 * 		y es necesaria para obtener algunos datos
+	 * 
+	 * @param nyp
+	 * 		Nombres y prefijos, para abreviar nombre de métodos si están visibles
+	 *  	y es necesario
 	 */
-	public PanelGrafo(DatosMetodoBasicos metodo, Ventana ventana) throws Exception {
+	public PanelGrafo(DatosMetodoBasicos metodo, Ventana ventana, NombresYPrefijos nyp) throws Exception {
 		
 		if (Ventana.thisventana.traza != null && metodo != null && ventana != null) {			
 			
 			//	Obtenemos datos básicos del grafo y su representación
-			
+			this.nyp = nyp;
 			this.metodo = metodo;
 			this.ventana = ventana;	
 				
-			this.grafoDependencia = new GrafoDependencia(this.metodo);
+			this.grafoDependencia = new GrafoDependencia(this.metodo,this.nyp);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false);
 			this.tipoGrafo = 0;
@@ -238,13 +245,17 @@ MouseListener, MouseMotionListener {
 	/**
 	 * Permite actualizar el grafo cuando haya un cambio en la traza
 	 * (cambio colores, entrada, salida... etc)
+	 * 
+	 * @param nyp
+	 * 	Nombres y prefijos, para abreviar nombre de métodos si están visibles
+	 *  y es necesario
 	 */
-	public void visualizar2(){
+	public void visualizar2(NombresYPrefijos nyp){
 		if (Ventana.thisventana.traza != null) {
 			
 			//	Creamos grafo nuevo siempre, para que cargue la nueva traza
 			//		y/o las nuevas opciones de visualización
-			this.grafoDependencia = new GrafoDependencia(this.metodo);
+			this.grafoDependencia = new GrafoDependencia(this.metodo,nyp);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false);	
 			
