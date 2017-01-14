@@ -383,7 +383,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		try {
 			pArbol = new PanelArbol(nyp);
 			pPila = new PanelPila(nyp);
-			pGrafo = new PanelGrafo(null,null,null);
+			if(grafoActivado)
+				pGrafo.visualizar2(nyp);
 			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 					Ventana.thisventana.getTraza().getTecnicas())) {
 				Ventana.thisventana.habilitarOpcionesDYV(true);

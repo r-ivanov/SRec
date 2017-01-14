@@ -221,7 +221,7 @@ MouseListener, MouseMotionListener {
 	 * Visualiza y redibuja el grafo en la pestaña.
 	 */
 	public void visualizar() {		
-		if (Ventana.thisventana.traza != null) {			
+		if (Ventana.thisventana.traza != null && this.representacionGrafo != null) {			
 			this.representacionGrafo.getModel().addGraphModelListener(null);
 			this.representacionGrafo.addMouseListener(this);
 			this.representacionGrafo.setScale(this.escalaActual);
