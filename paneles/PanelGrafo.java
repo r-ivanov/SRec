@@ -78,6 +78,8 @@ MouseListener, MouseMotionListener {
 
 	private NombresYPrefijos nyp;
 	
+	private boolean eliminarFilasColumnas = false;
+	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para el grafo.
 	 * 
@@ -209,8 +211,13 @@ MouseListener, MouseMotionListener {
 		for(NodoGrafoDependencia nodo:listaNodos){
 			nodo.invertirAristas();					
 		}
-		this.representacionGrafo = this.grafoDependencia
-				.obtenerRepresentacionGrafo(true);
+		if(this.eliminarFilasColumnas){
+			this.representacionGrafo = this.grafoDependencia
+					.obtenerRepresentacionGrafoEliminadasFilasYColumnas();
+		}else{
+			this.representacionGrafo = this.grafoDependencia
+					.obtenerRepresentacionGrafo(true);
+		}
 		this.orientacionFlechas = !this.orientacionFlechas;
 		if(visualizar){
 			this.visualizar();
@@ -384,7 +391,7 @@ MouseListener, MouseMotionListener {
 	 */
 	private void crearBarraDeHerramientas() {
 
-		this.botones = new JButton[3];
+		this.botones = new JButton[4];
 
 		this.botones[0] = new JButton(new ImageIcon(
 				getClass().getClassLoader().getResource("imagenes/i_tabulado.gif")));
@@ -400,7 +407,12 @@ MouseListener, MouseMotionListener {
 				getClass().getClassLoader().getResource("imagenes/i_invertir_flechas_grafo.gif")));
 		this.botones[2]
 				.setToolTipText(Texto.get("GP_INVERTIR_FLECHAS", Conf.idioma));
-
+		
+		this.botones[3] = new JButton(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/i_tabulado_eliminarFilas.gif")));
+		this.botones[3]
+				.setToolTipText(Texto.get("GP_ELIMINAR_FYC", Conf.idioma));
+				
 		// Creamos las barras de herramientas
 		this.barras = new JToolBar[2];
 		for (int i = 0; i < this.barras.length; i++) {
@@ -415,7 +427,8 @@ MouseListener, MouseMotionListener {
 		this.barras[0].add(this.botones[1]);
 
 		// Grupo opciones nodos
-		this.barras[1].add(this.botones[2]);		
+		this.barras[1].add(this.botones[2]);	
+		this.barras[1].add(this.botones[3]);
 
 		this.panelHerramientas = new JPanel();
 		this.panelHerramientas.setLayout(new BorderLayout());
@@ -444,6 +457,10 @@ MouseListener, MouseMotionListener {
 
 		this.panelHerramientas.add(panelInfo, BorderLayout.EAST);
 
+		if(this.tipoGrafo != 2)
+			this.botones[3].setEnabled(false);
+		if(this.eliminarFilasColumnas)
+			this.botones[0].setEnabled(false);
 //		this.add(this.panelHerramientas, BorderLayout.NORTH);
 	}	
 
@@ -526,6 +543,7 @@ MouseListener, MouseMotionListener {
 					this.grafoDependencia.getNumeroColumnasTabla(),
 					this);
 			this.tipoGrafo = 1;
+			
 		} else if (e.getSource() == this.botones[1]) {		//	Tabular
 			new CuadroTabularGrafoDependencia(this.ventana,
 					this.metodo.getInterfaz(),
@@ -533,8 +551,23 @@ MouseListener, MouseMotionListener {
 					this.ultimaExpresionParaColumna,
 					this);			
 			this.tipoGrafo = 2;
+			
 		}else if (e.getSource() == this.botones[2]) {		//	Flechas
 			this.invertirFlechasGrafo(true);
+				
+		}else if (e.getSource() == this.botones[3]) {		//	Eliminar filas y columnas vacías
+			this.grafoDependencia.nodosPosicionadosFalse();	
+			this.eliminarFilasColumnas  = !this.eliminarFilasColumnas;
+			if(this.eliminarFilasColumnas){
+				this.representacionGrafo = this.grafoDependencia
+						.obtenerRepresentacionGrafoEliminadasFilasYColumnas();
+			}else{
+				this.representacionGrafo = this.grafoDependencia
+						.obtenerRepresentacionGrafo(true);
+			}
+//			this.grafoDependencia.nodosPosicionadosFalse();			
+			this.visualizar();			
+			this.tipoGrafo = 2;
 		}
 	}
 }

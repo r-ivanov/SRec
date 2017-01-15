@@ -38,7 +38,7 @@ import conf.Conf;
 /**
  * Almacena y representa un grafo de dependencia.
  * 
- * @author David Pastor Herranz
+ * @author David Pastor Herranz y Daniel Arroyo Cortés
  */
 public class GrafoDependencia {
 
@@ -69,16 +69,20 @@ public class GrafoDependencia {
 	private String expresionParaFila;
 	private String expresionParaColumna;
 	private NombresYPrefijos nyp;
+	
+	private boolean eliminarFilasColumnas = false;
+	private int numeroFilasVisibles;
+	private int numeroColumnasVisibles;
 
 	/**
 	 * Devuelve una nueva instancia de un grafo.
 	 * 
 	 * @param metodo
-	 *	Método para el que obtener los nodos del grafo.
+	 *		Método para el que obtener los nodos del grafo.
 	 *            
 	 * @param nyp
-	 * 	Nombres y prefijos, para abreviar nombre de métodos si están visibles
-	 *  y es necesario
+	 * 		Nombres y prefijos, para abreviar nombre de métodos si están visibles
+	 *  	y es necesario
 	 */
 	public GrafoDependencia(DatosMetodoBasicos metodo, NombresYPrefijos nyp) {		
 		
@@ -130,12 +134,14 @@ public class GrafoDependencia {
 	 * Inserta nodos de la ejecución en el grafo de manera recursiva.
 	 * 
 	 * @param padre
-	 *            Nodo para el que se están resolviendo sus dependencias.
+	 * 		Nodo para el que se están resolviendo sus dependencias.
+	 * 
 	 * @param registroActivacion
-	 *            registro de activación que se esta procesando.
+	 * 		Registro de activación que se esta procesando.
+	 * 
 	 * @param procesados
-	 *            Nodos que ya han sido procesados, por lo que no es necesario
-	 *            determinar de nuevo sus dependencias.
+	 *		Nodos que ya han sido procesados, por lo que no es necesario
+	 *		determinar de nuevo sus dependencias.
 	 */
 	private void insertarNodos(NodoGrafoDependencia padre,
 			RegistroActivacion registroActivacion,
@@ -191,7 +197,8 @@ public class GrafoDependencia {
 	 * Determina si un nodo existe en la variable nodos de esta clase
 	 * (Para no repetir inserciones de nodo, permite insertar desde varias trazas)
 	 * 
-	 * @param nodoAInsertar Nodo que se pretende insertar
+	 * @param nodoAInsertar 
+	 * 		Nodo que se pretende insertar
 	 * @return
 	 * 		True si existe el nodo a insertar, False caso contrario
 	 */
@@ -209,9 +216,10 @@ public class GrafoDependencia {
 	 * de activación.
 	 * 
 	 * @param registroActivacion
-	 *            Registro de activación.
+	 *      Registro de activación.
 	 * 
-	 * @return Nodo que corresponde al registro de activación.
+	 * @return 
+	 * 		Nodo que corresponde al registro de activación.
 	 */
 	private NodoGrafoDependencia obtenerNodo(
 			RegistroActivacion registroActivacion) {
@@ -259,20 +267,23 @@ public class GrafoDependencia {
 	}
 
 	/**
-	 * Crea una celda que representa un indice para la matriz de tabulado.
+	 * Crea una celda que representa un indice para la matriz de tabulado
+	 * 	si no se han eliminado filas y columnas.
 	 * 
 	 * @param valor
-	 *            indice para filas o columnas.
+	 * 		indice para filas o columnas.
+	 * 
 	 * @param fila
-	 *            true si se trata de una fila, false si es una columna.
+	 *		true si se trata de una fila, false si es una columna.
 	 *            
 	 * @param invertirFilas
-	 * 				True si queremos orden decreciente, false si queremos orden creciente (para filas)
+	 *		True si queremos orden decreciente, false si queremos orden creciente (para filas)
 	 * 
 	 * @param invertirColumnas
-	 * 				True si queremos orden decreciente, false si queremos orden creciente (para columnas)
+	 * 		True si queremos orden decreciente, false si queremos orden creciente (para columnas)
 	 * 
-	 * @return Celda para el grafo que representa el índice.
+	 * @return 
+	 * 		Celda para el grafo que representa el índice.
 	 */
 	private DefaultGraphCell crearIndiceParaTabla(int valor, boolean fila, boolean invertirFilas, boolean invertirColumnas) {
 		String valorString;
@@ -313,14 +324,89 @@ public class GrafoDependencia {
 
 		return indice;
 	}
+	
+	/**
+	 * Crea una celda que representa un indice para la matriz 
+	 * 	de tabulado si se han eliminado filas y columnas
+	 * 
+	 * @param valorImprimir
+	 *		Valor que queremos imprimir, pero no determina el lugar
+	 *            
+	 * @param valorReal
+	 * 		Valor que determina el lugar donde se imprimirá
+	 * 
+	 * @param fila
+	 *		true si se trata de una fila, false si es una columna.
+	 *            
+	 * @param invertirFilas
+	 *		True si queremos orden decreciente, false si queremos orden creciente (para filas)
+	 * 
+	 * @param invertirColumnas
+	 *		True si queremos orden decreciente, false si queremos orden creciente (para columnas)
+	 *
+	 * @param numeroFilasVisibles
+	 * 		Número de filas visibles en la matriz al eliminar filas
+	 * 
+	 * @param numeroColumnasVisibles
+	 * 		Número de columnas visibles en la matriz al eliminar filas
+	 * 
+	 * @return 
+	 * 		Celda para el grafo que representa el índice.
+	 */
+	private DefaultGraphCell crearIndiceParaTabla2(int valorImprimir, int valorReal,
+			boolean fila, boolean invertirFilas, boolean invertirColumnas,
+			int numeroFilasVisibles, int numeroColumnasVisibles) {
+		String valorString;
+		if(invertirFilas && fila){
+			valorString = String.valueOf(this.numeroFilasTabla-valorImprimir-1);
+		}else if(invertirColumnas && !fila){
+			valorString = String.valueOf(this.numeroColumnasTabla-valorImprimir-1);
+		}else{
+			valorString = String.valueOf(valorReal);
+		}
+		DefaultGraphCell indice = new DefaultGraphCell(valorString);
+		GraphConstants.setDisconnectable(indice.getAttributes(), false);
+		GraphConstants.setMoveable(indice.getAttributes(), false);
+		GraphConstants.setSelectable(indice.getAttributes(), false);
+		GraphConstants.setEditable(indice.getAttributes(), false);
+		GraphConstants.setFont(indice.getAttributes(), new Font("Arial",
+				Font.BOLD, TAM_FUENTE));
+		GraphConstants.setBackground(indice.getAttributes(), Conf.colorPanel);
+		GraphConstants.setForeground(indice.getAttributes(), Color.LIGHT_GRAY);
+		GraphConstants.setOpaque(indice.getAttributes(), true);
+
+		int anchura = valorString.length() * ANCHO_PIXEL_CARACTER;
+		int altura = TAM_FUENTE;
+
+		int x = 0;
+		int y = 0;
+		if (fila) {
+			x = MARGEN_TABLA - MARGEN_INDICES - anchura;
+			y = MARGEN_TABLA + this.alturaCuadroMatriz * valorImprimir
+					+ this.alturaCuadroMatriz / 2 - altura / 2;
+		} else {
+			x = MARGEN_TABLA + this.anchuraCuadroMatriz * valorImprimir
+					+ this.anchuraCuadroMatriz / 2 - anchura / 2;
+			y = MARGEN_TABLA - MARGEN_INDICES - altura;
+		}
+		GraphConstants.setBounds(indice.getAttributes(), new Rectangle(x, y,
+				anchura, altura));
+
+		return indice;
+	}
 
 	/**
-	 * Devuelve la representación visual del grafo de dependencia.
-	 * @param esTabulado Indica si se genera al pulsar "Tabular nodos del grafo" o no
-	 * @return Representación visual del grafo.
+	 * Devuelve la representación visual del grafo de dependencia
+	 * 	si no se han eliminado filas y columnas.
+	 * 
+	 * @param esTabulado 
+	 * 		Indica si se genera al pulsar "Tabular nodos del grafo" o no
+	 * 
+	 * @return 
+	 * 		Representación visual del grafo.
 	 */
 	public JGraph obtenerRepresentacionGrafo(boolean esTabulado) {
-
+		this.eliminarFilasColumnas = false;
 		DefaultGraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new DefaultCellViewFactory());
@@ -438,14 +524,170 @@ public class GrafoDependencia {
 				.getAllViews()) {
 			cell.update(representacionGrafo.getGraphLayoutCache());
 		}
+		
+		return representacionGrafo;
+	}
+	
+	/**
+	 * Devuelve la representación visual del grafo 
+	 * 	de dependencia con las filas y columnas vacías eliminadas.
+	 * 	 
+	 * @return 
+	 * 		Representación visual del grafo con filas y columnas vacías eliminadas.
+	 */
+	public JGraph obtenerRepresentacionGrafoEliminadasFilasYColumnas() {
+		this.eliminarFilasColumnas = true;
+		DefaultGraphModel model = new DefaultGraphModel();
+		GraphLayoutCache view = new GraphLayoutCache(model,
+				new DefaultCellViewFactory());
+		final JGraph representacionGrafo = new JGraph(model, view);
+		representacionGrafo.setMarqueeHandler(null);
 
+		representacionGrafo.getModel().addGraphModelListener(
+				new GraphModelListener() {
+					@Override
+					public void graphChanged(final GraphModelEvent e) {
+						representacionGrafo.refreshUI();
+					}
+				});
+
+		representacionGrafo
+				.addGraphSelectionListener(new GraphSelectionListener() {
+					@Override
+					public void valueChanged(GraphSelectionEvent e) {
+						if (e.isAddedCell()) {
+							Object[] cells = new Object[1];
+							cells[0] = e.getCell();
+							representacionGrafo.getModel().toFront(cells);
+							List incomingEdges = representacionGrafo
+									.getGraphLayoutCache().getIncomingEdges(
+											e.getCell(), null, false, true);
+							List outgoingEdges = representacionGrafo
+									.getGraphLayoutCache().getOutgoingEdges(
+											e.getCell(), null, false, true);
+							representacionGrafo.getModel().toFront(
+									incomingEdges.toArray());
+							representacionGrafo.getModel().toFront(
+									outgoingEdges.toArray());
+						}
+					}
+				});
+
+		representacionGrafo.setBackground(Conf.colorPanel);
+		this.ajustarNodosAMismaAnchuraYCalcularTamanioCuadro();
+
+		boolean dibujarTabla = this.numeroFilasTabla >= 1
+				&& this.numeroColumnasTabla >= 1;
+		boolean[] invertirEjes = this.invertirEjes();
+		boolean[][] fyc= this.matrizTabulado.filasYColumnasVacias();
+		int numeroColumnasVisibles = 0;
+		for(boolean visible:fyc[1]){
+			if(!visible)
+				numeroColumnasVisibles++;
+		}
+		this.numeroColumnasVisibles = numeroColumnasVisibles;
+		int columna2=0;
+		int numeroFilasVisibles = 0;
+		for(boolean visible:fyc[0]){
+			if(!visible)
+				numeroFilasVisibles++;
+		}
+		this.numeroFilasVisibles = numeroFilasVisibles;
+		if (dibujarTabla) {	
+			
+			int tamanioMarcadorEjesParaFila = this.numeroFilasTabla > 1 ? TAMANIO_MARCADORES_EJES
+					: 0;
+			int fila2=0;			
+			for (int fila = 0; fila <= this.numeroFilasTabla; fila++) {
+				if(fila!=this.numeroFilasTabla && !fyc[0][fila]){
+					DefaultGraphCell linea = this.crearLineaParaTabla(MARGEN_TABLA
+							- tamanioMarcadorEjesParaFila, MARGEN_TABLA + fila2
+							* this.alturaCuadroMatriz, numeroColumnasVisibles
+							* this.anchuraCuadroMatriz
+							+ tamanioMarcadorEjesParaFila, false);
+					representacionGrafo.getGraphLayoutCache().insert(linea);
+					if (fila2 != this.numeroFilasTabla && this.numeroFilasTabla > 1) {
+						DefaultGraphCell indice = this.crearIndiceParaTabla2(fila2,fila,
+								true, invertirEjes[0],invertirEjes[1],numeroFilasVisibles,numeroColumnasVisibles);
+						representacionGrafo.getGraphLayoutCache().insert(indice);
+					}					
+					fila2++;
+				}				
+			}
+			
+			DefaultGraphCell lineaFinal = this.crearLineaParaTabla(MARGEN_TABLA
+					- tamanioMarcadorEjesParaFila, MARGEN_TABLA + fila2
+					* this.alturaCuadroMatriz, numeroColumnasVisibles
+					* this.anchuraCuadroMatriz
+					+ tamanioMarcadorEjesParaFila, false);
+			representacionGrafo.getGraphLayoutCache().insert(lineaFinal);
+			
+			int tamanioMarcadorEjesParaColumna = this.numeroColumnasTabla > 1 ? TAMANIO_MARCADORES_EJES
+					: 0;
+			
+			for (int columna = 0; columna <= this.numeroColumnasTabla; columna++) {
+				if(columna!=this.numeroColumnasTabla && !fyc[1][columna]){
+					DefaultGraphCell linea = this.crearLineaParaTabla(MARGEN_TABLA
+							+ columna2 * this.anchuraCuadroMatriz, MARGEN_TABLA
+							- tamanioMarcadorEjesParaColumna, numeroFilasVisibles
+							* this.alturaCuadroMatriz
+							+ tamanioMarcadorEjesParaColumna, true);
+					representacionGrafo.getGraphLayoutCache().insert(linea);
+					if (columna != this.numeroColumnasTabla
+							&& (this.numeroColumnasTabla > 1 || this.numeroColumnasTabla == 1
+									&& this.numeroFilasTabla == 1)) {
+						DefaultGraphCell indice = this.crearIndiceParaTabla2(
+								columna2,columna, false, invertirEjes[0],invertirEjes[1],numeroFilasVisibles,numeroColumnasVisibles);
+						representacionGrafo.getGraphLayoutCache().insert(indice);
+					}
+					columna2++;
+				}
+			}
+			
+			lineaFinal = this.crearLineaParaTabla(MARGEN_TABLA
+					+ columna2 * this.anchuraCuadroMatriz, MARGEN_TABLA
+					- tamanioMarcadorEjesParaColumna, numeroFilasVisibles
+					* this.alturaCuadroMatriz
+					+ tamanioMarcadorEjesParaColumna, true);
+			representacionGrafo.getGraphLayoutCache().insert(lineaFinal);
+			
+			if(this.expresionParaFila!=null && this.expresionParaColumna!=null){
+				this.insertarEjesTabularGrafo(representacionGrafo);
+			}			
+			
+		}		
+		
+		if (!this.nodosPosicionados) {
+			
+			this.posicionarNodosSegunTabulado2(invertirEjes[0],invertirEjes[1],fyc);
+			
+			this.nodosPosicionados = true;
+		}
+
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			representacionGrafo.getGraphLayoutCache().insert(
+					nodo.obtenerCeldasDelNodoParaGrafo().toArray());
+		}
+
+		int anchuraTotal = numeroColumnasVisibles * this.anchuraCuadroMatriz
+				+ MARGEN_TABLA * 2;
+		int alturaTotal = numeroFilasVisibles * this.alturaCuadroMatriz + MARGEN_TABLA * 2;
+		this.tamanioRepresentacion = new Dimension(anchuraTotal, alturaTotal);
+
+		for (CellView cell : representacionGrafo.getGraphLayoutCache()
+				.getAllViews()) {
+			cell.update(representacionGrafo.getGraphLayoutCache());
+		}
+		
 		return representacionGrafo;
 	}
 
 	/**
 	 * Inserta los ejes con el nombre de la expresión para filas y columnas
 	 * 		establecida por el usuario
-	 * @param representacionGrafo Grafo donde vamos a insertarlo
+	 * 
+	 * @param representacionGrafo 
+	 * 		Grafo donde vamos a insertarlo
 	 */
 	private void insertarEjesTabularGrafo(JGraph representacionGrafo){
 		//	Líneas invisibles para unir los títulos de las etiquetas de filas y columnas
@@ -474,7 +716,11 @@ public class GrafoDependencia {
 			textoX = "Valores de "+this.expresionParaColumna;
 		}		
 		int textoLongitudX = ANCHO_PIXEL_CARACTER*textoX.length();
-		int limiteTextoX = GrafoDependencia.MARGEN_TABLA+this.getNumeroColumnasTabla()*this.anchuraCuadroMatriz;
+		int limiteTextoX;
+		if(this.eliminarFilasColumnas)
+			limiteTextoX= GrafoDependencia.MARGEN_TABLA+this.numeroColumnasVisibles*this.anchuraCuadroMatriz;
+		else
+			limiteTextoX= GrafoDependencia.MARGEN_TABLA+this.getNumeroColumnasTabla()*this.anchuraCuadroMatriz;
 		if(textoLongitudX>limiteTextoX){
 			limiteTextoX = textoLongitudX +1;		
 		}
@@ -508,7 +754,11 @@ public class GrafoDependencia {
 			textoY = "Valores de "+this.expresionParaFila;
 		}
 		int textoLongitudY = ANCHO_PIXEL_CARACTER*textoY.length();
-		int limiteTextoY = GrafoDependencia.MARGEN_TABLA+this.getNumeroFilasTabla()*this.alturaCuadroMatriz;
+		int limiteTextoY;
+		if(this.eliminarFilasColumnas)
+			limiteTextoY = GrafoDependencia.MARGEN_TABLA+this.numeroFilasVisibles*this.alturaCuadroMatriz;
+		else
+			limiteTextoY = GrafoDependencia.MARGEN_TABLA+this.getNumeroFilasTabla()*this.alturaCuadroMatriz;
 		if(textoLongitudY>limiteTextoY){
 			limiteTextoY = textoLongitudY +1;		
 		}
@@ -563,7 +813,8 @@ public class GrafoDependencia {
 	/**
 	 * Devuelve el número de filas especificado para la matriz de tabulado.
 	 * 
-	 * @return Número de filas especificado para la matriz de tabulado.
+	 * @return 
+	 * 		Número de filas especificado para la matriz de tabulado.
 	 */
 	public int getNumeroFilasTabla() {
 		return this.numeroFilasTabla;
@@ -572,7 +823,8 @@ public class GrafoDependencia {
 	/**
 	 * Devuelve el número de columnas especificado para la matriz de tabulado.
 	 * 
-	 * @return Número de columnas especificado para la matriz de tabulado.
+	 * @return 
+	 * 		Número de columnas especificado para la matriz de tabulado.
 	 */
 	public int getNumeroColumnasTabla() {
 		return this.numeroColumnasTabla;
@@ -581,7 +833,8 @@ public class GrafoDependencia {
 	/**
 	 * Devuelve el tamaño de la representación visual del grafo.
 	 * 
-	 * @return Tamaño de la representación visual del grafo.
+	 * @return 
+	 * 		Tamaño de la representación visual del grafo.
 	 */
 	public Dimension getTamanioRepresentacion() {
 		return this.tamanioRepresentacion;
@@ -602,8 +855,10 @@ public class GrafoDependencia {
 	 * Posiciona los nodos del grafo según lo que especifique la matriz de
 	 * tabulado actual.
 	 * 
-	 * @param invertirFilas False = Orden creciente, True = Orden decreciente para filas
-	 * @param invertirColumnas False = Orden creciente, True = Orden decreciente para columnas
+	 * @param invertirFilas 
+	 * 		False = Orden creciente, True = Orden decreciente para filas
+	 * @param invertirColumnas 
+	 * 		False = Orden creciente, True = Orden decreciente para columnas
 	 */
 	private void posicionarNodosSegunTabulado(boolean invertirFilas, boolean invertirColumnas) {
 		for (int fila = 0; fila < this.matrizTabulado.numFilas(); fila++) {
@@ -638,13 +893,80 @@ public class GrafoDependencia {
 	}
 
 	/**
+	 * Posiciona los nodos del grafo según lo que especifique la matriz de
+	 * tabulado actual, pero teniendo en cuenta que existen filas y/o columnas
+	 * eliminadas porque estaban vacías.
+	 * 
+	 * @param invertirFilas 
+	 * 		False = Orden creciente, True = Orden decreciente para filas
+	 * @param invertirColumnas 
+	 * 		False = Orden creciente, True = Orden decreciente para columnas
+	 * @param fyc 
+	 * 		Array que contiene las filas y columnas eliminadas
+	 */
+	private void posicionarNodosSegunTabulado2(boolean invertirFilas,
+			boolean invertirColumnas, boolean fyc[][]) {
+		for (int fila = 0; fila < this.matrizTabulado.numFilas(); fila++) {
+			for (int columna = 0; columna < this.matrizTabulado.numColumnas(); columna++) {
+				NodoGrafoDependencia nodo = this.matrizTabulado.get(fila,
+						columna);
+				if (nodo != null) {				
+					
+					
+					int x,y;
+					
+					if(invertirFilas){
+						int numFilasEliminadas = 0;
+						for(int i=this.numeroFilasTabla-1;i>fila;i--){
+							if(fyc[0][i])
+								numFilasEliminadas++;
+						}
+						y = MARGEN_TABLA
+								+ MARGEN_NODOS_ALTURA + (this.matrizTabulado.numFilas()-1-(fila+numFilasEliminadas))
+								* this.alturaCuadroMatriz;
+					}else{
+						int numFilasEliminadas = 0;
+						for(int i=0;i<fila;i++){
+							if(fyc[0][i])
+								numFilasEliminadas++;
+						}
+						y = MARGEN_TABLA
+								+ MARGEN_NODOS_ALTURA + (fila - numFilasEliminadas)
+								* this.alturaCuadroMatriz;
+					}
+					
+					if(invertirColumnas){
+						int numColumnasEliminadas = 0;
+						for(int i=this.numeroColumnasTabla-1;i>columna;i--){
+							if(fyc[1][i])
+								numColumnasEliminadas++;
+						}
+						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
+								+ (this.matrizTabulado.numColumnas()-1-(columna+numColumnasEliminadas)) * this.anchuraCuadroMatriz;
+					}else{
+						int numColumnasEliminadas = 0;
+						for(int i=0;i<columna;i++){
+							if(fyc[1][i])
+								numColumnasEliminadas++;
+						}
+						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
+								+ (columna-numColumnasEliminadas) * this.anchuraCuadroMatriz;
+					}
+					
+					nodo.setPosicion(x, y);					
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Establece el tamaño de la matriz de tabulado que se dibujará detrás del
 	 * grafo.
 	 * 
 	 * @param numeroFilasTabla
-	 *            Número de filas de la tabla.
+	 *		Número de filas de la tabla.
 	 * @param numeroColumnasTabla
-	 *            Número de columnas de la tabla.
+	 *		Número de columnas de la tabla.
 	 */
 	public void setTamanioTabla(int numeroFilasTabla, int numeroColumnasTabla) {
 		this.numeroFilasTabla = numeroFilasTabla;
@@ -736,9 +1058,13 @@ public class GrafoDependencia {
 	 * y otra para columnas.
 	 * 
 	 * @param expresionParaFila
-	 * @param expresionParaColumna
+	 * 		Expresión del primer parámetro para tabular
 	 * 
-	 * @return Mensaje de error si ocurrió algun error, null en caso contrario.
+	 * @param expresionParaColumna
+	 * 		Expresión del segundo parámetro para tabular
+	 * 
+	 * @return 
+	 * 		Mensaje de error si ocurrió algun error, null en caso contrario.
 	 */
 	public String tabular(String expresionParaFila, String expresionParaColumna) {
 
@@ -751,7 +1077,8 @@ public class GrafoDependencia {
 		for (NodoGrafoDependencia nodo : this.nodos) {
 			ScriptEngine engine = manager.getEngineByName("js");
 			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
-				engine.put(this.metodo.getNombreParametroE(i), this.obtenerValorConTipo(nodo.getParams()[i]));
+				engine.put(this.metodo.getNombreParametroE(i), 
+						this.obtenerValorConTipo(nodo.getParams()[i]));
 			}
 			boolean filaEvaluada = false;
 			try {
@@ -792,10 +1119,11 @@ public class GrafoDependencia {
 	 * para tabular.
 	 * 
 	 * @param valorEval
-	 *            Objeto devuelto por el motor de expresiones.
+	 *		Objeto devuelto por el motor de expresiones.
 	 * 
-	 * @return posición resultante, -1 si el resultado de la evaluación no es un
-	 *         entero válido.
+	 * @return 
+	 * 		posición resultante, -1 si el resultado de la evaluación no es un
+	 *		entero válido.
 	 */
 	private int obtenerValorEnteroDeEvaluacion(Object valorEval) {
 		int valor = -1;
@@ -833,9 +1161,9 @@ public class GrafoDependencia {
 	 * la matriz.
 	 * 
 	 * @param matriz
-	 *            Matriz de tabulado.
+	 *		Matriz de tabulado.
 	 * @param raiz
-	 *            Nodo raiz del grafo.
+	 *		Nodo raiz del grafo.
 	 */
 	private void aniadirDependenciasAMatriz(
 			MatrizDinamica<NodoGrafoDependencia> matriz,
@@ -887,13 +1215,14 @@ public class GrafoDependencia {
 	 * Determina cual es la posición más cercana libre en la matriz.
 	 * 
 	 * @param matriz
-	 *            Matriz.
+	 *		Matriz.
 	 * @param fila
-	 *            Fila actual
+	 *		Fila actual
 	 * @param columna
-	 *            Columna actual
+	 *		Columna actual
 	 * 
-	 * @return [fila, columna] con la posición más cercana y libre.
+	 * @return 
+	 * 		[fila, columna] con la posición más cercana y libre.
 	 */
 	private int[] encontrarPosicionMasCercanaLibre(
 			MatrizDinamica<NodoGrafoDependencia> matriz, int fila, int columna) {
@@ -937,7 +1266,8 @@ public class GrafoDependencia {
 	/**
 	 * Heurística que intenta obtener la mejor representación del grafo tabulado automáticamente
 	 * 
-	 * @return Array de booleanos donde la primera posición indica si las filas deben estar
+	 * @return 
+	 * 		Array de booleanos donde la primera posición indica si las filas deben estar
 	 * 		en orden creciente (true) o en orden decreciente(false) y la segunda posición 
 	 * 		indica si las columnas deben estar en orden creciente (true) o en orden decreciente(false)
 	 */
@@ -973,10 +1303,20 @@ public class GrafoDependencia {
 	
 	/**
 	 * Obtiene una lista inmodificable de los nodos, para cambiar
-	 * 		la orientación de las aristas
-	 * @return Lista inmodificable de nodos del grafo
+	 *	la orientación de las aristas
+	 *
+	 * @return 
+	 * 		Lista inmodificable de nodos del grafo
 	 */
 	public List<NodoGrafoDependencia> getNodos() {
 		return Collections.unmodifiableList(nodos);
+	}
+	
+	/**
+	 * Establece los nodos como no posicionados, luego
+	 * 	fuerza que se recoloquen
+	 */
+	public void nodosPosicionadosFalse(){
+		this.nodosPosicionados=false;
 	}
 }

@@ -132,4 +132,31 @@ public class MatrizDinamica<T> {
 		}
 		return this.matriz.get(0).size();
 	}
+	
+	/**
+	 * Obtiene filas y columnas vacias, que no tienen nodos
+	 * @return
+	 * 		Array de arrays donde la primera posición son las filas vacías
+	 * 		y la segunda posición las columnas vacías
+	 */
+	public boolean[][] filasYColumnasVacias(){
+		
+		boolean[] filasVacias = new boolean[this.matriz.size()];
+		boolean[] columnasVacias = new boolean[this.matriz.get(0).size()];
+		java.util.Arrays.fill(filasVacias, Boolean.TRUE);
+		java.util.Arrays.fill(columnasVacias, Boolean.TRUE);		
+		
+		for (int i = 0; i < this.matriz.size(); i++) {			
+			for (int j = 0; j < this.matriz.get(i).size(); j++) {
+				if (this.get(i, j)!=null) {
+					filasVacias[i]=false;	
+					columnasVacias[j]=false;
+				}
+			}
+			
+		}
+		
+		boolean[][] valorDevuelto = new boolean[][] {filasVacias, columnasVacias};		
+		return valorDevuelto;
+	}
 }
