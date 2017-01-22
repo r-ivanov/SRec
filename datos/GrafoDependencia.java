@@ -125,8 +125,8 @@ public class GrafoDependencia {
 		}
 
 		this.anchuraCuadroMatriz = (int) anchuraNodoMayor
-				+ MARGEN_NODOS_ANCHURA * 2;
-		this.alturaCuadroMatriz = (int) alturaNodoMayor + MARGEN_NODOS_ALTURA
+				+ Conf.sepH * 2;
+		this.alturaCuadroMatriz = (int) alturaNodoMayor + Conf.sepV
 				* 2;
 	}
 
@@ -870,19 +870,19 @@ public class GrafoDependencia {
 					
 					if(invertirFilas){
 						y = MARGEN_TABLA
-								+ MARGEN_NODOS_ALTURA + (this.matrizTabulado.numFilas()-1-fila)
+								+ Conf.sepV + (this.matrizTabulado.numFilas()-1-fila)
 								* this.alturaCuadroMatriz;
 					}else{
 						y = MARGEN_TABLA
-								+ MARGEN_NODOS_ALTURA + fila
+								+ Conf.sepV + fila
 								* this.alturaCuadroMatriz;
 					}
 					
 					if(invertirColumnas){
-						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
+						x = MARGEN_TABLA + Conf.sepH
 								+ (this.matrizTabulado.numColumnas()-1-columna) * this.anchuraCuadroMatriz;
 					}else{
-						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
+						x = MARGEN_TABLA + Conf.sepH
 								+ columna * this.anchuraCuadroMatriz;
 					}
 					
@@ -922,7 +922,7 @@ public class GrafoDependencia {
 								numFilasEliminadas++;
 						}
 						y = MARGEN_TABLA
-								+ MARGEN_NODOS_ALTURA + (this.matrizTabulado.numFilas()-1-(fila+numFilasEliminadas))
+								+ Conf.sepV + (this.matrizTabulado.numFilas()-1-(fila+numFilasEliminadas))
 								* this.alturaCuadroMatriz;
 					}else{
 						int numFilasEliminadas = 0;
@@ -931,7 +931,7 @@ public class GrafoDependencia {
 								numFilasEliminadas++;
 						}
 						y = MARGEN_TABLA
-								+ MARGEN_NODOS_ALTURA + (fila - numFilasEliminadas)
+								+ Conf.sepV + (fila - numFilasEliminadas)
 								* this.alturaCuadroMatriz;
 					}
 					
@@ -941,7 +941,7 @@ public class GrafoDependencia {
 							if(fyc[1][i])
 								numColumnasEliminadas++;
 						}
-						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
+						x = MARGEN_TABLA + Conf.sepH
 								+ (this.matrizTabulado.numColumnas()-1-(columna+numColumnasEliminadas)) * this.anchuraCuadroMatriz;
 					}else{
 						int numColumnasEliminadas = 0;
@@ -949,7 +949,7 @@ public class GrafoDependencia {
 							if(fyc[1][i])
 								numColumnasEliminadas++;
 						}
-						x = MARGEN_TABLA + MARGEN_NODOS_ANCHURA
+						x = MARGEN_TABLA + Conf.sepH
 								+ (columna-numColumnasEliminadas) * this.anchuraCuadroMatriz;
 					}
 					

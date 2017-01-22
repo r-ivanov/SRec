@@ -471,12 +471,38 @@ public class NodoGrafoDependencia {
 	 */
 	public void addDependencia(NodoGrafoDependencia nodo) {
 		DefaultEdge arista = new DefaultEdge();
-		GraphConstants.setLineEnd(arista.getAttributes(),
-				GraphConstants.ARROW_CLASSIC);
+		int tipoFlecha = GraphConstants.ARROW_NONE;
+		switch (Conf.formaFlecha) {
+		case 0:
+			tipoFlecha = GraphConstants.ARROW_NONE;
+			break;
+		case 1:
+			tipoFlecha = GraphConstants.ARROW_TECHNICAL;
+			break;
+		case 2:
+			tipoFlecha = GraphConstants.ARROW_CLASSIC;
+			break;
+		case 3:
+			tipoFlecha = GraphConstants.ARROW_SIMPLE;
+			break;
+		case 4:
+			tipoFlecha = GraphConstants.ARROW_DIAMOND;
+			break;
+		case 5:
+			tipoFlecha = GraphConstants.ARROW_LINE;
+			break;
+		case 6:
+			tipoFlecha = GraphConstants.ARROW_DOUBLELINE;
+			break;
+		case 7:
+			tipoFlecha = GraphConstants.ARROW_CIRCLE;
+			break;
+		}
+		GraphConstants.setLineEnd(arista.getAttributes(),tipoFlecha);
 		GraphConstants.setEndFill(arista.getAttributes(), true);
 		GraphConstants.setSelectable(arista.getAttributes(), false);
-		GraphConstants.setLineWidth(arista.getAttributes(), 2);
-		GraphConstants.setLineColor(arista.getAttributes(), Color.BLACK);
+		GraphConstants.setLineWidth(arista.getAttributes(), Conf.grosorFlecha);
+		GraphConstants.setLineColor(arista.getAttributes(), Conf.colorFlecha);
 		GraphConstants.setRouting(arista.getAttributes(), edgeRouter);
 		GraphConstants.setLineStyle(arista.getAttributes(),
 				GraphConstants.STYLE_SPLINE);
