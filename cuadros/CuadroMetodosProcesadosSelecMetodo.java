@@ -323,6 +323,12 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			this.ventana.setClasePendienteGuardar(false);
             // Deshabilitamos las opciones de la animación por si estuviesen activas.
             this.ventana.habilitarOpcionesAnimacion(false);
+            
+            // Si el número de métodos distintos (padre e hijos) es > 0 activamos el 
+            //	identificador de traza       
+            this.ventana.simularIdTrazaPulsado(ma.metodosDistintosLlamados()>1);
+            	
+
 		}
 	}
 

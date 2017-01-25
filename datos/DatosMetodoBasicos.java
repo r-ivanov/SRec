@@ -45,7 +45,7 @@ public class DatosMetodoBasicos {
 	public DatosMetodoBasicos(String nombre, int numParamE, int numParamS,
 			boolean retorno) {
 		this.nombre = nombre;
-
+		
 		this.visibilidadE = new boolean[numParamE];
 		this.visibilidadS = new boolean[numParamS];
 

@@ -551,7 +551,7 @@ MouseListener, MouseMotionListener {
 					this.ultimaExpresionParaColumna,
 					this);			
 			this.tipoGrafo = 2;
-			
+			this.eliminarFilasColumnas = false;
 		}else if (e.getSource() == this.botones[2]) {		//	Flechas
 			this.invertirFlechasGrafo(true);
 				

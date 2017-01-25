@@ -124,6 +124,8 @@ public class RegistroActivacion {
 		if (RegistroActivacion.nodoID >= MAX_REGISTROS_ACTIVACION) {
 			throw new RuntimeException(Texto.get("DEMASIADOS_NODOS", Conf.idioma));
 		}
+		
+		
 	}
 
 	/**

@@ -150,6 +150,8 @@ public class Ventana extends JFrame implements ActionListener {
 	
 	private CuadroParamLanzarEjec cuadroLanzarEjec;
 
+	private boolean usuarioPulsadoIdTraza=false;	//	Indica si el usuario ha pulsado el botón idTraza o no
+
 	/**
 	 * Crea una nueva instancia de la ventana de la aplicación.
 	 */
@@ -601,6 +603,7 @@ public class Ventana extends JFrame implements ActionListener {
 
 			// Visualización > Identificador de método
 			else if (textoFuente.equals(this.textos[52])) {
+				this.usuarioPulsadoIdTraza = true;
 				if (Conf.fichero_log) {
 					this.log_write("Visualización > Identificador de método");
 				}
@@ -2578,7 +2581,7 @@ public class Ventana extends JFrame implements ActionListener {
 				metodos.get(i).setMarcadoPrincipal(
 						false);
 				metodos.get(i).setMarcadoVisualizar(
-						false);	
+						true);	
 			}
 			this.claseAlgoritmo.addMetodo(metodos.get(i));
 		}
@@ -2603,6 +2606,8 @@ public class Ventana extends JFrame implements ActionListener {
 			this.setClasePendienteGuardar(false);
             // Deshabilitamos las opciones de la animación por si estuviesen activas.
             this.habilitarOpcionesAnimacion(false);
+            
+            
 		}
 	}
 	/**
@@ -3134,5 +3139,47 @@ public class Ventana extends JFrame implements ActionListener {
 	 */
 	public DatosTrazaBasicos getDtb() {
 		return dtb;
+	}
+	
+	/**
+	 * Permite simular que han pulsado sobre 
+	 * 		"Visualización --> Identificación método"
+	 * 
+	 * @param pulsado Indica si es activar idTraza o no
+	 */
+	public void simularIdTrazaPulsado(boolean activar){
+		
+		if (Conf.fichero_log) {
+			this.log_write("Visualización > Identificador de método");
+		}
+		OpcionOpsVisualizacion oov = (OpcionOpsVisualizacion) this.gOpciones
+				.getOpcion("OpcionOpsVisualizacion", false);
+		
+		//	Solo hacemos algo si el valor es distinto al anterior
+		//	y el usuario no ha pulsado el botón 
+		if(this.usuarioPulsadoIdTraza || oov.getIdMetodoTraza() == activar)
+			return;
+		oov.setIdMetodoTraza(!oov.getIdMetodoTraza());
+		this.gOpciones.setOpcion(oov, 1);
+		if (Conf.fichero_log) {
+			this.log_write("Visualización > Identificador de método: "
+					+ oov.getIdMetodoTraza());
+		}
+		if (oov.getIdMetodoTraza()) {
+			GestorVentanaSRec.iconoMenuItem(
+					this.menus[1],
+					Texto.get("MENU_VISU_19", Conf.idioma)
+					.replace("_SubMenuItem_", "")
+					.replace("_CheckBoxMenuItem_", ""),
+					getClass().getClassLoader().getResource("imagenes/i_idMetodo.gif"));
+		} else {
+			GestorVentanaSRec.iconoMenuItem(
+					this.menus[1],
+					Texto.get("MENU_VISU_19", Conf.idioma)
+					.replace("_SubMenuItem_", "")
+					.replace("_CheckBoxMenuItem_", ""),
+					getClass().getClassLoader().getResource("imagenes/i_idMetodo_des.gif"));
+		}
+		this.actualizarVisualizacion();
 	}
 }

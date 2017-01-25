@@ -858,5 +858,24 @@ public class MetodoAlgoritmo {
 		return retorno;
 
 	}
+	
+	/**
+	 * Método para obtener los métodos distintos llamados desde este método
+	 * (Contando el mismo). 
+	 * Si por ejemplo el método x llama a y este método devuelve 2
+	 * Si por ejemplo el método x llama a x este método devuelve 1
+	 * 
+	 * @return
+	 * 	Métodos distintos llamados desde este método incluyendo a él mismo
+	 */
+	public int metodosDistintosLlamados(){
+		int identificadorPadre = this.getID();
+		int contador = 1;
+		for(int identificadorHijo : this.getMetodosLlamados()){
+			if(identificadorHijo != identificadorPadre)
+				contador++;
+		}
+		return contador;
+	}
 
 }
