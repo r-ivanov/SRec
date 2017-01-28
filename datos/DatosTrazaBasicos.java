@@ -1,6 +1,7 @@
 package datos;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import utilidades.ServiciosString;
 
@@ -169,6 +170,25 @@ public class DatosTrazaBasicos {
 		} else {
 			return null;
 		}
+	}
+	
+	/**
+	 * Devuelve una lista de métodos dada una lista de posiciones
+	 * 
+	 * @param listaPosiciones
+	 * 		Lista de posiciones de los métodos
+	 * 
+	 * @return
+	 * 		Lista de DatosMetodosBasicos
+	 */
+	public List<DatosMetodoBasicos> getMetodosPorPosicion(List<Integer> listaPosiciones) {
+		List<DatosMetodoBasicos> listaMetodos = new ArrayList<DatosMetodoBasicos>();
+		for(int i:listaPosiciones){
+			if (i >= 0 && i < this.metodos.size()) {
+				listaMetodos.add(this.metodos.get(i));
+			}
+		}
+		return listaMetodos;
 	}
 
 	/**

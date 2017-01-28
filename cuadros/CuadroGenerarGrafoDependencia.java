@@ -6,11 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
 import utilidades.Texto;
@@ -34,7 +35,7 @@ ActionListener, KeyListener {
 
 	private DatosTrazaBasicos dtb;
 
-	private JRadioButton botonesMetodos[];
+	private JCheckBox botonesMetodos[];
 
 	private Ventana ventana;
 	private JDialog dialogo;
@@ -71,23 +72,23 @@ ActionListener, KeyListener {
 
 		this.numeroFilas = this.dtb.getNumMetodos();
 
-		this.botonesMetodos = new JRadioButton[this.dtb.getNumMetodos()];
+		this.botonesMetodos = new JCheckBox[this.dtb.getNumMetodos()];
 
-		JPanel panelRadio = new JPanel();
-		panelRadio.setLayout(new GridLayout(this.numeroFilas, 1));
-		panelRadio.setBorder(new TitledBorder(Texto.get("GP_METODOS_DISPONIBLES", Conf.idioma)));
+		JPanel panelCheckbox = new JPanel();
+		panelCheckbox.setLayout(new GridLayout(this.numeroFilas, 1));
+		panelCheckbox.setBorder(new TitledBorder(Texto.get("GP_METODOS_DISPONIBLES", Conf.idioma)));
 
-		ButtonGroup radioButtonGroup = new ButtonGroup();
+		List<JCheckBox> checkboxButtonGroup = new ArrayList<JCheckBox>();
 		for (int i = 0; i < this.dtb.getNumMetodos(); i++) {
 			DatosMetodoBasicos dmb = this.dtb.getMetodo(i);
-			this.botonesMetodos[i] = new JRadioButton(dmb.getInterfaz());
+			this.botonesMetodos[i] = new JCheckBox(dmb.getInterfaz());
 			this.botonesMetodos[i].addActionListener(this);
 			this.botonesMetodos[i].addKeyListener(this);
-			if (i == this.dtb.getNumMetodos()-1) {
+			if (dmb.getEsPrincipal()) {
 				this.botonesMetodos[i].setSelected(true);
 			}
-			radioButtonGroup.add(this.botonesMetodos[i]);
-			panelRadio.add(this.botonesMetodos[i]);
+			checkboxButtonGroup.add(this.botonesMetodos[i]);
+			panelCheckbox.add(this.botonesMetodos[i]);
 		}
 
 		// Panel para el botón
@@ -105,7 +106,7 @@ ActionListener, KeyListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(bl);
 
-		panel.add(panelRadio, BorderLayout.NORTH);
+		panel.add(panelCheckbox, BorderLayout.NORTH);
 		panel.add(panelBotones, BorderLayout.SOUTH);
 
 		// Preparamos y mostramos cuadro
@@ -136,19 +137,28 @@ ActionListener, KeyListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.aceptar) {
-
-			String nombreMetodo = null;
-			int posicionMetodo = 0;
+			
+			List<Integer> posicionMetodo = new ArrayList<Integer>();
+			
+			//	Obtenemos las posiciones de los métodos seleccionados
 			for (int i = 0; i < this.botonesMetodos.length; i++) {
 				if (this.botonesMetodos[i].isSelected()) {
-					posicionMetodo = i;
-					break;
+					posicionMetodo.add(i);
 				}
 			}
-
-			this.dialogo.setVisible(false);			
-	        this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodo(posicionMetodo));
-
+			
+			this.dialogo.setVisible(false);	
+			
+			// Solo han seleccionado 1
+			if(posicionMetodo.size() == 1){							
+		        this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodosPorPosicion(posicionMetodo).get(0));
+			}
+			
+			// Si han seleccionado varios
+			else if(posicionMetodo.size() > 1){
+				//	this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodos(posicionMetodo));
+			}
+			
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
 		}
