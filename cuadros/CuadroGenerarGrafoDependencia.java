@@ -151,12 +151,12 @@ ActionListener, KeyListener {
 			
 			// Solo han seleccionado 1
 			if(posicionMetodo.size() == 1){							
-		        this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodosPorPosicion(posicionMetodo).get(0));
+		        this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodo(posicionMetodo.get(0)));
 			}
 			
 			// Si han seleccionado varios
 			else if(posicionMetodo.size() > 1){
-				//	this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodos(posicionMetodo));
+				//this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodo(posicionMetodo));
 			}
 			
 		} else if (e.getSource() == this.cancelar) {

@@ -181,7 +181,7 @@ public class DatosTrazaBasicos {
 	 * @return
 	 * 		Lista de DatosMetodosBasicos
 	 */
-	public List<DatosMetodoBasicos> getMetodosPorPosicion(List<Integer> listaPosiciones) {
+	public List<DatosMetodoBasicos> getMetodo(List<Integer> listaPosiciones) {
 		List<DatosMetodoBasicos> listaMetodos = new ArrayList<DatosMetodoBasicos>();
 		for(int i:listaPosiciones){
 			if (i >= 0 && i < this.metodos.size()) {
