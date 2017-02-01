@@ -48,7 +48,10 @@ MouseListener, MouseMotionListener {
 	private Ventana ventana;
 
 	private DatosMetodoBasicos metodo;
-
+	private List<DatosMetodoBasicos> metodos;
+	private boolean esGrafoDeUnMetodo = true;	//	true = solo se representa un método
+												//	false = se representan varios métodos
+	
 	private JPanel panelHerramientas;
 	private JToolBar[] barras;
 	private JButton[] botones;
@@ -97,13 +100,63 @@ MouseListener, MouseMotionListener {
 	public PanelGrafo(DatosMetodoBasicos metodo, Ventana ventana, NombresYPrefijos nyp) throws Exception {
 		
 		if (Ventana.thisventana.traza != null && metodo != null && ventana != null) {			
-			
+			this.esGrafoDeUnMetodo = true;
 			//	Obtenemos datos básicos del grafo y su representación
 			this.nyp = nyp;
 			this.metodo = metodo;
 			this.ventana = ventana;	
 				
 			this.grafoDependencia = new GrafoDependencia(this.metodo,this.nyp);
+			this.representacionGrafo = this.grafoDependencia
+					.obtenerRepresentacionGrafo(false);
+			this.tipoGrafo = 0;
+			this.representacionGrafo.setScale(this.representacionGrafo.getScale());
+			this.escalaOriginal = this.representacionGrafo.getScale();
+			this.escalaActual = this.representacionGrafo.getScale();
+			this.refrescarZoom(-50);	//	Tamaño por defecto del grafo al inicio
+			
+			//	Creamos pestaña	y llamamos a visualizar	
+				
+			this.panel = new JPanel();			
+			this.add(this.panel, BorderLayout.NORTH);
+			
+			try {
+				this.visualizar();				
+			} catch (OutOfMemoryError oome) {
+				this.representacionGrafo = null;
+				throw oome;
+			} catch (Exception e) {
+				throw e;
+			}
+		} else {
+			this.add(new JPanel());
+		}
+	}
+	
+	/**
+	 * Constructor: crea un nuevo panel de visualización para el grafo.
+	 * 
+	 * @param metodo
+	 * 		Lista de métodos de los que queremos crear el grafo de dependencia
+	 * 
+	 * @param ventana
+	 * 		Ventana a la que está asociada la pestaña, es la principal
+	 * 		y es necesaria para obtener algunos datos
+	 * 
+	 * @param nyp
+	 * 		Nombres y prefijos, para abreviar nombre de métodos si están visibles
+	 *  	y es necesario
+	 */
+	public PanelGrafo(List<DatosMetodoBasicos> metodo, Ventana ventana, NombresYPrefijos nyp) throws Exception {
+		
+		if (Ventana.thisventana.traza != null && metodo != null && ventana != null) {			
+			this.esGrafoDeUnMetodo = false;
+			//	Obtenemos datos básicos del grafo y su representación
+			this.nyp = nyp;
+			this.metodos = metodo;
+			this.ventana = ventana;	
+				
+			this.grafoDependencia = new GrafoDependencia(this.metodos,this.nyp);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false);
 			this.tipoGrafo = 0;
@@ -262,7 +315,10 @@ MouseListener, MouseMotionListener {
 			
 			//	Creamos grafo nuevo siempre, para que cargue la nueva traza
 			//		y/o las nuevas opciones de visualización
-			this.grafoDependencia = new GrafoDependencia(this.metodo,nyp);
+			if(this.esGrafoDeUnMetodo)
+				this.grafoDependencia = new GrafoDependencia(this.metodo,nyp);
+			else
+				this.grafoDependencia = new GrafoDependencia(this.metodos,nyp);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false);	
 			
@@ -447,8 +503,20 @@ MouseListener, MouseMotionListener {
 
 		JLabel labelTitulo = new JLabel(this.ventana.getTraza().getTitulo());
 		labelTitulo.setFont(new Font("Arial", Font.BOLD, 14));
-		JLabel labelSignatura = new JLabel("  -  " + this.metodo.getInterfaz()
-				+ "   ");
+		JLabel labelSignatura;
+		if(this.esGrafoDeUnMetodo)
+			labelSignatura = new JLabel("  -  " + this.metodo.getInterfaz()
+					+ "   ");
+		else{
+			String signatura = "";
+			for(DatosMetodoBasicos dmb : this.metodos){
+				signatura += dmb.getInterfaz() + " , ";
+			}
+			signatura.substring(0,signatura.length()-4);
+			labelSignatura = new JLabel("  -  " + signatura
+			+ "   ");
+		}
+			
 		labelSignatura.setFont(new Font("Arial", Font.ITALIC, 14));
 
 		JPanel panelInfo = new JPanel(new BorderLayout());
@@ -473,6 +541,27 @@ MouseListener, MouseMotionListener {
 	 */
 	public boolean esIgual(DatosMetodoBasicos nuevoMetodo){
 		return this.metodo.esIgual(nuevoMetodo);
+	}
+	
+	/**
+	 * Permite comparar una lista de métodos pasados como parámetro con 
+	 * los métodos que se estan visualizando actualmente
+	 * 
+	 * @param nuevoMetodo Lista de métodos a comparar con la lista de métodos actuales
+	 * @return True si lista nuevoMetodo = lista métodos que se visualizan actualmente, 
+	 * 			False caso contrario
+	 */
+	public boolean esIgual(List<DatosMetodoBasicos> nuevoMetodo){		
+		if(nuevoMetodo.size() != this.metodos.size()){
+			return false;
+		}
+		
+		for(int i=0 ; i<nuevoMetodo.size() ; i++){
+			if(!nuevoMetodo.get(i).esIgual(this.metodos.get(i))){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	@Override

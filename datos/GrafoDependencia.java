@@ -58,6 +58,9 @@ public class GrafoDependencia {
 	private int alturaCuadroMatriz;
 
 	private DatosMetodoBasicos metodo;
+	private List<DatosMetodoBasicos> metodos;
+	private boolean esGrafoDeUnMetodo = true;	//	true = solo se representa un método
+												//	false = se representan varios métodos
 
 	private boolean nodosPosicionados;
 
@@ -86,6 +89,7 @@ public class GrafoDependencia {
 	 */
 	public GrafoDependencia(DatosMetodoBasicos metodo, NombresYPrefijos nyp) {		
 		
+		this.esGrafoDeUnMetodo = true;
 		this.nyp = nyp;
 		this.nodos = new ArrayList<NodoGrafoDependencia>();
 		this.metodo = metodo;
@@ -97,6 +101,35 @@ public class GrafoDependencia {
 		//	Después añadimos el resto por si quieren visualizar grafos de métodos
 		//		que no se han establecido como visibles
 		this.insertarNodos(null, Ventana.thisventana.trazaCompleta.getRaiz(),
+				new ArrayList<NodoGrafoDependencia>());
+		
+		this.crearMatrizTabuladoConOrganizacionPorDefecto();
+	}
+	
+	/**
+	 * Devuelve una nueva instancia de un grafo.
+	 * 
+	 * @param metodo
+	 *		Método para el que obtener los nodos del grafo.
+	 *            
+	 * @param nyp
+	 * 		Nombres y prefijos, para abreviar nombre de métodos si están visibles
+	 *  	y es necesario
+	 */
+	public GrafoDependencia(List<DatosMetodoBasicos> metodo, NombresYPrefijos nyp) {		
+		
+		this.esGrafoDeUnMetodo = false;
+		this.nyp = nyp;
+		this.nodos = new ArrayList<NodoGrafoDependencia>();
+		this.metodos = metodo;
+
+		//	Primero añadimos los de la traza actual
+//		this.insertarNodosMultiplesMetodos(null, Ventana.thisventana.getTraza().getRaiz(),
+//				new ArrayList<NodoGrafoDependencia>());
+		
+		//	Después añadimos el resto por si quieren visualizar grafos de métodos
+		//		que no se han establecido como visibles
+		this.insertarNodosMultiplesMetodos(null, Ventana.thisventana.trazaCompleta.getRaiz(),
 				new ArrayList<NodoGrafoDependencia>());
 		
 		this.crearMatrizTabuladoConOrganizacionPorDefecto();
@@ -185,6 +218,65 @@ public class GrafoDependencia {
 					padre.addDependencia(dependencia);
 				}
 			}
+		}
+
+		/* Establecemos el nodo como procesado si no lo estaba */
+		if (!procesado) {
+			procesados.add(nodo);
+		}
+	}
+	
+	/**
+	 * Inserta nodos de la ejecución en el grafo de manera recursiva.
+	 * 
+	 * @param padre
+	 * 		Nodo para el que se están resolviendo sus dependencias.
+	 * 
+	 * @param registroActivacion
+	 * 		Registro de activación que se esta procesando.
+	 * 
+	 * @param procesados
+	 *		Nodos que ya han sido procesados, por lo que no es necesario
+	 *		determinar de nuevo sus dependencias.
+	 */
+	private void insertarNodosMultiplesMetodos(NodoGrafoDependencia padre,
+			RegistroActivacion registroActivacion,
+			List<NodoGrafoDependencia> procesados) {
+
+		/* Comprobamos si el nodo ya ha sido procesado */
+		NodoGrafoDependencia nodo = new NodoGrafoDependencia(registroActivacion, this.nyp);
+		boolean procesado = false;
+		for (NodoGrafoDependencia visitado : procesados) {
+			if (nodo.equals(visitado)) {
+				procesado = true;
+				nodo = visitado;
+				break;
+			}
+		}
+
+		/* Resolvemos las dependencias de los nodos hijos */		
+		if (!procesado) {
+			if (!existeNodo(nodo)) {
+				this.nodos.add(nodo);
+			}
+			for (int i = 0; i < registroActivacion.numHijos(); i++) {
+				this.insertarNodosMultiplesMetodos(nodo, registroActivacion.getHijo(i),
+						procesados);
+			}
+		}
+
+		/*
+		 * Establecemos las dependencias del padre una vez resueltas las del
+		 * nodo actual
+		 */
+		if (padre != null) {
+//			if (mismoMetodo) {
+				padre.addDependencia(nodo);
+//			} else {
+//				for (NodoGrafoDependencia dependencia : nodo.getDependencias()) {
+//					padre.addDependencia(dependencia);
+//				}
+//			}
 		}
 
 		/* Establecemos el nodo como procesado si no lo estaba */

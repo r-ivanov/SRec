@@ -156,7 +156,7 @@ ActionListener, KeyListener {
 			
 			// Si han seleccionado varios
 			else if(posicionMetodo.size() > 1){
-				//this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodo(posicionMetodo));
+				this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodo(posicionMetodo));
 			}
 			
 		} else if (e.getSource() == this.cancelar) {

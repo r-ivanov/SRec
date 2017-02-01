@@ -3,6 +3,7 @@ package paneles;
 import java.awt.BorderLayout;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -140,7 +141,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			pPila = new PanelPila(null);
 			pArbol = new PanelArbol(null);
 			pCrono = new PanelCrono(null);
-			pGrafo = new PanelGrafo(null,null,null);
+			pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 		} catch (OutOfMemoryError oome) {
 			pArbol = null;
 			throw oome;
@@ -432,7 +433,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				.println("\n-Ha saltado una excepcion(PanelAlgoritmo)-\n");
 				pArbol = new PanelArbol(null);
 				pPila = new PanelPila(null);
-				pGrafo = new PanelGrafo(null,null,null);
+				pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 				pTraza = new PanelTraza();
 				pCrono = new PanelCrono(null);
 				pEstructura = new PanelEstructura(null);
@@ -497,7 +498,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			pArbol = new PanelArbol(ficheroGIF, new ImageIcon(ficheroGIF));
 			pPila = new PanelPila(null);
 			pTraza = new PanelTraza();
-			pGrafo = new PanelGrafo(null,null,null);
+			pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 			this.ocupado = true;
 			pControl.setValores(ficheroGIF.substring(
 					ficheroGIF.lastIndexOf("\\") + 1,
@@ -511,7 +512,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				System.out.println("\n-Ha saltado una excepcion-\n");
 				pArbol = new PanelArbol(null);
 				pPila = new PanelPila(null);
-				pGrafo = new PanelGrafo(null,null,null);
+				pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 				pTraza = new PanelTraza();
 				pControl = new PanelControl("", this);
 				this.ocupado = false;
@@ -560,7 +561,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			Ventana.thisventana.trazaCompleta = null;
 			pArbol = new PanelArbol(null);
 			pPila = new PanelPila(null);
-			pGrafo = new PanelGrafo(null,null,null);
+			pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 			pTraza = new PanelTraza();
 			pCrono = new PanelCrono(null);
 			pControl.setValores("", this);
@@ -1691,6 +1692,77 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
      * 	Método del que queremos generar el grafo de dependencia
 	 */
 	public void vistaGrafoDependenciaVisible(DatosMetodoBasicos metodo){
+		boolean familiaEjecucionesHabilitado = FamiliaEjecuciones.getInstance().estaHabilitado();
+	    
+	    //	Solo abrimos la pestaña si no está abierta o el método es distinto al actual
+	    if(!grafoActivado || (pGrafo!=null && !pGrafo.esIgual(metodo))){
+	    	try {
+	    		
+	    		//	Eliminamos pestaña por si ya estuviera abierta
+
+				if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
+					this.panel1.remove(this.contenedorGrafo);
+				} else {
+					this.panel2.remove(this.contenedorGrafo);
+				}
+				this.contenedorGrafo=null;
+				pGrafo=null;
+				jspGrafo=null;
+	    		
+	    		//	Generamos el grafo de dependencia solo cuando pulsan botón de generar, no antes
+				
+				nyp = null;
+				this.mostrarNombreMetodos = Ventana.thisventana.traza.getNumMetodos() != 1;
+
+				if (this.mostrarNombreMetodos) {
+					nyp = new NombresYPrefijos();
+					this.nombresMetodos = Ventana.thisventana.trazaCompleta
+							.getNombresMetodos();
+					String prefijos[] = ServiciosString
+							.obtenerPrefijos(this.nombresMetodos);
+					for (int i = 0; i < this.nombresMetodos.length; i++) {
+						nyp.add(this.nombresMetodos[i], prefijos[i]);
+					}
+				}
+				
+				pGrafo = new PanelGrafo(metodo,Ventana.thisventana,nyp);
+				nyp = null;
+				jspGrafo = new JScrollPane(pGrafo);
+
+				this.contenedorGrafo = new JPanel();
+				this.contenedorGrafo.setLayout(new BorderLayout());
+				this.contenedorGrafo.add(jspGrafo,BorderLayout.CENTER);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    	
+	    	//	Ubicamos el grafo en el panel correspondiente
+			if (Conf.getVista(Vista.codigos[4]).getPanel() == 1 || familiaEjecucionesHabilitado) {
+				this.panel1.add(Texto.get(Vista.codigos[4], Conf.idioma),
+						this.contenedorGrafo);
+			} else {
+				this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
+						this.contenedorGrafo);
+			}
+	    }
+	    
+	    //	Activa se pone siempre
+		this.setVistaActiva(Texto.get(Vista.codigos[4], Conf.idioma));
+		
+		//	Actualizamos el estado, indica que la pestaña se ha abierto
+		//		por primera vez
+		grafoActivado = true;
+	}
+	
+	/**
+	 * Permite establecer la vista/pestaña del grafo de dependencia
+	 * 	como visible, así solo se hará visible cuando pulsen el botón de generar
+	 * 	grafo de dependencia
+	 * 
+	 * @param metodo
+     * 	Lista de métodos de los que queremos generar el grafo de dependencia
+	 */
+	public void vistaGrafoDependenciaVisible(List<DatosMetodoBasicos> metodo){
 		boolean familiaEjecucionesHabilitado = FamiliaEjecuciones.getInstance().estaHabilitado();
 	    
 	    //	Solo abrimos la pestaña si no está abierta o el método es distinto al actual

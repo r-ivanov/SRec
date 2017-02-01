@@ -1,6 +1,7 @@
 package paneles;
 
 import java.awt.BorderLayout;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -569,6 +570,16 @@ public class PanelVentana extends JPanel {
      * 	Método del que queremos generar el grafo de dependencia
 	 */
 	public void abrirPestanaGrafoDependencia(DatosMetodoBasicos metodo){
+		this.pAlgoritmo.vistaGrafoDependenciaVisible(metodo);
+	}
+	
+	/**
+	 * 	Permite abrir la pestaña del grafo de dependencia
+	 * 
+	 * @param metodo
+     * 	Lista de métodos de los que queremos generar el grafo de dependencia
+	 */
+	public void abrirPestanaGrafoDependencia(List<DatosMetodoBasicos> metodo){
 		this.pAlgoritmo.vistaGrafoDependenciaVisible(metodo);
 	}
 

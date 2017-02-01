@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -2278,6 +2279,16 @@ public class Ventana extends JFrame implements ActionListener {
      * 	Método del que queremos generar el grafo de dependencia
      */
     public void abrirPestanaGrafoDependencia(DatosMetodoBasicos metodo){
+    	this.panelVentana.abrirPestanaGrafoDependencia(metodo);
+    }
+    
+    /**
+     * Permite abrir la pestaña del grafo de dependencia en el panel correspondiente
+     * 
+     * @param metodo
+     * 	Lista de métodos de los que queremos generar el grafo de dependencia
+     */
+    public void abrirPestanaGrafoDependencia(List<DatosMetodoBasicos> metodo){
     	this.panelVentana.abrirPestanaGrafoDependencia(metodo);
     }
 
