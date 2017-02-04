@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -110,7 +111,7 @@ public class GrafoDependencia {
 	 * Devuelve una nueva instancia de un grafo.
 	 * 
 	 * @param metodo
-	 *		Método para el que obtener los nodos del grafo.
+	 *		Métodos para los que obtener los nodos del grafo.
 	 *            
 	 * @param nyp
 	 * 		Nombres y prefijos, para abreviar nombre de métodos si están visibles
@@ -122,15 +123,11 @@ public class GrafoDependencia {
 		this.nyp = nyp;
 		this.nodos = new ArrayList<NodoGrafoDependencia>();
 		this.metodos = metodo;
-
-		//	Primero añadimos los de la traza actual
-//		this.insertarNodosMultiplesMetodos(null, Ventana.thisventana.getTraza().getRaiz(),
-//				new ArrayList<NodoGrafoDependencia>());
 		
-		//	Después añadimos el resto por si quieren visualizar grafos de métodos
-		//		que no se han establecido como visibles
+		//	Aquí añadimos la traza completa y después ya seleccionaremos nodos
+		//	basándonos en la lista "metodo"
 		this.insertarNodosMultiplesMetodos(null, Ventana.thisventana.trazaCompleta.getRaiz(),
-				new ArrayList<NodoGrafoDependencia>());
+				new ArrayList<NodoGrafoDependencia>(),metodo);
 		
 		this.crearMatrizTabuladoConOrganizacionPorDefecto();
 	}
@@ -227,6 +224,23 @@ public class GrafoDependencia {
 	}
 	
 	/**
+	 * Permite saber si un nombre de método está en una lista de DatosMetodoBasicos
+	 * 
+	 * @param metodos Lista de DatosMetodoBasicos donde buscar
+	 * @param metodo  Nombre del método a buscar
+	 * 
+	 * @return True si metodo está en metodos, false caso contrario
+	 */
+	private boolean esMetodoSeleccionado(List<DatosMetodoBasicos> metodos,String metodo){
+		for(DatosMetodoBasicos dmb:metodos){
+			if(dmb.getNombre().equals(metodo)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Inserta nodos de la ejecución en el grafo de manera recursiva.
 	 * 
 	 * @param padre
@@ -238,14 +252,22 @@ public class GrafoDependencia {
 	 * @param procesados
 	 *		Nodos que ya han sido procesados, por lo que no es necesario
 	 *		determinar de nuevo sus dependencias.
+	 *
+	 * @param metodo
+	 *		Lista de métodos de los que queremos generar el grafo de dependencia
 	 */
 	private void insertarNodosMultiplesMetodos(NodoGrafoDependencia padre,
 			RegistroActivacion registroActivacion,
-			List<NodoGrafoDependencia> procesados) {
-
-		/* Comprobamos si el nodo ya ha sido procesado */
+			List<NodoGrafoDependencia> procesados,
+			List<DatosMetodoBasicos> metodo) {
+		
+		//	Solo se inserta si pertenece a uno de los métodos seleccionados	
+		boolean insertar = this.esMetodoSeleccionado(metodo, registroActivacion.getNombreMetodo());		
+		
+		// Comprobamos si el nodo ya ha sido procesado
 		NodoGrafoDependencia nodo = new NodoGrafoDependencia(registroActivacion, this.nyp);
-		boolean procesado = false;
+		boolean procesado = false;		
+		
 		for (NodoGrafoDependencia visitado : procesados) {
 			if (nodo.equals(visitado)) {
 				procesado = true;
@@ -254,14 +276,14 @@ public class GrafoDependencia {
 			}
 		}
 
-		/* Resolvemos las dependencias de los nodos hijos */		
+		//	Resolvemos las dependencias de sus hijos		
 		if (!procesado) {
-			if (!existeNodo(nodo)) {
+			if (insertar && !existeNodo(nodo)) {
 				this.nodos.add(nodo);
 			}
-			for (int i = 0; i < registroActivacion.numHijos(); i++) {
+			for (int i = 0; i < registroActivacion.numHijos(); i++) {							
 				this.insertarNodosMultiplesMetodos(nodo, registroActivacion.getHijo(i),
-						procesados);
+						procesados,metodo);
 			}
 		}
 
@@ -270,13 +292,42 @@ public class GrafoDependencia {
 		 * nodo actual
 		 */
 		if (padre != null) {
-//			if (mismoMetodo) {
+			
+			//	Si este nodo pertenece a un método de los seleccionados creamos
+			//		dependencia del padre a él
+			if(insertar)
 				padre.addDependencia(nodo);
-//			} else {
-//				for (NodoGrafoDependencia dependencia : nodo.getDependencias()) {
-//					padre.addDependencia(dependencia);
-//				}
-//			}
+			
+			//	Si este nodo NO pertenece a un método de los seleccionados 
+			//	creamos una dependencia del padre a los primeros nodos que si haya que insertar
+			else{
+				
+				Queue<NodoGrafoDependencia> colaNodos = new LinkedList<NodoGrafoDependencia>();
+				NodoGrafoDependencia nodoActual = nodo;
+				for(NodoGrafoDependencia hijo:nodoActual.getDependencias())
+					colaNodos.add(hijo);
+				
+				//	Bucle para recorrer cola
+				do{
+					//	Nodo actual es la cabecera de la cola
+					nodoActual = colaNodos.poll();
+					if(nodoActual == null)
+						break;
+					
+					//	Si el nodo actual es un método de los seleccionados por el usuario 
+					//		creamos dependencia de su padre a Él
+					if(this.esMetodoSeleccionado(metodo, nodoActual.getMetodo())){
+						padre.addDependencia(nodoActual);
+					}
+					
+					//	Si el nodo actual NO es un método de los seleccionados por el usuario 
+					//		insertamos sus hijos a la cola
+					else{
+						for(NodoGrafoDependencia hijo:nodoActual.getDependencias())
+							colaNodos.add(hijo);
+					}	
+				}while(colaNodos.size()>0);
+			}			
 		}
 
 		/* Establecemos el nodo como procesado si no lo estaba */
@@ -284,6 +335,8 @@ public class GrafoDependencia {
 			procesados.add(nodo);
 		}
 	}
+	
+	
 	
 	/**
 	 * Determina si un nodo existe en la variable nodos de esta clase
@@ -942,7 +995,7 @@ public class GrafoDependencia {
 			this.aniadirDependenciasAMatriz(this.matrizTabulado, raiz);
 		}
 	}
-
+	
 	/**
 	 * Posiciona los nodos del grafo según lo que especifique la matriz de
 	 * tabulado actual.

@@ -385,6 +385,15 @@ public class NodoGrafoDependencia {
 		return this.registroActivacion.getNombreMetodo().equals(
 				nodo.registroActivacion.getNombreMetodo());
 	}
+	
+	/**
+	 * Devuelve el método al que pertenece el nodo
+	 * @return
+	 * 	Nombre del método al que pertenece el nodo
+	 */
+	public String getMetodo(){
+		return this.registroActivacion.getNombreMetodo();
+	}
 
 	/**
 	 * Devuelve true si los tipos de los parametros de entrada de este nodo, son
