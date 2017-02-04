@@ -206,8 +206,7 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 			String valoresE[][] = this.ventana.getTraza().getValoresParametros(
 					this.dtb.getMetodo(numMetodo).getInterfaz(), true);
 			String valoresS[][] = this.ventana.getTraza().getValoresResultado(
-					this.dtb.getMetodo(numMetodo).getInterfaz(), true);
-
+					this.dtb.getMetodo(numMetodo).getInterfaz(), true);			
 			JPanel panelMetodo = panelParametros(this.dtb.getMetodo(numMetodo),
 					valoresE, valoresS);
 

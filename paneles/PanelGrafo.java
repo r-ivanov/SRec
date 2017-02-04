@@ -101,6 +101,7 @@ MouseListener, MouseMotionListener {
 		
 		if (Ventana.thisventana.traza != null && metodo != null && ventana != null) {			
 			this.esGrafoDeUnMetodo = true;
+			this.metodos = null;
 			//	Obtenemos datos básicos del grafo y su representación
 			this.nyp = nyp;
 			this.metodo = metodo;
@@ -151,6 +152,7 @@ MouseListener, MouseMotionListener {
 		
 		if (Ventana.thisventana.traza != null && metodo != null && ventana != null) {			
 			this.esGrafoDeUnMetodo = false;
+			this.metodo = null;
 			//	Obtenemos datos básicos del grafo y su representación
 			this.nyp = nyp;
 			this.metodos = metodo;
@@ -512,7 +514,7 @@ MouseListener, MouseMotionListener {
 			for(DatosMetodoBasicos dmb : this.metodos){
 				signatura += dmb.getInterfaz() + " , ";
 			}
-			signatura.substring(0,signatura.length()-4);
+			signatura = signatura.substring(0,signatura.length()-3);
 			labelSignatura = new JLabel("  -  " + signatura
 			+ "   ");
 		}
@@ -540,7 +542,7 @@ MouseListener, MouseMotionListener {
 	 * @return True si nuevoMetodo = metodo que se visualiza actualmente, False caso contrario
 	 */
 	public boolean esIgual(DatosMetodoBasicos nuevoMetodo){
-		return this.metodo.esIgual(nuevoMetodo);
+		return (this.metodo != null && this.metodo.esIgual(nuevoMetodo));
 	}
 	
 	/**
@@ -552,7 +554,7 @@ MouseListener, MouseMotionListener {
 	 * 			False caso contrario
 	 */
 	public boolean esIgual(List<DatosMetodoBasicos> nuevoMetodo){		
-		if(nuevoMetodo.size() != this.metodos.size()){
+		if(this.metodos == null || nuevoMetodo.size() != this.metodos.size()){
 			return false;
 		}
 		
