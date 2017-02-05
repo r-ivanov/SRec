@@ -100,7 +100,7 @@ public class GrafoDependencia {
 				new ArrayList<NodoGrafoDependencia>());
 		
 		//	Después añadimos el resto por si quieren visualizar grafos de métodos
-		//		que no se han establecido como visibles
+		//		que no pertenecen a la traza actual
 		this.insertarNodos(null, Ventana.thisventana.trazaCompleta.getRaiz(),
 				new ArrayList<NodoGrafoDependencia>());
 		
@@ -124,8 +124,12 @@ public class GrafoDependencia {
 		this.nodos = new ArrayList<NodoGrafoDependencia>();
 		this.metodos = metodo;
 		
-		//	Aquí añadimos la traza completa y después ya seleccionaremos nodos
-		//	basándonos en la lista "metodo"
+		//	Primero añadimos los de la traza actual
+		this.insertarNodosMultiplesMetodos(null, Ventana.thisventana.getTraza().getRaiz(),
+				new ArrayList<NodoGrafoDependencia>(),metodo);
+		
+		//	Después añadimos el resto por si quieren visualizar grafos de métodos
+		//		que no pertenecen a la traza actual
 		this.insertarNodosMultiplesMetodos(null, Ventana.thisventana.trazaCompleta.getRaiz(),
 				new ArrayList<NodoGrafoDependencia>(),metodo);
 		
