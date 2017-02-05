@@ -68,7 +68,46 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 		this.ventana = ventana;
 		this.start();
 	}
-
+	
+	/**
+	 * Permite reorganizar una lista de métodos y ponerlos en el mismo orden que
+	 * 	un array de interfaces. Soluciona el error de buscar cuando hay mas de 2 métodos
+	 * @param metodos		Lista de métodos
+	 * @param interfaces	Array de interfaces de métodos
+	 * 
+	 * @return				Null si metodos e interfaces tienen distinta longuitud
+	 * 						Lista de DatosMetodoBasicos reorganizados si tienen misma longuitud
+	 */
+	private ArrayList<DatosMetodoBasicos> reorganizarMetodos(	ArrayList<DatosMetodoBasicos> metodos,
+																String[] interfaces){
+		//	Tienen que tener misma longuitud, sino, devolvemos null
+		if(metodos.size() != interfaces.length)
+			return null;
+					
+		//	Obtenemos los nombres de los métodos
+		String[] metodosNombres = new String[metodos.size()];
+		for(int i=0;i<metodos.size();i++){
+			metodosNombres[i] = metodos.get(i).getNombre();
+		}
+		
+		//	Eliminamos todos los espacios de los nombres de ambos
+		for(int i=0;i<metodos.size();i++){
+			metodosNombres[i] = metodosNombres[i].replaceAll("\\s", "");
+			interfaces[i] = interfaces[i].replaceAll("\\s", "");
+		}
+		
+		//	Ahora reorganizamos metodos
+		ArrayList<DatosMetodoBasicos> metodosAux = new ArrayList<>();
+		for(int i=0;i<metodos.size();i++){			
+			for(int j=0;j<metodos.size();j++){
+				if(interfaces[i].contains(metodosNombres[j])){
+					metodosAux.add(metodos.get(j));
+				}					
+			}
+		}
+		return metodosAux;
+	}
+	
 	/**
 	 * Crea el cuadro de parámetros
 	 */
@@ -79,8 +118,11 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 
 		if (this.dtb != null) {
 
-			ArrayList<DatosMetodoBasicos> metodos = this.dtb.getMetodos();
-
+			ArrayList<DatosMetodoBasicos> metodosAux = this.dtb.getMetodos();
+			String[] interfaces = this.ventana.thisventana.trazaCompleta.getInterfacesMetodos();
+			ArrayList<DatosMetodoBasicos> metodos = 
+					this.reorganizarMetodos(metodosAux, interfaces);
+			
 			// Panel Selección Método
 			this.selectorMetodo = new JComboBox<String>();
 			for (int i = 0; i < metodos.size(); i++) {
@@ -88,6 +130,7 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 					this.selectorMetodo.addItem(metodos.get(i).getInterfaz());
 				}
 			}
+			
 			this.selectorMetodo.addActionListener(this);
 			this.selectorMetodo.addKeyListener(this);
 
@@ -107,7 +150,7 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 					.getValoresParametros(interfazMetodo, true);
 			String[][] valoresResult = this.ventana.getTraza()
 					.getValoresResultado(interfazMetodo, true);
-
+			
 			JPanel ppa = panelParametros(metodos.get(0), valoresParam,
 					valoresResult);
 			this.panelContenedorValores.add(ppa, BorderLayout.NORTH);
