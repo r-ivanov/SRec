@@ -58,10 +58,7 @@ public class GrafoDependencia {
 	private int anchuraCuadroMatriz;
 	private int alturaCuadroMatriz;
 
-	private DatosMetodoBasicos metodo;
-	private List<DatosMetodoBasicos> metodos;
-	private boolean esGrafoDeUnMetodo = true;	//	true = solo se representa un método
-												//	false = se representan varios métodos
+	private DatosMetodoBasicos metodo;	
 
 	private boolean nodosPosicionados;
 
@@ -77,6 +74,16 @@ public class GrafoDependencia {
 	private boolean eliminarFilasColumnas = false;
 	private int numeroFilasVisibles;
 	private int numeroColumnasVisibles;
+	
+	//	Multiples métodos
+	
+	private boolean esGrafoDeUnMetodo = true;			//	true = solo se representa un método
+														//	false = se representan varios métodos	
+	private List<DatosMetodoBasicos> metodos;			//	Métodos en caso de tener varios
+	private String ultimaExpresionMultiplesMetodos;		//	Expresión si han tabulado multiples métodos
+	private boolean esExpresionDeFila;					//	True - La expresión es de filas, False - Caso contrario
+	private List<Integer> parametrosComunes;			//	Lista de índices de parámetros comunes respecto al primer método
+	private List<String> parametrosComunesS;			//	Lista de nombres de los parámetros comunes respecto al primer método
 
 	/**
 	 * Devuelve una nueva instancia de un grafo.
@@ -1263,6 +1270,53 @@ public class GrafoDependencia {
 		return mensajeError;
 	}
 
+	public String tabularMultiplesMetodos(String ultimaExpresionMultiplesMetodos, boolean esExpresionDeFila) {
+		
+		String mensajeError = null;
+		ScriptEngineManager manager = new ScriptEngineManager();
+		MatrizDinamica<NodoGrafoDependencia> matriz = new MatrizDinamica<NodoGrafoDependencia>();
+		this.ultimaExpresionMultiplesMetodos = ultimaExpresionMultiplesMetodos;
+		this.esExpresionDeFila = esExpresionDeFila;
+		
+		for (NodoGrafoDependencia nodo : this.nodos) {
+			ScriptEngine engine = manager.getEngineByName("js");
+			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
+				engine.put(this.metodo.getNombreParametroE(i), 
+						this.obtenerValorConTipo(nodo.getParams()[i]));
+			}
+			boolean filaEvaluada = false;
+			try {
+				int fila = this.obtenerValorEnteroDeEvaluacion(engine
+						.eval(expresionParaFila));
+				filaEvaluada = true;
+				int columna = this.obtenerValorEnteroDeEvaluacion(engine
+						.eval(expresionParaColumna));
+				if (fila < 0 || columna < 0) {
+					mensajeError = Texto.get("GP_EXPR_NEGATIVOS", Conf.idioma);
+				} else if (matriz.get(fila, columna) != null) {
+					mensajeError = Texto
+							.get("GP_ERROR_POSICIONAR", Conf.idioma)
+							+ " x="
+							+ columna + ", y=" + fila;
+				} else {
+					matriz.set(fila, columna, nodo);
+				}
+			} catch (ScriptException e) {
+				String expresion = filaEvaluada ? expresionParaColumna : expresionParaFila;
+				mensajeError = "<html><p align=\"center\">" + Texto.get("GP_EXPR_INVALIDA", Conf.idioma) + " \"" + expresion +
+						"\" " + Texto.get("GP_EXPR_INVALIDA_2", Conf.idioma) + "</p><p align=\"center\">" + e.getMessage() +
+						"</p></html>";
+			}
+		}
+
+		if (mensajeError == null) {
+			this.matrizTabulado = matriz;
+			this.setTamanioTabla(matriz.numFilas(), matriz.numColumnas());
+			this.nodosPosicionados = false;
+		}
+
+		return mensajeError;
+	}
 	/**
 	 * Transforma el valor devuelto por el motor de expresiones en un entero
 	 * para tabular.
@@ -1467,5 +1521,123 @@ public class GrafoDependencia {
 	 */
 	public void nodosPosicionadosFalse(){
 		this.nodosPosicionados=false;
+	}
+	
+	/**
+	 * Obtiene una lista de los indices del primer método seleccionado
+	 * que son comunes a todos los restantes métodos seleccionados.
+	 * 
+	 * @return
+	 * 	Lista de enteros
+	 */
+	private List<Integer> parametrosComunes(){
+		
+		//	Lista de indices de parámetros comunes (respecto al primer método)
+		//	que devolveremos
+		List<Integer> l = new ArrayList<>();
+		
+		//	Si es de un método no tienen parámetros comunes
+		if(this.esGrafoDeUnMetodo)
+			return l;		
+		
+		//	Obtenemos los datos de los parámetros del primer método
+		DatosMetodoBasicos metodoPrimero = this.metodos.get(0);
+		
+		//	Recorremos todos los parámetros del primer método
+		
+		forA:for(int i=0 ; i<metodoPrimero.getNumParametrosE() ; i++){
+			String nombrePrimero 	= metodoPrimero.getNombreParametroE(i);
+			String tipoPrimero 		= metodoPrimero.getTipoParametroE(i);
+			int dimensionPrimero 	= metodoPrimero.getDimParametroE(i);
+			
+			//	Recorremos todos los métodos restantes
+			
+			forB:for(int j=1 ; j<this.metodos.size(); j++){
+				boolean esteMetodoTieneParametrosComunes = false;
+				
+				//	Recorremos todos los parámetros de los métodos restantes
+				
+				DatosMetodoBasicos metodoActual = this.metodos.get(j);
+				for(int k=0 ; k<metodoActual.getNumParametrosE() ; k++){
+					
+					//	Comparamos el parámetro actual con el parámetro del primer método
+					String nombreActual 	= metodoActual.getNombreParametroE(k);
+					String tipoActual 		= metodoActual.getTipoParametroE(k);
+					int dimensionActual 	= metodoActual.getDimParametroE(k);
+					
+					//	Comprobamos nombre, tipo y dimensión de parámetros
+					if(	nombreActual.equals(nombrePrimero) &&
+						tipoActual.equals(tipoPrimero) &&
+						dimensionActual == dimensionPrimero){
+						
+						esteMetodoTieneParametrosComunes = true;
+						
+						//	Si lo hemos encontrado en el método actual vamos al siguiente método
+						continue forB;
+					}
+				}
+				
+				//	Si el método actual no tiene en común ninguno de sus parámetros con el parámetro
+				//	por el que vayamos del primer método significa que no es común a todos los métodos
+				//	seleccionados, por lo tanto, miramos el siguiente parámetro del primer método
+				if(esteMetodoTieneParametrosComunes == false)
+					continue forA;
+			}
+			
+			//	Llegados aqui significa que el parámetro i es común a todos, lo añadimos a la lista
+			l.add(i);
+		}		
+		// System.out.println(l);
+		return l;
+	}
+	
+	/**
+	 * Obtiene una lista de los indices del primer método seleccionado
+	 * que son comunes a todos los restantes métodos seleccionados.
+	 * 
+	 * @return
+	 * 	Lista de enteros
+	 */
+	public List<Integer> getParametrosComunes(){
+		this.parametrosComunes = this.parametrosComunes();
+		return this.parametrosComunes;
+	}
+	
+	/**
+	 * Obtiene una lista de los nombres y tipos de los parámetros comunes a los
+	 * 	métodos representados
+	 * 
+	 * @return
+	 * 	Nombres y tipos de los parámetros comunes a los métodos representados
+	 */
+	private List<String> parametrosComunesS(){
+		List<String> l = new ArrayList<>();
+		if(this.parametrosComunes == null || this.parametrosComunes.size() == 0){
+			return l;
+		}
+		//	Obtenemos los datos de los parámetros del primer método
+		DatosMetodoBasicos metodoPrimero = this.metodos.get(0);
+		
+		//	Obtenemos los nombres de los parámetros comunes
+		for(int i : this.parametrosComunes){
+			String texto = metodoPrimero.getTipoParametroE(i);
+			for(int j = 0; j<metodoPrimero.getDimParametroE(i);j++){
+				texto = texto+"[]";
+			}
+			l.add(texto + " " + metodoPrimero.getNombreParametroE(i));
+		}
+		return l;
+	}
+	
+	/**
+	 * Obtiene una lista de los nombres y tipos de los parámetros comunes a los
+	 * 	métodos representados
+	 * 
+	 * @return
+	 * 	Nombres y tipos de los parámetros comunes a los métodos representados
+	 */
+	public List<String> getParametrosComunesS(){
+		this.parametrosComunesS = this.parametrosComunesS();
+		return this.parametrosComunesS;
 	}
 }

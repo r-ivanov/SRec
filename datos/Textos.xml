@@ -55,8 +55,7 @@
 		<T valor="RAGDLIJIBC" idioma="es" id="MNEMO_CONFIG"/>
 		<T valor="ROSDLIJLTC" idioma="en" id="MNEMO_CONFIG"/>
 		<T valor="ASY" idioma="es" id="MNEMO_AYUDA"/>
-		<T valor="HAH" idioma="en" id="MNEMO_AYUDA"/>
-		
+		<T valor="HAH" idioma="en" id="MNEMO_AYUDA"/>	
 		
 		
 		<!-- Menu Archivo -->
@@ -313,6 +312,8 @@
 		<T valor="Expressions for tabulation" idioma="en" id="GP_TABULAR_PANEL"/>
 		<T valor="Signatura del m[eacute]todo" idioma="es" id="GP_TABULAR_SIGNATURA"/>
 		<T valor="Method signature" idioma="en" id="GP_TABULAR_SIGNATURA"/>	
+		<T valor="Signatura de los m[eacute]todos" idioma="es" id="GP_TABULAR_SIGNATURA_S"/>
+		<T valor="Signatures of methods" idioma="en" id="GP_TABULAR_SIGNATURA_S"/>	
 		<T valor="Expresi[oacute]n para filas =" idioma="es" id="GP_TABULAR_FILAS"/>
 		<T valor="Rows expression =" idioma="en" id="GP_TABULAR_FILAS"/>
 		<T valor="Expresi[oacute]n para columnas =" idioma="es" id="GP_TABULAR_COLUMNAS"/>
@@ -359,6 +360,15 @@
 		<T valor="Configuraci[oacute]n de zoom: ajuste" idioma="es" id="GP_AJUSTE_ZOOM"/>
 		<T valor="Zoom configuration: adjust" idioma="en" id="GP_AJUSTE_ZOOM"/>
 		
+		<T valor="Los m[eacute]todos determinan" idioma="es" id="GP_CUADROMMSELECT_METODOS_DETERMINAN"/>
+		<T valor="Methods determine" idioma="es" id="GP_CUADROMMSELECT_METODOS_DETERMINAN"/>
+		<T valor="Filas" idioma="es" id="GP_CUADROMMSELECT_FILAS"/>
+		<T valor="Rows" idioma="en" id="GP_CUADROMMSELECT_METODOS_FILAS"/>	
+		<T valor="Columnas" idioma="es" id="GP_CUADROMMSELECT_COLUMNAS"/>
+		<T valor="Columns" idioma="en" id="GP_CUADROMMSELECT_METODOS_COLUMNAS"/>	
+		<T valor="Par[aacute]metros comunes" idioma="es" id="GP_CUADROMMSELECT_PARAMC"/>
+		<T valor="Common parameters" idioma="en" id="GP_CUADROMMSELECT_PARAMC"/>			
+		
 		<T valor="La ejecución produce demasiados nodos!" idioma="es" id="DEMASIADOS_NODOS"/>
 		<T valor="Execution produces too many nodes!" idioma="en" id="DEMASIADOS_NODOS"/>
 		
@@ -391,7 +401,8 @@
 		<T valor="Selection error" idioma="en" id="ERROR_SELECCION"/>		
 		<T valor="Error de selecci[oacute]n" idioma="es" id="ERROR_SELECCION"/>
 		<T valor="Selection error" idioma="en" id="ERROR_SELECCION"/>	
-		
+		<T valor="Error de par[aacute]metros comunes" idioma="es" id="ERROR_PARAM_GD"/>
+		<T valor="Common parameters error" idioma="en" id="ERROR_PARAM_GD"/>
 		
 		<!-- Mensajes de error, textos -->
 		<T valor="El archivo est[aacute] corrupto o no mantiene la estructura adecuada." idioma="es" id="ERROR_ARCHCOR"/>
@@ -490,7 +501,8 @@
 		<T valor="All parameter numbers for indexes have to be full or empty." idioma="en" id="ERROR_INFOPARAM3"/>
 		<T valor="Hay valores repetidos en los datos introducidos." idioma="es" id="ERROR_INFOPARAM4"/>
 		<T valor="There are repeated values within the introduced data." idioma="en" id="ERROR_INFOPARAM4"/>
-		
+		<T valor="Los m[eacute]todos seleccionados no tienen ning[uacute]n par[aacute]metro en com[uacute]n." idioma="es" id="ERROR_PARAM_GD_TXT"/>
+		<T valor="Selected methods have no common parameters." idioma="en" id="ERROR_PARAM_GD_TXT"/>
 		
 		<!-- Mensajes informacion -->
 		<T valor="Procesado correcto" idioma="es" id="INFO_PROCOK"/>

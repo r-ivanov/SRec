@@ -27,7 +27,9 @@ import org.jgraph.graph.CellView;
 import ventanas.Ventana;
 import conf.Conf;
 import cuadros.CuadroDibujarTablaGrafoDependencia;
+import cuadros.CuadroError;
 import cuadros.CuadroTabularGrafoDependencia;
+import cuadros.CuadroTabularGrafoDependenciaMultiplesMetodos;
 import datos.DatosMetodoBasicos;
 import datos.GrafoDependencia;
 import datos.NodoGrafoDependencia;
@@ -48,9 +50,6 @@ MouseListener, MouseMotionListener {
 	private Ventana ventana;
 
 	private DatosMetodoBasicos metodo;
-	private List<DatosMetodoBasicos> metodos;
-	private boolean esGrafoDeUnMetodo = true;	//	true = solo se representa un método
-												//	false = se representan varios métodos
 	
 	private JPanel panelHerramientas;
 	private JToolBar[] barras;
@@ -59,8 +58,8 @@ MouseListener, MouseMotionListener {
 	private GrafoDependencia grafoDependencia;
 	private JGraph representacionGrafo;
 
-	private String ultimaExpresionParaFila;		//	Expresión filas si han tabulado
-	private String ultimaExpresionParaColumna;	//	Expresión columnas si han tabulado
+	private String ultimaExpresionParaFila;				//	Expresión filas si han tabulado 1 método
+	private String ultimaExpresionParaColumna;			//	Expresión columnas si han tabulado 1 método
 
 	private JPanel panel;
 
@@ -82,6 +81,16 @@ MouseListener, MouseMotionListener {
 	private NombresYPrefijos nyp;
 	
 	private boolean eliminarFilasColumnas = false;
+	
+	//	Multiples métodos
+	
+	private boolean esGrafoDeUnMetodo = true;			//	true = solo se representa un método
+														//	false = se representan varios métodos	
+	private List<DatosMetodoBasicos> metodos;			//	Métodos en caso de tener varios
+	private String ultimaExpresionMultiplesMetodos;		//	Expresión si han tabulado multiples métodos
+	private boolean esExpresionDeFila;					//	True - La expresión es de filas, False - Caso contrario
+	private List<Integer> parametrosComunes;			//	Lista de índices de parámetros comunes respecto al primer método
+	private List<String> parametrosComunesS;			//	Lista de nombres de los parámetros comunes respecto al primer método
 	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para el grafo.
@@ -252,6 +261,27 @@ MouseListener, MouseMotionListener {
 			this.visualizar();
 		}
 		return mensajeError;
+	}
+	
+	/**
+	 * 
+	 */
+	public String tabularMultiplesMetodos(String ultimaExpresionMultiplesMetodos, boolean esExpresionDeFila) {
+
+//		String mensajeError = this.grafoDependencia.tabular(expresionParaFila,
+//				expresionParaColumna);
+//		if (mensajeError == null) {
+//			this.representacionGrafo = null;
+//			this.representacionGrafo = this.grafoDependencia
+//					.obtenerRepresentacionGrafo(true);
+//
+//			this.visualizar();
+//		}
+//		return mensajeError;
+		
+		this.ultimaExpresionMultiplesMetodos = ultimaExpresionMultiplesMetodos;
+		this.esExpresionDeFila = esExpresionDeFila;
+		return "Sin implementar";
 	}
 	
 	/**
@@ -510,19 +540,14 @@ MouseListener, MouseMotionListener {
 			labelSignatura = new JLabel("  -  " + this.metodo.getInterfaz()
 					+ "   ");
 		else{
-			String signatura = "";
-			for(DatosMetodoBasicos dmb : this.metodos){
-				signatura += dmb.getInterfaz() + " , ";
-			}
-			signatura = signatura.substring(0,signatura.length()-3);
-			labelSignatura = new JLabel("  -  " + signatura
-			+ "   ");
+			labelSignatura = this.getSignaturaMultiplesMetodos();
 		}
 			
 		labelSignatura.setFont(new Font("Arial", Font.ITALIC, 14));
 
 		JPanel panelInfo = new JPanel(new BorderLayout());
 		panelInfo.add(labelTitulo, BorderLayout.WEST);
+		panelInfo.add(new JLabel("    -    "), BorderLayout.CENTER);
 		panelInfo.add(labelSignatura, BorderLayout.EAST);
 
 		this.panelHerramientas.add(panelInfo, BorderLayout.EAST);
@@ -534,6 +559,24 @@ MouseListener, MouseMotionListener {
 //		this.add(this.panelHerramientas, BorderLayout.NORTH);
 	}	
 
+	/**
+	 * Obtiene el label de la signatura de los métodos seleccionados
+	 * 
+	 * @return
+	 * 	Label de la signatura de los métodos seleccionados
+	 */
+	private JLabel getSignaturaMultiplesMetodos(){
+		JLabel labelSignatura;
+		String signatura = "";
+		for(DatosMetodoBasicos dmb : this.metodos){
+			signatura += dmb.getInterfaz() + " , <br />";
+		}
+		signatura = signatura.substring(0,signatura.length()-9);
+		labelSignatura = new JLabel("<html>" + signatura
+		+ "</html>");
+		return labelSignatura;
+	}
+	
 	/**
 	 * Permite comparar un método pasado como parámetro con el método
 	 * 	que se está visualizando actualmente en la pestaña
@@ -635,12 +678,31 @@ MouseListener, MouseMotionListener {
 					this);
 			this.tipoGrafo = 1;
 			
-		} else if (e.getSource() == this.botones[1]) {		//	Tabular
-			new CuadroTabularGrafoDependencia(this.ventana,
-					this.metodo.getInterfaz(),
-					this.ultimaExpresionParaFila,
-					this.ultimaExpresionParaColumna,
-					this);			
+		} else if (e.getSource() == this.botones[1]) {		
+			if(this.esGrafoDeUnMetodo){						//	Tabular solo un método
+				new CuadroTabularGrafoDependencia(this.ventana,
+						this.metodo.getInterfaz(),
+						this.ultimaExpresionParaFila,
+						this.ultimaExpresionParaColumna,
+						this);		
+			}
+			else{											//	Tabular múltiples métodos
+				this.parametrosComunes = this.grafoDependencia.getParametrosComunes();
+				this.parametrosComunesS = this.grafoDependencia.getParametrosComunesS();
+				if(this.parametrosComunes.size()==0){
+					new CuadroError(this.ventana, Texto.get("ERROR_PARAM_GD",Conf.idioma),
+							Texto.get("ERROR_PARAM_GD_TXT",
+							Conf.idioma));
+				}else{					
+					this.parametrosComunesS = this.grafoDependencia.getParametrosComunesS();
+					new CuadroTabularGrafoDependenciaMultiplesMetodos(
+							this.ventana,
+							this,
+							this.getSignaturaMultiplesMetodos(),
+							this.parametrosComunesS,
+							this.ultimaExpresionMultiplesMetodos);
+				}
+			}
 			this.tipoGrafo = 2;
 			this.eliminarFilasColumnas = false;
 		}else if (e.getSource() == this.botones[2]) {		//	Flechas
