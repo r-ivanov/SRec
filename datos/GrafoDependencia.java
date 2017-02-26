@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +30,6 @@ import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.DefaultPort;
 import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
-
 import utilidades.MatrizDinamica;
 import utilidades.NombresYPrefijos;
 import utilidades.Texto;
@@ -242,7 +242,7 @@ public class GrafoDependencia {
 	 * 
 	 * @return True si metodo está en metodos, false caso contrario
 	 */
-	private boolean esMetodoSeleccionado(List<DatosMetodoBasicos> metodos,String metodo){
+	private boolean metodoDentroLista(List<DatosMetodoBasicos> metodos,String metodo){
 		for(DatosMetodoBasicos dmb:metodos){
 			if(dmb.getNombre().equals(metodo)){
 				return true;
@@ -273,7 +273,7 @@ public class GrafoDependencia {
 			List<DatosMetodoBasicos> metodo) {
 		
 		//	Solo se inserta si pertenece a uno de los métodos seleccionados	
-		boolean insertar = this.esMetodoSeleccionado(metodo, registroActivacion.getNombreMetodo());		
+		boolean insertar = this.metodoDentroLista(metodo, registroActivacion.getNombreMetodo());		
 		
 		// Comprobamos si el nodo ya ha sido procesado
 		NodoGrafoDependencia nodo = new NodoGrafoDependencia(registroActivacion, this.nyp);
@@ -327,7 +327,7 @@ public class GrafoDependencia {
 					
 					//	Si el nodo actual es un método de los seleccionados por el usuario 
 					//		creamos dependencia de su padre a Él
-					if(this.esMetodoSeleccionado(metodo, nodoActual.getMetodo())){
+					if(this.metodoDentroLista(metodo, nodoActual.getMetodo())){
 						padre.addDependencia(nodoActual);
 					}
 					
@@ -1066,8 +1066,7 @@ public class GrafoDependencia {
 			for (int columna = 0; columna < this.matrizTabulado.numColumnas(); columna++) {
 				NodoGrafoDependencia nodo = this.matrizTabulado.get(fila,
 						columna);
-				if (nodo != null) {				
-					
+				if (nodo != null) {					
 					
 					int x,y;
 					
@@ -1245,11 +1244,15 @@ public class GrafoDependencia {
 						.eval(expresionParaColumna));
 				if (fila < 0 || columna < 0) {
 					mensajeError = Texto.get("GP_EXPR_NEGATIVOS", Conf.idioma);
+					this.expresionParaFila = null;
+					this.expresionParaColumna = null;
 				} else if (matriz.get(fila, columna) != null) {
 					mensajeError = Texto
 							.get("GP_ERROR_POSICIONAR", Conf.idioma)
 							+ " x="
 							+ columna + ", y=" + fila;
+					this.expresionParaFila = null;
+					this.expresionParaColumna = null;
 				} else {
 					matriz.set(fila, columna, nodo);
 				}
@@ -1258,6 +1261,8 @@ public class GrafoDependencia {
 				mensajeError = "<html><p align=\"center\">" + Texto.get("GP_EXPR_INVALIDA", Conf.idioma) + " \"" + expresion +
 						"\" " + Texto.get("GP_EXPR_INVALIDA_2", Conf.idioma) + "</p><p align=\"center\">" + e.getMessage() +
 						"</p></html>";
+				this.expresionParaFila = null;
+				this.expresionParaColumna = null;
 			}
 		}
 
@@ -1270,6 +1275,20 @@ public class GrafoDependencia {
 		return mensajeError;
 	}
 
+	/**
+	 * Tabula automáticamente los nodos del grafo de múltiples métodos,
+	 * 	dada una expresión de filas o columnas
+	 * 
+	 * @param ultimaExpresionMultiplesMetodos
+	 * 		Expresión introducida por el usuario
+	 * 
+	 * @param esExpresionDeFila
+	 * 		Indica si la expresión introducida por el usuario es de
+	 * 		filas (true) o no (false)
+	 * 
+	 * @return 
+	 * 		Mensaje de error si ocurrió algun error, null en caso contrario.
+	 */
 	public String tabularMultiplesMetodos(String ultimaExpresionMultiplesMetodos, boolean esExpresionDeFila) {
 		
 		String mensajeError = null;
@@ -1278,37 +1297,78 @@ public class GrafoDependencia {
 		this.ultimaExpresionMultiplesMetodos = ultimaExpresionMultiplesMetodos;
 		this.esExpresionDeFila = esExpresionDeFila;
 		
+		//	Creamos mapa para los nombres y posición de métodos actuales
+		HashMap<String, Integer> mapaMetodos = new HashMap<String, Integer>();
+		for(int i = 0; i<this.metodos.size(); i++){
+			mapaMetodos.put(this.metodos.get(i).getNombre(), i);
+		}
+		
+		//	Recorremos nodos
 		for (NodoGrafoDependencia nodo : this.nodos) {
+			
+			//	Creamos engine para evaluar
 			ScriptEngine engine = manager.getEngineByName("js");
-			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
-				engine.put(this.metodo.getNombreParametroE(i), 
-						this.obtenerValorConTipo(nodo.getParams()[i]));
-			}
-			boolean filaEvaluada = false;
+			
+			//	Introducimos parámetros y su valor del nodo
+			DatosMetodoBasicos dmb = this.metodos.get(mapaMetodos.get(nodo.getMetodo()));
+			
+			for (int i = 0; i < dmb.getNumParametrosE(); i++) {
+				
+				//	Solo añadimos los parámetros comunes, no más, 
+				//	por eficiencia y por evitar errores		
+				if(this.parametrosComunes==null)
+					this.parametrosComunes = this.getParametrosComunes();
+				if(this.parametrosComunesS==null)
+					this.parametrosComunesS = this.getParametrosComunesS();
+				for(int j = 0; j<this.parametrosComunes.size(); j++){
+					String metodosComunesParam = this.metodos.get(0).getNombreParametroE(this.parametrosComunes.get(j));
+					String esteMetodoParam = dmb.getNombreParametroE(i);
+					if(metodosComunesParam.equals(esteMetodoParam)){
+						engine.put(dmb.getNombreParametroE(i), 
+								this.obtenerValorConTipo(nodo.getParams()[i]));							
+					}
+				}				
+			}			
+			
 			try {
-				int fila = this.obtenerValorEnteroDeEvaluacion(engine
-						.eval(expresionParaFila));
-				filaEvaluada = true;
-				int columna = this.obtenerValorEnteroDeEvaluacion(engine
-						.eval(expresionParaColumna));
+				int fila, columna;
+				
+				//	Evaluación de la expresión si la expresión es de fila
+				if(esExpresionDeFila){
+					fila = this.obtenerValorEnteroDeEvaluacion(engine
+							.eval(ultimaExpresionMultiplesMetodos));
+					columna = mapaMetodos.get(nodo.getMetodo());					
+					
+				//	Evaluación de la expresión si la expresión es de columna
+				}else{
+					columna = this.obtenerValorEnteroDeEvaluacion(engine
+							.eval(ultimaExpresionMultiplesMetodos));
+					fila = mapaMetodos.get(nodo.getMetodo());
+				}
+				
+				//	Errores
 				if (fila < 0 || columna < 0) {
 					mensajeError = Texto.get("GP_EXPR_NEGATIVOS", Conf.idioma);
+					this.ultimaExpresionMultiplesMetodos = null;
 				} else if (matriz.get(fila, columna) != null) {
 					mensajeError = Texto
 							.get("GP_ERROR_POSICIONAR", Conf.idioma)
 							+ " x="
 							+ columna + ", y=" + fila;
+					this.ultimaExpresionMultiplesMetodos = null;
 				} else {
 					matriz.set(fila, columna, nodo);
 				}
 			} catch (ScriptException e) {
-				String expresion = filaEvaluada ? expresionParaColumna : expresionParaFila;
+				String expresion = ultimaExpresionMultiplesMetodos;
 				mensajeError = "<html><p align=\"center\">" + Texto.get("GP_EXPR_INVALIDA", Conf.idioma) + " \"" + expresion +
 						"\" " + Texto.get("GP_EXPR_INVALIDA_2", Conf.idioma) + "</p><p align=\"center\">" + e.getMessage() +
 						"</p></html>";
+				this.ultimaExpresionMultiplesMetodos = null;
 			}
 		}
 
+		//	Si no hay error
 		if (mensajeError == null) {
 			this.matrizTabulado = matriz;
 			this.setTamanioTabla(matriz.numFilas(), matriz.numColumnas());

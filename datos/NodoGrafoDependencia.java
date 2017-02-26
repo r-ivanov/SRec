@@ -378,12 +378,29 @@ public class NodoGrafoDependencia {
 	 * nodo pasado por parámetro.
 	 * 
 	 * @param nodo
+	 * 	Nodo para comparar
 	 * 
-	 * @return true si son iguales, false en caso contrario.
+	 * @return 
+	 * 	true si son iguales, false en caso contrario.
 	 */
 	private boolean nombreMetodoIgual(NodoGrafoDependencia nodo) {
 		return this.registroActivacion.getNombreMetodo().equals(
 				nodo.registroActivacion.getNombreMetodo());
+	}
+	
+	/**
+	 * Devuelve true si el nombre del método de este nodo es igual
+	 * al pasado como parámetro
+	 * 
+	 * @param nombreMetodo
+	 * 	Nombre del método a comparar
+	 * 
+	 * @return
+	 * 	True si nombreMetodo = nombre del método de este nodo
+	 * 	False caso contrario
+	 */
+	public boolean nombreMetodoIgual(String nombreMetodo){
+		return this.registroActivacion.getNombreMetodo().equals(nombreMetodo);
 	}
 	
 	/**

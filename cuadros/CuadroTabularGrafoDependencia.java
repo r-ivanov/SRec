@@ -54,6 +54,7 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 	private String ultimaExpresionParaColumna;
 	
 	private PanelGrafo pg;
+	
 
 	/**
 	 * Devuelve una nueva instancia del Cuadro.
@@ -213,6 +214,9 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 					Conf.idioma), mensajeError, 550, 125);
 		} else {
 			this.dialogo.setVisible(false);
+			//	Solo si es correcto cambiamos tipo grafo y flechas
+			this.pg.setTipoGrafo(2);
+			this.pg.setEliminarFilasColumnas(false);
 		}
 	}
 
@@ -343,4 +347,5 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 			this.gestionEventoBotones(e);
 		}
 	}
+
 }

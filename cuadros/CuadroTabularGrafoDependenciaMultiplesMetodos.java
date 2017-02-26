@@ -335,7 +335,9 @@ public class CuadroTabularGrafoDependenciaMultiplesMetodos extends Thread implem
 		}
 
 		if (mensajeError == null) {
-			mensajeError = this.pg.tabularMultiplesMetodos(this.textFilasColumnas.getText(),this.filasRadioButton.isSelected());
+			mensajeError = this.pg.tabularMultiplesMetodos(
+					this.textFilasColumnas.getText(),
+					!this.filasRadioButton.isSelected());
 		}
 
 		if (mensajeError != null) {
@@ -343,6 +345,9 @@ public class CuadroTabularGrafoDependenciaMultiplesMetodos extends Thread implem
 					Conf.idioma), mensajeError, 550, 125);
 		} else {
 			this.dialogo.setVisible(false);
+			//	Solo si es correcto cambiamos tipo grafo y flechas
+			this.pg.setTipoGrafo(2);
+			this.pg.setEliminarFilasColumnas(false);
 		}
 	}
 
@@ -483,8 +488,9 @@ public class CuadroTabularGrafoDependenciaMultiplesMetodos extends Thread implem
 	}
 	
 	/**
-	 * Convierte el array de parámetros comunes a String para
+	 * Convierte una lista de parámetros comunes a String para
 	 * 	representarlo
+	 * 
 	 * @return
 	 * 	String para representar los parámetros comunes
 	 */
@@ -496,4 +502,5 @@ public class CuadroTabularGrafoDependenciaMultiplesMetodos extends Thread implem
 		retorno = retorno.substring(0, retorno.length()-2);
 		return retorno;
 	}
+	
 }

@@ -246,7 +246,8 @@ MouseListener, MouseMotionListener {
 	 * @param expresionParaColumna		
 	 * 		Expresión para columnas
 	 * 
-	 * @return Mensaje de error si ocurrió algun error, null en caso contrario.
+	 * @return 
+	 * 		Mensaje de error si ocurrió algun error, null en caso contrario.
 	 */
 	public String tabular(String expresionParaFila, String expresionParaColumna) {
 		this.ultimaExpresionParaFila = expresionParaFila;
@@ -264,24 +265,34 @@ MouseListener, MouseMotionListener {
 	}
 	
 	/**
+	 * 	Tabula automáticamente los nodos del grafo de múltiples métodos,
+	 * dada una expresión y un booleano que indica si la espresión determina
+	 * las filas o las columnas
 	 * 
+	 * @param ultimaExpresionMultiplesMetodos
+	 * 		Expresión introducida por el usuario para tabular
+	 * 		el grafo de múltiples métodos
+	 * 
+	 * @param esExpresionDeFila
+	 * 		True, la expresión determina filas y las funciones columnas
+	 * 		False, la expresión determina columnas y las funciones filas
+	 * 
+	 * @return
+	 * 		Mensaje de error si ocurrió algun error, null en caso contrario.
 	 */
 	public String tabularMultiplesMetodos(String ultimaExpresionMultiplesMetodos, boolean esExpresionDeFila) {
-
-//		String mensajeError = this.grafoDependencia.tabular(expresionParaFila,
-//				expresionParaColumna);
-//		if (mensajeError == null) {
-//			this.representacionGrafo = null;
-//			this.representacionGrafo = this.grafoDependencia
-//					.obtenerRepresentacionGrafo(true);
-//
-//			this.visualizar();
-//		}
-//		return mensajeError;
 		
+		String mensajeError = this.grafoDependencia.tabularMultiplesMetodos(ultimaExpresionMultiplesMetodos, esExpresionDeFila);
+		if (mensajeError == null) {
+			this.representacionGrafo = null;
+			this.representacionGrafo = this.grafoDependencia
+					.obtenerRepresentacionGrafo(true);
+
+			this.visualizar();
+		}		
 		this.ultimaExpresionMultiplesMetodos = ultimaExpresionMultiplesMetodos;
-		this.esExpresionDeFila = esExpresionDeFila;
-		return "Sin implementar";
+		this.esExpresionDeFila = esExpresionDeFila;		
+		return mensajeError;
 	}
 	
 	/**
@@ -351,6 +362,7 @@ MouseListener, MouseMotionListener {
 				this.grafoDependencia = new GrafoDependencia(this.metodo,nyp);
 			else
 				this.grafoDependencia = new GrafoDependencia(this.metodos,nyp);
+			
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false);	
 			
@@ -382,7 +394,19 @@ MouseListener, MouseMotionListener {
 				case 2:	
 			
 					//	Se crea grafo tabulado con valor almacenado previamente
-					this.tabular(this.ultimaExpresionParaFila, this.ultimaExpresionParaColumna);
+					if(this.esGrafoDeUnMetodo)
+						this.tabular(this.ultimaExpresionParaFila, this.ultimaExpresionParaColumna);
+					else
+						this.tabularMultiplesMetodos(this.ultimaExpresionMultiplesMetodos, this.esExpresionDeFila);
+					
+					//	Eliminar filas y columnas
+					if(this.eliminarFilasColumnas){
+						this.grafoDependencia.nodosPosicionadosFalse();
+						this.representacionGrafo = this.grafoDependencia
+								.obtenerRepresentacionGrafoEliminadasFilasYColumnas();
+						this.botones[0].setEnabled(false);
+						this.visualizar();
+					}
 					
 					//	No se llama a visualizar porque ya está en dibujar tabla
 					break;
@@ -678,13 +702,13 @@ MouseListener, MouseMotionListener {
 					this);
 			this.tipoGrafo = 1;
 			
-		} else if (e.getSource() == this.botones[1]) {		
-			if(this.esGrafoDeUnMetodo){						//	Tabular solo un método
+		} else if (e.getSource() == this.botones[1]) {
+			if(this.esGrafoDeUnMetodo){						//	Tabular solo un método				
 				new CuadroTabularGrafoDependencia(this.ventana,
 						this.metodo.getInterfaz(),
 						this.ultimaExpresionParaFila,
 						this.ultimaExpresionParaColumna,
-						this);		
+						this);	
 			}
 			else{											//	Tabular múltiples métodos
 				this.parametrosComunes = this.grafoDependencia.getParametrosComunes();
@@ -694,17 +718,18 @@ MouseListener, MouseMotionListener {
 							Texto.get("ERROR_PARAM_GD_TXT",
 							Conf.idioma));
 				}else{					
-					this.parametrosComunesS = this.grafoDependencia.getParametrosComunesS();
-					new CuadroTabularGrafoDependenciaMultiplesMetodos(
-							this.ventana,
-							this,
-							this.getSignaturaMultiplesMetodos(),
-							this.parametrosComunesS,
-							this.ultimaExpresionMultiplesMetodos);
+                    this.parametrosComunesS = this.grafoDependencia.getParametrosComunesS();
+                    new CuadroTabularGrafoDependenciaMultiplesMetodos(
+                            this.ventana,
+                            this,
+                            this.getSignaturaMultiplesMetodos(),
+                            this.parametrosComunesS,
+                            this.ultimaExpresionMultiplesMetodos);
 				}
 			}
-			this.tipoGrafo = 2;
-			this.eliminarFilasColumnas = false;
+//            this.tipoGrafo = 2;
+//            this.eliminarFilasColumnas = false;
+            
 		}else if (e.getSource() == this.botones[2]) {		//	Flechas
 			this.invertirFlechasGrafo(true);
 				
@@ -722,5 +747,63 @@ MouseListener, MouseMotionListener {
 			this.visualizar();			
 			this.tipoGrafo = 2;
 		}
+	}
+	
+	/**
+	 * Obtiene el tipo de grafo que se está representando
+	 * 
+	 * @return
+	 * 	0 - Grafo normal
+	 *	1 - Grafo con matriz
+	 *	2 - Grafo tabulado
+	 */
+	public int getTipoGrafo(){
+		return this.tipoGrafo;
+	}
+	
+	/**
+	 * Establece el tipo de grafo que se está representando
+	 * 
+	 * @param tipo
+	 * 	0 - Grafo normal
+	 *	1 - Grafo con matriz
+	 *	2 - Grafo tabulado
+	 */
+	public void setTipoGrafo(int tipo){
+		this.tipoGrafo = tipo;
+		if(this.tipoGrafo != 2)
+			this.botones[3].setEnabled(false);
+		else
+			this.botones[3].setEnabled(true);		
+	}
+	
+	/**
+	 * Obtiene si las flechas están invertidas en el grafo
+	 * 	o no
+	 * 
+	 * @return
+	 * 
+	 *	True - Normal
+	 *	False - Invertidas
+	 */
+	public boolean getEliminarFilasColumnas(){
+		return this.eliminarFilasColumnas;
+	}
+	
+	/**
+	 * Establece si las filas están invertidas en el grafo
+	 * 	o no
+	 * 
+	 * @param eliminar
+	 * 
+	 * 	True - Normal
+	 *	False - Invertidas
+	 */
+	public void setEliminarFilasColumnas(boolean eliminar){
+		this.eliminarFilasColumnas = eliminar;
+		if(this.eliminarFilasColumnas)
+			this.botones[0].setEnabled(false);
+		else
+			this.botones[0].setEnabled(true);
 	}
 }
