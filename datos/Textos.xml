@@ -301,6 +301,11 @@
 		<T valor="Columnas:" idioma="es" id="GP_DIBUJAR_TABLA_GRAFO_COLUMNAS"/>
 		<T valor="Columns:" idioma="en" id="GP_DIBUJAR_TABLA_GRAFO_COLUMNAS"/>
 		
+		<T valor="Valores de" idioma="es" id="GP_VALORES_DE"/>
+		<T valor="Values of" idioma="en" id="GP_VALORES_DE"/>
+		<T valor="Funciones" idioma="es" id="GP_VALORES_FUNCIONES"/>
+		<T valor="Functions" idioma="en" id="GP_VALORES_FUNCIONES"/>
+		
 		<T valor="Error" idioma="es" id="GP_ERROR_TITULO"/>
 		<T valor="Error" idioma="en" id="GP_ERROR_TITULO"/>
 		<T valor="Los valores deben ser enteros positivos." idioma="es" id="GP_ERROR_DIBUJAR_TABLA"/>

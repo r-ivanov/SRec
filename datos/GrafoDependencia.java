@@ -442,14 +442,45 @@ public class GrafoDependencia {
 	 * 		Celda para el grafo que representa el índice.
 	 */
 	private DefaultGraphCell crearIndiceParaTabla(int valor, boolean fila, boolean invertirFilas, boolean invertirColumnas) {
-		String valorString;
-		if(invertirFilas && fila){
+		String valorString="";
+		
+		if(this.esGrafoDeUnMetodo && fila && invertirFilas){
 			valorString = String.valueOf(this.numeroFilasTabla-valor-1);
-		}else if(invertirColumnas && !fila){
+			
+		}else if(this.esGrafoDeUnMetodo && fila && !invertirFilas){
+			valorString = String.valueOf(valor);
+			
+		}else if(this.esGrafoDeUnMetodo && !fila && invertirColumnas){
 			valorString = String.valueOf(this.numeroColumnasTabla-valor-1);
-		}else{
+			
+		}else if(this.esGrafoDeUnMetodo && !fila && !invertirColumnas){
+			valorString = String.valueOf(valor);
+			
+		}else if(!this.esGrafoDeUnMetodo && fila && invertirFilas && this.esExpresionDeFila){
+			valorString = String.valueOf(this.numeroFilasTabla-valor-1);
+			
+		}else if(!this.esGrafoDeUnMetodo && fila && invertirFilas && !this.esExpresionDeFila){
+			valorString = String.valueOf(this.nyp.getPrefijo(this.metodos.get(this.numeroFilasTabla-valor-1).getNombre()));
+		
+		}else if(!this.esGrafoDeUnMetodo && fila && !invertirFilas && this.esExpresionDeFila){
+			valorString = String.valueOf(valor);
+			
+		}else if(!this.esGrafoDeUnMetodo && fila && !invertirFilas && !this.esExpresionDeFila){
+			valorString = String.valueOf(this.nyp.getPrefijo(this.metodos.get(valor).getNombre()));
+			
+		}else if(!this.esGrafoDeUnMetodo && !fila && invertirColumnas && this.esExpresionDeFila){
+			valorString = String.valueOf(this.nyp.getPrefijo(this.metodos.get(this.numeroColumnasTabla-valor-1).getNombre()));
+		
+		}else if(!this.esGrafoDeUnMetodo && !fila && invertirColumnas && !this.esExpresionDeFila){
+			valorString = String.valueOf(this.numeroColumnasTabla-valor-1);
+		
+		}else if(!this.esGrafoDeUnMetodo && !fila && !invertirColumnas && this.esExpresionDeFila){
+			valorString = String.valueOf(this.nyp.getPrefijo(this.metodos.get(valor).getNombre()));
+		
+		}else if(!this.esGrafoDeUnMetodo && !fila && !invertirColumnas && !this.esExpresionDeFila){
 			valorString = String.valueOf(valor);
 		}
+		
 		DefaultGraphCell indice = new DefaultGraphCell(valorString);
 		GraphConstants.setDisconnectable(indice.getAttributes(), false);
 		GraphConstants.setMoveable(indice.getAttributes(), false);
@@ -639,9 +670,10 @@ public class GrafoDependencia {
 				}
 			}
 			
-			if(this.expresionParaFila!=null && this.expresionParaColumna!=null){
+			if(	(this.esGrafoDeUnMetodo && this.expresionParaFila!=null && this.expresionParaColumna!=null)	||
+				(!this.esGrafoDeUnMetodo && this.ultimaExpresionMultiplesMetodos != null)){
 				this.insertarEjesTabularGrafo(representacionGrafo);
-			}			
+			}
 			
 		}		
 		
@@ -807,8 +839,9 @@ public class GrafoDependencia {
 					+ tamanioMarcadorEjesParaColumna, true);
 			representacionGrafo.getGraphLayoutCache().insert(lineaFinal);
 			
-			if(this.expresionParaFila!=null && this.expresionParaColumna!=null){
-				this.insertarEjesTabularGrafo(representacionGrafo);
+			if(	(this.esGrafoDeUnMetodo && this.expresionParaFila!=null && this.expresionParaColumna!=null)	||
+					(!this.esGrafoDeUnMetodo && this.ultimaExpresionMultiplesMetodos != null)){
+					this.insertarEjesTabularGrafo(representacionGrafo);
 			}			
 			
 		}		
@@ -868,9 +901,22 @@ public class GrafoDependencia {
 		
 		//	Corrección para cuando texto es mas ancho que el ancho de la tabla
 		String textoX = "";
-		if(this.expresionParaColumna != null && !this.expresionParaColumna.equals("")){
-			textoX = "Valores de "+this.expresionParaColumna;
-		}		
+		
+		//	Grafo de un método texto X
+		if(this.esGrafoDeUnMetodo && this.expresionParaColumna != null && !this.expresionParaColumna.equals("")){
+			textoX = Texto.get("GP_VALORES_DE", Conf.idioma)+" "+this.expresionParaColumna;
+		
+			//	Grafo de varios métodos texto Y, columnas son funciones
+		}else if(!this.esGrafoDeUnMetodo && this.esExpresionDeFila){
+			textoX = Texto.get("GP_VALORES_FUNCIONES", Conf.idioma);
+		
+			//	Grafo de varios métodos texto Y, columnas son funciones
+		}else if(!this.esGrafoDeUnMetodo && !this.esExpresionDeFila 
+				&& this.ultimaExpresionMultiplesMetodos!=null && !this.ultimaExpresionMultiplesMetodos.equals("")){
+			textoX = Texto.get("GP_VALORES_DE", Conf.idioma) + " " + this.ultimaExpresionMultiplesMetodos;
+		}
+		
+		
 		int textoLongitudX = ANCHO_PIXEL_CARACTER*textoX.length();
 		int limiteTextoX;
 		if(this.eliminarFilasColumnas)
@@ -906,9 +952,21 @@ public class GrafoDependencia {
 		
 		//	Corrección para cuando texto es mas alto que el alto de la tabla
 		String textoY = "";
-		if(this.expresionParaFila != null && !this.expresionParaFila.equals("")){
-			textoY = "Valores de "+this.expresionParaFila;
+		
+		//	Grafo de un método texto Y
+		if(this.esGrafoDeUnMetodo && this.expresionParaFila != null && !this.expresionParaFila.equals("")){
+			textoY = Texto.get("GP_VALORES_DE", Conf.idioma)+" "+this.expresionParaFila;
+		
+		//	Grafo de varios métodos texto Y, filas son funciones
+		}else if(!this.esGrafoDeUnMetodo && !this.esExpresionDeFila){
+			textoY = Texto.get("GP_VALORES_FUNCIONES", Conf.idioma);
+		
+		//	Grafo de varios métodos texto Y, filas son funciones
+		}else if(!this.esGrafoDeUnMetodo && this.esExpresionDeFila 
+				&& this.ultimaExpresionMultiplesMetodos!=null && !this.ultimaExpresionMultiplesMetodos.equals("")){
+			textoY = Texto.get("GP_VALORES_DE", Conf.idioma) + " " + this.ultimaExpresionMultiplesMetodos;
 		}
+		
 		int textoLongitudY = ANCHO_PIXEL_CARACTER*textoY.length();
 		int limiteTextoY;
 		if(this.eliminarFilasColumnas)
@@ -1533,35 +1591,149 @@ public class GrafoDependencia {
 	 * 		Array de booleanos donde la primera posición indica si las filas deben estar
 	 * 		en orden creciente (true) o en orden decreciente(false) y la segunda posición 
 	 * 		indica si las columnas deben estar en orden creciente (true) o en orden decreciente(false)
+	 * @throws ScriptException 
 	 */
 	private boolean[] invertirEjes(){
-		//	Miramos si es necesario invertir los ejes de la fila y/o de las columnas
-		NodoGrafoDependencia raiz = this.nodos.get(0);
-		String nombreFilaPadre = this.expresionParaFila;
-		String nombreColumnaPadre = this.expresionParaColumna;
-		String valorFilaPadre = raiz.getValorParametro(raiz, nombreFilaPadre);
-		String valorColumnaPadre = raiz.getValorParametro(raiz,	nombreColumnaPadre);
-		List<NodoGrafoDependencia> listaHijos = raiz.getDependencias();
+		
+		//	Variables		
 		boolean[] retorno = new boolean[2];
 		retorno[0] = false;
 		retorno[1] = false;
-		for(NodoGrafoDependencia nodoHijo:listaHijos){
-			String valorFilaHijo = raiz.getValorParametro(nodoHijo, nombreFilaPadre);
-			String valorColumnaHijo = raiz.getValorParametro(nodoHijo,	nombreColumnaPadre);
-			//	Si el valor de la fila del hijo de la raiz es menor 
-			//	implica que las filas van en orden decreciente, invertimos
+		int valorFilaPadre = 0, valorColumnaPadre = 0, valorFilaHijo = 0, valorColumnaHijo = 0;		
+
+		HashMap<String, Integer> mapaMetodos = new HashMap<String, Integer>();
+		if(!this.esGrafoDeUnMetodo){
+			for(int i = 0; i<this.metodos.size(); i++){
+				mapaMetodos.put(this.metodos.get(i).getNombre(), i);
+			}	
+		}
+		//	Si no existen expresiones devolvemos false
+		if(  	(this.esGrafoDeUnMetodo && (this.expresionParaFila == null || this.expresionParaColumna == null)) ||
+				(!this.esGrafoDeUnMetodo && this.ultimaExpresionMultiplesMetodos == null)
+			)
+				return retorno;		
+		
+		//	Obtenemos raíz
+		NodoGrafoDependencia raiz = this.nodos.get(0);
+		
+		//	Obtenemos sus hijos
+		List<NodoGrafoDependencia> listaHijos = raiz.getDependencias();
+		
+		//	Creamos script para evaluar los valores de salida
+		ScriptEngineManager manager = new ScriptEngineManager();
+		ScriptEngine engine = manager.getEngineByName("js");
+		
+		//	Introducimos los valores del padre
+		if(this.esGrafoDeUnMetodo){
+			for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
+				engine.put(this.metodo.getNombreParametroE(i), 
+						this.obtenerValorConTipo(raiz.getParams()[i]));
+			}
+			
+			//	Calculamos valores del padre
+			try {
+				valorFilaPadre = this.obtenerValorEnteroDeEvaluacion(engine
+						.eval(this.expresionParaFila));
+				valorColumnaPadre = this.obtenerValorEnteroDeEvaluacion(engine
+						.eval(this.expresionParaColumna));
+			} catch (ScriptException e) {
+				
+			}
+			
+
+		}else{
+			DatosMetodoBasicos dmb = this.metodos.get(mapaMetodos.get(raiz.getMetodo()));
+			for (int i = 0; i < dmb.getNumParametrosE(); i++) {
+				if(this.parametrosComunes==null)
+					this.parametrosComunes = this.getParametrosComunes();
+				if(this.parametrosComunesS==null)
+					this.parametrosComunesS = this.getParametrosComunesS();
+				for(int j = 0; j<this.parametrosComunes.size(); j++){
+					String metodosComunesParam = this.metodos.get(0).getNombreParametroE(this.parametrosComunes.get(j));
+					String esteMetodoParam = dmb.getNombreParametroE(i);
+					if(metodosComunesParam.equals(esteMetodoParam)){
+						engine.put(dmb.getNombreParametroE(i), 
+								this.obtenerValorConTipo(raiz.getParams()[i]));							
+					}
+				}
+			}
 			try{
-				if(Integer.parseInt(valorFilaHijo)<Integer.parseInt(valorFilaPadre)){
-					retorno[0] = true;
+				//	Calculamos valores del padre
+				if(this.esExpresionDeFila){
+					valorFilaPadre = this.obtenerValorEnteroDeEvaluacion(engine
+							.eval(this.ultimaExpresionMultiplesMetodos));
+					valorColumnaPadre = mapaMetodos.get(raiz.getMetodo());
+				}else{
+					valorFilaPadre = mapaMetodos.get(raiz.getMetodo());
+					valorColumnaPadre = this.obtenerValorEnteroDeEvaluacion(engine
+							.eval(this.ultimaExpresionMultiplesMetodos));
 				}
-				if(Integer.parseInt(valorColumnaHijo)<Integer.parseInt(valorColumnaPadre)){
-					retorno[1] = true;
+			}catch(ScriptException e) {
+				
+			}
+		}		
+		
+		//	Hacemos lo mismo con los hijos para ver si tenemos que invertir
+		for(NodoGrafoDependencia nodoHijo:listaHijos){
+			if(this.esGrafoDeUnMetodo){
+				for (int i = 0; i < this.metodo.getNumParametrosE(); i++) {
+					engine.put(this.metodo.getNombreParametroE(i), 
+							this.obtenerValorConTipo(nodoHijo.getParams()[i]));
 				}
-			}catch(Exception e){
-				continue;
+				
+				//	Calculamos valores de los hijos
+				try{
+					valorFilaHijo = this.obtenerValorEnteroDeEvaluacion(engine
+							.eval(this.expresionParaFila));
+					valorColumnaHijo = this.obtenerValorEnteroDeEvaluacion(engine
+							.eval(this.expresionParaColumna));
+				}catch (ScriptException e) {
+					continue;
+				}
+
+			}else{
+				DatosMetodoBasicos dmb = this.metodos.get(mapaMetodos.get(nodoHijo.getMetodo()));
+				for (int i = 0; i < dmb.getNumParametrosE(); i++) {
+					if(this.parametrosComunes==null)
+						this.parametrosComunes = this.getParametrosComunes();
+					if(this.parametrosComunesS==null)
+						this.parametrosComunesS = this.getParametrosComunesS();
+					for(int j = 0; j<this.parametrosComunes.size(); j++){
+						String metodosComunesParam = this.metodos.get(0).getNombreParametroE(this.parametrosComunes.get(j));
+						String esteMetodoParam = dmb.getNombreParametroE(i);
+						if(metodosComunesParam.equals(esteMetodoParam)){
+							engine.put(dmb.getNombreParametroE(i), 
+									this.obtenerValorConTipo(nodoHijo.getParams()[i]));							
+						}
+					}
+				}
+				
+				//	Calculamos valores de los hijos
+				try{
+					if(this.esExpresionDeFila){
+						valorFilaHijo = this.obtenerValorEnteroDeEvaluacion(engine
+								.eval(this.ultimaExpresionMultiplesMetodos));
+						valorColumnaHijo = mapaMetodos.get(nodoHijo.getMetodo());
+					}else{
+						valorFilaHijo = mapaMetodos.get(nodoHijo.getMetodo());
+						valorColumnaHijo = this.obtenerValorEnteroDeEvaluacion(engine
+								.eval(this.ultimaExpresionMultiplesMetodos));
+					}
+				}catch (ScriptException e) {
+					continue;
+				}
+
+			}	
+			
+			//	Finalmente comparamos
+			if(valorFilaHijo < valorFilaPadre){
+				retorno[0] = true;
+			}
+			if(valorColumnaHijo < valorColumnaPadre){
+				retorno[1] = true;
 			}
 		}
-		return retorno;
+		return retorno;		
 	}
 	
 	/**
