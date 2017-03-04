@@ -40,6 +40,8 @@ import conf.Conf;
  * Almacena y representa un grafo de dependencia.
  * 
  * @author David Pastor Herranz y Daniel Arroyo Cortés
+ * 
+ * @version 2017
  */
 public class GrafoDependencia {
 
@@ -49,8 +51,8 @@ public class GrafoDependencia {
 	private static final int MARGEN_TABLA = 70;
 	private static final int MARGEN_INDICES = 10;
 	private static final int TAMANIO_MARCADORES_EJES = 20;
-	private static final int MARGEN_NODOS_ANCHURA = 50;
-	private static final int MARGEN_NODOS_ALTURA = 30;
+//	private static final int MARGEN_NODOS_ANCHURA = 50;
+//	private static final int MARGEN_NODOS_ALTURA = 30;
 
 	private List<NodoGrafoDependencia> nodos;	
 
@@ -86,7 +88,7 @@ public class GrafoDependencia {
 	private List<String> parametrosComunesS;			//	Lista de nombres de los parámetros comunes respecto al primer método
 
 	/**
-	 * Devuelve una nueva instancia de un grafo.
+	 * Devuelve una nueva instancia de un grafo. Solo un método.
 	 * 
 	 * @param metodo
 	 *		Método para el que obtener los nodos del grafo.
@@ -115,7 +117,7 @@ public class GrafoDependencia {
 	}
 	
 	/**
-	 * Devuelve una nueva instancia de un grafo.
+	 * Devuelve una nueva instancia de un grafo. Múltiples métodos.
 	 * 
 	 * @param metodo
 	 *		Métodos para los que obtener los nodos del grafo.
@@ -253,6 +255,7 @@ public class GrafoDependencia {
 	
 	/**
 	 * Inserta nodos de la ejecución en el grafo de manera recursiva.
+	 * Múltiples métodos.
 	 * 
 	 * @param padre
 	 * 		Nodo para el que se están resolviendo sus dependencias.
@@ -355,6 +358,7 @@ public class GrafoDependencia {
 	 * 
 	 * @param nodoAInsertar 
 	 * 		Nodo que se pretende insertar
+	 * 
 	 * @return
 	 * 		True si existe el nodo a insertar, False caso contrario
 	 */
@@ -1070,8 +1074,6 @@ public class GrafoDependencia {
 		GraphConstants.setEditable(edgeY.getAttributes(), false);
 		GraphConstants.setForeground(edgeY.getAttributes(), Color.LIGHT_GRAY);
 		
-		
-		
 		//	Añadimos elementos
 		representacionGrafo.getGraphLayoutCache().insert(lineaX1);
 		representacionGrafo.getGraphLayoutCache().insert(lineaX2);
@@ -1325,7 +1327,7 @@ public class GrafoDependencia {
 	
 	/**
 	 * Tabula automáticamente los nodos del grafo, dada una expresión para filas
-	 * y otra para columnas.
+	 * y otra para columnas. Solo un método.
 	 * 
 	 * @param expresionParaFila
 	 * 		Expresión del primer parámetro para tabular
@@ -1392,7 +1394,7 @@ public class GrafoDependencia {
 
 	/**
 	 * Tabula automáticamente los nodos del grafo de múltiples métodos,
-	 * 	dada una expresión de filas o columnas
+	 * 	dada una expresión de filas o columnas. Múltiples métodos.
 	 * 
 	 * @param ultimaExpresionMultiplesMetodos
 	 * 		Expresión introducida por el usuario
@@ -1648,6 +1650,7 @@ public class GrafoDependencia {
 	 * 		Array de booleanos donde la primera posición indica si las filas deben estar
 	 * 		en orden creciente (true) o en orden decreciente(false) y la segunda posición 
 	 * 		indica si las columnas deben estar en orden creciente (true) o en orden decreciente(false)
+	 * 
 	 * @throws ScriptException 
 	 */
 	private boolean[] invertirEjes(){

@@ -41,16 +41,16 @@ MouseListener, MouseMotionListener {
 
 	static final long serialVersionUID = 04;
 
-	private JGraph graph;					//	<=========== Hecho en grafo
+	private JGraph graph;					
 	private ContenedorPila cp;
 
-	private double escalaOriginal;			//	<=========== Hecho en grafo
-	private double escalaActual;			//	<=========== Hecho en grafo
+	private double escalaOriginal;			
+	private double escalaActual;			
 	private NombresYPrefijos nyp = null;
 
-	private JPanel panel = new JPanel();	//	<=========== Hecho en grafo
+	private JPanel panel = new JPanel();	
 
-	private int zoom = 0;					//	<=========== Hecho en grafo
+	private int zoom = 0;					
 
 	private RegistroActivacion ra;
 	private boolean haEntradoAhora = true;
@@ -64,7 +64,7 @@ MouseListener, MouseMotionListener {
 	 * @param nyp
 	 *            Nombres Y Prefijos para aplicar.
 	 */
-	public PanelPila(NombresYPrefijos nyp) throws Exception { 		//	<=========== Hecho en grafo
+	public PanelPila(NombresYPrefijos nyp) throws Exception { 		
 		this.nyp = nyp;
 		if (Ventana.thisventana.traza != null) {
 
@@ -98,7 +98,7 @@ MouseListener, MouseMotionListener {
 	/**
 	 * Visualiza y redibuja la pila en el panel.
 	 */
-	public void visualizar() {								//	<=========== Hecho en grafo
+	public void visualizar() {								
 		if (Ventana.thisventana.traza != null) {
 			GraphModel model = new DefaultGraphModel();
 			GraphLayoutCache view = new GraphLayoutCache(model,
@@ -143,7 +143,7 @@ MouseListener, MouseMotionListener {
 	 * 
 	 * @return Nivel de zoom actual.
 	 */
-	public int getZoom() {						//	<=========== Hecho en grafo
+	public int getZoom() {						
 		return this.zoom;
 	}
 
@@ -152,7 +152,7 @@ MouseListener, MouseMotionListener {
 	 * 
 	 * @return Grafo de la vista.
 	 */
-	public JGraph getGrafo() {					//	<=========== Hecho en grafo	
+	public JGraph getGrafo() {					
 		return this.graph;
 	}
 
@@ -162,7 +162,7 @@ MouseListener, MouseMotionListener {
 	 * @return Array, donde la posición 0 contiene el máximo ancho, y la
 	 *         posición 1 el máximo alto.
 	 */
-	public int[] dimGrafo() {					//	<=========== Hecho en grafo	
+	public int[] dimGrafo() {					
 		int[] dim = new int[2];
 
 		dim[0] = this.cp.maximoAncho();
@@ -178,7 +178,7 @@ MouseListener, MouseMotionListener {
 	 *         al alto del panel, la 2 al ancho del grafo, y la 3 al alto del
 	 *         grafo.
 	 */
-	public int[] dimPanelYPila() {				//	<=========== Hecho en grafo	
+	public int[] dimPanelYPila() {				
 		int dim[] = new int[4];
 
 		dim[0] = (int) (this.getSize().getWidth()); // Anchura del panel *
@@ -342,7 +342,7 @@ MouseListener, MouseMotionListener {
 
 	}
 
-	public void refrescarZoom(int valor) {					//	<=========== Hecho en grafo	
+	public void refrescarZoom(int valor) {						
 		if (valor == 0) {
 			this.graph.setScale(this.escalaOriginal);
 		} else if (valor > 0) {

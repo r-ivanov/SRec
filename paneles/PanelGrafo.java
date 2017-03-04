@@ -49,7 +49,8 @@ MouseListener, MouseMotionListener {
 	
 	private Ventana ventana;
 
-	private DatosMetodoBasicos metodo;
+	private DatosMetodoBasicos metodo;					//	Método que se está representando actualmente
+														//	si el grafo es de 1 método
 	
 	private JPanel panelHerramientas;
 	private JToolBar[] barras;
@@ -78,9 +79,10 @@ MouseListener, MouseMotionListener {
 	private int numeroFilas;	//	Nº filas si han dibujado tabla
 	private int numeroColumnas;	//	Nº columnas si han dibujado tabla
 
-	private NombresYPrefijos nyp;
+	private NombresYPrefijos nyp;	//	Nombres de métodos reducidos
 	
-	private boolean eliminarFilasColumnas = false;
+	private boolean eliminarFilasColumnas = false;		//	True si hay que eliminar filas y columnas vacías
+														//	False caso contrario
 	
 	//	Multiples métodos
 	
@@ -145,6 +147,7 @@ MouseListener, MouseMotionListener {
 	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para el grafo.
+	 * Para múltiples métodos.
 	 * 
 	 * @param metodo
 	 * 		Lista de métodos de los que queremos crear el grafo de dependencia
@@ -239,7 +242,7 @@ MouseListener, MouseMotionListener {
 	
 	/**
 	 * Tabula automáticamente los nodos del grafo, dada una expresión para filas
-	 * y otra para columnas.
+	 * y otra para columnas. Solo un método.
 	 * 
 	 * @param expresionParaFila 		
 	 * 		Expresión para las filas
@@ -604,8 +607,11 @@ MouseListener, MouseMotionListener {
 	 * Permite comparar un método pasado como parámetro con el método
 	 * 	que se está visualizando actualmente en la pestaña
 	 * 
-	 * @param nuevoMetodo Método a comparar con el actual
-	 * @return True si nuevoMetodo = metodo que se visualiza actualmente, False caso contrario
+	 * @param nuevoMetodo 
+	 * 		Método a comparar con el actual
+	 * 
+	 * @return 
+	 * 		True si nuevoMetodo = metodo que se visualiza actualmente, False caso contrario
 	 */
 	public boolean esIgual(DatosMetodoBasicos nuevoMetodo){
 		return (this.metodo != null && this.metodo.esIgual(nuevoMetodo));
@@ -615,9 +621,12 @@ MouseListener, MouseMotionListener {
 	 * Permite comparar una lista de métodos pasados como parámetro con 
 	 * los métodos que se estan visualizando actualmente
 	 * 
-	 * @param nuevoMetodo Lista de métodos a comparar con la lista de métodos actuales
-	 * @return True si lista nuevoMetodo = lista métodos que se visualizan actualmente, 
-	 * 			False caso contrario
+	 * @param nuevoMetodo 
+	 * 		Lista de métodos a comparar con la lista de métodos actuales
+	 * 
+	 * @return 
+	 * 		True si lista nuevoMetodo = lista métodos que se visualizan actualmente, 
+	 * 		False caso contrario
 	 */
 	public boolean esIgual(List<DatosMetodoBasicos> nuevoMetodo){		
 		if(this.metodos == null || nuevoMetodo.size() != this.metodos.size()){
@@ -777,8 +786,7 @@ MouseListener, MouseMotionListener {
 	}
 	
 	/**
-	 * Obtiene si las flechas están invertidas en el grafo
-	 * 	o no
+	 * Obtiene si las flechas están invertidas en el grafo o no
 	 * 
 	 * @return
 	 * 
