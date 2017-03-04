@@ -561,8 +561,7 @@ MouseListener, MouseMotionListener {
 		labelTitulo.setFont(new Font("Arial", Font.BOLD, 14));
 		JLabel labelSignatura;
 		if(this.esGrafoDeUnMetodo)
-			labelSignatura = new JLabel("  -  " + this.metodo.getInterfaz()
-					+ "   ");
+			labelSignatura = new JLabel(this.metodo.getInterfaz());
 		else{
 			labelSignatura = this.getSignaturaMultiplesMetodos();
 		}
