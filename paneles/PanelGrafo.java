@@ -118,7 +118,7 @@ MouseListener, MouseMotionListener {
 				
 			this.grafoDependencia = new GrafoDependencia(this.metodo,this.nyp);
 			this.representacionGrafo = this.grafoDependencia
-					.obtenerRepresentacionGrafo(false);
+					.obtenerRepresentacionGrafo(false,false);
 			this.tipoGrafo = 0;
 			this.representacionGrafo.setScale(this.representacionGrafo.getScale());
 			this.escalaOriginal = this.representacionGrafo.getScale();
@@ -169,7 +169,7 @@ MouseListener, MouseMotionListener {
 				
 			this.grafoDependencia = new GrafoDependencia(this.metodos,this.nyp);
 			this.representacionGrafo = this.grafoDependencia
-					.obtenerRepresentacionGrafo(false);
+					.obtenerRepresentacionGrafo(false,false);
 			this.tipoGrafo = 0;
 			this.representacionGrafo.setScale(this.representacionGrafo.getScale());
 			this.escalaOriginal = this.representacionGrafo.getScale();
@@ -231,7 +231,7 @@ MouseListener, MouseMotionListener {
 		this.representacionGrafo = null;
 		this.grafoDependencia.setTamanioTabla(filas, columnas);
 		this.representacionGrafo = this.grafoDependencia
-				.obtenerRepresentacionGrafo(false);
+				.obtenerRepresentacionGrafo(false,false);
 		this.numeroFilas = filas;
 		this.numeroColumnas = columnas;
 		this.visualizar();
@@ -257,7 +257,7 @@ MouseListener, MouseMotionListener {
 		if (mensajeError == null) {
 			this.representacionGrafo = null;
 			this.representacionGrafo = this.grafoDependencia
-					.obtenerRepresentacionGrafo(true);
+					.obtenerRepresentacionGrafo(true,false);
 
 			this.visualizar();
 		}
@@ -286,7 +286,7 @@ MouseListener, MouseMotionListener {
 		if (mensajeError == null) {
 			this.representacionGrafo = null;
 			this.representacionGrafo = this.grafoDependencia
-					.obtenerRepresentacionGrafo(true);
+					.obtenerRepresentacionGrafo(true,true);
 
 			this.visualizar();
 		}		
@@ -309,10 +309,10 @@ MouseListener, MouseMotionListener {
 		}
 		if(this.eliminarFilasColumnas){
 			this.representacionGrafo = this.grafoDependencia
-					.obtenerRepresentacionGrafoEliminadasFilasYColumnas();
+					.obtenerRepresentacionGrafoEliminadasFilasYColumnas(this.tipoGrafo==2);
 		}else{
 			this.representacionGrafo = this.grafoDependencia
-					.obtenerRepresentacionGrafo(true);
+					.obtenerRepresentacionGrafo(true,this.tipoGrafo==2);
 		}
 		this.orientacionFlechas = !this.orientacionFlechas;
 		if(visualizar){
@@ -364,7 +364,7 @@ MouseListener, MouseMotionListener {
 				this.grafoDependencia = new GrafoDependencia(this.metodos,nyp);
 			
 			this.representacionGrafo = this.grafoDependencia
-					.obtenerRepresentacionGrafo(false);	
+					.obtenerRepresentacionGrafo(false,this.tipoGrafo==2);	
 			
 			//	Dejamos las flechas con la orientación que tenían
 			if(!this.orientacionFlechas){
@@ -403,7 +403,7 @@ MouseListener, MouseMotionListener {
 					if(this.eliminarFilasColumnas){
 						this.grafoDependencia.nodosPosicionadosFalse();
 						this.representacionGrafo = this.grafoDependencia
-								.obtenerRepresentacionGrafoEliminadasFilasYColumnas();
+								.obtenerRepresentacionGrafoEliminadasFilasYColumnas(this.tipoGrafo==2);
 						this.botones[0].setEnabled(false);
 						this.visualizar();
 					}
@@ -738,10 +738,10 @@ MouseListener, MouseMotionListener {
 			this.eliminarFilasColumnas  = !this.eliminarFilasColumnas;
 			if(this.eliminarFilasColumnas){
 				this.representacionGrafo = this.grafoDependencia
-						.obtenerRepresentacionGrafoEliminadasFilasYColumnas();
+						.obtenerRepresentacionGrafoEliminadasFilasYColumnas(true);
 			}else{
 				this.representacionGrafo = this.grafoDependencia
-						.obtenerRepresentacionGrafo(true);
+						.obtenerRepresentacionGrafo(true,this.tipoGrafo==2);
 			}
 //			this.grafoDependencia.nodosPosicionadosFalse();			
 			this.visualizar();			

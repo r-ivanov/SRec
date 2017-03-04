@@ -438,12 +438,22 @@ public class GrafoDependencia {
 	 * @param invertirColumnas
 	 * 		True si queremos orden decreciente, false si queremos orden creciente (para columnas)
 	 * 
+	 * @param visualizarNombreMetodos
+	 * 		True si queremos visualizar en los índices el nombre de los métodos cuando
+	 * 		es de múltiples métodos, false caso contrario
+	 * 
 	 * @return 
 	 * 		Celda para el grafo que representa el índice.
 	 */
-	private DefaultGraphCell crearIndiceParaTabla(int valor, boolean fila, boolean invertirFilas, boolean invertirColumnas) {
+	private DefaultGraphCell crearIndiceParaTabla(
+			int valor, boolean fila, 
+			boolean invertirFilas, boolean invertirColumnas,
+			boolean visualizarNombreMetodos) {
 		String valorString="";
-		
+		boolean esGrafoDeUnMetodoLocal = this.esGrafoDeUnMetodo;
+		if(!visualizarNombreMetodos){
+			this.esGrafoDeUnMetodo = true;
+		}
 		if(this.esGrafoDeUnMetodo && fila && invertirFilas){
 			valorString = String.valueOf(this.numeroFilasTabla-valor-1);
 			
@@ -509,6 +519,10 @@ public class GrafoDependencia {
 		GraphConstants.setBounds(indice.getAttributes(), new Rectangle(x, y,
 				anchura, altura));
 
+		if(!visualizarNombreMetodos){
+			this.esGrafoDeUnMetodo = esGrafoDeUnMetodoLocal;
+		}
+		
 		return indice;
 	}
 	
@@ -537,17 +551,52 @@ public class GrafoDependencia {
 	 * @param numeroColumnasVisibles
 	 * 		Número de columnas visibles en la matriz al eliminar filas
 	 * 
+	 * @param visualizarNombreMetodos
+	 * 		True si queremos visualizar en los índices el nombre de los métodos cuando
+	 * 		es de múltiples métodos, false caso contrario
+	 * 
 	 * @return 
 	 * 		Celda para el grafo que representa el índice.
 	 */
 	private DefaultGraphCell crearIndiceParaTabla2(int valorImprimir, int valorReal,
 			boolean fila, boolean invertirFilas, boolean invertirColumnas,
-			int numeroFilasVisibles, int numeroColumnasVisibles) {
+			int numeroFilasVisibles, int numeroColumnasVisibles, boolean visualizarNombreMetodos) {
 		String valorString;
-		if(invertirFilas && fila){
+		if(this.esGrafoDeUnMetodo && fila && invertirFilas){
 			valorString = String.valueOf(this.numeroFilasTabla-valorImprimir-1);
-		}else if(invertirColumnas && !fila){
+			
+		}else if(this.esGrafoDeUnMetodo && fila && !invertirFilas){
+			valorString = String.valueOf(valorReal);
+			
+		}else if(this.esGrafoDeUnMetodo && !fila && invertirColumnas){
 			valorString = String.valueOf(this.numeroColumnasTabla-valorImprimir-1);
+			
+		}else if(this.esGrafoDeUnMetodo && !fila && !invertirColumnas){
+			valorString = String.valueOf(valorReal);
+			
+		}else if(!this.esGrafoDeUnMetodo && fila && invertirFilas && this.esExpresionDeFila){
+			valorString = String.valueOf(this.numeroFilasTabla-valorImprimir-1);
+			
+		}else if(!this.esGrafoDeUnMetodo && fila && invertirFilas && !this.esExpresionDeFila){
+			valorString = String.valueOf(this.nyp.getPrefijo(this.metodos.get(this.numeroFilasTabla-valorImprimir-1).getNombre()));
+
+		}else if(!this.esGrafoDeUnMetodo && fila && !invertirFilas && this.esExpresionDeFila){
+			valorString = String.valueOf(valorReal);
+			
+		}else if(!this.esGrafoDeUnMetodo && fila && !invertirFilas && !this.esExpresionDeFila){
+			valorString = String.valueOf(this.nyp.getPrefijo(this.metodos.get(valorReal).getNombre()));
+			
+		}else if(!this.esGrafoDeUnMetodo && !fila && invertirColumnas && this.esExpresionDeFila){
+			valorString = String.valueOf(this.nyp.getPrefijo(this.metodos.get(this.numeroColumnasTabla-valorImprimir-1).getNombre()));
+
+		}else if(!this.esGrafoDeUnMetodo && !fila && invertirColumnas && !this.esExpresionDeFila){
+			valorString = String.valueOf(this.numeroColumnasTabla-valorImprimir-1);
+
+		}else if(!this.esGrafoDeUnMetodo && !fila && !invertirColumnas && this.esExpresionDeFila){
+			valorString = String.valueOf(this.nyp.getPrefijo(this.metodos.get(valorReal).getNombre()));
+
+		}else if(!this.esGrafoDeUnMetodo && !fila && !invertirColumnas && !this.esExpresionDeFila){
+			valorString = String.valueOf(valorReal);
 		}else{
 			valorString = String.valueOf(valorReal);
 		}
@@ -589,10 +638,14 @@ public class GrafoDependencia {
 	 * @param esTabulado 
 	 * 		Indica si se genera al pulsar "Tabular nodos del grafo" o no
 	 * 
+	 * @param visualizarNombreMetodos
+	 * 		Indica si se quieren visualizar los nombres de los métodos
+	 * 		como índices o no
+	 * 
 	 * @return 
 	 * 		Representación visual del grafo.
 	 */
-	public JGraph obtenerRepresentacionGrafo(boolean esTabulado) {
+	public JGraph obtenerRepresentacionGrafo(boolean esTabulado,boolean visualizarNombreMetodos) {
 		this.eliminarFilasColumnas = false;
 		DefaultGraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
@@ -648,7 +701,7 @@ public class GrafoDependencia {
 				representacionGrafo.getGraphLayoutCache().insert(linea);
 				if (fila != this.numeroFilasTabla && this.numeroFilasTabla > 1) {
 					DefaultGraphCell indice = this.crearIndiceParaTabla(fila,
-							true, invertirEjes[0],invertirEjes[1]);
+							true, invertirEjes[0],invertirEjes[1],visualizarNombreMetodos);
 					representacionGrafo.getGraphLayoutCache().insert(indice);
 				}
 			}
@@ -665,7 +718,7 @@ public class GrafoDependencia {
 						&& (this.numeroColumnasTabla > 1 || this.numeroColumnasTabla == 1
 								&& this.numeroFilasTabla == 1)) {
 					DefaultGraphCell indice = this.crearIndiceParaTabla(
-							columna, false, invertirEjes[0],invertirEjes[1]);
+							columna, false, invertirEjes[0],invertirEjes[1],visualizarNombreMetodos);
 					representacionGrafo.getGraphLayoutCache().insert(indice);
 				}
 			}
@@ -719,11 +772,15 @@ public class GrafoDependencia {
 	/**
 	 * Devuelve la representación visual del grafo 
 	 * 	de dependencia con las filas y columnas vacías eliminadas.
+	 * 
+	 * @param visualizarNombreMetodos
+	 * 		Indica si se quieren visualizar los nombres de los métodos
+	 * 		como índices o no
 	 * 	 
 	 * @return 
 	 * 		Representación visual del grafo con filas y columnas vacías eliminadas.
 	 */
-	public JGraph obtenerRepresentacionGrafoEliminadasFilasYColumnas() {
+	public JGraph obtenerRepresentacionGrafoEliminadasFilasYColumnas(boolean visualizarNombreMetodos) {
 		this.eliminarFilasColumnas = true;
 		DefaultGraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
@@ -796,7 +853,7 @@ public class GrafoDependencia {
 					representacionGrafo.getGraphLayoutCache().insert(linea);
 					if (fila2 != this.numeroFilasTabla && this.numeroFilasTabla > 1) {
 						DefaultGraphCell indice = this.crearIndiceParaTabla2(fila2,fila,
-								true, invertirEjes[0],invertirEjes[1],numeroFilasVisibles,numeroColumnasVisibles);
+								true, invertirEjes[0],invertirEjes[1],numeroFilasVisibles,numeroColumnasVisibles,visualizarNombreMetodos);
 						representacionGrafo.getGraphLayoutCache().insert(indice);
 					}					
 					fila2++;
@@ -825,7 +882,7 @@ public class GrafoDependencia {
 							&& (this.numeroColumnasTabla > 1 || this.numeroColumnasTabla == 1
 									&& this.numeroFilasTabla == 1)) {
 						DefaultGraphCell indice = this.crearIndiceParaTabla2(
-								columna2,columna, false, invertirEjes[0],invertirEjes[1],numeroFilasVisibles,numeroColumnasVisibles);
+								columna2,columna, false, invertirEjes[0],invertirEjes[1],numeroFilasVisibles,numeroColumnasVisibles,visualizarNombreMetodos);
 						representacionGrafo.getGraphLayoutCache().insert(indice);
 					}
 					columna2++;
