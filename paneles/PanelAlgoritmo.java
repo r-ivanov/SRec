@@ -1744,6 +1744,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
 						this.contenedorGrafo);
 			}
+			this.zoomAjusteGrafoInicial();
 	    }
 	    
 	    //	Activa se pone siempre
@@ -1815,6 +1816,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				this.panel2.add(Texto.get(Vista.codigos[4], Conf.idioma),
 						this.contenedorGrafo);
 			}
+			this.zoomAjusteGrafoInicial();
 	    }
 	    
 	    //	Activa se pone siempre
@@ -1865,5 +1867,31 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
     @Override
     public void componentHidden(ComponentEvent e) {
     	
+    }
+    
+    /**
+     * 	Permite ajustar el grafo al panel cuando se muestra
+     * 	por primera vez
+     */
+    private void zoomAjusteGrafoInicial(){
+    	jspGrafo.getTopLevelAncestor().validate();
+    	int[] dimensionesGrafo = this.dimPanelYGrafoDep();	
+    	
+    	int panelW = dimensionesGrafo[0];
+    	int panelH = dimensionesGrafo[1];
+    	int grafoW = dimensionesGrafo[2];
+    	int grafoH = dimensionesGrafo[3];	
+    	
+    	double propAncho = (double) panelW / (double) grafoW;
+    	double propAlto = (double) panelH / (double) grafoH;
+    	double porc = Math.min(propAncho, propAlto);
+    	int valorNuevo = 0;
+
+    	if (grafoW > panelW || grafoH > panelH) {
+    		valorNuevo = ((int) (porc * 100)) - 100;
+    	} else {
+    		valorNuevo = (int) ((porc - 1) * 100) - 2;
+    	}	
+    	pGrafo.refrescarZoom(valorNuevo);
     }
 }
