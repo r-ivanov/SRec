@@ -97,7 +97,7 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 		}
 		
 		//	Ahora reorganizamos metodos
-		ArrayList<DatosMetodoBasicos> metodosAux = new ArrayList<>();
+		ArrayList<DatosMetodoBasicos> metodosAux = new ArrayList<DatosMetodoBasicos>();
 		for(int i=0;i<metodos.size();i++){			
 			for(int j=0;j<metodos.size();j++){
 				if(interfaces[i].contains(metodosNombres[j])){
