@@ -1826,7 +1826,7 @@ public class GrafoDependencia {
 		
 		//	Lista de indices de parámetros comunes (respecto al primer método)
 		//	que devolveremos
-		List<Integer> l = new ArrayList<>();
+		List<Integer> l = new ArrayList<Integer>();
 		
 		//	Si es de un método no tienen parámetros comunes
 		if(this.esGrafoDeUnMetodo)
@@ -1903,7 +1903,7 @@ public class GrafoDependencia {
 	 * 	Nombres y tipos de los parámetros comunes a los métodos representados
 	 */
 	private List<String> parametrosComunesS(){
-		List<String> l = new ArrayList<>();
+		List<String> l = new ArrayList<String>();
 		if(this.parametrosComunes == null || this.parametrosComunes.size() == 0){
 			return l;
 		}
