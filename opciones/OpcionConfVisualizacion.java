@@ -192,6 +192,11 @@ public class OpcionConfVisualizacion extends Opcion {
 	private int zoomCrono = -20;
 	private int zoomEstructura = -20;
 
+	// Grafo de dependencia
+	private int distanciaVGrafo = 30;
+	private int distanciaHGrafo = 30;
+	private int grosorFlechaGrafo = 2;
+	private int tipoFlechaGrafo = 1;
 	/**
 	 * Crea una nueva opción de visualización.
 	 */
@@ -1108,6 +1113,78 @@ public class OpcionConfVisualizacion extends Opcion {
 		return this.zoomGrafoDep;
 	}
 
+	/**
+	 * Obtiene la distancia vertical del grafo de dependencia
+	 * @return 
+	 * 		Distancia vertical del grafo de dependencia
+	 */
+	public int getDistanciaVGrafo() {
+		return distanciaVGrafo;
+	}
+	
+	/**
+	 * Establece la distancia vertical del grafo de dependencia
+	 * @param distanciaVGrafo
+	 * 		Distancia vertical del grafo de dependencia
+	 */
+	public void setDistanciaVGrafo(int distanciaVGrafo) {
+		this.distanciaVGrafo = distanciaVGrafo;
+	}
+	
+	/**
+	 * Obtiene la distancia horizontal del grafo de dependencia
+	 * @return
+	 * 		Distancia horizontal del grafo de dependencia
+	 */
+	public int getDistanciaHGrafo() {
+		return distanciaHGrafo;
+	}
+	
+	/**
+	 * Establece la distancia horizontal del grafo de dependencia
+	 * @param distanciaHGrafo
+	 * 		Distancia horizontal del grafo de dependencia
+	 */
+	public void setDistanciaHGrafo(int distanciaHGrafo) {
+		this.distanciaHGrafo = distanciaHGrafo;
+	}
+	
+	/**
+	 * Obtiene el grosor de las flechas del grafo de dependencia
+	 * @return
+	 * 		Grosor de las flechas del grafo de dependencia
+	 */
+	public int getGrosorFlechaGrafo() {
+		return grosorFlechaGrafo;
+	}
+	
+	/**
+	 * Establece el grosor de las flechas del grafo de dependencia
+	 * @param grosorFlechaGrafo
+	 * 		Grosor de las flechas del grafo de dependencia
+	 */
+	public void setGrosorFlechaGrafo(int grosorFlechaGrafo) {
+		this.grosorFlechaGrafo = grosorFlechaGrafo;
+	}
+	
+	/**
+	 * Obtiene el tipo de las flechas del grafo de dependencia
+	 * @return the tipoFlechaGrafo
+	 * 		Tipo de las flechas del grafo de dependencia
+	 */
+	public int getTipoFlechaGrafo() {
+		return tipoFlechaGrafo;
+	}
+	
+	/**
+	 * Establece el tipo de las flechas del grafo de dependencia
+	 * @param tipoFlechaGrafo
+	 * 		Tipo de las flechas del grafo de dependencia
+	 */
+	public void setTipoFlechaGrafo(int tipoFlechaGrafo) {
+		this.tipoFlechaGrafo = tipoFlechaGrafo;
+	}
+
 	@Override
 	public Element getRepresentacionElement(Document d) {
 		Element e = d.createElement("OpcionConfVisualizacion");
@@ -1256,7 +1333,17 @@ public class OpcionConfVisualizacion extends Opcion {
 		Element e33 = d.createElement("distancias");
 		e33.setAttribute("vertical", "" + this.distanciaV);
 		e33.setAttribute("horizontal", "" + this.distanciaH);
-
+		
+		//	Distancias grafo
+		Element e36 = d.createElement("distanciasGrafo");
+		e36.setAttribute("vertical", "" + this.distanciaVGrafo);
+		e36.setAttribute("horizontal", "" + this.distanciaHGrafo);
+		
+		//	Flechas grafo
+		Element e37 = d.createElement("flechasGrafo");
+		e37.setAttribute("grosor", "" + this.grosorFlechaGrafo);
+		e37.setAttribute("tipoFlecha", "" + this.tipoFlechaGrafo);
+		
 		e.appendChild(e01);
 		e.appendChild(e02);
 		e.appendChild(e03);
@@ -1282,7 +1369,9 @@ public class OpcionConfVisualizacion extends Opcion {
 		e.appendChild(e33);
 		e.appendChild(e34);
 		e.appendChild(e35);
-
+		e.appendChild(e36);
+		e.appendChild(e37);
+		
 		// Colores Modo 2
 		for (int i = 0; i < Conf.numColoresMetodos; i++) {
 			Element ecm2 = d.createElement("colorm2_" + i);
@@ -1466,6 +1555,18 @@ public class OpcionConfVisualizacion extends Opcion {
 				.getAttribute("vertical")));
 		this.setDistanciaH(Integer.parseInt(elements[0]
 				.getAttribute("horizontal")));
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("distanciasGrafo"));
+		this.setDistanciaVGrafo(Integer.parseInt(
+				elements[0].getAttribute("vertical")));
+		this.setDistanciaHGrafo(Integer.parseInt(
+				elements[0].getAttribute("horizontal")));
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("flechasGrafo"));
+		this.setGrosorFlechaGrafo(Integer.parseInt(
+				elements[0].getAttribute("grosor")));
+		this.setTipoFlechaGrafo(Integer.parseInt(
+				elements[0].getAttribute("tipoFlecha")));
 
 	}
 }
