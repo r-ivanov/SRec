@@ -960,8 +960,10 @@
 		<T valor="Mode 2 colours" idioma="en" id="COCV_ETIQ_2"/>
 		<T valor="Otros colores" idioma="es" id="COCV_ETIQ_3"/>
 		<T valor="Others colors" idioma="en" id="COCV_ETIQ_3"/>
-		<T valor="Tama[ntilde]os y formas" idioma="es" id="COCV_ETIQ_4"/>
-		<T valor="Sizes and shapes" idioma="en" id="COCV_ETIQ_4"/>
+		<T valor="[Aacute]rboles y pilas" idioma="es" id="COCV_ETIQ_4"/>
+		<T valor="Trees and stacks" idioma="en" id="COCV_ETIQ_4"/>
+		<T valor="Otros elementos" idioma="es" id="COCV_ETIQ_5"/>
+		<T valor="Other elements" idioma="en" id="COCV_ETIQ_5"/>
 		
 		<T valor="Configuraci[oacute]n de los colores de los elementos de la animaci[oacute]n" idioma="es" id="COCV_ETIQ_ARBPILCODTRATTT"/>
 		<T valor="Configuration of the colours of the elements from the animation" idioma="en" id="COCV_ETIQ_ARBPILCODTRATTT"/>
@@ -1059,10 +1061,10 @@
 		<T valor="Separaci[oacute]n vertical" idioma="es" id="COCV_DISTCELDV"/>
 		<T valor="Vertical distance" idioma="en" id="COCV_DISTCELDV"/>		
 		
-		<T valor="Configuraci[oacute]n de la fuente de la vista de c[oacute]digo" idioma="es" id="COCV_FUENTCOD"/>
-		<T valor="Configuration of the code font" idioma="en" id="COCV_FUENTCOD"/>	
-		<T valor="Configuraci[oacute]n de la fuente de la vista de traza" idioma="es" id="COCV_FUENTTR"/>
-		<T valor="Configuration of the trace font" idioma="en" id="COCV_FUENTTR"/>	
+		<T valor="Fuente de c[oacute]digo" idioma="es" id="COCV_FUENTCOD"/>
+		<T valor="Code font" idioma="en" id="COCV_FUENTCOD"/>	
+		<T valor="Fuente de traza" idioma="es" id="COCV_FUENTTR"/>
+		<T valor="Trace font" idioma="en" id="COCV_FUENTTR"/>	
 		
 		<T valor="Fuente" idioma="es" id="COCV_FUENT"/>
 		<T valor="Font" idioma="en" id="COCV_FUENT"/>	

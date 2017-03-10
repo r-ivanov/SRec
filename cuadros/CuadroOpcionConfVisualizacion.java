@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -77,9 +78,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 	// [0] para modo 1 y [1] para modo 2
 	private JCheckBox colorDegradado[] = new JCheckBox[2];
 
-	private JComboBox<String> grosorFlecha, tipoFlecha;
+	private JComboBox<String> grosorFlecha, tipoFlecha, 
+			grosorFlecha5, tipoFlecha5;
 	private JComboBox<String> grosorMarco, bordeCelda;
-	private JComboBox<String> sepHorizontal, sepVertical;
+	private JComboBox<String> sepHorizontal, sepVertical,
+			sepHorizontal5, sepVertical5;
 	private JComboBox<String> fuentesCodigo, fuentesTraza;
 	private JComboBox<String> fuentesTamCodigo, fuentesTamTraza;
 
@@ -147,7 +150,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				"COCV_DISTCELDV", "COCV_FUENTCOD", "COCV_FUENT",
 				"COCV_FUENTTAM", "COCV_FUENTTR", "COCV_ETIQ_4",
 				"COCV_ETIQ_ARBPILCODTRATTT", "COCV_ETIQ_TAMFORTTT",
-				"COCV_FORMATO", "COCV_COL_RESA", "COCV_COL_SEL_ARBOL"
+				"COCV_FORMATO", "COCV_COL_RESA", "COCV_COL_SEL_ARBOL",
+				"COCV_ETIQ_5"
 
 		// 26 a 28 no se están usando
 		// 29 a 32 se podrían no estar usando (comprobar)
@@ -494,7 +498,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		this.cp.setValores(CREANDO_PANEL, 60);
 
-		// PESTAÑA 4 . TAMAÑOS Y FORMAS
+		// PESTAÑA 4 . ÁRBOLES Y PILAS
 		JPanel panelPestana22 = new JPanel();
 		panelPestana22.setLayout(new BorderLayout());
 
@@ -698,11 +702,177 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		this.cp.setValores(CREANDO_PANEL, 80);
 
+//		GraphicsEnvironment ge = GraphicsEnvironment
+//				.getLocalGraphicsEnvironment();
+//		Font fonts[] = ge.getAllFonts();
+
+		panelPestana22.add(panelSuperior2, BorderLayout.NORTH);
+		panelPestana22.add(panelInferior2, BorderLayout.CENTER);
+
+		this.pestanas.add(textos[61], panelPestana22);
+		this.cp.setValores(CREANDO_PANEL, 90);
+		
+		// PESTAÑA 5. OTROS ELEMENTOS
+		// ********	PANEL GENERAL PESTAÑA 5		*********
+
+		JPanel panelPestana5 = new JPanel();
+		panelPestana5.setLayout(new BorderLayout());
+
+		// *** Panel superior e inferior
+		JPanel panelSuperior5 = new JPanel();
+		panelSuperior5.setLayout(new GridLayout());
+		JPanel panelInferior5 = new JPanel();
+		panelInferior5.setLayout(new BorderLayout());
+
+		// *** Panel flechas
+		JPanel panelFlecha5 = new JPanel();
+		panelFlecha5.setBorder(new TitledBorder(textos[34]));
+		panelFlecha5.setLayout(new BorderLayout());
+
+		// Panel JComboBoxes
+		JPanel panelJCBs5 = new JPanel();
+		panelJCBs5.setLayout(new BorderLayout());
+
+		// Panel etiquetas
+		JPanel panelEtiquetas5 = new JPanel();
+		panelEtiquetas5.setLayout(new GridLayout(4, 1));
+
+		JLabel etiqGrosor5 = new JLabel(textos[35] + "    ");
+		JLabel etiqTipo5 = new JLabel(textos[36]);
+
+		panelEtiquetas5.add(etiqGrosor5);
+		panelEtiquetas5.add(new JPanel());
+		panelEtiquetas5.add(etiqTipo5);
+		panelEtiquetas5.add(new JPanel());
+
+		// Panel JComboBoxes
+		JPanel panelDesplegables5 = new JPanel();
+		panelDesplegables5.setLayout(new GridLayout(4, 1));
+
+		this.grosorFlecha5 = new JComboBox<String>();
+		for (int i = 0; i < 10; i++) {
+			this.grosorFlecha5.addItem((i + 1) + "");
+		}
+		this.grosorFlecha5.addActionListener(this);
+		this.grosorFlecha5.addKeyListener(this);
+		this.grosorFlecha5.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		this.tipoFlecha5 = new JComboBox<String>();
+		this.tipoFlecha5.addItem(textos[37]);
+		this.tipoFlecha5.addItem(textos[38]);
+		this.tipoFlecha5.addItem(textos[39]);
+		this.tipoFlecha5.addItem(textos[40]);
+		this.tipoFlecha5.addItem(textos[41]);
+		this.tipoFlecha5.addItem(textos[42]);
+		this.tipoFlecha5.addItem(textos[43]);
+		this.tipoFlecha5.addItem(textos[44]);
+		this.tipoFlecha5.addActionListener(this);
+		this.tipoFlecha5.addKeyListener(this);
+
+		this.grosorFlecha5.setPreferredSize(new Dimension(75, 19));
+		this.tipoFlecha5.setPreferredSize(new Dimension(75, 19));
+
+		panelDesplegables5.add(this.grosorFlecha5);
+		panelDesplegables5.add(new JPanel());
+		panelDesplegables5.add(this.tipoFlecha5);
+		panelDesplegables5.add(new JPanel());
+
+		panelJCBs5.add(panelEtiquetas5, BorderLayout.WEST);
+		panelJCBs5.add(panelDesplegables5, BorderLayout.EAST);
+
+		// Panel etiquetaImagen
+		JPanel panelEtiquetaImagen5 = new JPanel();
+		JLabel etiqImagen5 = new JLabel(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/cuadroconf_flechas.gif")));
+		panelEtiquetaImagen5.add(etiqImagen5);
+
+		panelFlecha5.add(panelJCBs5, BorderLayout.NORTH);
+		panelFlecha5.add(panelEtiquetaImagen5, BorderLayout.CENTER);
+
+		this.cp.setValores(CREANDO_PANEL, 65);
+
+		// *** Panel distancias
+		JPanel panelDistancias5 = new JPanel();
+		panelDistancias5.setBorder(new TitledBorder(textos[54]));
+		panelDistancias5.setLayout(new BorderLayout());
+
+		// Panel JComboBoxes
+		JPanel panelJCBs53 = new JPanel();
+		panelJCBs53.setLayout(new BorderLayout());
+
+		// Panel etiquetas
+		JPanel panelEtiquetas53 = new JPanel();
+		panelEtiquetas53.setLayout(new GridLayout(4, 1));
+
+		JLabel etiqsepHorizontal55 = new JLabel(textos[55] + "    ");
+		JLabel etiqsepVertical55 = new JLabel(textos[56]);
+
+		panelEtiquetas53.add(etiqsepHorizontal55);
+		panelEtiquetas53.add(new JPanel());
+		panelEtiquetas53.add(etiqsepVertical55);
+		panelEtiquetas53.add(new JPanel());
+
+		// Panel JComboBoxes
+		JPanel panelDesplegables53 = new JPanel();
+		panelDesplegables53.setLayout(new GridLayout(4, 1));
+
+		this.sepHorizontal5 = new JComboBox<String>();
+		for (int i = 0; i < 91; i++) {
+			this.sepHorizontal5.addItem((i + 10) + "");
+		}
+		this.sepHorizontal5.addActionListener(this);
+		this.sepHorizontal5.addKeyListener(this);
+
+		this.sepVertical5 = new JComboBox<String>();
+		for (int i = 0; i < 91; i++) {
+			this.sepVertical5.addItem((i + 10) + "");
+		}
+		this.sepVertical5.addActionListener(this);
+		this.sepVertical5.addKeyListener(this);
+
+		this.sepHorizontal5.setPreferredSize(new Dimension(75, 19));
+		this.sepVertical5.setPreferredSize(new Dimension(75, 19));
+
+		panelDesplegables53.add(this.sepHorizontal5);
+		panelDesplegables53.add(new JPanel());
+		panelDesplegables53.add(this.sepVertical5);
+		panelDesplegables53.add(new JPanel());
+
+		panelJCBs53.add(panelEtiquetas53, BorderLayout.WEST);
+		panelJCBs53.add(panelDesplegables53, BorderLayout.EAST);
+
+		// Panel etiquetaImagen
+		JPanel panelEtiquetaImagen53 = new JPanel();
+		JLabel etiqImagen53 = new JLabel(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/cuadroconf_distancias.gif")));
+		panelEtiquetaImagen53.add(etiqImagen53);
+
+		panelDistancias5.add(panelJCBs53, BorderLayout.NORTH);
+		panelDistancias5.add(panelEtiquetaImagen53, BorderLayout.CENTER);
+
+		// *** Añadir paneles
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.gridx = 0; 
+		constraints.gridy = 0; 
+		constraints.gridwidth = 1; 
+		constraints.gridheight = 1; 
+		
+		panelSuperior5.add (panelDistancias5, constraints);
+//		panelSuperior5.add(panelDistancias5, BorderLayout.WEST);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 1; 
+		constraints.gridy = 0; 
+		constraints.gridwidth = 1; 
+		constraints.gridheight = 1; 
+//		panelSuperior5.add(panelFlecha5, BorderLayout.EAST);
+		panelSuperior5.add (panelFlecha5, constraints);
+
+		this.cp.setValores(CREANDO_PANEL, 80);
+
 		GraphicsEnvironment ge = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
 		Font fonts[] = ge.getAllFonts();
 
-		// Panel vista código texto
+		// *** Panel vista código texto
 		JPanel panelFuenteCodigo = new JPanel();
 		panelFuenteCodigo.setBorder(new TitledBorder(textos[57]));
 		panelFuenteCodigo.setLayout(new BorderLayout());
@@ -740,7 +910,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		panelFuenteCodigo.add(linea1Codigo, BorderLayout.NORTH);
 		panelFuenteCodigo.add(linea2Codigo, BorderLayout.SOUTH);
 
-		// Panel vista código traza
+		// *** Panel vista código traza
 		JPanel panelFuenteTraza = new JPanel();
 		panelFuenteTraza.setBorder(new TitledBorder(textos[60]));
 		panelFuenteTraza.setLayout(new BorderLayout());
@@ -778,15 +948,15 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		panelFuenteTraza.add(linea1Traza, BorderLayout.NORTH);
 		panelFuenteTraza.add(linea2Traza, BorderLayout.SOUTH);
 
-		panelInferior2.add(panelFuenteCodigo, BorderLayout.WEST);
-		panelInferior2.add(panelFuenteTraza, BorderLayout.EAST);
+		panelInferior5.add(panelFuenteCodigo, BorderLayout.WEST);
+		panelInferior5.add(panelFuenteTraza, BorderLayout.EAST);
 
-		panelPestana22.add(panelSuperior2, BorderLayout.NORTH);
-		panelPestana22.add(panelInferior2, BorderLayout.CENTER);
+		panelPestana5.add(panelSuperior5, BorderLayout.NORTH);
+		panelPestana5.add(panelInferior5, BorderLayout.CENTER);
 
-		this.pestanas.add(textos[61], panelPestana22);
+		this.pestanas.add(textos[67], panelPestana5);
 		this.cp.setValores(CREANDO_PANEL, 90);
-
+		
 		this.pestanas.setToolTipTextAt(0, textos[62]);
 		this.pestanas.setToolTipTextAt(1, textos[62]);
 		this.pestanas.setToolTipTextAt(2, textos[62]);
@@ -796,8 +966,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		this.pestanas.setMnemonicAt(2, 'M');
 		// ¡¡¡ Adaptar a multidioma !!!
 		this.pestanas.setMnemonicAt(3, 'S');
-
-		// Panel Botones
+		
+		// PANEL BOTONES INFERIORES
 		JPanel panelBotones = new JPanel();
 		panelBotones.add(this.aceptar);
 		panelBotones.add(this.cancelar);
