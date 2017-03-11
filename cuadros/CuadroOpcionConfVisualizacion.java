@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +24,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -151,7 +151,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				"COCV_FUENTTAM", "COCV_FUENTTR", "COCV_ETIQ_4",
 				"COCV_ETIQ_ARBPILCODTRATTT", "COCV_ETIQ_TAMFORTTT",
 				"COCV_FORMATO", "COCV_COL_RESA", "COCV_COL_SEL_ARBOL",
-				"COCV_ETIQ_5"
+				"COCV_ETIQ_5", /*68*/"COCV_DISTCELD_G", "COCV_CONFFLEC_G"
 
 		// 26 a 28 no se están usando
 		// 29 a 32 se podrían no estar usando (comprobar)
@@ -499,13 +499,9 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		this.cp.setValores(CREANDO_PANEL, 60);
 
 		// PESTAÑA 4 . ÁRBOLES Y PILAS
-		JPanel panelPestana22 = new JPanel();
-		panelPestana22.setLayout(new BorderLayout());
 
-		JPanel panelSuperior2 = new JPanel();
-		panelSuperior2.setLayout(new BorderLayout());
-		JPanel panelInferior2 = new JPanel();
-		panelInferior2.setLayout(new BorderLayout());
+		JPanel panelPestana4 = new JPanel();
+		panelPestana4.setLayout(new BorderLayout());
 
 		// Panel flechas
 		JPanel panelFlecha = new JPanel();
@@ -696,9 +692,9 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		panelDistancias.add(panelJCBs3, BorderLayout.NORTH);
 		panelDistancias.add(panelEtiquetaImagen3, BorderLayout.CENTER);
 
-		panelSuperior2.add(panelCaracteristicas, BorderLayout.WEST);
-		panelSuperior2.add(panelDistancias, BorderLayout.CENTER);
-		panelSuperior2.add(panelFlecha, BorderLayout.EAST);
+		panelPestana4.add(panelCaracteristicas, BorderLayout.WEST);
+		panelPestana4.add(panelDistancias, BorderLayout.CENTER);
+		panelPestana4.add(panelFlecha, BorderLayout.EAST);
 
 		this.cp.setValores(CREANDO_PANEL, 80);
 
@@ -706,27 +702,18 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 //				.getLocalGraphicsEnvironment();
 //		Font fonts[] = ge.getAllFonts();
 
-		panelPestana22.add(panelSuperior2, BorderLayout.NORTH);
-		panelPestana22.add(panelInferior2, BorderLayout.CENTER);
-
-		this.pestanas.add(textos[61], panelPestana22);
+		this.pestanas.add(textos[61], panelPestana4);
 		this.cp.setValores(CREANDO_PANEL, 90);
 		
 		// PESTAÑA 5. OTROS ELEMENTOS
-		// ********	PANEL GENERAL PESTAÑA 5		*********
 
+		// *** Panel general
 		JPanel panelPestana5 = new JPanel();
-		panelPestana5.setLayout(new BorderLayout());
-
-		// *** Panel superior e inferior
-		JPanel panelSuperior5 = new JPanel();
-		panelSuperior5.setLayout(new GridLayout());
-		JPanel panelInferior5 = new JPanel();
-		panelInferior5.setLayout(new BorderLayout());
-
+		panelPestana5.setLayout(new GridBagLayout());
+		
 		// *** Panel flechas
 		JPanel panelFlecha5 = new JPanel();
-		panelFlecha5.setBorder(new TitledBorder(textos[34]));
+		panelFlecha5.setBorder(new TitledBorder(textos[69]));
 		panelFlecha5.setLayout(new BorderLayout());
 
 		// Panel JComboBoxes
@@ -792,7 +779,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		// *** Panel distancias
 		JPanel panelDistancias5 = new JPanel();
-		panelDistancias5.setBorder(new TitledBorder(textos[54]));
+		panelDistancias5.setBorder(new TitledBorder(textos[68]));
 		panelDistancias5.setLayout(new BorderLayout());
 
 		// Panel JComboBoxes
@@ -850,21 +837,39 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		panelDistancias5.add(panelEtiquetaImagen53, BorderLayout.CENTER);
 
 		// *** Añadir paneles
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.gridx = 0; 
-		constraints.gridy = 0; 
-		constraints.gridwidth = 1; 
-		constraints.gridheight = 1; 
 		
-		panelSuperior5.add (panelDistancias5, constraints);
-//		panelSuperior5.add(panelDistancias5, BorderLayout.WEST);
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.gridx = 0; 		// Empieza columna
+		constraints.gridy = 0; 		// Empieza fila
+		constraints.gridwidth = 1; 	// Ocupa columnas
+		constraints.gridheight = 1; // Ocupa filas
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weightx = constraints.weighty = 1.0;
+		
+		panelPestana5.add(panelDistancias5, constraints);	
+		
 		constraints = new GridBagConstraints();
-		constraints.gridx = 1; 
-		constraints.gridy = 0; 
-		constraints.gridwidth = 1; 
-		constraints.gridheight = 1; 
-//		panelSuperior5.add(panelFlecha5, BorderLayout.EAST);
-		panelSuperior5.add (panelFlecha5, constraints);
+		constraints.gridx = 1; 		// Empieza columna
+		constraints.gridy = 0; 		// Empieza fila
+		constraints.gridwidth = 1; 	// Ocupa columnas
+		constraints.gridheight = 1; // Ocupa filas	
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weightx = constraints.weighty = 1.0;
+		
+		panelPestana5.add(panelFlecha5, constraints);
+		
+		constraints = new GridBagConstraints();
+		constraints.gridx = 2; 		// Empieza columna
+		constraints.gridy = 0; 		// Empieza fila
+		constraints.gridwidth = 1; 	// Ocupa columnas
+		constraints.gridheight = 1; // Ocupa filas	
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weightx = constraints.weighty = 1.0;
+		
+		JPanel panelDerecha5 = new JPanel();
+		panelDerecha5.setLayout(new GridBagLayout());
+		
+		panelPestana5.add(panelDerecha5, constraints);
 
 		this.cp.setValores(CREANDO_PANEL, 80);
 
@@ -947,12 +952,32 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		panelFuenteTraza.add(linea1Traza, BorderLayout.NORTH);
 		panelFuenteTraza.add(linea2Traza, BorderLayout.SOUTH);
+		
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0; 		// Empieza columna
+		constraints.gridy = 0; 		// Empieza fila
+		constraints.gridwidth = 1; 	// Ocupa columnas
+		constraints.gridheight = 1; // Ocupa filas	
+		
+		panelDerecha5.add(panelFuenteCodigo, constraints);
+		
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0; 		// Empieza columna
+		constraints.gridy = 1; 		// Empieza fila
+		constraints.gridwidth = 1; 	// Ocupa columnas
+		constraints.gridheight = 1; // Ocupa filas	
+		constraints.anchor = GridBagConstraints.NORTH;
+		constraints.weighty = 1;
+		
+		panelDerecha5.add(panelFuenteTraza, constraints);
 
-		panelInferior5.add(panelFuenteCodigo, BorderLayout.WEST);
-		panelInferior5.add(panelFuenteTraza, BorderLayout.EAST);
-
-		panelPestana5.add(panelSuperior5, BorderLayout.NORTH);
-		panelPestana5.add(panelInferior5, BorderLayout.CENTER);
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0; 		// Empieza columna
+		constraints.gridy = 0; 		// Empieza fila
+		constraints.gridwidth = 1; 	// Ocupa columnas
+		constraints.gridheight = 1; // Ocupa filas	
+		constraints.anchor = GridBagConstraints.NORTH;
+		constraints.weighty = 1;
 
 		this.pestanas.add(textos[67], panelPestana5);
 		this.cp.setValores(CREANDO_PANEL, 90);
@@ -964,6 +989,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		this.pestanas.setMnemonicAt(0, 'C');
 		this.pestanas.setMnemonicAt(1, 'T');
 		this.pestanas.setMnemonicAt(2, 'M');
+		
 		// ¡¡¡ Adaptar a multidioma !!!
 		this.pestanas.setMnemonicAt(3, 'S');
 		

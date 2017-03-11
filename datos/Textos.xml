@@ -1012,6 +1012,8 @@
 		
 		<T valor="Configuraci[oacute]n de flechas" idioma="es" id="COCV_CONFFLEC"/>
 		<T valor="Configuration of arrows" idioma="en" id="COCV_CONFFLEC"/>	
+		<T valor="Configuraci[oacute]n de flechas de grafos" idioma="es" id="COCV_CONFFLEC_G"/>
+		<T valor="Configuration graph arrows" idioma="en" id="COCV_CONFFLEC_G"/>	
 		<T valor="Grosor de las flechas" idioma="es" id="COCV_CONFFLECANCH"/>
 		<T valor="Width of arrows" idioma="en" id="COCV_CONFFLECANCH"/>			
 		<T valor="Tipo de las flechas" idioma="es" id="COCV_CONFFLECTIPO"/>
@@ -1055,7 +1057,9 @@
 		<T valor="Raised bevel" idioma="en" id="COCV_CARACCELDBORDBL"/>			
 		
 		<T valor="Distancias entre celdas" idioma="es" id="COCV_DISTCELD"/>
-		<T valor="Distance between cells" idioma="en" id="COCV_DISTCELD"/>					
+		<T valor="Distance between cells" idioma="en" id="COCV_DISTCELD"/>	
+		<T valor="Distancias entre celdas de grafos" idioma="es" id="COCV_DISTCELD_G"/>
+		<T valor="Distance between graphs cells" idioma="en" id="COCV_DISTCELD_G"/>		
 		<T valor="Separaci[oacute]n horizontal" idioma="es" id="COCV_DISTCELDH"/>
 		<T valor="Horizontal distance" idioma="en" id="COCV_DISTCELDH"/>
 		<T valor="Separaci[oacute]n vertical" idioma="es" id="COCV_DISTCELDV"/>
