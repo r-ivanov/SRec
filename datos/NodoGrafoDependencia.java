@@ -498,7 +498,7 @@ public class NodoGrafoDependencia {
 	public void addDependencia(NodoGrafoDependencia nodo) {
 		DefaultEdge arista = new DefaultEdge();
 		int tipoFlecha = GraphConstants.ARROW_NONE;
-		switch (Conf.formaFlecha) {
+		switch (Conf.formaFlechaGrafo) {
 		case 0:
 			tipoFlecha = GraphConstants.ARROW_NONE;
 			break;
@@ -527,7 +527,7 @@ public class NodoGrafoDependencia {
 		GraphConstants.setLineEnd(arista.getAttributes(),tipoFlecha);
 		GraphConstants.setEndFill(arista.getAttributes(), true);
 		GraphConstants.setSelectable(arista.getAttributes(), false);
-		GraphConstants.setLineWidth(arista.getAttributes(), Conf.grosorFlecha);
+		GraphConstants.setLineWidth(arista.getAttributes(), Conf.grosorFlechaGrafo);
 		GraphConstants.setLineColor(arista.getAttributes(), Conf.colorFlecha);
 		GraphConstants.setRouting(arista.getAttributes(), edgeRouter);
 		GraphConstants.setLineStyle(arista.getAttributes(),

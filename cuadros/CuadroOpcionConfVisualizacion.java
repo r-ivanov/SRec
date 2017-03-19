@@ -913,7 +913,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		linea2Codigo.add(tamFormaCodigo, BorderLayout.EAST);
 
 		panelFuenteCodigo.add(linea1Codigo, BorderLayout.NORTH);
-		panelFuenteCodigo.add(linea2Codigo, BorderLayout.SOUTH);
+		panelFuenteCodigo.add(linea2Codigo, BorderLayout.SOUTH);		
 
 		// *** Panel vista código traza
 		JPanel panelFuenteTraza = new JPanel();
@@ -1192,6 +1192,13 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		this.fuentesTraza.setSelectedItem(this.ocv.getFuenteTraza());
 		this.fuentesTamTraza.setSelectedItem("" + this.ocv.getTamFuenteTraza());
+		
+		//	Pestaña 5
+		this.sepHorizontal5.setSelectedIndex(this.ocv.getDistanciaHGrafo());
+		this.sepVertical5.setSelectedIndex(this.ocv.getDistanciaVGrafo());
+		
+		this.grosorFlecha5.setSelectedIndex(this.ocv.getGrosorFlechaGrafo() - 1);
+		this.tipoFlecha5.setSelectedIndex(this.ocv.getTipoFlechaGrafo());
 	}
 
 	/**
@@ -1286,6 +1293,13 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				.parseInt((String) this.fuentesTamTraza.getSelectedItem());
 		this.ocv.setFuenteTraza((String) this.fuentesTraza.getSelectedItem(),
 				iAux.intValue());// ,(String)fuentesTraza.getSelectedItem() );
+		
+		//	Pestaña 5
+		this.ocv.setDistanciaHGrafo(this.sepHorizontal5.getSelectedIndex());
+		this.ocv.setDistanciaVGrafo(this.sepVertical5.getSelectedIndex());
+		
+		this.ocv.setGrosorFlechaGrafo(this.grosorFlecha5.getSelectedIndex() +1);
+		this.ocv.setTipoFlechaGrafo(this.tipoFlecha5.getSelectedIndex());
 	}
 
 	/**

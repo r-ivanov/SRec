@@ -256,11 +256,16 @@ public class Conf {
 
 	public static int grosorFlecha;
 	public static int formaFlecha;
+	public static int grosorFlechaGrafo;
+	public static int formaFlechaGrafo;
 	public static int bordeCelda;
 	public static int grosorMarco;
 
 	public static int sepH;
 	public static int sepV;
+	
+	public static int sepHGrafo;
+	public static int sepVGrafo;
 
 	// Win 79,23 Otros 88,23
 
@@ -470,6 +475,7 @@ public class Conf {
 		colorFlecha = new Color(color[0], color[1], color[2]);
 
 		grosorFlecha = ocv.getGrosorFlecha();
+		grosorFlechaGrafo = ocv.getGrosorFlechaGrafo();
 
 		color = ocv.getColorPanel();
 		colorPanel = new Color(color[0], color[1], color[2]);
@@ -481,12 +487,16 @@ public class Conf {
 		colorMarcosCActual = new Color(color[0], color[1], color[2]);
 
 		formaFlecha = ocv.getFormaFlecha();
+		formaFlechaGrafo = ocv.getTipoFlechaGrafo();
 
 		bordeCelda = ocv.getTipoBordeCelda();
 		grosorMarco = ocv.getGrosorActual();
 
 		sepH = ocv.getDistanciaH();
 		sepV = ocv.getDistanciaV();
+		
+		sepHGrafo = ocv.getDistanciaHGrafo();
+		sepVGrafo = ocv.getDistanciaVGrafo();
 
 		color = ocv.getColorCodigoPR();
 		colorCodigoPR = new Color(color[0], color[1], color[2]);

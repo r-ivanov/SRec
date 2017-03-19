@@ -32,6 +32,7 @@ import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
 import utilidades.MatrizDinamica;
 import utilidades.NombresYPrefijos;
+import utilidades.SsooValidator;
 import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
@@ -47,7 +48,8 @@ public class GrafoDependencia {
 
 	private static final int ANCHO_PIXEL_CARACTER = 13;
 	private static final int TAM_FUENTE = 20;
-
+	private static final int TAM_FUENTE_LINUX = 16;
+	
 	private static final int MARGEN_TABLA = 70;
 	private static final int MARGEN_INDICES = 10;
 	private static final int TAMANIO_MARCADORES_EJES = 20;
@@ -168,8 +170,8 @@ public class GrafoDependencia {
 		}
 
 		this.anchuraCuadroMatriz = (int) anchuraNodoMayor
-				+ Conf.sepH * 2;
-		this.alturaCuadroMatriz = (int) alturaNodoMayor + Conf.sepV
+				+ Conf.sepHGrafo * 2;
+		this.alturaCuadroMatriz = (int) alturaNodoMayor + Conf.sepVGrafo
 				* 2;
 	}
 
@@ -371,7 +373,7 @@ public class GrafoDependencia {
 		return false;
 	}
 
-	/**
+	/**TAM_FUENTE
 	 * Devuelve el nodo del grafo de dependencia correspondiente a un registro
 	 * de activación.
 	 * 
@@ -501,13 +503,13 @@ public class GrafoDependencia {
 		GraphConstants.setSelectable(indice.getAttributes(), false);
 		GraphConstants.setEditable(indice.getAttributes(), false);
 		GraphConstants.setFont(indice.getAttributes(), new Font("Arial",
-				Font.BOLD, TAM_FUENTE));
+				Font.BOLD, SsooValidator.isUnix()?TAM_FUENTE_LINUX:TAM_FUENTE));
 		GraphConstants.setBackground(indice.getAttributes(), Conf.colorPanel);
 		GraphConstants.setForeground(indice.getAttributes(), Color.LIGHT_GRAY);
 		GraphConstants.setOpaque(indice.getAttributes(), true);
 
 		int anchura = valorString.length() * ANCHO_PIXEL_CARACTER;
-		int altura = TAM_FUENTE;
+		int altura = SsooValidator.isUnix()?TAM_FUENTE_LINUX:TAM_FUENTE;
 
 		int x = 0;
 		int y = 0;
@@ -610,13 +612,13 @@ public class GrafoDependencia {
 		GraphConstants.setSelectable(indice.getAttributes(), false);
 		GraphConstants.setEditable(indice.getAttributes(), false);
 		GraphConstants.setFont(indice.getAttributes(), new Font("Arial",
-				Font.BOLD, TAM_FUENTE));
+				Font.BOLD, SsooValidator.isUnix()?TAM_FUENTE_LINUX:TAM_FUENTE));
 		GraphConstants.setBackground(indice.getAttributes(), Conf.colorPanel);
 		GraphConstants.setForeground(indice.getAttributes(), Color.LIGHT_GRAY);
 		GraphConstants.setOpaque(indice.getAttributes(), true);
 
 		int anchura = valorString.length() * ANCHO_PIXEL_CARACTER;
-		int altura = TAM_FUENTE;
+		int altura = SsooValidator.isUnix()?TAM_FUENTE_LINUX:TAM_FUENTE;
 
 		int x = 0;
 		int y = 0;
@@ -1054,7 +1056,7 @@ public class GrafoDependencia {
 		GraphConstants.setMoveable(edgeX.getAttributes(), false);
 		GraphConstants.setLineEnd(edgeX.getAttributes(), GraphConstants.ARROW_TECHNICAL);
 		GraphConstants.setFont(edgeX.getAttributes(), new Font("Arial",
-				Font.BOLD, TAM_FUENTE));			
+				Font.BOLD, SsooValidator.isUnix()?TAM_FUENTE_LINUX:TAM_FUENTE));			
 		GraphConstants.setLineColor(edgeX.getAttributes(), Color.WHITE);
 		GraphConstants.setSelectable(edgeX.getAttributes(), false);
 		GraphConstants.setEditable(edgeX.getAttributes(), false);
@@ -1068,7 +1070,7 @@ public class GrafoDependencia {
 		GraphConstants.setMoveable(edgeY.getAttributes(), false);
 		GraphConstants.setLineEnd(edgeY.getAttributes(), GraphConstants.ARROW_TECHNICAL);
 		GraphConstants.setFont(edgeY.getAttributes(), new Font("Arial",
-				Font.BOLD, TAM_FUENTE));
+				Font.BOLD, SsooValidator.isUnix()?TAM_FUENTE_LINUX:TAM_FUENTE));
 		GraphConstants.setLineColor(edgeY.getAttributes(), Color.WHITE);
 		GraphConstants.setSelectable(edgeY.getAttributes(), false);
 		GraphConstants.setEditable(edgeY.getAttributes(), false);
@@ -1143,19 +1145,19 @@ public class GrafoDependencia {
 					
 					if(invertirFilas){
 						y = MARGEN_TABLA
-								+ Conf.sepV + (this.matrizTabulado.numFilas()-1-fila)
+								+ Conf.sepVGrafo + (this.matrizTabulado.numFilas()-1-fila)
 								* this.alturaCuadroMatriz;
 					}else{
 						y = MARGEN_TABLA
-								+ Conf.sepV + fila
+								+ Conf.sepVGrafo + fila
 								* this.alturaCuadroMatriz;
 					}
 					
 					if(invertirColumnas){
-						x = MARGEN_TABLA + Conf.sepH
+						x = MARGEN_TABLA + Conf.sepHGrafo
 								+ (this.matrizTabulado.numColumnas()-1-columna) * this.anchuraCuadroMatriz;
 					}else{
-						x = MARGEN_TABLA + Conf.sepH
+						x = MARGEN_TABLA + Conf.sepHGrafo
 								+ columna * this.anchuraCuadroMatriz;
 					}
 					
@@ -1194,7 +1196,7 @@ public class GrafoDependencia {
 								numFilasEliminadas++;
 						}
 						y = MARGEN_TABLA
-								+ Conf.sepV + (this.matrizTabulado.numFilas()-1-(fila+numFilasEliminadas))
+								+ Conf.sepVGrafo + (this.matrizTabulado.numFilas()-1-(fila+numFilasEliminadas))
 								* this.alturaCuadroMatriz;
 					}else{
 						int numFilasEliminadas = 0;
@@ -1203,7 +1205,7 @@ public class GrafoDependencia {
 								numFilasEliminadas++;
 						}
 						y = MARGEN_TABLA
-								+ Conf.sepV + (fila - numFilasEliminadas)
+								+ Conf.sepVGrafo + (fila - numFilasEliminadas)
 								* this.alturaCuadroMatriz;
 					}
 					
@@ -1213,7 +1215,7 @@ public class GrafoDependencia {
 							if(fyc[1][i])
 								numColumnasEliminadas++;
 						}
-						x = MARGEN_TABLA + Conf.sepH
+						x = MARGEN_TABLA + Conf.sepHGrafo
 								+ (this.matrizTabulado.numColumnas()-1-(columna+numColumnasEliminadas)) * this.anchuraCuadroMatriz;
 					}else{
 						int numColumnasEliminadas = 0;
@@ -1221,7 +1223,7 @@ public class GrafoDependencia {
 							if(fyc[1][i])
 								numColumnasEliminadas++;
 						}
-						x = MARGEN_TABLA + Conf.sepH
+						x = MARGEN_TABLA + Conf.sepHGrafo
 								+ (columna-numColumnasEliminadas) * this.anchuraCuadroMatriz;
 					}
 					

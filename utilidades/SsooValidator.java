@@ -2,7 +2,7 @@ package utilidades;
 
 /**
  * Permite determinar en qué sistema operativo nos encontramos
- * @author Daniel
+ * @author Daniel Arroyo Cortés
  *
  */
 public class SsooValidator {
