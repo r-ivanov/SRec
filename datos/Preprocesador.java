@@ -94,7 +94,11 @@ public class Preprocesador extends Thread {
 	public Preprocesador(String path, String nombre) {
 		String nombreModif = JavaParser.convReverse(nombre);
 		if (path != null && nombreModif != null) {
-			fichero[0] = path.substring(0, path.lastIndexOf("\\") + 1);
+			if(!SsooValidator.isUnix()){
+				fichero[0] = path.substring(0, path.lastIndexOf("\\") + 1);
+			}else{
+				fichero[0] = path.substring(0, path.lastIndexOf("/") + 1);
+			}
 			fichero[1] = nombreModif;
 		} else {
 			fichero[0] = null;
@@ -117,7 +121,11 @@ public class Preprocesador extends Thread {
 	public Preprocesador(String path, String nombre, boolean selecMetodo) {
 		String nombreModif = JavaParser.convReverse(nombre);
 		if (path != null && nombreModif != null) {
-			fichero[0] = path.substring(0, path.lastIndexOf("\\") + 1);
+			if(!SsooValidator.isUnix()){
+				fichero[0] = path.substring(0, path.lastIndexOf("\\") + 1);
+			}else{
+				fichero[0] = path.substring(0, path.lastIndexOf("/") + 1);
+			}
 			fichero[1] = nombreModif;
 		} else {
 			fichero[0] = null;
