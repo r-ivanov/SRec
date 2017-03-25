@@ -347,6 +347,10 @@
 		<T valor="Reverse graph arrows" idioma="en" id="GP_INVERTIR_FLECHAS"/>
 		<T valor="Mostrar/ocultar filas y columnas vac[iacute]as" idioma="es" id="GP_ELIMINAR_FYC"/>
 		<T valor="Show/hide empty rows and columns" idioma="en" id="GP_ELIMINAR_FYC"/>
+		<T valor="Invertir orden de filas" idioma="es" id="GP_INVERTIR_F"/>
+		<T valor="Reverse rows order" idioma="en" id="GP_INVERTIR_F"/>
+		<T valor="Invertir orden de columnas" idioma="es" id="GP_INVERTIR_C"/>
+		<T valor="Reverse columns order" idioma="en" id="GP_INVERTIR_C"/>
 		
 		<T valor="Datos de entrada y salida..." idioma="es" id="GP_DATOS_ENTRADA"/>
 		<T valor="Input and output data..." idioma="en" id="GP_DATOS_ENTRADA"/>
