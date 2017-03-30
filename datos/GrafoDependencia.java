@@ -78,7 +78,17 @@ public class GrafoDependencia {
 	private boolean eliminarFilasColumnas = false;
 	private int numeroFilasVisibles;
 	private int numeroColumnasVisibles;
+	private int invertirFilasUsuario = 0;				//	Lo que quiere el usuario
+														//	0 - No establecido por el usuario, 1 - Creciente, 2 - Decreciente	
+													
+	private int invertirFilasNormal = 0;				//	Lo que se está representando actualmente			
+														//	0 - Grafo no representado, 1 - Creciente, 2 - Decreciente
 	
+	private int invertirColumnasUsuario = 0;				//	Lo que quiere el usuario
+														//	0 - No establecido por el usuario, 1 - Creciente, 2 - Decreciente	
+	
+	private int invertirColumnasNormal = 0;				//	Lo que se está representando actualmente			
+														//	0 - Grafo no representado, 1 - Creciente, 2 - Decreciente
 	//	Multiples métodos
 	
 	private boolean esGrafoDeUnMetodo = true;			//	true = solo se representa un método
@@ -694,7 +704,7 @@ public class GrafoDependencia {
 
 		boolean dibujarTabla = this.numeroFilasTabla >= 1
 				&& this.numeroColumnasTabla >= 1;
-		boolean[] invertirEjes = this.invertirEjes();
+		boolean[] invertirEjes = this.invertirEjes(this.getInvertirFilasUsuario(),this.getInvertirColumnasUsuario());
 		if (dibujarTabla) {			
 			int tamanioMarcadorEjesParaFila = this.numeroFilasTabla > 1 ? TAMANIO_MARCADORES_EJES
 					: 0;
@@ -829,7 +839,7 @@ public class GrafoDependencia {
 
 		boolean dibujarTabla = this.numeroFilasTabla >= 1
 				&& this.numeroColumnasTabla >= 1;
-		boolean[] invertirEjes = this.invertirEjes();
+		boolean[] invertirEjes = this.invertirEjes(this.getInvertirFilasUsuario(),this.getInvertirColumnasUsuario());
 		boolean[][] fyc= this.matrizTabulado.filasYColumnasVacias();
 		int numeroColumnasVisibles = 0;
 		for(boolean visible:fyc[1]){
@@ -1650,12 +1660,22 @@ public class GrafoDependencia {
 	 * 
 	 * @return 
 	 * 		Array de booleanos donde la primera posición indica si las filas deben estar
-	 * 		en orden creciente (true) o en orden decreciente(false) y la segunda posición 
-	 * 		indica si las columnas deben estar en orden creciente (true) o en orden decreciente(false)
+	 * 		en orden creciente (false) o en orden decreciente(true) y la segunda posición 
+	 * 		indica si las columnas deben estar en orden creciente (false) o en orden decreciente(true)
 	 * 
+	 * @param filas
+	 * 		0 - El orden de las filas será el que establezca la heurística
+	 * 		1 - El orden de las filas será creciente
+	 * 		2 - El orden de las filas será decreciente
+	 * 
+	 * @param columnas
+	 * 		0 - El orden de las columnas será el que establezca la heurística
+	 * 		1 - El orden de las columnas será creciente
+	 * 		2 - El orden de las columnas será decreciente
+	 * 	
 	 * @throws ScriptException 
 	 */
-	private boolean[] invertirEjes(){
+	private boolean[] invertirEjes(int filas, int columnas){
 		
 		//	Variables		
 		boolean[] retorno = new boolean[2];
@@ -1787,7 +1807,7 @@ public class GrafoDependencia {
 
 			}	
 			
-			//	Finalmente comparamos
+			//	Comparamos
 			if(valorFilaHijo < valorFilaPadre){
 				retorno[0] = true;
 			}
@@ -1795,6 +1815,29 @@ public class GrafoDependencia {
 				retorno[1] = true;
 			}
 		}
+		//	Miramos si debemos sobreescribir los valores calculados por lo
+		//	que introducen a través de los parámetros
+		if(filas==1)
+			retorno[0]=false;
+		else if(filas==2)
+			retorno[0]=true;
+		
+		if(columnas==1)
+			retorno[1]=false;
+		else if(columnas==2)
+			retorno[1]=true;
+			
+		//	Establecemos la variable establecer filas normal = estado actual
+		if(!retorno[0])
+			this.setInvertirFilasNormal(1);
+		else
+			this.setInvertirFilasNormal(2);
+		
+		if(!retorno[1])
+			this.setInvertirColumnasNormal(1);
+		else
+			this.setInvertirColumnasNormal(2);
+		
 		return retorno;		
 	}
 	
@@ -1933,5 +1976,81 @@ public class GrafoDependencia {
 	public List<String> getParametrosComunesS(){
 		this.parametrosComunesS = this.parametrosComunesS();
 		return this.parametrosComunesS;
+	}
+	
+	/**
+	 * Obtiene si el usuario ha establecido el orden de las filas o no
+	 * 
+	 * @return
+	 * 	0 - No establecido por el usuario, 1 - Creciente, 2 - Decreciente
+	 */
+	private int getInvertirFilasUsuario() {
+		return this.invertirFilasUsuario;
+	}
+
+	/**
+	 * Establece la opción del usuario para invertir filas o no
+	 * 
+	 * @param invertirFilasUsuario
+	 * 	0 - No establecido por el usuario, 1 - Creciente, 2 - Decreciente
+	 */
+	public void setInvertirFilasUsuario(int invertirFilasUsuario) {
+		this.invertirFilasUsuario = invertirFilasUsuario;
+	}
+	
+	/**
+	 * Obtiene el estado actual de filas
+	 * @return
+	 * 	0 - Grafo no representado, 1 - Creciente, 2 - Decreciente
+	 */
+	public int getInvertirFilasNormal() {
+		return this.invertirFilasNormal;
+	}
+
+	/**
+	 * Establece el estado actual de filas
+	 * @param invertirFilasNormal
+	 * 	0 - Grafo no representado, 1 - Creciente, 2 - Decreciente
+	 */
+	private void setInvertirFilasNormal(int invertirFilasNormal) {
+		this.invertirFilasNormal = invertirFilasNormal;
+	}
+	
+	/**
+	 * Obtiene si el usuario ha establecido el orden de las columnas o no
+	 * 
+	 * @return
+	 * 	0 - No establecido por el usuario, 1 - Creciente, 2 - Decreciente
+	 */
+	private int getInvertirColumnasUsuario() {
+		return this.invertirColumnasUsuario;
+	}
+
+	/**
+	 * Establece la opción del usuario para invertir columnas o no
+	 * 
+	 * @param invertirColumnasUsuario
+	 * 	0 - No establecido por el usuario, 1 - Creciente, 2 - Decreciente
+	 */
+	public void setInvertirColumnasUsuario(int invertirColumnasUsuario) {
+		this.invertirColumnasUsuario = invertirColumnasUsuario;
+	}
+
+	/**
+	 * Obtiene el estado actual de columnas
+	 * @return
+	 * 	0 - Grafo no representado, 1 - Creciente, 2 - Decreciente
+	 */
+	public int getInvertirColumnasNormal() {
+		return this.invertirColumnasNormal;
+	}
+
+	/**
+	 * Establece el estado actual de columnas
+	 * @param invertirColumnasNormal
+	 * 	0 - Grafo no representado, 1 - Creciente, 2 - Decreciente
+	 */
+	private void setInvertirColumnasNormal(int invertirColumnasNormal) {
+		this.invertirColumnasNormal = invertirColumnasNormal;
 	}
 }

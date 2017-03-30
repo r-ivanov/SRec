@@ -121,6 +121,7 @@ MouseListener, MouseMotionListener {
 			this.grafoDependencia = new GrafoDependencia(this.metodo,this.nyp);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false,false);
+			this.actualizarIconosInvertir();
 			this.tipoGrafo = 0;
 			this.representacionGrafo.setScale(this.representacionGrafo.getScale());
 			this.escalaOriginal = this.representacionGrafo.getScale();
@@ -173,6 +174,7 @@ MouseListener, MouseMotionListener {
 			this.grafoDependencia = new GrafoDependencia(this.metodos,this.nyp);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false,false);
+			this.actualizarIconosInvertir();
 			this.tipoGrafo = 0;
 			this.representacionGrafo.setScale(this.representacionGrafo.getScale());
 			this.escalaOriginal = this.representacionGrafo.getScale();
@@ -235,6 +237,7 @@ MouseListener, MouseMotionListener {
 		this.grafoDependencia.setTamanioTabla(filas, columnas);
 		this.representacionGrafo = this.grafoDependencia
 				.obtenerRepresentacionGrafo(false,false);
+		this.actualizarIconosInvertir();
 		this.numeroFilas = filas;
 		this.numeroColumnas = columnas;
 		this.visualizar();
@@ -261,7 +264,7 @@ MouseListener, MouseMotionListener {
 			this.representacionGrafo = null;
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(true,false);
-
+			this.actualizarIconosInvertir();
 			this.visualizar();
 		}
 		return mensajeError;
@@ -290,7 +293,7 @@ MouseListener, MouseMotionListener {
 			this.representacionGrafo = null;
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(true,true);
-
+			this.actualizarIconosInvertir();
 			this.visualizar();
 		}		
 		this.ultimaExpresionMultiplesMetodos = ultimaExpresionMultiplesMetodos;
@@ -316,6 +319,7 @@ MouseListener, MouseMotionListener {
 		}else{
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(true,this.tipoGrafo==2);
+			this.actualizarIconosInvertir();
 		}
 		this.orientacionFlechas = !this.orientacionFlechas;
 		if(visualizar){
@@ -368,6 +372,7 @@ MouseListener, MouseMotionListener {
 			
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false,this.tipoGrafo==2);	
+			this.actualizarIconosInvertir();
 			
 			//	Dejamos las flechas con la orientación que tenían
 			if(!this.orientacionFlechas){
@@ -506,7 +511,7 @@ MouseListener, MouseMotionListener {
 	 */
 	private void crearBarraDeHerramientas() {
 
-		this.botones = new JButton[4];
+		this.botones = new JButton[6];
 
 		this.botones[0] = new JButton(new ImageIcon(
 				getClass().getClassLoader().getResource("imagenes/i_tabulado.gif")));
@@ -527,6 +532,16 @@ MouseListener, MouseMotionListener {
 				getClass().getClassLoader().getResource("imagenes/i_tabulado_eliminarFilas.gif")));
 		this.botones[3]
 				.setToolTipText(Texto.get("GP_ELIMINAR_FYC", Conf.idioma));
+		
+		this.botones[4] = new JButton();
+		this.botones[4].setIcon(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/i_grafo_filas_asc.png")));
+			this.botones[4].setToolTipText(Texto.get("GP_INVERTIR_F_ASC", Conf.idioma));
+		
+		this.botones[5] = new JButton();
+		this.botones[5].setIcon(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/i_grafo_columnas_asc.png")));
+		this.botones[5].setToolTipText(Texto.get("GP_INVERTIR_C_ASC", Conf.idioma));
 				
 		// Creamos las barras de herramientas
 		this.barras = new JToolBar[2];
@@ -544,6 +559,8 @@ MouseListener, MouseMotionListener {
 		// Grupo opciones nodos
 		this.barras[1].add(this.botones[2]);	
 		this.barras[1].add(this.botones[3]);
+		this.barras[1].add(this.botones[4]);	
+		this.barras[1].add(this.botones[5]);
 
 		this.panelHerramientas = new JPanel();
 		this.panelHerramientas.setLayout(new BorderLayout());
@@ -578,8 +595,11 @@ MouseListener, MouseMotionListener {
 
 		this.panelHerramientas.add(panelInfo, BorderLayout.EAST);
 
-		if(this.tipoGrafo != 2)
+		if(this.tipoGrafo != 2){
 			this.botones[3].setEnabled(false);
+			this.botones[4].setEnabled(false);
+			this.botones[5].setEnabled(false);
+		}
 		if(this.eliminarFilasColumnas)
 			this.botones[0].setEnabled(false);
 //		this.add(this.panelHerramientas, BorderLayout.NORTH);
@@ -639,6 +659,35 @@ MouseListener, MouseMotionListener {
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * Actualiza la imagen de invertir filas y columnas dependiendo
+	 * de la representación del grafo
+	 */
+	private void actualizarIconosInvertir(){
+		int filas = this.grafoDependencia.getInvertirFilasNormal();
+		int columnas = this.grafoDependencia.getInvertirColumnasNormal();
+		
+		if(filas==1){			//	Creciente, img y tooltip decreciente
+			this.botones[4].setIcon(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/i_grafo_filas_des.png")));
+			this.botones[4].setToolTipText(Texto.get("GP_INVERTIR_F_DES", Conf.idioma));
+		}else if(filas==2){		//	Decreciente, img y tooltip creciente
+			this.botones[4].setIcon(new ImageIcon(
+					getClass().getClassLoader().getResource("imagenes/i_grafo_filas_asc.png")));
+			this.botones[4].setToolTipText(Texto.get("GP_INVERTIR_F_ASC", Conf.idioma));
+		}
+		
+		if(columnas==1){		//	Creciente, img y tooltip decreciente
+			this.botones[5].setIcon(new ImageIcon(
+				getClass().getClassLoader().getResource("imagenes/i_grafo_columnas_des.png")));
+			this.botones[5].setToolTipText(Texto.get("GP_INVERTIR_C_DES", Conf.idioma));
+		}else if(columnas==2){	//	Decreciente, img y tooltip creciente
+			this.botones[5].setIcon(new ImageIcon(
+					getClass().getClassLoader().getResource("imagenes/i_grafo_columnas_asc.png")));
+			this.botones[5].setToolTipText(Texto.get("GP_INVERTIR_C_ASC", Conf.idioma));
+		}
 	}
 	
 	@Override
@@ -754,6 +803,38 @@ MouseListener, MouseMotionListener {
 //			this.grafoDependencia.nodosPosicionadosFalse();			
 			this.visualizar();			
 			this.tipoGrafo = 2;
+		}else if (e.getSource() == this.botones[4]){		//	Invertir filas
+			if(this.grafoDependencia.getInvertirFilasNormal() == 1)
+				this.grafoDependencia.setInvertirFilasUsuario(2);
+			else if(this.grafoDependencia.getInvertirFilasNormal() == 2)
+				this.grafoDependencia.setInvertirFilasUsuario(1);
+			this.grafoDependencia.nodosPosicionadosFalse();
+			if(this.eliminarFilasColumnas){
+				this.representacionGrafo = this.grafoDependencia
+						.obtenerRepresentacionGrafoEliminadasFilasYColumnas(true);
+			}else{
+				this.representacionGrafo = this.grafoDependencia
+						.obtenerRepresentacionGrafo(true,this.tipoGrafo==2);
+			}		
+			this.visualizar();			
+			this.tipoGrafo = 2;
+			this.actualizarIconosInvertir();
+		}else if(e.getSource() == this.botones[5]){			//	Invertir columnas
+			if(this.grafoDependencia.getInvertirColumnasNormal() == 1)
+				this.grafoDependencia.setInvertirColumnasUsuario(2);
+			else if(this.grafoDependencia.getInvertirColumnasNormal() == 2)
+				this.grafoDependencia.setInvertirColumnasUsuario(1);
+			this.grafoDependencia.nodosPosicionadosFalse();
+			if(this.eliminarFilasColumnas){
+				this.representacionGrafo = this.grafoDependencia
+						.obtenerRepresentacionGrafoEliminadasFilasYColumnas(true);
+			}else{
+				this.representacionGrafo = this.grafoDependencia
+						.obtenerRepresentacionGrafo(true,this.tipoGrafo==2);
+			}		
+			this.visualizar();			
+			this.tipoGrafo = 2;
+			this.actualizarIconosInvertir();
 		}
 	}
 	
@@ -779,10 +860,15 @@ MouseListener, MouseMotionListener {
 	 */
 	public void setTipoGrafo(int tipo){
 		this.tipoGrafo = tipo;
-		if(this.tipoGrafo != 2)
+		if(this.tipoGrafo != 2){
 			this.botones[3].setEnabled(false);
-		else
-			this.botones[3].setEnabled(true);		
+			this.botones[4].setEnabled(false);
+			this.botones[5].setEnabled(false);
+		}else{
+			this.botones[3].setEnabled(true);	
+			this.botones[4].setEnabled(true);
+			this.botones[5].setEnabled(true);
+		}
 	}
 	
 	/**
