@@ -121,7 +121,6 @@ MouseListener, MouseMotionListener {
 			this.grafoDependencia = new GrafoDependencia(this.metodo,this.nyp);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false,false);
-			this.actualizarIconosInvertir();
 			this.tipoGrafo = 0;
 			this.representacionGrafo.setScale(this.representacionGrafo.getScale());
 			this.escalaOriginal = this.representacionGrafo.getScale();
@@ -174,7 +173,6 @@ MouseListener, MouseMotionListener {
 			this.grafoDependencia = new GrafoDependencia(this.metodos,this.nyp);
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false,false);
-			this.actualizarIconosInvertir();
 			this.tipoGrafo = 0;
 			this.representacionGrafo.setScale(this.representacionGrafo.getScale());
 			this.escalaOriginal = this.representacionGrafo.getScale();
@@ -237,7 +235,6 @@ MouseListener, MouseMotionListener {
 		this.grafoDependencia.setTamanioTabla(filas, columnas);
 		this.representacionGrafo = this.grafoDependencia
 				.obtenerRepresentacionGrafo(false,false);
-		this.actualizarIconosInvertir();
 		this.numeroFilas = filas;
 		this.numeroColumnas = columnas;
 		this.visualizar();
@@ -264,7 +261,6 @@ MouseListener, MouseMotionListener {
 			this.representacionGrafo = null;
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(true,false);
-			this.actualizarIconosInvertir();
 			this.visualizar();
 		}
 		return mensajeError;
@@ -293,7 +289,8 @@ MouseListener, MouseMotionListener {
 			this.representacionGrafo = null;
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(true,true);
-			this.actualizarIconosInvertir();
+			                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+		
 			this.visualizar();
 		}		
 		this.ultimaExpresionMultiplesMetodos = ultimaExpresionMultiplesMetodos;
@@ -319,7 +316,6 @@ MouseListener, MouseMotionListener {
 		}else{
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(true,this.tipoGrafo==2);
-			this.actualizarIconosInvertir();
 		}
 		this.orientacionFlechas = !this.orientacionFlechas;
 		if(visualizar){
@@ -372,7 +368,7 @@ MouseListener, MouseMotionListener {
 			
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false,this.tipoGrafo==2);	
-			this.actualizarIconosInvertir();
+			
 			
 			//	Dejamos las flechas con la orientación que tenían
 			if(!this.orientacionFlechas){
@@ -602,6 +598,11 @@ MouseListener, MouseMotionListener {
 		}
 		if(this.eliminarFilasColumnas)
 			this.botones[0].setEnabled(false);
+		
+		//	Actualizamos los iconos de invertir después de generar
+		//	la barra de herramientas
+		this.actualizarIconosInvertir(0);
+		this.actualizarIconosInvertir(1);
 //		this.add(this.panelHerramientas, BorderLayout.NORTH);
 	}	
 
@@ -664,29 +665,34 @@ MouseListener, MouseMotionListener {
 	/**
 	 * Actualiza la imagen de invertir filas y columnas dependiendo
 	 * de la representación del grafo
+	 * 
+	 * @param icono
+	 * 		0 = Pulsado columnas
+	 * 		1 = Pulsado filas
 	 */
-	private void actualizarIconosInvertir(){
-		int filas = this.grafoDependencia.getInvertirFilasNormal();
-		int columnas = this.grafoDependencia.getInvertirColumnasNormal();
-		
-		if(filas==1){			//	Creciente, img y tooltip decreciente
-			this.botones[4].setIcon(new ImageIcon(
-				getClass().getClassLoader().getResource("imagenes/i_grafo_filas_des.png")));
-			this.botones[4].setToolTipText(Texto.get("GP_INVERTIR_F_DES", Conf.idioma));
-		}else if(filas==2){		//	Decreciente, img y tooltip creciente
-			this.botones[4].setIcon(new ImageIcon(
-					getClass().getClassLoader().getResource("imagenes/i_grafo_filas_asc.png")));
-			this.botones[4].setToolTipText(Texto.get("GP_INVERTIR_F_ASC", Conf.idioma));
-		}
-		
-		if(columnas==1){		//	Creciente, img y tooltip decreciente
-			this.botones[5].setIcon(new ImageIcon(
-				getClass().getClassLoader().getResource("imagenes/i_grafo_columnas_des.png")));
-			this.botones[5].setToolTipText(Texto.get("GP_INVERTIR_C_DES", Conf.idioma));
-		}else if(columnas==2){	//	Decreciente, img y tooltip creciente
-			this.botones[5].setIcon(new ImageIcon(
-					getClass().getClassLoader().getResource("imagenes/i_grafo_columnas_asc.png")));
-			this.botones[5].setToolTipText(Texto.get("GP_INVERTIR_C_ASC", Conf.idioma));
+	private void actualizarIconosInvertir(int icono){		
+		if(icono==0){		//	COLUMNAS
+			int columnas = this.grafoDependencia.getInvertirColumnasNormal();
+			if(columnas==1){		//	Creciente, img y tooltip decreciente
+				this.botones[5].setIcon(new ImageIcon(
+					getClass().getClassLoader().getResource("imagenes/i_grafo_columnas_des.png")));
+				this.botones[5].setToolTipText(Texto.get("GP_INVERTIR_C_DES", Conf.idioma));
+			}else if(columnas==2){	//	Decreciente, img y tooltip creciente
+				this.botones[5].setIcon(new ImageIcon(
+						getClass().getClassLoader().getResource("imagenes/i_grafo_columnas_asc.png")));
+				this.botones[5].setToolTipText(Texto.get("GP_INVERTIR_C_ASC", Conf.idioma));
+			}
+		}else if(icono==1){	//	FILAS
+			int filas = this.grafoDependencia.getInvertirFilasNormal();
+			if(filas==1){			//	Creciente, img y tooltip decreciente
+				this.botones[4].setIcon(new ImageIcon(
+					getClass().getClassLoader().getResource("imagenes/i_grafo_filas_des.png")));
+				this.botones[4].setToolTipText(Texto.get("GP_INVERTIR_F_DES", Conf.idioma));
+			}else if(filas==2){		//	Decreciente, img y tooltip creciente
+				this.botones[4].setIcon(new ImageIcon(
+						getClass().getClassLoader().getResource("imagenes/i_grafo_filas_asc.png")));
+				this.botones[4].setToolTipText(Texto.get("GP_INVERTIR_F_ASC", Conf.idioma));
+			}
 		}
 	}
 	
@@ -818,7 +824,7 @@ MouseListener, MouseMotionListener {
 			}		
 			this.visualizar();			
 			this.tipoGrafo = 2;
-			this.actualizarIconosInvertir();
+			this.actualizarIconosInvertir(0);
 		}else if(e.getSource() == this.botones[5]){			//	Invertir columnas
 			if(this.grafoDependencia.getInvertirColumnasNormal() == 1)
 				this.grafoDependencia.setInvertirColumnasUsuario(2);
@@ -834,7 +840,7 @@ MouseListener, MouseMotionListener {
 			}		
 			this.visualizar();			
 			this.tipoGrafo = 2;
-			this.actualizarIconosInvertir();
+			this.actualizarIconosInvertir(1);
 		}
 	}
 	
