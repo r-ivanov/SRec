@@ -40,7 +40,7 @@ public class OpcionOpsVisualizacion extends Opcion {
 	private boolean sangrado = true;
 	private boolean idMetodoTraza = false;
 	private boolean soloEstructuraDYVcrono = true;
-	private boolean arranqueEstadoInicial = true;
+	private boolean arranqueEstadoInicial = false;
 	private boolean ajustarVistaGlobal = true;
 	private boolean visualizacionDinamica = true;
 
