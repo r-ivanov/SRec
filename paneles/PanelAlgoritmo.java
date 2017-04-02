@@ -3,6 +3,8 @@ package paneles;
 import java.awt.BorderLayout;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -92,6 +94,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	private NavegacionListener arbolNavegacionListener;
 	
 	private static Boolean grafoActivado = false;	
+	
+	private static int panel1Pestana,panel2Pestana;
 
 	/**
 	 * Crea un nuevo PanelAlgoritmo
@@ -231,6 +235,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.panelGral.add(pContencion, BorderLayout.CENTER);
 		this.setLayout(new BorderLayout());
 		this.add(this.panelGral, BorderLayout.CENTER);
+		
+		//	Añadimos mouse event a los JTabbedPane para recordar pestañas
+		this.anadirMouseEventPaneles();
 	}
 
 	/**
@@ -480,6 +487,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorControl.updateUI();
 		this.contenedorGrafo.updateUI();		
 		this.abriendoVistas = false;
+		
+		//	Recordamos pestaña seleccionada
+		this.recordarPestanaPaneles();
+		
 	}
 
 	/**
@@ -1393,6 +1404,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			if (this.panel1.getTitleAt(i).equals(nombre)) {
 				// System.out.println("    (1)setVistaActiva "+i);
 				this.panel1.setSelectedIndex(i);
+				panel1Pestana = i;
 			}
 		}
 
@@ -1400,6 +1412,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			if (this.panel2.getTitleAt(i).equals(nombre)) {
 				// System.out.println("    (2)setVistaActiva "+i);
 				this.panel2.setSelectedIndex(i);
+				panel2Pestana = i;
 			}
 		}
 
@@ -1893,5 +1906,104 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
     		valorNuevo = (int) ((porc - 1) * 100) - 2;
     	}	
     	pGrafo.refrescarZoom(valorNuevo);
+    }
+    
+    /**
+     * Recuerda la pestaña seleccionada en los paneles si es posible,
+     * sino la establace a la primera
+     */
+    private void recordarPestanaPaneles(){
+    	if(panel1Pestana<this.panel1.getTabCount())
+			this.panel1.setSelectedIndex(panel1Pestana);
+		else{
+			if(this.panel1!=null && this.panel1.getTabCount()>0)
+				this.panel1.setSelectedIndex(0);
+			panel1Pestana = 0;
+		}
+		
+		if(panel2Pestana<this.panel2.getTabCount())
+			this.panel2.setSelectedIndex(panel2Pestana);
+		else{
+			if(this.panel2!=null && this.panel2.getTabCount()>0)
+				this.panel2.setSelectedIndex(0);
+			panel2Pestana = 0;
+		}
+    }
+    
+    /**
+     * Detecta clicks en las pestañas de cada panel unicamente cuando
+     * el usuario pulsa en una pestaña, para recordarla entre ejecuciones
+     * (para esto no sirve stateChanged porque recibe "clicks extras")
+     */
+    private void anadirMouseEventPaneles(){
+    	this.panel1.addMouseListener(new MouseListener()
+    	{
+
+    		@Override
+    		public void mouseClicked(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			panel1Pestana = PanelAlgoritmo.this.panel1.getSelectedIndex();
+    		}
+
+    		@Override
+    		public void mousePressed(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			
+    		}
+
+    		@Override
+    		public void mouseReleased(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			
+    		}
+
+    		@Override
+    		public void mouseEntered(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			
+    		}
+
+    		@Override
+    		public void mouseExited(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			
+    		}
+
+    	});
+    	
+    	this.panel2.addMouseListener(new MouseListener()
+    	{
+
+    		@Override
+    		public void mouseClicked(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			panel2Pestana = PanelAlgoritmo.this.panel2.getSelectedIndex();
+    		}
+
+    		@Override
+    		public void mousePressed(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			
+    		}
+
+    		@Override
+    		public void mouseReleased(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			
+    		}
+
+    		@Override
+    		public void mouseEntered(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			
+    		}
+
+    		@Override
+    		public void mouseExited(MouseEvent e) {
+    			// TODO Auto-generated method stub
+    			
+    		}
+
+    	});
     }
 }
