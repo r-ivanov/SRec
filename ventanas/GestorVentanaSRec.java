@@ -876,6 +876,36 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 			}
 		}
 	}
+	
+	/**
+	 * Establece un elemento del menú como seleccionado
+	 * (Método principalmente para Linux)
+	 * 
+	 * @param menu
+	 *      Menú correspondiente.
+	 * @param nombreElemento
+	 *      Nombre del elemento dentro del menú.
+	 * @param path
+	 *      Path del icono para el elemento.
+	 * @param pulsado
+	 * 		Indica si el elemento está pulsado o no
+	 */
+	protected static void setPulsado(JMenu menu, String nombreElemento,
+			URL path, boolean pulsado) {
+		JMenuItem items[] = new JMenuItem[menu.getItemCount()];
+
+		for (int i = 0; i < items.length; i++) {
+			items[i] = menu.getItem(i);
+		}
+
+		for (int i = 0; i < items.length; i++) {
+			if (items[i] != null && items[i].getText().equals(nombreElemento)) {
+				items[i].setSelected(pulsado);;
+			} else if (items[i] != null && items[i] instanceof JMenu) {
+				setPulsado((JMenu) items[i], nombreElemento, path, pulsado);
+			}
+		}
+	}
 
 	/**
 	 * Crea las distintas barras de herramientas de la aplicación.

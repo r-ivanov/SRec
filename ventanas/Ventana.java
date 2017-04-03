@@ -3176,20 +3176,34 @@ public class Ventana extends JFrame implements ActionListener {
 			this.log_write("Visualización > Identificador de método: "
 					+ oov.getIdMetodoTraza());
 		}
-		if (oov.getIdMetodoTraza()) {
+		if (oov.getIdMetodoTraza()) {					//	idMetodo activado
 			GestorVentanaSRec.iconoMenuItem(
 					this.menus[1],
 					Texto.get("MENU_VISU_19", Conf.idioma)
 					.replace("_SubMenuItem_", "")
 					.replace("_CheckBoxMenuItem_", ""),
 					getClass().getClassLoader().getResource("imagenes/i_idMetodo.gif"));
+			GestorVentanaSRec.setPulsado(
+					this.menus[1],
+					Texto.get("MENU_VISU_19", Conf.idioma)
+					.replace("_SubMenuItem_", "")
+					.replace("_CheckBoxMenuItem_", ""),
+					getClass().getClassLoader().getResource("imagenes/i_idMetodo.gif"),
+					true);
 		} else {
-			GestorVentanaSRec.iconoMenuItem(
+			GestorVentanaSRec.iconoMenuItem(			//	idMetodo NO activado
 					this.menus[1],
 					Texto.get("MENU_VISU_19", Conf.idioma)
 					.replace("_SubMenuItem_", "")
 					.replace("_CheckBoxMenuItem_", ""),
 					getClass().getClassLoader().getResource("imagenes/i_idMetodo_des.gif"));
+			GestorVentanaSRec.setPulsado(				
+					this.menus[1],
+					Texto.get("MENU_VISU_19", Conf.idioma)
+					.replace("_SubMenuItem_", "")
+					.replace("_CheckBoxMenuItem_", ""),
+					getClass().getClassLoader().getResource("imagenes/i_idMetodo_des.gif"),
+					true);
 		}
 		this.actualizarVisualizacion();
 	}
