@@ -97,7 +97,7 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 			this.botonesVistas[i].setToolTipText(Texto.get("CVD_MARCAR",
 					Conf.idioma));
 			this.botonesVistas[i].addKeyListener(this);
-			if ((i == 2) && (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
+			if ((vistasDisponibles[i].equals(Texto.get("V_TRAZA", Conf.idioma))) && (!Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 							this.ventana.getTraza().getTecnicas()))) {
 				this.botonesVistas[i].setEnabled(false);
 			}
@@ -107,7 +107,12 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 			this.grupoBotones.add(this.botonesVistas[i]);
 			panelVistas.add(this.botonesVistas[i]);
 		}
-		this.botonesVistas[0].setSelected(true);
+		for(int i=0;i<this.botonesVistas.length;i++){
+			if(this.botonesVistas[i].isEnabled()){
+				this.botonesVistas[i].setSelected(true);
+				break;
+			}
+		}
 
 		if ((this.vistasDisponibles.length >= 4) && (this.tipoExportacion < 3)) {
 			this.botonesVistas[3].setEnabled(false);
