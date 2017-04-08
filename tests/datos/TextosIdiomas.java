@@ -140,7 +140,7 @@ public class TextosIdiomas {
 		File filesXML;
 		
 		if(!SsooValidator.isUnix()){	//	No Linux
-			filesXML = new File("Sources\\srec\\datos\\Textos.xml");
+			filesXML = new File("datos\\Textos.xml");
 		}else{							//	Si linux			
 			filesXML = new File("Sources/srec/datos/Textos.xml");
 		}
