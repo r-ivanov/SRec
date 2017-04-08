@@ -374,11 +374,11 @@
 		<T valor="Zoom configuration: adjust" idioma="en" id="GP_AJUSTE_ZOOM"/>
 		
 		<T valor="Los m[eacute]todos determinan" idioma="es" id="GP_CUADROMMSELECT_METODOS_DETERMINAN"/>
-		<T valor="Methods determine" idioma="es" id="GP_CUADROMMSELECT_METODOS_DETERMINAN"/>
+		<T valor="Methods determine" idioma="en" id="GP_CUADROMMSELECT_METODOS_DETERMINAN"/>
 		<T valor="Filas" idioma="es" id="GP_CUADROMMSELECT_FILAS"/>
-		<T valor="Rows" idioma="en" id="GP_CUADROMMSELECT_METODOS_FILAS"/>	
+		<T valor="Rows" idioma="en" id="GP_CUADROMMSELECT_FILAS"/>	
 		<T valor="Columnas" idioma="es" id="GP_CUADROMMSELECT_COLUMNAS"/>
-		<T valor="Columns" idioma="en" id="GP_CUADROMMSELECT_METODOS_COLUMNAS"/>	
+		<T valor="Columns" idioma="en" id="GP_CUADROMMSELECT_COLUMNAS"/>	
 		<T valor="Par[aacute]metros comunes" idioma="es" id="GP_CUADROMMSELECT_PARAMC"/>
 		<T valor="Common parameters" idioma="en" id="GP_CUADROMMSELECT_PARAMC"/>			
 		
@@ -948,7 +948,7 @@
 		<T valor="Degradados de color" idioma="es" id="COCV_HABDEGR"/>
 		<T valor="Color degrades" idioma="en" id="COCV_HABDEGR"/>		
 		<T valor="Habilitar degradado en celdas" idioma="es" id="COCV_HABILDEGR"/>
-		<T valor="Enable degrades in cells" idioma="en" id="COCV_HABDEGR"/>		
+		<T valor="Enable degrades in cells" idioma="en" id="COCV_HABILDEGR"/>		
 		<T valor="Marque la casilla para habilitar efectos de degradado." idioma="es" id="COCV_HABDEGR_TTT"/>
 		<T valor="Check the cell to enable degrades effects" idioma="en" id="COCV_HABDEGR_TTT"/>			
 		
