@@ -15,6 +15,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultCaret;
+import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
@@ -56,6 +58,8 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 	private MyDocument md = new MyDocument();
 
 	private JEditorPane edit;
+	
+	private final Color colorErrores = Color.LIGHT_GRAY;
 	
 	/**
 	 * Construye un nuevo panel editor vacío.
@@ -633,8 +637,27 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 	 * @param longitud Tamaño de la selección.
 	 */
 	public void select(int inicio, int longitud) {
-		this.edit.select(inicio, longitud);
-		this.edit.requestFocus();
+		
+		//	Hacemos focus
+		
+		this.edit.requestFocusInWindow();
+        this.edit.select(inicio, longitud);
+
+        //	Coloreamos línea
+        
+		DefaultHighlighter highlighter =  (DefaultHighlighter)this.edit.getHighlighter();
+        DefaultHighlighter.DefaultHighlightPainter painter = 
+        		new DefaultHighlighter.DefaultHighlightPainter( colorErrores );
+        highlighter.setDrawsLayeredHighlights(false);
+        
+        try
+        {
+            highlighter.addHighlight(inicio, inicio+longitud, painter );
+        }
+        catch(Exception e)
+        {
+            
+        }
 	}
 
 	@Override
