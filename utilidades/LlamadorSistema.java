@@ -86,8 +86,10 @@ public class LlamadorSistema {
 		
 		if(!SsooValidator.isUnix()){	//	No Linux			
 			mvCorregida = mvCorregida.substring(0,mvCorregida.lastIndexOf('\\'));
+			mvCorregida = mvCorregida + "\\jre";
 		}else{							//	Linux			
 			mvCorregida = mvCorregida.substring(0,mvCorregida.lastIndexOf('/'));
+			mvCorregida = mvCorregida + "/jre";
 		}
 		
 		System.setProperty("java.home", mvCorregida);
