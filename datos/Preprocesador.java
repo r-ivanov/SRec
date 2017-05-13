@@ -283,7 +283,8 @@ public class Preprocesador extends Thread {
 				aux[1] = "-d";
 				aux[4] = "-classpath";
 				aux[5] = getRunningPath();
-				String salidaCompilador = LlamadorSistema.ejecucionArray(aux);
+				String salidaCompilador = LlamadorSistema.getErrorDetallado(aux[3],
+						((OpcionMVJava)this.gOpciones.getOpcion("OpcionMVJava",true)).getDir());
 				// String
 
 				this.compilado = salidaCompilador.length() < 4;
