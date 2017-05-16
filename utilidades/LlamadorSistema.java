@@ -81,6 +81,7 @@ public class LlamadorSistema {
 	public static String getErrorDetallado(String source, String mv) { 
 		String retorno = "";
 		String mvCorregida="";
+		String javaHomeCopiaSeguridad = System.getProperty("java.home");
 		
 		mvCorregida = mv.substring(0,mv.length()-2);
 		
@@ -92,7 +93,7 @@ public class LlamadorSistema {
 			mvCorregida = mvCorregida + "/jre";
 		}
 		
-		System.setProperty("java.home", mvCorregida);
+		System.setProperty("java.home", mvCorregida);		
 		String sourceFile = "";
 		if(!SsooValidator.isUnix())		//	No Linux
 			sourceFile = source.substring(1,source.length()-1);
@@ -128,7 +129,9 @@ public class LlamadorSistema {
 			fileManager.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	
+			System.setProperty("java.home", javaHomeCopiaSeguridad);
+		}
+	    System.setProperty("java.home", javaHomeCopiaSeguridad);
 	    return retorno;
     } 
 }
