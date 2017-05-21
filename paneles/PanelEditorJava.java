@@ -27,6 +27,10 @@ import utilidades.ServiciosString;
 import ventanas.Ventana;
 import conf.Conf;
 
+import javax.swing.*;
+import org.fife.ui.rtextarea.*;
+import org.fife.ui.rsyntaxtextarea.*;
+
 /**
  * Representa el panel que permite visualizar el código de la clase cargada y editarlo.
  */

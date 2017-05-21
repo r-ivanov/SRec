@@ -9,7 +9,7 @@
 	
     <target name="compile" description="Compila el código">
         <mkdir dir="bin" />
-        <javac target="1.6" source="1.6" srcdir="." excludes="tests/**" destdir="bin" encoding="Cp1252" />
+        <javac target="1.8" source="1.8" srcdir="." excludes="tests/**" destdir="bin" encoding="Cp1252" />
     </target>
 
     <target name="jar" description="Genera el JAR ejecutable" depends="clean,compile">
