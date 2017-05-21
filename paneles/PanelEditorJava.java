@@ -27,10 +27,6 @@ import utilidades.ServiciosString;
 import ventanas.Ventana;
 import conf.Conf;
 
-import javax.swing.*;
-import org.fife.ui.rtextarea.*;
-import org.fife.ui.rsyntaxtextarea.*;
-
 /**
  * Representa el panel que permite visualizar el código de la clase cargada y editarlo.
  */
@@ -78,6 +74,8 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 	 * @param texto Código que contendrá el editor.
 	 * @param editable A true si se permite edición, false en caso contrario.
 	 */
+	
+	//	REFERENCIA DANI
 	public PanelEditorJava(String texto, boolean editable) {
 		super();
 		
@@ -630,6 +628,8 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 	 * 
 	 * @return Texto del editor.
 	 */
+	
+	//	REFERENCIA DANI
 	public String getText() {
 		return this.edit.getText();
 	}
@@ -640,6 +640,8 @@ class PanelEditorJava extends JPanel implements DocumentListener, KeyListener {
 	 * @param inicio Posición de inicio de la selección.
 	 * @param longitud Tamaño de la selección.
 	 */
+	
+	//	REFERENCIA DANI
 	public void select(int inicio, int longitud) {
 		
 		//	Hacemos focus

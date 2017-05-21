@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import utilidades.Texto;
 import ventanas.Ventana;
@@ -101,9 +102,13 @@ class PanelCodigo implements MouseListener {
 			} else if (recargarFormato) {
 				this.contents = new StringBuffer(this.getText());
 			}
-
-			this.panelJava = new PanelEditorJava(new String(this.contents),
-					editable);
+			
+			//	PANEL JAVA LLAMADA
+			
+        	this.panelJava = new PanelEditorJava(new String(this.contents),
+ 					editable);
+        	this.panelJava.setVisible(true);
+		      
 			this.panel.setLayout(new BorderLayout());
 			this.panel.removeAll();
 
