@@ -1375,18 +1375,18 @@
 		<!-- Panel de compilador -->
 		<T valor="Clase compilada sin errores." idioma="es" id="COMPILAR_NOERRORES"/>
 		<T valor="Compilation with no errors." idioma="en" id="COMPILAR_NOERRORES"/>
+		<T valor="Clase compilada con errores." idioma="es" id="COMPILAR_SIERRORES"/>
+		<T valor="Compilation with errors." idioma="en" id="COMPILAR_SIERRORES"/>
 		<T valor="FICHERO: " idioma="es" id="COMPILAR_FICHERO"/>
 		<T valor="FILE: " idioma="en" id="COMPILAR_FICHERO"/>
 		<T valor="LINEA: " idioma="es" id="COMPILAR_LINEA"/>
 		<T valor="LINE: " idioma="en" id="COMPILAR_LINEA"/>
-		<T valor="COLUMNA: " idioma="es" id="COMPILAR_COLUMNA"/>
-		<T valor="COLUMN: " idioma="en" id="COMPILAR_COLUMNA"/>
-		<T valor="ERROR RESUMEN: " idioma="es" id="COMPILAR_ERROR_RESUMEN"/>
-		<T valor="ERROR SUMMARY: " idioma="en" id="COMPILAR_ERROR_RESUMEN"/>
-		<T valor="ERROR AMPLIADO: " idioma="es" id="COMPILAR_ERROR_AMPLIADO"/>
-		<T valor="ERROR EXTENDED: " idioma="en" id="COMPILAR_ERROR_AMPLIADO"/>
-		<T valor="---------------------------------------------------------------------" idioma="es" id="COMPILAR_SEPARADOR"/>
-		<T valor="---------------------------------------------------------------------" idioma="en" id="COMPILAR_SEPARADOR"/>
+		<T valor="ERROR COMPILADOR: " idioma="es" id="COMPILAR_ERROR"/>
+		<T valor="COMPILER ERROR: " idioma="en" id="COMPILAR_ERROR"/>
+		<T valor="TOTAL ERRORES: " idioma="es" id="COMPILAR_NUM_ERROR"/>
+		<T valor="TOTAL ERRORS: " idioma="en" id="COMPILAR_NUM_ERROR"/>
+		<T valor="------------------------------------------------------------------------------------------------------------------------------------------" idioma="es" id="COMPILAR_SEPARADOR"/>
+		<T valor="------------------------------------------------------------------------------------------------------------------------------------------" idioma="en" id="COMPILAR_SEPARADOR"/>
 		
 		<!-- Etiqueta flotante (se usan en cuadro de visibilidad, de busqueda y de parametros tambien) -->
 		<T valor="Ent" idioma="es" id="ETIQFL_ENTR"/>

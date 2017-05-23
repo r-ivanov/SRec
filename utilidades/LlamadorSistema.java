@@ -1,18 +1,9 @@
 package utilidades;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.tools.Diagnostic;
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
-import javax.tools.JavaCompiler.CompilationTask;
+import java.io.InputStreamReader;
 
 import conf.Conf;
 
@@ -26,10 +17,11 @@ public class LlamadorSistema {
 	 * debe recibir un array de Strings.
 	 * 
 	 * @param s
-	 *         Lista de parámetros del comando.
+	 * 		Lista de parámetros del comando.
 	 * 
-	 * @return Contenido volcado en la salida de error tras la ejecución del
-	 *         comando.
+	 * @return 
+	 * 		Contenido volcado en la salida de error tras la ejecución del
+	 *      comando.
 	 */
 	public static String ejecucionArray(String[] s) {
 		String salida = "";
@@ -71,67 +63,159 @@ public class LlamadorSistema {
 	/**
 	 * Obtiene un error detallado al compilar un fichero .java
 	 * 
-	 * @param source
-	 * 		Ruta que contiene el archivo a compilar
-	 * @param mv
-	 * 		Ruta que contiene el jdk
+	 * @param comando
+	 * 		Comando que ejecuta el fichero java
+	 * 
 	 * @return
 	 * 		String con el error detallado
+	 * 
+	 * @throws IOException 
 	 */
-	public static String getErrorDetallado(String source, String mv) { 
-		String retorno = "";
-		String mvCorregida="";
-		String javaHomeCopiaSeguridad = System.getProperty("java.home");
-		
-		mvCorregida = mv.substring(0,mv.length()-2);
-		
-		if(!SsooValidator.isUnix()){	//	No Linux			
-			mvCorregida = mvCorregida.substring(0,mvCorregida.lastIndexOf('\\'));
-			mvCorregida = mvCorregida + "\\jre";
-		}else{							//	Linux			
-			mvCorregida = mvCorregida.substring(0,mvCorregida.lastIndexOf('/'));
-			mvCorregida = mvCorregida + "/jre";
-		}
-		
-		System.setProperty("java.home", mvCorregida);		
-		String sourceFile = "";
-		if(!SsooValidator.isUnix())		//	No Linux
-			sourceFile = source.substring(1,source.length()-1);
-		else							//	Linux
-			sourceFile = source;
-	    JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-	    DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-	    StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
+	public static String getErrorDetallado(String[] comando) throws IOException { 
 
-	    List<File> sourceFileList = new ArrayList<File>();
-	    sourceFileList.add(new File(sourceFile));
-	    Iterable<? extends JavaFileObject> compilationUnits = fileManager
-	        .getJavaFileObjectsFromFiles(sourceFileList);
-	    CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits);
-	    task.call();
-	    List<Diagnostic<? extends JavaFileObject>> diagnosticList = diagnostics.getDiagnostics();
-	    
-	    for (Diagnostic<? extends JavaFileObject> diagnostic : diagnosticList) {
-	      retorno += Texto.get("COMPILAR_FICHERO",Conf.idioma) +
-	    		  diagnostic.getSource().getName() + "\n";
-	      retorno += Texto.get("COMPILAR_LINEA",Conf.idioma) +
-	    		  diagnostic.getLineNumber()+ "\n";
-	      retorno += Texto.get("COMPILAR_COLUMNA",Conf.idioma) +
-	    		  diagnostic.getColumnNumber()+ "\n";
-	      retorno += Texto.get("COMPILAR_ERROR_RESUMEN",Conf.idioma) +
-	    		  diagnostic.getMessage(null)+ "\n";
-	      retorno += Texto.get("COMPILAR_ERROR_AMPLIADO",Conf.idioma) +
-	    		  diagnostic.toString()+"\n"+
-	    		  Texto.get("COMPILAR_SEPARADOR",Conf.idioma)
-	    		  + "\n";
-	    }
-	    try {
-			fileManager.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.setProperty("java.home", javaHomeCopiaSeguridad);
-		}
-	    System.setProperty("java.home", javaHomeCopiaSeguridad);
-	    return retorno;
+		Process proceso = Runtime.getRuntime().exec(comando);
+		String retornoString = "";		
+		int contador = 0;
+		
+        try {
+            proceso.waitFor();
+        }catch (InterruptedException ex) {
+        	
+        }
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(proceso.getInputStream()));
+        while (br.ready()){
+            String aux = br.readLine();
+            if (aux.compareTo("") != 0){
+                retornoString+=aux+"\n";
+            }
+        }
+        
+        br = new BufferedReader(new InputStreamReader(proceso.getErrorStream()));   	
+        while (br.ready()){        	
+            String aux = br.readLine();
+            String[] parseo = Parsear(aux, contador);  
+            
+           	if((parseo.length == 3) && (aux.compareTo("") != 0)){
+           		
+           		try{
+                	Integer.parseInt(parseo[1]);
+                }catch(Exception e){
+                	continue;
+                }
+                
+           		retornoString+="\n"+Texto.get("COMPILAR_SEPARADOR",Conf.idioma);
+           		retornoString+="\n" + Texto.get("COMPILAR_FICHERO",Conf.idioma);
+           		retornoString+=parseo[0];
+           		retornoString+="\n" + Texto.get("COMPILAR_LINEA",Conf.idioma);
+           		retornoString+=parseo[1];
+           		retornoString+="\n" + Texto.get("COMPILAR_ERROR",Conf.idioma);
+           		retornoString+=parseo[2] + "\n";
+           	}else if((aux.indexOf("error")!=-1) && (aux.length()<9)){ 	//línea errores
+           		retornoString+=parseo[0];
+            }else if(aux.indexOf("^")!=-1){ 							//línea 2 código
+            	retornoString+=parseo[0];
+            }else{ 														//línea 1 código
+            	retornoString+=parseo[0] + "\n";
+            }
+           	
+            if (aux.compareTo("") == 0){
+            	retornoString+=aux+"\n";
+            }
+            
+            contador++;            
+        }
+        
+        retornoString = invertirTotalErrores(retornoString);
+        return retornoString;
     } 
+	
+	/**
+	 * Parsea una línea de la salida de errores
+	 * 
+	 * @param aux
+	 * 		Línea
+	 * 
+	 * @param auxLinea
+	 * 		Número línea
+	 * 
+	 * @return
+	 * 		Error parseado
+	 */
+	private static String[] Parsear(String aux, int auxLinea){
+		String[] array = new String[1];
+		
+		if((aux.indexOf("error")!=-1) && (aux.length()<9)){ 
+			array = new String[1];
+			int numErrores = aux.indexOf("error");
+			String numErroresString = aux.substring(0,numErrores);
+			array[0]="\n"+Texto.get("COMPILAR_SEPARADOR",Conf.idioma);
+			array[0]+= "\n"+Texto.get("COMPILAR_NUM_ERROR",Conf.idioma) + numErroresString;
+			array[0]+="\n"+Texto.get("COMPILAR_SEPARADOR",Conf.idioma);
+			return array;
+		}else{		
+			if(auxLinea%3 == 0){
+				array = new String[3];
+				array = ParsearTipo0(aux);		
+				return array;
+			}else if(auxLinea%3 == 1){
+				array = new String[1];
+				array[0] = aux;
+				return array;
+			}else if(auxLinea%3 == 2){
+				array = new String[1];
+				array[0] = aux;
+				return array;
+			}
+		}
+		return array;
+	}
+	
+	/**
+	 * Parsea cuando realmente es una línea de error
+	 * 
+	 * @param aux
+	 * 		Línea de error a parsear
+	 * 
+	 * @return
+	 * 		array = {fichero, linea, error}
+	 */
+	private static String[] ParsearTipo0(String aux){ 
+		int finRuta = aux.indexOf(".java") + 5;
+		String fichero = aux.substring(0,finRuta);
+		int finLinea = aux.indexOf(": ");
+		
+		String linea = aux.substring(finRuta+1,finLinea);
+		String error = aux.substring(finLinea+1, aux.length());
+		
+		String[] array = {fichero, linea, error};
+		return array;
+	}
+	
+	/**
+	 * 	Método que pone el total de errores arriba, 
+	 * 	en vez de abajo de todo el texto del compilador
+	 * 
+	 * @param errores
+	 * 		String con todos los errores parseados y formateados
+	 * 
+	 * @return
+	 * 		Mismo que error pero con TOTAL ERRORES al principio
+	 */
+	private static String invertirTotalErrores(String errores){
+		if(!errores.contains(Texto.get("COMPILAR_NUM_ERROR",Conf.idioma))){
+			return errores;
+		}
+		String temp = errores.substring(0,errores.lastIndexOf('\n'));
+		String tempErrores = temp.substring(0,temp.lastIndexOf('\n'));
+		String tempErrores2 = temp.substring(tempErrores.length(),errores.lastIndexOf('\n'));
+		tempErrores2 = tempErrores2.substring(1);
+		tempErrores = 
+				Texto.get("COMPILAR_SEPARADOR",Conf.idioma) + "\n"+
+				tempErrores2 + 				
+				tempErrores;
+		return tempErrores;
+	}
 }
+
+
