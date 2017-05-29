@@ -3,8 +3,8 @@
 	<classpathentry excluding="bin/|release/|build_tmp/" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/Daniel/Downloads/Mozilla Firefox/RSyntaxTextArea-master/build/libs/rsyntaxtextarea-3.0.0-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Daniel/Downloads/Mozilla Firefox/RSyntaxTextArea-master/build/libs/rsyntaxtextarea-3.0.0-SNAPSHOT-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Daniel/Downloads/Mozilla Firefox/RSyntaxTextArea-master/build/libs/rsyntaxtextarea-3.0.0-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="lib/rsyntaxtextarea-3.0.0-SNAPSHOT-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/rsyntaxtextarea-3.0.0-SNAPSHOT-sources.jar"/>
+	<classpathentry kind="lib" path="lib/rsyntaxtextarea-3.0.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

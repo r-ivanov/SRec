@@ -29,7 +29,7 @@ class PanelCodigo implements MouseListener {
 
 	private StringBuffer contents;
 
-	private PanelEditorJava panelJava;
+	private PanelEditorJava2 panelJava;
 
 	private JPanel panel = new JPanel();
 
@@ -103,10 +103,8 @@ class PanelCodigo implements MouseListener {
 				this.contents = new StringBuffer(this.getText());
 			}
 			
-			//	PANEL JAVA LLAMADA
-			
-        	this.panelJava = new PanelEditorJava(new String(this.contents),
- 					editable);
+			//	Llamada al panel de Java	
+        	this.panelJava = new PanelEditorJava2(new String(this.contents)/*,editable*/);
         	this.panelJava.setVisible(true);
 		      
 			this.panel.setLayout(new BorderLayout());
