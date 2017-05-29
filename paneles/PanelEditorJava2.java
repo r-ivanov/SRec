@@ -3,7 +3,6 @@ import org.fife.ui.rtextarea.*;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -39,12 +38,14 @@ public class PanelEditorJava2 extends JPanel{
 		textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		textArea.setCodeFoldingEnabled(true);
 		textArea.setMinimumSize(new Dimension(50,50));
+		
 		RTextScrollPane sp = new RTextScrollPane(textArea);
 		cp.add(sp);
 		sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		
 		this.add(cp, BorderLayout.CENTER);
-	      
+		textArea.setCaretPosition(0);	      
 	}
 	
 	//	TODO Falta implementar
