@@ -2,20 +2,28 @@ package paneles;
 import org.fife.ui.rtextarea.*;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.text.DefaultHighlighter;
 
 import org.fife.ui.rsyntaxtextarea.*;
 
 /**
- * Clase que representa el editor de código
+ * Clase que representa el editor de código nuevo
  * 
  * @author Daniel Arroyo Cortés
  *
  */
 public class PanelEditorJava2 extends JPanel{
+	
 	private static final long serialVersionUID = -5193287286127050841L;
+	private static final Color colorErrores = Color.LIGHT_GRAY;
+	
+	private String texto;
+	
+	private RSyntaxTextArea textArea;
 	
 	/**
 	 * Construye un nuevo panel editor vacío.
@@ -27,34 +35,74 @@ public class PanelEditorJava2 extends JPanel{
 	/**
 	 * Construye un nuevo panel editor con el contenido especificado.
 	 * 
-	 * @param texto Código que contendrá el editor.
-	 * @param editable A true si se permite edición, false en caso contrario.
+	 * @param texto Código que contendrá el editor.	 *	
 	 */
+	
+	/*@param editable A true si se permite edición, false en caso contrario.*/
+	
 	public PanelEditorJava2(String texto/*, boolean editable*/) {
+		
+		this.texto = texto;
+		
 		this.setLayout(new BorderLayout()); 
 		JPanel cp = new JPanel(new BorderLayout());
 		
-		RSyntaxTextArea textArea = new RSyntaxTextArea(texto);
-		textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-		textArea.setCodeFoldingEnabled(true);
-		textArea.setMinimumSize(new Dimension(50,50));
+		this.textArea = new RSyntaxTextArea(texto);
+		this.textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+		this.textArea.setCodeFoldingEnabled(true);
+		this.textArea.setMinimumSize(new Dimension(50,50));
 		
-		RTextScrollPane sp = new RTextScrollPane(textArea);
+		RTextScrollPane sp = new RTextScrollPane(this.textArea);
 		cp.add(sp);
 		sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		
 		this.add(cp, BorderLayout.CENTER);
-		textArea.setCaretPosition(0);	      
+		this.textArea.setCaretPosition(0);	  
+		
+		
 	}
 	
-	//	TODO Falta implementar
+	/**
+	 * Devuelve el texto del editor.
+	 * 
+	 * @return 
+	 * 		Texto del editor.
+	 */
 	public String getText() {
-		return "Dani";
+		return this.texto;
 	}
 	
-	//	TODO Falta implementar
+	/**
+	 * Permite seleccionar una porción del texto.
+	 * 
+	 * @param inicio 
+	 * 		Posición de inicio de la selección.
+	 * @param longitud 
+	 * 		Tamaño de la selección.
+	 */
 	public void select(int inicio, int longitud) {
 		
+		//	Hacemos focus
+		
+		this.textArea.requestFocusInWindow();
+		this.textArea.select(inicio, longitud);
+	    
+	
+	    //	Coloreamos línea
+	        
+		DefaultHighlighter highlighter =  (DefaultHighlighter)this.textArea.getHighlighter();
+        DefaultHighlighter.DefaultHighlightPainter painter = 
+        		new DefaultHighlighter.DefaultHighlightPainter( colorErrores );
+        highlighter.setDrawsLayeredHighlights(false);
+        
+        try
+        {
+            highlighter.addHighlight(inicio, inicio+longitud, painter );
+        }
+        catch(Exception e)
+        {
+            
+        }
 	}
 }

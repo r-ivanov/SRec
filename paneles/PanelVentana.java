@@ -582,5 +582,15 @@ public class PanelVentana extends JPanel {
 	public void abrirPestanaGrafoDependencia(List<DatosMetodoBasicos> metodo){
 		this.pAlgoritmo.vistaGrafoDependenciaVisible(metodo);
 	}
+	
+	/**
+	 * Permite subrayar una línea del editor
+	 * 
+	 * @param numeroLinea
+	 * 		Número de línea a subrayar
+	 */
+	public void subrayarLineaEditor(int numeroLinea){
+		this.getPanelAlgoritmo().subrayarLineaEditor(numeroLinea);
+	}
 
 }

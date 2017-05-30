@@ -1931,6 +1931,16 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
     }
     
     /**
+	 * Permite subrayar una línea del editor
+	 * 
+	 * @param numeroLinea
+	 * 		Número de línea a subrayar
+	 */
+	public void subrayarLineaEditor(int numeroLinea){
+		this.getPanelCodigo().subrayarLineaEditor(numeroLinea);
+	}
+    
+    /**
      * Detecta clicks en las pestañas de cada panel unicamente cuando
      * el usuario pulsa en una pestaña, para recordarla entre ejecuciones
      * (para esto no sirve stateChanged porque recibe "clicks extras")

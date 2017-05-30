@@ -25,7 +25,7 @@ public class PanelCompilador implements MouseListener {
 
 	private JPanel panel = new JPanel();
 
-	private PanelAlgoritmo pAlgoritmo;
+//	private PanelAlgoritmo pAlgoritmo;
 
 	public static final String CODIGO_VACIO = "      ";
 
@@ -37,7 +37,7 @@ public class PanelCompilador implements MouseListener {
 	 * @param pAlgoritmo PanelAlgoritmo que contendrá este panel.
 	 */
 	public PanelCompilador(PanelAlgoritmo pAlgoritmo) {
-		this.pAlgoritmo = pAlgoritmo;
+//		this.pAlgoritmo = pAlgoritmo;
 
 		this.espacioCompilador = new JTextPane();
 		this.espacioCompilador.setText("");
@@ -90,76 +90,76 @@ public class PanelCompilador implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource() == this.espacioCompilador) {
-			new Thread() {
-				@Override
-				public synchronized void run() {
-					try {
-						this.wait(60);
-					} catch (Exception e) {
-					}
-					;
-					String seleccionado = PanelCompilador.this.espacioCompilador
-							.getSelectedText();
-					if (seleccionado != null) {
-						int numeroLinea = PanelCompilador.this
-								.numLinea(seleccionado);
-
-						int nLineas = numeroLinea;
-
-						if (numeroLinea != -1) {
-							int longitud = 0;
-							String textoareatexto = PanelCompilador.this.pAlgoritmo
-									.getPanelCodigo().getText();
-
-							while (numeroLinea > 1) // !=0
-							{
-								longitud = longitud
-										+ (textoareatexto.substring(0,
-												textoareatexto.indexOf("\n"))
-												.length() + 1);
-								textoareatexto = textoareatexto.substring(
-										textoareatexto.indexOf("\n") + 1,
-										textoareatexto.length());
-								numeroLinea--;
-							}
-							int inicio = longitud;
-
-							try {
-								longitud = (textoareatexto.substring(0,
-										textoareatexto.indexOf("\n")).length());
-							} catch (Exception e) {
-								longitud = textoareatexto.length();
-							}
-							
-							PanelCompilador.this.pAlgoritmo.getPanelCodigo()
-									.select(inicio - nLineas + 1, longitud);
-						}
-					}
-				}
-			}.start();
-		}
+//		if (e.getSource() == this.espacioCompilador) {
+//			new Thread() {
+//				@Override
+//				public synchronized void run() {
+//					try {
+//						this.wait(60);
+//					} catch (Exception e) {
+//					}
+//					;
+//					String seleccionado = PanelCompilador.this.espacioCompilador
+//							.getSelectedText();
+//					if (seleccionado != null) {
+//						int numeroLinea = PanelCompilador.this
+//								.numLinea(seleccionado);
+//
+//						int nLineas = numeroLinea;
+//
+//						if (numeroLinea != -1) {
+//							int longitud = 0;
+//							String textoareatexto = PanelCompilador.this.pAlgoritmo
+//									.getPanelCodigo().getText();
+//
+//							while (numeroLinea > 1) // !=0
+//							{
+//								longitud = longitud
+//										+ (textoareatexto.substring(0,
+//												textoareatexto.indexOf("\n"))
+//												.length() + 1);
+//								textoareatexto = textoareatexto.substring(
+//										textoareatexto.indexOf("\n") + 1,
+//										textoareatexto.length());
+//								numeroLinea--;
+//							}
+//							int inicio = longitud;
+//
+//							try {
+//								longitud = (textoareatexto.substring(0,
+//										textoareatexto.indexOf("\n")).length());
+//							} catch (Exception e) {
+//								longitud = textoareatexto.length();
+//							}
+//							
+//							PanelCompilador.this.pAlgoritmo.getPanelCodigo()
+//									.select(inicio - nLineas + 1, longitud);
+//						}
+//					}
+//				}
+//			}.start();
+//		}
 	}
-
-	private int numLinea(String texto) {
-		if ((texto.indexOf("java:")) >= 0
-				&& (texto.indexOf("java:") + 5) < texto.length()) {
-			String t = texto.substring(texto.indexOf("java:") + 5,
-					texto.length());
-
-			if (t.indexOf(":") != -1) {
-				t = t.substring(0, t.indexOf(":"));
-			}
-			int x = -1;
-			try {
-				x = Integer.parseInt(t);
-			} catch (Exception e) {
-				return -1;
-			}
-			return x;
-		}
-		return -1;
-	}
+//
+//	private int numLinea(String texto) {
+//		if ((texto.indexOf("java:")) >= 0
+//				&& (texto.indexOf("java:") + 5) < texto.length()) {
+//			String t = texto.substring(texto.indexOf("java:") + 5,
+//					texto.length());
+//
+//			if (t.indexOf(":") != -1) {
+//				t = t.substring(0, t.indexOf(":"));
+//			}
+//			int x = -1;
+//			try {
+//				x = Integer.parseInt(t);
+//			} catch (Exception e) {
+//				return -1;
+//			}
+//			return x;
+//		}
+//		return -1;
+//	}
 	
 	/**
 	 * Permite borrar el texto mostrado.

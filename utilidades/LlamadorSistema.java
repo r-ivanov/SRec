@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import conf.Conf;
 
@@ -62,19 +64,23 @@ public class LlamadorSistema {
 	
 	/**
 	 * Obtiene un error detallado al compilar un fichero .java
+	 * 	y las líneas donde ha habido error
 	 * 
 	 * @param comando
 	 * 		Comando que ejecuta el fichero java
 	 * 
 	 * @return
-	 * 		String con el error detallado
+	 * 		Lista de string donde:
+	 * 			- Pos 0 = Error formateado listo para el panelCompilador
+	 * 			- Resto = Líneas donde ha habido errores, 
+	 * 				se comprueba aquí que son números
 	 * 
 	 * @throws IOException 
 	 */
-	public static String getErrorDetallado(String[] comando) throws IOException { 
-
+	public static List<String> getErrorDetallado(String[] comando) throws IOException { 
 		Process proceso = Runtime.getRuntime().exec(comando);
 		String retornoString = "";		
+		List<String> listaRetorno = new ArrayList<>();
 		int contador = 0;
 		
         try {
@@ -108,9 +114,12 @@ public class LlamadorSistema {
            		retornoString+="\n" + Texto.get("COMPILAR_FICHERO",Conf.idioma);
            		retornoString+=parseo[0];
            		retornoString+="\n" + Texto.get("COMPILAR_LINEA",Conf.idioma);
-           		retornoString+=parseo[1];
+           		retornoString+=parseo[1];           		
            		retornoString+="\n" + Texto.get("COMPILAR_ERROR",Conf.idioma);
-           		retornoString+=parseo[2] + "\n";
+           		retornoString+=parseo[2] + "\n";           		
+           		
+           		listaRetorno.add(parseo[1]);           		
+           		
            	}else if((aux.indexOf("error")!=-1) && (aux.length()<9)){ 	//línea errores
            		retornoString+=parseo[0];
             }else if(aux.indexOf("^")!=-1){ 							//línea 2 código
@@ -127,7 +136,8 @@ public class LlamadorSistema {
         }
         
         retornoString = invertirTotalErrores(retornoString);
-        return retornoString;
+        listaRetorno.add(0, retornoString);
+        return listaRetorno;
     } 
 	
 	/**

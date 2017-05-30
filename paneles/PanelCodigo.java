@@ -141,8 +141,43 @@ class PanelCodigo implements MouseListener {
 	 * @param inicio Posición inicial.
 	 * @param longitud Posición final.
 	 */
-	public void select(int inicio, int longitud) {
+	private void select(int inicio, int longitud) {
 		this.panelJava.select(inicio, longitud);
+	}
+	
+	 /**
+	 * Permite subrayar una línea del editor
+	 * 
+	 * @param numeroLinea
+	 * 		Número de línea a subrayar
+	 */
+	public void subrayarLineaEditor(int numeroLinea){
+		
+		int longitud = 0;
+		String textoareatexto = this.getText();
+
+		while (numeroLinea > 1) // !=0
+		{
+			longitud = longitud
+					+ (textoareatexto.substring(0,
+							textoareatexto.indexOf("\n"))
+							.length() + 1);
+			textoareatexto = textoareatexto.substring(
+					textoareatexto.indexOf("\n") + 1,
+					textoareatexto.length());
+			numeroLinea--;
+		}
+		
+		int inicio = longitud;
+
+		try {
+			longitud = (textoareatexto.substring(0,
+					textoareatexto.indexOf("\n")).length());
+		} catch (Exception e) {
+			longitud = textoareatexto.length();
+		}
+
+		this.select(inicio - numeroLinea + 1, longitud);
 	}
 	
 	/**

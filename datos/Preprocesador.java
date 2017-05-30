@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
@@ -286,7 +285,20 @@ public class Preprocesador extends Thread {
 
 				String salidaCompilador="";
 				try {
-					salidaCompilador = LlamadorSistema.getErrorDetallado(aux);
+					List<String> salidaCompletaCompilador = LlamadorSistema.getErrorDetallado(aux);
+					if(salidaCompletaCompilador.size()>0){
+						
+						//	Salida que se mostrará en el compilador
+						salidaCompilador = salidaCompletaCompilador.get(0);
+						
+						//	Subrayamos líneas
+						int lineaASubrayar = 1;
+//						while(lineaASubrayar<salidaCompletaCompilador.size()){
+//							this.vv.getPanelVentana().subrayarLineaEditor(
+//									Integer.parseInt(salidaCompletaCompilador.get(lineaASubrayar))
+//							);
+//						}
+					}
 				} catch (IOException e1) {					
 				}
 
@@ -295,7 +307,7 @@ public class Preprocesador extends Thread {
 
 				if (!this.compilado) {
 					this.cuadroProgreso.cerrar();
-
+					//this.vv.getPanelVentana().cerrarPanelCodigo();
 					int posicExtensionNombre = fichero[1].toLowerCase()
 							.indexOf(".java");
 					String nombreClase = fichero[1].substring(0,
