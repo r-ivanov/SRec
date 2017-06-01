@@ -18,14 +18,12 @@ import conf.Conf;
  * @author Antonio Pérez Carrasco
  * @version 2006-2007
  */
-public class PanelCompilador implements MouseListener {
+public class PanelCompilador {
 	static final long serialVersionUID = 04;
 
 	private JTextPane espacioCompilador;
 
 	private JPanel panel = new JPanel();
-
-//	private PanelAlgoritmo pAlgoritmo;
 
 	public static final String CODIGO_VACIO = "      ";
 
@@ -36,15 +34,13 @@ public class PanelCompilador implements MouseListener {
 	 * 
 	 * @param pAlgoritmo PanelAlgoritmo que contendrá este panel.
 	 */
-	public PanelCompilador(PanelAlgoritmo pAlgoritmo) {
-//		this.pAlgoritmo = pAlgoritmo;
-
+	public PanelCompilador() {
+		
 		this.espacioCompilador = new JTextPane();
 		this.espacioCompilador.setText("");
 		this.espacioCompilador.setFont(new Font("Courier New", Font.PLAIN, 11));
 		this.espacioCompilador.setBackground(Conf.colorPanel);
 		this.espacioCompilador.setEditable(false);
-		this.espacioCompilador.addMouseListener(this);
 
 		this.panel.setLayout(new BorderLayout());
 		this.panel.add(this.espacioCompilador);
@@ -63,104 +59,6 @@ public class PanelCompilador implements MouseListener {
 		return this.panel;
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-//		if (e.getSource() == this.espacioCompilador) {
-//			new Thread() {
-//				@Override
-//				public synchronized void run() {
-//					try {
-//						this.wait(60);
-//					} catch (Exception e) {
-//					}
-//					;
-//					String seleccionado = PanelCompilador.this.espacioCompilador
-//							.getSelectedText();
-//					if (seleccionado != null) {
-//						int numeroLinea = PanelCompilador.this
-//								.numLinea(seleccionado);
-//
-//						int nLineas = numeroLinea;
-//
-//						if (numeroLinea != -1) {
-//							int longitud = 0;
-//							String textoareatexto = PanelCompilador.this.pAlgoritmo
-//									.getPanelCodigo().getText();
-//
-//							while (numeroLinea > 1) // !=0
-//							{
-//								longitud = longitud
-//										+ (textoareatexto.substring(0,
-//												textoareatexto.indexOf("\n"))
-//												.length() + 1);
-//								textoareatexto = textoareatexto.substring(
-//										textoareatexto.indexOf("\n") + 1,
-//										textoareatexto.length());
-//								numeroLinea--;
-//							}
-//							int inicio = longitud;
-//
-//							try {
-//								longitud = (textoareatexto.substring(0,
-//										textoareatexto.indexOf("\n")).length());
-//							} catch (Exception e) {
-//								longitud = textoareatexto.length();
-//							}
-//							
-//							PanelCompilador.this.pAlgoritmo.getPanelCodigo()
-//									.select(inicio - nLineas + 1, longitud);
-//						}
-//					}
-//				}
-//			}.start();
-//		}
-	}
-//
-//	private int numLinea(String texto) {
-//		if ((texto.indexOf("java:")) >= 0
-//				&& (texto.indexOf("java:") + 5) < texto.length()) {
-//			String t = texto.substring(texto.indexOf("java:") + 5,
-//					texto.length());
-//
-//			if (t.indexOf(":") != -1) {
-//				t = t.substring(0, t.indexOf(":"));
-//			}
-//			int x = -1;
-//			try {
-//				x = Integer.parseInt(t);
-//			} catch (Exception e) {
-//				return -1;
-//			}
-//			return x;
-//		}
-//		return -1;
-//	}
-	
 	/**
 	 * Permite borrar el texto mostrado.
 	 */

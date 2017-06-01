@@ -103,7 +103,7 @@ class PanelCodigo implements MouseListener {
 			}
 			
 			//	Llamada al panel de Java	
-        	this.panelJava = new PanelEditorJava2(new String(this.contents)/*,editable*/);
+        	this.panelJava = new PanelEditorJava2(new String(this.contents));
         	this.panelJava.setVisible(true);
 		      
 			this.panel.setLayout(new BorderLayout());

@@ -110,7 +110,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 
 		pCodigo = new PanelCodigo(null);
 		pTraza = new PanelTraza();
-		pCompilador = new PanelCompilador(this);
+		pCompilador = new PanelCompilador();
 
 		// jspCodigo = new JScrollPane(pCodigo);
 		jspTraza = new JScrollPane(pTraza);

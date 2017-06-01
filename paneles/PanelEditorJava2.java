@@ -40,12 +40,10 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	/**
 	 * Construye un nuevo panel editor con el contenido especificado.
 	 * 
-	 * @param texto Código que contendrá el editor.	 *	
+	 * @param texto 
+	 * 		Código que contendrá el editor.
 	 */
-	
-	/*@param editable A true si se permite edición, false en caso contrario.*/
-	
-	public PanelEditorJava2(String texto/*, boolean editable*/) {
+	public PanelEditorJava2(String texto) {
 		
 		this.texto = texto;
 		
@@ -118,6 +116,10 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		highlighter.removeAllHighlights();
 	}
 
+	/*
+	 * SECCION KEY LISTENER
+	 */
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
