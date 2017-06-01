@@ -881,14 +881,14 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			}
 			
 			//	Árbol
+
 			if (this.panel1.indexOfTab(this.nombresVistas[0]) == this.panel1
 					.getSelectedIndex()
 					|| this.panel2.indexOfTab(this.nombresVistas[0]) == this.panel2
 					.getSelectedIndex()) {
 				new Thread() {
 					@Override
-					public synchronized void run() {
-
+					public synchronized void run() {						
 						try {
 							this.wait(100);
 						} catch (java.lang.InterruptedException ie) {
@@ -1402,7 +1402,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		// System.out.println("panelalgoritmo.setVistaActiva");
 		for (int i = 0; i < this.panel1.getTabCount(); i++) {
 			if (this.panel1.getTitleAt(i).equals(nombre)) {
-				// System.out.println("    (1)setVistaActiva "+i);
+				//   System.out.println("    (1)setVistaActiva "+i);
 				this.panel1.setSelectedIndex(i);
 				panel1Pestana = i;
 			}
@@ -1410,7 +1410,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 
 		for (int i = 0; i < this.panel2.getTabCount(); i++) {
 			if (this.panel2.getTitleAt(i).equals(nombre)) {
-				// System.out.println("    (2)setVistaActiva "+i);
+				//	System.out.println("    (2)setVistaActiva "+i);
 				this.panel2.setSelectedIndex(i);
 				panel2Pestana = i;
 			}

@@ -1,9 +1,14 @@
 package paneles;
 import org.fife.ui.rtextarea.*;
 
+import ventanas.Ventana;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.text.DefaultHighlighter;
@@ -16,7 +21,7 @@ import org.fife.ui.rsyntaxtextarea.*;
  * @author Daniel Arroyo Cortés
  *
  */
-public class PanelEditorJava2 extends JPanel{
+public class PanelEditorJava2 extends JPanel implements KeyListener{
 	
 	private static final long serialVersionUID = -5193287286127050841L;
 	private static final Color colorErrores = Color.LIGHT_GRAY;
@@ -51,6 +56,7 @@ public class PanelEditorJava2 extends JPanel{
 		this.textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.textArea.setCodeFoldingEnabled(true);
 		this.textArea.setMinimumSize(new Dimension(50,50));
+		this.textArea.addKeyListener(this);
 		
 		RTextScrollPane sp = new RTextScrollPane(this.textArea);
 		cp.add(sp);
@@ -58,9 +64,7 @@ public class PanelEditorJava2 extends JPanel{
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		
 		this.add(cp, BorderLayout.CENTER);
-		this.textArea.setCaretPosition(0);	  
-		
-		
+		this.textArea.setCaretPosition(0);	
 	}
 	
 	/**
@@ -104,5 +108,21 @@ public class PanelEditorJava2 extends JPanel{
         {
             
         }
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		this.texto = this.textArea.getText();
+		Ventana.thisventana.setClasePendienteGuardar(true);
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
 	}
 }

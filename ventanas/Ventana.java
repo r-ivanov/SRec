@@ -2573,7 +2573,6 @@ public class Ventana extends JFrame implements ActionListener {
 	 * @param ultimoMetodoSeleccionado
 	 */
 	private void recogerUltimoMetodoSeleccionado() {
-		boolean errorProducido = false;
 		ArrayList<MetodoAlgoritmo> metodos = new ArrayList<MetodoAlgoritmo>(0);
 		
 		//	Obtenemos el método
@@ -2597,10 +2596,10 @@ public class Ventana extends JFrame implements ActionListener {
 			this.claseAlgoritmo.addMetodo(metodos.get(i));
 		}
 		
-
-		if (!errorProducido) {
+		MetodoAlgoritmo ma = this.claseAlgoritmo.getMetodoPrincipal();
+		if (ma!=null) {
 			// Actualizamos la clase
-			MetodoAlgoritmo ma = this.claseAlgoritmo.getMetodoPrincipal();
+			
 			if (Conf.fichero_log) {
 				String mensaje = "Método seleccionado: "
 						+ ma.getRepresentacion();
