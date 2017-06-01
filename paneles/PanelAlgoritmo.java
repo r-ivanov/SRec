@@ -1940,6 +1940,13 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.getPanelCodigo().subrayarLineaEditor(numeroLinea);
 	}
     
+	/**
+	 * Elimina todas las líneas subrayadas, para limpiar
+	 */
+	public void removeSelects(){
+		this.getPanelCodigo().removeSelects();
+	}
+	
     /**
      * Detecta clicks en las pestañas de cada panel unicamente cuando
      * el usuario pulsa en una pestaña, para recordarla entre ejecuciones

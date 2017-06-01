@@ -107,7 +107,15 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
         catch(Exception e)
         {
             
-        }
+        } 
+	}
+	
+	/**
+	 * Elimina todas las líneas subrayadas, para limpiar
+	 */
+	public void removeSelects(){
+		DefaultHighlighter highlighter = (DefaultHighlighter)this.textArea.getHighlighter();
+		highlighter.removeAllHighlights();
 	}
 
 	@Override

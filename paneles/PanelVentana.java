@@ -592,5 +592,13 @@ public class PanelVentana extends JPanel {
 	public void subrayarLineaEditor(int numeroLinea){
 		this.getPanelAlgoritmo().subrayarLineaEditor(numeroLinea);
 	}
+	
+	/**
+	 * Elimina todas las líneas subrayadas, para limpiar
+	 */
+	public void removeSelects(){
+		this.getPanelAlgoritmo().removeSelects();
+	}
+	
 
 }

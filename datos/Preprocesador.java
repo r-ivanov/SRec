@@ -283,23 +283,18 @@ public class Preprocesador extends Thread {
 				aux[4] = "-classpath";
 				aux[5] = getRunningPath();
 
+				
 				String salidaCompilador="";
+				List<String> salidaCompletaCompilador;
 				try {
-					List<String> salidaCompletaCompilador = LlamadorSistema.getErrorDetallado(aux);
-					if(salidaCompletaCompilador.size()>0){
+					salidaCompletaCompilador = LlamadorSistema.getErrorDetallado(aux);
+					if(salidaCompletaCompilador.size()>0)
 						
 						//	Salida que se mostrará en el compilador
 						salidaCompilador = salidaCompletaCompilador.get(0);
-						
-						//	Subrayamos líneas
-						int lineaASubrayar = 1;
-//						while(lineaASubrayar<salidaCompletaCompilador.size()){
-//							this.vv.getPanelVentana().subrayarLineaEditor(
-//									Integer.parseInt(salidaCompletaCompilador.get(lineaASubrayar))
-//							);
-//						}
-					}
-				} catch (IOException e1) {					
+					
+				} catch (IOException e1) {	
+					salidaCompletaCompilador = new ArrayList<>();
 				}
 
 				this.compilado = salidaCompilador.length() < 4;
@@ -338,6 +333,9 @@ public class Preprocesador extends Thread {
 						}
 					}
 
+					//	Subrayar	
+					this.subrayarLineas(salidaCompletaCompilador);					
+					
 				} else {
 					// Actualizamos opción de ficheros recientes (para mantener
 					// último directorio)
@@ -934,6 +932,32 @@ public class Preprocesador extends Thread {
 		}
 
 		return vecesEncontradas == numero;
+	}
+	
+	/**
+	 * Subraya las líneas del editor
+	 * 
+	 * @param salidaCompletaCompilador
+	 * Lista de string donde:
+	 * 			- Pos 0 = Error formateado listo para el panelCompilador
+	 * 			- Resto = Líneas donde ha habido errores, 
+	 * 				se comprueba aquí que son números
+	 * 		
+	 */
+	private void subrayarLineas(List<String> salidaCompletaCompilador){
+		if(salidaCompletaCompilador.size()>0){	
+			
+			vv.getPanelVentana().removeSelects();
+			
+			//	Subrayamos líneas
+			int lineaASubrayar = 1;
+			while(lineaASubrayar<salidaCompletaCompilador.size()){
+				vv.getPanelVentana().subrayarLineaEditor(
+						Integer.parseInt(salidaCompletaCompilador.get(lineaASubrayar))
+				);
+				lineaASubrayar++;
+			}
+		}
 	}
 
 }

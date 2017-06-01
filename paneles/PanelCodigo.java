@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import utilidades.Texto;
 import ventanas.Ventana;
@@ -130,6 +129,10 @@ class PanelCodigo implements MouseListener {
 	 * @return Contenido del editor.
 	 */
 	public String getText() {
+		
+		if(this.panelJava==null)
+			return "";
+		
 		String s;
 		s = this.panelJava.getText();
 		return s;
@@ -145,6 +148,13 @@ class PanelCodigo implements MouseListener {
 		this.panelJava.select(inicio, longitud);
 	}
 	
+	/**
+	 * Elimina todas las líneas subrayadas, para limpiar
+	 */
+	public void removeSelects(){
+		this.panelJava.removeSelects();
+	}
+	
 	 /**
 	 * Permite subrayar una línea del editor
 	 * 
@@ -155,7 +165,10 @@ class PanelCodigo implements MouseListener {
 		
 		int longitud = 0;
 		String textoareatexto = this.getText();
-
+		
+		if(textoareatexto.equals(""))
+			return;
+		
 		while (numeroLinea > 1) // !=0
 		{
 			longitud = longitud
