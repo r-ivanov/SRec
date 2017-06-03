@@ -294,7 +294,7 @@ public class Preprocesador extends Thread {
 						salidaCompilador = salidaCompletaCompilador.get(0);
 					
 				} catch (IOException e1) {	
-					salidaCompletaCompilador = new ArrayList<>();
+					salidaCompletaCompilador = new ArrayList<String>();
 				}
 
 				this.compilado = salidaCompilador.length() < 4;

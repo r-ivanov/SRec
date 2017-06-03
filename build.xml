@@ -31,6 +31,10 @@
     		<fileset file="datos/Textos.xml" />
 		</copy>
     	
+    	<copy todir="bin/org">
+    	   <fileset dir="org"/>
+    	</copy>
+    	
     	<mkdir dir="build_tmp" />  		
 		<manifest file="build_tmp/MANIFEST.MF">
 			<attribute name="Main-Class" value="SRec"/>

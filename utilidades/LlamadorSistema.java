@@ -80,7 +80,7 @@ public class LlamadorSistema {
 	public static List<String> getErrorDetallado(String[] comando) throws IOException { 
 		Process proceso = Runtime.getRuntime().exec(comando);
 		String retornoString = "";		
-		List<String> listaRetorno = new ArrayList<>();
+		List<String> listaRetorno = new ArrayList<String>();
 		int contador = 0;
 		
         try {
