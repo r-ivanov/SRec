@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.text.DefaultHighlighter;
 
 import org.fife.ui.rsyntaxtextarea.*;
@@ -128,17 +129,21 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 		JScrollPane que moveremos
 	 */
 	public void focusLinea(int numLinea, JScrollPane jsp){
-		int numLineasEditor = this.textArea.getText().split("(\r\n|\r|\n)", -1).length;
-		double desplazamiento = (float)numLinea/(float)numLineasEditor;
-
-		JScrollBar vertical = jsp.getVerticalScrollBar();
-		int numScrollMin = vertical.getMinimum();
-		int numScrollMax = vertical.getMaximum();
-		int difScroll = numScrollMax-numScrollMin;
-		int unidadDesplazamiento = difScroll/numLineasEditor;
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+				int numLineasEditor = textArea.getText().split("(\r\n|\r|\n)", -1).length;
+				double desplazamiento = (float)numLinea/(float)numLineasEditor;
 		
-		double moveScrollTo = (difScroll)*desplazamiento;
-		vertical.setValue((int) Math.round(moveScrollTo)-unidadDesplazamiento);
+				JScrollBar vertical = jsp.getVerticalScrollBar();
+				int numScrollMin = vertical.getMinimum();
+				int numScrollMax = vertical.getMaximum();
+				int difScroll = numScrollMax-numScrollMin;
+				int unidadDesplazamiento = difScroll/numLineasEditor;
+				
+				double moveScrollTo = (difScroll)*desplazamiento;
+				vertical.setValue((int) Math.round(moveScrollTo)-unidadDesplazamiento);
+		    }
+		});
 	}
 
 	/*
