@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import utilidades.Texto;
 import ventanas.Ventana;
@@ -191,6 +192,20 @@ class PanelCodigo implements MouseListener {
 		}
 
 		this.select(inicio - numeroLinea + 1, longitud);
+	}
+	
+	/**
+	 * Mueve el scroll (focus) del editor de código a la línea indicada por
+	 * 	numLinea
+	 * 
+	 * @param numLinea
+	 * 		Número de línea donde queremos hacer scroll o focus
+	 * 
+	 * @param jsp
+	 * 		JScrollPane que moveremos
+	 */
+	public void focusLinea(int numLinea, JScrollPane jsp){
+		this.panelJava.focusLinea(numLinea, jsp);
 	}
 	
 	/**

@@ -345,10 +345,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 
 		// pCodigo = new PanelCodigo(nombreArchivo,nombreMetodo);
 		pCodigo.abrir(nombreArchivo, editable, cargarFichero, false);
-		JScrollPane jsp = new JScrollPane(pCodigo.getPanel());
+		jspCodigo = new JScrollPane(pCodigo.getPanel());
 		this.quitarBordesJSP();
 
-		this.contenedorCodigo.add(jsp);
+		this.contenedorCodigo.add(jspCodigo);
 		this.contenedorCodigo.updateUI();
 
 	}
@@ -1938,6 +1938,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 */
 	public void subrayarLineaEditor(int numeroLinea){
 		this.getPanelCodigo().subrayarLineaEditor(numeroLinea);
+		this.getPanelCodigo().focusLinea(numeroLinea,jspCodigo);
 	}
     
 	/**

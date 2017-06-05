@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.text.DefaultHighlighter;
 
@@ -105,7 +106,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
         catch(Exception e)
         {
             
-        } 
+        }         
 	}
 	
 	/**
@@ -114,6 +115,30 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	public void removeSelects(){
 		DefaultHighlighter highlighter = (DefaultHighlighter)this.textArea.getHighlighter();
 		highlighter.removeAllHighlights();
+	}	
+	
+	/**
+	 * Mueve el scroll (focus) del editor de código a la línea indicada por
+	 * 	numLinea
+	 * 
+	 * @param numLinea
+	 * 		Número de línea donde queremos hacer scroll o focus
+	 * 
+	 * @param jsp
+	 * 		JScrollPane que moveremos
+	 */
+	public void focusLinea(int numLinea, JScrollPane jsp){
+		int numLineasEditor = this.textArea.getText().split("(\r\n|\r|\n)", -1).length;
+		double desplazamiento = (float)numLinea/(float)numLineasEditor;
+
+		JScrollBar vertical = jsp.getVerticalScrollBar();
+		int numScrollMin = vertical.getMinimum();
+		int numScrollMax = vertical.getMaximum();
+		int difScroll = numScrollMax-numScrollMin;
+		int unidadDesplazamiento = difScroll/numLineasEditor;
+		
+		double moveScrollTo = (difScroll)*desplazamiento;
+		vertical.setValue((int) Math.round(moveScrollTo)-unidadDesplazamiento);
 	}
 
 	/*
