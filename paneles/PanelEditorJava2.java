@@ -15,6 +15,11 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.DefaultHighlighter;
 
+import org.fife.ui.autocomplete.AutoCompletion;
+import org.fife.ui.autocomplete.BasicCompletion;
+import org.fife.ui.autocomplete.CompletionProvider;
+import org.fife.ui.autocomplete.DefaultCompletionProvider;
+import org.fife.ui.autocomplete.ShorthandCompletion;
 import org.fife.ui.rsyntaxtextarea.*;
 
 /**
@@ -47,6 +52,8 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 */
 	public PanelEditorJava2(String texto) {
 		
+		//	Editor
+		
 		this.texto = texto;
 		
 		this.setLayout(new BorderLayout()); 
@@ -65,6 +72,13 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		
 		this.add(cp, BorderLayout.CENTER);
 		this.textArea.setCaretPosition(0);	
+		
+		//	Autocompletar
+		
+	    CompletionProvider provider = createCompletionProvider();	    
+	    AutoCompletion ac = new AutoCompletion(provider);
+	    ac.install(textArea);
+
 	}
 	
 	/**
@@ -146,6 +160,30 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		});
 	}
 
+	/**
+	 * Provee las palabras y las expresiones que se autocompletarán
+	 * 
+	 * @return
+	 * 		Objeto de la clase CompletionProvider
+	 */
+	private CompletionProvider createCompletionProvider() {
+
+		DefaultCompletionProvider provider = new DefaultCompletionProvider();
+
+		//	Ejemplo de palabra reservada
+		provider.addCompletion(new BasicCompletion(provider, "abstract"));
+
+		//	Ejemlo de autocompletar atajo
+		provider.addCompletion(new ShorthandCompletion(provider, "sysout",
+		"System.out.println(", "System.out.println("));
+		
+		provider.addCompletion(new ShorthandCompletion(provider, "syserr",
+		"System.err.println(", "System.err.println("));
+
+		return provider;
+
+	}
+	
 	/*
 	 * SECCION KEY LISTENER
 	 */
