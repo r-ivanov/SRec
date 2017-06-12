@@ -151,7 +151,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * @param jsp
 	 * 		JScrollPane que moveremos
 	 */
-	public void focusLinea(int numLinea, JScrollPane jsp){
+	public void focusLinea(final int numLinea, final JScrollPane jsp){
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
 				int numLineasEditor = textArea.getText().split("(\r\n|\r|\n)", -1).length;
