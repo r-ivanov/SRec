@@ -1,6 +1,7 @@
 package paneles;
 import org.fife.ui.rtextarea.*;
 
+import utilidades.SsooValidator;
 import ventanas.Ventana;
 
 import java.awt.BorderLayout;
@@ -8,6 +9,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -75,7 +83,8 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		
 		//	Autocompletar
 		
-	    CompletionProvider provider = createCompletionProvider();	    
+	    CompletionProvider provider = createCompletionProvider();	
+	    
 	    AutoCompletion ac = new AutoCompletion(provider);
 	    ac.install(textArea);
 
@@ -168,20 +177,124 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 */
 	private CompletionProvider createCompletionProvider() {
 
-		DefaultCompletionProvider provider = new DefaultCompletionProvider();
-
-		//	Ejemplo de palabra reservada
-		provider.addCompletion(new BasicCompletion(provider, "abstract"));
-
-		//	Ejemlo de autocompletar atajo
-		provider.addCompletion(new ShorthandCompletion(provider, "sysout",
-		"System.out.println(", "System.out.println("));
+		String ficheroOrigen = 
+				(!SsooValidator.isUnix()) ?
+					"org\\fife\\ui\\rsyntaxtextarea\\modes\\JavaTokenMaker.flex"
+				:
+					"org/fife/ui/rsyntaxtextarea/modes/JavaTokenMaker.flex";
+				
+		String ficheroExcluir =
+				(!SsooValidator.isUnix()) ?
+					"datos\\editorPalabrasEliminarAutocompletar.txt"
+				:
+					"datos/editorPalabrasEliminarAutocompletar.txt";
 		
-		provider.addCompletion(new ShorthandCompletion(provider, "syserr",
-		"System.err.println(", "System.err.println("));
+		String ficheroExtras =
+				(!SsooValidator.isUnix()) ?
+					"datos\\editorPalabrasAnadirExtras.txt"
+				:
+					"datos/editorPalabrasAnadirExtras.txt";
+		
+		Set<String> wordsToInclude = 
+				editorObtenerAutorrellenar(ficheroOrigen, ficheroExcluir, ficheroExtras);
+		
+		return this.fillCompletionProvider(wordsToInclude);
 
-		return provider;
+	}
+	
+	/**
+	 * Método intermedio que rellena el CompletionProvider con palabras y atajos de autocompletar
+	 * 
+	 * @param words
+	 * 		Palabras con las que rellenaremos el CompletionProvider
+	 * 
+	 * @return
+	 * 		CompletionProvider completo
+	 */
+	private CompletionProvider fillCompletionProvider(Set<String> words){
+		
+		DefaultCompletionProvider p = new DefaultCompletionProvider();
+		
+		for(String s : words){
+			p.addCompletion(new BasicCompletion(p, s));
+		}
+		
+		p.addCompletion(new ShorthandCompletion(p, "syso",
+				"System.out.println(", "System.out.println("));		
+		
+		p.addCompletion(new ShorthandCompletion(p, "syse",
+				"System.err.println(", "System.err.println("));
+		
+		return p;
+	}
+	
+	/**
+	 * Devuelve un Tree Set de las palabras que se utilizarán para autocompletar en el editor
+	 * 
+	 * @param ficheroOrigen
+	 * 		Fichero que contiene las palabras del léxico de Java. Debe de apuntar a este mismo proyecto,
+	 * 		fichero .flex JAVA de la librería rsyntaxtextarea
+	 * 
+	 * 		Actual: srec\\org\\fife\\ui\\rsyntaxtextarea\\modes\\JavaTokenMaker.flex
+	 * 
+	 * @param ficheroExcluir
+	 * 		Fichero que contiene las palabras a excluir separadas por saltos de línea, para limpiar
+	 * 		la lista de "ficheroOrigen"
+	 * 
+	 * 		Actual: srec\\datos\\editorPalabrasEliminarAutocompletar.txt
+	 * 
+	 * @param ficheroExtras
+	 * 		Fichero con palabras extras que queremos añadir al autocompletar, separadas por 
+	 * 		saltos de línea
+	 * 
+	 * 		Actual: srec\\datos\\editorPalabrasAnadirExtras.txt
+	 * 
+	 * @return
+	 * 		Set ordenado alfabéticamente con las palabras que utilizaremos para autocompletar
+	 */
+	private static Set<String> editorObtenerAutorrellenar(String ficheroOrigen, String ficheroExcluir, String ficheroExtras){
+		try{
+			
+			Pattern patt = Pattern.compile("\"([^\"]*)\"");
+			
+		    BufferedReader r1 = new BufferedReader(new FileReader(ficheroOrigen));
+		    BufferedReader r2 = new BufferedReader(new FileReader(ficheroExcluir));
+		    BufferedReader r3 = new BufferedReader(new FileReader(ficheroExtras));
 
+		    Set<String> linesToExclude = new HashSet<String>();
+		    Set<String> autoCompleteWords = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+		    String line;
+		    
+		    while ((line = r2.readLine()) != null) {	    	
+		    	linesToExclude.add(line);		      
+			}    
+		    
+		    while ((line = r1.readLine()) != null) {
+		    	
+		      Matcher m = patt.matcher(line);
+		      
+		      while (m.find()) {
+		        String s = m.group(0);
+		        s = s.substring(1, s.length()-1);		        
+		        if(!linesToExclude.contains(s) && !(s.equals(""))){
+		        	autoCompleteWords.add(s);		        	
+		        }
+		      }		      
+		    }
+		    
+		    while((line = r3.readLine()) != null){
+		    	autoCompleteWords.add(line);
+		    }
+		    
+		    r1.close();
+		    r2.close();		    
+		    
+		    return autoCompleteWords;
+		    
+		}catch(Exception e){
+			e.printStackTrace();
+			return new HashSet<String>();
+		}
 	}
 	
 	/*
