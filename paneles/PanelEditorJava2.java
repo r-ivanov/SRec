@@ -1,7 +1,5 @@
 package paneles;
 import org.fife.ui.rtextarea.*;
-
-import utilidades.SsooValidator;
 import ventanas.Ventana;
 
 import java.awt.BorderLayout;
@@ -10,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashSet;
@@ -88,6 +87,9 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	    
 	    AutoCompletion ac = new AutoCompletion(provider);
 	    ac.install(textArea);
+	    
+	    //	Temas
+	    this.changeTheme(0,textArea);
 
 	}
 	
@@ -293,6 +295,79 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 			e.printStackTrace();
 			return new HashSet<String>();
 		}
+	}
+	
+	/**
+	 * Establece el tema visual del editor
+	 * 
+	 * @param tema
+	 * 
+	 * 		Número del 0 al 6, temas disponibles:
+	 * 
+	 * 			0: "default.xml";
+	 *			
+	 *			1: "default-alt.xml";
+	 *
+	 *			2: "dark.xml";
+	 *		
+	 *			3: "eclipse.xml";
+	 *			
+	 * 			4: "idea.xml";
+	 *		
+	 *			5: "monokai.xml";
+	 * 					
+	 *			6: "vs.xml";
+	 *	
+	 *			otro número: "default.xml";
+	 *			
+	 * @param textArea
+	 * 
+	 * 		RSyntaxTextArea donde aplicaremos el cambio
+	 * 
+	 */
+	private void changeTheme(int tema, RSyntaxTextArea textArea){
+		
+		String ruta = "";
+		
+		switch (tema) {
+			case 0:
+				ruta = "default.xml";
+				break;
+			case 1:
+				ruta = "default-alt.xml";
+				break;
+			case 2:
+				ruta = "dark.xml";
+				break;
+			case 3:
+				ruta = "eclipse.xml";
+				break;
+			case 4:
+				ruta = "idea.xml";
+				break;
+			case 5:
+				ruta = "monokai.xml";
+				break;
+			case 6:
+				ruta = "vs.xml";
+				break;
+			default:
+				ruta = "default.xml";
+				break;
+		}
+		
+//		ruta = SsooValidator.isUnix() ? 
+//				"/org/fife/ui/rsyntaxtextarea/themes/" + ruta :
+//				"\\org\\fife\\ui\\rsyntaxtextarea\\themes\\" + ruta ;	
+		
+		ruta = "/org/fife/ui/rsyntaxtextarea/themes/" + ruta;
+		
+		try {
+	         Theme theme = Theme.load(getClass().getResourceAsStream(ruta));
+	         theme.apply(textArea);
+	      } catch (IOException ioe) { // Never happens
+	         ioe.printStackTrace();
+	      }
 	}
 	
 	/*
