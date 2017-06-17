@@ -983,20 +983,7 @@
 		<T valor="Nodos resaltados" idioma="es" id="COCV_COL_RESA"/>
 		<T valor="Highlight nodes" idioma="en" id="COCV_COL_RESA"/>
 		<T valor="Marco de selecci[oacute]n de [aacute]rbol" idioma="es" id="COCV_COL_SEL_ARBOL"/>
-		<T valor="Tree selector frame" idioma="en" id="COCV_COL_SEL_ARBOL"/>
-		
-		<T valor="Vista C[oacute]digo: palabras reservadas" idioma="es" id="COCV_PALRESERV"/>
-		<T valor="Code panel: reserved words" idioma="en" id="COCV_PALRESERV"/>
-		<T valor="Vista C[oacute]digo: comentarios" idioma="es" id="COCV_COMENT"/>
-		<T valor="Code panel: comments" idioma="en" id="COCV_COMENT"/>		
-		<T valor="Vista C[oacute]digo: nombre de m[eacute]todo" idioma="es" id="COCV_MET"/>
-		<T valor="Code panel: method name" idioma="en" id="COCV_MET"/>		
-		<T valor="Vista C[oacute]digo: nombre de m[eacute]todo (fondo)" idioma="es" id="COCV_METFON"/>
-		<T valor="Code panel: method name (background)" idioma="en" id="COCV_METFON"/>						
-		<T valor="Vista C[oacute]digo: c[oacute]digo" idioma="es" id="COCV_CODIGO"/>
-		<T valor="Code panel: code" idioma="en" id="COCV_CODIGO"/>				
-		<T valor="Vista C[oacute]digo: fondo de panel" idioma="es" id="COCV_CODPANEL"/>
-		<T valor="Code panel: background panel " idioma="en" id="COCV_CODPANEL"/>			
+		<T valor="Tree selector frame" idioma="en" id="COCV_COL_SEL_ARBOL"/>	
 		
 		<T valor="Vista Traza: l[iacute]neas de entrada" idioma="es" id="COCV_TREN"/>
 		<T valor="Trace panel: enter lines" idioma="en" id="COCV_TREN"/>			
