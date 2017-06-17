@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.border.TitledBorder;
+
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -427,6 +428,15 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		this.selectores3[8] = new JRadioButton(textos[20]);
 		this.selectores3[9] = new JRadioButton(textos[21]);
 		this.selectores3[10] = new JRadioButton(textos[22]);
+		
+		//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+		//	textos y códigos estos radio buttons, no ocultándolos
+		this.selectores3[6].setVisible(false);
+		this.selectores3[7].setVisible(false);
+		this.selectores3[8].setVisible(false);
+		this.selectores3[9].setVisible(false);
+		this.selectores3[10].setVisible(false);
+		
 		this.selectores3[11] = new JRadioButton(textos[25]);
 		this.selectores3[12] = new JRadioButton(textos[65]);
 		this.selectores3[13] = new JRadioButton(textos[66]);
@@ -434,17 +444,27 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		this.selectores3[0].setSelected(true);
 
 		for (int i = 0; i < NUM_SELECTORES_3; i++) {
+			//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+			//	textos y códigos estos radio buttons, no ocultándolos
+			if(!this.selectores3[i].isVisible()){
+				continue;
+			}
 			this.selectores3[i].addKeyListener(this);
 			this.selectores3[i].addActionListener(this);
 			this.selectores3[i].addMouseListener(this);
 			this.selectores3[i].setToolTipText(textos[12]);
 			bg3.add(this.selectores3[i]);
-			panelSeleccionColores3.add(this.selectores3[i]);
+			panelSeleccionColores3.add(this.selectores3[i]);			
 		}
 
 		this.cp.setValores(CREANDO_PANEL, 45);
 		JPanel panelFila3[] = new JPanel[NUM_SELECTORES_3];
 		for (int i = 0; i < NUM_SELECTORES_3; i++) {
+			//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+			//	textos y códigos estos radio buttons, no ocultándolos
+			if(!this.selectores3[i].isVisible()){
+				continue;
+			}
 			panelFila3[i] = new JPanel();
 			panelFila3[i].setLayout(new BorderLayout());
 			panelFila3[i].add(this.selectores3[i], BorderLayout.WEST);
@@ -456,6 +476,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			this.panelesColores3[i].addMouseListener(this);
 			panelFila3[i].add(this.panelesColores3[i], BorderLayout.EAST);
 			panelSeleccionColores3.add(panelFila3[i]);
+			
 		}
 		panelSeleccionColores3.setPreferredSize(new Dimension(270, 300));
 
@@ -1098,6 +1119,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		}
 
 		for (int i = 0; i < NUM_SELECTORES_3; i++) {
+			//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+			//	textos y códigos estos radio buttons, no ocultándolos
+			if(!this.selectores3[i].isVisible()){
+				continue;
+			}
 			switch (i) {
 			case 0:
 				color = this.ocv.getColorFEntrada();
@@ -1334,6 +1360,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			}
 
 			for (int i = 0; i < NUM_SELECTORES_3; i++) {
+				//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+				//	textos y códigos estos radio buttons, no ocultándolos
+				if(!this.selectores3[i].isVisible()){
+					continue;
+				}
 				if (this.selectores3[i].isSelected()) {
 					this.jcc3.setColor(this.etiqColores3[i].getBackground());
 				}
@@ -1545,6 +1576,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				}
 			}
 			for (int i = 0; i < NUM_SELECTORES_3; i++) {
+				//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+				//	textos y códigos estos radio buttons, no ocultándolos
+				if(!this.selectores3[i].isVisible()){
+					continue;
+				}
 				if (this.panelesColores3[i] == e.getComponent()
 						&& this.selectores3[i].isEnabled()) {
 					this.selectores3[i].setSelected(true);
@@ -1566,6 +1602,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				}
 			}
 			for (int i = 0; i < NUM_SELECTORES_3; i++) {
+				//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+				//	textos y códigos estos radio buttons, no ocultándolos
+				if(!this.selectores3[i].isVisible()){
+					continue;
+				}
 				if (this.selectores3[i] == e.getComponent()
 						&& this.selectores3[i].isEnabled()) {
 					this.jcc3.setColor(this.etiqColores3[i].getBackground());
@@ -1654,6 +1695,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		Color c = this.jcc3.getColor();
 
 		for (int i = 0; i < NUM_SELECTORES_3; i++) {
+			//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+			//	textos y códigos estos radio buttons, no ocultándolos
+			if(!this.selectores3[i].isVisible()){
+				continue;
+			}
 			if (this.selectores3[i].isSelected()) {
 				this.panelesColores3[i].setForeground(c);
 				this.panelesColores3[i].setBackground(c);
@@ -1694,6 +1740,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 	 */
 	private void accionResetear3() {
 		for (int i = 0; i < NUM_SELECTORES_3; i++) {
+			//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+			//	textos y códigos estos radio buttons, no ocultándolos
+			if(!this.selectores3[i].isVisible()){
+				continue;
+			}
 			if (this.selectores3[i].isSelected()) {
 				this.jcc3.setColor(this.etiqColores3[i].getBackground());
 			}
