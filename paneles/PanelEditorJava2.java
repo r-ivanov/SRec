@@ -178,23 +178,11 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 */
 	private CompletionProvider createCompletionProvider() {
 
-		String ficheroOrigen = 
-				(!SsooValidator.isUnix()) ?
-					"org\\fife\\ui\\rsyntaxtextarea\\modes\\JavaTokenMaker.flex"
-				:
-					"/org/fife/ui/rsyntaxtextarea/modes/JavaTokenMaker.flex";
+		String ficheroOrigen = 	"/org/fife/ui/rsyntaxtextarea/modes/JavaTokenMaker.flex";
 				
-		String ficheroExcluir =
-				(!SsooValidator.isUnix()) ?
-					"datos\\editorPalabrasEliminarAutocompletar.txt"
-				:
-					"/datos/editorPalabrasEliminarAutocompletar.txt";
+		String ficheroExcluir =	"/datos/editorPalabrasEliminarAutocompletar.txt";
 		
-		String ficheroExtras =
-				(!SsooValidator.isUnix()) ?
-					"datos\\editorPalabrasAnadirExtras.txt"
-				:
-					"/datos/editorPalabrasAnadirExtras.txt";
+		String ficheroExtras =	"/datos/editorPalabrasAnadirExtras.txt";
 		
 		Set<String> wordsToInclude = 
 				editorObtenerAutorrellenar(ficheroOrigen, ficheroExcluir, ficheroExtras);
