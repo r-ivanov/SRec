@@ -262,12 +262,6 @@ public class AlmacenadorTraza {
 		this.anadirNodo(d, otros, "Tipo", "formaFlecha",
 				this.ocv.getFormaFlecha());
 
-		this.anadirColor(d, otros, "codigoPR", this.ocv.getColorCodigoPR());
-		this.anadirColor(d, otros, "codigoCo", this.ocv.getColorCodigoCo());
-		this.anadirColor(d, otros, "codigoMF", this.ocv.getColorCodigoMF());
-		this.anadirColor(d, otros, "codigoMB", this.ocv.getColorCodigoMB());
-		this.anadirColor(d, otros, "codigoRC", this.ocv.getColorCodigoRC());
-
 		this.anadirNodo(d, otros, "modoColor", "modo",
 				"" + this.ocv.getModoColor());
 

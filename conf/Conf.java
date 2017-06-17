@@ -498,21 +498,6 @@ public class Conf {
 		sepHGrafo = ocv.getDistanciaHGrafo();
 		sepVGrafo = ocv.getDistanciaVGrafo();
 
-		color = ocv.getColorCodigoPR();
-		colorCodigoPR = new Color(color[0], color[1], color[2]);
-
-		color = ocv.getColorCodigoCo();
-		colorCodigoCo = new Color(color[0], color[1], color[2]);
-
-		color = ocv.getColorCodigoMF();
-		colorCodigoMF = new Color(color[0], color[1], color[2]);
-
-		color = ocv.getColorCodigoMB();
-		colorCodigoMB = new Color(color[0], color[1], color[2]);
-
-		color = ocv.getColorCodigoRC();
-		colorCodigoRC = new Color(color[0], color[1], color[2]);
-
 		color = ocv.getColorIluminado();
 		colorIluminado = new Color(color[0], color[1], color[2]);
 

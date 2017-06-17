@@ -78,44 +78,6 @@ public class OpcionConfVisualizacion extends Opcion {
 	// actual
 	private int colorCActualB = 0; // Valor B para color de marcos camino actual
 
-	// Color código: palabras reservadas
-	private int colorCodigoPRR = 210; // Valor R para color de código: palabras
-	// reservadas
-	private int colorCodigoPRG = 0; // Valor G para color de código: palabras
-	// reservadas
-	private int colorCodigoPRB = 0; // Valor B para color de código: palabras
-	// reservadas
-
-	// Color código: comentarios
-	private int colorCodigoCoR = 0; // Valor R para color de código: comentarios
-	private int colorCodigoCoG = 180; // Valor G para color de código:
-	// comentarios
-	private int colorCodigoCoB = 0; // Valor B para color de código: comentarios
-
-	// Color código: nombre método foreground
-	private int colorCodigoMFR = 0; // Valor R para color de código: nombre
-	// método foreground
-	private int colorCodigoMFG = 0; // Valor G para color de código: nombre
-	// método foreground
-	private int colorCodigoMFB = 220; // Valor B para color de código: nombre
-	// método foreground
-
-	// Color código: nombre método background
-	private int colorCodigoMBR = 210; // Valor R para color de código: nombre
-	// método background
-	private int colorCodigoMBG = 210; // Valor G para color de código: nombre
-	// método background
-	private int colorCodigoMBB = 255; // Valor B para color de código: nombre
-	// método background
-
-	// Color código: resto codigo
-	private int colorCodigoRCR = 0; // Valor R para color de código: resto
-	// codigo
-	private int colorCodigoRCG = 0; // Valor G para color de código: resto
-	// codigo
-	private int colorCodigoRCB = 0; // Valor B para color de código: resto
-	// codigo
-
 	// Color nodos buscados (iluminados)
 	private int colorIluminadoR = 200; // Valor R para color nodos buscados
 	// (iluminados)
@@ -461,89 +423,6 @@ public class OpcionConfVisualizacion extends Opcion {
 	 */
 	public void setTipoBordeCelda(int x) {
 		this.tipoBordeCelda = x;
-	}
-
-	/**
-	 * Permite establecer el color de las palabras reservadas en la vista de
-	 * código.
-	 * 
-	 * @param r
-	 *            componente R
-	 * @param g
-	 *            componente G
-	 * @param b
-	 *            componente B
-	 */
-	public void setColorCodigoPR(int r, int g, int b) {
-		this.colorCodigoPRR = r;
-		this.colorCodigoPRG = g;
-		this.colorCodigoPRB = b;
-	}
-
-	/**
-	 * Permite establecer el color de los comentarios en la vista de código.
-	 * 
-	 * @param r
-	 *            componente R
-	 * @param g
-	 *            componente G
-	 * @param b
-	 *            componente B
-	 */
-	public void setColorCodigoCo(int r, int g, int b) {
-		this.colorCodigoCoR = r;
-		this.colorCodigoCoG = g;
-		this.colorCodigoCoB = b;
-	}
-
-	/**
-	 * Permite establecer el color de foreground para los métodos en la vista de
-	 * código.
-	 * 
-	 * @param r
-	 *            componente R
-	 * @param g
-	 *            componente G
-	 * @param b
-	 *            componente B
-	 */
-	public void setColorCodigoMF(int r, int g, int b) {
-		this.colorCodigoMFR = r;
-		this.colorCodigoMFG = g;
-		this.colorCodigoMFB = b;
-	}
-
-	/**
-	 * Permite establecer el color de backgrouund para los métodos en la vista
-	 * de código.
-	 * 
-	 * @param r
-	 *            componente R
-	 * @param g
-	 *            componente G
-	 * @param b
-	 *            componente B
-	 */
-	public void setColorCodigoMB(int r, int g, int b) {
-		this.colorCodigoMBR = r;
-		this.colorCodigoMBG = g;
-		this.colorCodigoMBB = b;
-	}
-
-	/**
-	 * Permite establecer el color del código en la vista de código.
-	 * 
-	 * @param r
-	 *            componente R
-	 * @param g
-	 *            componente G
-	 * @param b
-	 *            componente B
-	 */
-	public void setColorCodigoRC(int r, int g, int b) {
-		this.colorCodigoRCR = r;
-		this.colorCodigoRCG = g;
-		this.colorCodigoRCB = b;
 	}
 
 	/**
@@ -919,71 +798,6 @@ public class OpcionConfVisualizacion extends Opcion {
 	}
 
 	/**
-	 * Devuelve el color de las palabras reservadas en la vista de código.
-	 * 
-	 * @return array de enteros con los componentes (R, G y B) respectivamente.
-	 */
-	public int[] getColorCodigoPR() {
-		int color[] = new int[3];
-		color[0] = this.colorCodigoPRR;
-		color[1] = this.colorCodigoPRG;
-		color[2] = this.colorCodigoPRB;
-		return color;
-	}
-
-	/**
-	 * Devuelve el color de los comentarios en la vista de código.
-	 * 
-	 * @return array de enteros con los componentes (R, G y B) respectivamente.
-	 */
-	public int[] getColorCodigoCo() {
-		int color[] = new int[3];
-		color[0] = this.colorCodigoCoR;
-		color[1] = this.colorCodigoCoG;
-		color[2] = this.colorCodigoCoB;
-		return color;
-	}
-
-	/**
-	 * Devuelve el color de foreground para los métodos en la vista de código.
-	 * 
-	 * @return array de enteros con los componentes (R, G y B) respectivamente.
-	 */
-	public int[] getColorCodigoMF() {
-		int color[] = new int[3];
-		color[0] = this.colorCodigoMFR;
-		color[1] = this.colorCodigoMFG;
-		color[2] = this.colorCodigoMFB;
-		return color;
-	}
-
-	/**
-	 * Devuelve el color de background para los métodos en la vista de código.
-	 * 
-	 * @return array de enteros con los componentes (R, G y B) respectivamente.
-	 */
-	public int[] getColorCodigoMB() {
-		int color[] = new int[3];
-		color[0] = this.colorCodigoMBR;
-		color[1] = this.colorCodigoMBG;
-		color[2] = this.colorCodigoMBB;
-		return color;
-	}
-
-	/**
-	 * Devuelve el color del código en la vista de código.
-	 * 
-	 * @return array de enteros con los componentes (R, G y B) respectivamente.
-	 */
-	public int[] getColorCodigoRC() {
-		int color[] = new int[3];
-		color[0] = this.colorCodigoRCR;
-		color[1] = this.colorCodigoRCG;
-		color[2] = this.colorCodigoRCB;
-		return color;
-	}
-
-	/**
 	 * Devuelve el color de los nodos iluminados.
 	 * 
 	 * @return array de enteros con los componentes (R, G y B) respectivamente.
@@ -1262,36 +1076,6 @@ public class OpcionConfVisualizacion extends Opcion {
 		e19.setAttribute("tipoFlecha", "" + this.formaFlecha);
 		e19.setAttribute("tipoBordeCelda", "" + this.tipoBordeCelda);
 
-		// Color para vista código: palabras reservadas
-		Element e20 = d.createElement("colorPalabrasReservadas");
-		e20.setAttribute("r", "" + this.colorCodigoPRR);
-		e20.setAttribute("g", "" + this.colorCodigoPRG);
-		e20.setAttribute("b", "" + this.colorCodigoPRB);
-
-		// Color para vista código: comentarios
-		Element e21 = d.createElement("colorComentarios");
-		e21.setAttribute("r", "" + this.colorCodigoCoR);
-		e21.setAttribute("g", "" + this.colorCodigoCoG);
-		e21.setAttribute("b", "" + this.colorCodigoCoB);
-
-		// Color para vista código: nombre método foreground
-		Element e22 = d.createElement("colorMetodoForeground");
-		e22.setAttribute("r", "" + this.colorCodigoMFR);
-		e22.setAttribute("g", "" + this.colorCodigoMFG);
-		e22.setAttribute("b", "" + this.colorCodigoMFB);
-
-		// Color para vista código: nombre método background
-		Element e23 = d.createElement("colorMetodoBackground");
-		e23.setAttribute("r", "" + this.colorCodigoMBR);
-		e23.setAttribute("g", "" + this.colorCodigoMBG);
-		e23.setAttribute("b", "" + this.colorCodigoMBB);
-
-		// Color para vista código: nombre código
-		Element e24 = d.createElement("colorCodigo");
-		e24.setAttribute("r", "" + this.colorCodigoRCR);
-		e24.setAttribute("g", "" + this.colorCodigoRCG);
-		e24.setAttribute("b", "" + this.colorCodigoRCB);
-
 		// Color para vista código: nombre código
 		Element e25 = d.createElement("colorIluminado");
 		e25.setAttribute("r", "" + this.colorIluminadoR);
@@ -1358,11 +1142,6 @@ public class OpcionConfVisualizacion extends Opcion {
 		e.appendChild(e17);
 		e.appendChild(e18);
 		e.appendChild(e19);
-		e.appendChild(e20);
-		e.appendChild(e21);
-		e.appendChild(e22);
-		e.appendChild(e23);
-		e.appendChild(e24);
 		e.appendChild(e25);
 		e.appendChild(e31);
 		e.appendChild(e32);
@@ -1483,36 +1262,6 @@ public class OpcionConfVisualizacion extends Opcion {
 				.getAttribute("tipoFlecha")));
 		this.setTipoBordeCelda(Integer.parseInt(elements[0]
 				.getAttribute("tipoBordeCelda")));
-
-		elements = ManipulacionElement.nodeListToElementArray(e
-				.getElementsByTagName("colorPalabrasReservadas"));
-		this.setColorCodigoPR(Integer.parseInt(elements[0].getAttribute("r")),
-				Integer.parseInt(elements[0].getAttribute("g")),
-				Integer.parseInt(elements[0].getAttribute("b")));
-
-		elements = ManipulacionElement.nodeListToElementArray(e
-				.getElementsByTagName("colorComentarios"));
-		this.setColorCodigoCo(Integer.parseInt(elements[0].getAttribute("r")),
-				Integer.parseInt(elements[0].getAttribute("g")),
-				Integer.parseInt(elements[0].getAttribute("b")));
-
-		elements = ManipulacionElement.nodeListToElementArray(e
-				.getElementsByTagName("colorMetodoForeground"));
-		this.setColorCodigoMF(Integer.parseInt(elements[0].getAttribute("r")),
-				Integer.parseInt(elements[0].getAttribute("g")),
-				Integer.parseInt(elements[0].getAttribute("b")));
-
-		elements = ManipulacionElement.nodeListToElementArray(e
-				.getElementsByTagName("colorMetodoBackground"));
-		this.setColorCodigoMB(Integer.parseInt(elements[0].getAttribute("r")),
-				Integer.parseInt(elements[0].getAttribute("g")),
-				Integer.parseInt(elements[0].getAttribute("b")));
-
-		elements = ManipulacionElement.nodeListToElementArray(e
-				.getElementsByTagName("colorCodigo"));
-		this.setColorCodigoRC(Integer.parseInt(elements[0].getAttribute("r")),
-				Integer.parseInt(elements[0].getAttribute("g")),
-				Integer.parseInt(elements[0].getAttribute("b")));
 
 		elements = ManipulacionElement.nodeListToElementArray(e
 				.getElementsByTagName("colorIluminado"));

@@ -168,17 +168,6 @@ public class CargadorTraza extends Thread {
 						ocv.setColorCActual(valoresOpFormato[9],
 								valoresOpFormato[10], valoresOpFormato[11]);
 
-						ocv.setColorCodigoPR(valoresOpFormato[12],
-								valoresOpFormato[13], valoresOpFormato[14]);
-						ocv.setColorCodigoCo(valoresOpFormato[15],
-								valoresOpFormato[16], valoresOpFormato[17]);
-						ocv.setColorCodigoMF(valoresOpFormato[18],
-								valoresOpFormato[19], valoresOpFormato[20]);
-						ocv.setColorCodigoMB(valoresOpFormato[21],
-								valoresOpFormato[22], valoresOpFormato[23]);
-						ocv.setColorCodigoRC(valoresOpFormato[24],
-								valoresOpFormato[25], valoresOpFormato[26]);
-
 						ocv.setGrosorFlecha(valoresOpFormato[27]);
 						ocv.setGrosorActual(valoresOpFormato[28]);
 						ocv.setDistanciaV(valoresOpFormato[29]);

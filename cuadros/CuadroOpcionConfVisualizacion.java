@@ -1145,21 +1145,6 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			case 5:
 				color = this.ocv.getColorCActual();
 				break;
-			case 6:
-				color = this.ocv.getColorCodigoPR();
-				break;
-			case 7:
-				color = this.ocv.getColorCodigoCo();
-				break;
-			case 8:
-				color = this.ocv.getColorCodigoMF();
-				break;
-			case 9:
-				color = this.ocv.getColorCodigoMB();
-				break;
-			case 10:
-				color = this.ocv.getColorCodigoRC();
-				break;
 			case 11:
 				color = this.ocv.getColorIluminado();
 				break;
@@ -1266,22 +1251,6 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		c = this.etiqColores3[5].getBackground();
 		this.ocv.setColorCActual(c.getRed(), c.getGreen(), c.getBlue());
-
-		// Colores antigua pestaña 2 (traza y código)
-		c = this.etiqColores3[6].getBackground();
-		this.ocv.setColorCodigoPR(c.getRed(), c.getGreen(), c.getBlue());
-
-		c = this.etiqColores3[7].getBackground();
-		this.ocv.setColorCodigoCo(c.getRed(), c.getGreen(), c.getBlue());
-
-		c = this.etiqColores3[8].getBackground();
-		this.ocv.setColorCodigoMF(c.getRed(), c.getGreen(), c.getBlue());
-
-		c = this.etiqColores3[9].getBackground();
-		this.ocv.setColorCodigoMB(c.getRed(), c.getGreen(), c.getBlue());
-
-		c = this.etiqColores3[10].getBackground();
-		this.ocv.setColorCodigoRC(c.getRed(), c.getGreen(), c.getBlue());
 
 		c = this.etiqColores3[11].getBackground();
 		this.ocv.setColorIluminado(c.getRed(), c.getGreen(), c.getBlue());
