@@ -10,7 +10,8 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -181,19 +182,19 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 				(!SsooValidator.isUnix()) ?
 					"org\\fife\\ui\\rsyntaxtextarea\\modes\\JavaTokenMaker.flex"
 				:
-					"org/fife/ui/rsyntaxtextarea/modes/JavaTokenMaker.flex";
+					"/org/fife/ui/rsyntaxtextarea/modes/JavaTokenMaker.flex";
 				
 		String ficheroExcluir =
 				(!SsooValidator.isUnix()) ?
 					"datos\\editorPalabrasEliminarAutocompletar.txt"
 				:
-					"datos/editorPalabrasEliminarAutocompletar.txt";
+					"/datos/editorPalabrasEliminarAutocompletar.txt";
 		
 		String ficheroExtras =
 				(!SsooValidator.isUnix()) ?
 					"datos\\editorPalabrasAnadirExtras.txt"
 				:
-					"datos/editorPalabrasAnadirExtras.txt";
+					"/datos/editorPalabrasAnadirExtras.txt";
 		
 		Set<String> wordsToInclude = 
 				editorObtenerAutorrellenar(ficheroOrigen, ficheroExcluir, ficheroExtras);
@@ -254,12 +255,21 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 */
 	private static Set<String> editorObtenerAutorrellenar(String ficheroOrigen, String ficheroExcluir, String ficheroExtras){
 		try{
+			InputStream is1 = PanelEditorJava2.class.getResourceAsStream(ficheroOrigen);
+			InputStream is2 = PanelEditorJava2.class.getResourceAsStream(ficheroExcluir);
+			InputStream is3 = PanelEditorJava2.class.getResourceAsStream(ficheroExtras);
 			
+		    InputStreamReader fr1 = new InputStreamReader(is1);
+		    InputStreamReader fr2 = new InputStreamReader(is2);
+		    InputStreamReader fr3 = new InputStreamReader(is3);
+		    
+		    BufferedReader r1 = new BufferedReader(fr1);
+		    BufferedReader r2 = new BufferedReader(fr2);
+		    BufferedReader r3 = new BufferedReader(fr3);
+		    
 			Pattern patt = Pattern.compile("\"([^\"]*)\"");
 			
-		    BufferedReader r1 = new BufferedReader(new FileReader(ficheroOrigen));
-		    BufferedReader r2 = new BufferedReader(new FileReader(ficheroExcluir));
-		    BufferedReader r3 = new BufferedReader(new FileReader(ficheroExtras));
+		    
 
 		    Set<String> linesToExclude = new HashSet<String>();
 		    Set<String> autoCompleteWords = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);

@@ -29,6 +29,8 @@
 
     	<copy todir="bin/datos">
     		<fileset file="datos/Textos.xml" />
+    		<fileset file="datos/editorPalabrasAnadirExtras.txt" />
+			<fileset file="datos/editorPalabrasEliminarAutocompletar.txt" />
 		</copy>
     	
     	<copy todir="bin/org">
