@@ -146,7 +146,7 @@ class PanelCodigo implements MouseListener {
 	 * @param longitud Posición final.
 	 */
 	private void select(int inicio, int longitud) {
-		this.panelJava.select(inicio, longitud);
+		this.panelJava.select(inicio, longitud, false);
 	}
 	
 	/**
@@ -225,6 +225,14 @@ class PanelCodigo implements MouseListener {
 
 	}
 
+	/**
+	 * Redibuja las líneas sobrayadas del editor, por si cambian el color
+	 */
+	public void redibujarLineasErrores(){
+		if(this.panelJava != null)
+			this.panelJava.redibujarLineasErrores();	
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 

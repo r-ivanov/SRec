@@ -978,7 +978,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 *            Si es necesario recargar también el panel de código.
 	 */
 	public void refrescarFormato(boolean recargarCodigo) {
-		if (pArbol != null) {
+		if (pArbol != null && Ventana.thisventana.traza != null) {
 			this.mostrarNombreMetodos = Ventana.thisventana.traza.getNumMetodos() != 1;
 			if (this.mostrarNombreMetodos) {
 				nyp = new NombresYPrefijos();
@@ -1027,9 +1027,14 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				}
 			}.start();
 		}
+		
+		if(pCodigo != null)
+			pCodigo.redibujarLineasErrores();
+		
 		if (FamiliaEjecuciones.getInstance().estaHabilitado()) {
 			this.actualizarFamiliaEjecuciones(true);
 		}
+		
 		this.updateUI();
 	}
 

@@ -14,7 +14,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -51,6 +53,8 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	private OpcionConfVisualizacion ocv = null;
 	
 	private GestorOpciones gOpciones = new GestorOpciones();
+	
+	private List<Integer> lineasSubrayadas = new ArrayList<Integer>();
 	
 	/**
 	 * Construye un nuevo panel editor vacío.
@@ -122,10 +126,15 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 
 	 * @param inicio 
 	 * 		Posición de inicio de la selección.
+	 * 
 	 * @param longitud 
 	 * 		Tamaño de la selección.
+	 * 
+	 * @param esInterno
+	 * 		Indica si el subrayado lo provoca el usuario (false) 
+	 * 		o lo hacemos nosotros internamente
 	 */
-	public void select(int inicio, int longitud) {
+	public void select(int inicio, int longitud, boolean esInterno) {
 		
 		//	Hacemos focus
 		
@@ -142,7 +151,11 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
         
         try
         {
-            highlighter.addHighlight(inicio, inicio+longitud, painter );
+            highlighter.addHighlight(inicio, inicio+longitud, painter);
+            if(!esInterno){
+	            this.lineasSubrayadas.add(inicio);
+	            this.lineasSubrayadas.add(longitud);
+            }
         }
         catch(Exception e)
         {
@@ -151,11 +164,34 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	}
 	
 	/**
+	 * Redibuja las líneas sobrayadas del editor, por si cambian el color
+	 */
+	public void redibujarLineasErrores(){
+		
+		//	Opciones fichero
+	    this.ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+				"OpcionConfVisualizacion", false);
+	    
+	    int[] colorErroresArray = this.ocv.getColorErroresCodigo();
+	    
+	    this.colorErrores = new Color(colorErroresArray[0],colorErroresArray[1],colorErroresArray[2]);
+	    
+		int i = 0;
+		while(i<this.lineasSubrayadas.size()){
+			this.select(this.lineasSubrayadas.get(i), this.lineasSubrayadas.get(i+1), true);
+			i = i+2;
+		}
+		
+	}
+	
+	/**
 	 * Elimina todas las líneas subrayadas, para limpiar
 	 */
 	public void removeSelects(){
 		DefaultHighlighter highlighter = (DefaultHighlighter)this.textArea.getHighlighter();
 		highlighter.removeAllHighlights();
+		
+		this.lineasSubrayadas = new ArrayList<Integer>();
 	}	
 	
 	/**
