@@ -196,6 +196,9 @@ public class Conf {
 	
 	// Marco familia de ejecuciones
 	public static Color colorMarcoFamilia = new Color(0, 0, 204);
+	
+	// Marco familia de ejecuciones
+	public static Color colorErroresCodigo = new Color(177, 177, 177);
 
 	public static Color[] degradadosEstructuraEC1 = null;
 	public static Color[] degradadosEstructuraSC1 = null;
@@ -506,6 +509,9 @@ public class Conf {
 		
 		color = ocv.getColorMarcoFamilia();
 		colorMarcoFamilia = new Color(color[0], color[1], color[2]);
+		
+		color = ocv.getColorErroresCodigo();
+		colorErroresCodigo  = new Color(color[0], color[1], color[2]);
 
 		zoomArbol = ocv.getZoomArbol();
 		zoomPila = ocv.getZoomPila();

@@ -1,5 +1,8 @@
 package paneles;
 import org.fife.ui.rtextarea.*;
+
+import opciones.GestorOpciones;
+import opciones.OpcionConfVisualizacion;
 import ventanas.Ventana;
 
 import java.awt.BorderLayout;
@@ -39,11 +42,15 @@ import org.fife.ui.rsyntaxtextarea.*;
 public class PanelEditorJava2 extends JPanel implements KeyListener{
 	
 	private static final long serialVersionUID = -5193287286127050841L;
-	private static final Color colorErrores = Color.LIGHT_GRAY;
+	private Color colorErrores;
 	
 	private String texto;
 	
 	private RSyntaxTextArea textArea;
+	
+	private OpcionConfVisualizacion ocv = null;
+	
+	private GestorOpciones gOpciones = new GestorOpciones();
 	
 	/**
 	 * Construye un nuevo panel editor vacío.
@@ -90,7 +97,14 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	    
 	    //	Temas
 	    this.changeTheme(0,textArea);
-
+	    
+	    //	Opciones fichero
+	    this.ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+				"OpcionConfVisualizacion", false);
+	    
+	    int[] colorErroresArray = this.ocv.getColorErroresCodigo();
+	    
+	    this.colorErrores = new Color(colorErroresArray[0],colorErroresArray[1],colorErroresArray[2]);
 	}
 	
 	/**
@@ -123,7 +137,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	        
 		DefaultHighlighter highlighter =  (DefaultHighlighter)this.textArea.getHighlighter();
         DefaultHighlighter.DefaultHighlightPainter painter = 
-        		new DefaultHighlighter.DefaultHighlightPainter( colorErrores );
+        		new DefaultHighlighter.DefaultHighlightPainter(colorErrores);
         highlighter.setDrawsLayeredHighlights(false);
         
         try

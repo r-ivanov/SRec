@@ -98,6 +98,11 @@ public class OpcionConfVisualizacion extends Opcion {
 	private int colorMarcoFamiliaR = 0; // Valor R
 	private int colorMarcoFamiliaG = 0; // Valor G
 	private int colorMarcoFamiliaB = 204; // Valor B
+	
+	// Color marco de familias de árboles
+	private int colorErroresCodigoR = 177; // Valor R
+	private int colorErroresCodigoG = 177; // Valor G
+	private int colorErroresCodigoB = 177; // Valor B
 
 	// Colores para el modo 2
 
@@ -472,6 +477,23 @@ public class OpcionConfVisualizacion extends Opcion {
 		this.colorMarcoFamiliaG = g;
 		this.colorMarcoFamiliaB = b;
 	}
+	
+	/**
+	 * Permite establecer el color de las líneas resaltadas como error
+	 * en el editor de código.
+	 * 
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
+	 */
+	public void setColorErroresCodigo(int r, int g, int b) {
+		this.colorErroresCodigoR = r;
+		this.colorErroresCodigoG = g;
+		this.colorErroresCodigoB = b;
+	}
 
 	/**
 	 * Permite establecer el modo de colores, el habitual, o el de
@@ -835,6 +857,20 @@ public class OpcionConfVisualizacion extends Opcion {
 		color[2] = this.colorMarcoFamiliaB;
 		return color;
 	}
+	
+	/**
+	 * Devuelve el color de las líneas resaltadas como error
+	 * en el editor de código
+	 * 
+	 * @return array de enteros con los componentes (R, G y B) respectivamente.
+	 */
+	public int[] getColorErroresCodigo(){
+		int color[] = new int[3];
+		color[0] = this.colorErroresCodigoR;
+		color[1] = this.colorErroresCodigoG;
+		color[2] = this.colorErroresCodigoB;
+		return color;
+	}
 
 	/**
 	 * Devuelve la fuente usada en la vista de código.
@@ -1128,6 +1164,12 @@ public class OpcionConfVisualizacion extends Opcion {
 		e37.setAttribute("grosor", "" + this.grosorFlechaGrafo);
 		e37.setAttribute("tipoFlecha", "" + this.tipoFlechaGrafo);
 		
+		// Marco de selección de múltiples visualizaciones.
+		Element e38 = d.createElement("colorErroresCodigo");
+		e38.setAttribute("r", "" + this.colorErroresCodigoR);
+		e38.setAttribute("g", "" + this.colorErroresCodigoG);
+		e38.setAttribute("b", "" + this.colorErroresCodigoB);
+		
 		e.appendChild(e01);
 		e.appendChild(e02);
 		e.appendChild(e03);
@@ -1150,6 +1192,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		e.appendChild(e35);
 		e.appendChild(e36);
 		e.appendChild(e37);
+		e.appendChild(e38);
 		
 		// Colores Modo 2
 		for (int i = 0; i < Conf.numColoresMetodos; i++) {
@@ -1278,6 +1321,12 @@ public class OpcionConfVisualizacion extends Opcion {
 		elements = ManipulacionElement.nodeListToElementArray(e
 				.getElementsByTagName("colorMarcoFamilia"));
 		this.setColorMarcoFamilia(Integer.parseInt(elements[0].getAttribute("r")),
+				Integer.parseInt(elements[0].getAttribute("g")),
+				Integer.parseInt(elements[0].getAttribute("b")));
+		
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("colorErroresCodigo"));
+		this.setColorErroresCodigo(Integer.parseInt(elements[0].getAttribute("r")),
 				Integer.parseInt(elements[0].getAttribute("g")),
 				Integer.parseInt(elements[0].getAttribute("b")));
 
