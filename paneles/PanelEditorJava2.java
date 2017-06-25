@@ -71,14 +71,14 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 */
 	public PanelEditorJava2(String texto) {
 		
-		//	Editor
+		this.texto = texto.replaceAll("\r","");
 		
-		this.texto = texto;
+		//	Editor
 		
 		this.setLayout(new BorderLayout()); 
 		JPanel cp = new JPanel(new BorderLayout());
 		
-		this.textArea = new RSyntaxTextArea(texto);
+		this.textArea = new RSyntaxTextArea(this.texto);
 		this.textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
 		this.textArea.setCodeFoldingEnabled(true);
 		this.textArea.setMinimumSize(new Dimension(50,50));
@@ -100,9 +100,11 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	    ac.install(textArea);
 	    
 	    //	Temas
+	    
 	    this.changeTheme(0,textArea);
 	    
 	    //	Opciones fichero
+	    
 	    this.ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
 				"OpcionConfVisualizacion", false);
 	    
@@ -431,10 +433,10 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		this.texto = this.textArea.getText();
+		this.texto = this.textArea.getText();	
 		Ventana.thisventana.setClasePendienteGuardar(true);
-	}
-
+	}	
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		
