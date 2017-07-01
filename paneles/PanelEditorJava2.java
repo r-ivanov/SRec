@@ -363,7 +363,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	/**
 	 * Establece el tema visual del editor
 	 * 
-	 * @param tema
+	 * @param temaColorEditor
 	 * 
 	 * 		Número del 0 al 6, temas disponibles:
 	 * 
@@ -382,14 +382,14 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 *			otro número: "default.xml";
 	 * 
 	 */
-	public void changeTheme(int tema){
+	public void changeTheme(int temaColorEditor){
 		
 		String ruta = "";
 		
-		if(tema>0 && tema<this.listaTemas.length)
-			ruta = this.listaTemas[tema];
+		if(temaColorEditor>0 && temaColorEditor<this.listaTemas.length)
+			ruta = this.listaTemas[temaColorEditor];
 		else
-			ruta = this.listaTemas[tema];
+			ruta = this.listaTemas[temaColorEditor];
 		
 //		ruta = SsooValidator.isUnix() ? 
 //				"/org/fife/ui/rsyntaxtextarea/themes/" + ruta :

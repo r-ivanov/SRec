@@ -361,6 +361,10 @@ public class Conf {
 
 	public static String idioma = "ES";
 
+	
+	// Tema / skin editor código
+	public static int temaColorEditor = 0;
+	
 	/**
 	 * Calcula y establece los colores del Modo 2.
 	 */
@@ -537,6 +541,8 @@ public class Conf {
 		tamFuente = ocv.getTamFuenteTraza();
 
 		fuenteTraza = new Font(nombreFuente, Font.PLAIN, tamFuente);
+		
+		temaColorEditor = ocv.getTemaColorEditor();
 
 	}
 

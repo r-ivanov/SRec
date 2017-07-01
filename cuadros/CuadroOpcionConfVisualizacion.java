@@ -1216,6 +1216,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			this.etiqColores3[i].setBackground(new Color(color[0], color[1],
 					color[2]));
 		}
+		
+		this.comboThemes.setSelectedIndex(this.ocv.getTemaColorEditor());
 
 		for (int i = 0; i < NUM_SELECTORES_2; i++) {
 			this.panelesColores2[i].setForeground(Conf.coloresNodo[i]);
@@ -1313,6 +1315,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		
 		c = this.etiqColores3[14].getBackground();
 		this.ocv.setColorErroresCodigo(c.getRed(), c.getGreen(), c.getBlue());
+		
+		this.ocv.setTemaColorEditor(this.comboThemes.getSelectedIndex());
 
 		this.ocv.setGrosorActual(this.grosorMarco.getSelectedIndex());
 		this.ocv.setGrosorFlecha(this.grosorFlecha.getSelectedIndex() + 1);

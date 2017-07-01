@@ -282,6 +282,10 @@ public class AlmacenadorTraza {
 		this.anadirNodo(d, otros, "Zoom", "pila", this.ocv.getZoomPila());
 		
         this.anadirColor(d, otros, "colorErroresCodigo", this.ocv.getColorErroresCodigo());
+        
+        Element temaColorEditor = d.createElement("temaColorEditor");
+        otros.appendChild(temaColorEditor);
+        temaColorEditor.setAttribute("tema", Integer.toString(this.ocv.getTemaColorEditor()));
 	}
 
 	/**

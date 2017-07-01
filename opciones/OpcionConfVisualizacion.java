@@ -164,6 +164,10 @@ public class OpcionConfVisualizacion extends Opcion {
 	private int distanciaHGrafo = 30;
 	private int grosorFlechaGrafo = 2;
 	private int tipoFlechaGrafo = 1;
+	
+	// Tema / skin editor código
+	public static int temaColorEditor = 0;
+	
 	/**
 	 * Crea una nueva opción de visualización.
 	 */
@@ -1034,6 +1038,60 @@ public class OpcionConfVisualizacion extends Opcion {
 	public void setTipoFlechaGrafo(int tipoFlechaGrafo) {
 		this.tipoFlechaGrafo = tipoFlechaGrafo;
 	}
+	
+	/**
+	 * Establece el tema visual del editor de código
+	 * 
+	 * @param temaColorEditor
+	 * 
+	 * 		Número del 0 al 6, temas disponibles:
+	 * 
+	 * 			0: "default.xml";
+	 *
+	 *			1: "dark.xml";
+	 *		
+	 *			2: "eclipse.xml";
+	 *			
+	 * 			3: "idea.xml";
+	 *		
+	 *			4: "monokai.xml";
+	 * 					
+	 *			5: "vs.xml";
+	 *	
+	 *			otro número: "default.xml";
+	 * 
+	 */
+	public void setTemaColorEditor(int temaColorEditorP) {
+		temaColorEditor = temaColorEditorP;
+	}
+	
+	/**
+	 * Obtiene el tema visual del editor de código
+	 * 
+	 * @return
+	 * 
+	 * 
+	 * 
+	 * 		Número del 0 al 6, temas disponibles:
+	 * 
+	 * 			0: "default.xml";
+	 *
+	 *			1: "dark.xml";
+	 *		
+	 *			2: "eclipse.xml";
+	 *			
+	 * 			3: "idea.xml";
+	 *		
+	 *			4: "monokai.xml";
+	 * 					
+	 *			5: "vs.xml";
+	 *	
+	 *			otro número: "default.xml";
+	 * 
+	 */
+	public int getTemaColorEditor() {
+		return temaColorEditor;
+	}
 
 	@Override
 	public Element getRepresentacionElement(Document d) {
@@ -1170,6 +1228,10 @@ public class OpcionConfVisualizacion extends Opcion {
 		e38.setAttribute("g", "" + this.colorErroresCodigoG);
 		e38.setAttribute("b", "" + this.colorErroresCodigoB);
 		
+		// Tema color editor
+		Element e39 = d.createElement("temaColorEditor");
+		e39.setAttribute("tema", Integer.toString(this.getTemaColorEditor()));
+		
 		e.appendChild(e01);
 		e.appendChild(e02);
 		e.appendChild(e03);
@@ -1193,6 +1255,7 @@ public class OpcionConfVisualizacion extends Opcion {
 		e.appendChild(e36);
 		e.appendChild(e37);
 		e.appendChild(e38);
+		e.appendChild(e39);
 		
 		// Colores Modo 2
 		for (int i = 0; i < Conf.numColoresMetodos; i++) {
@@ -1365,6 +1428,11 @@ public class OpcionConfVisualizacion extends Opcion {
 				elements[0].getAttribute("grosor")));
 		this.setTipoFlechaGrafo(Integer.parseInt(
 				elements[0].getAttribute("tipoFlecha")));
+		
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("temaColorEditor"));
+		this.setTemaColorEditor(Integer.parseInt(
+				elements[0].getAttribute("tema")));
 
 	}
 }
