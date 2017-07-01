@@ -233,6 +233,33 @@ class PanelCodigo implements MouseListener {
 			this.panelJava.redibujarLineasErrores();	
 	}
 	
+	/**
+	 * Establece el tema visual del editor
+	 * 
+	 * @param tema
+	 * 
+	 * 		Número del 0 al 6, temas disponibles:
+	 * 
+	 * 			0: "default.xml";
+	 *
+	 *			1: "dark.xml";
+	 *		
+	 *			2: "eclipse.xml";
+	 *			
+	 * 			3: "idea.xml";
+	 *		
+	 *			4: "monokai.xml";
+	 * 					
+	 *			5: "vs.xml";
+	 *	
+	 *			otro número: "default.xml";
+	 * 
+	 */
+	public void changeTheme(int tema){
+		if(this.panelJava != null)
+			this.panelJava.changeTheme(tema);
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 

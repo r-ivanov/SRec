@@ -41,9 +41,10 @@ import org.fife.ui.rsyntaxtextarea.*;
  * @author Daniel Arroyo Cortés
  *
  */
-public class PanelEditorJava2 extends JPanel implements KeyListener{
+public class PanelEditorJava2 extends JPanel implements KeyListener{	
 	
 	private static final long serialVersionUID = -5193287286127050841L;
+	
 	private Color colorErrores;
 	
 	private String texto;
@@ -55,6 +56,10 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	private GestorOpciones gOpciones = new GestorOpciones();
 	
 	private List<Integer> lineasSubrayadas = new ArrayList<Integer>();
+	
+	private static final int numeroTemas = 7;
+	
+	private String[] listaTemas = new String[numeroTemas];
 	
 	/**
 	 * Construye un nuevo panel editor vacío.
@@ -101,7 +106,13 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	    
 	    //	Temas
 	    
-	    this.changeTheme(0,textArea);
+	    listaTemas[0] = "default.xml";
+	    listaTemas[1] = "dark.xml";
+	    listaTemas[2] = "eclipse.xml";
+	    listaTemas[3] = "idea.xml";
+	    listaTemas[4] = "monokai.xml";
+	    listaTemas[5] = "vs.xml";
+	    this.changeTheme(0);
 	    
 	    //	Opciones fichero
 	    
@@ -357,56 +368,28 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 		Número del 0 al 6, temas disponibles:
 	 * 
 	 * 			0: "default.xml";
-	 *			
-	 *			1: "default-alt.xml";
 	 *
-	 *			2: "dark.xml";
+	 *			1: "dark.xml";
 	 *		
-	 *			3: "eclipse.xml";
+	 *			2: "eclipse.xml";
 	 *			
-	 * 			4: "idea.xml";
+	 * 			3: "idea.xml";
 	 *		
-	 *			5: "monokai.xml";
+	 *			4: "monokai.xml";
 	 * 					
-	 *			6: "vs.xml";
+	 *			5: "vs.xml";
 	 *	
 	 *			otro número: "default.xml";
-	 *			
-	 * @param textArea
-	 * 
-	 * 		RSyntaxTextArea donde aplicaremos el cambio
 	 * 
 	 */
-	private void changeTheme(int tema, RSyntaxTextArea textArea){
+	public void changeTheme(int tema){
 		
 		String ruta = "";
 		
-		switch (tema) {
-			case 0:
-				ruta = "default.xml";
-				break;
-			case 1:
-				ruta = "default-alt.xml";
-				break;
-			case 2:
-				ruta = "dark.xml";
-				break;
-			case 3:
-				ruta = "eclipse.xml";
-				break;
-			case 4:
-				ruta = "idea.xml";
-				break;
-			case 5:
-				ruta = "monokai.xml";
-				break;
-			case 6:
-				ruta = "vs.xml";
-				break;
-			default:
-				ruta = "default.xml";
-				break;
-		}
+		if(tema>0 && tema<this.listaTemas.length)
+			ruta = this.listaTemas[tema];
+		else
+			ruta = this.listaTemas[tema];
 		
 //		ruta = SsooValidator.isUnix() ? 
 //				"/org/fife/ui/rsyntaxtextarea/themes/" + ruta :
@@ -416,8 +399,8 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		
 		try {
 	         Theme theme = Theme.load(getClass().getResourceAsStream(ruta));
-	         theme.apply(textArea);
-	      } catch (IOException ioe) { // Never happens
+	         theme.apply(this.textArea);
+	      } catch (IOException ioe) {
 	         ioe.printStackTrace();
 	      }
 	}

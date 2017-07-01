@@ -984,10 +984,22 @@
 		<T valor="Highlight nodes" idioma="en" id="COCV_COL_RESA"/>
 		<T valor="Marco de selecci[oacute]n de [aacute]rbol" idioma="es" id="COCV_COL_SEL_ARBOL"/>
 		<T valor="Tree selector frame" idioma="en" id="COCV_COL_SEL_ARBOL"/>	
-		<T valor="Editor c[oacute]odigo, resaltado errores" idioma="es" id="COCV_COL_COD_ERR"/>
+		<T valor="Editor c[oacute]digo, resaltado errores" idioma="es" id="COCV_COL_COD_ERR"/>
 		<T valor="Code editor, highlighted errors" idioma="en" id="COCV_COL_COD_ERR"/>
-		<T valor="Editor c[oacute]odigo, tema de color" idioma="es" id="COCV_COL_COD_THEME"/>
-		<T valor="Code editor, color theme" idioma="en" id="COCV_COL_COD_THEME"/>
+		<T valor="Editor c[oacute]digo, tema de color" idioma="es" id="COCV_COL_COD_THEME_TITLE"/>
+		<T valor="Code editor, color theme" idioma="en" id="COCV_COL_COD_THEME_TITLE"/>
+		<T valor="Por defecto" idioma="es" id="COCV_COL_COD_THEME_DEFAULT"/>
+		<T valor="Default" idioma="en" id="COCV_COL_COD_THEME_DEFAULT"/>
+		<T valor="Oscuro" idioma="es" id="COCV_COL_COD_THEME_DARK"/>
+		<T valor="Dark" idioma="en" id="COCV_COL_COD_THEME_DARK"/>
+		<T valor="Eclipse" idioma="es" id="COCV_COL_COD_THEME_ECLIPSE"/>
+		<T valor="Eclipse" idioma="en" id="COCV_COL_COD_THEME_ECLIPSE"/>
+		<T valor="Idea" idioma="es" id="COCV_COL_COD_THEME_IDEA"/>
+		<T valor="Idea" idioma="en" id="COCV_COL_COD_THEME_IDEA"/>
+		<T valor="Monokai" idioma="es" id="COCV_COL_COD_THEME_MONOKAI"/>
+		<T valor="Monokai" idioma="en" id="COCV_COL_COD_THEME_MONOKAI"/>
+		<T valor="Visual Studio" idioma="es" id="COCV_COL_COD_THEME_VISUALSTUDIO"/>
+		<T valor="Visual Studio" idioma="en" id="COCV_COL_COD_THEME_VISUALSTUDIO"/>
 		
 		
 		<T valor="Vista Traza: l[iacute]neas de entrada" idioma="es" id="COCV_TREN"/>

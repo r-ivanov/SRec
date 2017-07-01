@@ -89,7 +89,6 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	private JPanel panelGral;
 
 	private String[] nombresVistas = new String[Vista.codigos.length];
-	private boolean[] vistasActualizadas = new boolean[Vista.codigos.length];
 
 	private NavegacionListener arbolNavegacionListener;
 	
@@ -1951,6 +1950,32 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 */
 	public void removeSelects(){
 		this.getPanelCodigo().removeSelects();
+	}
+	
+	/**
+	 * Establece el tema visual del editor
+	 * 
+	 * @param tema
+	 * 
+	 * 		Número del 0 al 6, temas disponibles:
+	 * 
+	 * 			0: "default.xml";
+	 *
+	 *			1: "dark.xml";
+	 *		
+	 *			2: "eclipse.xml";
+	 *			
+	 * 			3: "idea.xml";
+	 *		
+	 *			4: "monokai.xml";
+	 * 					
+	 *			5: "vs.xml";
+	 *	
+	 *			otro número: "default.xml";
+	 * 
+	 */
+	public void changeTheme(int tema){
+		this.getPanelCodigo().changeTheme(tema);
 	}
 	
     /**

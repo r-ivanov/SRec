@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
@@ -86,7 +87,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			sepHorizontal5, sepVertical5;
 	private JComboBox<String> fuentesCodigo, fuentesTraza;
 	private JComboBox<String> fuentesTamCodigo, fuentesTamTraza;
-
+	private JComboBox<String> comboThemes;
+	
 	private JColorChooser jcc1, jcc2, jcc3;
 
 	private JRadioButton selectores1[] = new JRadioButton[NUM_SELECTORES_1];
@@ -153,7 +155,9 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				"COCV_ETIQ_ARBPILCODTRATTT", "COCV_ETIQ_TAMFORTTT",
 				"COCV_FORMATO", "COCV_COL_RESA", "COCV_COL_SEL_ARBOL",
 				"COCV_ETIQ_5", /*68*/"COCV_DISTCELD_G", "COCV_CONFFLEC_G",
-				"COCV_COL_COD_ERR"
+				"COCV_COL_COD_ERR","COCV_COL_COD_THEME_TITLE","COCV_COL_COD_THEME_DEFAULT",
+				"COCV_COL_COD_THEME_DARK", "COCV_COL_COD_THEME_ECLIPSE",
+				"COCV_COL_COD_THEME_IDEA", "COCV_COL_COD_THEME_MONOKAI","COCV_COL_COD_THEME_VISUALSTUDIO"
 
 		// 26 a 28 no se están usando
 		// 29 a 32 se podrían no estar usando (comprobar)
@@ -407,13 +411,14 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		// Panel Izquierda
 		JPanel panelIzquierda3 = new JPanel();
-		panelIzquierda3.setLayout(new BorderLayout());
+		panelIzquierda3.setLayout(new GridBagLayout());
 
 		// Panel colores
+		
 		JPanel panelSeleccionColores3 = new JPanel();
 		panelSeleccionColores3.setBorder(new TitledBorder(textos[0]));
-		panelSeleccionColores3.setLayout(new GridLayout(NUM_SELECTORES_3, 1));
-
+		panelSeleccionColores3.setPreferredSize(new Dimension(270, 300));
+		
 		ButtonGroup bg3 = new ButtonGroup();
 		this.selectores3[0] = new JRadioButton(textos[1]);
 
@@ -445,12 +450,15 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		this.selectores3[0].setSelected(true);
 
+		int numeroSelectoresVisibles = 0;
+		
 		for (int i = 0; i < NUM_SELECTORES_3; i++) {
 			//	TODO Esto hay que cambiarlo, eliminando los selectores, 
 			//	textos y códigos estos radio buttons, no ocultándolos
 			if(!this.selectores3[i].isVisible()){
 				continue;
 			}
+			numeroSelectoresVisibles++;
 			this.selectores3[i].addKeyListener(this);
 			this.selectores3[i].addActionListener(this);
 			this.selectores3[i].addMouseListener(this);
@@ -458,7 +466,9 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			bg3.add(this.selectores3[i]);
 			panelSeleccionColores3.add(this.selectores3[i]);			
 		}
-
+		
+		panelSeleccionColores3.setLayout(new GridLayout(numeroSelectoresVisibles, 1));
+		
 		this.cp.setValores(CREANDO_PANEL, 45);
 		JPanel panelFila3[] = new JPanel[NUM_SELECTORES_3];
 		for (int i = 0; i < NUM_SELECTORES_3; i++) {
@@ -480,15 +490,50 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			panelSeleccionColores3.add(panelFila3[i]);
 			
 		}
-		panelSeleccionColores3.setPreferredSize(new Dimension(270, 300));
+		
+		//	Panel selección de tema
+		JPanel panelSeleccionTema3 = new JPanel();
+		panelSeleccionTema3.setBorder(new TitledBorder(textos[71]));
+		panelSeleccionTema3.setLayout(new FlowLayout());
+		
+		comboThemes = new JComboBox<String>();		
+		comboThemes.setName("comboThemes");
+		comboThemes.addItem(textos[72]);
+		comboThemes.addItem(textos[73]);
+		comboThemes.addItem(textos[74]);
+		comboThemes.addItem(textos[75]);
+		comboThemes.addItem(textos[76]);
+		comboThemes.addItem(textos[77]);
+		comboThemes.addActionListener(this);
+		comboThemes.addKeyListener(this);
+		
+		panelSeleccionTema3.add(comboThemes);
+		//	Añadimos a panel izquierdo
 
-		panelIzquierda3.add(panelSeleccionColores3, BorderLayout.CENTER);
-
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.gridx = 0; 
+		constraints.gridy = 0; 
+		constraints.gridwidth = 1;
+		constraints.gridheight = 2; 
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weighty = 1;
+		constraints.weightx = 1;
+		panelIzquierda3.add(panelSeleccionColores3, constraints);
+		
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0; 
+		constraints.gridy = 3; 
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1; 
+		constraints.fill = GridBagConstraints.BOTH;
+		panelIzquierda3.add(panelSeleccionTema3, constraints);
+		
 		this.cp.setValores(CREANDO_PANEL, 55);
 
 		// Panel Derecha
 		JPanel panelDerecha3 = new JPanel();
 		panelDerecha3.setLayout(new BorderLayout());
+		
 
 		// JColorChooser
 		this.jcc3 = new JColorChooser(new Color(0, 0, 0));
@@ -861,7 +906,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		// *** Añadir paneles
 		
-		GridBagConstraints constraints = new GridBagConstraints();
+		constraints = new GridBagConstraints();
 		constraints.gridx = 0; 		// Empieza columna
 		constraints.gridy = 0; 		// Empieza fila
 		constraints.gridwidth = 1; 	// Ocupa columnas
@@ -1354,6 +1399,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			} else if (e.getSource() == this.checkModo2) {
 				habilitarElementosModo2(this.checkModo2.isSelected());
 				habilitarElementosModo1(!this.checkModo2.isSelected());
+			} else if(e.getSource() == this.comboThemes){
+				this.ventana.getPanelVentana().getPanelAlgoritmo().changeTheme(this.comboThemes.getSelectedIndex());
 			}
 
 			Conf.degradado1 = this.colorDegradado[0].isSelected();
