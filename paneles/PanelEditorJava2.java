@@ -76,6 +76,9 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 */
 	public PanelEditorJava2(String texto) {
 		
+		this.ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+				"OpcionConfVisualizacion", false);
+		
 		this.texto = texto.replaceAll("\r","");
 		
 		//	Editor
@@ -111,13 +114,11 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	    listaTemas[2] = "eclipse.xml";
 	    listaTemas[3] = "idea.xml";
 	    listaTemas[4] = "monokai.xml";
-	    listaTemas[5] = "vs.xml";
-	    this.changeTheme(0);
+	    listaTemas[5] = "vs.xml";	    
+	    
+	    this.changeTheme(this.ocv.getTemaColorEditor());
 	    
 	    //	Opciones fichero
-	    
-	    this.ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
-				"OpcionConfVisualizacion", false);
 	    
 	    int[] colorErroresArray = this.ocv.getColorErroresCodigo();
 	    
@@ -320,8 +321,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		    BufferedReader r2 = new BufferedReader(fr2);
 		    BufferedReader r3 = new BufferedReader(fr3);
 		    
-			Pattern patt = Pattern.compile("\"([^\"]*)\"");
-			
+			Pattern patt = Pattern.compile("\"([^\"]*)\"");		
 		    
 
 		    Set<String> linesToExclude = new HashSet<String>();
@@ -382,27 +382,28 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 *			otro número: "default.xml";
 	 * 
 	 */
-	public void changeTheme(int temaColorEditor){
+	public void changeTheme(final int temaColorEditor){
+		SwingUtilities.invokeLater(new Runnable() { 
+	        public void run() { 
+	        	String ruta = "";
 		
-		String ruta = "";
+			if(temaColorEditor>0 && temaColorEditor<PanelEditorJava2.this.listaTemas.length)
+				ruta = PanelEditorJava2.this.listaTemas[temaColorEditor];
+			else
+				ruta = PanelEditorJava2.this.listaTemas[0];		
+			
+	        ruta = "/org/fife/ui/rsyntaxtextarea/themes/" + ruta;
+	        InputStream is1 = PanelEditorJava2.class.getResourceAsStream(ruta);
+	        		
+			try {
+		         Theme theme = Theme.load(is1);
+		         theme.apply(PanelEditorJava2.this.textArea);
+		      } catch (IOException ioe) {
+		         ioe.printStackTrace();
+		      }
+	        }
+		});
 		
-		if(temaColorEditor>0 && temaColorEditor<this.listaTemas.length)
-			ruta = this.listaTemas[temaColorEditor];
-		else
-			ruta = this.listaTemas[temaColorEditor];
-		
-//		ruta = SsooValidator.isUnix() ? 
-//				"/org/fife/ui/rsyntaxtextarea/themes/" + ruta :
-//				"\\org\\fife\\ui\\rsyntaxtextarea\\themes\\" + ruta ;	
-		
-		ruta = "/org/fife/ui/rsyntaxtextarea/themes/" + ruta;
-		
-		try {
-	         Theme theme = Theme.load(getClass().getResourceAsStream(ruta));
-	         theme.apply(this.textArea);
-	      } catch (IOException ioe) {
-	         ioe.printStackTrace();
-	      }
 	}
 	
 	/*

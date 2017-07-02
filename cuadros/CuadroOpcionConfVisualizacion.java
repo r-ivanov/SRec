@@ -30,6 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 import conf.*;
 import botones.*;
@@ -119,7 +120,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 	public CuadroOpcionConfVisualizacion(Ventana ventana) {
 		this.dialogo = new JDialog(ventana, true);
 		this.ventana = ventana;
-		this.start();
+		SwingUtilities.invokeLater(new Runnable() { 
+	        public void run() { 
+	        		CuadroOpcionConfVisualizacion.this.start();
+	        }
+		});
 	}
 
 	/**
