@@ -97,7 +97,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		
-		this.add(cp, BorderLayout.CENTER);
+		this.add(cp, BorderLayout.CENTER);		
 		this.textArea.setCaretPosition(0);	
 		
 		//	Autocompletar

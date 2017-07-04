@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -54,6 +55,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	private static PanelCodigo pCodigo;
 	private static PanelCompilador pCompilador;
 	private static PanelGrafo pGrafo;
+	private static PanelCodigoBotones pCodigoBotones;
 
 	private static PanelTraza pTraza;
 	private static PanelPila pPila;
@@ -122,6 +124,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorCompilador.setLayout(new BorderLayout());
 		this.contenedorTraza.setLayout(new BorderLayout());
 		this.contenedorCodigo.add(pCodigo.getPanel(), BorderLayout.CENTER);
+		this.contenedorCodigo.add(new JPanel().add(new JButton("aaa")), BorderLayout.SOUTH);
 		this.contenedorCompilador.add(pCompilador.getPanel(),
 				BorderLayout.CENTER);
 		this.contenedorTraza.add(jspTraza);
@@ -347,7 +350,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspCodigo = new JScrollPane(pCodigo.getPanel());
 		this.quitarBordesJSP();
 
-		this.contenedorCodigo.add(jspCodigo);
+		this.contenedorCodigo.add(jspCodigo, BorderLayout.CENTER);
+		this.contenedorCodigo.add(new JPanel().add(new JButton("aaa")), BorderLayout.SOUTH);
 		this.contenedorCodigo.updateUI();
 
 	}
