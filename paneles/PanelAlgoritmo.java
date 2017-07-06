@@ -112,6 +112,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		pCodigo = new PanelCodigo(null);
 		pTraza = new PanelTraza();
 		pCompilador = new PanelCompilador();
+		pCodigoBotones = new PanelCodigoBotones();
 
 		// jspCodigo = new JScrollPane(pCodigo);
 		jspTraza = new JScrollPane(pTraza);
@@ -124,7 +125,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorCompilador.setLayout(new BorderLayout());
 		this.contenedorTraza.setLayout(new BorderLayout());
 		this.contenedorCodigo.add(pCodigo.getPanel(), BorderLayout.CENTER);
-		this.contenedorCodigo.add(new JPanel().add(new JButton("aaa")), BorderLayout.SOUTH);
+		this.contenedorCodigo.add(pCodigoBotones, BorderLayout.SOUTH);
 		this.contenedorCompilador.add(pCompilador.getPanel(),
 				BorderLayout.CENTER);
 		this.contenedorTraza.add(jspTraza);
@@ -348,12 +349,12 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		// pCodigo = new PanelCodigo(nombreArchivo,nombreMetodo);
 		pCodigo.abrir(nombreArchivo, editable, cargarFichero, false);
 		jspCodigo = new JScrollPane(pCodigo.getPanel());
+		pCodigoBotones.activarTodosBotones();
 		this.quitarBordesJSP();
 
 		this.contenedorCodigo.add(jspCodigo, BorderLayout.CENTER);
-		this.contenedorCodigo.add(new JPanel().add(new JButton("aaa")), BorderLayout.SOUTH);
+		this.contenedorCodigo.add(pCodigoBotones, BorderLayout.SOUTH);
 		this.contenedorCodigo.updateUI();
-
 	}
 
 	/**
@@ -363,7 +364,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorCodigo.removeAll();
 
 		pCodigo = new PanelCodigo(null);
-
+		pCodigoBotones.desactivarTodosBotones();
+		
 		this.quitarBordesJSP();
 		this.contenedorCodigo.updateUI();
 
