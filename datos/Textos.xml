@@ -1452,10 +1452,10 @@
 		<T valor="return " idioma="en" id="TR_S"/>	
 
 		<!-- Panel Editor -->
-		<T valor="Deshacer" idioma="es" id="EDITOR_DESHACER"/>
-		<T valor="Undo" idioma="en" id="EDITOR_DESHACER"/>
-		<T valor="Rehacer" idioma="es" id="EDITOR_REHACER"/>
-		<T valor="Redo" idioma="en" id="EDITOR_REHACER"/>
+		<T valor="Deshacer (Ctrl+Z)" idioma="es" id="EDITOR_DESHACER"/>
+		<T valor="Undo (Ctrl+Z)" idioma="en" id="EDITOR_DESHACER"/>
+		<T valor="Rehacer (Ctrl+Y)" idioma="es" id="EDITOR_REHACER"/>
+		<T valor="Redo (Ctrl+Y)" idioma="en" id="EDITOR_REHACER"/>
 		<T valor="Copiar" idioma="es" id="EDITOR_COPIAR"/>
 		<T valor="Copy" idioma="en" id="EDITOR_COPIAR"/>
 		<T valor="Cortar" idioma="es" id="EDITOR_CORTAR"/>

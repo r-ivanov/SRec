@@ -234,6 +234,20 @@ class PanelCodigo implements MouseListener {
 	}
 	
 	/**
+	 * Operación deshacer
+	 */
+	public void doUndo() {
+		this.panelJava.doUndo();
+	}
+	
+	/**
+	 * Operación rehacer
+	 */
+	public void doRedo() {
+		this.panelJava.doRedo();
+	}
+	
+	/**
 	 * Establece el tema visual del editor
 	 * 
 	 * @param tema

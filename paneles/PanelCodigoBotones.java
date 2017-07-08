@@ -43,9 +43,10 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 		EDITOR_BUSCAR_SIGUIENTE, EDITOR_SELECCIONAR_TODO
 	}
 	
-	private static final Map<botonesNombre,String> traduccionesBotones = new HashMap<botonesNombre, String>();
+	private static final Map<botonesNombre,String> traduccionesBotones = 
+			new HashMap<botonesNombre, String>();
 	
-	
+	private PanelCodigo panelCodigo;	
 	
 	//********************************************************************************
     // 			CONSTRUCTORES
@@ -53,8 +54,12 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 	
 	/**
 	 * Crea un nuevo panel con todos los botones del editor de código desactivados
+	 * 
+	 * @param pc
+	 * 		Panel código asociado a este panel
 	 */
-	public PanelCodigoBotones() {
+	public PanelCodigoBotones(PanelCodigo pc) {
+		this.panelCodigo = pc;
 		//	TODO			
 		this.crearBarraBotones();
 	}
@@ -199,6 +204,7 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 		this.jt[2].add(this.jb[8]);
 		
 		//	Añadimos JToolbar a panel
+		
 		for(int i = 0 ; i<this.numJToolbar;i++) {
 			this.add(jt[i]);
 		}
@@ -210,20 +216,28 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 	private void anadeTraduccionesBotones() {		
 		traduccionesBotones.put(botonesNombre.EDITOR_DESHACER, 
 				Texto.get(botonesNombre.EDITOR_DESHACER.toString(), Conf.idioma));
+		
 		traduccionesBotones.put(botonesNombre.EDITOR_REHACER, 
 				Texto.get(botonesNombre.EDITOR_REHACER.toString(), Conf.idioma));
+		
 		traduccionesBotones.put(botonesNombre.EDITOR_CORTAR, 
 				Texto.get(botonesNombre.EDITOR_CORTAR.toString(), Conf.idioma));
+		
 		traduccionesBotones.put(botonesNombre.EDITOR_COPIAR, 
 				Texto.get(botonesNombre.EDITOR_COPIAR.toString(), Conf.idioma));
+		
 		traduccionesBotones.put(botonesNombre.EDITOR_PEGAR, 
 				Texto.get(botonesNombre.EDITOR_PEGAR.toString(), Conf.idioma));
+		
 		traduccionesBotones.put(botonesNombre.EDITOR_IR_A_LINEA, 
 				Texto.get(botonesNombre.EDITOR_IR_A_LINEA.toString(), Conf.idioma));
+		
 		traduccionesBotones.put(botonesNombre.EDITOR_BUSCAR_PRIMERO, 
 				Texto.get(botonesNombre.EDITOR_BUSCAR_PRIMERO.toString(), Conf.idioma));
+		
 		traduccionesBotones.put(botonesNombre.EDITOR_BUSCAR_SIGUIENTE, 
 				Texto.get(botonesNombre.EDITOR_BUSCAR_SIGUIENTE.toString(), Conf.idioma));
+		
 		traduccionesBotones.put(botonesNombre.EDITOR_SELECCIONAR_TODO, 
 				Texto.get(botonesNombre.EDITOR_SELECCIONAR_TODO.toString(), Conf.idioma));		
 	}
@@ -241,23 +255,23 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 			String buttonName = button.getName();
 			
 			if(buttonName.equals(botonesNombre.EDITOR_DESHACER.toString())){
-				
+				this.panelCodigo.doUndo();
 			}else if(buttonName.equals(botonesNombre.EDITOR_REHACER.toString())){
-				
+				this.panelCodigo.doRedo();
 			}else if(buttonName.equals(botonesNombre.EDITOR_CORTAR.toString())){
-				
+//				TODO
 			}else if(buttonName.equals(botonesNombre.EDITOR_COPIAR.toString())){
-				
+//				TODO
 			}else if(buttonName.equals(botonesNombre.EDITOR_PEGAR.toString())){
-				
+//				TODO
 			}else if(buttonName.equals(botonesNombre.EDITOR_IR_A_LINEA.toString())){
-				
+//				TODO
 			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR_PRIMERO.toString())){
-				
+//				TODO
 			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR_SIGUIENTE.toString())){
-				
+//				TODO
 			}else if(buttonName.equals(botonesNombre.EDITOR_SELECCIONAR_TODO.toString())){
-				
+//				TODO
 			}
 		}
 		

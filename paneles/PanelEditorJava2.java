@@ -8,6 +8,7 @@ import ventanas.Ventana;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
@@ -22,11 +23,19 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Document;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 
 import org.fife.ui.autocomplete.AutoCompletion;
 import org.fife.ui.autocomplete.BasicCompletion;
@@ -60,6 +69,8 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	private static final int numeroTemas = 7;
 	
 	private String[] listaTemas = new String[numeroTemas];
+	
+	private final UndoManager undo = new UndoManager();
 	
 	/**
 	 * Construye un nuevo panel editor vacío.
@@ -122,7 +133,11 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	    
 	    int[] colorErroresArray = this.ocv.getColorErroresCodigo();
 	    
-	    this.colorErrores = new Color(colorErroresArray[0],colorErroresArray[1],colorErroresArray[2]);
+	    this.colorErrores = new Color(colorErroresArray[0],colorErroresArray[1],colorErroresArray[2]); 
+	    
+	    //	Undo-redo manager
+	    
+	    this.inicializateUndoRedoManager();
 	}
 	
 	/**
@@ -404,6 +419,74 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	        }
 		});
 		
+	}
+	
+	/**
+	 * 	Inicializa el undo-redo manager
+	 */
+	private void inicializateUndoRedoManager() {
+		
+	    Document doc = this.textArea.getDocument();
+	    
+	    doc.addUndoableEditListener(new UndoableEditListener() { 
+	    	public void undoableEditHappened(UndoableEditEvent evt) { undo.addEdit(evt.getEdit()); } 
+	    });
+	    
+	    this.textArea.getActionMap().put("Undo", new AbstractAction("Undo") {
+			private static final long serialVersionUID = -5838527237464903916L;
+
+			public void actionPerformed(ActionEvent evt) {
+	    		try {
+	    			if (undo.canUndo()) { 
+	    				undo.undo(); 
+	    			} 
+	    		} catch (CannotUndoException e) { 
+	    			
+	    		} 
+	    	} 
+	    });
+	    
+	    this.textArea.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
+	    
+	    this.textArea.getActionMap().put("Redo", new AbstractAction("Redo") {
+			private static final long serialVersionUID = 228170695013853021L;
+
+			public void actionPerformed(ActionEvent evt) {
+	    		try { 
+	    			if (undo.canRedo()) {
+	    				undo.redo(); } 
+	    			}
+	    		catch (CannotRedoException e) { 
+	    			
+	    		} 
+	    	} 
+	    });
+	    
+	    this.textArea.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
+	}
+	
+	/**
+	 * Operación deshacer
+	 */
+	public void doUndo() {
+		try {
+			if (undo.canUndo()) { undo.undo(); } 
+		} catch (CannotUndoException e) { 
+			
+		}
+	}
+	
+	/**
+	 * Operación rehacer
+	 */
+	public void doRedo() {
+		try { 
+			if (undo.canRedo()) {
+				undo.redo(); } 
+			}
+		catch (CannotRedoException e) { 
+			
+		} 
 	}
 	
 	/*
