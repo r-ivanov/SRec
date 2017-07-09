@@ -265,7 +265,7 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 			}else if(buttonName.equals(botonesNombre.EDITOR_PEGAR.toString())){
 				this.panelCodigo.doPaste();
 			}else if(buttonName.equals(botonesNombre.EDITOR_IR_A_LINEA.toString())){
-//				TODO
+				this.panelCodigo.doSelectLine();
 			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR_PRIMERO.toString())){
 //				TODO
 			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR_SIGUIENTE.toString())){

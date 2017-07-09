@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
+import cuadros.CuadroEditorIrALinea;
 
 /**
  * Panel que contiene el código fuente de la clase cargada.
@@ -34,11 +35,15 @@ class PanelCodigo implements MouseListener {
 	private JPanel panel = new JPanel();
 
 	private boolean editable = true;
+	
+	private JScrollPane jsp;
 
 	/**
 	 * Constructor: crea un nuevo PanelCodigo
 	 * 
-	 * @param archivo Archivo que contiene el código fuente de la clase.
+	 * @param archivo 
+	 * 		Archivo que contiene el código fuente de la clase.
+	 * 
 	 */
 	public PanelCodigo(String archivo) {
 		this.archivo = archivo;
@@ -140,6 +145,16 @@ class PanelCodigo implements MouseListener {
 	}
 	
 	/**
+	 * Establece el JScrollPane asociado al panel
+	 * 
+	 * @param jsp 
+	 * 		JScrollPane asociado
+	 */
+	public void setJScrollPane(JScrollPane jsp) {
+		this.jsp = jsp;
+	}
+	
+	/**
 	 * Permite seleccionar un fragmento de código.
 	 * 
 	 * @param inicio Posición inicial.
@@ -192,7 +207,7 @@ class PanelCodigo implements MouseListener {
 		}
 
 		this.select(inicio - numeroLinea + 1, longitud);
-	}
+	}	
 	
 	/**
 	 * Mueve el scroll (focus) del editor de código a la línea indicada por
@@ -301,6 +316,13 @@ class PanelCodigo implements MouseListener {
 	 */
 	public void doSelectAll() {
 		this.panelJava.doSelectAll();
+	}
+	
+	/**
+	 * Operación seleccionar línea
+	 */
+	public void doSelectLine() {
+		new CuadroEditorIrALinea(Ventana.thisventana, this.panelJava, this.jsp);
 	}
 	
 	@Override

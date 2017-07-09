@@ -234,10 +234,14 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 		JScrollPane que moveremos
 	 */
 	public void focusLinea(final int numLinea, final JScrollPane jsp){
-		SwingUtilities.invokeLater(new Runnable() {
-		    public void run() {
+		SwingUtilities.invokeLater(new Runnable() {			
+		    public void run() {		    	
 				int numLineasEditor = textArea.getText().split("(\r\n|\r|\n)", -1).length;
-				double desplazamiento = (float)numLinea/(float)numLineasEditor;
+				int numLineaFinal = numLinea;
+				if(numLinea<0 || numLinea>numLineasEditor)
+					numLineaFinal = numLineasEditor;
+				
+				double desplazamiento = (float)numLineaFinal/(float)numLineasEditor;
 		
 				JScrollBar vertical = jsp.getVerticalScrollBar();
 				int numScrollMin = vertical.getMinimum();
@@ -246,9 +250,51 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 				int unidadDesplazamiento = difScroll/numLineasEditor;
 				
 				double moveScrollTo = (difScroll)*desplazamiento;
-				vertical.setValue((int) Math.round(moveScrollTo)-unidadDesplazamiento);
+				vertical.setValue((int) Math.round(moveScrollTo)-unidadDesplazamiento);	
+				
+				PanelEditorJava2.this.moverLineaEditor(numLineaFinal);
 		    }
 		});
+	}
+	
+	/**
+	 * Mueve el cursor/ratón a la línea especificada
+	 * 
+	 * @param numeroLinea
+	 * 
+	 * 		Número de línea donde mover el cursor
+	 */
+	private void moverLineaEditor(int numeroLinea){
+		
+		int longitud = 0;
+		String textoareatexto = this.getText();
+		
+		if(textoareatexto.equals(""))
+			return;
+		
+		while (numeroLinea > 1) // !=0
+		{
+			longitud = longitud
+					+ (textoareatexto.substring(0,
+							textoareatexto.indexOf("\n"))
+							.length() + 1);
+			textoareatexto = textoareatexto.substring(
+					textoareatexto.indexOf("\n") + 1,
+					textoareatexto.length());
+			numeroLinea--;
+		}
+		
+		int inicio = longitud;
+
+		try {
+			longitud = (textoareatexto.substring(0,
+					textoareatexto.indexOf("\n")).length());
+		} catch (Exception e) {
+			longitud = textoareatexto.length();
+		}
+		
+		textArea.requestFocus();
+		this.textArea.setCaretPosition(inicio - numeroLinea + 1);
 	}
 
 	/**

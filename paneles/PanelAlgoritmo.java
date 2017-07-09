@@ -348,6 +348,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		// pCodigo = new PanelCodigo(nombreArchivo,nombreMetodo);
 		pCodigo.abrir(nombreArchivo, editable, cargarFichero, false);
 		jspCodigo = new JScrollPane(pCodigo.getPanel());
+		pCodigo.setJScrollPane(jspCodigo);
 		pCodigoBotones.activarTodosBotones();
 		this.quitarBordesJSP();
 

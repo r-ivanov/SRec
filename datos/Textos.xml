@@ -1470,6 +1470,9 @@
 		<T valor="Search next" idioma="en" id="EDITOR_BUSCAR_SIGUIENTE"/>
 		<T valor="Seleccionar todo" idioma="es" id="EDITOR_SELECCIONAR_TODO"/>
 		<T valor="Select all" idioma="en" id="EDITOR_SELECCIONAR_TODO"/>
+		<T valor="N[uacute]mero de l[iacute]nea" idioma="es" id="EDITOR_NUMERO_LINEA"/>
+		<T valor="Line number" idioma="en" id="EDITOR_NUMERO_LINEA"/>
+		
 		
 		<!-- Ventana Ver Codigo -->
 		<T valor="SRec - Editor de c[oacute]digo" idioma="es" id="VVC_TITULO"/>
