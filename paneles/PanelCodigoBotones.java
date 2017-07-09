@@ -259,11 +259,11 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 			}else if(buttonName.equals(botonesNombre.EDITOR_REHACER.toString())){
 				this.panelCodigo.doRedo();
 			}else if(buttonName.equals(botonesNombre.EDITOR_CORTAR.toString())){
-//				TODO
+				this.panelCodigo.doCut();
 			}else if(buttonName.equals(botonesNombre.EDITOR_COPIAR.toString())){
-//				TODO
+				this.panelCodigo.doCopy();
 			}else if(buttonName.equals(botonesNombre.EDITOR_PEGAR.toString())){
-//				TODO
+				this.panelCodigo.doPaste();
 			}else if(buttonName.equals(botonesNombre.EDITOR_IR_A_LINEA.toString())){
 //				TODO
 			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR_PRIMERO.toString())){
@@ -271,7 +271,7 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR_SIGUIENTE.toString())){
 //				TODO
 			}else if(buttonName.equals(botonesNombre.EDITOR_SELECCIONAR_TODO.toString())){
-//				TODO
+				this.panelCodigo.doSelectAll();
 			}
 		}
 		

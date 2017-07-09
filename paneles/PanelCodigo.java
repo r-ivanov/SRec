@@ -234,20 +234,6 @@ class PanelCodigo implements MouseListener {
 	}
 	
 	/**
-	 * Operación deshacer
-	 */
-	public void doUndo() {
-		this.panelJava.doUndo();
-	}
-	
-	/**
-	 * Operación rehacer
-	 */
-	public void doRedo() {
-		this.panelJava.doRedo();
-	}
-	
-	/**
 	 * Establece el tema visual del editor
 	 * 
 	 * @param tema
@@ -272,6 +258,49 @@ class PanelCodigo implements MouseListener {
 	public void changeTheme(int tema){
 		if(this.panelJava != null)
 			this.panelJava.changeTheme(tema);
+	}
+
+	
+	/**
+	 * Operación deshacer
+	 */
+	public void doUndo() {
+		this.panelJava.doUndo();
+	}
+	
+	/**
+	 * Operación rehacer
+	 */
+	public void doRedo() {
+		this.panelJava.doRedo();
+	}
+	
+	/**
+	 * Operación copiar
+	 */
+	public void doCopy() {
+		this.panelJava.doCopy();
+	}
+	
+	/**
+	 * Operación pegar
+	 */
+	public void doPaste() {
+		this.panelJava.doPaste();
+	}
+	
+	/**
+	 * Operación cortar
+	 */
+	public void doCut() {
+		this.panelJava.doCut();
+	}
+	
+	/**
+	 * Operación seleccionar todo
+	 */
+	public void doSelectAll() {
+		this.panelJava.doSelectAll();
 	}
 	
 	@Override

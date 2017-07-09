@@ -137,7 +137,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	    
 	    //	Undo-redo manager
 	    
-	    this.inicializateUndoRedoManager();
+	    this.inicializateUndoRedoManager();	    
 	}
 	
 	/**
@@ -487,6 +487,34 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		catch (CannotRedoException e) { 
 			
 		} 
+	}
+	
+	/**
+	 * Operación copiar
+	 */
+	public void doCopy() {
+		this.textArea.copy();
+	}
+	
+	/**
+	 * Operación pegar
+	 */
+	public void doPaste() {
+		this.textArea.paste();
+	}
+	
+	/**
+	 * Operación cortar
+	 */
+	public void doCut() {
+		this.textArea.cut();
+	}
+	
+	/**
+	 * Operación seleccionar todo
+	 */
+	public void doSelectAll() {
+		this.textArea.selectAll();
 	}
 	
 	/*
