@@ -188,6 +188,7 @@ KeyListener, MouseListener {
 	}
 	
 	/**
+	 * Obtiene las GridBagConstraints para ordenar visualmente
 	 * 
 	 * @param x
 	 * 		Empieza en la columna x

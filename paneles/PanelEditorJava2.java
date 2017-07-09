@@ -516,7 +516,11 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 */
 	public void doUndo() {
 		try {
-			if (undo.canUndo()) { undo.undo(); } 
+			if (undo.canUndo()) { 
+				undo.undo(); 
+				Ventana.thisventana.setClasePendienteGuardar(true);
+				this.texto = this.textArea.getText();
+			} 
 		} catch (CannotUndoException e) { 
 			
 		}
@@ -528,9 +532,11 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	public void doRedo() {
 		try { 
 			if (undo.canRedo()) {
-				undo.redo(); } 
-			}
-		catch (CannotRedoException e) { 
+				undo.redo(); 
+				Ventana.thisventana.setClasePendienteGuardar(true);
+				this.texto = this.textArea.getText();
+			} 
+		}catch (CannotRedoException e) { 
 			
 		} 
 	}
@@ -539,27 +545,43 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * Operación copiar
 	 */
 	public void doCopy() {
+		String anterior = this.textArea.getText();
 		this.textArea.copy();
+		if(!anterior.equals(this.textArea.getText())) {
+			Ventana.thisventana.setClasePendienteGuardar(true);
+			this.texto = this.textArea.getText();
+		}
 	}
 	
 	/**
 	 * Operación pegar
 	 */
-	public void doPaste() {
+	public void doPaste() {		
+		String anterior = this.textArea.getText();
 		this.textArea.paste();
+		if(!anterior.equals(this.textArea.getText())) {
+			Ventana.thisventana.setClasePendienteGuardar(true);
+			this.texto = this.textArea.getText();
+		}
 	}
 	
 	/**
 	 * Operación cortar
 	 */
 	public void doCut() {
+		String anterior = this.textArea.getText();
 		this.textArea.cut();
+		if(!anterior.equals(this.textArea.getText())) {
+			Ventana.thisventana.setClasePendienteGuardar(true);
+			this.texto = this.textArea.getText();
+		}
 	}
 	
 	/**
 	 * Operación seleccionar todo
 	 */
 	public void doSelectAll() {
+		this.textArea.requestFocus();
 		this.textArea.selectAll();
 	}
 	
