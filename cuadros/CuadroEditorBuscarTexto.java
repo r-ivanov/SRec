@@ -69,6 +69,7 @@ KeyListener, MouseListener, WindowListener {
 	 */
 	public CuadroEditorBuscarTexto(Ventana ventana, PanelEditorJava2 panelJava) {
 		this.dialogo = new JDialog(ventana, true);
+		this.dialogo.addWindowListener(this);
 		this.panelJava = panelJava;
 		this.reiniciarBuscador();
 		this.start();
@@ -407,12 +408,12 @@ KeyListener, MouseListener, WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		
+		this.panelJava.removeSelects();
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		this.panelJava.removeSelects();
+		
 	}
 
 	@Override
