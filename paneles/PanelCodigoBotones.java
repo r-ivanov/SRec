@@ -32,15 +32,15 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 	
 	private static final long serialVersionUID = 3942482496745699703L;
 	private final int numJToolbar = 3;
-	private final int numJButton = 9;
+	private final int numJButton = 8;
 	
 	private JToolBar[] jt = new JToolBar[numJToolbar];	
 	private JButton[] jb = new JButton[numJButton];	
 	
 	private enum botonesNombre {
 		EDITOR_DESHACER, EDITOR_REHACER, EDITOR_CORTAR, EDITOR_COPIAR,
-		EDITOR_PEGAR, EDITOR_IR_A_LINEA, EDITOR_BUSCAR_PRIMERO ,
-		EDITOR_BUSCAR_SIGUIENTE, EDITOR_SELECCIONAR_TODO
+		EDITOR_PEGAR, EDITOR_IR_A_LINEA, EDITOR_BUSCAR,
+		EDITOR_SELECCIONAR_TODO
 	}
 	
 	private static final Map<botonesNombre,String> traduccionesBotones = 
@@ -59,8 +59,7 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 	 * 		Panel código asociado a este panel
 	 */
 	public PanelCodigoBotones(PanelCodigo pc) {
-		this.panelCodigo = pc;
-		//	TODO			
+		this.panelCodigo = pc;	
 		this.crearBarraBotones();
 	}
 	
@@ -159,22 +158,16 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 		this.jb[5].setName(botonesNombre.EDITOR_IR_A_LINEA.toString());
 		
 		this.jb[6] = new JButton(new ImageIcon(GestorVentanaSRec.class
-				.getClassLoader().getResource("imagenes/cod_buscarPrimero.png")));
+				.getClassLoader().getResource("imagenes/cod_buscar.png")));
 		
-		this.jb[6].setToolTipText(traduccionesBotones.get(botonesNombre.EDITOR_BUSCAR_PRIMERO));
-		this.jb[6].setName(botonesNombre.EDITOR_BUSCAR_PRIMERO.toString());
+		this.jb[6].setToolTipText(traduccionesBotones.get(botonesNombre.EDITOR_BUSCAR));
+		this.jb[6].setName(botonesNombre.EDITOR_BUSCAR.toString());		
 		
 		this.jb[7] = new JButton(new ImageIcon(GestorVentanaSRec.class
-				.getClassLoader().getResource("imagenes/cod_buscarSiguiente.png")));
-		
-		this.jb[7].setToolTipText(traduccionesBotones.get(botonesNombre.EDITOR_BUSCAR_SIGUIENTE));
-		this.jb[7].setName(botonesNombre.EDITOR_BUSCAR_SIGUIENTE.toString());
-		
-		this.jb[8] = new JButton(new ImageIcon(GestorVentanaSRec.class
 				.getClassLoader().getResource("imagenes/cod_seleccionarTodo.png")));		
 		
-		this.jb[8].setToolTipText(traduccionesBotones.get(botonesNombre.EDITOR_SELECCIONAR_TODO));
-		this.jb[8].setName(botonesNombre.EDITOR_SELECCIONAR_TODO.toString());
+		this.jb[7].setToolTipText(traduccionesBotones.get(botonesNombre.EDITOR_SELECCIONAR_TODO));
+		this.jb[7].setName(botonesNombre.EDITOR_SELECCIONAR_TODO.toString());
 		
 		for(int i = 0; i<this.numJButton;i++) {
 			this.jb[i].setPreferredSize(new Dimension(27, 27));
@@ -201,7 +194,6 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 		this.jt[2].add(this.jb[5]);
 		this.jt[2].add(this.jb[6]);
 		this.jt[2].add(this.jb[7]);
-		this.jt[2].add(this.jb[8]);
 		
 		//	Añadimos JToolbar a panel
 		
@@ -232,11 +224,8 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 		traduccionesBotones.put(botonesNombre.EDITOR_IR_A_LINEA, 
 				Texto.get(botonesNombre.EDITOR_IR_A_LINEA.toString(), Conf.idioma));
 		
-		traduccionesBotones.put(botonesNombre.EDITOR_BUSCAR_PRIMERO, 
-				Texto.get(botonesNombre.EDITOR_BUSCAR_PRIMERO.toString(), Conf.idioma));
-		
-		traduccionesBotones.put(botonesNombre.EDITOR_BUSCAR_SIGUIENTE, 
-				Texto.get(botonesNombre.EDITOR_BUSCAR_SIGUIENTE.toString(), Conf.idioma));
+		traduccionesBotones.put(botonesNombre.EDITOR_BUSCAR, 
+				Texto.get(botonesNombre.EDITOR_BUSCAR.toString(), Conf.idioma));
 		
 		traduccionesBotones.put(botonesNombre.EDITOR_SELECCIONAR_TODO, 
 				Texto.get(botonesNombre.EDITOR_SELECCIONAR_TODO.toString(), Conf.idioma));		
@@ -266,10 +255,8 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 				this.panelCodigo.doPaste();
 			}else if(buttonName.equals(botonesNombre.EDITOR_IR_A_LINEA.toString())){
 				this.panelCodigo.doSelectLine();
-			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR_PRIMERO.toString())){
-//				TODO
-			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR_SIGUIENTE.toString())){
-//				TODO
+			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR.toString())){
+				this.panelCodigo.doSearch();
 			}else if(buttonName.equals(botonesNombre.EDITOR_SELECCIONAR_TODO.toString())){
 				this.panelCodigo.doSelectAll();
 			}

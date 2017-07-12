@@ -72,6 +72,8 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	
 	private final UndoManager undo = new UndoManager();
 	
+	private int posicionBuscar;
+	
 	/**
 	 * Construye un nuevo panel editor vacío.
 	 */
@@ -161,15 +163,14 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 
 	 * @param esInterno
 	 * 		Indica si el subrayado lo provoca el usuario (false) 
-	 * 		o lo hacemos nosotros internamente
+	 * 		o lo hacemos nosotros internamente (true)
 	 */
 	public void select(int inicio, int longitud, boolean esInterno) {
 		
 		//	Hacemos focus
 		
 		this.textArea.requestFocusInWindow();
-		this.textArea.select(inicio, longitud);
-	    
+		this.textArea.select(inicio, longitud);	    
 	
 	    //	Coloreamos línea
 	        
@@ -219,8 +220,11 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	public void removeSelects(){
 		DefaultHighlighter highlighter = (DefaultHighlighter)this.textArea.getHighlighter();
 		highlighter.removeAllHighlights();
+			
+		this.textArea.setCaretPosition(this.posicionBuscar);
+		this.textArea.moveCaretPosition(this.posicionBuscar);		
 		
-		this.lineasSubrayadas = new ArrayList<Integer>();
+		this.lineasSubrayadas = new ArrayList<Integer>();		
 	}	
 	
 	/**
@@ -230,13 +234,12 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * @param numLinea
 	 * 		Número de línea donde queremos hacer scroll o focus
 	 * 
-	 * @param jsp
-	 * 		JScrollPane que moveremos
 	 */
-	public void focusLinea(final int numLinea, final JScrollPane jsp){
-		SwingUtilities.invokeLater(new Runnable() {			
-		    public void run() {		    	
-				int numLineasEditor = textArea.getText().split("(\r\n|\r|\n)", -1).length;
+	public void focusLinea(final int numLinea){		
+		SwingUtilities.invokeLater(new Runnable() {				
+		    public void run() {	
+		    	JScrollPane jsp = Ventana.thisventana.getPanelVentana().getPanelAlgoritmo().getJSPCodigo();
+				int numLineasEditor = PanelEditorJava2.this.textArea.getText().split("(\r\n|\r|\n)", -1).length;
 				int numLineaFinal = numLinea;
 				if(numLinea<0 || numLinea>numLineasEditor)
 					numLineaFinal = numLineasEditor;
@@ -255,6 +258,60 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 				PanelEditorJava2.this.moverLineaEditor(numLineaFinal);
 		    }
 		});
+	}
+	
+	/**
+	 * Mueve el scroll (focus) del editor de código al texto indicado por
+	 * 	texto y dado un número de ocurrencia
+	 * 
+	 * @param texto
+	 * 		Texto a subrayar
+	 * 
+	 * @param numOcurrencia
+	 * 		Ocurrencia de texto a subrayar
+	 */
+	private void focusTexto(final String texto, int numOcurrencia) {
+		SwingUtilities.invokeLater(new Runnable() {				
+		    public void run() {	
+		    	String[] textoCompleto = PanelEditorJava2.this.textArea.getText().split("(\r\n|\r|\n)", -1);
+				int numOcurrenciasLocal = 0;
+				int numLinea = 0;
+				
+				for(String linea : textoCompleto) {	
+					numLinea++;
+					int numOcurrenciasLinea = PanelEditorJava2.this.getNumberOcurrences(linea, texto);	
+					numOcurrenciasLocal = numOcurrenciasLocal+numOcurrenciasLinea;
+					if(numOcurrenciasLocal>=numOcurrencia)
+						break;
+				}
+				
+				PanelEditorJava2.this.focusLinea(numLinea);
+		    }
+		});
+	}
+	
+	/**
+	 * Obtiene el número de ocurrencias de "ocurrence" dentro de "text"
+	 * 
+	 * @param text
+	 * 		Texto donde buscaremos
+	 * 
+	 * @param ocurrence
+	 * 		Ocurrencia a buscar
+	 * 
+	 * @return
+	 * 		Número de ocurrencias de "ocurrence" dentro de "text"
+	 */
+	private int getNumberOcurrences(String text, String ocurrence) {
+		String content = text;
+        Pattern pattern = Pattern.compile(ocurrence);
+        Matcher  matcher = pattern.matcher(content);
+
+        int count = 0;
+        while (matcher.find())
+            count++;
+
+        return count; 
 	}
 	
 	/**
@@ -293,7 +350,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 			longitud = textoareatexto.length();
 		}
 		
-		textArea.requestFocus();
+		this.textArea.requestFocus();
 		this.textArea.setCaretPosition(inicio - numeroLinea + 1);
 	}
 
@@ -509,6 +566,85 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	    });
 	    
 	    this.textArea.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
+	}
+	
+	/**
+	 * Subraya la palabra n del código
+	 * 
+	 * @param texto
+	 * 		Texto a subrayar/ocurrencia
+	 * 
+	 * @param	
+	 * 		Número de ocurrencia a subrayar
+	 * 
+	 */
+	public void subrayarPalabra(String texto, int numActualOcurrencia) {
+		SwingUtilities.invokeLater(new Runnable() { 
+	        public void run() { 
+	        	PanelEditorJava2.this.removeSelects();
+	        	
+				// Focus the text area, otherwise the highlighting won't show up
+	        	
+				PanelEditorJava2.this.textArea.requestFocus();
+				
+		        // Make sure we have a valid search term
+				
+		        if (texto != null && texto.length() > 0) {
+		            Document document = PanelEditorJava2.this.textArea.getDocument();
+		            int findLength = texto.length();
+		            try {
+		                boolean found = false;
+		                
+		                // Rest the search position if we're at the end of the document
+		                
+		                if (PanelEditorJava2.this.posicionBuscar + findLength > document.getLength()) {
+		                	PanelEditorJava2.this.posicionBuscar = 0;
+		                }
+		                
+		                // While we haven't reached the end...
+		                // "<=" Correction
+		                
+		                while (PanelEditorJava2.this.posicionBuscar + findLength <= document.getLength()) {
+		                	
+		                    // Extract the text from teh docuemnt
+		                	
+		                    String match = document.getText(PanelEditorJava2.this.posicionBuscar, findLength).toLowerCase();
+		                    
+		                    // Check to see if it matches or request
+		                    
+		                    if (match.equals(texto)) {
+		                        found = true;
+		                        break;
+		                    }
+		                    PanelEditorJava2.this.posicionBuscar++;
+		                }
+		
+		                // Did we find something...
+		                if (found) {
+		                	
+		                    // Scroll to make the rectangle visible
+		                    PanelEditorJava2.this.focusTexto(texto, numActualOcurrencia);
+		                    
+		                    PanelEditorJava2.this.select(PanelEditorJava2.this.posicionBuscar, findLength-1, true);
+		                    
+                            // Move the search position beyond the current match
+                            PanelEditorJava2.this.posicionBuscar += findLength;
+		                }
+		
+		            } catch (Exception exp) {
+		                exp.printStackTrace();
+		            }
+		        }
+	        }
+        });
+	}
+	
+	/**
+	 * Reinicia la posición del buscador
+	 */
+	public void reiniciarBuscador() {
+		this.posicionBuscar = 0;
+		this.textArea.setCaretPosition(0);
 	}
 	
 	/**

@@ -10,11 +10,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
+import cuadros.CuadroEditorBuscarTexto;
 import cuadros.CuadroEditorIrALinea;
 
 /**
@@ -35,8 +35,6 @@ class PanelCodigo implements MouseListener {
 	private JPanel panel = new JPanel();
 
 	private boolean editable = true;
-	
-	private JScrollPane jsp;
 
 	/**
 	 * Constructor: crea un nuevo PanelCodigo
@@ -145,19 +143,10 @@ class PanelCodigo implements MouseListener {
 	}
 	
 	/**
-	 * Establece el JScrollPane asociado al panel
-	 * 
-	 * @param jsp 
-	 * 		JScrollPane asociado
-	 */
-	public void setJScrollPane(JScrollPane jsp) {
-		this.jsp = jsp;
-	}
-	
-	/**
 	 * Permite seleccionar un fragmento de código.
 	 * 
 	 * @param inicio Posición inicial.
+	 * 
 	 * @param longitud Posición final.
 	 */
 	private void select(int inicio, int longitud) {
@@ -216,11 +205,9 @@ class PanelCodigo implements MouseListener {
 	 * @param numLinea
 	 * 		Número de línea donde queremos hacer scroll o focus
 	 * 
-	 * @param jsp
-	 * 		JScrollPane que moveremos
 	 */
-	public void focusLinea(int numLinea, JScrollPane jsp){
-		this.panelJava.focusLinea(numLinea, jsp);
+	public void focusLinea(int numLinea){
+		this.panelJava.focusLinea(numLinea);
 	}
 	
 	/**
@@ -322,7 +309,14 @@ class PanelCodigo implements MouseListener {
 	 * Operación seleccionar línea
 	 */
 	public void doSelectLine() {
-		new CuadroEditorIrALinea(Ventana.thisventana, this.panelJava, this.jsp);
+		new CuadroEditorIrALinea(Ventana.thisventana, this.panelJava);
+	}
+	
+	/**
+	 * Operación buscar
+	 */
+	public void doSearch() {
+		new CuadroEditorBuscarTexto(Ventana.thisventana, this.panelJava);
 	}
 	
 	@Override

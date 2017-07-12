@@ -1464,15 +1464,20 @@
 		<T valor="Paste  (Ctrl+V)" idioma="en" id="EDITOR_REHACER"/>
 		<T valor="Ir a l[iacute]nea" idioma="es" id="EDITOR_IR_A_LINEA"/>
 		<T valor="Go to line" idioma="en" id="EDITOR_IR_A_LINEA"/>
-		<T valor="Buscar primero" idioma="es" id="EDITOR_BUSCAR_PRIMERO"/>
-		<T valor="Search first" idioma="en" id="EDITOR_BUSCAR_PRIMERO"/>
-		<T valor="Buscar siguiente" idioma="es" id="EDITOR_BUSCAR_SIGUIENTE"/>
-		<T valor="Search next" idioma="en" id="EDITOR_BUSCAR_SIGUIENTE"/>
+		<T valor="Buscar" idioma="es" id="EDITOR_BUSCAR"/>
+		<T valor="Search" idioma="en" id="EDITOR_BUSCAR"/>
 		<T valor="Seleccionar todo  (Ctrl+A)" idioma="es" id="EDITOR_SELECCIONAR_TODO"/>
 		<T valor="Select all (Ctrl+A)" idioma="en" id="EDITOR_SELECCIONAR_TODO"/>
 		<T valor="N[uacute]mero de l[iacute]nea" idioma="es" id="EDITOR_NUMERO_LINEA"/>
 		<T valor="Line number" idioma="en" id="EDITOR_NUMERO_LINEA"/>
-		
+		<T valor="Texto a buscar" idioma="es" id="EDITOR_TEXTO_A_BUSCAR"/>
+		<T valor="Text to search" idioma="en" id="EDITOR_TEXTO_A_BUSCAR"/>
+		<T valor="coincidencias" idioma="es" id="EDITOR_COINCIDENCIAS"/>
+		<T valor="matches" idioma="en" id="EDITOR_COINCIDENCIAS"/>
+		<T valor="No hay coincidencias" idioma="es" id="EDITOR_NO_COINCIDENCIAS"/>
+		<T valor="There aren't matches" idioma="en" id="EDITOR_NO_COINCIDENCIAS"/>
+		<T valor="Buscar / Siguiente" idioma="es" id="EDITOR_BOTON_BUSCAR"/>
+		<T valor="Search / Next" idioma="en" id="EDITOR_BOTON_BUSCAR"/>
 		
 		<!-- Ventana Ver Codigo -->
 		<T valor="SRec - Editor de c[oacute]digo" idioma="es" id="VVC_TITULO"/>

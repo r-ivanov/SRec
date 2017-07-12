@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -39,9 +38,7 @@ public class CuadroEditorIrALinea extends Thread implements ActionListener,
 KeyListener, MouseListener {
 	
 	private JDialog dialogo;
-	private Ventana ventana;
 	private PanelEditorJava2 panelJava;
-	private JScrollPane jsp;	
 	
 	private JPanel panelIrALinea, panelSuperior, panelBotones;
 	private JLabel labelImagen, labelSuperior;
@@ -65,15 +62,10 @@ KeyListener, MouseListener {
 	 * 
 	 * @param panelJava
 	 * 		Panel Java sobre el que actuará este cuadro
-	 * 
-	 * @param jsp
-	 * 		JScrollPane que moverá este cuadro
 	 */
-	public CuadroEditorIrALinea(Ventana ventana, PanelEditorJava2 panelJava, JScrollPane jsp) {
+	public CuadroEditorIrALinea(Ventana ventana, PanelEditorJava2 panelJava) {
 		this.dialogo = new JDialog(ventana, true);
-		this.ventana = ventana;
 		this.panelJava = panelJava;
-		this.jsp = jsp;
 		this.start();
 	}
 	
@@ -192,6 +184,7 @@ KeyListener, MouseListener {
 	 * 
 	 * @param x
 	 * 		Empieza en la columna x
+	 * 
 	 * @param y
 	 * 		Empieza en la fila y
 	 * 
@@ -233,7 +226,7 @@ KeyListener, MouseListener {
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
 		}else if(e.getSource() == this.aceptar) {
-			this.panelJava.focusLinea((Integer)this.numeroEntrada.getValue(), this.jsp);	
+			this.panelJava.focusLinea((Integer)this.numeroEntrada.getValue());	
 			this.dialogo.setVisible(false);
 		}
 	}
@@ -264,7 +257,7 @@ KeyListener, MouseListener {
 		if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
 		}else if(code == KeyEvent.VK_ENTER) {
-			this.panelJava.focusLinea((Integer)this.numeroEntrada.getValue(), this.jsp);
+			this.panelJava.focusLinea((Integer)this.numeroEntrada.getValue());
 			this.dialogo.setVisible(false);
 		}		
 	}

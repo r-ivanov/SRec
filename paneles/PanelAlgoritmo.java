@@ -348,7 +348,6 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		// pCodigo = new PanelCodigo(nombreArchivo,nombreMetodo);
 		pCodigo.abrir(nombreArchivo, editable, cargarFichero, false);
 		jspCodigo = new JScrollPane(pCodigo.getPanel());
-		pCodigo.setJScrollPane(jspCodigo);
 		pCodigoBotones.activarTodosBotones();
 		this.quitarBordesJSP();
 
@@ -1948,7 +1947,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 */
 	public void subrayarLineaEditor(int numeroLinea){
 		this.getPanelCodigo().subrayarLineaEditor(numeroLinea);
-		this.getPanelCodigo().focusLinea(numeroLinea,jspCodigo);
+		this.getPanelCodigo().focusLinea(numeroLinea);
 	}
     
 	/**
@@ -1982,6 +1981,17 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 */
 	public void changeTheme(int tema){
 		this.getPanelCodigo().changeTheme(tema);
+	}
+	
+	/**
+	 * Obtiene el panel de código
+	 * 
+	 * @return
+	 * 
+	 * 		JScrollPane de código
+	 */
+	public JScrollPane getJSPCodigo() {
+		return jspCodigo;
 	}
 	
     /**
