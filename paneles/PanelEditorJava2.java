@@ -270,7 +270,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * @param numOcurrencia
 	 * 		Ocurrencia de texto a subrayar
 	 */
-	private void focusTexto(final String texto, int numOcurrencia) {
+	private void focusTexto(final String texto, final int numOcurrencia) {
 		SwingUtilities.invokeLater(new Runnable() {				
 		    public void run() {	
 		    	String[] textoCompleto = PanelEditorJava2.this.textArea.getText().split("(\r\n|\r|\n)", -1);
@@ -578,7 +578,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 		Número de ocurrencia a subrayar
 	 * 
 	 */
-	public void subrayarPalabra(String texto, int numActualOcurrencia) {
+	public void subrayarPalabra(final String texto, final int numActualOcurrencia) {
 		SwingUtilities.invokeLater(new Runnable() { 
 	        public void run() { 
 	        	PanelEditorJava2.this.removeSelects();
