@@ -1277,7 +1277,7 @@ public class Ventana extends JFrame implements ActionListener {
                 	log_write("Botón: Generar Grafo de dependencia");
                 }
                 this.generarGrafoDependencia();
-			} else if (fuente == this.botones[5]) // Archivo > Cargar
+			}else if (fuente == this.botones[5]) // Archivo > Cargar
 			// visualización...
 			{
 				if (Conf.fichero_log) {
@@ -2277,6 +2277,23 @@ public class Ventana extends JFrame implements ActionListener {
     }
     
     /**
+     * Gestiona las acciones necesarias cuando el usuario pulsa
+     * el botón abrir/cerrar terminal
+     */
+    public void abrirCerrarTerminal() {   	
+	    	boolean estaVisible = Ventana.this.getCuadroTerminal().abrirCerrarTerminal();
+			if(estaVisible) {
+				botones[36].setToolTipText(Texto.get("BARRA_HERR_TTT36_CLOSE",Conf.idioma));
+				botones[36].setIcon(new ImageIcon(
+		 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_termial_desactivar.png")));
+			}else {
+				botones[36].setToolTipText(Texto.get("BARRA_HERR_TTT36_OPEN",Conf.idioma));
+				botones[36].setIcon(new ImageIcon(
+		 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_termial_activar.png")));
+			}
+    }
+    
+    /**
      * Permite abrir la pestaña del grafo de dependencia en el panel correspondiente
      * 
      * @param metodo
@@ -2723,7 +2740,8 @@ public class Ventana extends JFrame implements ActionListener {
 		this.botones[31].setEnabled(valor);
 		this.botones[34].setEnabled(valor);
         this.botones[35].setEnabled(valor);
-
+        this.botones[36].setEnabled(valor);
+        
 		GestorVentanaSRec.habilitaMenuItem(this.menus[2],
 				Texto.get("MENU_INFO_01", Conf.idioma), valor);
 		GestorVentanaSRec.habilitaMenuItem(this.menus[2],

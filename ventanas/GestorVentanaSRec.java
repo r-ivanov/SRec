@@ -1,5 +1,7 @@
 package ventanas;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
@@ -914,7 +916,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 	 */
 	protected static JToolBar[] creaBarrasHeramientas() {
 		// Primero creamos los botones
-		JButton[] botones = new JButton[36];
+		JButton[] botones = new JButton[37];
 
 		// Grupo archivo Java
 		botones[0] = new JButton(new ImageIcon(GestorVentanaSRec.class
@@ -932,7 +934,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		botones[29] = new JButton(new ImageIcon(
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_nuevavisualizacion.gif")));
         botones[35]=new JButton(new ImageIcon(
-        		GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_generargrafodependencia.gif")));
+        		GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_generargrafodependencia.gif"))); 		
+    
 		// Grupo animación - No visibles
 		botones[4] = new JButton(new ImageIcon(
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_nuevavisualizacion.gif")));
@@ -959,6 +962,9 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_llamadasmarcar.gif")));
 		botones[31] = new JButton(new ImageIcon(
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_llamadasdesmarcar.gif")));
+		botones[36] = new JButton(new ImageIcon(
+ 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_termial_activar.png")));
+		
 		// Grupo opciones 1 - No Visibles
 		botones[12] = new JButton(new ImageIcon(
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_nodoshistoricos.gif")));
@@ -1002,10 +1008,11 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoommenos2.gif")));
 		botones[26] = new JButton(new ImageIcon(
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoomajuste2.gif")));
+		
 		// Grupo formato - No Visibles
 		botones[27] = new JButton(new ImageIcon(
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ubicacionpaneles.gif")));
-
+		
 		GestorVentanaSRec.setToolTipTextBHH(botones);
 
 		for (int i = 0; i < botones.length; i++) {
@@ -1019,11 +1026,19 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		botones[28].setEnabled(false);
 		botones[29].setEnabled(false);
 		botones[33].setEnabled(false);
-		botones[35].setEnabled(false);
-
+		botones[35].setEnabled(false);		
+		
 		Ventana.thisventana.setBotones(botones);
 		Ventana.thisventana.habilitarOpcionesAnimacion(false);
-
+		
+		//	Terminal - Necesario, sino no funciona bien
+		botones[36].setEnabled(true);
+		botones[36].addActionListener(new ActionListener() { 		
+			  public void actionPerformed(ActionEvent e) { 
+				    Ventana.thisventana.abrirCerrarTerminal();
+				  } 
+		} );
+		
 		// Creamos las barras de herramientas donde insertaremos los botones
 		// creados
 		JToolBar[] barras = new JToolBar[6];
@@ -1044,8 +1059,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		for (int i = 28; i < 30; i++) {
 			barras[1].add(botones[i]);
 		}
-        barras[1].add(botones[35]);
-
+        barras[1].add(botones[35]);       
+        
 		// Grupo exportación
 		barras[2].add(botones[7]);
 		barras[2].add(botones[9]);
@@ -1056,6 +1071,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		}
 		barras[3].add(botones[30]);
 		barras[3].add(botones[31]);
+		barras[3].add(botones[36]);
 
 		// Grupo de opciones 2
 		barras[4].add(botones[14]);
@@ -1087,7 +1103,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		// Animaciones
 		botones[28].setToolTipText(Texto.get("BARRA_HERR_TTT26", Conf.idioma));
 		botones[29].setToolTipText(Texto.get("BARRA_HERR_TTT27", Conf.idioma));
-        botones[35].setToolTipText(Texto.get("BARRA_HERR_TTT35",Conf.idioma));
+        botones[35].setToolTipText(Texto.get("BARRA_HERR_TTT35",Conf.idioma));        
 		botones[4].setToolTipText(Texto.get("BARRA_HERR_TTT05", Conf.idioma));
 		botones[5].setToolTipText(Texto.get("BARRA_HERR_TTT06", Conf.idioma));
 		botones[6].setToolTipText(Texto.get("BARRA_HERR_TTT07", Conf.idioma));
@@ -1104,6 +1120,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		botones[31].setToolTipText(Texto.get("BARRA_HERR_TTT29", Conf.idioma));
 		botones[12].setToolTipText(Texto.get("BARRA_HERR_TTT13", Conf.idioma));
 		botones[13].setToolTipText(Texto.get("BARRA_HERR_TTT14", Conf.idioma));
+		botones[36].setToolTipText(Texto.get("BARRA_HERR_TTT36_OPEN",Conf.idioma));
 
 		// Opciones 2
 		botones[14].setToolTipText(Texto.get("BARRA_HERR_TTT15", Conf.idioma));
