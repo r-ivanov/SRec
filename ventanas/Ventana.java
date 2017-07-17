@@ -62,6 +62,7 @@ import cuadros.CuadroPreguntaEdicionNoGuardada;
 import cuadros.CuadroPreguntaNuevaVisualizacion;
 import cuadros.CuadroPreguntaSobreescribir;
 import cuadros.CuadroProgreso;
+import cuadros.CuadroTerminal;
 import cuadros.CuadroVisibilidad;
 import cuadros.CuadroVistasDisponibles;
 import cuadros.CuadroZoom;
@@ -152,6 +153,8 @@ public class Ventana extends JFrame implements ActionListener {
 	private CuadroParamLanzarEjec cuadroLanzarEjec;
 
 	private boolean usuarioPulsadoIdTraza=false;	//	Indica si el usuario ha pulsado el botón idTraza o no
+	
+	private CuadroTerminal cuadroTerminal;	
 
 	/**
 	 * Crea una nueva instancia de la ventana de la aplicación.
@@ -342,6 +345,7 @@ public class Ventana extends JFrame implements ActionListener {
 			}
 		}
 
+		this.setCuadroTerminal(new CuadroTerminal(this));
 	}
 	
 	/**
@@ -3205,5 +3209,25 @@ public class Ventana extends JFrame implements ActionListener {
 					true);
 		}
 		this.actualizarVisualizacion();
+	}
+	
+	/**
+	 * Obtiene el cuadro terminal de la aplicación
+	 * 
+	 * @return 
+	 * 		Cuadro terminal de la aplicación
+	 */
+	public CuadroTerminal getCuadroTerminal() {
+		return cuadroTerminal;
+	}
+
+	/**
+	 * Establece el cuadro terminal de la aplicación
+	 * 
+	 * @param 
+	 * 		CuadroTerminal de la aplicación
+	 */
+	public void setCuadroTerminal(CuadroTerminal cuadroTerminal) {
+		this.cuadroTerminal = cuadroTerminal;
 	}
 }
