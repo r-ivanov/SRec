@@ -189,7 +189,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				Texto.get("MENU_VISU_18", Conf.idioma),
 				Texto.get("MENU_VISU_10", Conf.idioma),
 				Texto.get("MENU_VISU_11", Conf.idioma),
-				Texto.get("MENU_VISU_12", Conf.idioma) };
+				Texto.get("MENU_VISU_12", Conf.idioma),
+				Texto.get("BARRA_HERR_TTT36_OPEN", Conf.idioma)};
 
 		char mnAnimacion[] = new char[noAnimacion.length];
 		mnemotecnicos = Texto.get("MNEMO_VISU", Conf.idioma);
@@ -205,7 +206,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_estadoInicial.gif"),
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_formato.gif"),
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoom.gif"),
-				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ubicacionpaneles.gif") };
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ubicacionpaneles.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_terminal_activar.png")};
 		int sepAnimacion[] = {}; // Separador debajo de la primera opción de
 		// menú (contamos desde cero)
 		KeyStroke ksAnimacion[] = {
@@ -215,7 +217,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V,
 						java.awt.Event.CTRL_MASK),
 						KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
-								java.awt.Event.CTRL_MASK) };
+								java.awt.Event.CTRL_MASK),
+				null};
 		menus[1] = creaMenu(noAnimacion, mnAnimacion, iconosAnimacion,
 				nombreMenuAnimacion, mnMenuAnimacion, sepAnimacion, ksAnimacion);
 
@@ -439,7 +442,6 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		barramenu.add(menus[2]);
 		barramenu.add(menus[3]);
 		barramenu.add(menus[4]);
-
 	}
 
 	/**
@@ -963,7 +965,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		botones[31] = new JButton(new ImageIcon(
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_llamadasdesmarcar.gif")));
 		botones[36] = new JButton(new ImageIcon(
- 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_termial_activar.png")));
+ 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_terminal_activar.png")));
 		
 		// Grupo opciones 1 - No Visibles
 		botones[12] = new JButton(new ImageIcon(

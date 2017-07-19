@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -249,8 +250,8 @@ public class Ventana extends JFrame implements ActionListener {
 				"MENU_TRAZ_03", // 50 a 54
 				"MENU_TRAZ_04", "MENU_VISU_18", "MENU_ARBL_03", "MENU_ARBL_04", // 55
 				"MENU_ARCH_16"
-				// a
-				// 59
+				// a 59
+				,"BARRA_HERR_TTT36_OPEN","BARRA_HERR_TTT36_CLOSE"
 		};
 
 		this.codigos = codigos2;
@@ -1176,6 +1177,11 @@ public class Ventana extends JFrame implements ActionListener {
 					this.log_write("Ayuda > Sobre SRec");
 				}
 				new CuadroAcercade(this);
+			}else if (textoFuente.equals(this.textos[60]) || textoFuente.equals(this.textos[61])) { 
+				if (Conf.fichero_log) {
+					this.log_write("Visualización > Abrir/Cerrar terminal");
+				}
+				this.abrirCerrarTerminal();				
 			}
 
 			// JMenuItem no reconocido
@@ -2280,17 +2286,27 @@ public class Ventana extends JFrame implements ActionListener {
      * Gestiona las acciones necesarias cuando el usuario pulsa
      * el botón abrir/cerrar terminal
      */
-    public void abrirCerrarTerminal() {   	
-	    	boolean estaVisible = Ventana.this.getCuadroTerminal().abrirCerrarTerminal();
-			if(estaVisible) {
-				botones[36].setToolTipText(Texto.get("BARRA_HERR_TTT36_CLOSE",Conf.idioma));
-				botones[36].setIcon(new ImageIcon(
-		 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_termial_desactivar.png")));
-			}else {
-				botones[36].setToolTipText(Texto.get("BARRA_HERR_TTT36_OPEN",Conf.idioma));
-				botones[36].setIcon(new ImageIcon(
-		 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_termial_activar.png")));
-			}
+    public void abrirCerrarTerminal() { 
+    	boolean estaVisible = Ventana.this.getCuadroTerminal().abrirCerrarTerminal();
+    	JMenuItem item = this.menus[1].getItem(5);
+    	String textoClose = Texto.get("BARRA_HERR_TTT36_CLOSE",Conf.idioma);
+    	String textoOpen = Texto.get("BARRA_HERR_TTT36_OPEN",Conf.idioma);
+    	Icon iconClose = new ImageIcon(
+ 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_terminal_desactivar.png"));
+    	Icon iconOpen = new ImageIcon(
+ 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_terminal_activar.png"));
+    	
+		if(estaVisible) {
+			botones[36].setToolTipText(textoClose);
+			botones[36].setIcon(iconClose);
+			item.setText(textoClose);
+			item.setIcon(iconClose);
+		}else {
+			botones[36].setToolTipText(textoOpen);
+			botones[36].setIcon(iconOpen);
+			item.setText(textoOpen);
+			item.setIcon(iconOpen);
+		}
     }
     
     /**
@@ -2740,7 +2756,7 @@ public class Ventana extends JFrame implements ActionListener {
 		this.botones[31].setEnabled(valor);
 		this.botones[34].setEnabled(valor);
         this.botones[35].setEnabled(valor);
-        this.botones[36].setEnabled(valor);
+        this.botones[36].setEnabled(true);
         
 		GestorVentanaSRec.habilitaMenuItem(this.menus[2],
 				Texto.get("MENU_INFO_01", Conf.idioma), valor);
