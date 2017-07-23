@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -454,8 +455,11 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		//	Añadimos JToolbar al panel
 		
-		for(int i=0;i<this.controlesBotonesNumeroJToolbar;i++)
-			this.cuadroPanelBotones.add(this.controlesBotonesJToolbar[i],this.variosGetConstraints(i, 0, 1, 1, 0, 0, false, GridBagConstraints.CENTER));
+		for(int i=0;i<this.controlesBotonesNumeroJToolbar;i++) {
+			GridBagConstraints g = this.variosGetConstraints(i, 0, 1, 1, 0, 0, false, GridBagConstraints.CENTER);
+			g.insets = new Insets(2, 2, 2, 5);
+			this.cuadroPanelBotones.add(this.controlesBotonesJToolbar[i],g);
+		}
 		
 		//	Añadimos action listener y dimensión a los botones
 		
