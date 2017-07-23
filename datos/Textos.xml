@@ -11,8 +11,7 @@
 
 		<!-- Cabecera -->
 		<T valor="SRec, Sistema de animaci[oacute]n de la recursividad" idioma="es" id="APLIC"/>
-		<T valor="SRec, System for recursion animation" idioma="en" id="APLIC"/>
-	
+		<T valor="SRec, System for recursion animation" idioma="en" id="APLIC"/>	
 	
 		<!-- otros -->
 		<T valor="S[iacute]" idioma="es" id="SI"/>
@@ -749,10 +748,7 @@
 		<T valor="Versi[oacute]n" idioma="es" id="URJC_SREC_02"/>
 		<T valor="Version" idioma="en" id="URJC_SREC_02"/>
 		<T valor="Sobre SRec" idioma="es" id="URJC_ACERCADE"/>
-		<T valor="About SRec" idioma="en" id="URJC_ACERCADE"/>		
-
-		
-		
+		<T valor="About SRec" idioma="en" id="URJC_ACERCADE"/>	
 		
 		<!-- Cuadro generacion parametros -->
 		<T valor="Generaci[oacute]n de valores aleatorios" idioma="es" id="CGF_TITULO"/>
@@ -1377,8 +1373,35 @@
 		
 		<!-- Cuadro paneles -->
 		<T valor="Disposici[oacute]n de paneles" idioma="es" id="CPAN_DISPOS"/>
-		<T valor="Panels location" idioma="en" id="CPAN_DISPOS"/>		
-		
+		<T valor="Panels location" idioma="en" id="CPAN_DISPOS"/>	
+
+		<!-- Cuadro terminal -->
+		<T valor="Terminal SRec" idioma="es" id="TER_TITULO"/>
+		<T valor="SRec Terminal" idioma="en" id="TER_TITULO"/>
+		<T valor="Limpiar" idioma="es" id="TER_LIMPIAR"/>
+		<T valor="Clear" idioma="en" id="TER_LIMPIAR"/>
+		<T valor="Guardar en archivo" idioma="es" id="TER_GUARDAR"/>
+		<T valor="Save in file" idioma="en" id="TER_GUARDAR"/>
+		<T valor="Copiar texto" idioma="es" id="TER_COPIAR"/>
+		<T valor="Copy text" idioma="en" id="TER_COPIAR"/>
+		<T valor="Imprimir" idioma="es" id="TER_IMPRIMIR"/>
+		<T valor="Print" idioma="en" id="TER_IMPRIMIR"/>
+		<T valor="Limpiar pantalla en llamada al m[eacute]todo [Activar]" idioma="es" id="TER_LIMPIAR_PANTALLA_ACTIVAR"/>
+		<T valor="Clear screen on method call [Enable]" idioma="en" id="TER_LIMPIAR_PANTALLA_ACTIVAR"/>
+		<T valor="Limpiar pantalla en llamada al m[eacute]todo [Desactivar]" idioma="es" id="TER_LIMPIAR_PANTALLA_DESACTIVAR"/>
+		<T valor="Clear screen on method call [Disable]" idioma="en" id="TER_LIMPIAR_PANTALLA_DESACTIVAR"/>
+		<T valor="Registro de llamadas a m[eacute]todo [Activar]" idioma="es" id="TER_REG_LLAMADAS_ACTIVAR"/>
+		<T valor="Method call log [Enable]" idioma="en" id="TER_REG_LLAMADAS_ACTIVAR"/>
+		<T valor="Registro de llamadas a m[eacute]todo [Desactivar]" idioma="es" id="TER_REG_LLAMADAS_DESACTIVAR"/>
+		<T valor="Method call log [Disable]" idioma="en" id="TER_REG_LLAMADAS_DESACTIVAR"/>
+		<T valor="Buffer ilimitado [Activar]" idioma="es" id="TER_BUFFER_ACTIVAR"/>
+		<T valor="Unlimited buffer [Enable]" idioma="en" id="TER_BUFFER_ACTIVAR"/>
+		<T valor="Buffer ilimitado [Desctivar]" idioma="es" id="TER_BUFFER_DESACTIVAR"/>
+		<T valor="Unlimited buffer [Disable]" idioma="en" id="TER_BUFFER_DESACTIVAR"/>
+		<T valor="Cerrar terminal" idioma="es" id="TER_CERRAR"/>
+		<T valor="Close terminal" idioma="en" id="TER_CERRAR"/>
+		<T valor="Opciones" idioma="es" id="TER_OPCIONES"/>
+		<T valor="Options" idioma="en" id="TER_OPCIONES"/>
 		
 		<!-- Panel de compilador -->
 		<T valor="Clase compilada sin errores." idioma="es" id="COMPILAR_NOERRORES"/>

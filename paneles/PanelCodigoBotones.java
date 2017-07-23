@@ -263,7 +263,4 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 		}
 		
 	}
-	
-	
-
 }
