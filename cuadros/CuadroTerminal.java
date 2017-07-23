@@ -157,17 +157,20 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		else
 			this.cuadroEstaVisible = true;
 		
-		this.cuadroDialogo.setVisible(this.cuadroEstaVisible);
+		
 		
 		if(this.cuadroEstaVisible) {			
 			SwingUtilities.invokeLater(new Runnable() {	
 	            @Override
 	            public void run() {
 	                if(cuadroDialogo != null) {
+	                	cuadroDialogo.setVisible(true);
 	                	cuadroDialogo.toFront();
 	                }
 	            }
 	        });
+		}else {
+			cuadroDialogo.setVisible(false);
 		}
 		
 		return this.cuadroEstaVisible;		
