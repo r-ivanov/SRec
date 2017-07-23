@@ -25,6 +25,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.metal.MetalBorders;
 
 import conf.Conf;
@@ -157,6 +158,17 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			this.cuadroEstaVisible = true;
 		
 		this.cuadroDialogo.setVisible(this.cuadroEstaVisible);
+		
+		if(this.cuadroEstaVisible) {			
+			SwingUtilities.invokeLater(new Runnable() {	
+	            @Override
+	            public void run() {
+	                if(cuadroDialogo != null) {
+	                	cuadroDialogo.toFront();
+	                }
+	            }
+	        });
+		}
 		
 		return this.cuadroEstaVisible;		
 	}	
