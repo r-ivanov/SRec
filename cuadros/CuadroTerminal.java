@@ -211,10 +211,10 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		//	Panel general = Panel botones + Panel salidas	
 		
-		this.cuadroPanelGeneral.add(this.cuadroPanelBotones, this.variosGetConstraints(0, 0, 1, 1, 0, 0, false));
-		this.cuadroPanelGeneral.add(this.cuadroPanelSalidas, this.variosGetConstraints(0, 1, 1, 1, 1, 1, true));
+		this.cuadroPanelGeneral.add(this.cuadroPanelBotones, this.variosGetConstraints(0, 0, 1, 1, 0, 0, false, GridBagConstraints.WEST));
+		this.cuadroPanelGeneral.add(this.cuadroPanelSalidas, this.variosGetConstraints(0, 1, 1, 1, 1, 1, true, GridBagConstraints.CENTER));
 		
-		this.cuadroDialogo.getContentPane().add(this.cuadroPanelGeneral, this.variosGetConstraints(0, 0, 1, 1, 1, 1, true));
+		this.cuadroDialogo.getContentPane().add(this.cuadroPanelGeneral, this.variosGetConstraints(0, 0, 1, 1, 1, 1, true, GridBagConstraints.CENTER));
 	}
 	
 	//***************************************
@@ -455,7 +455,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		//	Añadimos JToolbar al panel
 		
 		for(int i=0;i<this.controlesBotonesNumeroJToolbar;i++)
-			this.cuadroPanelBotones.add(this.controlesBotonesJToolbar[i],this.variosGetConstraints(i, 0, 1, 1, 0, 0, false));
+			this.cuadroPanelBotones.add(this.controlesBotonesJToolbar[i],this.variosGetConstraints(i, 0, 1, 1, 0, 0, false, GridBagConstraints.CENTER));
 		
 		//	Añadimos action listener y dimensión a los botones
 		
@@ -522,7 +522,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		this.cuadroPanelSalidas.add(
 			this.panelesPanelSplitPane,
-			this.variosGetConstraints(0, 0, 1, 1, 1, 1, true)
+			this.variosGetConstraints(0, 0, 1, 1, 1, 1, true, GridBagConstraints.CENTER)
 		);
 	}
 	
@@ -543,7 +543,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		this.panelesPanelNormal.add(
 			this.panelesPanelNormalScroll,
-			this.variosGetConstraints(0, 0, 1, 1, 1, 1, true)
+			this.variosGetConstraints(0, 0, 1, 1, 1, 1, true, GridBagConstraints.CENTER)
 		);		
 	}
 	
@@ -564,7 +564,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		this.panelesPanelError.add(
 			this.panelesPanelErrorScroll,
-			this.variosGetConstraints(0, 0, 1, 1, 1, 1, true)
+			this.variosGetConstraints(0, 0, 1, 1, 1, 1, true, GridBagConstraints.CENTER)
 		);
 	}
 	
@@ -614,10 +614,13 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * @param fill
 	 * 		Rellena en ambos sentidos o no
 	 * 
+	 * @param align
+	 * 		Alineación del contenido
+	 * 
 	 * @return
 	 * 		GridBagConstraints
 	 */
-	private GridBagConstraints variosGetConstraints(int x, int y, int xS, int yS, int weightX, int weightY, boolean fill) {
+	private GridBagConstraints variosGetConstraints(int x, int y, int xS, int yS, int weightX, int weightY, boolean fill, int align) {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridx = x;
 		constraints.gridy = y; 
@@ -628,6 +631,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		if(fill) {
 			constraints.fill = GridBagConstraints.BOTH;
 		}
+		constraints.anchor = align;
 		return constraints;
 	}
 	
