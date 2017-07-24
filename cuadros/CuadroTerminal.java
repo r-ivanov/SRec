@@ -1,5 +1,6 @@
 package cuadros;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -9,6 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +35,9 @@ import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.metal.MetalBorders;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import conf.Conf;
 import utilidades.Texto;
@@ -107,7 +118,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	
 	private JPanel panelesPanelNormal;
 	private JScrollPane panelesPanelNormalScroll;
-	private JTextPane panelesPanelNormalTexto;
+	private panelTextoClase panelesPanelNormalTexto;
 	
 	//	Salida errores
 	
@@ -552,9 +563,9 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		//	Inicializaciones	
 		
-		this.panelesPanelNormalTexto = new JTextPane();//TODO METER DOCUMENTO
+		this.panelesPanelNormalTexto = new panelTextoClase(1000); //TODO
 		
-		this.panelesPanelNormalScroll = new JScrollPane(this.panelesPanelNormalTexto);
+		this.panelesPanelNormalScroll = new JScrollPane(this.panelesPanelNormalTexto.getPanelTexto());
 		
 		this.panelesPanelNormal = new JPanel(new GridBagLayout());
 		
@@ -573,7 +584,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		//	Inicializaciones		
 		
-		this.panelesPanelErrorTexto = new JTextPane();//TODO METER DOCUMENTO
+		this.panelesPanelErrorTexto = new JTextPane();//TODO
 		
 		this.panelesPanelErrorScroll = new JScrollPane(this.panelesPanelErrorTexto);
 		
@@ -715,5 +726,150 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		}else if(origen.equals(controlesNombre.TER_CERRAR.toString())) {
 			// TODO Auto-generated method stub
 		}
+	}
+	
+	//********************************************************************************
+    // 			CLASE PRIVADA OUTPUT STREAM
+    //********************************************************************************
+	
+	private class panelTextoClase extends OutputStream{
+		
+		//********************************************************************************
+		// 			VARIABLES
+		//********************************************************************************
+
+		private JTextPane panelTexto;
+		private StringBuilder sb;
+		private StyledDocument doc;
+		private int limiteBuffer;
+		private SimpleAttributeSet estilo;
+		
+		//********************************************************************************
+		// 			CONSTRUCTOR
+		//********************************************************************************
+		/**
+		 * Límite del buffer a aplicar
+		 * 
+		 * @param limiteBuffer
+		 * 		Límite del buffer en caracteres
+		 * 
+		 */
+		public panelTextoClase(int limiteBuffer) {
+			   
+			//	Inicializaciones
+				   
+			this.panelTexto = new JTextPane();
+			this.sb = new StringBuilder();
+			this.doc = panelTexto.getStyledDocument();
+			this.limiteBuffer = limiteBuffer;
+		}
+		//********************************************************************************
+		// 			MÉTODOS PUBLICOS
+		//********************************************************************************
+		
+		/**
+		 * Establece el estilo del texto que se mostrará
+		 * 
+		 * @param texto
+		 * 		Color.CONSTANTE
+		 * 
+		 * @param fondo
+		 * 		Color.CONSTANTE
+		 * 
+		 * @param Negrita
+		 * 		Texto en negrita o no
+		 * 
+		 */
+		public void setEstilo(Color texto, Color fondo, boolean negrita) {
+			SimpleAttributeSet keyWord = new SimpleAttributeSet();
+			StyleConstants.setForeground(keyWord, texto);
+			StyleConstants.setBackground(keyWord, fondo);
+			StyleConstants.setBold(keyWord, negrita);
+			
+			this.estilo = keyWord;
+		}
+		
+		//********************************************************************************
+		// 			MÉTODOS PRIVADOS
+		//********************************************************************************
+		
+		/**
+		 * Obtiene el panel texto contenido en esta clase
+		 * @return
+		 */
+		private JTextPane getPanelTexto() {
+			return this.panelTexto;
+		}
+		
+		//********************************************************************************
+		// 			MÉTODOS OUTPUT STREAM
+		//********************************************************************************
+		
+		@Override
+		public void flush() {
+			 String text = sb.toString() + "\n";
+			 
+			 SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						
+						if(doc.getLength() + text.length() > limiteBuffer) {
+						    doc.remove(0, text.length());
+						}
+						
+						doc.insertString(doc.getLength(), text, estilo);
+						
+						panelTexto.setDocument(doc);
+						
+					}catch(Exception e) {
+						
+					}
+				}
+			 });
+			 
+			 sb.setLength(0);
+
+			 return;
+		}
+
+		@Override
+		public void close() {
+			sb.setLength(0);
+		}
+
+		@Override
+		public void write(int b) throws IOException {
+
+		  if (b == '\r')
+			 return;
+
+		  if (b == '\n') {
+			 String text = sb.toString() + "\n";
+			 
+			 SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						
+						if(doc.getLength() + text.length() > limiteBuffer) {
+						    doc.remove(0, text.length());
+						}
+						
+						doc.insertString(doc.getLength(), text, estilo);
+						
+						panelTexto.setDocument(doc);
+						
+					}catch(Exception e) {
+						
+					}
+				}
+			 });
+			 
+			 sb.setLength(0);
+
+			 return;
+		  }
+
+		  sb.append((char) b);
+		} 
 	}
 }
