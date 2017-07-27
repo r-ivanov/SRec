@@ -10,13 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -124,7 +118,27 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	
 	private JPanel panelesPanelError;
 	private JScrollPane panelesPanelErrorScroll;
-	private JTextPane panelesPanelErrorTexto;
+	private panelTextoClase panelesPanelErrorTexto;
+	
+	//***************************************
+    // 			SALIDAS
+    //***************************************
+	
+	//	Estilo
+	
+	private final String salidaTextoFuenteGeneral = "Monospaced";
+	
+	private final Color salidaTextoNormalColor = Color.BLACK;
+	private final int salidaTextoNormalTamano = 14;
+	private final boolean salidaTextoNormalNegrita = false;
+
+	private final Color salidaTextoErrorColor = Color.RED;
+	private final int salidaTextoErrorTamano = 14;
+	private final boolean salidaTextoErrorNegrita = false;
+
+	private final Color salidaTextoCabeceraColor = Color.BLUE;
+	private final int salidaTextoCabeceraTamano = 16;
+	private final boolean salidaTextoCabeceraNegrita = true;
 	
 	//********************************************************************************
     // 			CONSTRUCTOR
@@ -166,9 +180,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		if(this.cuadroEstaVisible)
 			this.cuadroEstaVisible = false;
 		else
-			this.cuadroEstaVisible = true;
-		
-		
+			this.cuadroEstaVisible = true;		
 		
 		if(this.cuadroEstaVisible) {			
 			SwingUtilities.invokeLater(new Runnable() {	
@@ -185,6 +197,41 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		}
 		
 		return this.cuadroEstaVisible;		
+	}
+	
+	//***************************************
+    // 			SALIDAS
+    //***************************************
+	
+	/**
+	 * Retorna el ByteArrayOutputStream de la salida normal
+	 * 
+	 * @return
+	 * 		ByteArrayOutputStream de la salida normal
+	 */
+	public ByteArrayOutputStream getSalidaNormal() {
+		return this.panelesPanelNormalTexto;
+	}
+	
+	/**
+	 * Retorna el ByteArrayOutputStream de la salida de error
+	 * 
+	 * @return
+	 * 		ByteArrayOutputStream de la salida de error
+	 */
+	public ByteArrayOutputStream getSalidaError() {
+		return this.panelesPanelErrorTexto;
+	}	
+	
+	/**
+	 * Establece la cabecera de ambas salidas
+	 * 
+	 * @param s
+	 * 		Valor de la cabacera
+	 */
+	public void setSalidaCabecera(String s) {
+		this.panelesPanelErrorTexto.setCabecera(s);
+		this.panelesPanelNormalTexto.setCabecera(s);
 	}	
 	
 	//********************************************************************************
@@ -220,6 +267,12 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		//	Rellenamos elementos
 		
 		this.cuadroRellenarElementos();
+		
+		//	Salidas estilos
+		
+		this.setSalidaColorCabecera();
+		this.setSalidaColorNormal();
+		this.setSalidaColorError();		
 	}
 	
 	/**
@@ -563,7 +616,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		//	Inicializaciones	
 		
-		this.panelesPanelNormalTexto = new panelTextoClase(1000); //TODO
+		this.panelesPanelNormalTexto = new panelTextoClase(10000000); //TODO
 		
 		this.panelesPanelNormalScroll = new JScrollPane(this.panelesPanelNormalTexto.getPanelTexto());
 		
@@ -584,9 +637,9 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		//	Inicializaciones		
 		
-		this.panelesPanelErrorTexto = new JTextPane();//TODO
+		this.panelesPanelErrorTexto = new panelTextoClase(10000000);//TODO
 		
-		this.panelesPanelErrorScroll = new JScrollPane(this.panelesPanelErrorTexto);
+		this.panelesPanelErrorScroll = new JScrollPane(this.panelesPanelErrorTexto.getPanelTexto());
 		
 		this.panelesPanelError = new JPanel(new GridBagLayout());
 		
@@ -614,6 +667,52 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		this.panelesPanelSplitPane.setDividerLocation(this.panelesPanelSplitPaneValor);
 		this.panelesPanelSplitPane.setResizeWeight(0.5);		
+	}
+	
+	//***************************************
+	//		SALIDAS
+	//***************************************
+	
+	/**
+	 * Establece el color de la salida de error
+	 */
+	private void setSalidaColorError() {
+		this.panelesPanelErrorTexto.setEstiloNormal(
+				this.salidaTextoErrorColor,
+				this.salidaTextoErrorNegrita,
+				this.salidaTextoErrorTamano,
+				this.salidaTextoFuenteGeneral
+		);
+	}	
+	
+	/**
+	 * Establece el color de la salida normal
+	 */
+	private void setSalidaColorNormal() {
+		this.panelesPanelNormalTexto.setEstiloNormal(
+				this.salidaTextoNormalColor,
+				this.salidaTextoNormalNegrita,
+				this.salidaTextoNormalTamano,
+				this.salidaTextoFuenteGeneral
+		);
+	}
+	
+	/**
+	 * Establece el color de la cabecera para ambas salidas
+	 */
+	private void setSalidaColorCabecera() {
+		this.panelesPanelNormalTexto.setEstiloCabecera(
+				this.salidaTextoCabeceraColor,
+				this.salidaTextoCabeceraNegrita,
+				this.salidaTextoCabeceraTamano,
+				this.salidaTextoFuenteGeneral
+		);
+		this.panelesPanelErrorTexto.setEstiloCabecera(
+				this.salidaTextoCabeceraColor,
+				this.salidaTextoCabeceraNegrita,
+				this.salidaTextoCabeceraTamano,
+				this.salidaTextoFuenteGeneral
+		);
 	}
 	
 	//***************************************
@@ -705,6 +804,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	//***************************************
     // 	CONTROLES: ACTION LISTENER
     //***************************************
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
@@ -729,10 +829,10 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	}
 	
 	//********************************************************************************
-    // 			CLASE PRIVADA OUTPUT STREAM
+    // 			CLASE PRIVADA BYTE ARRAY OUTPUT STREAM
     //********************************************************************************
 	
-	private class panelTextoClase extends OutputStream{
+	private class panelTextoClase extends ByteArrayOutputStream{
 		
 		//********************************************************************************
 		// 			VARIABLES
@@ -742,11 +842,14 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		private StringBuilder sb;
 		private StyledDocument doc;
 		private int limiteBuffer;
-		private SimpleAttributeSet estilo;
+		private SimpleAttributeSet estiloNormal;
+		private SimpleAttributeSet estiloCabecera;
+		private String cabecera;
 		
 		//********************************************************************************
 		// 			CONSTRUCTOR
 		//********************************************************************************
+		
 		/**
 		 * Límite del buffer a aplicar
 		 * 
@@ -762,31 +865,9 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			this.sb = new StringBuilder();
 			this.doc = panelTexto.getStyledDocument();
 			this.limiteBuffer = limiteBuffer;
-		}
-		//********************************************************************************
-		// 			MÉTODOS PUBLICOS
-		//********************************************************************************
-		
-		/**
-		 * Establece el estilo del texto que se mostrará
-		 * 
-		 * @param texto
-		 * 		Color.CONSTANTE
-		 * 
-		 * @param fondo
-		 * 		Color.CONSTANTE
-		 * 
-		 * @param Negrita
-		 * 		Texto en negrita o no
-		 * 
-		 */
-		public void setEstilo(Color texto, Color fondo, boolean negrita) {
-			SimpleAttributeSet keyWord = new SimpleAttributeSet();
-			StyleConstants.setForeground(keyWord, texto);
-			StyleConstants.setBackground(keyWord, fondo);
-			StyleConstants.setBold(keyWord, negrita);
-			
-			this.estilo = keyWord;
+			this.estiloNormal = new SimpleAttributeSet();
+			this.estiloCabecera = new SimpleAttributeSet();
+			this.cabecera = "";
 		}
 		
 		//********************************************************************************
@@ -795,10 +876,76 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		/**
 		 * Obtiene el panel texto contenido en esta clase
+		 * 
 		 * @return
+		 * 		Panel texto contenido en esta clase
 		 */
 		private JTextPane getPanelTexto() {
 			return this.panelTexto;
+		}
+		
+		/**
+		 * Establece el estilo normal del texto que se mostrará
+		 * 
+		 * @param texto
+		 * 		Color.CONSTANTE
+		 * 
+		 * @param negrita
+		 * 		Texto en negrita o no
+		 * 
+		 * @param tamanio
+		 * 		Tamaño de la letra
+		 * 
+		 * @param fuente
+		 * 		Nombre de la fuente
+		 * 
+		 */
+		private void setEstiloNormal(Color texto, boolean negrita, int tamanio, String fuente) {			
+			SimpleAttributeSet keyWord = new SimpleAttributeSet();
+			
+			StyleConstants.setForeground(keyWord, texto);
+			StyleConstants.setBold(keyWord, negrita);
+			StyleConstants.setFontFamily(keyWord, fuente);
+			StyleConstants.setFontSize(keyWord, tamanio);			
+			
+			this.estiloNormal = keyWord;
+		}
+		
+		/**
+		 * Establece el estilo de la cabecera del texto que se mostrará
+		 * 
+		 * @param texto
+		 * 		Color.CONSTANTE
+		 * 
+		 * @param negrita
+		 * 		Texto en negrita o no
+		 * 
+		 * @param tamanio
+		 * 		Tamaño de la letra
+		 * 
+		 * @param fuente
+		 * 		Nombre de la fuente
+		 * 
+		 */
+		private void setEstiloCabecera(Color texto, boolean negrita, int tamanio, String fuente) {			
+			SimpleAttributeSet keyWord = new SimpleAttributeSet();
+			
+			StyleConstants.setForeground(keyWord, texto);
+			StyleConstants.setBold(keyWord, negrita);
+			StyleConstants.setFontFamily(keyWord, fuente);
+			StyleConstants.setFontSize(keyWord, tamanio);	
+			
+			this.estiloCabecera = keyWord;
+		}
+		
+		/**
+		 * Establece el valor de la cabecera
+		 * 
+		 * @param cabecera
+		 * 		Valor de la cabecera
+		 */
+		private void setCabecera(String cabecera) {
+			this.cabecera = cabecera;
 		}
 		
 		//********************************************************************************
@@ -807,6 +954,10 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		@Override
 		public void flush() {
+			
+			if(sb.toString().equals(""))
+				return;
+			
 			 String text = sb.toString() + "\n";
 			 
 			 SwingUtilities.invokeLater(new Runnable() {
@@ -817,7 +968,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 						    doc.remove(0, text.length());
 						}
 						
-						doc.insertString(doc.getLength(), text, estilo);
+						doc.insertString(doc.getLength(), text, estiloNormal);
 						
 						panelTexto.setDocument(doc);
 						
@@ -834,19 +985,15 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 
 		@Override
 		public void close() {
-			sb.setLength(0);
-		}
-
+			this.flush();
+		}		
+		
 		@Override
-		public void write(int b) throws IOException {
-
-		  if (b == '\r')
-			 return;
-
-		  if (b == '\n') {
-			 String text = sb.toString() + "\n";
-			 
-			 SwingUtilities.invokeLater(new Runnable() {
+		public void write(byte[] b) {
+			
+			String text = new String(b);
+			
+			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					try {
 						
@@ -854,7 +1001,12 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 						    doc.remove(0, text.length());
 						}
 						
-						doc.insertString(doc.getLength(), text, estilo);
+						if(!cabecera.equals("")) {
+							doc.insertString(doc.getLength(), cabecera, estiloCabecera);
+							cabecera = "";
+						}
+							
+						doc.insertString(doc.getLength(), text, estiloNormal);
 						
 						panelTexto.setDocument(doc);
 						
@@ -865,11 +1017,38 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			 });
 			 
 			 sb.setLength(0);
-
 			 return;
-		  }
-
-		  sb.append((char) b);
-		} 
+		}
+		
+		@Override
+		public void write(byte[] b, int off, int len){
+			String text = new String(b, off, len);
+			
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						
+						if(doc.getLength() + text.length() > limiteBuffer) {
+						    doc.remove(0, text.length());
+						}
+						
+						if(!cabecera.equals("")) {
+							doc.insertString(doc.getLength(), cabecera, estiloCabecera);
+							cabecera = "";
+						}
+							
+						doc.insertString(doc.getLength(), text, estiloNormal);
+						
+						panelTexto.setDocument(doc);
+						
+					}catch(Exception e) {
+						
+					}
+				}
+			 });
+			 
+			 sb.setLength(0);
+			 return;
+		}
 	}
 }

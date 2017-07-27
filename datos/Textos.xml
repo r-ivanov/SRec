@@ -1402,6 +1402,12 @@
 		<T valor="Close terminal" idioma="en" id="TER_CERRAR"/>
 		<T valor="Opciones" idioma="es" id="TER_OPCIONES"/>
 		<T valor="Options" idioma="en" id="TER_OPCIONES"/>
+		<T valor="Clase:" idioma="es" id="TER_CLASE"/>
+		<T valor="Class:" idioma="en" id="TER_CLASE"/>
+		<T valor="M[eacute]todo:" idioma="es" id="TER_METODO"/>
+		<T valor="Method:" idioma="en" id="TER_METODO"/>
+		<T valor="Par[aacute]metros llamada:" idioma="es" id="TER_PARAMETROS"/>
+		<T valor="Call parameters: " idioma="en" id="TER_PARAMETROS"/>
 		
 		<!-- Panel de compilador -->
 		<T valor="Clase compilada sin errores." idioma="es" id="COMPILAR_NOERRORES"/>
