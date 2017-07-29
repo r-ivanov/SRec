@@ -93,17 +93,15 @@ public class Ejecutador {
 						PrintStream psOut = System.out;
 						PrintStream psErr = System.err;	
 
-						//	Escribimos clase y método en cabecera terminal
+						//	Escribimos cabecera = clase y método
 						
-						String cabecera = "";
-						
-						cabecera = 
+						 String cabecera = 
 							Texto.get("TER_CLASE", Conf.idioma)+" "+cm.getName()+"\n"+
 							Texto.get("TER_METODO", Conf.idioma)+" "+mm[x].getName()+"("
 						;
-						
-						for(Class<?> parameterType : mm[x].getParameterTypes()) {
-							cabecera = cabecera + parameterType.getName()+", ";
+						 
+						for(Object obj : parametros) {
+							cabecera = cabecera + obj.toString()+", ";
 						}
 						
 						cabecera = cabecera.substring(0, cabecera.length()-2);
@@ -111,29 +109,30 @@ public class Ejecutador {
 						
 						terminal.setSalidaCabecera(cabecera);
 						
-						//	Errores
+						//	Errores 1
 						
 						if (cm.isInterface()) {
 							String error = Texto.get("ERROR_CLASEINTERFAZ", Conf.idioma);
-							terminalSalidaErrorEscribir(terminalSalidaError,error+"\n");
+							terminalEscribir(terminalSalidaError,error+"\n");
 							cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
 							return error;
 						} else if (cm.isArray()) {
 							String error = Texto.get("ERROR_CLASEARRAY", Conf.idioma);
-							terminalSalidaErrorEscribir(terminalSalidaError,error+"\n");
+							terminalEscribir(terminalSalidaError,error+"\n");
 							cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
 							return error;
 						} else if (cm.isEnum()) {
 							String error = Texto.get("ERROR_CLASEENUM", Conf.idioma);
-							terminalSalidaErrorEscribir(terminalSalidaError,error+"\n");
+							terminalEscribir(terminalSalidaError,error+"\n");
 							cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
 							return error;
 						} else if (cm.isPrimitive()) {
 							String error = Texto.get("ERROR_CLASEPRIM", Conf.idioma);
-							terminalSalidaErrorEscribir(terminalSalidaError,error+"\n");
+							terminalEscribir(terminalSalidaError,error+"\n");
 							cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
 							return error;
 						} else {
+							
 							boolean instanciacion = false;
 							try {
 								o = cm.newInstance();
@@ -168,20 +167,20 @@ public class Ejecutador {
 								
 								return null;
 							
-							//	Errores
+							//	Errores 2
 								
 							} catch (java.lang.OutOfMemoryError oome) {
 								System.setOut(psOut);
 								System.setErr(psErr);
 								String error = Texto.get("ERROR_JAVASINMEM", Conf.idioma);
-								terminalSalidaErrorEscribir(terminalSalidaError,error+"\n"+oome.getCause());
+								terminalEscribir(terminalSalidaError,error+"\n"+oome.getCause()+"\n");
 								cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
 								return error;
 							} catch (IllegalAccessException iae) {
 								System.setOut(psOut);
 								System.setErr(psErr);
 								String error = Texto.get("ERROR_ILEGALDATOS", Conf.idioma);
-								terminalSalidaErrorEscribir(terminalSalidaError,error+"\n"+iae.getCause());
+								terminalEscribir(terminalSalidaError,error+"\n"+iae.getCause()+"\n");
 								cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
 								return error;
 							} catch (InvocationTargetException ite) {
@@ -189,30 +188,27 @@ public class Ejecutador {
 								System.setErr(psErr);
 								Traza traza = Traza.singleton();
 								traza.vaciarTraza();
-								String causa = "" + ite.getCause() + "";
+								String causa = ite.getCause().toString();
+								String error = "";
+								
 								if (causa.contains("emory")
 										|| causa.contains("heap space")) {
-									String error = Texto.get("ERROR_METEXP", Conf.idioma)+"\n"+causa;
-									terminalSalidaErrorEscribir(terminalSalidaError,error+"\n"+ite.getCause());
-									cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
-									return error;
+									error = Texto.get("ERROR_METEXP", Conf.idioma);
 								} else if (causa.contains("ThreadDeath")) { 
 									/* Esperado si el usuario ha cancelado la ejecución */
-									String error = Texto.get("ERROR_CANCELADO", Conf.idioma);
-									terminalSalidaErrorEscribir(terminalSalidaError,error+"\n"+ite.getCause());
-									cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
-									return error;
+									error = Texto.get("ERROR_CANCELADO", Conf.idioma);	
 								} else {
-									String error = Texto.get("ERROR_METEXP", Conf.idioma);
-									terminalSalidaErrorEscribir(terminalSalidaError,error+"\n"+ite.getCause());
-									cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
-									return error;
+									error = Texto.get("ERROR_METEXP", Conf.idioma);
 								}
+								
+								terminalEscribir(terminalSalidaError,error+"\n"+ite.getCause()+"\n");
+								cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+								return error;
 							} catch (Exception e) {
 								System.setOut(psOut);
 								System.setErr(psErr);
 								String error = Texto.get("ERROR_METERR", Conf.idioma);
-								terminalSalidaErrorEscribir(terminalSalidaError,error+"\n"+e.getCause());
+								terminalEscribir(terminalSalidaError,error+"\n"+e.getCause()+"\n");
 								cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
 								return error;
 							}
@@ -221,6 +217,7 @@ public class Ejecutador {
 				}
 			}
 		}
+		
 		String error = Texto.get("ERROR_DESCONOCIDO", Conf.idioma);		
 		return error;
 	}
@@ -253,7 +250,7 @@ public class Ejecutador {
 	}
 	
 	/**
-	 * Escribe en la salida de error de la terminal
+	 * Escribe en la salida especificada el texto especificado
 	 * 
 	 * @param b
 	 * 		ByteArrayOutputStream donde escribiremos (error o normal)
@@ -261,7 +258,7 @@ public class Ejecutador {
 	 * @param s
 	 * 		String a escribir
 	 */
-	private static void terminalSalidaErrorEscribir(ByteArrayOutputStream b, String s) {
+	private static void terminalEscribir(ByteArrayOutputStream b, String s) {
 		try {
 			b.write(s.getBytes());
 		} catch (IOException e) {
