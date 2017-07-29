@@ -22,6 +22,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
@@ -622,6 +623,8 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		this.panelesPanelNormal = new JPanel(new GridBagLayout());
 		
+		this.panelesPanelNormalTexto.setJScrollPane(this.panelesPanelNormalScroll);
+		
 		//	Añadimos
 		
 		this.panelesPanelNormal.add(
@@ -642,6 +645,8 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		this.panelesPanelErrorScroll = new JScrollPane(this.panelesPanelErrorTexto.getPanelTexto());
 		
 		this.panelesPanelError = new JPanel(new GridBagLayout());
+		
+		this.panelesPanelErrorTexto.setJScrollPane(this.panelesPanelErrorScroll);
 		
 		//	Añadimos
 		
@@ -845,6 +850,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		private SimpleAttributeSet estiloNormal;
 		private SimpleAttributeSet estiloCabecera;
 		private String cabecera;
+		private JScrollPane panelScroll;
 		
 		//********************************************************************************
 		// 			CONSTRUCTOR
@@ -867,7 +873,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			this.limiteBuffer = limiteBuffer;
 			this.estiloNormal = new SimpleAttributeSet();
 			this.estiloCabecera = new SimpleAttributeSet();
-			this.cabecera = "";
+			this.cabecera = "";			
 		}
 		
 		//********************************************************************************
@@ -948,6 +954,73 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			this.cabecera = cabecera;
 		}
 		
+		/**
+		 * Escribe el texto pasado como parámetro
+		 * sin incluir la cabecera
+		 * 
+		 * @param text
+		 * 		Texto a escribir
+		 */
+		private void escribirSinCabecera(String text) {
+			try {
+				
+				if(doc.getLength() + text.length() > limiteBuffer) {
+				    doc.remove(0, text.length());
+				}
+				
+				doc.insertString(doc.getLength(), text, estiloNormal);
+				
+				panelTexto.setDocument(doc);
+				
+			}catch(Exception e) {
+				
+			}
+		}
+		
+		/**
+		 * Escribe el texto pasado como parámetro
+		 * incluyendo la cabecera
+		 * 
+		 * @param text
+		 * 		Texto a escribir
+		 */
+		private void escribirConCabecera(String text) {
+			try {
+				if(doc.getLength() + text.length() > limiteBuffer) {
+				    doc.remove(0, text.length());
+				}
+				
+				if(!cabecera.equals("")) {
+					doc.insertString(doc.getLength(), cabecera, estiloCabecera);
+					cabecera = "";
+				}
+					
+				doc.insertString(doc.getLength(), text, estiloNormal);
+				
+				panelTexto.setDocument(doc);
+			}catch(Exception e) {
+				
+			}
+		}
+		
+		/**
+		 * Establece el JScrollPane asociado a la salida
+		 * 
+		 * @param p
+		 * 		JScrollPane asociado a la salida
+		 */
+		private void setJScrollPane(JScrollPane p) {
+			this.panelScroll = p;
+		}
+		
+		/**
+		 * Establece el scroll del panel abajo
+		 */
+		private void setScrollAbajo() {
+			JScrollBar vertical = this.panelScroll.getVerticalScrollBar();
+			vertical.setValue( vertical.getMaximum() );
+		}
+		
 		//********************************************************************************
 		// 			MÉTODOS OUTPUT STREAM
 		//********************************************************************************
@@ -962,19 +1035,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			 
 			 SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
-					try {
-						
-						if(doc.getLength() + text.length() > limiteBuffer) {
-						    doc.remove(0, text.length());
-						}
-						
-						doc.insertString(doc.getLength(), text, estiloNormal);
-						
-						panelTexto.setDocument(doc);
-						
-					}catch(Exception e) {
-						
-					}
+					escribirSinCabecera(text);
 				}
 			 });
 			 
@@ -986,6 +1047,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		@Override
 		public void close() {
 			this.flush();
+			this.setScrollAbajo();
 		}		
 		
 		@Override
@@ -994,25 +1056,8 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			String text = new String(b);
 			
 			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						
-						if(doc.getLength() + text.length() > limiteBuffer) {
-						    doc.remove(0, text.length());
-						}
-						
-						if(!cabecera.equals("")) {
-							doc.insertString(doc.getLength(), cabecera, estiloCabecera);
-							cabecera = "";
-						}
-							
-						doc.insertString(doc.getLength(), text, estiloNormal);
-						
-						panelTexto.setDocument(doc);
-						
-					}catch(Exception e) {
-						
-					}
+				public void run() {						
+					escribirConCabecera(text);					
 				}
 			 });
 			 
@@ -1022,28 +1067,12 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		@Override
 		public void write(byte[] b, int off, int len){
+			
 			String text = new String(b, off, len);
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
-					try {
-						
-						if(doc.getLength() + text.length() > limiteBuffer) {
-						    doc.remove(0, text.length());
-						}
-						
-						if(!cabecera.equals("")) {
-							doc.insertString(doc.getLength(), cabecera, estiloCabecera);
-							cabecera = "";
-						}
-							
-						doc.insertString(doc.getLength(), text, estiloNormal);
-						
-						panelTexto.setDocument(doc);
-						
-					}catch(Exception e) {
-						
-					}
+					escribirConCabecera(text);					
 				}
 			 });
 			 
