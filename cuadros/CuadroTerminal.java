@@ -152,10 +152,33 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * 		Ventana a la que estará asociada la terminal
 	 */
 	public CuadroTerminal(Ventana ventana) {
-		this.cuadroEstaVisible = false;
+		
+		//	Inicializaciones previas
+		
 		this.cuadroVentana = ventana;
-		this.cuadroDialogo = new JFrame();
-		this.cuadroDialogo.addWindowListener(this);
+		this.cuadroEstaVisible = false;	
+		
+		//	Cuadro diálogo
+		
+		this.cuadroDialogoInicializar();		
+		
+		//	Inicializaciones controles / botones	
+		
+		this.controlesInicializar();
+		
+		//	Inicialización paneles de salida normal y errores
+		
+		this.panelesInicializar();
+		
+		//	Panel general, rellenamos elementos
+		
+		this.cuadroPanelGeneral();
+		
+		//	Salidas estilos
+		
+		this.setSalidaColorCabecera();
+		this.setSalidaColorNormal();
+		this.setSalidaColorError();		
 	}
 	
 	//********************************************************************************
@@ -173,8 +196,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * 		Nuevo valor de la visibilidad de la terminal
 	 */
 	public boolean abrirCerrarTerminal() {
-		if(!this.cuadroAbiertoPrimeraVez) {
-			this.cuadroInicializarTerminal();
+		if(!this.cuadroAbiertoPrimeraVez) {			
 			this.cuadroAbiertoPrimeraVez = true;
 		}
 		
@@ -241,54 +263,33 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	
 	//***************************************
     // 			CUADRO TERMINAL
-    //***************************************
+    //***************************************	
 	
 	/**
-	 * Inicializa todos los componentes de la terminal cuando
-	 * ésta se abre por primera vez
+	 * Inicializa el cuadro de diálogo general, la ventana
 	 */
-	private void cuadroInicializarTerminal() {
-		
-		//	Inicialización terminal
-		
+	private void cuadroDialogoInicializar() {
+		this.cuadroDialogo = new JFrame();
+		this.cuadroDialogo.addWindowListener(this);		
 		this.cuadroDialogo.setSize(CUADRO_ANCHO, CUADRO_ALTO);
 		URL icono = getClass().getClassLoader().getResource(this.cuadroImagen);
 		this.cuadroDialogo.setIconImage(new ImageIcon(icono).getImage());
 		this.cuadroDialogo.setTitle(this.cuadroTitulo);
-		this.cuadroPanelGeneral = new JPanel(new GridBagLayout());
-		
-		//	Inicializaciones controles / botones	
-		
-		this.controlesInicializar();
-		
-		//	Inicialización paneles de salida normal y errores
-		
-		this.panelesInicializar();
-		
-		//	Rellenamos elementos
-		
-		this.cuadroRellenarElementos();
-		
-		//	Salidas estilos
-		
-		this.setSalidaColorCabecera();
-		this.setSalidaColorNormal();
-		this.setSalidaColorError();		
+		this.cuadroDialogo.getContentPane().setLayout(new GridBagLayout());	
 	}
 	
 	/**
-	 * Añade y organiza visualmente los elementos generales
-	 * de la terminal
+	 * Inicializa y rellena el panel general
 	 */
-	private void cuadroRellenarElementos() {
+	private void cuadroPanelGeneral() {
 		
 		//	Inicializaciones
 		
-		this.cuadroDialogo.getContentPane().setLayout(new GridBagLayout());		
+		this.cuadroPanelGeneral = new JPanel(new GridBagLayout());			
 		
 		//	Desplegable
 		
-		this.cuadroDialogo.setJMenuBar(controlesDesplegableMenuBar);
+		this.cuadroDialogo.setJMenuBar(this.controlesDesplegableMenuBar);
 		
 		//	Panel general = Panel botones + Panel salidas	
 		
