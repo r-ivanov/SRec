@@ -14,6 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -212,6 +213,8 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	                if(cuadroDialogo != null) {
 	                	cuadroDialogo.setVisible(true);
 	                	cuadroDialogo.toFront();
+	                	panelesPanelErrorTexto.setScrollAbajo();
+	                	panelesPanelNormalTexto.setScrollAbajo();
 	                }
 	            }
 	        });
@@ -621,7 +624,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		this.panelesPanelNormalTexto = new panelTextoClase(10000000); //TODO
 		
 		this.panelesPanelNormalScroll = new JScrollPane(this.panelesPanelNormalTexto.getPanelTexto());
-		
+				
 		this.panelesPanelNormal = new JPanel(new GridBagLayout());
 		
 		this.panelesPanelNormalTexto.setJScrollPane(this.panelesPanelNormalScroll);
@@ -644,7 +647,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		this.panelesPanelErrorTexto = new panelTextoClase(10000000);//TODO
 		
 		this.panelesPanelErrorScroll = new JScrollPane(this.panelesPanelErrorTexto.getPanelTexto());
-		
+				
 		this.panelesPanelError = new JPanel(new GridBagLayout());
 		
 		this.panelesPanelErrorTexto.setJScrollPane(this.panelesPanelErrorScroll);
@@ -852,6 +855,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		private SimpleAttributeSet estiloCabecera;
 		private String cabecera;
 		private JScrollPane panelScroll;
+		private final ReentrantLock bloqueo = new ReentrantLock(true);
 		
 		//********************************************************************************
 		// 			CONSTRUCTOR
@@ -874,7 +878,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			this.limiteBuffer = limiteBuffer;
 			this.estiloNormal = new SimpleAttributeSet();
 			this.estiloCabecera = new SimpleAttributeSet();
-			this.cabecera = "";			
+			this.cabecera = "";	
 		}
 		
 		//********************************************************************************
@@ -953,30 +957,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		 */
 		private void setCabecera(String cabecera) {
 			this.cabecera = cabecera;
-		}
-		
-		/**
-		 * Escribe el texto pasado como parámetro
-		 * sin incluir la cabecera
-		 * 
-		 * @param text
-		 * 		Texto a escribir
-		 */
-		private void escribirSinCabecera(String text) {
-			try {
-				
-				if(doc.getLength() + text.length() > limiteBuffer) {
-				    doc.remove(0, text.length());
-				}
-				
-				doc.insertString(doc.getLength(), text, estiloNormal);
-				
-				panelTexto.setDocument(doc);
-				
-			}catch(Exception e) {
-				
-			}
-		}
+		}		
 		
 		/**
 		 * Escribe el texto pasado como parámetro
@@ -984,24 +965,38 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		 * 
 		 * @param text
 		 * 		Texto a escribir
+		 * 
+		 * @param cabeceraP
+		 * 		Indica si hay que escribir la cabecera o no
 		 */
-		private void escribirConCabecera(String text) {
-			try {
-				if(doc.getLength() + text.length() > limiteBuffer) {
-				    doc.remove(0, text.length());
-				}
-				
-				if(!cabecera.equals("")) {
-					doc.insertString(doc.getLength(), cabecera, estiloCabecera);
-					cabecera = "";
-				}
-					
-				doc.insertString(doc.getLength(), text, estiloNormal);
-				
-				panelTexto.setDocument(doc);
-			}catch(Exception e) {
-				
-			}
+		private void escribir(String text, boolean cabeceraP) {
+			SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+					try {
+						bloqueo.lock();
+						
+						if(doc.getLength() + text.length() > limiteBuffer) {
+						    doc.remove(0, text.length());
+						}
+						
+						if(cabeceraP && !cabecera.equals("")) {
+							doc.insertString(doc.getLength(), cabecera, estiloCabecera);
+							cabecera = "";
+						}
+							
+						doc.insertString(doc.getLength(), text, estiloNormal);
+						
+						panelTexto.setDocument(doc);
+						
+						setScrollAbajo();
+						
+						bloqueo.unlock();
+						
+					}catch(Exception e) {
+						
+					}
+                }
+			});
 		}
 		
 		/**
@@ -1017,9 +1012,21 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		/**
 		 * Establece el scroll del panel abajo
 		 */
-		private void setScrollAbajo() {
-			JScrollBar vertical = this.panelScroll.getVerticalScrollBar();
-			vertical.setValue( vertical.getMaximum() );
+		private void setScrollAbajo() {	
+			SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+					try {
+						bloqueo.lock();
+						
+						JScrollBar vertical = panelScroll.getVerticalScrollBar();
+						vertical.setValue( vertical.getMaximum() );
+						
+						bloqueo.unlock();
+					}catch(Exception e) {
+						
+					}
+                }
+			});
 		}
 		
 		//********************************************************************************
@@ -1033,52 +1040,35 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 				return;
 			
 			 String text = sb.toString() + "\n";
-			 
-			 SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					escribirSinCabecera(text);
-				}
-			 });
-			 
+			 escribir(text, false);	
+			
 			 sb.setLength(0);
-
 			 return;
 		}
 
 		@Override
 		public void close() {
 			this.flush();
-			this.setScrollAbajo();
 		}		
 		
 		@Override
 		public void write(byte[] b) {
 			
 			String text = new String(b);
-			
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {						
-					escribirConCabecera(text);					
-				}
-			 });
+			escribir(text, true);			
 			 
-			 sb.setLength(0);
-			 return;
+			sb.setLength(0);
+			return;
 		}
 		
 		@Override
 		public void write(byte[] b, int off, int len){
 			
 			String text = new String(b, off, len);
-			
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					escribirConCabecera(text);					
-				}
-			 });
+			escribir(text, true);
 			 
-			 sb.setLength(0);
-			 return;
+			sb.setLength(0);
+			return;
 		}
 	}
 }
