@@ -986,11 +986,11 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 							
 						doc.insertString(doc.getLength(), text, estiloNormal);
 						
-						panelTexto.setDocument(doc);
-						
-						setScrollAbajo();
+						panelTexto.setDocument(doc);	
 						
 						bloqueo.unlock();
+						
+						setScrollAbajo();
 						
 					}catch(Exception e) {
 						
