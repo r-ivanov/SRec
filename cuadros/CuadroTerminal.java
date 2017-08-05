@@ -357,7 +357,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	}
 	
 	//***************************************
-    // 			CONTROLES
+    // 		CONTROLES CREACIÓN Y EDICIÓN
     //***************************************
 	
 	/**
@@ -639,7 +639,109 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		jt.setBorder(new MetalBorders.PaletteBorder());
 		jt.setLayout(new FlowLayout(FlowLayout.CENTER));
 		return jt;
+	}	
+	
+	/**
+	 * Método que cambia la apariencia del botón limpiar pantalla tras llamada
+	 * a método
+	 * 
+	 * @param estadoActual
+	 * 		True activado actual, false caso contrario
+	 */
+	private void controlesBotonesCambiarLimpiarPantalla(boolean estadoActual) {
+		
 	}
+	
+	/**
+	 * Método que cambia la apariencia del botón registro llamadas
+	 * 
+	 * @param estadoActual
+	 * 		True activado actual, false caso contrario
+	 */
+	private void controlesBotonesCambiarRegistroLlamadas(boolean estadoActual) {
+		
+	}
+	
+	/**
+	 * Método que cambia la apariencia del botón del buffer
+	 * 
+	 * @param estadoActual
+	 * 		True activado actual, false caso contrario
+	 */
+	private void controlesBotonesCambiarBuffer(boolean estadoActual) {
+		
+	}
+	
+	//***************************************
+    // 			CONTROLES ACCIONES
+    //***************************************
+	
+	/**
+	 * Método que se ejecuta cuando pulsan el botón de limpiar pantalla
+	 */
+	private void controlesAccionLimpiar() {
+		
+	}
+
+	/**
+	 * Método que se ejecuta cuando pulsan el botón de copiar
+	 */
+	private void controlesAccionCopiar() {
+			
+	}
+
+	/**
+	 * Método que se ejecuta cuando pulsan el botón de guardar
+	 */
+	private void controlesAccionGuardar() {
+		
+	}
+
+	/**
+	 * Método que se ejecuta cuando pulsan el botón de imprimir
+	 */
+	private void controlesAccionImprimir() {
+		
+	}
+
+	/**
+	 * Método que se ejecuta cuando pulsan el botón de limpiar pantalla 
+	 * tras llamada a método
+	 * 
+	 * @param estadoActual
+	 * 		True activado actual, false caso contrario
+	 */
+	private void controlesAccionLimpiarPantalla(boolean estadoActual) {
+		controlesBotonesCambiarLimpiarPantalla(estadoActual);
+	}
+
+	/**
+	 * Método que se ejecuta cuando pulsan el botón de registro de llamadas a método
+	 * 
+	 * @param estadoActual
+	 * 		True activado actual, false caso contrario
+	 */
+	private void controlesAccionRegistroLlamadas(boolean estadoActual) {
+		controlesBotonesCambiarRegistroLlamadas(estadoActual);
+	}
+
+	/**
+	 * Método que se ejecuta cuando pulsan el botón del buffer
+	 * 
+	 * @param estadoActual
+	 * 		True activado actual, false caso contrario
+	 */
+	private void controlesAccionBuffer(boolean estadoActual) {
+		controlesBotonesCambiarBuffer(estadoActual);
+	}
+
+	/**
+	 * Método que se ejecuta cuando pulsan el botón de cerrar
+	 */
+	private void controlesAccionCerrar() {
+		Ventana.thisventana.terminalAbrirCerrar();
+	}
+	
 	
 	//***************************************
     // 			PANELES
@@ -884,22 +986,48 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		String origen = e.getActionCommand();
+		
 		if(origen.equals(controlesNombre.TER_LIMPIAR.toString())) {
-			// TODO Auto-generated method stub
+			
+			controlesAccionLimpiar();
+			
 		}else if(origen.equals(controlesNombre.TER_COPIAR.toString())) {
-			// TODO Auto-generated method stub
+			
+			controlesAccionCopiar();
+			
 		}else if(origen.equals(controlesNombre.TER_GUARDAR.toString())) {
-			// TODO Auto-generated method stub
+			
+			controlesAccionGuardar();
+			
 		}else if(origen.equals(controlesNombre.TER_IMPRIMIR.toString())) {
-			// TODO Auto-generated method stub
-		}else if(origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR.toString())) {
-			// TODO Auto-generated method stub
-		}else if(origen.equals(controlesNombre.TER_REG_LLAMADAS_DESACTIVAR.toString())) {
-			// TODO Auto-generated method stub
-		}else if(origen.equals(controlesNombre.TER_BUFFER_ACTIVAR.toString())) {
-			// TODO Auto-generated method stub
+			
+			controlesAccionImprimir();
+			
+		}else if(origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR.toString()) ||
+				origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR.toString())) {
+			
+			controlesAccionLimpiarPantalla(
+					origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR.toString()
+			));
+			
+		}else if(origen.equals(controlesNombre.TER_REG_LLAMADAS_DESACTIVAR.toString()) ||
+				origen.equals(controlesNombre.TER_REG_LLAMADAS_ACTIVAR.toString())) {
+			
+			controlesAccionRegistroLlamadas(
+				origen.equals(controlesNombre.TER_REG_LLAMADAS_ACTIVAR.toString())		
+			);
+			
+		}else if(origen.equals(controlesNombre.TER_BUFFER_ACTIVAR.toString()) ||
+				origen.equals(controlesNombre.TER_BUFFER_DESACTIVAR.toString())) {
+			
+			controlesAccionBuffer(
+				origen.equals(controlesNombre.TER_BUFFER_ACTIVAR.toString())		
+			);
+			
 		}else if(origen.equals(controlesNombre.TER_CERRAR.toString())) {
-			// TODO Auto-generated method stub
+			
+			controlesAccionCerrar();
+			
 		}
 	}
 	
