@@ -1396,7 +1396,7 @@
 		<T valor="Method call log [Disable]" idioma="en" id="TER_REG_LLAMADAS_DESACTIVAR"/>
 		<T valor="Buffer ilimitado [Activar]" idioma="es" id="TER_BUFFER_ACTIVAR"/>
 		<T valor="Unlimited buffer [Enable]" idioma="en" id="TER_BUFFER_ACTIVAR"/>
-		<T valor="Buffer ilimitado [Desctivar]" idioma="es" id="TER_BUFFER_DESACTIVAR"/>
+		<T valor="Buffer ilimitado [Desactivar]" idioma="es" id="TER_BUFFER_DESACTIVAR"/>
 		<T valor="Unlimited buffer [Disable]" idioma="en" id="TER_BUFFER_DESACTIVAR"/>
 		<T valor="Cerrar terminal" idioma="es" id="TER_CERRAR"/>
 		<T valor="Close terminal" idioma="en" id="TER_CERRAR"/>

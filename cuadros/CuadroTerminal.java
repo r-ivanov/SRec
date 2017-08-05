@@ -465,7 +465,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		this.controlesDesplegableJMenuItems[3] = this.controlesDesplegableGetMenuItem(itemNombre);
 		
-		itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR;
+		itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR;
 		
 		this.controlesDesplegableJMenuItems[4] = this.controlesDesplegableGetMenuItem(itemNombre);
 		
@@ -529,6 +529,23 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	}
 	
 	/**
+	 * Cambia la imagen, texto y action command de un JMenuItem
+	 * 
+	 * @param item
+	 * 		Elemento que queremos cambiar
+	 * 
+	 * @param nombre
+	 * 		Determina el texto, imagen y action command nuevos
+	 */
+	private void controlesDesplegableGetMenuItemCambiado(JMenuItem item, controlesNombre nombre) {
+		item.setIcon(
+			new ImageIcon(this.controlesImagenesUrl.get(nombre))
+		);
+		item.setText(this.controlesTraducciones.get(nombre));
+		item.setActionCommand(nombre.toString());
+	}
+	
+	/**
 	 * Crea la barra de botones
 	 */
 	private void controlesBotonesCrear() {
@@ -557,7 +574,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		this.controlesBotonesJButtons[3] = this.controlesBotonesGetBoton(itemNombre);
 		
-		itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR;
+		itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR;
 		
 		this.controlesBotonesJButtons[4] = this.controlesBotonesGetBoton(itemNombre);
 		
@@ -627,6 +644,23 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	}
 	
 	/**
+	 * Cambia la imagen, tooltip y action command de un JButton
+	 * 
+	 * @param boton
+	 * 		Botón que queremos cambiar
+	 * 
+	 * @param nombre
+	 * 		Determina el tooltip, imagen y action command nuevos
+	 */
+	private void controlesBotonesGetBotonCambiado(JButton boton, controlesNombre nombre) {
+		boton.setIcon(
+			new ImageIcon(this.controlesImagenesUrl.get(nombre))
+		);
+		boton.setToolTipText(this.controlesTraducciones.get(nombre));
+		boton.setActionCommand(nombre.toString());
+	}
+	
+	/**
 	 * Obtiene un JToolbar
 	 * 
 	 * @return
@@ -645,31 +679,61 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * Método que cambia la apariencia del botón limpiar pantalla tras llamada
 	 * a método
 	 * 
-	 * @param estadoActual
-	 * 		True activado actual, false caso contrario
+	 * @param estadoNuevo
+	 * 		True activado nuevo, false caso contrario
 	 */
-	private void controlesBotonesCambiarLimpiarPantalla(boolean estadoActual) {
+	private void controlesBotonesCambiarLimpiarPantalla(boolean estadoNuevo) {
 		
+		controlesNombre itemNombre;
+		
+		if(estadoNuevo) {
+			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR;
+		}else {
+			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR;
+		}
+		
+		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[4], itemNombre);		
+		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJMenuItems[4], itemNombre);
 	}
 	
 	/**
 	 * Método que cambia la apariencia del botón registro llamadas
 	 * 
-	 * @param estadoActual
-	 * 		True activado actual, false caso contrario
+	 * @param estadoNuevo
+	 * 		True activado nuevo, false caso contrario
 	 */
-	private void controlesBotonesCambiarRegistroLlamadas(boolean estadoActual) {
+	private void controlesBotonesCambiarRegistroLlamadas(boolean estadoNuevo) {
 		
+		controlesNombre itemNombre;
+		
+		if(estadoNuevo) {
+			itemNombre = controlesNombre.TER_REG_LLAMADAS_ACTIVAR;
+		}else {
+			itemNombre = controlesNombre.TER_REG_LLAMADAS_DESACTIVAR;
+		}
+		
+		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[5], itemNombre);
+		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJMenuItems[5], itemNombre);
 	}
 	
 	/**
 	 * Método que cambia la apariencia del botón del buffer
 	 * 
-	 * @param estadoActual
-	 * 		True activado actual, false caso contrario
+	 * @param estadoNuevo
+	 * 		True activado nuevo, false caso contrario
 	 */
-	private void controlesBotonesCambiarBuffer(boolean estadoActual) {
+	private void controlesBotonesCambiarBuffer(boolean estadoNuevo) {
 		
+		controlesNombre itemNombre;
+		
+		if(estadoNuevo) {
+			itemNombre = controlesNombre.TER_BUFFER_ACTIVAR;
+		}else {
+			itemNombre = controlesNombre.TER_BUFFER_DESACTIVAR;
+		}
+		
+		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[6], itemNombre);
+		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJMenuItems[6], itemNombre);
 	}
 	
 	//***************************************
@@ -712,7 +776,9 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * 		True activado actual, false caso contrario
 	 */
 	private void controlesAccionLimpiarPantalla(boolean estadoActual) {
-		controlesBotonesCambiarLimpiarPantalla(estadoActual);
+		boolean estadoNuevo = !estadoActual;
+		
+		controlesBotonesCambiarLimpiarPantalla(estadoNuevo);
 	}
 
 	/**
@@ -722,7 +788,9 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * 		True activado actual, false caso contrario
 	 */
 	private void controlesAccionRegistroLlamadas(boolean estadoActual) {
-		controlesBotonesCambiarRegistroLlamadas(estadoActual);
+		boolean estadoNuevo = !estadoActual;
+		
+		controlesBotonesCambiarRegistroLlamadas(estadoNuevo);
 	}
 
 	/**
@@ -732,7 +800,9 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * 		True activado actual, false caso contrario
 	 */
 	private void controlesAccionBuffer(boolean estadoActual) {
-		controlesBotonesCambiarBuffer(estadoActual);
+		boolean estadoNuevo = !estadoActual;
+		
+		controlesBotonesCambiarBuffer(estadoNuevo);
 	}
 
 	/**
@@ -1007,7 +1077,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 				origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR.toString())) {
 			
 			controlesAccionLimpiarPantalla(
-					origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR.toString()
+				origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR.toString()
 			));
 			
 		}else if(origen.equals(controlesNombre.TER_REG_LLAMADAS_DESACTIVAR.toString()) ||
