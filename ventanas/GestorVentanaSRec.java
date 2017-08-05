@@ -1037,8 +1037,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		botones[36].setEnabled(true);
 		botones[36].addActionListener(new ActionListener() { 		
 			  public void actionPerformed(ActionEvent e) { 
-				    Ventana.thisventana.abrirCerrarTerminal();
-				  } 
+				    Ventana.thisventana.terminalAbrirCerrar();
+			  } 
 		} );
 		
 		// Creamos las barras de herramientas donde insertaremos los botones
