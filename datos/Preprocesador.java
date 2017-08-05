@@ -801,8 +801,6 @@ public class Preprocesador extends Thread {
 				break;
 			} else {
 				System.gc();
-				new CuadroError(Ventana.thisventana, Texto.get("ERROR_EJEC",
-						Conf.idioma), error);
 				break;
 			}
 		}

@@ -196,7 +196,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * @return
 	 * 		Nuevo valor de la visibilidad de la terminal
 	 */
-	public boolean abrirCerrarTerminal() {
+	public boolean terminalAbrirCerrar() {
 		if(!this.cuadroAbiertoPrimeraVez) {			
 			this.cuadroAbiertoPrimeraVez = true;
 		}
@@ -206,23 +206,51 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		else
 			this.cuadroEstaVisible = true;		
 		
-		if(this.cuadroEstaVisible) {			
+		if(this.cuadroEstaVisible) {
 			SwingUtilities.invokeLater(new Runnable() {	
 	            @Override
-	            public void run() {
+	            public void run() {	 
 	                if(cuadroDialogo != null) {
 	                	cuadroDialogo.setVisible(true);
-	                	cuadroDialogo.toFront();
-	                	panelesPanelErrorTexto.setScrollAbajo();
-	                	panelesPanelNormalTexto.setScrollAbajo();
+	                	terminalPrimerPlano();	                	
 	                }
 	            }
 	        });
+			
 		}else {
 			cuadroDialogo.setVisible(false);
 		}
 		
 		return this.cuadroEstaVisible;		
+	}
+	
+	/**
+	 * Pasa a primer plano la ventana de la terminal
+	 * refrescando el formato visual
+	 */
+	public void terminalPrimerPlano() {
+		
+		if(this.cuadroDialogo.isVisible()) {
+	    	cuadroDialogo.setAlwaysOnTop(true);
+	    	cuadroDialogo.toFront();
+	    	panelesSeparadorRefrescar();
+	    	panelesPanelErrorTexto.setScrollAbajo();
+	    	panelesPanelNormalTexto.setScrollAbajo();
+	    	
+	    	//	Necesario esperar para quitar el always on top,
+	    	//	sino no hace toFront mientras se escribe... BUG JAVA
+	    	
+	    	new Thread("Non edt Thread") {
+	            public void run() {
+	                try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+					}
+	                cuadroDialogo.setAlwaysOnTop(false);
+	            }
+	
+	        }.start();
+		}
 	}
 	
 	//***************************************
@@ -259,6 +287,32 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		this.panelesPanelErrorTexto.setCabecera(s);
 		this.panelesPanelNormalTexto.setCabecera(s);
 	}	
+	
+	/**
+	 * Obtiene, tras la escritura en ambas salidas,
+	 * si la terminal se tiene que abrir o no
+	 * 
+	 * @return
+	 * 		True si la terminal se tiene que abrir,
+	 * 		false caso contrario
+	 */
+	public boolean getSalidasTerminalAbrir() {
+		if(this.cuadroDialogo.isVisible())
+			return false;
+		return this.panelesPanelErrorTexto.getTerminalAbrir() ||
+				this.panelesPanelNormalTexto.getTerminalAbrir();
+	}
+	
+	/**
+	 * Reinicializa los valores necesarios cuando una llamada
+	 * a un método termina de escribir en las salidas.
+	 * Hacer tras llamada getSalidasTerminalAbrir, no antes.
+	 */
+	public void setSalidasFin() {
+		this.panelesPanelErrorTexto.setEscribirFin();
+		this.panelesPanelNormalTexto.setEscribirFin();
+	}
+	
 	
 	//********************************************************************************
     // 			MÉTODOS PRIVADOS
@@ -621,7 +675,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		//	Inicializaciones	
 		
-		this.panelesPanelNormalTexto = new panelTextoClase(10000000); //TODO
+		this.panelesPanelNormalTexto = new panelTextoClase(10000000, true); //TODO
 		
 		this.panelesPanelNormalScroll = new JScrollPane(this.panelesPanelNormalTexto.getPanelTexto());
 				
@@ -644,7 +698,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		//	Inicializaciones		
 		
-		this.panelesPanelErrorTexto = new panelTextoClase(10000000);//TODO
+		this.panelesPanelErrorTexto = new panelTextoClase(10000000, false);//TODO
 		
 		this.panelesPanelErrorScroll = new JScrollPane(this.panelesPanelErrorTexto.getPanelTexto());
 				
@@ -676,6 +730,18 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		this.panelesPanelSplitPane.setDividerLocation(this.panelesPanelSplitPaneValor);
 		this.panelesPanelSplitPane.setResizeWeight(0.5);		
+	}
+	
+	/**
+	 * Refresca el separador en función de si se tiene
+	 * que mostrar el panel de error o no
+	 */
+	private void panelesSeparadorRefrescar() {		
+		if(this.panelesPanelErrorTexto.hanEscrito) {
+			this.panelesPanelSplitPane.setDividerLocation(this.panelesPanelSplitPaneValor);
+		}else {
+			this.panelesPanelSplitPane.setDividerLocation(1.0);
+		}
 	}
 	
 	//***************************************
@@ -787,7 +853,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		this.cuadroVentana.abrirCerrarTerminal();
+		this.cuadroVentana.terminalAbrirCerrar();
 	}
 
 	@Override
@@ -855,7 +921,9 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		private SimpleAttributeSet estiloCabecera;
 		private String cabecera;
 		private JScrollPane panelScroll;
-		private final ReentrantLock bloqueo = new ReentrantLock(true);
+		private final ReentrantLock bloqueo;
+		private boolean abrirModificar, abrir, hanEscrito;
+		private boolean esSalidaNormal;
 		
 		//********************************************************************************
 		// 			CONSTRUCTOR
@@ -867,8 +935,12 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		 * @param limiteBuffer
 		 * 		Límite del buffer en caracteres
 		 * 
+		 * @param esSalidaNormal
+		 * 		Indica si esta clase se aplica a la salida
+		 * 		normal o la de error
+		 * 
 		 */
-		public panelTextoClase(int limiteBuffer) {
+		public panelTextoClase(int limiteBuffer, boolean esSalidaNormal) {
 			   
 			//	Inicializaciones
 				   
@@ -879,12 +951,17 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			this.estiloNormal = new SimpleAttributeSet();
 			this.estiloCabecera = new SimpleAttributeSet();
 			this.cabecera = "";	
+			this.bloqueo = new ReentrantLock(true);
+			this.abrirModificar = true;
+			this.abrir = false;
+			this.hanEscrito = false;
+			this.esSalidaNormal = esSalidaNormal;
 		}
 		
 		//********************************************************************************
 		// 			MÉTODOS PRIVADOS
 		//********************************************************************************
-		
+
 		/**
 		 * Obtiene el panel texto contenido en esta clase
 		 * 
@@ -961,7 +1038,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		/**
 		 * Escribe el texto pasado como parámetro
-		 * incluyendo la cabecera
+		 * incluyendo la cabecera o no
 		 * 
 		 * @param text
 		 * 		Texto a escribir
@@ -986,7 +1063,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 							
 						doc.insertString(doc.getLength(), text, estiloNormal);
 						
-						panelTexto.setDocument(doc);	
+						panelTexto.setDocument(doc);						
 						
 						bloqueo.unlock();
 						
@@ -1029,6 +1106,50 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			});
 		}
 		
+		/**
+		 * Establece las variables en cada Write que después permitirán
+		 * saber si debemos abrir la terminal automáticamente o no
+		 */
+		private void setEscribirWrite() {			
+			if(this.esSalidaNormal && this.abrirModificar) 				
+				this.abrir = true;		
+			
+			else if(this.esSalidaNormal && !this.abrirModificar)				
+				this.abrir = false;
+			
+			else 				
+				this.abrir = true;
+			
+			this.hanEscrito = true;
+		}
+		
+		/**
+		 * Reinicializa los valores necesarios cuando una llamada
+		 * a un método termina de escribir en los paneles.
+		 * Hacer tras llamada getEscribirAbrir, no antes.
+		 */
+		private void setEscribirFin() {
+			if(this.esSalidaNormal) {
+				this.abrir = false;
+				this.abrirModificar = false;
+			}else {
+				this.abrir = false;
+				this.abrirModificar = true;
+			}
+		}
+		
+		/**
+		 * Obtiene, tras la escritura en ambos paneles,
+		 * si la terminal se tiene que abrir o no
+		 * 
+		 * @return
+		 * 		True si la terminal se tiene que abrir,
+		 * 		false caso contrario
+		 */
+		private boolean getTerminalAbrir() {
+			return this.abrir;
+		}		
+		
 		//********************************************************************************
 		// 			MÉTODOS OUTPUT STREAM
 		//********************************************************************************
@@ -1039,11 +1160,13 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			if(sb.toString().equals(""))
 				return;
 			
-			 String text = sb.toString() + "\n";
-			 escribir(text, false);	
+			this.setEscribirWrite();
 			
-			 sb.setLength(0);
-			 return;
+			String text = sb.toString() + "\n";
+			escribir(text, false);	
+			
+			sb.setLength(0);
+			return;
 		}
 
 		@Override
@@ -1054,6 +1177,8 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		@Override
 		public void write(byte[] b) {
 			
+			this.setEscribirWrite();
+			
 			String text = new String(b);
 			escribir(text, true);			
 			 
@@ -1063,6 +1188,8 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		@Override
 		public void write(byte[] b, int off, int len){
+			
+			this.setEscribirWrite();
 			
 			String text = new String(b, off, len);
 			escribir(text, true);

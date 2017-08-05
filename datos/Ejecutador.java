@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
+
+import javax.swing.SwingUtilities;
 
 import utilidades.Texto;
 import ventanas.Ventana;
@@ -16,7 +17,7 @@ import cuadros.CuadroTerminal;
  * Se encarga de invocar al método para llevar a cabo la ejecución y obtención
  * de la traza
  * 
- * @author Antonio Pérez Carrasco
+ * @author Antonio Pérez Carrasco y Daniel Arroyo Cortés
  * @version 2006-2007
  */
 public class Ejecutador {
@@ -114,22 +115,22 @@ public class Ejecutador {
 						if (cm.isInterface()) {
 							String error = Texto.get("ERROR_CLASEINTERFAZ", Conf.idioma);
 							terminalEscribir(terminalSalidaError,error+"\n");
-							cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+							setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 							return error;
 						} else if (cm.isArray()) {
 							String error = Texto.get("ERROR_CLASEARRAY", Conf.idioma);
 							terminalEscribir(terminalSalidaError,error+"\n");
-							cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+							setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 							return error;
 						} else if (cm.isEnum()) {
 							String error = Texto.get("ERROR_CLASEENUM", Conf.idioma);
 							terminalEscribir(terminalSalidaError,error+"\n");
-							cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+							setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 							return error;
 						} else if (cm.isPrimitive()) {
 							String error = Texto.get("ERROR_CLASEPRIM", Conf.idioma);
 							terminalEscribir(terminalSalidaError,error+"\n");
-							cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+							setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 							return error;
 						} else {
 							
@@ -163,7 +164,7 @@ public class Ejecutador {
 								System.setOut(psOut);
 								System.setErr(psErr);
 								
-								cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								
 								return null;
 							
@@ -174,14 +175,14 @@ public class Ejecutador {
 								System.setErr(psErr);
 								String error = Texto.get("ERROR_JAVASINMEM", Conf.idioma);
 								terminalEscribir(terminalSalidaError,error+"\n"+oome.getCause()+"\n");
-								cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								return error;
 							} catch (IllegalAccessException iae) {
 								System.setOut(psOut);
 								System.setErr(psErr);
 								String error = Texto.get("ERROR_ILEGALDATOS", Conf.idioma);
 								terminalEscribir(terminalSalidaError,error+"\n"+iae.getCause()+"\n");
-								cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								return error;
 							} catch (InvocationTargetException ite) {
 								System.setOut(psOut);
@@ -202,14 +203,14 @@ public class Ejecutador {
 								}
 								
 								terminalEscribir(terminalSalidaError,error+"\n"+ite.getCause()+"\n");
-								cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								return error;
 							} catch (Exception e) {
 								System.setOut(psOut);
 								System.setErr(psErr);
 								String error = Texto.get("ERROR_METERR", Conf.idioma);
 								terminalEscribir(terminalSalidaError,error+"\n"+e.getCause()+"\n");
-								cerrarTerminal(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter);
+								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								return error;
 							}
 						}
@@ -223,7 +224,7 @@ public class Ejecutador {
 	}
 	
 	/**
-	 * Cierra todos los componentes abiertos de la terminal
+	 * Acciones a llevar a cabo cuando se termina de escribir
 	 * 
 	 * @param o1
 	 * 		ByteArrayOutputStream error
@@ -237,16 +238,37 @@ public class Ejecutador {
 	 * @param p2
 	 * 		PrintStream normal
 	 * 
+	 * @param terminal
+	 * 		Terminal
+	 * 
 	 */
-	private static void cerrarTerminal(ByteArrayOutputStream o1, ByteArrayOutputStream o2, PrintStream p1, PrintStream p2) {
-		try {
-			o1.close();
-			o2.close();
-			p1.close();
-			p2.close();
-		} catch (IOException e) {
-		}
-		
+	private static void setSalidasFin(ByteArrayOutputStream o1, ByteArrayOutputStream o2, PrintStream p1, PrintStream p2, CuadroTerminal terminal) {
+		SwingUtilities.invokeLater(new Runnable() {	
+	        @Override
+	        public void run() {	
+	        	try {
+	        		
+	        		//	Cerramos
+	        		
+	            	o1.close();
+	    			o2.close();
+	    			p1.close();
+	    			p2.close();
+	        	} catch (IOException e) {
+	        		
+	    		}
+	        	
+	        	//	Comprobamos si hay que abrir o no terminal
+	        	
+	        	if(terminal.getSalidasTerminalAbrir()) {
+	        		Ventana.thisventana.terminalAbrirCerrar();
+	        	}else {
+	        		terminal.terminalPrimerPlano();
+	        	}
+	        	
+	        	terminal.setSalidasFin();
+	        }
+		});				
 	}
 	
 	/**

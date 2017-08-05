@@ -1181,7 +1181,7 @@ public class Ventana extends JFrame implements ActionListener {
 				if (Conf.fichero_log) {
 					this.log_write("Visualización > Abrir/Cerrar terminal");
 				}
-				this.abrirCerrarTerminal();				
+				this.terminalAbrirCerrar();				
 			}
 
 			// JMenuItem no reconocido
@@ -2286,8 +2286,8 @@ public class Ventana extends JFrame implements ActionListener {
      * Gestiona las acciones necesarias cuando el usuario pulsa
      * el botón abrir/cerrar terminal
      */
-    public void abrirCerrarTerminal() { 
-    	boolean estaVisible = Ventana.this.getCuadroTerminal().abrirCerrarTerminal();
+    public void terminalAbrirCerrar() { 
+    	boolean estaVisible = Ventana.this.getCuadroTerminal().terminalAbrirCerrar();
     	JMenuItem item = this.menus[1].getItem(5);
     	String textoClose = Texto.get("BARRA_HERR_TTT36_CLOSE",Conf.idioma);
     	String textoOpen = Texto.get("BARRA_HERR_TTT36_OPEN",Conf.idioma);
