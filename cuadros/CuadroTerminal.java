@@ -697,8 +697,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 				
 	        }
 		});
-	}
-	        
+	}	        
 	
 	/**
 	 * Obtiene un JToolbar
@@ -775,7 +774,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * Método que se ejecuta cuando pulsan el botón de limpiar pantalla
 	 */
 	private void controlesAccionLimpiar() {
-		
+		this.setSalidasVacias();
 	}
 
 	/**
@@ -936,7 +935,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * Refresca el separador en función de si se tiene
 	 * que mostrar el panel de error o no
 	 */
-	private void panelesSeparadorRefrescar() {		
+	private void panelesSeparadorRefrescar() {			
 		if(this.panelesPanelErrorTexto.hanEscrito) {
 			this.panelesPanelSplitPane.setDividerLocation(this.panelesPanelSplitPaneValor);
 		}else {
@@ -988,6 +987,19 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 				this.salidaTextoCabeceraTamano,
 				this.salidaTextoFuenteGeneral
 		);
+	}
+	
+	/**
+	 * Vacía ambas salidas, normal y error
+	 */
+	private void setSalidasVacias() {
+		SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+				panelesPanelNormalTexto.setSalidaVacia();
+				panelesPanelErrorTexto.setSalidaVacia();
+				panelesSeparadorRefrescar();
+            }
+		});
 	}
 	
 	//***************************************
@@ -1181,16 +1193,12 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		//********************************************************************************
 		// 			MÉTODOS PRIVADOS
 		//********************************************************************************
-
-		/**
-		 * Obtiene el panel texto contenido en esta clase
-		 * 
-		 * @return
-		 * 		Panel texto contenido en esta clase
-		 */
-		private JTextPane getPanelTexto() {
-			return this.panelTexto;
-		}
+		
+		
+		//***************************************
+	    // 			ESTILOS
+	    //***************************************
+		
 		
 		/**
 		 * Establece el estilo normal del texto que se mostrará
@@ -1246,6 +1254,12 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			this.estiloCabecera = keyWord;
 		}
 		
+		
+		//***************************************
+	    // 		ESCRIBIR
+	    //***************************************
+		
+		
 		/**
 		 * Establece el valor de la cabecera
 		 * 
@@ -1294,7 +1308,63 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 					}
                 }
 			});
+		}		
+		
+		
+		//***************************************
+	    // 		ABRIR TERMINAL TRAS ESCRIBIR
+	    //***************************************
+		
+		
+		/**
+		 * Establece las variables en cada Write que después permitirán
+		 * saber si debemos abrir la terminal automáticamente o no
+		 */
+		private void setEscribirWrite() {			
+			if(this.esSalidaNormal && this.abrirModificar) 				
+				this.abrir = true;		
+			
+			else if(this.esSalidaNormal && !this.abrirModificar)				
+				this.abrir = false;
+			
+			else 				
+				this.abrir = true;
+			
+			this.hanEscrito = true;
 		}
+		
+		/**
+		 * Reinicializa los valores necesarios cuando una llamada
+		 * a un método termina de escribir en los paneles.
+		 * Hacer tras llamada getTerminalAbrir, no antes.
+		 */
+		private void setEscribirFin() {
+			if(this.esSalidaNormal) {
+				this.abrir = false;
+				this.abrirModificar = false;
+			}else {
+				this.abrir = false;
+				this.abrirModificar = true;
+			}
+		}		
+		
+		/**
+		 * Obtiene, tras la escritura en ambos paneles,
+		 * si la terminal se tiene que abrir o no
+		 * 
+		 * @return
+		 * 		True si la terminal se tiene que abrir,
+		 * 		false caso contrario
+		 */
+		private boolean getTerminalAbrir() {
+			return this.abrir;
+		}
+		
+		
+		//***************************************
+	    // 		GETTERS Y SETTERS VARIOS
+	    //***************************************
+		
 		
 		/**
 		 * Establece el JScrollPane asociado a la salida
@@ -1327,52 +1397,44 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		}
 		
 		/**
-		 * Establece las variables en cada Write que después permitirán
-		 * saber si debemos abrir la terminal automáticamente o no
-		 */
-		private void setEscribirWrite() {			
-			if(this.esSalidaNormal && this.abrirModificar) 				
-				this.abrir = true;		
-			
-			else if(this.esSalidaNormal && !this.abrirModificar)				
-				this.abrir = false;
-			
-			else 				
-				this.abrir = true;
-			
-			this.hanEscrito = true;
-		}
-		
-		/**
-		 * Reinicializa los valores necesarios cuando una llamada
-		 * a un método termina de escribir en los paneles.
-		 * Hacer tras llamada getEscribirAbrir, no antes.
-		 */
-		private void setEscribirFin() {
-			if(this.esSalidaNormal) {
-				this.abrir = false;
-				this.abrirModificar = false;
-			}else {
-				this.abrir = false;
-				this.abrirModificar = true;
-			}
-		}
-		
-		/**
-		 * Obtiene, tras la escritura en ambos paneles,
-		 * si la terminal se tiene que abrir o no
+		 * Obtiene el panel texto contenido en esta clase
 		 * 
 		 * @return
-		 * 		True si la terminal se tiene que abrir,
-		 * 		false caso contrario
+		 * 		Panel texto contenido en esta clase
 		 */
-		private boolean getTerminalAbrir() {
-			return this.abrir;
-		}		
+		private JTextPane getPanelTexto() {
+			return this.panelTexto;
+		}
+		
+		/**
+		 * Vacia el contenido de la salida/panel
+		 */		
+		private void setSalidaVacia() {
+			
+			this.hanEscrito = false;
+			
+			SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+					try {	
+						
+						doc.remove(0, doc.getLength());
+						
+						panelTexto.setDocument(doc);
+						
+						setScrollAbajo();
+						
+					}catch(Exception e) {
+						
+					}
+                }
+			});
+		}
+		
 		
 		//********************************************************************************
 		// 			MÉTODOS OUTPUT STREAM
 		//********************************************************************************
+		
 		
 		@Override
 		public void flush() {
