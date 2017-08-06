@@ -6,11 +6,15 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +35,7 @@ import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.metal.MetalBorders;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -149,6 +154,20 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	private final int salidaTextoCabeceraTamano = 16;
 	private final boolean salidaTextoCabeceraNegrita = true;
 	
+	//	Exportar cabecera
+	
+	private final String salidaTextoCabeceraExportarNormal = 
+	 "\n\n"+"**************************************************************************"+"\n"+
+			"			SALIDA NORMAL                                                  "+"\n"+
+			"**************************************************************************"+"\n\n";
+					
+					
+					;
+	private final String salidaTextoCabeceraExportarError = 
+	 "\n\n"+"**************************************************************************"+"\n"+
+			"			SALIDA ERRORES                                                 "+"\n"+
+			"**************************************************************************"+"\n\n";
+
 	//********************************************************************************
     // 			CONSTRUCTOR
     //********************************************************************************	
@@ -781,7 +800,31 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 * Método que se ejecuta cuando pulsan el botón de copiar
 	 */
 	private void controlesAccionCopiar() {
-			
+		
+		//	No obtenemos el texto hasta que la EDT se encuentre inactiva
+		
+		new Thread(new Runnable() {
+		    @Override
+		    public void run() {				
+		    	try {
+					SwingUtilities.invokeAndWait(new Thread(new Runnable() {
+						@Override
+						public void run() {
+							String salidasTexto = getTextosSalidas();
+							
+							StringSelection stringSelection = new StringSelection(salidasTexto);
+							Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+							clpbrd.setContents(stringSelection, null); 							
+						}
+					}));					
+					
+				} catch (InvocationTargetException e) {
+
+				} catch (InterruptedException e) {
+
+				}
+		    }
+		}).start();	
 	}
 
 	/**
@@ -1002,6 +1045,28 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		});
 	}
 	
+	/**
+	 * Obtiene el texto de ambas salidas 
+	 * junto con la cabecera de exportar
+	 * 
+	 * @return
+	 * 		String de ambas salidas 		
+	 */
+	private String getTextosSalidas() {
+		
+		String retorno = "";
+		
+		retorno += this.salidaTextoCabeceraExportarNormal;
+		
+		retorno += this.panelesPanelNormalTexto.getTextoSalida();
+		
+		retorno += this.salidaTextoCabeceraExportarError;
+		
+		retorno += this.panelesPanelErrorTexto.getTextoSalida();
+		
+		return retorno;
+	}
+	
 	//***************************************
     // 			VARIOS
     //***************************************
@@ -1141,9 +1206,11 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	
 	private class panelTextoClase extends ByteArrayOutputStream{
 		
+		
 		//********************************************************************************
 		// 			VARIABLES
 		//********************************************************************************
+		
 
 		private JTextPane panelTexto;
 		private StringBuilder sb;
@@ -1157,9 +1224,11 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		private boolean abrirModificar, abrir, hanEscrito;
 		private boolean esSalidaNormal;
 		
+		
 		//********************************************************************************
 		// 			CONSTRUCTOR
 		//********************************************************************************
+		
 		
 		/**
 		 * Límite del buffer a aplicar
@@ -1183,16 +1252,17 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			this.estiloNormal = new SimpleAttributeSet();
 			this.estiloCabecera = new SimpleAttributeSet();
 			this.cabecera = "";	
-			this.bloqueo = new ReentrantLock(true);
+            this.bloqueo = new ReentrantLock(true);
 			this.abrirModificar = true;
 			this.abrir = false;
 			this.hanEscrito = false;
 			this.esSalidaNormal = esSalidaNormal;
 		}
 		
+		
 		//********************************************************************************
 		// 			MÉTODOS PRIVADOS
-		//********************************************************************************
+		//********************************************************************************	
 		
 		
 		//***************************************
@@ -1362,7 +1432,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		
 		
 		//***************************************
-	    // 		GETTERS Y SETTERS VARIOS
+	    // 		SCROLL
 	    //***************************************
 		
 		
@@ -1396,15 +1466,11 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 			});
 		}
 		
-		/**
-		 * Obtiene el panel texto contenido en esta clase
-		 * 
-		 * @return
-		 * 		Panel texto contenido en esta clase
-		 */
-		private JTextPane getPanelTexto() {
-			return this.panelTexto;
-		}
+		
+		//***************************************
+	    // 		VACIAR
+	    //***************************************
+		
 		
 		/**
 		 * Vacia el contenido de la salida/panel
@@ -1428,6 +1494,43 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 					}
                 }
 			});
+		}
+		
+		
+		//***************************************
+	    // 		GET TEXTO SALIDA
+	    //***************************************
+		
+		/**
+		 * Obtiene el texto de la salida
+		 * 
+		 * @return
+		 * 		String con el texto de la salida
+		 */
+		private String getTextoSalida() {
+			
+			try {
+				return doc.getText(0, doc.getLength());
+			} catch (BadLocationException e) {
+				return "";
+			}			
+				
+		}		
+		
+		
+		//***************************************
+	    // 		GETTERS Y SETTERS VARIOS
+	    //***************************************
+		
+		
+		/**
+		 * Obtiene el panel texto contenido en esta clase
+		 * 
+		 * @return
+		 * 		Panel texto contenido en esta clase
+		 */
+		private JTextPane getPanelTexto() {
+			return this.panelTexto;
 		}
 		
 		
