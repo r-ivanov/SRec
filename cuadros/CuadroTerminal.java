@@ -22,7 +22,10 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.HashMap;
@@ -34,6 +37,7 @@ import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.PageRanges;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -194,6 +198,11 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private int salidaTextoImprimirNumeroPaginas, 
 				salidaTextoImprimirLineasPorPagina,
 				salidaTextoImprimirFuenteHeight;
+	
+	//	Guardar
+	
+	private final String salidaTextoGuardarTitulo =
+			Texto.get("TER_GUARDAR_TITULO", Conf.idioma);
 	
 	//********************************************************************************
     // 			CONSTRUCTOR
@@ -859,6 +868,60 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 */
 	private void controlesAccionGuardar() {
 		
+		//	No guardamos el texto hasta que la EDT se encuentre inactiva
+	
+		new Thread(new Runnable() {
+		    @Override
+		    public void run() {				
+		    	try {
+					SwingUtilities.invokeAndWait(new Thread(new Runnable() {
+						@Override
+						public void run() {
+							
+							//	Creamos file chooser
+							
+							final JFileChooser chooser = new JFileChooser();	    
+						    chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+						    chooser.setSelectedFile(new File(salidaTextoNombreArchivo+".txt"));	    
+						    chooser.setDialogTitle(salidaTextoGuardarTitulo);
+						    chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+						    
+						    //	Mostramos diálogo
+						    
+						    int retVal = chooser.showSaveDialog(cuadroDialogo);
+						    
+						    //	Aceptar pulsado
+						    
+						    if (retVal == JFileChooser.APPROVE_OPTION) {
+						    	
+						    	//	Escribimos texto
+						    	
+						    	BufferedWriter writer = null;
+						    	
+						        try {
+						            
+						            File file = chooser.getSelectedFile();
+						            writer = new BufferedWriter(new FileWriter(file));
+						            writer.write(getSalidasTextos());
+						            
+						        } catch (Exception e) {	            
+						        } finally {
+						        	try {
+						                writer.close();
+						            } catch (Exception e) {
+						            }
+						        }
+						    }
+						}
+					}));					
+					
+				} catch (InvocationTargetException e) {
+	
+				} catch (InterruptedException e) {
+	
+				}
+		    }
+		}).start();	
 	}
 
 	/**

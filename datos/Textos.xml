@@ -1414,6 +1414,8 @@
 		<T valor="ERROR OUTPUT" idioma="en" id="TER_IMPRIMIR_SALIDA_ERROR"/>
 		<T valor="SRec_salida_terminal" idioma="es" id="TER_IMPRIMIR_NOMBRE_ARCHIVO"/>
 		<T valor="SRec_terminal_output" idioma="en" id="TER_IMPRIMIR_NOMBRE_ARCHIVO"/>
+		<T valor="Guardar salida terminal en..." idioma="es" id="TER_GUARDAR_TITULO"/>
+		<T valor="Save terminal output in..." idioma="en" id="TER_GUARDAR_TITULO"/>
 		
 		<!-- Panel de compilador -->
 		<T valor="Clase compilada sin errores." idioma="es" id="COMPILAR_NOERRORES"/>
