@@ -1382,8 +1382,8 @@
 		<T valor="Clear" idioma="en" id="TER_LIMPIAR"/>
 		<T valor="Guardar en archivo" idioma="es" id="TER_GUARDAR"/>
 		<T valor="Save in file" idioma="en" id="TER_GUARDAR"/>
-		<T valor="Copiar texto" idioma="es" id="TER_COPIAR"/>
-		<T valor="Copy text" idioma="en" id="TER_COPIAR"/>
+		<T valor="Copiar texto al portapapeles" idioma="es" id="TER_COPIAR"/>
+		<T valor="Copy text to clipboard" idioma="en" id="TER_COPIAR"/>
 		<T valor="Imprimir" idioma="es" id="TER_IMPRIMIR"/>
 		<T valor="Print" idioma="en" id="TER_IMPRIMIR"/>
 		<T valor="Limpiar pantalla en llamada al m[eacute]todo [Activar]" idioma="es" id="TER_LIMPIAR_PANTALLA_ACTIVAR"/>
@@ -1408,6 +1408,12 @@
 		<T valor="Method:" idioma="en" id="TER_METODO"/>
 		<T valor="Par[aacute]metros llamada:" idioma="es" id="TER_PARAMETROS"/>
 		<T valor="Call parameters: " idioma="en" id="TER_PARAMETROS"/>
+		<T valor="SALIDA NORMAL" idioma="es" id="TER_IMPRIMIR_SALIDA_NORMAL"/>
+		<T valor="NORMAL OUTPUT" idioma="en" id="TER_IMPRIMIR_SALIDA_NORMAL"/>
+		<T valor="SALIDA ERROR" idioma="es" id="TER_IMPRIMIR_SALIDA_ERROR"/>
+		<T valor="ERROR OUTPUT" idioma="en" id="TER_IMPRIMIR_SALIDA_ERROR"/>
+		<T valor="SRec_salida_terminal" idioma="es" id="TER_IMPRIMIR_NOMBRE_ARCHIVO"/>
+		<T valor="SRec_terminal_output" idioma="en" id="TER_IMPRIMIR_NOMBRE_ARCHIVO"/>
 		
 		<!-- Panel de compilador -->
 		<T valor="Clase compilada sin errores." idioma="es" id="COMPILAR_NOERRORES"/>

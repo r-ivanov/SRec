@@ -3,6 +3,10 @@ package cuadros;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -13,6 +17,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -20,6 +29,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.PageRanges;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -44,7 +56,7 @@ import conf.Conf;
 import utilidades.Texto;
 import ventanas.Ventana;
 
-public class CuadroTerminal implements WindowListener, ActionListener{
+public class CuadroTerminal implements WindowListener, ActionListener, Printable {
 	
 	//********************************************************************************
     // 			VARIABLES
@@ -138,7 +150,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
     // 			SALIDAS
     //***************************************
 	
-	//	Estilo
+	//	Estilo terminal
 	
 	private final String salidaTextoFuenteGeneral = "Monospaced";
 	
@@ -154,20 +166,35 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	private final int salidaTextoCabeceraTamano = 16;
 	private final boolean salidaTextoCabeceraNegrita = true;
 	
-	//	Exportar cabecera
+	//	Exportar cabecera (copiar, guardar e imprimir)
 	
 	private final String salidaTextoCabeceraExportarNormal = 
 	 "\n\n"+"**************************************************************************"+"\n"+
-			"			SALIDA NORMAL                                                  "+"\n"+
+			"			"+Texto.get("TER_IMPRIMIR_SALIDA_NORMAL", Conf.idioma)			+"\n"+
 			"**************************************************************************"+"\n\n\n";
 					
 					
 					;
 	private final String salidaTextoCabeceraExportarError = 
 	 "\n\n"+"**************************************************************************"+"\n"+
-			"			SALIDA ERRORES                                                 "+"\n"+
+			"			"+Texto.get("TER_IMPRIMIR_SALIDA_ERROR", Conf.idioma)			+"\n"+
 			"**************************************************************************"+"\n\n\n";
-
+	
+	//	Exportar nombre arhivo (copiar e imprimir)
+	
+	private final String salidaTextoNombreArchivo =
+			Texto.get("TER_IMPRIMIR_NOMBRE_ARCHIVO", Conf.idioma);
+	
+	//	Imprimir
+	
+	private String[] salidaTextoImprimirContenido;
+	
+	private Font salidaTextoImprimirFuente;
+	
+	private int salidaTextoImprimirNumeroPaginas, 
+				salidaTextoImprimirLineasPorPagina,
+				salidaTextoImprimirFuenteHeight;
+	
 	//********************************************************************************
     // 			CONSTRUCTOR
     //********************************************************************************	
@@ -801,7 +828,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 */
 	private void controlesAccionCopiar() {
 		
-		//	No obtenemos el texto hasta que la EDT se encuentre inactiva
+		//	No copiamos el texto hasta que la EDT se encuentre inactiva
 		
 		new Thread(new Runnable() {
 		    @Override
@@ -810,7 +837,7 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 					SwingUtilities.invokeAndWait(new Thread(new Runnable() {
 						@Override
 						public void run() {
-							String salidasTexto = getTextosSalidas();
+							String salidasTexto = getSalidasTextos();
 							
 							StringSelection stringSelection = new StringSelection(salidasTexto);
 							Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -839,6 +866,61 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	 */
 	private void controlesAccionImprimir() {
 		
+		//	No imprimimos el texto hasta que la EDT se encuentre inactiva
+		
+		new Thread(new Runnable() {
+		    @Override
+		    public void run() {				
+		    	try {
+					SwingUtilities.invokeAndWait(new Thread(new Runnable() {
+						@Override
+						public void run() {
+							
+							//	Obtenemos datos
+							
+							getImprimirDatos();
+							
+							//	Diálogo con nº de páginas
+							
+					        PrintRequestAttributeSet printAttribute = new HashPrintRequestAttributeSet();
+							printAttribute.add(
+								new PageRanges(
+										1, salidaTextoImprimirNumeroPaginas
+								)
+							);   
+							
+							//	Creamos impresora
+							
+					        PrinterJob job = PrinterJob.getPrinterJob();    
+						    job.setJobName(salidaTextoNombreArchivo);
+						    job.setPrintable(CuadroTerminal.this);
+						    
+							if (job.printDialog(printAttribute)) {			
+								try {
+									
+									//	Imprimimos
+									
+									job.print();
+									
+									//	Limpiamos
+									
+									setImprimirDatosVacios();
+									
+								} catch (Exception e) {
+									
+								}			
+							}
+							
+						}
+					}));					
+					
+				} catch (InvocationTargetException e) {
+
+				} catch (InterruptedException e) {
+
+				}
+		    }
+		}).start();			
 	}
 
 	/**
@@ -1046,13 +1128,13 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 	}
 	
 	/**
-	 * Obtiene el texto de ambas salidas 
+	 * Obtiene el texto completo de ambas salidas 
 	 * junto con la cabecera de exportar
 	 * 
 	 * @return
 	 * 		String de ambas salidas 		
 	 */
-	private String getTextosSalidas() {
+	private String getSalidasTextos() {
 		
 		String retorno = "";
 		
@@ -1065,6 +1147,71 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		retorno += this.panelesPanelErrorTexto.getTextoSalida();
 		
 		return retorno;
+	}
+	
+	//***************************************
+    // 			IMPRIMIR
+    //***************************************
+	
+	/**  
+	 * Rellena el texto a imprimir.
+	 * 
+	 * Calcula:
+	 * 		- Fuente
+	 * 		- Fuente height
+	 * 		- Nº páginas
+	 * 		- Nº líneas por página
+	 * 		
+	 */
+	private void getImprimirDatos() {
+		
+		//	Fuente
+		
+		this.salidaTextoImprimirFuente = 
+				new Font(this.salidaTextoFuenteGeneral, Font.PLAIN, this.salidaTextoNormalTamano);
+		
+		//	Fuente height
+		
+		BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D graphics2D = image.createGraphics();		
+		FontMetrics metrics = graphics2D.getFontMetrics(this.salidaTextoImprimirFuente);
+		this.salidaTextoImprimirFuenteHeight = metrics.getHeight();
+		
+		//	Texto a imprimir
+		
+		this.salidaTextoImprimirContenido = new String[0];		
+		
+		this.salidaTextoImprimirContenido = 
+				this.getSalidasTextos().split("\n");
+
+		//	Líneas por página		
+		
+		this.salidaTextoImprimirLineasPorPagina =
+				(int)(new PageFormat().getImageableHeight()/this.salidaTextoImprimirFuenteHeight);
+		
+		//	Número páginas
+
+		this.salidaTextoImprimirNumeroPaginas =
+			 (salidaTextoImprimirContenido.length-1)/this.salidaTextoImprimirLineasPorPagina;
+		
+	}
+	
+	/**
+	 * Vacía todas las variables rellenadas anteriormente
+	 * para ahorrar memoria.
+	 * 
+	 * 		- Texto a imprimir
+	 * 		- Fuente
+	 * 		- Fuente height
+	 * 		- Nº de páginas
+	 * 		- Nº de líneas por página
+	 */
+	private void setImprimirDatosVacios() {
+		this.salidaTextoImprimirContenido = null;
+		this.salidaTextoImprimirFuente = null;
+		this.salidaTextoImprimirNumeroPaginas = 0;
+		this.salidaTextoImprimirLineasPorPagina = 0;
+		this.salidaTextoImprimirFuenteHeight = 0;
 	}
 	
 	//***************************************
@@ -1200,9 +1347,50 @@ public class CuadroTerminal implements WindowListener, ActionListener{
 		}
 	}
 	
+	//***************************************
+    // 	SALIDAS: IMPRIMIR
+    //***************************************
+	
+	@Override
+	public int print(Graphics g, PageFormat pf, int pageIndex) throws PrinterException {
+		
+		//	TODO Implementar con colores, sería dificil pero es posible	
+		
+		//	Rellenamos array de número de páginas para pintar
+		
+		int[] pageBreaks = new int[this.salidaTextoImprimirNumeroPaginas];
+		for (int b=0; b<salidaTextoImprimirNumeroPaginas; b++) {
+		    pageBreaks[b] = (b+1)*salidaTextoImprimirLineasPorPagina; 
+		}
+		
+		//	Excedido número páginas --> Fuera
+			
+		if (pageIndex > pageBreaks.length)
+			return NO_SUCH_PAGE;		
+		
+		
+		//	Dibujamos
+			
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.translate(pf.getImageableX(), pf.getImageableY()); 
+		
+		int y = 0; 
+		int start = (pageIndex == 0) ? 0 : pageBreaks[pageIndex-1];
+		int end   = (pageIndex == pageBreaks.length)
+		                 ? this.salidaTextoImprimirContenido.length : pageBreaks[pageIndex];
+		for (int line=start; line<end; line++) {
+		    y += this.salidaTextoImprimirFuenteHeight;
+		    g.drawString(salidaTextoImprimirContenido[line], 0, y);
+		}	
+		
+		return PAGE_EXISTS;   
+	}
+	
+	
 	//********************************************************************************
     // 			CLASE PRIVADA BYTE ARRAY OUTPUT STREAM
     //********************************************************************************
+	
 	
 	private class panelTextoClase extends ByteArrayOutputStream{
 		
