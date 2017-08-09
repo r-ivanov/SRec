@@ -108,7 +108,7 @@ public class Ejecutador {
 						cabecera = cabecera.substring(0, cabecera.length()-2);
 						cabecera = cabecera + ") \n";
 						
-						terminal.setSalidaCabecera(cabecera);
+						terminal.setSalidaCabecera(cabecera);						
 						
 						//	Errores 1
 						

@@ -346,8 +346,16 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 * 		Valor de la cabacera
 	 */
 	public void setSalidaCabecera(String s) {
+		
+		//	Establecemos cabecera
+		
 		this.panelesPanelErrorTexto.setCabecera(s);
 		this.panelesPanelNormalTexto.setCabecera(s);
+		
+		//	Comprobamos si hay que vaciar antes de llamada al método
+		
+		if(this.controlesBotonesEstadoLimpiarPantalla)
+			this.setSalidasVacias();
 	}	
 	
 	/**
@@ -373,8 +381,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	public void setSalidasFin() {
 		this.panelesPanelErrorTexto.setEscribirFin();
 		this.panelesPanelNormalTexto.setEscribirFin();
-	}
-	
+	}	
 	
 	//********************************************************************************
     // 			MÉTODOS PRIVADOS
@@ -1175,19 +1182,17 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 				this.salidaTextoCabeceraTamano,
 				this.salidaTextoFuenteGeneral
 		);
-	}
+	}	
 	
 	/**
 	 * Vacía ambas salidas, normal y error
 	 */
 	private void setSalidasVacias() {
-		SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-				panelesPanelNormalTexto.setSalidaVacia();
-				panelesPanelErrorTexto.setSalidaVacia();
-				panelesSeparadorRefrescar();
-            }
-		});
+		if(this.controlesBotonesEstadoLimpiarPantalla) {            
+			panelesPanelNormalTexto.setSalidaVacia();
+			panelesPanelErrorTexto.setSalidaVacia();
+			panelesSeparadorRefrescar();
+		}   
 	}
 	
 	/**
@@ -1734,9 +1739,13 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
                 public void run() {
 					try {	
 						
+						bloqueo.lock();
+						
 						doc.remove(0, doc.getLength());
 						
 						panelTexto.setDocument(doc);
+						
+						bloqueo.unlock();
 						
 						setScrollAbajo();
 						
