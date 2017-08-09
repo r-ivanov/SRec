@@ -355,7 +355,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		//	Comprobamos si hay que vaciar antes de llamada al método
 		
 		if(this.controlesBotonesEstadoLimpiarPantalla)
-			this.setSalidasVacias();
+			this.setSalidasVacias(true);
 	}	
 	
 	/**
@@ -836,7 +836,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 * Método que se ejecuta cuando pulsan el botón de limpiar pantalla
 	 */
 	private void controlesAccionLimpiar() {
-		this.setSalidasVacias();
+		this.setSalidasVacias(false);
 	}
 
 	/**
@@ -1186,9 +1186,13 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	
 	/**
 	 * Vacía ambas salidas, normal y error
+	 * 
+	 * @param comprobar
+	 * 		Indica si hay que comprobar la variable
+	 * 		controlesBotonesEstadoLimpiarPantalla
 	 */
-	private void setSalidasVacias() {
-		if(this.controlesBotonesEstadoLimpiarPantalla) {            
+	private void setSalidasVacias(boolean comprobar) {
+		if(!comprobar || this.controlesBotonesEstadoLimpiarPantalla) {            
 			panelesPanelNormalTexto.setSalidaVacia();
 			panelesPanelErrorTexto.setSalidaVacia();
 			panelesSeparadorRefrescar();
@@ -1593,7 +1597,10 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		 * 		Valor de la cabecera
 		 */
 		private void setCabecera(String cabecera) {
-			this.cabecera = cabecera;
+			if(CuadroTerminal.this.controlesBotonesEstadoRegistroLlamadas)
+				this.cabecera = cabecera;
+			else
+				this.cabecera = "\n";
 		}		
 		
 		/**
