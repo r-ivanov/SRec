@@ -204,6 +204,10 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private final String salidaTextoGuardarTitulo =
 			Texto.get("TER_GUARDAR_TITULO", Conf.idioma);
 	
+	//	Buffer
+	
+	private final int salidaBuffer = 100;
+	
 	//********************************************************************************
     // 			CONSTRUCTOR
     //********************************************************************************	
@@ -381,6 +385,8 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	public void setSalidasFin() {
 		this.panelesPanelErrorTexto.setEscribirFin();
 		this.panelesPanelNormalTexto.setEscribirFin();
+		this.panelesPanelErrorTexto.setBufferIlimitado(this.controlesBotonesEstadoBuffer);
+		this.panelesPanelNormalTexto.setBufferIlimitado(this.controlesBotonesEstadoBuffer);
 	}	
 	
 	//********************************************************************************
@@ -1002,7 +1008,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		this.controlesBotonesEstadoLimpiarPantalla = 
 				!this.controlesBotonesEstadoLimpiarPantalla;		
 				
-		controlesBotonesCambiarLimpiarPantalla();
+		this.controlesBotonesCambiarLimpiarPantalla();
 	}
 
 	/**
@@ -1013,7 +1019,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		this.controlesBotonesEstadoRegistroLlamadas =
 				!this.controlesBotonesEstadoRegistroLlamadas;
 		
-		controlesBotonesCambiarRegistroLlamadas();
+		this.controlesBotonesCambiarRegistroLlamadas();
 	}
 
 	/**
@@ -1024,7 +1030,11 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		this.controlesBotonesEstadoBuffer =
 				!this.controlesBotonesEstadoBuffer;
 		
-		controlesBotonesCambiarBuffer();
+		this.controlesBotonesCambiarBuffer();
+		
+		this.panelesPanelErrorTexto.setBufferIlimitado(this.controlesBotonesEstadoBuffer);
+		
+		this.panelesPanelNormalTexto.setBufferIlimitado(this.controlesBotonesEstadoBuffer);
 	}
 
 	/**
@@ -1069,7 +1079,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		
 		//	Inicializaciones	
 		
-		this.panelesPanelNormalTexto = new panelTextoClase(10000000, true); //TODO
+		this.panelesPanelNormalTexto = new panelTextoClase(this.salidaBuffer, true);
 		
 		this.panelesPanelNormalScroll = new JScrollPane(this.panelesPanelNormalTexto.getPanelTexto());
 				
@@ -1092,7 +1102,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		
 		//	Inicializaciones		
 		
-		this.panelesPanelErrorTexto = new panelTextoClase(10000000, false);//TODO
+		this.panelesPanelErrorTexto = new panelTextoClase(this.salidaBuffer, false);
 		
 		this.panelesPanelErrorScroll = new JScrollPane(this.panelesPanelErrorTexto.getPanelTexto());
 				
@@ -1475,7 +1485,8 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		private JTextPane panelTexto;
 		private StringBuilder sb;
 		private StyledDocument doc;
-		private int limiteBuffer;
+		private int bufferLimite;
+		private boolean bufferIlimitadoActivado;
 		private SimpleAttributeSet estiloNormal;
 		private SimpleAttributeSet estiloCabecera;
 		private String cabecera;
@@ -1493,7 +1504,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		/**
 		 * Límite del buffer a aplicar
 		 * 
-		 * @param limiteBuffer
+		 * @param bufferLimite
 		 * 		Límite del buffer en caracteres
 		 * 
 		 * @param esSalidaNormal
@@ -1501,14 +1512,15 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		 * 		normal o la de error
 		 * 
 		 */
-		public panelTextoClase(int limiteBuffer, boolean esSalidaNormal) {
+		public panelTextoClase(int bufferLimite, boolean esSalidaNormal) {
 			   
 			//	Inicializaciones
 				   
 			this.panelTexto = new JTextPane();
 			this.sb = new StringBuilder();
 			this.doc = panelTexto.getStyledDocument();
-			this.limiteBuffer = limiteBuffer;
+			this.bufferLimite = bufferLimite;
+			this.bufferIlimitadoActivado = false;
 			this.estiloNormal = new SimpleAttributeSet();
 			this.estiloCabecera = new SimpleAttributeSet();
 			this.cabecera = "";	
@@ -1516,7 +1528,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			this.abrirModificar = true;
 			this.abrir = false;
 			this.hanEscrito = false;
-			this.esSalidaNormal = esSalidaNormal;
+			this.esSalidaNormal = esSalidaNormal;			
 		}
 		
 		
@@ -1618,10 +1630,6 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
                 public void run() {
 					try {
 						bloqueo.lock();
-						
-						if(doc.getLength() + text.length() > limiteBuffer) {
-						    doc.remove(0, text.length());
-						}
 						
 						if(cabeceraP && !cabecera.equals("")) {
 							doc.insertString(doc.getLength(), cabecera, estiloCabecera);
@@ -1763,10 +1771,57 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			});
 		}
 		
+		//***************************************
+	    // 		BUFFER
+	    //***************************************
+		
+		/**
+		 * Establece si el buffer ilimitado estará activado o no
+		 * 
+		 * @param bufferIlimitadoActivado
+		 * 	Buffer ilimitado activado o no
+		 */
+		private void setBufferIlimitado(boolean bufferIlimitadoActivado) {
+			this.bufferIlimitadoActivado = bufferIlimitadoActivado;
+			if(!this.bufferIlimitadoActivado)
+				this.setBufferRecalcular();
+		}
+		
+		/**
+		 * Recalcula el buffer, es decir, vacía lo necesario del
+		 * documento si lo ponen como limitado y excede el tamaño
+		 */
+		private void setBufferRecalcular() {
+			SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+					try {
+						bloqueo.lock();
+						
+						int longitud = doc.getLength();
+						
+						if(!bufferIlimitadoActivado && longitud > bufferLimite && longitud>0) {	
+							int fin  = doc.getLength()-bufferLimite;
+							doc.remove(0, fin);
+						}							
+						
+						panelTexto.setDocument(doc);						
+						
+						bloqueo.unlock();
+						
+						//setScrollAbajo();
+						
+					}catch(Exception e) {
+						
+					}
+                }
+			});
+		}
+		
 		
 		//***************************************
 	    // 		GET TEXTO SALIDA
 	    //***************************************
+		
 		
 		/**
 		 * Obtiene el texto de la salida
@@ -1786,7 +1841,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		
 		
 		//***************************************
-	    // 		GETTERS Y SETTERS VARIOS
+	    // 		GET PANEL TEXTO
 	    //***************************************
 		
 		
