@@ -206,7 +206,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	
 	//	Buffer
 	
-	private final int salidaBuffer = 100;
+	private final int salidaBuffer = 2000;
 	
 	//********************************************************************************
     // 			CONSTRUCTOR
@@ -622,7 +622,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 * @param nombre
 	 * 		Determina el texto, imagen y action command nuevos
 	 */
-	private void controlesDesplegableGetMenuItemCambiado(JMenuItem item, controlesNombre nombre) {
+	private void controlesDesplegableGetMenuItemCambiado(final JMenuItem item, final controlesNombre nombre) {
 		SwingUtilities.invokeLater(new Runnable() {	
 	        @Override
 	        public void run() {	
@@ -753,7 +753,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 * @param nombre
 	 * 		Determina el tooltip, imagen y action command nuevos
 	 */
-	private void controlesBotonesGetBotonCambiado(JButton boton, controlesNombre nombre) {
+	private void controlesBotonesGetBotonCambiado(final JButton boton, final controlesNombre nombre) {
 		SwingUtilities.invokeLater(new Runnable() {	
 	        @Override
 	        public void run() {	
@@ -1626,7 +1626,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		 * @param cabeceraP
 		 * 		Indica si hay que escribir la cabecera o no
 		 */
-		private void escribir(String text, boolean cabeceraP) {
+		private void escribir(final String text, final boolean cabeceraP) {
 			SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
 					try {

@@ -242,7 +242,12 @@ public class Ejecutador {
 	 * 		Terminal
 	 * 
 	 */
-	private static void setSalidasFin(ByteArrayOutputStream o1, ByteArrayOutputStream o2, PrintStream p1, PrintStream p2, CuadroTerminal terminal) {
+	private static void setSalidasFin(
+			final ByteArrayOutputStream o1,
+			final ByteArrayOutputStream o2,
+			final PrintStream p1,
+			final PrintStream p2,
+			final CuadroTerminal terminal) {
 		SwingUtilities.invokeLater(new Runnable() {	
 	        @Override
 	        public void run() {	
