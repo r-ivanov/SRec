@@ -387,6 +387,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		this.panelesPanelNormalTexto.setEscribirFin();
 		this.panelesPanelErrorTexto.setBufferIlimitado(this.controlesBotonesEstadoBuffer);
 		this.panelesPanelNormalTexto.setBufferIlimitado(this.controlesBotonesEstadoBuffer);
+		this.panelesSeparadorRefrescar();
 	}	
 	
 	//********************************************************************************
@@ -1792,29 +1793,18 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		 * documento si lo ponen como limitado y excede el tamaño
 		 */
 		private void setBufferRecalcular() {
-			SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-					try {
-						bloqueo.lock();
 						
-						int longitud = doc.getLength();
-						
-						if(!bufferIlimitadoActivado && longitud > bufferLimite && longitud>0) {	
-							int fin  = doc.getLength()-bufferLimite;
-							doc.remove(0, fin);
-						}							
-						
-						panelTexto.setDocument(doc);						
-						
-						bloqueo.unlock();
-						
-						//setScrollAbajo();
-						
-					}catch(Exception e) {
-						
-					}
-                }
-			});
+			int longitud = doc.getLength();
+			
+			if(!bufferIlimitadoActivado && longitud > bufferLimite && longitud>0) {	
+				int fin  = doc.getLength()-bufferLimite;
+				try {
+					doc.remove(0, fin);
+				} catch (BadLocationException e) {
+				}
+				panelTexto.setDocument(doc);				
+			}					
+
 		}
 		
 		
