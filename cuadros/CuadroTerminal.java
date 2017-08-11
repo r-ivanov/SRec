@@ -58,6 +58,7 @@ import javax.swing.text.StyledDocument;
 
 import conf.Conf;
 import utilidades.Texto;
+import ventanas.GestorVentanaSRec;
 import ventanas.Ventana;
 
 public class CuadroTerminal implements WindowListener, ActionListener, Printable {
@@ -605,7 +606,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private JMenuItem controlesDesplegableGetMenuItem(controlesNombre nombre) {
 		JMenuItem item = new JMenuItem(
 				this.controlesTraducciones.get(nombre),
-				new ImageIcon(this.controlesImagenesUrl.get(nombre))
+				new ImageIcon(GestorVentanaSRec.class.getClassLoader().getResource(this.controlesImagenesUrl.get(nombre)))
 		);
 		
 		item.setActionCommand(nombre.toString());
@@ -628,7 +629,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	        public void run() {	
 		
 				item.setIcon(
-					new ImageIcon(controlesImagenesUrl.get(nombre))
+					new ImageIcon(GestorVentanaSRec.class.getClassLoader().getResource(controlesImagenesUrl.get(nombre)))
 				);
 				item.setText(controlesTraducciones.get(nombre));
 				item.setActionCommand(nombre.toString());
@@ -736,7 +737,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 */
 	private JButton controlesBotonesGetBoton(controlesNombre nombre) {
 		JButton item = new JButton(
-				new ImageIcon(this.controlesImagenesUrl.get(nombre))
+				new ImageIcon(GestorVentanaSRec.class.getClassLoader().getResource(this.controlesImagenesUrl.get(nombre)))
 		);
 		item.setToolTipText(this.controlesTraducciones.get(nombre));
 		item.setActionCommand(nombre.toString());
@@ -759,7 +760,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	        public void run() {	
 		
 				boton.setIcon(
-					new ImageIcon(controlesImagenesUrl.get(nombre))
+					new ImageIcon(GestorVentanaSRec.class.getClassLoader().getResource(controlesImagenesUrl.get(nombre)))
 				);
 				boton.setToolTipText(controlesTraducciones.get(nombre));
 				boton.setActionCommand(nombre.toString());
