@@ -1,8 +1,6 @@
 package cuadros;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -162,6 +160,10 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private final Color salidaTextoNormalColor = Conf.terminalSalidaTextoNormalColor;
 	private final int salidaTextoNormalTamano = Conf.terminalSalidaTextoNormalTamano;
 	private final boolean salidaTextoNormalNegrita = Conf.terminalSalidaTextoNormalNegrita;
+	
+	private final Color salidaTextoNormalResultadoMetodoColor = Conf.terminalSalidaTextoNormalResultadoMetodoColor;
+	private final int salidaTextoNormalResultadoMetodoTamano = Conf.terminalSalidaTextoNormalResultadoMetodoTamano;
+	private final boolean salidaTextoNormalResultadoMetodoNegrita = Conf.terminalSalidaTextoNormalResultadoMetodoNegrita;
 
 	private final Color salidaTextoErrorColor = Conf.terminalSalidaTextoErrorColor;
 	private final int salidaTextoErrorTamano = Conf.terminalSalidaTextoErrorTamano;
@@ -178,8 +180,6 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			"			"+Texto.get("TER_IMPRIMIR_SALIDA_NORMAL", Conf.idioma)			+"\n"+
 			"**************************************************************************"+"\n\n\n";
 					
-					
-					;
 	private final String salidaTextoCabeceraExportarError = 
 	 "\n\n"+"**************************************************************************"+"\n"+
 			"			"+Texto.get("TER_IMPRIMIR_SALIDA_ERROR", Conf.idioma)			+"\n"+
@@ -246,7 +246,8 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		
 		this.setSalidaColorCabecera();
 		this.setSalidaColorNormal();
-		this.setSalidaColorError();		
+		this.setSalidaColorError();	
+		this.setSalidaColorResultadoMetodo();
 	}
 	
 	//********************************************************************************
@@ -361,7 +362,17 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		
 		if(this.controlesBotonesEstadoLimpiarPantalla)
 			this.setSalidasVacias(true);
-	}	
+	}
+	
+	/**
+	 * Establece el resultado del método
+	 * 
+	 * @param s
+	 * 		Valor de resultado del método
+	 */
+	public void setSalidaResultadoMetodo(String s) {
+		this.panelesPanelNormalTexto.setSalidaResultadoMetodo(s);
+	}
 	
 	/**
 	 * Obtiene, tras la escritura en ambas salidas,
@@ -1177,6 +1188,17 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	}
 	
 	/**
+	 * Establece el color del resultado del método
+	 */
+	private void setSalidaColorResultadoMetodo() {
+		this.panelesPanelNormalTexto.setEstiloResultadoMetodo(
+				this.salidaTextoNormalResultadoMetodoColor, 
+				this.salidaTextoNormalResultadoMetodoNegrita, 
+				this.salidaTextoNormalResultadoMetodoTamano, 
+				this.salidaTextoFuenteGeneral);
+	}
+	
+	/**
 	 * Establece el color de la cabecera para ambas salidas
 	 */
 	private void setSalidaColorCabecera() {
@@ -1487,9 +1509,8 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		private StyledDocument doc;
 		private int bufferLimite;
 		private boolean bufferIlimitadoActivado;
-		private SimpleAttributeSet estiloNormal;
-		private SimpleAttributeSet estiloCabecera;
-		private String cabecera;
+		private SimpleAttributeSet estiloNormal, estiloCabecera, estiloResultadoMetodo;
+		private String cabecera, resultadoMetodo;
 		private JScrollPane panelScroll;
 		private final ReentrantLock bloqueo;
 		private boolean abrirModificar, abrir, hanEscrito;
@@ -1523,7 +1544,9 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			this.bufferIlimitadoActivado = false;
 			this.estiloNormal = new SimpleAttributeSet();
 			this.estiloCabecera = new SimpleAttributeSet();
+			this.estiloResultadoMetodo = new SimpleAttributeSet();
 			this.cabecera = "";	
+			this.resultadoMetodo = "";
             this.bloqueo = new ReentrantLock(true);
 			this.abrirModificar = true;
 			this.abrir = false;
@@ -1596,6 +1619,32 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			this.estiloCabecera = keyWord;
 		}
 		
+		/**
+		 * Establece el estilo del resultado del método del texto que se mostrará
+		 * 
+		 * @param texto
+		 * 		Color.CONSTANTE
+		 * 
+		 * @param negrita
+		 * 		Texto en negrita o no
+		 * 
+		 * @param tamanio
+		 * 		Tamaño de la letra
+		 * 
+		 * @param fuente
+		 * 		Nombre de la fuente
+		 * 
+		 */
+		private void setEstiloResultadoMetodo(Color texto, boolean negrita, int tamanio, String fuente) {			
+			SimpleAttributeSet keyWord = new SimpleAttributeSet();
+			
+			StyleConstants.setForeground(keyWord, texto);
+			StyleConstants.setBold(keyWord, negrita);
+			StyleConstants.setFontFamily(keyWord, fuente);
+			StyleConstants.setFontSize(keyWord, tamanio);	
+			
+			this.estiloResultadoMetodo = keyWord;
+		}		
 		
 		//***************************************
 	    // 		ESCRIBIR
@@ -1613,7 +1662,17 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 				this.cabecera = cabecera;
 			else
 				this.cabecera = "\n";
-		}		
+		}	
+		
+		/**
+		 * Establece el resultado del método
+		 * @param s
+		 * 		Valor de resultado del método
+		 */
+		private void setSalidaResultadoMetodo(String s) {
+			if(this.esSalidaNormal)
+				this.resultadoMetodo = Texto.get("TER_RESULTADO_METODO", Conf.idioma) + s + "\n";
+		}
 		
 		/**
 		 * Escribe el texto pasado como parámetro
@@ -1624,19 +1683,31 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		 * 
 		 * @param cabeceraP
 		 * 		Indica si hay que escribir la cabecera o no
+		 * 
+		 * @param metodoResultado
+		 * 		Indica si hay que escribir el resultado del método o no
 		 */
-		private void escribir(final String text, final boolean cabeceraP) {
+		private void escribir(final String text, final boolean cabeceraP, final boolean metodoResultado) {
 			SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
 					try {
 						bloqueo.lock();
 						
+						//	Cabecera
+						
 						if(cabeceraP && !cabecera.equals("")) {
 							doc.insertString(doc.getLength(), cabecera, estiloCabecera);
 							cabecera = "";
 						}
-							
-						doc.insertString(doc.getLength(), text, estiloNormal);
+						
+						//	Escribir con o sin resultado de método
+						
+						if(!metodoResultado) {
+							doc.insertString(doc.getLength(), text, estiloNormal);
+						}else if(metodoResultado && !resultadoMetodo.equals("")) {
+							doc.insertString(doc.getLength(), resultadoMetodo, estiloResultadoMetodo);	
+							resultadoMetodo = "";
+						}
 						
 						panelTexto.setDocument(doc);						
 						
@@ -1679,8 +1750,9 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		 * a un método termina de escribir en los paneles.
 		 * Hacer tras llamada getTerminalAbrir, no antes.
 		 */
-		private void setEscribirFin() {
+		private void setEscribirFin() {			
 			if(this.esSalidaNormal) {
+				this.escribir(this.resultadoMetodo, false, true);
 				this.abrir = false;
 				this.abrirModificar = false;
 			}else {
@@ -1859,7 +1931,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			this.setEscribirWrite();
 			
 			String text = sb.toString() + "\n";
-			escribir(text, false);	
+			escribir(text, false, false);	
 			
 			sb.setLength(0);
 			return;
@@ -1876,7 +1948,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			this.setEscribirWrite();
 			
 			String text = new String(b);
-			escribir(text, true);			
+			escribir(text, true, false);			
 			 
 			sb.setLength(0);
 			return;
@@ -1888,7 +1960,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			this.setEscribirWrite();
 			
 			String text = new String(b, off, len);
-			escribir(text, true);
+			escribir(text, true, false);
 			 
 			sb.setLength(0);
 			return;

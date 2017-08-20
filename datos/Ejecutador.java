@@ -154,18 +154,21 @@ public class Ejecutador {
 								
 								//	Ejecución métodos
 								
+								Object returnInvoke;
+								
 								if (instanciacion) {
 									// Esta es la correcta
-									mm[x].invoke(o, parametros);
+									returnInvoke = mm[x].invoke(o, parametros);
 								} else {
-									mm[x].invoke(new Object(), parametros);
+									returnInvoke = mm[x].invoke(new Object(), parametros);
 								}
 								
-								//	Reestablecemos salidas a sistema
+								//	Reestablecemos salidas a sistema y cerramos terminal
 								
 								System.setOut(psOut);
 								System.setErr(psErr);
 								
+								terminal.setSalidaResultadoMetodo(returnInvoke.toString());
 								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								
 								return null;
