@@ -244,6 +244,21 @@ public class Conf {
 	// Fuente para títulos de paneles (nombres de métodos, de ficheros de
 	// código, ...)
 	public static Font fuenteTitulo = new Font("Arial", Font.BOLD, 12);
+	
+	//	Fuentes para la terminal
+	public static final String terminalSalidaTextoFuenteGeneral = "Dialog";
+	
+	public static final Color terminalSalidaTextoNormalColor = Color.BLACK;
+	public static final int terminalSalidaTextoNormalTamano = 12;
+	public static final boolean terminalSalidaTextoNormalNegrita = false;
+
+	public static final Color terminalSalidaTextoErrorColor = Color.RED;
+	public static final int terminalSalidaTextoErrorTamano = 12;
+	public static final boolean terminalSalidaTextoErrorNegrita = false;
+
+	public static final Color terminalSalidaTextoCabeceraColor = Color.BLUE;
+	public static final int terminalSalidaTextoCabeceraTamano = 13;
+	public static final boolean terminalSalidaTextoCabeceraNegrita = true;
 
 	// Vistas código y traza
 	public static Font fuenteCodigo = null;

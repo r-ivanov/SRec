@@ -157,19 +157,19 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	
 	//	Estilo terminal
 	
-	private final String salidaTextoFuenteGeneral = "Monospaced";
+	private final String salidaTextoFuenteGeneral = Conf.terminalSalidaTextoFuenteGeneral;
 	
-	private final Color salidaTextoNormalColor = Color.BLACK;
-	private final int salidaTextoNormalTamano = 14;
-	private final boolean salidaTextoNormalNegrita = false;
+	private final Color salidaTextoNormalColor = Conf.terminalSalidaTextoNormalColor;
+	private final int salidaTextoNormalTamano = Conf.terminalSalidaTextoNormalTamano;
+	private final boolean salidaTextoNormalNegrita = Conf.terminalSalidaTextoNormalNegrita;
 
-	private final Color salidaTextoErrorColor = Color.RED;
-	private final int salidaTextoErrorTamano = 14;
-	private final boolean salidaTextoErrorNegrita = false;
+	private final Color salidaTextoErrorColor = Conf.terminalSalidaTextoErrorColor;
+	private final int salidaTextoErrorTamano = Conf.terminalSalidaTextoErrorTamano;
+	private final boolean salidaTextoErrorNegrita = Conf.terminalSalidaTextoErrorNegrita;
 
-	private final Color salidaTextoCabeceraColor = Color.BLUE;
-	private final int salidaTextoCabeceraTamano = 16;
-	private final boolean salidaTextoCabeceraNegrita = true;
+	private final Color salidaTextoCabeceraColor = Conf.terminalSalidaTextoCabeceraColor;
+	private final int salidaTextoCabeceraTamano = Conf.terminalSalidaTextoCabeceraTamano;
+	private final boolean salidaTextoCabeceraNegrita = Conf.terminalSalidaTextoCabeceraNegrita;
 	
 	//	Exportar cabecera (copiar, guardar e imprimir)
 	
