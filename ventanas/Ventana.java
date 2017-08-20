@@ -3090,6 +3090,13 @@ public class Ventana extends JFrame implements ActionListener {
 	public void setPreprocesador(Preprocesador p) {
 		this.p = p;
 	}
+	
+	/**
+	 * Obtiene el preprocesador
+	 */
+	public Preprocesador getPreprocesador() {
+		return this.p;
+	}
 
 	/**
 	 * Gestiona las acciones necesarias cuando el usuario intenta cerrar la

@@ -957,5 +957,18 @@ public class Preprocesador extends Thread {
 			}
 		}
 	}
+	
+	/**
+	 * Obtiene el nombre real de la clase procesada, 
+	 * no la generada por SRec
+	 * 
+	 * @return
+	 * 		String donde:
+	 * 			[0] - Archivo clase ejecutada
+	 * 			[1] - Nombre clase ejecutada
+	 */
+	public String[] getClaseProcesada() {
+		return claseProcesada;
+	}
 
 }

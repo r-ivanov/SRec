@@ -96,8 +96,10 @@ public class Ejecutador {
 
 						//	Escribimos cabecera = clase y método
 						
+						String claseReal = Ventana.thisventana.getPreprocesador().getClaseProcesada()[1];
+						
 						 String cabecera = 
-							Texto.get("TER_CLASE", Conf.idioma)+" "+cm.getName()+"\n"+
+							Texto.get("TER_CLASE", Conf.idioma)+" "+claseReal+", "+
 							Texto.get("TER_METODO", Conf.idioma)+" "+mm[x].getName()+"("
 						;
 						 
