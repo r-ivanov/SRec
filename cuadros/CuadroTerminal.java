@@ -721,7 +721,6 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		//	Añadimos action listener y dimensión a los botones
 		
 		for(JButton item : this.controlesBotonesJButtons) {
-			item.setPreferredSize(new Dimension(27, 27));
 			item.addActionListener(this);
 		}
 	}
@@ -778,9 +777,8 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private JToolBar controlesBotonesGetJToolBar() {
 		JToolBar jt = new JToolBar();
 		jt.setBorderPainted(true);
-		jt.setFloatable(false);
+		jt.setFloatable(false);		
 		jt.setBorder(new MetalBorders.PaletteBorder());
-		jt.setLayout(new FlowLayout(FlowLayout.CENTER));
 		return jt;
 	}	
 	

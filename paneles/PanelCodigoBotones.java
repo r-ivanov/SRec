@@ -111,7 +111,6 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 			jt1.setBorderPainted(true);
 			jt1.setFloatable(false);
 			jt1.setBorder(new MetalBorders.PaletteBorder());
-			jt1.setLayout(new FlowLayout(FlowLayout.CENTER));
 			this.jt[i] = jt1;			
 		}
 	}
@@ -170,7 +169,6 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 		this.jb[7].setName(botonesNombre.EDITOR_SELECCIONAR_TODO.toString());
 		
 		for(int i = 0; i<this.numJButton;i++) {
-			this.jb[i].setPreferredSize(new Dimension(27, 27));
 			this.jb[i].addActionListener(this);
 		}
 		
