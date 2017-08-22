@@ -152,7 +152,7 @@ public class Ejecutador {
 								
 								RegistroActivacion.reinicializar();								
 								
-								//	Ejecución métodos
+								//	Ejecución métodos								
 								
 								Object returnInvoke;
 								
@@ -161,14 +161,14 @@ public class Ejecutador {
 									returnInvoke = mm[x].invoke(o, parametros);
 								} else {
 									returnInvoke = mm[x].invoke(new Object(), parametros);
-								}
+								}								
 								
 								//	Reestablecemos salidas a sistema y cerramos terminal
 								
 								System.setOut(psOut);
 								System.setErr(psErr);
 								
-								terminal.setSalidaResultadoMetodo(returnInvoke.toString());
+								terminal.setSalidaResultadoMetodo(returnInvoke.toString()+"\n");
 								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								
 								return null;

@@ -1662,6 +1662,12 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 				this.cabecera = cabecera;
 			else
 				this.cabecera = "\n";
+			
+			//	TODO Eliminar las dos siguientes líneas si quieren que la terminal se abra automáticamente cuando
+			//	recibe una salida normal y real por primera vez
+			
+			if(this.esSalidaNormal)
+				this.setEscribirWrite();
 		}	
 		
 		/**
@@ -1704,7 +1710,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 						
 						if(!metodoResultado) {
 							doc.insertString(doc.getLength(), text, estiloNormal);
-						}else if(metodoResultado && !resultadoMetodo.equals("")) {
+						}else if(metodoResultado && !resultadoMetodo.equals("")) {							
 							doc.insertString(doc.getLength(), resultadoMetodo, estiloResultadoMetodo);	
 							resultadoMetodo = "";
 						}
@@ -1751,10 +1757,10 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		 * Hacer tras llamada getTerminalAbrir, no antes.
 		 */
 		private void setEscribirFin() {			
-			if(this.esSalidaNormal) {
-				this.escribir(this.resultadoMetodo, false, true);
+			if(this.esSalidaNormal) {					
 				this.abrir = false;
 				this.abrirModificar = false;
+				this.escribir(this.resultadoMetodo, true, true);
 			}else {
 				this.abrir = false;
 				this.abrirModificar = true;
