@@ -168,7 +168,7 @@ public class Ejecutador {
 								System.setOut(psOut);
 								System.setErr(psErr);
 								
-								terminal.setSalidaResultadoMetodo(returnInvoke.toString()+"\n");
+								terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+returnInvoke.toString()+"\n");
 								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								
 								return null;

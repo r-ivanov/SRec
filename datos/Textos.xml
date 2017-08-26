@@ -1416,8 +1416,8 @@
 		<T valor="SRec_terminal_output" idioma="en" id="TER_IMPRIMIR_NOMBRE_ARCHIVO"/>
 		<T valor="Guardar salida terminal en..." idioma="es" id="TER_GUARDAR_TITULO"/>
 		<T valor="Save terminal output in..." idioma="en" id="TER_GUARDAR_TITULO"/>
-		<T valor="Resultado del m[eacute]todo: " idioma="es" id="TER_RESULTADO_METODO"/>
-		<T valor="Method result: " idioma="en" id="TER_RESULTADO_METODO"/>
+		<T valor="Resultado: " idioma="es" id="TER_RESULTADO_METODO"/>
+		<T valor="Result: " idioma="en" id="TER_RESULTADO_METODO"/>
 		
 		<!-- Panel de compilador -->
 		<T valor="Clase compilada sin errores." idioma="es" id="COMPILAR_NOERRORES"/>
