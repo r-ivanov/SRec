@@ -589,7 +589,8 @@ public class ServiciosString {
 				}
 				if (!ServiciosString.esNumero(valor.charAt(1))
 						&& !ServiciosString.esLetra(valor.charAt(1))
-						&& !(valor.charAt(1) == '_')) {
+						&& !(valor.charAt(1) == '_')
+						&& !(valor.charAt(1) == ' ')) {
 					return false;
 				}
 			}

@@ -414,7 +414,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 		for (int i = 0; i < this.metodo.getNumeroParametros(); i++) {
 			String texto = (String) (this.cuadrosvalores[i]
 					.getSelectedItem());
-			this.metodo.setParamValor(i, texto.replace(" ", ""));
+			this.metodo.setParamValor(i, texto.replace("\\u2002", ""));
 		}
 		
 		return true;		

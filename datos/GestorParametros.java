@@ -292,7 +292,9 @@ public class GestorParametros {
 			if (s.charAt(i) != ' ' && s.charAt(i) != '{' && s.charAt(i) != '}'
 					&& !ServiciosString.esLetra(s.charAt(i))
 					&& s.charAt(i) != ','
-					&& !ServiciosString.esNumero(s.charAt(i))) {
+					&& !ServiciosString.esNumero(s.charAt(i))
+					&& s.charAt(i) != '\\'	
+				){
 				return false;
 			}
 		}
@@ -495,15 +497,17 @@ public class GestorParametros {
 		i++;
 
 		while (i < s.length() - 1 && s.charAt(i) != '}') {
-			while (s.charAt(i) == ' ') {
+			while (s.charAt(i) == ',') {
 				i++;
 			}
 			if (!ServiciosString.esNumero(s.charAt(i))
-					&& !ServiciosString.esLetra(s.charAt(i))) {
+					&& !ServiciosString.esLetra(s.charAt(i))
+					&&	s.charAt(i)!=' ') {
 				return false;
 			}
 			while (ServiciosString.esNumero(s.charAt(i))
-					|| ServiciosString.esLetra(s.charAt(i))) {
+					|| ServiciosString.esLetra(s.charAt(i))
+					|| s.charAt(i) == ' ') {
 				i++;
 			}
 			while (s.charAt(i) == ' ') {
@@ -975,16 +979,18 @@ public class GestorParametros {
 		char arrayCaracteres[] = new char[num_objetos];
 
 		// Internamente, quitamos las comillas simples a los caracteres
+		arrayChar = arrayChar.replace(" ", "");
+		arrayChar = arrayChar.replaceAll("''", "' '");
 		arrayChar = arrayChar.replace("\'", "");
-
+		
 		if (tieneSoloCaracteres(arrayChar) && tieneLlaves(arrayChar)
 				&& tieneSecuenciaCorrectaChar(arrayChar)) {
-			arrayChar = arrayChar.replace(" ", "");
+			
 			try {
 				for (int z = 0; z < num_objetos; z++) {
 					while (arrayChar.length() >= 1
 							&& (!ServiciosString.esLetra(arrayChar.charAt(0)) && !ServiciosString
-									.esNumero(arrayChar.charAt(0)))) {
+									.esNumero(arrayChar.charAt(0)) && arrayChar.charAt(0)!=' ')) {
 						arrayChar = (arrayChar.subSequence(1,
 								arrayChar.length())).toString();
 					}
@@ -999,14 +1005,17 @@ public class GestorParametros {
 					arrayChar = (arrayChar.subSequence(1, arrayChar.length()))
 							.toString(); // Borramos carácter
 
-					if (valor.length() == 1) {
+					if (valor.length() == 1 && !valor.equals(" ")) {
 						arrayCaracteres[z] = valor.charAt(0);
-					} else {
+					}else if(valor.equals(" ")){
+						arrayCaracteres[z] = ' ';
+					}else {					
 						return null;
 					}
+				
 					while (z < (num_objetos - 1)
 							&& (!ServiciosString.esLetra(arrayChar.charAt(0)) && !ServiciosString
-									.esNumero(arrayChar.charAt(0)))) {
+									.esNumero(arrayChar.charAt(0)) && arrayChar.charAt(0)!=' ')) {
 						arrayChar = (arrayChar.subSequence(1,
 								arrayChar.length())).toString();
 					}

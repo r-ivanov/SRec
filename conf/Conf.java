@@ -246,7 +246,7 @@ public class Conf {
 	public static Font fuenteTitulo = new Font("Arial", Font.BOLD, 12);
 	
 	//	Fuentes para la terminal
-	public static final String terminalSalidaTextoFuenteGeneral = "Dialog";
+	public static final String terminalSalidaTextoFuenteGeneral = "Consolas";
 	
 	public static final Color terminalSalidaTextoNormalColor = Color.BLACK;
 	public static final int terminalSalidaTextoNormalTamano = 12;

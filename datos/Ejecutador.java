@@ -168,7 +168,11 @@ public class Ejecutador {
 								System.setOut(psOut);
 								System.setErr(psErr);
 								
-								terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+returnInvoke.toString()+"\n");
+								if(returnInvoke != null)
+									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+returnInvoke.toString()+"\n");
+								else
+									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+Texto.get("TER_RESULTADO_VOID", Conf.idioma)+"\n");
+								
 								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								
 								return null;
