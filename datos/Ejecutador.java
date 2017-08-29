@@ -108,8 +108,11 @@ public class Ejecutador {
 						}
 						
 						cabecera = cabecera.substring(0, cabecera.length()-2);
-						cabecera = cabecera + ") \n";
 						
+						if(parametros.length > 0)
+							cabecera = "\n"+cabecera + ") \n";
+						else
+							cabecera = "\n"+cabecera + "\n";
 						terminal.setSalidaCabecera(cabecera);						
 						
 						//	Errores 1
@@ -169,9 +172,9 @@ public class Ejecutador {
 								System.setErr(psErr);
 								
 								if(returnInvoke != null)
-									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+returnInvoke.toString()+"\n");
+									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+returnInvoke.toString());
 								else
-									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+Texto.get("TER_RESULTADO_VOID", Conf.idioma)+"\n");
+									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+Texto.get("TER_RESULTADO_VOID", Conf.idioma));
 								
 								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								

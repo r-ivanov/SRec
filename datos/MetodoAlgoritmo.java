@@ -354,6 +354,9 @@ public class MetodoAlgoritmo {
 				cadenaEtiqueta = cadenaEtiqueta + " ) ";
 			}
 		}
+		
+		if(this.getNumeroParametros()==0)
+			cadenaEtiqueta = cadenaEtiqueta + " ) ";
 
 		cadenaEtiqueta = cadenaEtiqueta + " [ " + this.getTipo();
 		cadenaEtiqueta = cadenaEtiqueta

@@ -1550,6 +1550,11 @@ public class Transformador {
 
 		// Añadimos a la inicialización los nombres de los distintos parámetros
 		// del método
+		if(argumentos.length==0) {
+			Element cadena = d.createElement("literal-string");
+			inicializador.appendChild(cadena);
+			cadena.setAttribute("value", "");
+		}
 		for (int i = 0; i < argumentos.length; i++) {
 			Element cadena = d.createElement("literal-string");
 			inicializador.appendChild(cadena);
@@ -1977,10 +1982,6 @@ public class Transformador {
 	}
 
 	private static boolean esMetodoApropiado(MetodoAlgoritmo m) {
-		// Comprobamos que tenga al menos un parámetro
-		if (m.getNumeroParametros() == 0) {
-			return false;
-		}
 
 		for (int i = 0; i < m.getNumeroParametros(); i++) {
 			// Comprobamos que sean de tipo primitivo

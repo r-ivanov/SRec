@@ -903,6 +903,9 @@ public class Preprocesador extends Thread {
 						metodoEjecutar = metodos[i];
 					}
 				}
+				
+				if(tipos.length == 0)
+					metodoEjecutar = metodos[i];
 
 			}
 		}

@@ -1418,8 +1418,8 @@
 		<T valor="Save terminal output in..." idioma="en" id="TER_GUARDAR_TITULO"/>
 		<T valor="Resultado: " idioma="es" id="TER_RESULTADO_METODO"/>
 		<T valor="Result: " idioma="en" id="TER_RESULTADO_METODO"/>
-		<T valor="Método sin retorno" idioma="es" id="TER_RESULTADO_VOID"/>
-		<T valor="Method without return" idioma="en" id="TER_RESULTADO_VOID"/>
+		<T valor="(Método sin retorno)" idioma="es" id="TER_RESULTADO_VOID"/>
+		<T valor="(Method without return)" idioma="en" id="TER_RESULTADO_VOID"/>
 		
 		<!-- Panel de compilador -->
 		<T valor="Clase compilada sin errores." idioma="es" id="COMPILAR_NOERRORES"/>

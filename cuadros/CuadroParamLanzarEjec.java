@@ -355,6 +355,8 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 
 			this.foco();
 
+		}else {
+			this.recogerValores(true, false);
 		}
 	}
 	
@@ -428,16 +430,18 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	 *            false si es una comprobación interna del programa, no
 	 *            solicitada por el usuario
 	 * 
-	 * @param true si los datos introducidos son válidos
+	 * @param valoresFinales true si los datos introducidos son válidos
+	 * 
+	 * @param tieneParametros Indica si el método tiene parámetros o no
 	 */
-	private synchronized boolean recogerValores(boolean valoresFinales) {
+	private synchronized boolean recogerValores(boolean valoresFinales, boolean tieneParametros) {
 		if (this.editarValores) {
 			if (!comprobarYAsignarValores()) {
 				return false;
 			}			
 		}
 		
-		if (!comprobarVisibilidadCorrecta()) {
+		if (!comprobarVisibilidadCorrecta() && tieneParametros) {
 			return false;
 		}
 
@@ -581,7 +585,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	 */
 	private void gestionEventoBotones(AWTEvent e) {
 		if (e.getSource() == this.aceptar) {
-			recogerValores(true);
+			recogerValores(true, true);
 		} else if (e.getSource() == this.verValores) {
 			if (comprobarYAsignarValores()) {
 				new CuadroValores(this.ventana, new ParametrosParser(this.metodo));
@@ -605,7 +609,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 					this.cuadrosvalores[i].insertItemAt(this.valores[i], 0);
 					this.cuadrosvalores[i].setSelectedIndex(0);
 				}
-				if (recogerValores(false)) {
+				if (recogerValores(false, true)) {
 					this.aceptar.setEnabled(true);
 				} else {
 					this.aceptar.setEnabled(false);
@@ -636,6 +640,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 	 */
 	private boolean comprobarVisibilidadCorrecta() {
 		boolean unoActivo = false;
+		boolean tieneParametros = metodo.getNumeroParametros()!=0;
 		// Tendremos n campos: n parámetros
 		if (!this.metodo.getTipo().equals("void")) {
 			for (int i = 0; i < this.numero; i++) {
@@ -643,7 +648,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 					unoActivo = true;
 				}
 			}
-			if (!unoActivo) {
+			if (!unoActivo && tieneParametros) {
 				new CuadroError(this.dialogo, Texto.get("ERROR_PARAM",
 						Conf.idioma),
 						Texto.get("ERROR_VISIBIENTR", Conf.idioma));
@@ -656,7 +661,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 					unoActivo = true;
 				}
 			}
-			if (!unoActivo) {
+			if (!unoActivo && tieneParametros) {
 				new CuadroError(this.dialogo, Texto.get("ERROR_PARAM",
 						Conf.idioma),
 						Texto.get("ERROR_VISIBIENTR", Conf.idioma));
@@ -698,7 +703,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ENTER) {
 			if ((e.getSource() != this.cargar || !this.estamosCargando)) {
-				recogerValores(true);
+				recogerValores(true, true);
 			}
 			this.estamosCargando = false;
 		} else if ((e.getSource() instanceof JButton)

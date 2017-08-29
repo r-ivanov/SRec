@@ -178,12 +178,12 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private final String salidaTextoCabeceraExportarNormal = 
 	 "\n\n"+"**************************************************************************"+"\n"+
 			"			"+Texto.get("TER_IMPRIMIR_SALIDA_NORMAL", Conf.idioma)			+"\n"+
-			"**************************************************************************"+"\n\n\n";
+			"**************************************************************************"+"\n\n";
 					
 	private final String salidaTextoCabeceraExportarError = 
 	 "\n\n"+"**************************************************************************"+"\n"+
 			"			"+Texto.get("TER_IMPRIMIR_SALIDA_ERROR", Conf.idioma)			+"\n"+
-			"**************************************************************************"+"\n\n\n";
+			"**************************************************************************"+"\n\n";
 	
 	//	Exportar nombre arhivo (copiar e imprimir)
 	
