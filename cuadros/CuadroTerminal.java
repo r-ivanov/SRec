@@ -1092,7 +1092,10 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		
 		this.panelesPanelNormalTexto = new panelTextoClase(this.salidaBuffer, true);
 		
-		this.panelesPanelNormalScroll = new JScrollPane(this.panelesPanelNormalTexto.getPanelTexto());
+		this.panelesPanelNormalScroll = new JScrollPane(
+				this.panelesPanelNormalTexto.getPanelTexto(),
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 				
 		this.panelesPanelNormal = new JPanel(new GridBagLayout());
 		
@@ -1115,7 +1118,10 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		
 		this.panelesPanelErrorTexto = new panelTextoClase(this.salidaBuffer, false);
 		
-		this.panelesPanelErrorScroll = new JScrollPane(this.panelesPanelErrorTexto.getPanelTexto());
+		this.panelesPanelErrorScroll = new JScrollPane(
+				this.panelesPanelErrorTexto.getPanelTexto(),
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 				
 		this.panelesPanelError = new JPanel(new GridBagLayout());
 		
@@ -1537,7 +1543,18 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			   
 			//	Inicializaciones
 				   
-			this.panelTexto = new JTextPane();
+			this.panelTexto = new JTextPane() {
+				
+				private static final long serialVersionUID = 1L;
+
+				//	Para scroll horizontal
+				@Override
+			    public boolean getScrollableTracksViewportWidth() {
+			        return getUI().getPreferredSize(this).width
+			                        <= getParent().getSize().width;
+			    }
+
+			};
 			this.sb = new StringBuilder();
 			this.doc = panelTexto.getStyledDocument();
 			this.bufferLimite = bufferLimite;

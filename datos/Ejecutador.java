@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import javax.swing.SwingUtilities;
 
+import utilidades.ServiciosString;
 import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
@@ -102,8 +103,8 @@ public class Ejecutador {
 						;
 						 
 						for(Object obj : parametros) {
-							cabecera = cabecera + obj.toString()+", ";
-						}
+							cabecera = cabecera + ServiciosString.representacionObjeto(obj)+", ";
+						}								 
 						
 						cabecera = cabecera.substring(0, cabecera.length()-2);
 						
