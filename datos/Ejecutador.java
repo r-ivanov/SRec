@@ -98,9 +98,7 @@ public class Ejecutador {
 						
 						String claseReal = Ventana.thisventana.getPreprocesador().getClaseProcesada()[1];
 						
-						 String cabecera = 
-							Texto.get("TER_CLASE", Conf.idioma)+" "+claseReal+", "+
-							Texto.get("TER_METODO", Conf.idioma)+" "+mm[x].getName()+"("
+						 String cabecera = claseReal.replaceAll(".java", "")+"."+mm[x].getName()+"("
 						;
 						 
 						for(Object obj : parametros) {
@@ -113,6 +111,7 @@ public class Ejecutador {
 							cabecera = "\n"+cabecera + ") \n";
 						else
 							cabecera = "\n"+cabecera + "\n";
+						
 						terminal.setSalidaCabecera(cabecera);						
 						
 						//	Errores 1
