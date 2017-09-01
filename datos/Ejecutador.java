@@ -174,7 +174,7 @@ public class Ejecutador {
 								if(returnInvoke != null)
 									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+returnInvoke.toString());
 								else
-									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+Texto.get("TER_RESULTADO_VOID", Conf.idioma));
+									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString());
 								
 								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								
