@@ -39,7 +39,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -99,8 +99,8 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	//	Traducciones e imágenes
 	
 	private enum controlesNombre {
-		TER_LIMPIAR, TER_GUARDAR, TER_COPIAR, TER_IMPRIMIR, TER_LIMPIAR_PANTALLA_ACTIVAR, TER_LIMPIAR_PANTALLA_DESACTIVAR,
-		TER_REG_LLAMADAS_ACTIVAR, TER_REG_LLAMADAS_DESACTIVAR, TER_BUFFER_ACTIVAR, TER_BUFFER_DESACTIVAR, TER_CERRAR,
+		TER_LIMPIAR, TER_GUARDAR, TER_COPIAR, TER_IMPRIMIR, TER_LIMPIAR_PANTALLA_DESACTIVADO, TER_LIMPIAR_PANTALLA_ACTIVADO,
+		TER_REG_LLAMADAS_DESACTIVADO, TER_REG_LLAMADAS_ACTIVADO, TER_BUFFER_DESACTIVADO, TER_BUFFER_ACTIVADO, TER_CERRAR,
 		TER_OPCIONES
 	}
 	
@@ -111,7 +111,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	
 	private final int controlesDesplegableNumeroMenu = 8;	
 	private JMenu controlesDesplegableMenu;
-	private JMenuItem[] controlesDesplegableJMenuItems;
+	private JCheckBoxMenuItem[] controlesDesplegableJCheckBoxMenuItems;
 	private JMenuBar controlesDesplegableMenuBar;
 	
 	//	Botones
@@ -121,8 +121,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private JToolBar[] controlesBotonesJToolbar;	
 	private JButton[] controlesBotonesJButtons;	
 	
-	//	Estado por defecto botones variables, ES LO CONTRARIO 
-	//		que los iconos
+	//	Estado por defecto botones variables
 	
 	private boolean controlesBotonesEstadoLimpiarPantalla = false;
 	private boolean controlesBotonesEstadoRegistroLlamadas = true;
@@ -473,18 +472,18 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 				Texto.get(controlesNombre.TER_COPIAR.toString(), Conf.idioma));
 		this.controlesTraducciones.put(controlesNombre.TER_IMPRIMIR,
 				Texto.get(controlesNombre.TER_IMPRIMIR.toString(), Conf.idioma));
-		this.controlesTraducciones.put(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR,
-				Texto.get(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR.toString(), Conf.idioma));
-		this.controlesTraducciones.put(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR,
-				Texto.get(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR.toString(), Conf.idioma));	
-		this.controlesTraducciones.put(controlesNombre.TER_REG_LLAMADAS_ACTIVAR,
-				Texto.get(controlesNombre.TER_REG_LLAMADAS_ACTIVAR.toString(), Conf.idioma));
-		this.controlesTraducciones.put(controlesNombre.TER_REG_LLAMADAS_DESACTIVAR,
-				Texto.get(controlesNombre.TER_REG_LLAMADAS_DESACTIVAR.toString(), Conf.idioma));
-		this.controlesTraducciones.put(controlesNombre.TER_BUFFER_ACTIVAR,
-				Texto.get(controlesNombre.TER_BUFFER_ACTIVAR.toString(), Conf.idioma));
-		this.controlesTraducciones.put(controlesNombre.TER_BUFFER_DESACTIVAR,
-				Texto.get(controlesNombre.TER_BUFFER_DESACTIVAR.toString(), Conf.idioma));
+		this.controlesTraducciones.put(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVADO,
+				Texto.get(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVADO.toString(), Conf.idioma));
+		this.controlesTraducciones.put(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVADO,
+				Texto.get(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVADO.toString(), Conf.idioma));	
+		this.controlesTraducciones.put(controlesNombre.TER_REG_LLAMADAS_DESACTIVADO,
+				Texto.get(controlesNombre.TER_REG_LLAMADAS_DESACTIVADO.toString(), Conf.idioma));
+		this.controlesTraducciones.put(controlesNombre.TER_REG_LLAMADAS_ACTIVADO,
+				Texto.get(controlesNombre.TER_REG_LLAMADAS_ACTIVADO.toString(), Conf.idioma));
+		this.controlesTraducciones.put(controlesNombre.TER_BUFFER_DESACTIVADO,
+				Texto.get(controlesNombre.TER_BUFFER_DESACTIVADO.toString(), Conf.idioma));
+		this.controlesTraducciones.put(controlesNombre.TER_BUFFER_ACTIVADO,
+				Texto.get(controlesNombre.TER_BUFFER_ACTIVADO.toString(), Conf.idioma));
 		this.controlesTraducciones.put(controlesNombre.TER_CERRAR,
 				Texto.get(controlesNombre.TER_CERRAR.toString(), Conf.idioma));
 		this.controlesTraducciones.put(controlesNombre.TER_OPCIONES,
@@ -508,18 +507,18 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 				preUrl+controlesNombre.TER_COPIAR.toString().toLowerCase()+".png");
 		this.controlesImagenesUrl.put(controlesNombre.TER_IMPRIMIR,
 				preUrl+controlesNombre.TER_IMPRIMIR.toString().toLowerCase()+".png");
-		this.controlesImagenesUrl.put(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR,
-				preUrl+controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR.toString().toLowerCase()+".png");
-		this.controlesImagenesUrl.put(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR,
-				preUrl+controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR.toString().toLowerCase()+".png");	
-		this.controlesImagenesUrl.put(controlesNombre.TER_REG_LLAMADAS_ACTIVAR,
-				preUrl+controlesNombre.TER_REG_LLAMADAS_ACTIVAR.toString().toLowerCase()+".png");
-		this.controlesImagenesUrl.put(controlesNombre.TER_REG_LLAMADAS_DESACTIVAR,
-				preUrl+controlesNombre.TER_REG_LLAMADAS_DESACTIVAR.toString().toLowerCase()+".png");
-		this.controlesImagenesUrl.put(controlesNombre.TER_BUFFER_ACTIVAR,
-				preUrl+controlesNombre.TER_BUFFER_ACTIVAR.toString().toLowerCase()+".png");
-		this.controlesImagenesUrl.put(controlesNombre.TER_BUFFER_DESACTIVAR,
-				preUrl+controlesNombre.TER_BUFFER_DESACTIVAR.toString().toLowerCase()+".png");
+		this.controlesImagenesUrl.put(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVADO,
+				preUrl+controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVADO.toString().toLowerCase()+".png");
+		this.controlesImagenesUrl.put(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVADO,
+				preUrl+controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVADO.toString().toLowerCase()+".png");	
+		this.controlesImagenesUrl.put(controlesNombre.TER_REG_LLAMADAS_DESACTIVADO,
+				preUrl+controlesNombre.TER_REG_LLAMADAS_DESACTIVADO.toString().toLowerCase()+".png");
+		this.controlesImagenesUrl.put(controlesNombre.TER_REG_LLAMADAS_ACTIVADO,
+				preUrl+controlesNombre.TER_REG_LLAMADAS_ACTIVADO.toString().toLowerCase()+".png");
+		this.controlesImagenesUrl.put(controlesNombre.TER_BUFFER_DESACTIVADO,
+				preUrl+controlesNombre.TER_BUFFER_DESACTIVADO.toString().toLowerCase()+".png");
+		this.controlesImagenesUrl.put(controlesNombre.TER_BUFFER_ACTIVADO,
+				preUrl+controlesNombre.TER_BUFFER_ACTIVADO.toString().toLowerCase()+".png");
 		this.controlesImagenesUrl.put(controlesNombre.TER_CERRAR,
 				preUrl+controlesNombre.TER_CERRAR.toString().toLowerCase()+".png");
 	}
@@ -531,73 +530,86 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		
 		//	Inicializaciones
 		
-		this.controlesDesplegableJMenuItems = new JMenuItem[this.controlesDesplegableNumeroMenu];
+		this.controlesDesplegableJCheckBoxMenuItems = new JCheckBoxMenuItem[this.controlesDesplegableNumeroMenu];
 		this.controlesDesplegableMenuBar = new JMenuBar();
 		this.controlesDesplegableMenu = new JMenu(this.controlesTraducciones.get(controlesNombre.TER_OPCIONES));
+		boolean selected;
 		
 		//	Creamos items 
 		
 		controlesNombre itemNombre = controlesNombre.TER_LIMPIAR;
 		
-		this.controlesDesplegableJMenuItems[0] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableJCheckBoxMenuItems[0] = this.controlesDesplegableGetMenuItem(itemNombre);
 		
 		itemNombre = controlesNombre.TER_COPIAR;
 		
-		this.controlesDesplegableJMenuItems[1] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableJCheckBoxMenuItems[1] = this.controlesDesplegableGetMenuItem(itemNombre);
 		
 		itemNombre = controlesNombre.TER_GUARDAR;
 		
-		this.controlesDesplegableJMenuItems[2] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableJCheckBoxMenuItems[2] = this.controlesDesplegableGetMenuItem(itemNombre);
 		
 		itemNombre = controlesNombre.TER_IMPRIMIR;
 		
-		this.controlesDesplegableJMenuItems[3] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableJCheckBoxMenuItems[3] = this.controlesDesplegableGetMenuItem(itemNombre);
 		
-		if(controlesBotonesEstadoLimpiarPantalla)
-			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR;
-		else
-			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR;
+		if(controlesBotonesEstadoLimpiarPantalla) {
+			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVADO;
+			selected = true;
+		}else {
+			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVADO;
+			selected = false;
+		}
 		
-		this.controlesDesplegableJMenuItems[4] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableJCheckBoxMenuItems[4] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJCheckBoxMenuItems[4], itemNombre, selected);
 		
-		if(controlesBotonesEstadoRegistroLlamadas)
-			itemNombre = controlesNombre.TER_REG_LLAMADAS_DESACTIVAR;
-		else
-			itemNombre = controlesNombre.TER_REG_LLAMADAS_ACTIVAR;
+		if(controlesBotonesEstadoRegistroLlamadas) {
+			itemNombre = controlesNombre.TER_REG_LLAMADAS_ACTIVADO;
+			selected = true;
+		}else {
+			itemNombre = controlesNombre.TER_REG_LLAMADAS_DESACTIVADO;
+			selected = false;
+		}
 		
-		this.controlesDesplegableJMenuItems[5] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableJCheckBoxMenuItems[5] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJCheckBoxMenuItems[5], itemNombre, selected);
 		
-		if(controlesBotonesEstadoBuffer)
-			itemNombre = controlesNombre.TER_BUFFER_DESACTIVAR;
-		else
-			itemNombre = controlesNombre.TER_BUFFER_ACTIVAR;
+		if(controlesBotonesEstadoBuffer) {
+			itemNombre = controlesNombre.TER_BUFFER_ACTIVADO;
+			selected = true;
+		}else {
+			itemNombre = controlesNombre.TER_BUFFER_DESACTIVADO;
+			selected = false;
+		}
 		
-		this.controlesDesplegableJMenuItems[6] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableJCheckBoxMenuItems[6] = this.controlesDesplegableGetMenuItem(itemNombre);
+		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJCheckBoxMenuItems[6], itemNombre, selected);
 		
 		itemNombre = controlesNombre.TER_CERRAR;
 		
-		this.controlesDesplegableJMenuItems[7] = this.controlesDesplegableGetMenuItem(itemNombre);				
+		this.controlesDesplegableJCheckBoxMenuItems[7] = this.controlesDesplegableGetMenuItem(itemNombre);				
 		
 		//	Añadimos items
 		
-		this.controlesDesplegableMenu.add(this.controlesDesplegableJMenuItems[0]);
-		this.controlesDesplegableMenu.add(this.controlesDesplegableJMenuItems[1]);
-		this.controlesDesplegableMenu.add(this.controlesDesplegableJMenuItems[2]);
-		this.controlesDesplegableMenu.add(this.controlesDesplegableJMenuItems[3]);
+		this.controlesDesplegableMenu.add(this.controlesDesplegableJCheckBoxMenuItems[0]);
+		this.controlesDesplegableMenu.add(this.controlesDesplegableJCheckBoxMenuItems[1]);
+		this.controlesDesplegableMenu.add(this.controlesDesplegableJCheckBoxMenuItems[2]);
+		this.controlesDesplegableMenu.add(this.controlesDesplegableJCheckBoxMenuItems[3]);
 		
 		this.controlesDesplegableMenu.add(new JSeparator());
 		
-		this.controlesDesplegableMenu.add(this.controlesDesplegableJMenuItems[4]);
-		this.controlesDesplegableMenu.add(this.controlesDesplegableJMenuItems[5]);
-		this.controlesDesplegableMenu.add(this.controlesDesplegableJMenuItems[6]);
+		this.controlesDesplegableMenu.add(this.controlesDesplegableJCheckBoxMenuItems[4]);
+		this.controlesDesplegableMenu.add(this.controlesDesplegableJCheckBoxMenuItems[5]);
+		this.controlesDesplegableMenu.add(this.controlesDesplegableJCheckBoxMenuItems[6]);
 		
 		this.controlesDesplegableMenu.add(new JSeparator());
 		
-		this.controlesDesplegableMenu.add(this.controlesDesplegableJMenuItems[7]);
+		this.controlesDesplegableMenu.add(this.controlesDesplegableJCheckBoxMenuItems[7]);
 		
 		//	Añadimos action listener
 		
-		for(JMenuItem item:this.controlesDesplegableJMenuItems)
+		for(JCheckBoxMenuItem item:this.controlesDesplegableJCheckBoxMenuItems)
 			item.addActionListener(this);
 		
 		//	Añadimos
@@ -606,16 +618,16 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	}
 	
 	/**
-	 * Obtiene un JMenuItem
+	 * Obtiene un JCheckBoxMenuItem
 	 * 
 	 * @param nombre
 	 * 		Determina el texto, imagen y action command
 	 * 
 	 * @return
-	 * 		JMenuItem creado
+	 * 		JCheckBoxMenuItem creado
 	 */
-	private JMenuItem controlesDesplegableGetMenuItem(controlesNombre nombre) {
-		JMenuItem item = new JMenuItem(
+	private JCheckBoxMenuItem controlesDesplegableGetMenuItem(controlesNombre nombre) {
+		JCheckBoxMenuItem item = new JCheckBoxMenuItem(
 				this.controlesTraducciones.get(nombre),
 				new ImageIcon(GestorVentanaSRec.class.getClassLoader().getResource(this.controlesImagenesUrl.get(nombre)))
 		);
@@ -626,22 +638,28 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	}
 	
 	/**
-	 * Cambia la imagen, texto y action command de un JMenuItem
+	 * Cambia la imagen, texto y action command de un JCheckBoxMenuItem
 	 * 
 	 * @param item
 	 * 		Elemento que queremos cambiar
 	 * 
 	 * @param nombre
 	 * 		Determina el texto, imagen y action command nuevos
+	 * 
+	 * @param selected
+	 * 		Determina si el boton estará seleccionado o no
 	 */
-	private void controlesDesplegableGetMenuItemCambiado(final JMenuItem item, final controlesNombre nombre) {
+	private void controlesDesplegableGetMenuItemCambiado(final JCheckBoxMenuItem item, final controlesNombre nombre, boolean selected) {
 		SwingUtilities.invokeLater(new Runnable() {	
 	        @Override
 	        public void run() {	
-		
-				item.setIcon(
-					new ImageIcon(GestorVentanaSRec.class.getClassLoader().getResource(controlesImagenesUrl.get(nombre)))
-				);
+	        	
+	        	//	Con esta línea cambiamos la imagen, por ahora no se quiere así
+//				item.setIcon(
+//					new ImageIcon(GestorVentanaSRec.class.getClassLoader().getResource(controlesImagenesUrl.get(nombre)))
+//				);
+	        	
+	        	item.setSelected(selected);
 				item.setText(controlesTraducciones.get(nombre));
 				item.setActionCommand(nombre.toString());
 				
@@ -659,6 +677,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		this.controlesBotonesJToolbar = new JToolBar[this.controlesBotonesNumeroJToolbar];
 		this.controlesBotonesJButtons = new JButton[this.controlesBotonesNumeroJButtons];
 		this.cuadroPanelBotones = new JPanel(new GridBagLayout());
+		boolean selected;
 		
 		//	Creamos botones
 		
@@ -678,26 +697,38 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		
 		this.controlesBotonesJButtons[3] = this.controlesBotonesGetBoton(itemNombre);
 		
-		if(controlesBotonesEstadoLimpiarPantalla)
-			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR;
-		else
-			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR;
+		if(controlesBotonesEstadoLimpiarPantalla) {
+			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVADO;
+			selected = true;
+		}else {
+			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVADO;
+			selected = false;
+		}
 		
 		this.controlesBotonesJButtons[4] = this.controlesBotonesGetBoton(itemNombre);
+		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[4], itemNombre, selected);
 		
-		if(controlesBotonesEstadoRegistroLlamadas)
-			itemNombre = controlesNombre.TER_REG_LLAMADAS_DESACTIVAR;
-		else
-			itemNombre = controlesNombre.TER_REG_LLAMADAS_ACTIVAR;
+		if(controlesBotonesEstadoRegistroLlamadas) {
+			itemNombre = controlesNombre.TER_REG_LLAMADAS_ACTIVADO;
+			selected = true;
+		}else {
+			itemNombre = controlesNombre.TER_REG_LLAMADAS_DESACTIVADO;
+			selected = false;
+		}
 		
 		this.controlesBotonesJButtons[5] = this.controlesBotonesGetBoton(itemNombre);
+		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[5], itemNombre, selected);
 		
-		if(controlesBotonesEstadoBuffer)
-			itemNombre = controlesNombre.TER_BUFFER_DESACTIVAR;
-		else
-			itemNombre = controlesNombre.TER_BUFFER_ACTIVAR;
+		if(controlesBotonesEstadoBuffer) {
+			itemNombre = controlesNombre.TER_BUFFER_ACTIVADO;
+			selected = true;
+		}else {
+			itemNombre = controlesNombre.TER_BUFFER_DESACTIVADO;
+			selected = false;
+		}
 		
 		this.controlesBotonesJButtons[6] = this.controlesBotonesGetBoton(itemNombre);
+		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[6], itemNombre, selected);
 		
 		itemNombre = controlesNombre.TER_CERRAR;
 		
@@ -763,15 +794,21 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 * 
 	 * @param nombre
 	 * 		Determina el tooltip, imagen y action command nuevos
+	 * 
+	 * @param selected
+	 * 		Determina si el boton estará seleccionado o no
 	 */
-	private void controlesBotonesGetBotonCambiado(final JButton boton, final controlesNombre nombre) {
+	private void controlesBotonesGetBotonCambiado(final JButton boton, final controlesNombre nombre, boolean selected) {
 		SwingUtilities.invokeLater(new Runnable() {	
 	        @Override
 	        public void run() {	
-		
-				boton.setIcon(
-					new ImageIcon(GestorVentanaSRec.class.getClassLoader().getResource(controlesImagenesUrl.get(nombre)))
-				);
+	        	
+	        	//	Con esta línea cambiamos la imagen, por ahora no se quiere así
+//				boton.setIcon(
+//					new ImageIcon(GestorVentanaSRec.class.getClassLoader().getResource(controlesImagenesUrl.get(nombre)))
+//				);
+	        	
+	        	boton.setSelected(selected);
 				boton.setToolTipText(controlesTraducciones.get(nombre));
 				boton.setActionCommand(nombre.toString());
 				
@@ -800,15 +837,18 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private void controlesBotonesCambiarLimpiarPantalla() {
 		
 		controlesNombre itemNombre;
+		boolean selected;
 		
 		if(this.controlesBotonesEstadoLimpiarPantalla) {
-			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR;
+			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVADO;
+			selected = true;
 		}else {
-			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR;
+			itemNombre = controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVADO;
+			selected = false;
 		}
 		
-		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[4], itemNombre);		
-		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJMenuItems[4], itemNombre);
+		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[4], itemNombre, selected);		
+		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJCheckBoxMenuItems[4], itemNombre, selected);
 	}
 	
 	/**
@@ -817,15 +857,18 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private void controlesBotonesCambiarRegistroLlamadas() {
 		
 		controlesNombre itemNombre;
+		boolean selected;
 		
 		if(this.controlesBotonesEstadoRegistroLlamadas) {
-			itemNombre = controlesNombre.TER_REG_LLAMADAS_DESACTIVAR;
+			itemNombre = controlesNombre.TER_REG_LLAMADAS_ACTIVADO;
+			selected = true;
 		}else {
-			itemNombre = controlesNombre.TER_REG_LLAMADAS_ACTIVAR;
+			itemNombre = controlesNombre.TER_REG_LLAMADAS_DESACTIVADO;
+			selected = false;
 		}
 		
-		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[5], itemNombre);
-		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJMenuItems[5], itemNombre);
+		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[5], itemNombre, selected);
+		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJCheckBoxMenuItems[5], itemNombre, selected);
 	}
 	
 	/**
@@ -834,15 +877,18 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private void controlesBotonesCambiarBuffer() {
 		
 		controlesNombre itemNombre;
+		boolean selected;
 		
 		if(this.controlesBotonesEstadoBuffer) {
-			itemNombre = controlesNombre.TER_BUFFER_DESACTIVAR;
+			itemNombre = controlesNombre.TER_BUFFER_ACTIVADO;
+			selected = true;
 		}else {
-			itemNombre = controlesNombre.TER_BUFFER_ACTIVAR;
+			itemNombre = controlesNombre.TER_BUFFER_DESACTIVADO;
+			selected = false;
 		}
 		
-		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[6], itemNombre);
-		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJMenuItems[6], itemNombre);
+		this.controlesBotonesGetBotonCambiado(this.controlesBotonesJButtons[6], itemNombre, selected);
+		this.controlesDesplegableGetMenuItemCambiado(this.controlesDesplegableJCheckBoxMenuItems[6], itemNombre, selected);
 	}
 	
 	//***************************************
@@ -1435,18 +1481,18 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			
 			controlesAccionImprimir();
 			
-		}else if(origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVAR.toString()) ||
-				origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVAR.toString())) {
+		}else if(origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_ACTIVADO.toString()) ||
+				origen.equals(controlesNombre.TER_LIMPIAR_PANTALLA_DESACTIVADO.toString())) {
 			
 			controlesAccionLimpiarPantalla();
 			
-		}else if(origen.equals(controlesNombre.TER_REG_LLAMADAS_DESACTIVAR.toString()) ||
-				origen.equals(controlesNombre.TER_REG_LLAMADAS_ACTIVAR.toString())) {
+		}else if(origen.equals(controlesNombre.TER_REG_LLAMADAS_ACTIVADO.toString()) ||
+				origen.equals(controlesNombre.TER_REG_LLAMADAS_DESACTIVADO.toString())) {
 			
 			controlesAccionRegistroLlamadas();
 			
-		}else if(origen.equals(controlesNombre.TER_BUFFER_ACTIVAR.toString()) ||
-				origen.equals(controlesNombre.TER_BUFFER_DESACTIVAR.toString())) {
+		}else if(origen.equals(controlesNombre.TER_BUFFER_DESACTIVADO.toString()) ||
+				origen.equals(controlesNombre.TER_BUFFER_ACTIVADO.toString())) {
 			
 			controlesAccionBuffer();
 			

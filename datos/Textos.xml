@@ -1386,18 +1386,18 @@
 		<T valor="Copy text to clipboard" idioma="en" id="TER_COPIAR"/>
 		<T valor="Imprimir" idioma="es" id="TER_IMPRIMIR"/>
 		<T valor="Print" idioma="en" id="TER_IMPRIMIR"/>
-		<T valor="Limpiar pantalla en llamada al m[eacute]todo [Activar]" idioma="es" id="TER_LIMPIAR_PANTALLA_ACTIVAR"/>
-		<T valor="Clear screen on method call [Enable]" idioma="en" id="TER_LIMPIAR_PANTALLA_ACTIVAR"/>
-		<T valor="Limpiar pantalla en llamada al m[eacute]todo [Desactivar]" idioma="es" id="TER_LIMPIAR_PANTALLA_DESACTIVAR"/>
-		<T valor="Clear screen on method call [Disable]" idioma="en" id="TER_LIMPIAR_PANTALLA_DESACTIVAR"/>
-		<T valor="Registro de llamadas a m[eacute]todo [Activar]" idioma="es" id="TER_REG_LLAMADAS_ACTIVAR"/>
-		<T valor="Method call log [Enable]" idioma="en" id="TER_REG_LLAMADAS_ACTIVAR"/>
-		<T valor="Registro de llamadas a m[eacute]todo [Desactivar]" idioma="es" id="TER_REG_LLAMADAS_DESACTIVAR"/>
-		<T valor="Method call log [Disable]" idioma="en" id="TER_REG_LLAMADAS_DESACTIVAR"/>
-		<T valor="Buffer ilimitado [Activar]" idioma="es" id="TER_BUFFER_ACTIVAR"/>
-		<T valor="Unlimited buffer [Enable]" idioma="en" id="TER_BUFFER_ACTIVAR"/>
-		<T valor="Buffer ilimitado [Desactivar]" idioma="es" id="TER_BUFFER_DESACTIVAR"/>
-		<T valor="Unlimited buffer [Disable]" idioma="en" id="TER_BUFFER_DESACTIVAR"/>
+		<T valor="Limpiar pantalla en llamada al m[eacute]todo [Desactivado]" idioma="es" id="TER_LIMPIAR_PANTALLA_DESACTIVADO"/>
+		<T valor="Clear screen on method call [Disabled]" idioma="en" id="TER_LIMPIAR_PANTALLA_DESACTIVADO"/>
+		<T valor="Limpiar pantalla en llamada al m[eacute]todo [Activado]" idioma="es" id="TER_LIMPIAR_PANTALLA_ACTIVADO"/>
+		<T valor="Clear screen on method call [Enabled]" idioma="en" id="TER_LIMPIAR_PANTALLA_ACTIVADO"/>
+		<T valor="Registro de llamadas a m[eacute]todo [Desactivado]" idioma="es" id="TER_REG_LLAMADAS_DESACTIVADO"/>
+		<T valor="Method call log [Disabled]" idioma="en" id="TER_REG_LLAMADAS_DESACTIVADO"/>
+		<T valor="Registro de llamadas a m[eacute]todo [Activado]" idioma="es" id="TER_REG_LLAMADAS_ACTIVADO"/>
+		<T valor="Method call log [Enabled]" idioma="en" id="TER_REG_LLAMADAS_ACTIVADO"/>
+		<T valor="Buffer ilimitado [Desactivado]" idioma="es" id="TER_BUFFER_DESACTIVADO"/>
+		<T valor="Unlimited buffer [Disabled]" idioma="en" id="TER_BUFFER_DESACTIVADO"/>
+		<T valor="Buffer ilimitado [Activado]" idioma="es" id="TER_BUFFER_ACTIVADO"/>
+		<T valor="Unlimited buffer [Enabled]" idioma="en" id="TER_BUFFER_ACTIVADO"/>
 		<T valor="Cerrar terminal" idioma="es" id="TER_CERRAR"/>
 		<T valor="Close terminal" idioma="en" id="TER_CERRAR"/>
 		<T valor="Opciones" idioma="es" id="TER_OPCIONES"/>
