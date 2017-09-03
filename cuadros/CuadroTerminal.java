@@ -1648,6 +1648,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 			    }
 
 			};
+			this.panelTexto.setEditable(false);			
 			this.sb = new StringBuilder();
 			this.doc = panelTexto.getStyledDocument();
 			this.bufferLimite = bufferLimite;
