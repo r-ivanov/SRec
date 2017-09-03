@@ -653,7 +653,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 * @param selected
 	 * 		Determina si el boton estará seleccionado o no
 	 */
-	private void controlesDesplegableGetMenuItemCambiado(final JCheckBoxMenuItem item, final controlesNombre nombre, boolean selected) {
+	private void controlesDesplegableGetMenuItemCambiado(final JCheckBoxMenuItem item, final controlesNombre nombre, final boolean selected) {
 		SwingUtilities.invokeLater(new Runnable() {	
 	        @Override
 	        public void run() {	
@@ -802,7 +802,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 * @param selected
 	 * 		Determina si el boton estará seleccionado o no
 	 */
-	private void controlesBotonesGetBotonCambiado(final JButton boton, final controlesNombre nombre, boolean selected) {
+	private void controlesBotonesGetBotonCambiado(final JButton boton, final controlesNombre nombre, final boolean selected) {
 		SwingUtilities.invokeLater(new Runnable() {	
 	        @Override
 	        public void run() {	
