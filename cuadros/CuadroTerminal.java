@@ -1011,14 +1011,14 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 							
 							//	Obtenemos datos
 							
-							getImprimirDatos();
+							getImprimirDatos();							
 							
 							//	Diálogo con nº de páginas
 							
 					        PrintRequestAttributeSet printAttribute = new HashPrintRequestAttributeSet();
 							printAttribute.add(
 								new PageRanges(
-										1, salidaTextoImprimirNumeroPaginas
+										1, salidaTextoImprimirNumeroPaginas == 0 ? 1 : salidaTextoImprimirNumeroPaginas
 								)
 							);   
 							
