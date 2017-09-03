@@ -174,15 +174,17 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	
 	//	Exportar cabecera (copiar, guardar e imprimir)
 	
-	private final String salidaTextoCabeceraExportarNormal = 
-	 "\n\n"+"**************************************************************************"+"\n"+
-			"			"+Texto.get("TER_IMPRIMIR_SALIDA_NORMAL", Conf.idioma)			+"\n"+
-			"**************************************************************************"+"\n\n";
+	private final String salidaTextoCabeceraExportarNormal = 			 
+			
+	 "\n\n"+"**************************************************************"+"\n"+
+			"		"+Texto.get("TER_IMPRIMIR_SALIDA_NORMAL", Conf.idioma) 	   +"\n"+
+			"**************************************************************"+"\n\n";
 					
 	private final String salidaTextoCabeceraExportarError = 
-	 "\n\n"+"**************************************************************************"+"\n"+
-			"			"+Texto.get("TER_IMPRIMIR_SALIDA_ERROR", Conf.idioma)			+"\n"+
-			"**************************************************************************"+"\n\n";
+			
+	 "\n\n"+"**************************************************************"+"\n"+
+			"		"+Texto.get("TER_IMPRIMIR_SALIDA_ERROR", Conf.idioma)      +"\n"+
+			"**************************************************************"+"\n\n";
 	
 	//	Exportar nombre arhivo (copiar e imprimir)
 	
@@ -198,6 +200,8 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	private int salidaTextoImprimirNumeroPaginas, 
 				salidaTextoImprimirLineasPorPagina,
 				salidaTextoImprimirFuenteHeight;
+	
+	private final int salidaTextoImprimirNumeroCaracteresLinea = 65;
 	
 	//	Guardar
 	
@@ -1329,7 +1333,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		//	Fuente height
 		
 		BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graphics2D = image.createGraphics();		
+		Graphics2D graphics2D = image.createGraphics();
 		FontMetrics metrics = graphics2D.getFontMetrics(this.salidaTextoImprimirFuente);
 		this.salidaTextoImprimirFuenteHeight = metrics.getHeight();
 		
@@ -1338,7 +1342,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		this.salidaTextoImprimirContenido = new String[0];		
 		
 		this.salidaTextoImprimirContenido = 
-				this.getSalidasTextos().split("\n");
+				this.getImprimirContenido();
 
 		//	Líneas por página		
 		
@@ -1368,6 +1372,48 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		this.salidaTextoImprimirNumeroPaginas = 0;
 		this.salidaTextoImprimirLineasPorPagina = 0;
 		this.salidaTextoImprimirFuenteHeight = 0;
+	}
+	
+	/**
+	 * Obtiene el texto a imprimir que no es mas que el de las salidas corregidas,
+	 * hay que pasar del string de java al string necesario para el PDF:
+	 * 
+	 * - Un split por cada salto de línea y una correccion por si cada
+	 * línea de las obtenidas ocupa mas de lo visualmente permitido
+	 * 
+	 * - Se cambian tabuladores por 3 espacios
+	 */
+	private String[] getImprimirContenido() {
+		
+		//	Obtenemos texto de las salidas
+		
+		String textoSalidas =
+				this.getSalidasTextos();
+		
+		//	Corrección tabuladores
+		
+		textoSalidas =
+				textoSalidas.replaceAll("\t", "   ");
+		
+		//	Obtenemos texto con split
+		
+		String[] textoSalidasSplit = 
+				textoSalidas.split("\n");		
+		
+		//	Corrección salto de línea	
+		
+		String textoCorregidoSinSplit = "";
+		
+		for(String textoLinea : textoSalidasSplit) {
+			if(textoLinea.length()>this.salidaTextoImprimirNumeroCaracteresLinea) {
+				textoLinea = textoLinea.replaceAll("(.{"+this.salidaTextoImprimirNumeroCaracteresLinea+"})", "$1\n");
+			}
+			textoCorregidoSinSplit += textoLinea+"\n";
+		}
+		
+		//	Retornamos
+		
+		return textoCorregidoSinSplit.split("\n");
 	}
 	
 	//***************************************
@@ -1528,6 +1574,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		//	Dibujamos
 			
 		Graphics2D g2d = (Graphics2D)g;
+		g.setFont(this.salidaTextoImprimirFuente);
 		g2d.translate(pf.getImageableX(), pf.getImageableY()); 
 		
 		int y = 0; 
