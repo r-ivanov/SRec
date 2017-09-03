@@ -2056,7 +2056,7 @@ public class Ventana extends JFrame implements ActionListener {
 		this.setTextoCompilador(PanelCompilador.CODIGO_VACIO);
 		this.cerrarVentana();
 		this.cerrarVistas();
-		this.setClasePendienteGuardar(false);
+//		this.setClasePendienteGuardar(false);
 		this.panelVentana.abrirPanelAlgoritmo(this.ficheroGIF[0]
 				+ this.ficheroGIF[1]);
 		if (Conf.fichero_log) {
@@ -2608,7 +2608,6 @@ public class Ventana extends JFrame implements ActionListener {
 			this.setValoresPanelControl(ma.getRepresentacion());
 			// Habilitamos la opcion para asignar parametros y ejecutar
 			this.setClaseHabilitadaAnimacion(true);
-			this.setClasePendienteGuardar(false);
             // Deshabilitamos las opciones de la animación por si estuviesen activas.
             this.habilitarOpcionesAnimacion(false);
 		}
@@ -2659,7 +2658,6 @@ public class Ventana extends JFrame implements ActionListener {
 			this.setValoresPanelControl(ma.getRepresentacion());
 			// Habilitamos la opcion para asignar parametros y ejecutar
 			this.setClaseHabilitadaAnimacion(true);
-			this.setClasePendienteGuardar(false);
             // Deshabilitamos las opciones de la animación por si estuviesen activas.
             this.habilitarOpcionesAnimacion(false);
             
