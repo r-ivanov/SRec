@@ -51,7 +51,7 @@ public class Preprocesador extends Thread {
 
 	private static String fichero[] = new String[2];
 	private Ventana vv;
-	private boolean selecMetodo = false;
+	private int metodoOrigen = 0;
 
 	private static String claseProcesada[] = new String[2];
 
@@ -113,11 +113,11 @@ public class Preprocesador extends Thread {
 	 *            path del fichero que hay que preprocesar
 	 * @param nombre
 	 *            nombre del fichero que hay que preprocesar
-	 * @param selecMetodo
-	 *            A true si debe mostrarse el cuadro de selección de métodos al
-	 *            terminar de procesar, false en caso contrario.
+	 * @param metodoOrigen
+	 * 			1 = Mostrar selección de métodos
+	 * 			2 = Mostrar seleccion parámetros
 	 */
-	public Preprocesador(String path, String nombre, boolean selecMetodo) {
+	public Preprocesador(String path, String nombre, int metodoOrigen) {
 		String nombreModif = JavaParser.convReverse(nombre);
 		if (path != null && nombreModif != null) {
 			if(!SsooValidator.isUnix()){
@@ -130,7 +130,7 @@ public class Preprocesador extends Thread {
 			fichero[0] = null;
 			fichero[1] = null;
 		}
-		this.selecMetodo = selecMetodo;
+		this.metodoOrigen = metodoOrigen;
 		this.start();
 	}
 
@@ -682,8 +682,10 @@ public class Preprocesador extends Thread {
 				this.vv.setClase(this.claseAlgoritmo);
 				this.vv.setPreprocesador(this);
 				this.vv.setTextoCompilador("");
-				if (this.selecMetodo) {
+				if (this.metodoOrigen == 1) {
 					this.vv.iniciarNuevaVisualizacionSelecMetodo();
+				}else if(this.metodoOrigen == 2) {
+					this.vv.introducirParametros();
 				}
 			}
 		}

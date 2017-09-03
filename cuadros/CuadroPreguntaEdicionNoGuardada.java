@@ -34,8 +34,9 @@ public class CuadroPreguntaEdicionNoGuardada extends CuadroPregunta implements
 	 *            usuario.
 	 */
 	public CuadroPreguntaEdicionNoGuardada(Ventana ventana, String accion) {
-		super(ventana, accion.equals("guardar") ? Texto.get("PREG_CLASNOGUARD",
-				Conf.idioma) : Texto.get("PREG_EDITNOGUARD", Conf.idioma),
+		super(ventana,
+				accion.equals("guardar") ? Texto.get("PREG_CLASNOGUARD",Conf.idioma) : 
+				Texto.get("PREG_EDITNOGUARD", Conf.idioma),
 				accion.equals("guardar") ? Texto.get("PREGMEN_CLASNOGUARD",
 						Conf.idioma) : Texto.get("PREGMEN_EDITNOGUARD",
 						Conf.idioma), Texto.get("SI", Conf.idioma), Texto.get(
@@ -66,11 +67,20 @@ public class CuadroPreguntaEdicionNoGuardada extends CuadroPregunta implements
 			this.getVentana().guardarClase();
 		}
 
+		//	Cuando el diálogo viene de seleccionar método
 		if ((e.getSource() == this.aceptar) && (this.accion.equals("guardar"))) {
 			this.getVentana().procesarClaseSeleccionarMetodo();
 		}
 		if ((e.getSource() == this.cancelar) && (this.accion.equals("guardar"))) {
 			this.getVentana().iniciarNuevaVisualizacionSelecMetodo();
+		}
+		
+		//	Cuando el diálogo viene de lanzar ejecucion
+		if ((e.getSource() == this.aceptar) && (this.accion.equals("lanzar"))) {
+			this.getVentana().procesarClaseLanzarEjecucion();
+		}
+		if ((e.getSource() == this.cancelar) && (this.accion.equals("lanzar"))) {
+			this.getVentana().introducirParametros();
 		}
 
 		if (this.accion.equals("cargarClase")) {

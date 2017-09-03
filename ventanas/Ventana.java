@@ -474,7 +474,12 @@ public class Ventana extends JFrame implements ActionListener {
 					this.log_write("Archivo > Asignar parámetros y lanzar animación.");
 				}
 				if (this.claseAlgoritmo != null) {
-					this.introducirParametros();
+					if (this.clasePendienteGuardar
+							|| this.clasePendienteProcesar) {
+						new CuadroPreguntaEdicionNoGuardada(this, "lanzar");
+					}else {
+						this.introducirParametros();
+					}
 				} else {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOARCHPROC", Conf.idioma));
@@ -1265,14 +1270,18 @@ public class Ventana extends JFrame implements ActionListener {
 							Texto.get("ERROR_NOARCHPROC", Conf.idioma));
 				}
 			} else if (fuente == this.botones[29]) // Archivo > Asignar
-				// Parámetros y lanzar
-				// animación
+				// Parámetros y lanzar animación
 			{
 				if (Conf.fichero_log) {
 					this.log_write("Botón > Asignar parámetros y lanzar animación.");
 				}
 				if (this.claseAlgoritmo != null) {
-					this.introducirParametros();
+					if (this.clasePendienteGuardar
+							|| this.clasePendienteProcesar) {
+						new CuadroPreguntaEdicionNoGuardada(this, "lanzar");
+					}else {
+						this.introducirParametros();
+					}
 				} else {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOARCHPROC", Conf.idioma));
@@ -2252,7 +2261,7 @@ public class Ventana extends JFrame implements ActionListener {
 	 * Gestiona las acciones necesarias cuando el usuario desea introducir los
 	 * parámetros para una nueva visualización.
 	 */
-	private void introducirParametros() {
+	public void introducirParametros() {
 		
 		CuadroGenerarAleatorio cuadroGenerarAleatorio = null;
 		if (this.cuadroLanzarEjec != null) {
@@ -3129,7 +3138,17 @@ public class Ventana extends JFrame implements ActionListener {
 	 */
 	public void procesarClaseSeleccionarMetodo() {
 		new Preprocesador(this.claseAlgoritmo.getPath(),
-				this.claseAlgoritmo.getNombre() + ".java", true);
+				this.claseAlgoritmo.getNombre() + ".java", 1);
+		this.setClasePendienteProcesar(false);
+	}
+	
+	/**
+	 * Gestiona las acciones necesarias cuando el usuario desea procesar la
+	 * clase actual.
+	 */
+	public void procesarClaseLanzarEjecucion() {
+		new Preprocesador(this.claseAlgoritmo.getPath(),
+				this.claseAlgoritmo.getNombre() + ".java", 2);
 		this.setClasePendienteProcesar(false);
 	}
 
