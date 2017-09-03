@@ -3130,6 +3130,7 @@ public class Ventana extends JFrame implements ActionListener {
 	public void procesarClaseSeleccionarMetodo() {
 		new Preprocesador(this.claseAlgoritmo.getPath(),
 				this.claseAlgoritmo.getNombre() + ".java", true);
+		this.setClasePendienteProcesar(false);
 	}
 
 	/**
