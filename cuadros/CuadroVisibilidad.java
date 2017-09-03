@@ -8,10 +8,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
@@ -32,6 +34,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 		KeyListener {
 
 	private static final int ANCHO_CUADRO = 275;
+	private static final int ALTO_CUADRO = 600;
 
 	private DatosTrazaBasicos dtb;
 
@@ -145,28 +148,26 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 		this.cancelar.addKeyListener(this);
 
 		// Panel general
+		JScrollPane jsp = new JScrollPane(panelDatos);
+		jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
+		jsp.setPreferredSize(new Dimension(ANCHO_CUADRO - 10,
+				ALTO_CUADRO - 80));
 		BorderLayout bl = new BorderLayout();
 		JPanel panel = new JPanel();
 		panel.setLayout(bl);
 
-		panel.add(panelDatos, BorderLayout.NORTH);
+		panel.add(jsp, BorderLayout.NORTH);
 		panel.add(panelBoton, BorderLayout.SOUTH);
 
 		// Preparamos y mostramos cuadro
 		this.dialogo.getContentPane().add(panel);
 		this.dialogo.setTitle(Texto.get("CVIS_VIS", Conf.idioma));
-
-		if (this.ventana.msWindows) {
-			this.dialogo.setSize(ANCHO_CUADRO, this.numeroFilas * 23 + 90);
-			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO,
-					this.numeroFilas * 23 + 90);
-			this.dialogo.setLocation(coord[0], coord[1]);
-		} else {
-			this.dialogo.setSize(ANCHO_CUADRO, this.numeroFilas * 23 + 90);
-			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO,
-					this.numeroFilas * 23 + 90);
-			this.dialogo.setLocation(coord[0], coord[1]);
-		}
+		this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
+				
+		int coord[] = Conf.ubicarCentro(ANCHO_CUADRO,
+				ALTO_CUADRO);
+		this.dialogo.setLocation(coord[0], coord[1]);
+		
 		this.dialogo.setResizable(false);
 		this.dialogo.setVisible(true);
 	}
