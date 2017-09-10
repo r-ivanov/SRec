@@ -333,7 +333,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 		for (int i = 0; i < this.botonesParametros.length; i++) {
 			DatosMetodoBasicos dmb = this.dtb.getMetodo(i);
 			boolean unoActivo = false;
-
+			
 			if (dmb.esMetodoConRetorno()) {
 				for (int j = 0; j < this.botonesParametros[i].length - 1; j++) {
 					if (this.botonesParametros[i][j].isSelected()) {
@@ -349,6 +349,8 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 				if (!unoActivo && this.botonesMetodos[i].isSelected()) {
 					return dmb.getNombre();
 				}
+			} else if(dmb.getNumParametrosE() == 0 && dmb.getNumParametrosS() == 0) {
+				unoActivo = true;
 			} else {
 				for (int j = 0; j < this.botonesParametros[i].length / 2; j++) {
 					if (this.botonesParametros[i][j].isSelected()) {
