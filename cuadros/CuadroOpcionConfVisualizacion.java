@@ -1032,7 +1032,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		constraints.gridwidth = 1; 	// Ocupa columnas
 		constraints.gridheight = 1; // Ocupa filas	
 		
-		panelDerecha5.add(panelFuenteCodigo, constraints);
+		//TODO Ocultado formato ódigo porque por ahora no funciona
+//		panelDerecha5.add(panelFuenteCodigo, constraints);
 		
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0; 		// Empieza columna
