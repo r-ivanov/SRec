@@ -585,7 +585,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	        	
 				// Focus the text area, otherwise the highlighting won't show up
 	        	
-				PanelEditorJava2.this.textArea.requestFocus();
+	        	PanelEditorJava2.this.textArea.requestFocus();
 				
 		        // Make sure we have a valid search term
 				
@@ -612,7 +612,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		                    
 		                    // Check to see if it matches or request
 		                    
-		                    if (match.equals(texto)) {
+		                    if (match.equals(texto.toLowerCase())) {
 		                        found = true;
 		                        break;
 		                    }
@@ -623,12 +623,12 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		                if (found) {
 		                	
 		                    // Scroll to make the rectangle visible
-		                    PanelEditorJava2.this.focusTexto(texto, numActualOcurrencia);
+		                	PanelEditorJava2.this.focusTexto(texto, numActualOcurrencia);
 		                    
-		                    PanelEditorJava2.this.select(PanelEditorJava2.this.posicionBuscar, findLength-1, true);
+		                	PanelEditorJava2.this.select(PanelEditorJava2.this.posicionBuscar, findLength-1, true);
 		                    
                             // Move the search position beyond the current match
-                            PanelEditorJava2.this.posicionBuscar += findLength;
+		                	PanelEditorJava2.this.posicionBuscar += findLength;
 		                }
 		
 		            } catch (Exception exp) {
