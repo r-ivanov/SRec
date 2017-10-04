@@ -1500,7 +1500,7 @@
 		<T valor="Cortar (Ctrl+X)" idioma="es" id="EDITOR_CORTAR"/>
 		<T valor="Cut (Ctrl+X)" idioma="en" id="EDITOR_CORTAR"/>
 		<T valor="Pegar (Ctrl+V)" idioma="es" id="EDITOR_PEGAR"/>
-		<T valor="Paste  (Ctrl+V)" idioma="en" id="EDITOR_REHACER"/>
+		<T valor="Paste  (Ctrl+V)" idioma="en" id="EDITOR_PEGAR"/>
 		<T valor="Ir a l[iacute]nea" idioma="es" id="EDITOR_IR_A_LINEA"/>
 		<T valor="Go to line" idioma="en" id="EDITOR_IR_A_LINEA"/>
 		<T valor="Buscar" idioma="es" id="EDITOR_BUSCAR"/>
