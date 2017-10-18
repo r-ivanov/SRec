@@ -241,9 +241,11 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		    	JScrollPane jsp = Ventana.thisventana.getPanelVentana().getPanelAlgoritmo().getJSPCodigo();
 				int numLineasEditor = PanelEditorJava2.this.textArea.getText().split("(\r\n|\r|\n)", -1).length;
 				int numLineaFinal = numLinea;
-				if(numLinea<0 || numLinea>numLineasEditor)
+				if(numLinea>numLineasEditor)
 					numLineaFinal = numLineasEditor;
-				
+				if(numLinea<0) {
+					numLineaFinal = 0;
+				}
 				double desplazamiento = (float)numLineaFinal/(float)numLineasEditor;
 		
 				JScrollBar vertical = jsp.getVerticalScrollBar();
