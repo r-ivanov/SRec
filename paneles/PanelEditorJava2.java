@@ -236,8 +236,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 
 	 */
 	public void focusLinea(final int numLinea){		
-		SwingUtilities.invokeLater(new Runnable() {				
-		    public void run() {	
+		
 		    	JScrollPane jsp = Ventana.thisventana.getPanelVentana().getPanelAlgoritmo().getJSPCodigo();
 				int numLineasEditor = PanelEditorJava2.this.textArea.getText().split("(\r\n|\r|\n)", -1).length;
 				int numLineaFinal = numLinea;
@@ -258,8 +257,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 				vertical.setValue((int) Math.round(moveScrollTo)-unidadDesplazamiento);	
 				
 				PanelEditorJava2.this.moverLineaEditor(numLineaFinal);
-		    }
-		});
+
 	}
 	
 	/**
@@ -273,8 +271,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 		Ocurrencia de texto a subrayar
 	 */
 	private void focusTexto(final String texto, final int numOcurrencia) {
-		SwingUtilities.invokeLater(new Runnable() {				
-		    public void run() {	
+
 		    	String[] textoCompleto = PanelEditorJava2.this.textArea.getText().split("(\r\n|\r|\n)", -1);
 				int numOcurrenciasLocal = 0;
 				int numLinea = 0;
@@ -287,9 +284,8 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 						break;
 				}
 				
-				PanelEditorJava2.this.focusLinea(numLinea);
-		    }
-		});
+				PanelEditorJava2.this.focusLinea(numLinea-2);
+
 	}
 	
 	/**
@@ -305,8 +301,8 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 		Número de ocurrencias de "ocurrence" dentro de "text"
 	 */
 	private int getNumberOcurrences(String text, String ocurrence) {
-		String content = text;
-        Pattern pattern = Pattern.compile(ocurrence);
+		String content = text.toUpperCase();
+        Pattern pattern = Pattern.compile(ocurrence.toUpperCase());
         Matcher  matcher = pattern.matcher(content);
 
         int count = 0;
@@ -581,8 +577,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 	 * 
 	 */
 	public void subrayarPalabra(final String texto, final int numActualOcurrencia) {
-		SwingUtilities.invokeLater(new Runnable() { 
-	        public void run() { 
+
 	        	PanelEditorJava2.this.removeSelects();
 	        	
 				// Focus the text area, otherwise the highlighting won't show up
@@ -637,8 +632,7 @@ public class PanelEditorJava2 extends JPanel implements KeyListener{
 		                exp.printStackTrace();
 		            }
 		        }
-	        }
-        });
+
 	}
 	
 	/**
