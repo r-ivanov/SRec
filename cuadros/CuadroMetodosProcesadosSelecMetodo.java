@@ -302,6 +302,9 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 					this.botonesCheck[i].isSelected());
 			this.clase.addMetodo(this.metodos.get(i));
 		}
+		
+		//	Actualizamos visibilidad de métodos
+        this.ventana.setSeleccionMetodos(this.metodos);
 
 		if (!errorProducido) {
 			// Actualizamos la clase
@@ -327,7 +330,7 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
             //	identificador de traza       
             this.ventana.simularIdTrazaPulsado(ma.metodosDistintosLlamados()>1);
             	
-
+            
 		}
 	}
 

@@ -688,7 +688,7 @@ public class Ventana extends JFrame implements ActionListener {
 				if (Conf.fichero_log) {
 					this.log_write("Filtrado y selección > Métodos y parámetros...");
 				}
-				new CuadroVisibilidad(this, this.dtb);
+				new CuadroVisibilidad(this, this.dtb, this.claseAlgoritmo);
 			}
 
 			// Filtrado > Llamadas terminadas...
@@ -1365,7 +1365,7 @@ public class Ventana extends JFrame implements ActionListener {
 				if (Conf.fichero_log) {
 					this.log_write("Botón: Visibilidad de métodos y parámetros...");
 				}
-				new CuadroVisibilidad(this, this.dtb);
+				new CuadroVisibilidad(this, this.dtb, this.claseAlgoritmo);
 			}
 
 			else if (fuente == this.botones[12]) // Visualización > Nodos
@@ -2257,6 +2257,18 @@ public class Ventana extends JFrame implements ActionListener {
 		new CuadroMetodosProcesadosSelecMetodo(this, this.claseAlgoritmo);
 	}
 
+	/* Actualiza la visibilidad de los métodos con la selección pasada por parámetro */
+	public void setSeleccionMetodos(ArrayList<MetodoAlgoritmo> metodos) {
+		for(int i = 0; i<this.claseAlgoritmo.getNumMetodos(); i++) {
+			for(MetodoAlgoritmo m : metodos) {
+				if(this.claseAlgoritmo.getMetodo(i).getNombre().equals(m.getNombre())) {
+					this.claseAlgoritmo.getMetodo(i).setMarcadoVisualizar(m.getMarcadoVisualizar());
+				}
+			}
+			
+		}
+	}
+	
 	/**
 	 * Gestiona las acciones necesarias cuando el usuario desea introducir los
 	 * parámetros para una nueva visualización.
@@ -2630,13 +2642,16 @@ public class Ventana extends JFrame implements ActionListener {
 			if(claseAlgoritmo.compararUltimoMetodoSeleccionado(metodos.get(i), this.claseAlgoritmo.getNombre())){
 				metodos.get(i).setMarcadoPrincipal(
 						true);
-				metodos.get(i).setMarcadoVisualizar(
-						true);				
+				if(metodos.get(i).getMarcadoPrincipal()) {
+					metodos.get(i).setMarcadoVisualizar(true);
+				}
+								
 			}else{
 				metodos.get(i).setMarcadoPrincipal(
 						false);
-				metodos.get(i).setMarcadoVisualizar(
-						true);	
+				if(metodos.get(i).getMarcadoPrincipal()) {
+					metodos.get(i).setMarcadoVisualizar(true);
+				}
 			}
 			this.claseAlgoritmo.addMetodo(metodos.get(i));
 		}

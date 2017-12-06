@@ -48,6 +48,8 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 	private BotonCancelar cancelar = new BotonCancelar();
 
 	private int numeroFilas = 0;
+	
+	private ClaseAlgoritmo ca;
 
 	/**
 	 * Genera un nuevo cuadro que permite modificar la visibilidad de los
@@ -59,11 +61,12 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 	 * @param dtb
 	 *            Datos de traza básicos de la traza en ejecución.
 	 */
-	public CuadroVisibilidad(Ventana ventana, DatosTrazaBasicos dtb) {
+	public CuadroVisibilidad(Ventana ventana, DatosTrazaBasicos dtb, ClaseAlgoritmo ca) {
 		if (dtb != null) {
 			this.dialogo = new JDialog(ventana, true);
 			this.ventana = ventana;
 			this.dtb = dtb;
+			this.ca = ca;
 			this.start();
 		}
 	}
@@ -94,7 +97,14 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 				Conf.idioma)));
 
 		for (int i = 0; i < this.dtb.getNumMetodos(); i++) {
-			DatosMetodoBasicos dmb = this.dtb.getMetodo(i);
+			DatosMetodoBasicos dmb = this.dtb.getMetodo(i);			
+			
+			for(MetodoAlgoritmo ma:this.ca.getMetodos()) {
+				if(dmb.getNombre().equals(ma.getNombre())) {
+					dmb.setEsVisible(ma.getMarcadoVisualizar());
+				}
+			}			
+			
 			panelDatos.add(creaPanelMetodo(dmb.getEsVisible(),
 					dmb.getEsPrincipal(), i, dmb.getNombre()));
 
