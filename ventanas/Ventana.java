@@ -251,7 +251,8 @@ public class Ventana extends JFrame implements ActionListener {
 				"MENU_TRAZ_04", "MENU_VISU_18", "MENU_ARBL_03", "MENU_ARBL_04", // 55
 				"MENU_ARCH_16"
 				// a 59
-				,"BARRA_HERR_TTT36_OPEN","BARRA_HERR_TTT36_CLOSE"
+				,"BARRA_HERR_TTT36_OPEN","BARRA_HERR_TTT36_CLOSE",
+				"BARRA_HERR_TTT35"
 		};
 
 		this.codigos = codigos2;
@@ -1187,6 +1188,11 @@ public class Ventana extends JFrame implements ActionListener {
 					this.log_write("Visualización > Abrir/Cerrar terminal");
 				}
 				this.terminalAbrirCerrar();				
+			}else if (textoFuente.equals(this.textos[62])) { 
+				if (Conf.fichero_log) {
+					this.log_write("Visualización > Generar grafo de dependencia");
+				}
+				this.generarGrafoDependencia();			
 			}
 
 			// JMenuItem no reconocido
@@ -2309,7 +2315,7 @@ public class Ventana extends JFrame implements ActionListener {
      */
     public void terminalAbrirCerrar() { 
     	boolean estaVisible = Ventana.this.getCuadroTerminal().terminalAbrirCerrar();
-    	JMenuItem item = this.menus[1].getItem(5);
+    	JMenuItem item = this.menus[1].getItem(6);
     	String textoClose = Texto.get("BARRA_HERR_TTT36_CLOSE",Conf.idioma);
     	String textoOpen = Texto.get("BARRA_HERR_TTT36_OPEN",Conf.idioma);
     	Icon iconClose = new ImageIcon(
@@ -2779,7 +2785,8 @@ public class Ventana extends JFrame implements ActionListener {
 		this.botones[34].setEnabled(valor);
         this.botones[35].setEnabled(valor);
         this.botones[36].setEnabled(true);
-        
+        GestorVentanaSRec.habilitaMenuItem(this.menus[1],
+				Texto.get("BARRA_HERR_TTT35", Conf.idioma), valor);
 		GestorVentanaSRec.habilitaMenuItem(this.menus[2],
 				Texto.get("MENU_INFO_01", Conf.idioma), valor);
 		GestorVentanaSRec.habilitaMenuItem(this.menus[2],

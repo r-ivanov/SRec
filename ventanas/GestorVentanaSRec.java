@@ -190,6 +190,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				Texto.get("MENU_VISU_10", Conf.idioma),
 				Texto.get("MENU_VISU_11", Conf.idioma),
 				Texto.get("MENU_VISU_12", Conf.idioma),
+				Texto.get("BARRA_HERR_TTT35", Conf.idioma),
 				Texto.get("BARRA_HERR_TTT36_OPEN", Conf.idioma)};
 
 		char mnAnimacion[] = new char[noAnimacion.length];
@@ -207,6 +208,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_formato.gif"),
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_zoom.gif"),
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_ubicacionpaneles.gif"),
+				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/i_generargrafodependencia.gif"),
 				GestorVentanaSRec.class.getClassLoader().getResource("imagenes/ter_terminal_activar.png")};
 		int sepAnimacion[] = {}; // Separador debajo de la primera opción de
 		// menú (contamos desde cero)
@@ -218,6 +220,7 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 						java.awt.Event.CTRL_MASK),
 						KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
 								java.awt.Event.CTRL_MASK),
+				null,
 				null};
 		menus[1] = creaMenu(noAnimacion, mnAnimacion, iconosAnimacion,
 				nombreMenuAnimacion, mnMenuAnimacion, sepAnimacion, ksAnimacion);
@@ -225,6 +228,8 @@ public class GestorVentanaSRec implements WindowListener, WindowStateListener {
 		habilitaMenuItem(menus[1], Texto.get("MENU_VISU_11", Conf.idioma),
 				false);
 		habilitaMenuItem(menus[1], Texto.get("MENU_VISU_12", Conf.idioma),
+				false);
+		habilitaMenuItem(menus[1], Texto.get("BARRA_HERR_TTT35", Conf.idioma),
 				false);
 
 		// Menú Filtrado y Selección

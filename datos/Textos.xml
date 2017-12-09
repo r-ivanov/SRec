@@ -41,8 +41,8 @@
 		<!-- Mnemotecnicos, el ultimo es para el nombre del menu -->
 		<T valor="VSPRMNNCFGATUZXA" idioma="es" id="MNEMO_ARCHIVO"/>
 		<T valor="WCPRMNNLFSATUEXF" idioma="en" id="MNEMO_ARCHIVO"/>
-		<T valor="MIFZUV" idioma="es" id="MNEMO_VISU"/>
-		<T valor="MIFZLV" idioma="en" id="MNEMO_VISU"/>
+		<T valor="MIFZUGV" idioma="es" id="MNEMO_VISU"/>
+		<T valor="MIFZLGV" idioma="en" id="MNEMO_VISU"/>
 		<T valor="DMHSBRS" idioma="es" id="MNEMO_FILT"/>
 		<T valor="DMHSCRS" idioma="en" id="MNEMO_FILT"/>
 		<T valor="DNGAER" idioma="es" id="MNEMO_ARBL"/>
