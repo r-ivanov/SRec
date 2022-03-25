@@ -1,6 +1,6 @@
 package cuadros;
 
-import java.awt.BorderLayout;
+import java.awt.BorderLayout; 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -18,21 +18,29 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.border.TitledBorder;
-
+import javax.swing.colorchooser.AbstractColorChooserPanel;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.basic.BasicComboPopup;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.plaf.basic.ComboPopup;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.LayoutStyle;
 import javax.swing.SwingUtilities;
 
 import conf.*;
+//import javafx.scene.layout.Border;
 import botones.*;
 import opciones.*;
 import utilidades.*;
@@ -47,9 +55,11 @@ import ventanas.*;
  */
 public class CuadroOpcionConfVisualizacion extends Thread implements
 		ActionListener, KeyListener, MouseListener {
-
-	private static final int ANCHO_CUADRO = 900;
-	private static final int ALTO_CUADRO = 485;
+	
+	private static final int ANCHO_CUADRO = 685;//Original 900 Ingles 675
+	
+	
+	private static final int ALTO_CUADRO = 485;// 485;
 	private static final int ANCHO_CUADRO_NO_WINDOWS = 900;
 	private static final int ALTO_CUADRO_NO_WINDOWS = 465;
 
@@ -59,7 +69,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 	private static final int NUM_SELECTORES_2 = Conf.numColoresMetodos;
 	// Num. selectores en pestaña 3
 	private static final int NUM_SELECTORES_3 = 15;
-
+	// Num. selectores en pestaña 4
+	private static final int NUM_SELECTORES_4 = 2;
 	private final static String CREANDO_PANEL = Texto.get("CP_CREARPAN",
 			Conf.idioma);
 	private final static String MARCAR_PANEL = Texto.get("COCV_MARCAR",
@@ -86,25 +97,31 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 	private JComboBox<String> grosorMarco, bordeCelda;
 	private JComboBox<String> sepHorizontal, sepVertical,
 			sepHorizontal5, sepVertical5;
-	private JComboBox<String> fuentesCodigo, fuentesTraza;
+	private JComboBox<String> fuentesCodigo;
+
+
+	JComboBox<Object> fuentesTraza;
 	private JComboBox<String> fuentesTamCodigo, fuentesTamTraza;
 	private JComboBox<String> comboThemes;
 	
-	private JColorChooser jcc1, jcc2, jcc3;
+	private JColorChooser jcc1, jcc2, jcc3,jcc4;
 
 	private JRadioButton selectores1[] = new JRadioButton[NUM_SELECTORES_1];
 	private JRadioButton selectores2[] = new JRadioButton[NUM_SELECTORES_2];
 	private JRadioButton selectores3[] = new JRadioButton[NUM_SELECTORES_3];
+	private JRadioButton selectores4[] = new JRadioButton[NUM_SELECTORES_4];
 	private JLabel etiqColores1[] = new JLabel[NUM_SELECTORES_1];
 	private JLabel etiqColores2[] = new JLabel[NUM_SELECTORES_2];
 	private JLabel etiqColores3[] = new JLabel[NUM_SELECTORES_3];
-
+	private JLabel etiqColores4[] = new JLabel[NUM_SELECTORES_4];
 	private JPanel panelesColores1[] = new JPanel[NUM_SELECTORES_1];
 	private JPanel panelesColores2[] = new JPanel[NUM_SELECTORES_2];
 	private JPanel panelesColores3[] = new JPanel[NUM_SELECTORES_3];
+	private JPanel panelesColores4[] = new JPanel[NUM_SELECTORES_4];
+	
 
 	private BotonTexto asignar1, resetear1, asignar2, resetear2, asignar3,
-			resetear3;
+			resetear3,asignar4,resetear4;
 
 	private CuadroProgreso cp;
 
@@ -162,13 +179,14 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				"COCV_ETIQ_5", /*68*/"COCV_DISTCELD_G", "COCV_CONFFLEC_G",
 				"COCV_COL_COD_ERR","COCV_COL_COD_THEME_TITLE","COCV_COL_COD_THEME_DEFAULT",
 				"COCV_COL_COD_THEME_DARK", "COCV_COL_COD_THEME_ECLIPSE",
-				"COCV_COL_COD_THEME_IDEA", "COCV_COL_COD_THEME_MONOKAI","COCV_COL_COD_THEME_VISUALSTUDIO"
+				"COCV_COL_COD_THEME_IDEA", "COCV_COL_COD_THEME_MONOKAI","COCV_COL_COD_THEME_VISUALSTUDIO","COCV_TEXTO"
 
 		// 26 a 28 no se están usando
 		// 29 a 32 se podrían no estar usando (comprobar)
 		};
 
 		String textos[] = Texto.get(codigos, Conf.idioma);
+		
 
 		this.cp = new CuadroProgreso(this.ventana, Texto.get("CP_ESPERE",
 				Conf.idioma), CREANDO_PANEL, 0);
@@ -192,6 +210,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		// Panel Izquierda
 		JPanel panelIzquierda = new JPanel();
 		panelIzquierda.setLayout(new BorderLayout());
+		
 
 		// Panel checkbox modo
 		JPanel pCheckModo1 = new JPanel();
@@ -209,6 +228,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		ButtonGroup bg1 = new ButtonGroup();
 
 		this.selectores1[0] = new JRadioButton(textos[2]);
+		
 		this.selectores1[1] = new JRadioButton(textos[3]);
 
 		this.selectores1[2] = new JRadioButton(textos[5]);
@@ -241,8 +261,12 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			panelFila[i].add(this.panelesColores1[i], BorderLayout.EAST);
 			panelSeleccionColores.add(panelFila[i]);
 		}
-		panelSeleccionColores.setPreferredSize(new Dimension(270, 300));
-
+		//Original panelSeleccionColores.setPreferredSize(new Dimension(270, 300));
+		//Ingles panelSeleccionColores.setPreferredSize(new Dimension(200, 300));
+		if(Conf.idioma.equals("es")) {
+			panelSeleccionColores.setPreferredSize(new Dimension(180, 300));
+		}
+		else {panelSeleccionColores.setPreferredSize(new Dimension(200, 300));}
 		// Panel Degradados
 		JPanel panelDegradados1 = new JPanel();
 		panelDegradados1.setBorder(new TitledBorder(textos[13]));
@@ -255,7 +279,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		panelIzquierda.add(pCheckModo1, BorderLayout.NORTH);
 		panelIzquierda.add(panelSeleccionColores, BorderLayout.CENTER);
 		panelIzquierda.add(panelDegradados1, BorderLayout.SOUTH);
-
+		
 		this.cp.setValores(CREANDO_PANEL, 15);
 
 		// Panel Derecha
@@ -263,11 +287,38 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		panelDerecha.setLayout(new BorderLayout());
 
 		this.jcc1 = new JColorChooser(new Color(0, 0, 0));
+		Dimension d= new Dimension();
+		Dimension d12= new Dimension();
+		//Ingles d.setSize(450, 300);
+		//Ingles d12.setSize(425, 200);
+		 d.setSize(434, 300);
+		 d12.setSize(430, 200);
+		String idioma =Conf.idioma;
+		this.jcc1.setPreferredSize(d);
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	AbstractColorChooserPanel[] ab=	this.jcc1.getChooserPanels();
+	for(int i =1;i<ab.length;i++) {
+		ab[i].setPreferredSize(d12);
+		
+		
+	}
+	jcc1.setChooserPanels(ab);
 		this.jcc1.addMouseListener(this);
+		
 
 		// Panel Botones Asignar y Borrar
 		JPanel panelBotonesDerecha = new JPanel();
 		this.asignar1 = new BotonTexto(textos[15]);
+		
 		this.resetear1 = new BotonTexto(textos[16]);
 
 		panelBotonesDerecha.add(this.asignar1);
@@ -282,13 +333,16 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		panelDerecha.add(this.jcc1, BorderLayout.NORTH);
 		panelDerecha.add(panelBotonesDerecha, BorderLayout.SOUTH);
 
+
 		// Panel pestana color
 		JPanel panelPestana1 = new JPanel();
 		panelPestana1.setLayout(new BorderLayout());
+		
 		panelPestana1.add(panelIzquierda, BorderLayout.WEST);
 		panelPestana1.add(panelDerecha, BorderLayout.EAST);
-
+		
 		this.pestanas.add(textos[17], panelPestana1);
+		
 
 		this.cp.setValores(CREANDO_PANEL, 20);
 		// PESTAÑA 2 . MODO DE COLORES QUE DISTINGUE ENTRE NODOS DE MÉTODOS
@@ -309,7 +363,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		JPanel panelSeleccionColores2 = new JPanel();
 		panelSeleccionColores2.setBorder(new TitledBorder(textos[0]));
 		panelSeleccionColores2.setLayout(new GridLayout(NUM_SELECTORES_2, 1));
-
+		
 		ButtonGroup bg2 = new ButtonGroup();
 		this.selectores2[0] = new JRadioButton(Texto.get("COCV_COLOR",
 				Conf.idioma)
@@ -359,8 +413,9 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			panelFila2[i].add(this.panelesColores2[i], BorderLayout.EAST);
 			panelSeleccionColores2.add(panelFila2[i]);
 		}
-		panelSeleccionColores2.setPreferredSize(new Dimension(270, 300));
-
+		//panelSeleccionColores2.setPreferredSize(new Dimension(270, 300));
+		//panelSeleccionColores2.setSize(220,300);
+		panelSeleccionColores2.setPreferredSize(new Dimension(230, 300));
 		// Panel degradados
 		JPanel panelDegradados2 = new JPanel();
 		panelDegradados2.setBorder(new TitledBorder(textos[13]));
@@ -383,8 +438,17 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		// JColorChooser
 		this.jcc2 = new JColorChooser(new Color(0, 0, 0));
+		
+		AbstractColorChooserPanel[] ab2=this.jcc2.getChooserPanels();
+		for(int i =1;i<ab2.length;i++) {
+			ab2[i].setPreferredSize(d12);
+			
+			
+		}
+		//Original d2.setSize(450, 300);
+		this.jcc2.setPreferredSize(d);
 		this.jcc2.addMouseListener(this);
-
+		
 		// Panel Botones Asignar y Borrar
 		JPanel panelBotonesDerecha2 = new JPanel();
 		this.asignar2 = new BotonTexto(textos[15]);
@@ -422,18 +486,29 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		
 		JPanel panelSeleccionColores3 = new JPanel();
 		panelSeleccionColores3.setBorder(new TitledBorder(textos[0]));
-		panelSeleccionColores3.setPreferredSize(new Dimension(270, 300));
+		//panelSeleccionColores3.setPreferredSize(new Dimension(270, 300));
+		panelSeleccionColores3.setPreferredSize(new Dimension(230, 300));
 		
 		ButtonGroup bg3 = new ButtonGroup();
-		this.selectores3[0] = new JRadioButton(textos[1]);
-
+		/*this.selectores3[0] = new JRadioButton(textos[1]);
 		this.selectores3[1] = new JRadioButton(textos[4]);
+*/
+		this.selectores3[0] = new JRadioButton(textos[8]);
+		this.selectores3[1] = new JRadioButton(textos[9]);
+		this.selectores3[2] = new JRadioButton(textos[10]);
+		this.selectores3[3] = new JRadioButton(textos[11]);
 
-		this.selectores3[2] = new JRadioButton(textos[8]);
-		this.selectores3[3] = new JRadioButton(textos[9]);
-		this.selectores3[4] = new JRadioButton(textos[10]);
-		this.selectores3[5] = new JRadioButton(textos[11]);
+		this.selectores3[11] = new JRadioButton(textos[25]);
+		this.selectores3[12] = new JRadioButton(textos[65]);
+		this.selectores3[13] = new JRadioButton(textos[66]);
+		this.selectores3[14] = new JRadioButton(textos[70]);
+		
 
+	
+		//TODO Esto hay que cambiarlo, eliminando los selectores, 
+		//	textos y códigos estos radio buttons, no ocultándolos
+		this.selectores3[4] = new JRadioButton();
+		this.selectores3[5] = new JRadioButton();
 		this.selectores3[6] = new JRadioButton(textos[18]);
 		this.selectores3[7] = new JRadioButton(textos[19]);
 		this.selectores3[8] = new JRadioButton(textos[20]);
@@ -442,19 +517,15 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		
 		//	TODO Esto hay que cambiarlo, eliminando los selectores, 
 		//	textos y códigos estos radio buttons, no ocultándolos
+		this.selectores3[4].setVisible(false);
+		this.selectores3[5].setVisible(false);
 		this.selectores3[6].setVisible(false);
 		this.selectores3[7].setVisible(false);
 		this.selectores3[8].setVisible(false);
 		this.selectores3[9].setVisible(false);
 		this.selectores3[10].setVisible(false);
 		
-		this.selectores3[11] = new JRadioButton(textos[25]);
-		this.selectores3[12] = new JRadioButton(textos[65]);
-		this.selectores3[13] = new JRadioButton(textos[66]);
-		this.selectores3[14] = new JRadioButton(textos[70]);
-
-		this.selectores3[0].setSelected(true);
-
+		
 		int numeroSelectoresVisibles = 0;
 		
 		for (int i = 0; i < NUM_SELECTORES_3; i++) {
@@ -468,8 +539,8 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			this.selectores3[i].addActionListener(this);
 			this.selectores3[i].addMouseListener(this);
 			this.selectores3[i].setToolTipText(textos[12]);
-			bg3.add(this.selectores3[i]);
-			panelSeleccionColores3.add(this.selectores3[i]);			
+		//	bg3.add(this.selectores3[i]);
+			//panelSeleccionColores3.add(this.selectores3[i]);			
 		}
 		
 		panelSeleccionColores3.setLayout(new GridLayout(numeroSelectoresVisibles, 1));
@@ -477,7 +548,6 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		this.cp.setValores(CREANDO_PANEL, 45);
 		JPanel panelFila3[] = new JPanel[NUM_SELECTORES_3];
 		for (int i = 0; i < NUM_SELECTORES_3; i++) {
-			//	TODO Esto hay que cambiarlo, eliminando los selectores, 
 			//	textos y códigos estos radio buttons, no ocultándolos
 			if(!this.selectores3[i].isVisible()){
 				continue;
@@ -498,7 +568,9 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		
 		//	Panel selección de tema
 		JPanel panelSeleccionTema3 = new JPanel();
+		//panelSeleccionTema3.setBorder(new TitledBorder(textos[71]));
 		panelSeleccionTema3.setBorder(new TitledBorder(textos[71]));
+		
 		panelSeleccionTema3.setLayout(new FlowLayout());
 		
 		comboThemes = new JComboBox<String>();		
@@ -509,6 +581,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		comboThemes.addItem(textos[75]);
 		comboThemes.addItem(textos[76]);
 		comboThemes.addItem(textos[77]);
+		
 		comboThemes.addActionListener(this);
 		comboThemes.addKeyListener(this);
 		
@@ -523,6 +596,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.weighty = 1;
 		constraints.weightx = 1;
+		
 		panelIzquierda3.add(panelSeleccionColores3, constraints);
 		
 		constraints = new GridBagConstraints();
@@ -543,7 +617,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		// JColorChooser
 		this.jcc3 = new JColorChooser(new Color(0, 0, 0));
 		this.jcc3.addMouseListener(this);
-
+		this.jcc3.setPreferredSize(new Dimension(430, 300));
+		AbstractColorChooserPanel[] ab3=this.jcc3.getChooserPanels();
+		for(int i =1;i<ab3.length;i++) {
+			ab3[i].setPreferredSize(d12);
+			}
 		// Panel Botones Asignar y Borrar
 		JPanel panelBotonesDerecha3 = new JPanel();
 		this.asignar3 = new BotonTexto(textos[15]);
@@ -986,17 +1064,17 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		linea2Codigo.add(tamFormaCodigo, BorderLayout.EAST);
 
 		panelFuenteCodigo.add(linea1Codigo, BorderLayout.NORTH);
-		panelFuenteCodigo.add(linea2Codigo, BorderLayout.SOUTH);		
+		panelFuenteCodigo.add(linea2Codigo, BorderLayout.CENTER);		
 
-		// *** Panel vista código traza
+		// *** Panel vista código traza Esto forma parte de la nueva pestaña Texto
 		JPanel panelFuenteTraza = new JPanel();
 		panelFuenteTraza.setBorder(new TitledBorder(textos[60]));
-		panelFuenteTraza.setLayout(new BorderLayout());
+		panelFuenteTraza.setLayout(new GridBagLayout());
 
 		JLabel etiqFuenteTraza = new JLabel(textos[58] + "   ");
 		JLabel etiqTFTraza = new JLabel(textos[59]);
 
-		this.fuentesTraza = new JComboBox<String>();
+		this.fuentesTraza = new JComboBox<Object>();
 		for (int i = 0; i < fonts.length; i++) {
 			this.fuentesTraza.addItem(fonts[i].getFontName());
 		}
@@ -1005,7 +1083,28 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		for (int i = 0; i < 73; i++) {
 			this.fuentesTamTraza.addItem("" + (i + 8));
 		}
+		
 
+
+		Dimension dBotonTrazas = new Dimension();
+		dBotonTrazas.setSize(100
+				, 20);
+		this.fuentesTraza.setPreferredSize(dBotonTrazas);
+		//Codigo para que el botón de fuentes de traza tenga un scrollbar horizontal
+		this.fuentesTraza.setUI(new BasicComboBoxUI() {
+            @Override
+            protected ComboPopup createPopup() {
+                return new BasicComboPopup(fuentesTraza) {
+                    @Override
+                    protected JScrollPane createScroller() {
+                        JScrollPane scroller = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                       
+                        return scroller;
+                    }
+                };
+            }
+        });
 		this.fuentesTraza.addActionListener(this);
 		this.fuentesTamTraza.addActionListener(this);
 
@@ -1017,14 +1116,36 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		linea1Traza.setLayout(new BorderLayout());
 		linea1Traza.add(etiqFuenteTraza, BorderLayout.WEST);
 		linea1Traza.add(this.fuentesTraza, BorderLayout.EAST);
-
+		
+		Dimension dPanelTrazas = new Dimension();
+		dPanelTrazas.setSize(150, 70);//70);
+		
 		JPanel linea2Traza = new JPanel();
 		linea2Traza.setLayout(new BorderLayout());
 		linea2Traza.add(etiqTFTraza, BorderLayout.WEST);
 		linea2Traza.add(tamFormaTraza, BorderLayout.EAST);
-
-		panelFuenteTraza.add(linea1Traza, BorderLayout.NORTH);
-		panelFuenteTraza.add(linea2Traza, BorderLayout.SOUTH);
+		
+		constraints = new GridBagConstraints();
+		constraints.gridx = 0; 		// Empieza columna
+		constraints.gridy = 0; 		// Empieza fila
+		constraints.gridwidth = 1; 	// Ocupa columnas
+		constraints.gridheight = 1; // Ocupa filas	
+		//constraints.anchor = GridBagConstraints.NORTH;
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weighty = 1;
+		constraints.weightx = 1;
+		GridBagConstraints constraints2 = new GridBagConstraints();
+		constraints2.gridx = 0; 		// Empieza columna
+		constraints2.gridy = 1; 		// Empieza fila
+		constraints2.gridwidth = 1; 	// Ocupa columnas
+		constraints2.gridheight = 1; // Ocupa filas	;
+		constraints2.fill = GridBagConstraints.BOTH;
+		//constraints.anchor = GridBagConstraints.SOUTH;
+		constraints2.weighty = 1;
+		constraints2.weightx = 1;
+		panelFuenteTraza.add(linea1Traza,constraints);
+		panelFuenteTraza.add(linea2Traza,constraints2);//SOUTH
+		panelFuenteTraza.setPreferredSize(dPanelTrazas);
 		
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0; 		// Empieza columna
@@ -1035,7 +1156,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		//TODO Ocultado formato ódigo porque por ahora no funciona
 //		panelDerecha5.add(panelFuenteCodigo, constraints);
 		
-		constraints = new GridBagConstraints();
+		/*constraints = new GridBagConstraints();
 		constraints.gridx = 0; 		// Empieza columna
 		constraints.gridy = 1; 		// Empieza fila
 		constraints.gridwidth = 1; 	// Ocupa columnas
@@ -1044,7 +1165,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		constraints.weighty = 1;
 		
 		panelDerecha5.add(panelFuenteTraza, constraints);
-
+*/
 		constraints = new GridBagConstraints();
 		constraints.gridx = 0; 		// Empieza columna
 		constraints.gridy = 0; 		// Empieza fila
@@ -1054,6 +1175,170 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		constraints.weighty = 1;
 
 		this.pestanas.add(textos[67], panelPestana5);
+
+		//Pestaña 6
+		// Panel Izquierda
+				JPanel panelIzquierda4 = new JPanel();
+				panelIzquierda4.setLayout(new GridBagLayout());
+
+				// Panel colores
+
+				JPanel panelSeleccionColores4 = new JPanel();
+				panelSeleccionColores4.setBorder(new TitledBorder(textos[0]));
+				//panelSeleccionColores3.setPreferredSize(new Dimension(270, 300));
+				//panelSeleccionColores4.setPreferredSize(new Dimension(230, 50));
+
+				ButtonGroup bg4 = new ButtonGroup();
+				this.selectores4[0] = new JRadioButton(textos[1]);
+
+				this.selectores4[1] = new JRadioButton(textos[4]);
+
+
+
+
+				this.selectores4[0].setSelected(true);
+
+				int numeroSelectoresVisibles2 = 0;
+
+				for (int i = 0; i < NUM_SELECTORES_4; i++) {
+					//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+					//	textos y códigos estos radio buttons, no ocultándolos
+					if(!this.selectores4[i].isVisible()){
+						continue;
+					}
+					numeroSelectoresVisibles2++;
+					this.selectores4[i].addKeyListener(this);
+					this.selectores4[i].addActionListener(this);
+					this.selectores4[i].addMouseListener(this);
+					this.selectores4[i].setToolTipText(textos[12]);
+					bg4.add(this.selectores4[i]);
+					panelSeleccionColores4.add(this.selectores4[i]);			
+				}
+
+				panelSeleccionColores4.setLayout(new GridLayout(numeroSelectoresVisibles2, 1));
+
+				this.cp.setValores(CREANDO_PANEL, 65);
+				JPanel panelFila4[] = new JPanel[NUM_SELECTORES_4];
+				for (int i = 0; i < NUM_SELECTORES_4; i++) {
+					//	textos y códigos estos radio buttons, no ocultándolos
+					if(!this.selectores4[i].isVisible()){
+						continue;
+					}
+					panelFila4[i] = new JPanel();
+					panelFila4[i].setLayout(new BorderLayout());
+					panelFila4[i].add(this.selectores4[i], BorderLayout.WEST);
+
+					this.etiqColores4[i] = new JLabel("");
+					this.etiqColores4[i].addMouseListener(this);
+					this.etiqColores4[i].setForeground(new Color(0, 0, 0));
+					this.etiqColores4[i].setBackground(new Color(0, 0, 0));
+					this.panelesColores4[i] = creaPanelColor(this.etiqColores4[i]);
+					this.panelesColores4[i].addMouseListener(this);
+
+					panelFila4[i].add(this.panelesColores4[i], BorderLayout.EAST);
+					panelSeleccionColores4.add(panelFila4[i]);
+
+				}
+				panelSeleccionColores4.setPreferredSize(new Dimension(230,100));// 200));
+				//	Panel selección de tema
+				JPanel panelSeleccionTema4 = new JPanel();
+				//panelSeleccionTema3.setBorder(new TitledBorder(textos[71]));
+				panelSeleccionTema4.setBorder(new TitledBorder(textos[71]));
+				panelSeleccionTema4.setPreferredSize(new Dimension(230,100));
+				panelSeleccionTema4.setLayout(new FlowLayout());
+				JPanel panelSeleccion = new JPanel();
+				//panelSeleccionTema3.setBorder(new TitledBorder(textos[71]));
+				panelSeleccion.setBorder(new TitledBorder(textos[71]));
+
+				panelSeleccion.setLayout(new FlowLayout());
+
+				comboThemes = new JComboBox<String>();		
+				comboThemes.setName("comboThemes");
+				comboThemes.addItem(textos[72]);
+				comboThemes.addItem(textos[73]);
+				comboThemes.addItem(textos[74]);
+				comboThemes.addItem(textos[75]);
+				comboThemes.addItem(textos[76]);
+				comboThemes.addItem(textos[77]);
+
+				comboThemes.addActionListener(this);
+				comboThemes.addKeyListener(this);
+
+				panelSeleccionTema4.add(comboThemes);
+				//	Añadimos a panel izquierdo
+
+				 constraints2 = new GridBagConstraints();
+				constraints2.gridx = 0; 
+				constraints2.gridy = 0; 
+				
+				constraints2.gridwidth = 1;
+				constraints2.gridheight = 1; 
+				/*constraints2.fill = GridBagConstraints.VERTICAL;
+				
+				constraints2.weighty = 1;
+				constraints2.weightx = 1;*/
+				panelIzquierda4.add(panelSeleccionColores4,constraints2);
+				
+				constraints = new GridBagConstraints();
+				constraints.fill = GridBagConstraints.BOTH;
+				constraints.gridx = 0; 		// Empieza columna
+				/*constraints.gridy = 2; 		// Empieza fila
+				constraints.gridwidth = 1; 	// Ocupa columnas
+				constraints.gridheight = 1; // Ocupa filas	
+				//constraints.anchor = GridBagConstraints.CENTER;
+				constraints.fill = GridBagConstraints.VERTICAL;
+				constraints.weighty = 1;
+				constraints.weightx = 1;
+				*///panelIzquierda4.add(panelSeleccionColores4,constraints);
+				panelIzquierda4.add(panelFuenteTraza,constraints);
+
+				constraints2 = new GridBagConstraints();
+				constraints2.gridx = 0; 
+				constraints2.gridy = 2; 
+				constraints2.gridwidth = 1;
+				constraints2.gridheight = 1; 
+				constraints2.fill = GridBagConstraints.BOTH;
+				constraints2.weighty = 1;
+				constraints2.weightx = 1;
+				panelIzquierda4.add(panelSeleccionTema4, constraints2);
+
+				this.cp.setValores(CREANDO_PANEL, 55);
+
+				// Panel Derecha
+				JPanel panelDerecha4 = new JPanel();
+				panelDerecha4.setLayout(new BorderLayout());
+
+
+				// JColorChooser
+				this.jcc4 = new JColorChooser(new Color(0, 0, 0));
+				this.jcc4.addMouseListener(this);
+				this.jcc4.setPreferredSize(new Dimension(430, 300));
+				AbstractColorChooserPanel[] ab4=this.jcc4.getChooserPanels();
+				for(int i =1;i<ab4.length;i++) {
+					ab4[i].setPreferredSize(d12);
+					}
+				// Panel Botones Asignar y Borrar
+				JPanel panelBotonesDerecha4 = new JPanel();
+				this.asignar4 = new BotonTexto(textos[15]);
+				this.resetear4 = new BotonTexto(textos[16]);
+
+				panelBotonesDerecha4.add(this.asignar4);
+				panelBotonesDerecha4.add(this.resetear4);
+
+				this.asignar4.addMouseListener(this);
+				this.resetear4.addMouseListener(this);
+
+				this.asignar4.addKeyListener(this);
+				this.resetear4.addKeyListener(this);
+
+				panelDerecha4.add(this.jcc4, BorderLayout.NORTH);
+				panelDerecha4.add(panelBotonesDerecha4, BorderLayout.SOUTH);
+
+		JPanel panelPestana6 = new JPanel();
+		panelPestana6.setLayout(new BorderLayout());
+		panelPestana6.add(panelIzquierda4, BorderLayout.WEST);
+		panelPestana6.add(panelDerecha4, BorderLayout.EAST);
+		this.pestanas.add(textos[78], panelPestana6);
 		this.cp.setValores(CREANDO_PANEL, 90);
 		
 		this.pestanas.setToolTipTextAt(0, textos[62]);
@@ -1086,6 +1371,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		this.jcc1.setColor(this.etiqColores1[0].getBackground());
 		this.jcc2.setColor(this.etiqColores2[0].getBackground());
 		this.jcc3.setColor(this.etiqColores3[0].getBackground());
+		this.jcc4.setColor(this.etiqColores4[0].getBackground());
 
 		// Evita refrescos innecesarios en ventanas
 		this.creandoCuadro = false;
@@ -1108,7 +1394,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			this.dialogo.setLocation(coord[0], coord[1]);
 		}
 		this.cp.cerrar();
-		this.dialogo.setResizable(false);
+		this.dialogo.setResizable(true);
 		this.dialogo.setVisible(true);
 
 	}
@@ -1178,24 +1464,19 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				continue;
 			}
 			switch (i) {
+			
+
 			case 0:
-				color = this.ocv.getColorFEntrada();
-				break;
-
-			case 1:
-				color = this.ocv.getColorFSalida();
-				break;
-
-			case 2:
 				color = this.ocv.getColorPanel();
 				break;
-			case 3:
+			case 1:
 				color = this.ocv.getColorFlecha();
 				break;
-			case 4:
+			case 2:
+				
 				color = this.ocv.getColorActual();
 				break;
-			case 5:
+			case 3:
 				color = this.ocv.getColorCActual();
 				break;
 			case 11:
@@ -1222,7 +1503,31 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			this.etiqColores3[i].setBackground(new Color(color[0], color[1],
 					color[2]));
 		}
+		for (int i = 0; i < NUM_SELECTORES_4; i++) {
+			switch (i) {
+
+			case 0:
+				color = this.ocv.getColorFEntrada();
+				break;
+
+			case 1:
+				color = this.ocv.getColorFSalida();
+				break;
 		
+
+			default:
+				color[0] = color[1] = color[2] = 0;
+			}
+			this.panelesColores4[i].setForeground(new Color(color[0], color[1],
+					color[2]));
+			this.panelesColores4[i].setBackground(new Color(color[0], color[1],
+					color[2]));
+			this.etiqColores4[i].setForeground(new Color(color[0], color[1],
+					color[2]));
+			this.etiqColores4[i].setBackground(new Color(color[0], color[1],
+					color[2]));
+		}
+
 		this.comboThemes.setSelectedIndex(this.ocv.getTemaColorEditor());
 
 		for (int i = 0; i < NUM_SELECTORES_2; i++) {
@@ -1292,22 +1597,23 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		c = this.etiqColores1[4].getBackground();
 		this.ocv.setColorC1NCSalida(c.getRed(), c.getGreen(), c.getBlue());
 
-		c = this.etiqColores3[0].getBackground();
+		c = this.etiqColores4[0].getBackground();
 		this.ocv.setColorFEntrada(c.getRed(), c.getGreen(), c.getBlue());
 
-		c = this.etiqColores3[1].getBackground();
+		c = this.etiqColores4[1].getBackground();
 		this.ocv.setColorFSalida(c.getRed(), c.getGreen(), c.getBlue());
 
-		c = this.etiqColores3[2].getBackground();
+	
+		c = this.etiqColores3[0].getBackground();
 		this.ocv.setColorPanel(c.getRed(), c.getGreen(), c.getBlue());
 
-		c = this.etiqColores3[3].getBackground();
+		c = this.etiqColores3[1].getBackground();
 		this.ocv.setColorFlecha(c.getRed(), c.getGreen(), c.getBlue());
 
-		c = this.etiqColores3[4].getBackground();
+		c = this.etiqColores3[2].getBackground();
 		this.ocv.setColorActual(c.getRed(), c.getGreen(), c.getBlue());
 
-		c = this.etiqColores3[5].getBackground();
+		c = this.etiqColores3[3].getBackground();
 		this.ocv.setColorCActual(c.getRed(), c.getGreen(), c.getBlue());
 
 		c = this.etiqColores3[11].getBackground();
@@ -1349,6 +1655,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				iAux.intValue());
 		iAux = Integer
 				.parseInt((String) this.fuentesTamTraza.getSelectedItem());
+		
 		this.ocv.setFuenteTraza((String) this.fuentesTraza.getSelectedItem(),
 				iAux.intValue());// ,(String)fuentesTraza.getSelectedItem() );
 		
@@ -1359,7 +1666,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		this.ocv.setGrosorFlechaGrafo(this.grosorFlecha5.getSelectedIndex() +1);
 		this.ocv.setTipoFlechaGrafo(this.tipoFlecha5.getSelectedIndex());
 	}
-
+	
 	/**
 	 * Gestiona los eventos de acción
 	 * 
@@ -1399,6 +1706,15 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				}
 				if (this.selectores3[i].isSelected()) {
 					this.jcc3.setColor(this.etiqColores3[i].getBackground());
+				}
+			}
+			for (int i = 0; i < NUM_SELECTORES_4; i++) {
+				
+				if(!this.selectores4[i].isVisible()){
+					continue;
+				}
+				if (this.selectores4[i].isSelected()) {
+					this.jcc4.setColor(this.etiqColores4[i].getBackground());
 				}
 			}
 		} else if (e.getSource().getClass().getName().contains("JComboBox")
@@ -1508,12 +1824,16 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			accionAsignar2();
 		} else if (e.getComponent() == this.asignar3) {
 			accionAsignar3();
+		}else if (e.getComponent() == this.asignar4) {
+			accionAsignar4();
 		} else if (e.getComponent() == this.resetear1) {
 			accionResetear1();
 		} else if (e.getComponent() == this.resetear2) {
 			accionResetear2();
 		} else if (e.getComponent() == this.resetear3) {
 			accionResetear3();
+		}else if (e.getComponent() == this.resetear4) {
+			accionResetear4();
 		}
 
 		if (e.getComponent() == this.asignar1
@@ -1621,6 +1941,18 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 					this.jcc3.setColor(this.etiqColores3[i].getBackground());
 				}
 			}
+			for (int i = 0; i < NUM_SELECTORES_4; i++) {
+				//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+				//	textos y códigos estos radio buttons, no ocultándolos
+				if(!this.selectores4[i].isVisible()){
+					continue;
+				}
+				if (this.panelesColores4[i] == e.getComponent()
+						&& this.selectores4[i].isEnabled()) {
+					this.selectores4[i].setSelected(true);
+					this.jcc4.setColor(this.etiqColores4[i].getBackground());
+				}
+			}
 		} else if (e.getComponent().getClass().getCanonicalName()
 				.contains("JRadioButton")) {
 			for (int i = 0; i < NUM_SELECTORES_1; i++) {
@@ -1646,6 +1978,18 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 					this.jcc3.setColor(this.etiqColores3[i].getBackground());
 				}
 			}
+			for (int i = 0; i < NUM_SELECTORES_4; i++) {
+				//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+				//	textos y códigos estos radio buttons, no ocultándolos
+				if(!this.selectores4[i].isVisible()){
+					continue;
+				}
+				if (this.panelesColores4[i] == e.getComponent()
+						&& this.selectores4[i].isEnabled()) {
+					this.selectores4[i].setSelected(true);
+					this.jcc4.setColor(this.etiqColores4[i].getBackground());
+				}
+			}
 		} else if (e.getComponent().getClass().getCanonicalName()
 				.contains("BotonAceptar")) {
 			this.dialogo.setVisible(false);
@@ -1661,17 +2005,22 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				accionAsignar2();
 			} else if (e.getComponent() == this.asignar3) {
 				accionAsignar3();
+			} else if (e.getComponent() == this.asignar4) {
+				accionAsignar4();
 			} else if (e.getComponent() == this.resetear1) {
 				accionResetear1();
 			} else if (e.getComponent() == this.resetear2) {
 				accionResetear2();
 			} else if (e.getComponent() == this.resetear3) {
 				accionResetear3();
+			}else if (e.getComponent() == this.resetear4) {
+				accionResetear4();
 			}
 
 			if (e.getComponent() == this.asignar1
 					|| e.getComponent() == this.asignar2
 					|| e.getComponent() == this.asignar3
+					|| e.getComponent() == this.asignar4
 					|| e.getComponent() == this.aceptar) {
 				guardadoRecarga();
 			}
@@ -1742,7 +2091,26 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			}
 		}
 	}
-	
+	/**
+	 * Asigna el color seleccionado al elemento seleccionado del Modo 4.
+	 */
+	private void accionAsignar4() {
+		Color c = this.jcc4.getColor();
+
+		for (int i = 0; i < NUM_SELECTORES_4; i++) {
+			//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+			//	textos y códigos estos radio buttons, no ocultándolos
+			if(!this.selectores4[i].isVisible()){
+				continue;
+			}
+			if (this.selectores4[i].isSelected()) {
+				this.panelesColores4[i].setForeground(c);
+				this.panelesColores4[i].setBackground(c);
+				this.etiqColores4[i].setForeground(c);
+				this.etiqColores4[i].setBackground(c);
+			}
+		}
+	}
 	/**
 	 * Restablece el color del elemento seleccionado del Modo 1.
 	 */
@@ -1781,6 +2149,18 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 			}
 			if (this.selectores3[i].isSelected()) {
 				this.jcc3.setColor(this.etiqColores3[i].getBackground());
+			}
+		}
+	}
+	private void accionResetear4() {
+		for (int i = 0; i < NUM_SELECTORES_4; i++) {
+			//	TODO Esto hay que cambiarlo, eliminando los selectores, 
+			//	textos y códigos estos radio buttons, no ocultándolos
+			if(!this.selectores4[i].isVisible()){
+				continue;
+			}
+			if (this.selectores4[i].isSelected()) {
+				this.jcc4.setColor(this.etiqColores4[i].getBackground());
 			}
 		}
 	}

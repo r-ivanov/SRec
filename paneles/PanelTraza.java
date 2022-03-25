@@ -6,9 +6,16 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jgraph.JGraph;
+import org.jgraph.graph.DefaultCellViewFactory;
+import org.jgraph.graph.DefaultGraphModel;
+import org.jgraph.graph.GraphLayoutCache;
+import org.jgraph.graph.GraphModel;
+
 import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
+import cuadros.CuadroError;
 
 /**
  * Panel que contendrá la visualización de traza del algoritmo.
@@ -18,10 +25,14 @@ import conf.Conf;
  */
 class PanelTraza extends JPanel {
 	static final long serialVersionUID = 04;
-
+	private JLabel etiqueta; 
 	private String textoEntrada;
 	private String textoSalida;
-
+	private double escalaOriginal;			
+	private double escalaActual;
+	private JGraph graph;	
+	private int zoom = 0;	
+ static	String lineasTraza[];
 	/**
 	 * Constructor: crea un nuevo panel de traza.
 	 */
@@ -30,13 +41,19 @@ class PanelTraza extends JPanel {
 			this.textoEntrada = Texto.get("TR_E", Conf.idioma);
 			this.textoSalida = Texto.get("TR_S", Conf.idioma);
 
-			String lineasTraza[] = Ventana.thisventana.traza.getLineasTraza();
+			 lineasTraza = Ventana.thisventana.traza.getLineasTraza();
 
 			BorderLayout bl = new BorderLayout();
 			GridLayout gl = new GridLayout(lineasTraza.length, 1);
 			JPanel panelEtiquetas = new JPanel();
 			panelEtiquetas.setLayout(gl);
+			GraphModel model = new DefaultGraphModel();
+			GraphLayoutCache view = new GraphLayoutCache(model,
+					new DefaultCellViewFactory());
 			JLabel etiquetas[] = new JLabel[lineasTraza.length];
+			this.graph = new JGraph(model, view);
+
+			this.escalaOriginal = this.graph.getScale();
 
 			for (int i = 0; i < lineasTraza.length; i++) {
 				if (lineasTraza[i].contains("<hist>")) {
@@ -74,6 +91,15 @@ class PanelTraza extends JPanel {
 
 			this.setBackground(Conf.colorPanel);
 			panelEtiquetas.setBackground(Conf.colorPanel);
+			try {
+				this.visualizar();
+				this.refrescarZoom(Conf.zoomPila);
+			} catch (OutOfMemoryError oome) {
+				this.graph = null;
+				throw oome;
+			} catch (Exception e) {
+				throw e;
+			}
 
 		} else {
 			this.add(new JPanel());
@@ -93,7 +119,7 @@ class PanelTraza extends JPanel {
 
 				String lineasTraza[] = Ventana.thisventana.traza
 						.getLineasTraza();
-
+				//this.etiqueta = new JLabel(lineasTraza[0]);
 				int numNoHistoricos = 0;
 				if (Conf.historia == 2) // Si nodos históricos son eliminados
 				{
@@ -398,4 +424,25 @@ class PanelTraza extends JPanel {
 
 		this.updateUI();
 	}
+	public void refrescarZoom(int valor) {						
+		if (valor == 0) {
+			this.graph.setScale(this.escalaOriginal);
+		} else if (valor > 0) {
+			double v = valor;
+			v = v / 100;
+			v = v + 1;
+			v = v * this.escalaOriginal;
+			this.graph.setScale(v);
+		} else // if (valor<0)
+		{
+			double v = (valor * (-1));
+			v = v / 100;
+			v = 1 - v;
+			v = v * this.escalaOriginal;
+			this.graph.setScale(v);
+		}
+		this.escalaActual = this.graph.getScale();
+		this.zoom = valor;
+	}
+	
 }

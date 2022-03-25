@@ -1,8 +1,11 @@
 package datos;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import opciones.GestorOpciones;
 import opciones.OpcionFicherosRecientes;
@@ -14,6 +17,7 @@ import utilidades.ManipulacionElement;
 import utilidades.SelecDireccion;
 import utilidades.Texto;
 import conf.Conf;
+import cuadros.CuadroError;
 
 /**
  * Almacena archivos con valores para determinados métodos (opción "Guardar" de
@@ -27,6 +31,7 @@ public class AlmacenValores {
 	private String cadenas[];
 	private String fichero[];
 	private String mensajeError;
+	private String tipoFich;
 
 	private GestorOpciones gOpciones = new GestorOpciones();
 	private OpcionFicherosRecientes ofr;
@@ -40,13 +45,13 @@ public class AlmacenValores {
 		// Cargamos opción de ficheros recientes (para saber último directorio)
 		this.ofr = (OpcionFicherosRecientes) this.gOpciones.getOpcion(
 				"OpcionFicherosRecientes", true);
-		this.fichero = new String[2];
+		this.fichero = new String[3];
 		this.fichero[0] = this.ofr.getDir();
 	}
 
 	/**
 	 * Guarda los contenidos de los parámetros, las clases a las que pertenecen
-	 * y el nombre del método en un XML
+	 * y el nombre del método en un XML o TXT
 	 * 
 	 * @param cadenas
 	 *            valores para los paráemtros
@@ -56,13 +61,19 @@ public class AlmacenValores {
 	public void guardar(String cadenas[], MetodoAlgoritmo metodo) {
 
 		this.fichero[1] = null;
+		String[][] ext = new String[2][1];
+		ext[0][0]="xml";
+		ext[1][0]="txt";
+		String[] def = new String[2];
+		def[0]=Texto.get("ARCHIVO_XML", Conf.idioma);
+		def[1]="Documento TXT";
 		this.fichero = SelecDireccion.cuadroAbrirFichero(this.fichero[0],
-				Texto.get("CA_GUARPAR", Conf.idioma), null, "xml",
-				Texto.get("ARCHIVO_XML", Conf.idioma), 0);
+				Texto.get("CA_GUARPAR", Conf.idioma), null, ext,
+				def, 0);
 
 		// *1* Comprobarmos que el fichero existe
 
-		if (this.fichero != null && this.fichero[1] != null) {
+		if (this.fichero != null && this.fichero[1] != null && this.fichero[2]=="false") {
 			this.ofr.setDir(this.fichero[0]);
 			this.gOpciones.setOpcion(this.ofr, 2);
 
@@ -138,6 +149,37 @@ public class AlmacenValores {
 			} catch (IOException ioe) {
 				System.out.println("Error FileWriter 3");
 			}
+		} else if(fichero[2]=="true"){   //Tipo txt
+			this.ofr.setDir(this.fichero[0]);
+			this.gOpciones.setOpcion(this.ofr, 2);
+			File f = new File(this.fichero[0] + this.fichero[1]);
+			try {
+				f.createNewFile();
+			} catch (java.io.IOException ioe) {
+			}
+
+			// Inicialización de escritura
+			FileWriter fw = null;
+			try {
+				fw = new FileWriter(this.fichero[0] + this.fichero[1]);
+
+			} catch (IOException ioe) {
+				System.out.println("Error FileWriter 1");
+			}
+			try {
+				for (int i = 0; i < metodo.getNumeroParametros(); i++) {
+				fw.write(cadenas[i]+"\n ");
+				}
+			} catch (IOException ioe) {
+				System.out.println("Error FileWriter 1");
+			}
+			// Finalización de escritura
+			try {
+				fw.close();
+			} catch (IOException ioe) {
+				System.out.println("Error FileWriter 3");
+			}
+
 		}
 	}
 
@@ -155,13 +197,22 @@ public class AlmacenValores {
 		
 		this.ofr = (OpcionFicherosRecientes) this.gOpciones.getOpcion(
 				"OpcionFicherosRecientes", true);
+		String[][] ext = new String[2][1];
+		ext[0][0]="xml";
+		ext[1][0]="txt";
+		String[] def = new String[2];
+		def[0]=Texto.get("ARCHIVO_XML", Conf.idioma);
+		def[1]="Documento TXT";
 		this.fichero = SelecDireccion.cuadroAbrirFichero(this.ofr.getDir(),
-				Texto.get("CA_CARGPAR", Conf.idioma), null, "xml",
-				Texto.get("ARCHIVO_XML", Conf.idioma), 1);
-
+				Texto.get("CA_CARGPAR", Conf.idioma), null, ext,
+				def, 1);
+	
 		// *1* Comprobarmos que el fichero existe
+		String tipoTxt = this.fichero[2];
+		
+		
 
-		if (this.fichero != null && this.fichero[1] != null) {
+		if (this.fichero != null && this.fichero[1] != null&&tipoTxt=="false") {
 			this.ofr.setDir(this.fichero[0]);
 			this.gOpciones.setOpcion(this.ofr, 2);
 
@@ -171,7 +222,8 @@ public class AlmacenValores {
 			Element elementDocumento;
 			Element elementAlgoritmo[];
 			Element parametros[];
-
+			
+			
 			try {
 				elementDocumento = documento.getDocumentElement();
 				elementAlgoritmo = ManipulacionElement
@@ -190,6 +242,10 @@ public class AlmacenValores {
 					return false;
 				}
 				this.cadenas = new String[parametros.length];
+				
+				
+				
+				
 				for (int i = 0; i < parametros.length; i++) {
 					this.cadenas[i] = parametros[i].getAttribute("val");
 					this.cadenas[i] = this.cadenas[i].replace("&quot;", "\"");
@@ -215,8 +271,10 @@ public class AlmacenValores {
 					this.cadenas[i] = this.cadenas[i].replace("&Igrave;", "Ì");
 					this.cadenas[i] = this.cadenas[i].replace("&Ograve;", "Ò");
 					this.cadenas[i] = this.cadenas[i].replace("&Ugrave;", "Ù");
+				
 				}
-
+			
+				
 				for (int i = 0; i < parametros.length; i++) {
 					if (!(metodo.getTipoParametro(i).equals(parametros[i]
 							.getAttribute("clase")))) {
@@ -226,14 +284,49 @@ public class AlmacenValores {
 					}
 				}
 				return true; // Carga satisfactoria
-			} else {
+			}
+			else {
 				this.mensajeError = Texto.get("ERROR_PARAMALG", Conf.idioma)
 						+ elementAlgoritmo[0].getAttribute("nombre") + ").";
 				return false; // Sucedio error
 			}
+		
+			}
+		else  { 
+			//Si no contiene el "nombre" se tratara de un fichero txt
+			try {
+				FileReader fr = new FileReader(fichero[0] + fichero[1]);
+				BufferedReader br = new BufferedReader(fr);
+				ArrayList<String> cadenasList = new ArrayList<String>();
+				String linea;
+				while ((linea = br.readLine()) != null) {
+					cadenasList.add(linea);
+				}
+				this.cadenas = new String[cadenasList.size()];
+				for (int i = 0; i < cadenas.length; i++) {
+				/*	if (cadenasList.get(i).matches(".*[a-z].*")) { 
+						this.mensajeError =  Texto.get("ERROR_PARAMALG", Conf.idioma);
+						return false;  
+					}*/
+					
+				
+				cadenas[i] = cadenasList.get(i);
+					
+				}
+				fr.close();
+			} catch (Exception e) {
+				this.mensajeError = "Error al encontrar el fichero";
+
+				return false;
+			}
+			/*
+			 * this.cadenas = new String[1]; this.cadenas[0]=tipoTxt;
+			 */
+
+			return true;
 		}
-		this.mensajeError = "";
-		return false;
+		/*this.mensajeError = "Error al encontrar el fichero";
+		return false;*/
 	}
 
 	/**

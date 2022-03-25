@@ -39,12 +39,12 @@
 		<T valor="Help" idioma="en" id="MENU_AYUD_N"/>
 		
 		<!-- Mnemotecnicos, el ultimo es para el nombre del menu -->
-		<T valor="VSPRMNNCFGATUZXA" idioma="es" id="MNEMO_ARCHIVO"/>
-		<T valor="WCPRMNNLFSATUEXF" idioma="en" id="MNEMO_ARCHIVO"/>
-		<T valor="MIFZUGV" idioma="es" id="MNEMO_VISU"/>
-		<T valor="MIFZLGV" idioma="en" id="MNEMO_VISU"/>
-		<T valor="DMHSBRS" idioma="es" id="MNEMO_FILT"/>
-		<T valor="DMHSCRS" idioma="en" id="MNEMO_FILT"/>
+		<T valor="VSPRNCFGATUZXA" idioma="es" id="MNEMO_ARCHIVO"/>
+		<T valor="WCPRNLFSATUEXF" idioma="en" id="MNEMO_ARCHIVO"/>
+		<T valor="MNGUVZMF" idioma="es" id="MNEMO_VISU"/>
+		<T valor="MNGLVZMF" idioma="en" id="MNEMO_VISU"/>
+		<T valor="IDMHSBRS" idioma="es" id="MNEMO_FILT"/>
+		<T valor="IDMHSCRS" idioma="en" id="MNEMO_FILT"/>
 		<T valor="DNGAER" idioma="es" id="MNEMO_ARBL"/>
 		<T valor="DNGASR" idioma="en" id="MNEMO_ARBL"/>
 		<T valor="SOECT" idioma="es" id="MNEMO_TRAZ"/>
@@ -117,10 +117,10 @@
 			
 		<T valor="Formato tipogr[aacute]fico..." idioma="es" id="MENU_VISU_10"/>
 		<T valor="Typographical format..." idioma="en" id="MENU_VISU_10"/>
-		<T valor="Configuraci[oacute]n de zoom..." idioma="es" id="MENU_VISU_11"/>
+		<T valor="Ajuste de zoom..." idioma="es" id="MENU_VISU_11"/>
 		<T valor="Zoom configuration..." idioma="en" id="MENU_VISU_11"/>
-		<T valor="Ubicaci[oacute]n de vistas y paneles..." idioma="es" id="MENU_VISU_12"/>
-		<T valor="Views and panels location..." idioma="en" id="MENU_VISU_12"/>
+		<T valor="Ubicaci[oacute]n de vistas y paneles" idioma="es" id="MENU_VISU_12"/>
+		<T valor="Views and panels location" idioma="en" id="MENU_VISU_12"/>
 		<T valor="Arranque de animaci[oacute]n en estado inicial_CheckBoxMenuItem_" idioma="es" id="MENU_VISU_18"/>
 		<T valor="Boot the animation in initial state_CheckBoxMenuItem_" idioma="en" id="MENU_VISU_18"/>
 		<T valor="Identificador de m[eacute]todo_CheckBoxMenuItem_" idioma="es" id="MENU_VISU_19"/>
@@ -169,12 +169,15 @@
 	
 		
 		<!-- Menu Informacion -->
-		<T valor="Informaci[oacute]n de la animaci[oacute]n..." idioma="es" id="MENU_INFO_01"/>
-		<T valor="Animation info..." idioma="en" id="MENU_INFO_01"/>
-		<T valor="Informaci[oacute]n sobre nodo activo..." idioma="es" id="MENU_INFO_02"/>
-		<T valor="Active node info..." idioma="en" id="MENU_INFO_02"/>
-		
-		
+		<T valor="Informaci[oacute]n de la animaci[oacute]n" idioma="es" id="MENU_INFO_01"/>
+		<T valor="Animation information" idioma="en" id="MENU_INFO_01"/>
+		<T valor="Informaci[oacute]n sobre nodo activo" idioma="es" id="MENU_INFO_02"/>
+		<T valor="Active node information" idioma="en" id="MENU_INFO_02"/><T
+			valor="Informaci[oacute]n de redundancia" idioma="es" id="MENU_INFO_03">
+		</T>
+		<T valor="Redundancy information" idioma="en" id="MENU_INFO_03"></T>
+
+
 		<!-- Menu Configuracion -->
 		<T valor="Restaurar configuraci[oacute]n" idioma="es" id="MENU_VISU_13"/>
 		<T valor="Restore configuration" idioma="en" id="MENU_VISU_13"/>	
@@ -222,8 +225,8 @@
 		<T valor="New animation..." idioma="en" id="BARRA_HERR_TTT27"/>
 		<T valor="Generar grafo de dependencia..." idioma="es" id="BARRA_HERR_TTT35"/>
         <T valor="Generate dependency graph..." idioma="en" id="BARRA_HERR_TTT35"/>
-		<T valor="Abrir terminal..." idioma="es" id="BARRA_HERR_TTT36_OPEN"/>
-        <T valor="Open terminal..." idioma="en" id="BARRA_HERR_TTT36_OPEN"/>
+		<T valor="Abrir terminal" idioma="es" id="BARRA_HERR_TTT36_OPEN"/>
+        <T valor="Open terminal" idioma="en" id="BARRA_HERR_TTT36_OPEN"/>
 		<T valor="Cerrar terminal..." idioma="es" id="BARRA_HERR_TTT36_CLOSE"/>
         <T valor="Close terminal..." idioma="en" id="BARRA_HERR_TTT36_CLOSE"/>
 		<T valor="Nueva animaci[oacute]n..." idioma="es" id="BARRA_HERR_TTT05"/>
@@ -261,8 +264,11 @@
 		<T valor="Chronological order" idioma="en" id="BARRA_HERR_TTT30"/>
 		<T valor="Estructura de datos en DYV" idioma="es" id="BARRA_HERR_TTT31"/>
 		<T valor="Data structure on divide and conquer" idioma="en" id="BARRA_HERR_TTT31"/>
-		<T valor="Informaci[oacute]n de la animaci[oacute]n..." idioma="es" id="BARRA_HERR_TTT32"/>
-		<T valor="Animation info..." idioma="en" id="BARRA_HERR_TTT32"/>
+		<T valor="Informaci[oacute]n de la animaci[oacute]n" idioma="es" id="BARRA_HERR_TTT32"/>
+		<T valor="Animation info" idioma="en" id="BARRA_HERR_TTT32"/><T
+			valor="Informaci[oacute]n sobre la redundancia" idioma="es" id="BARRA_HERR_TTT37">
+		</T>
+		<T valor="Redundancy info" idioma="en" id="BARRA_HERR_TTT37"></T>
 		<T valor="Mostrar estructura en la vista de [aacute]rbol" idioma="es" id="BARRA_HERR_TTT16"/>
 		<T valor="Show structure in the tree view" idioma="en" id="BARRA_HERR_TTT16"/>
 		<T valor="Mostrar estructura completa en la vista cronol[oacute]gica" idioma="es" id="BARRA_HERR_TTT17"/>
@@ -517,6 +523,16 @@
 		<T valor="All parameter numbers for indexes have to be full or empty." idioma="en" id="ERROR_INFOPARAM3"/>
 		<T valor="Hay valores repetidos en los datos introducidos." idioma="es" id="ERROR_INFOPARAM4"/>
 		<T valor="There are repeated values within the introduced data." idioma="en" id="ERROR_INFOPARAM4"/>
+		
+		<T valor="El n[uacute]mero de par[aacute]metro dado para la estructura no es v[aacute]lido." idioma="es" id="ERROR_INFOPARAMVE1"/>
+		<T valor="Given parameter number for data structure is not valid." idioma="en" id="ERROR_INFOPARAMVE1"/>
+		<T valor="Al menos uno de los n[uacute]meros de par[aacute]metro dados para los [iacute]ndices no es v[aacute]lido." idioma="es" id="ERROR_INFOPARAMVE2"/>
+		<T valor="At least a given parameter number for indexes is not valid." idioma="en" id="ERROR_INFOPARAMVE2"/>
+		<T valor="Los n[uacute]meros de par[aacute]metro para los [iacute]ndices son obligatorios exceptuando la estimaci[oacute]n de cota." idioma="es" id="ERROR_INFOPARAMVE3"/>
+		<T valor="All parameter numbers for indexes have to be full except for the estimated threshold." idioma="en" id="ERROR_INFOPARAMVE3"/>
+		<T valor="Hay valores repetidos en los datos introducidos." idioma="es" id="ERROR_INFOPARAMVE4"/>
+		<T valor="There are repeated values within the introduced data." idioma="en" id="ERROR_INFOPARAMVE4"/>
+		
 		<T valor="Los m[eacute]todos seleccionados no tienen ning[uacute]n par[aacute]metro en com[uacute]n." idioma="es" id="ERROR_PARAM_GD_TXT"/>
 		<T valor="Selected methods have no common parameters." idioma="en" id="ERROR_PARAM_GD_TXT"/>
 		
@@ -597,7 +613,31 @@
 		
 		<T valor="[iquest]Desea activar las vistas de Divide y Vencer[aacute]s para alg[uacute]n m[eacute]todo?" idioma="es" id="PREGMEN_SELECCMETODOSDYV"/>
 		<T valor="Do you want to activate Divide and conquer views for any method?" idioma="en" id="PREGMEN_SELECCMETODOSDYV"/>
-		
+		<T valor="Activaci[oacute]n de vistas " idioma="es" id="PREG_SELECCVISTASESPECIFICAS"></T>
+		<T valor="Enabling views" idioma="en" id="PREG_SELECCVISTASESPECIFICAS"></T>
+		<T valor="Seleccione las vistas que desea activar" idioma="es" id="PREGMEN_SELECCVISTASESPECIFICAS"></T>
+		<T valor="Select the views to enable" idioma="en" id="PREGMEN_SELECCVISTASESPECIFICAS"></T>
+		<T valor="Vistas generales" idioma="es" id="BOTON1_SELECCVISTASESPECIFICAS"></T>
+		<T valor="General views" idioma="en" id="BOTON1_SELECCVISTASESPECIFICAS"></T>
+		<T valor="Vistas para divide y vencer[aacute]s" idioma="es" id="BOTON2_SELECCVISTASESPECIFICAS"></T>
+		<T valor="Divide and Conquer views" idioma="en" id="BOTON2_SELECCVISTASESPECIFICAS"></T>
+		<T valor="Vistas para [aacute]rboles de b[uacute]squeda" idioma="es" id="BOTON3_SELECCVISTASESPECIFICAS"></T>
+		<T valor="Search tree views" idioma="en" id="BOTON3_SELECCVISTASESPECIFICAS"></T>
+		<T valor="Maximizaci[oacute]n" idioma="es" id="BOTON_MAXVISTASESPECIFICAS"></T>
+		<T valor="Maximization" idioma="en" id="BOTON_MAXVISTASESPECIFICAS"></T>
+		<T valor="Minimizaci[oacute]n" idioma="es" id="BOTON_MINVISTASESPECIFICAS"></T>
+		<T valor="Minimization" idioma="en" id="BOTON_MINVISTASESPECIFICAS"></T>
+		<T valor="Indique el tipo de problema de optimizaci[oacute]n:" idioma="es" id="PRIMERAPREGUNTA_VISTASESPECIFICAS"></T>
+		<T valor="Indicate the type of optimization problem:" idioma="en" id="PRIMERAPREGUNTA_VISTASESPECIFICAS"></T>
+		<T valor="Número del parámetro que representa (0.." idioma="es" id="INDICACION_VISTASESPECIFICAS"></T>
+		<T valor="Number of the parameter that represents (0 .." idioma="en" id="INDICACION_VISTASESPECIFICAS"></T>
+		<T valor=" La medida asociada a la soluci[oacute]n parcial" idioma="es" id="SOLPARCIAL_VISTASESPECIFICAS"></T>
+		<T valor=" The measure associated with the partial solution" idioma="en" id="SOLPARCIAL_VISTASESPECIFICAS"></T>
+		<T valor=" La medida asociada a la mejor soluci[oacute]n encontrada" idioma="es" id="MEJORSOL_VISTASESPECIFICAS"></T>
+		<T valor=" The measure associated with the best solution found" idioma="en" id="MEJORSOL_VISTASESPECIFICAS"></T>
+		<T valor=" La estimaci[oacute]n de cota" idioma="es" id="ESTIM_VISTASESPECIFICAS"></T>
+		<T valor=" The threshold estimate" idioma="en" id="ESTIM_VISTASESPECIFICAS"></T>
+
 		<!-- Excepciones -->
 		<T valor="Error en informaci[oacute]n de configuraci[oacute]n de opciones." idioma="es" id="EXCEP_INFOCONF"/>
 		<T valor="Error in the information about configuration." idioma="en" id="EXCEP_INFOCONF"/>		
@@ -800,6 +840,10 @@
 		<!-- Cuadro Vistas, Zoom y de seleccion de vistas disponibles para exportacion -->
 		<T valor="Vista de [aacute]rbol" idioma="es" id="V_ARBOL"/>
 		<T valor="Tree view" idioma="en" id="V_ARBOL"/>
+		<T valor="Vista de líneas - global" idioma="es" id="V_GLOBAL_VAL"/>
+		<T valor="Line view - global" idioma="en" id="V_GLOBAL_VAL"/>
+		<T valor="Vista de líneas - rama" idioma="es" id="V_RAMA_VAL"/>
+		<T valor="Line view - branch" idioma="en" id="V_RAMA_VAL"/>
 		<T valor="Vista de pila" idioma="es" id="V_PILA"/>
 		<T valor="Stack view" idioma="en" id="V_PILA"/>
 		<T valor="Vista de traza" idioma="es" id="V_TRAZA"/>
@@ -807,7 +851,10 @@
 		<T valor="Vista de [aacute]rbol con estructura" idioma="es" id="V_ARBOL_E"/>
 		<T valor="Tree with structure view" idioma="en" id="V_ARBOL_E"/>			
 		<T valor="Vista cronol[oacute]gica" idioma="es" id="V_CRONO"/>
-		<T valor="Chronological view" idioma="en" id="V_CRONO"/>
+		<T valor="Chronological view" idioma="en" id="V_CRONO"/><T
+			valor="Vista coordenadas" idioma="es" id="V_COORDENADAS">
+		</T>
+		<T valor="Coordinates view" idioma="en" id="V_COORDENADAS"></T>
 		<T valor="Vista de estructura" idioma="es" id="V_ESTRUC"/>
 		<T valor="Structure view" idioma="en" id="V_ESTRUC"/>
 		<T valor="Vista de grafo" idioma="es" id="V_GRAFO_DEP"/>
@@ -829,7 +876,7 @@
 		
 		
 		<T valor="Horizontal" idioma="es" id="HORIZONTAL"/>
-		<T valor="Horiontal" idioma="en" id="HORIZONTAL"/>	
+		<T valor="Horizontal" idioma="en" id="HORIZONTAL"/>	
 		<T valor="Vertical" idioma="es" id="VERTICAL"/>
 		<T valor="Vertical" idioma="en" id="VERTICAL"/>
 		
@@ -1085,8 +1132,9 @@
 		<T valor="Fuente" idioma="es" id="COCV_FUENT"/>
 		<T valor="Font" idioma="en" id="COCV_FUENT"/>	
 		<T valor="Tama[ntilde]o" idioma="es" id="COCV_FUENTTAM"/>
-		<T valor="Size" idioma="en" id="COCV_FUENTTAM"/>			
-		
+		<T valor="Size" idioma="en" id="COCV_FUENTTAM"/><T valor="Texto" idioma="es" id="COCV_TEXTO"></T>
+		<T valor="Text" idioma="en" id="COCV_TEXTO"></T>
+
 		<!-- Cuadro Opcion MVJava -->
 		<T valor="Escriba aqu[iacute] la direcci[oacute]n" idioma="es" id="COMVJ_ESCRDIR"/>
 		<T valor="Write here the complete path" idioma="en" id="COMVJ_ESCRDIR"/>
@@ -1174,9 +1222,26 @@
 		<T valor="Nodo seleccionado" idioma="es" id="CINFONODO_NODSEL"/>
 		<T valor="Selected node" idioma="en" id="CINFONODO_NODSEL"/>
 		<T valor="Informaci[oacute]n de nodo" idioma="es" id="CINFONODO_TITULO"/>
-		<T valor="Node info" idioma="en" id="CINFONODO_TITULO"/>
-		
-		
+		<T valor="Node info" idioma="en" id="CINFONODO_TITULO"/><!--Cuadro Informacion Redundancia--><T
+			valor="Informaci[oacute]n de redundancia" idioma="es" id="CINFOTITULO_REDUNDANCIA">
+		</T>
+		<T valor="Redundancy info" idioma="en" id="CINFOTITULO_REDUNDANCIA"></T>
+		<T valor="Datos globales:" idioma="es" id="CINFODATOSGLOBALES_REDUNDANCIA"></T>
+		<T valor="Global data:" idioma="en" id="CINFODATOSGLOBALES_REDUNDANCIA"></T>
+		<T valor="Algunos casos de redundancia:" idioma="es" id="CINFOALGUNOSCASOS_REDUNDANCIA"></T>
+		<T valor="Some cases of redundancy:" idioma="en" id="CINFOALGUNOSCASOS_REDUNDANCIA"></T>
+		<T valor="Nodos recursivos [uacute]nicos" idioma="es" id="CINFONODOU_REDUNDANCIA"></T>
+		<T valor="Unique recursive nodes" idioma="en" id="CINFONODOU_REDUNDANCIA"></T>
+		<T valor="Nodos recursivos no [uacute]nicos" idioma="es" id="CINFONODONU_REDUNDANCIA"></T>
+		<T valor="Non-unique recursive nodes" idioma="en" id="CINFONODONU_REDUNDANCIA"></T>
+		<T valor="Nodos de casos b[aacute]sicos" idioma="es" id="CINFONODOBAS_REDUNDANCIA"></T>
+		<T valor="Base case nodes" idioma="en" id="CINFONODOBAS_REDUNDANCIA"></T>
+		<T valor="Total de nodos" idioma="es" id="CINFONODOTOT_REDUNDANCIA"></T>
+		<T valor="Total nodes" idioma="en" id="CINFONODOTOT_REDUNDANCIA"></T>
+		<T valor="Nº nodos" idioma="es" id="CINFONODO_NNODOS"></T>
+		<T valor="No. nodes" idioma="en" id="CINFONODO_NNODOS"></T>
+
+
 		<!-- Cuadro Buscar llamada -->
 		<T valor="B[uacute]squeda de llamadas" idioma="es" id="CUBSQ_TITULO"/>
 		<T valor="Calls search" idioma="en" id="CUBSQ_TITULO"/>
@@ -1279,13 +1344,19 @@
 		<T valor="m[eacute]todos disponibles para la clase" idioma="es" id="CSM_METDISP"/>
 		<T valor="availables methods for the class" idioma="en" id="CSM_METDISP"/>				
 		<T valor="Seleccione esta casilla para activar vistas de la t[eacute]cnica Divide y Vencer[aacute]s" idioma="es" id="CSM_MARCPROC"/>
-		<T valor="Check this cell to active Divide and Conquer views" idioma="en" id="CSM_MARCPROC"/>			
+		<T valor="Check this cell to active Divide and Conquer views" idioma="en" id="CSM_MARCPROC"/>	
+		<T valor="Seleccione esta casilla para activar vistas basadas en [Aacute]rboles de B[uacute]squeda" idioma="es" id="CSM_MARCPROC1"/>
+		<T valor="Check this cell to active Search Tree views" idioma="en" id="CSM_MARCPROC1"/>		
 		<T valor="No se pueden activar vistas de Divide y Vencer[aacute]s para este m[eacute]todo" idioma="es" id="CSM_MARCPROCNO"/>
-		<T valor="Divide and Conquer views can't be activated for this method" idioma="en" id="CSM_MARCPROCNO"/>			
+		<T valor="Divide and Conquer views can't be activated for this method" idioma="en" id="CSM_MARCPROCNO"/>	
+		<T valor="No se pueden activar vistas de [Aacute]rboles de B[uacute]squeda para este m[eacute]todo" idioma="es" id="CSM_MARCPROC1NO"/>
+		<T valor="Search Tree views can't be activated for this method" idioma="en" id="CSM_MARCPROC1NO"/>			
 		<T valor="La clase no contiene m[eacute]todos visualizables." idioma="es" id="CSM_NOVISMET"/>
 		<T valor="The class has not visualizable methods" idioma="en" id="CSM_NOVISMET"/>			
 		<T valor="Seleccione los m[eacute]todo(s) para los que desea activar las vistas de Divide y Vencer[aacute]s" idioma="es" id="CSM_ESCMET"/>
-		<T valor="Select method(s) to active Divide and Conquer views" idioma="en" id="CSM_ESCMET"/>					
+		<T valor="Select method(s) to active Divide and Conquer views" idioma="en" id="CSM_ESCMET"/>		
+		<T valor="Seleccione los m[eacute]todo(s) para los que desea activar las vistas de [Aacute]rboles de B[uacute]squeda" idioma="es" id="CSM_ESCMET2"/>
+		<T valor="Select method(s) to active Search Tree views" idioma="en" id="CSM_ESCMET2"/>			
 		<T valor="Seleccionar todos los m[eacute]todos" idioma="es" id="CSM_SELECTTODO"/>
 		<T valor="Select all methods" idioma="en" id="CSM_SELECTTODO"/>
 		<T valor="Signaturas de los m[eacute]todos visualizables y de los m[eacute]todos llamados" idioma="es" id="CSM_SIGNAT"/>	<!-- usado en CuadroMetodosProcesados tambien -->
@@ -1294,6 +1365,8 @@
 		<T valor="Structure parameter number | Indexes parameter numbers" idioma="en" id="CSM_INDICAC"/>
 		<T valor="Inserte el n[uacute]mero de par[aacute]metro que alberga la esctructura" idioma="es" id="CSM_INDICAESTR"/>
 		<T valor="Insert parameter number of which contains the structure" idioma="en" id="CSM_INDICAESTR"/>
+		<T valor="Inserte el tipo de m[eacute]todo a usar" idioma="es" id="CSM_INDICATIPO"/>
+		<T valor="Insert the method type to use" idioma="en" id="CSM_INDICATIPO"/>
 		<T valor="Inserte los n[uacute]meros de par[aacute]metros que albergan los [iacute]ndices, separados por comas" idioma="es" id="CSM_INDICAPARAM"/>
 		<T valor="Insert parameter number of which contains the indexes, separated by commas" idioma="en" id="CSM_INDICAPARAM"/>
 		
@@ -1301,6 +1374,8 @@
 		<T valor="Structure" idioma="en" id="CSM_FILASUPESTR"/>
 		<T valor="[iacute]ndices" idioma="es" id="CSM_FILASUPINDIC"/>
 		<T valor="Indexes" idioma="en" id="CSM_FILASUPINDIC"/>
+		<T valor="Tipo m[eacute]todo" idioma="es" id="CSM_FILASUPTIPO"/>
+		<T valor="Method type" idioma="en" id="CSM_FILASUPTIPO"/>
 		
 		<T valor="Rec." idioma="es" id="CSM_TECREC"/>
 		<T valor="Rec." idioma="en" id="CSM_TECREC"/>
@@ -1314,6 +1389,8 @@
 		<T valor="Method" idioma="en" id="CIPDYV_METODO"/>
 		<T valor="N[uacute]mero del par[aacute]metro que contiene la estructura" idioma="es" id="CIPDYV_PARAMESTR"/>
 		<T valor="Number of the parameter which contains the data structure" idioma="en" id="CIPDYV_PARAMESTR"/>
+		<T valor="N[uacute]mero del par[aacute]metro que contiene la estructura del eje X" idioma="es" id="CIPDYV_PARAMESTRX"></T>
+		<T valor="Number of the parameter which contains the data structure of the X axis" idioma="en" id="CIPDYV_PARAMESTRX"></T>
 		<T valor="N[uacute]mero de los par[aacute]metros que delimitan el [aacute]rea" idioma="es" id="CIPDYV_PARAMINDI1"/>
 		<T valor="Number of the parameters which limit the affected" idioma="en" id="CIPDYV_PARAMINDI1"/>
 		<T valor="de la estructura afectada en cada subllamada" idioma="es" id="CIPDYV_PARAMINDI2"/>
@@ -1372,8 +1449,8 @@
 		
 		
 		<!-- Cuadro paneles -->
-		<T valor="Disposici[oacute]n de paneles" idioma="es" id="CPAN_DISPOS"/>
-		<T valor="Panels location" idioma="en" id="CPAN_DISPOS"/>	
+		<T valor="Ubicaci[oacute]n de vistas y paneles" idioma="es" id="CPAN_DISPOS"/>
+		<T valor="Location of views and panels" idioma="en" id="CPAN_DISPOS"/>	
 
 		<!-- Cuadro terminal -->
 		<T valor="Terminal SRec" idioma="es" id="TER_TITULO"/>
@@ -1463,8 +1540,6 @@
 		<T valor="Regula entre 0 y 5 el n[uacute]mero de segundos que transcurren entre paso y paso de la animaci[oacute]n" idioma="es" id="PBV_REGULAR05"/>
 		<T valor="Regulate between 0 and 5 seconds the length of each step in the animation" idioma="en" id="PBV_REGULAR05"/>			
 		
-		
-		
 		<!-- Panel Arbol - menu contextual -->
 		<T valor="Detalle E/S" idioma="es" id="PARB_DET"/>
 		<T valor="I/O detail" idioma="en" id="PARB_DET"/>
@@ -1481,8 +1556,17 @@
 		
 		<!-- Panel Codigo -->
 		<T valor="Fichero Java no encontrado." idioma="es" id="PCOD_ARCHJAVANOENC"/>
-		<T valor="Java file not found." idioma="en" id="PCOD_ARCHJAVANOENC"/>			
-				
+		<T valor="Java file not found." idioma="en" id="PCOD_ARCHJAVANOENC"/>	
+
+		<!-- Panel Valores Globales -->
+		<T valor="Valor de la cota" idioma="es" id="PVG_COTA"/>
+		<T valor="Threshold value" idioma="en" id="PVG_COTA"/>	
+		<T valor="Soluci[oacute]n actual" idioma="es" id="PVG_SOLACTUAL"/>
+		<T valor="Current solution" idioma="en" id="PVG_SOLACTUAL"/>		
+		<T valor="Mejor soluci[oacute]n" idioma="es" id="PVG_SOLMEJOR"/>
+		<T valor="Best solution" idioma="en" id="PVG_SOLMEJOR"/>	
+		<T valor="Nodos/Llamadas al metodo" idioma="es" id="PVG_NODOS"/>
+		<T valor="Nodes/Method calls" idioma="en" id="PVG_NODOS"/>		
 		
 		<!-- Panel Traza -->
 		<T valor="entra " idioma="es" id="TR_E"/>

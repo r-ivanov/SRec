@@ -150,9 +150,6 @@ public class FamiliaEjecuciones {
 	 * Actualiza el panel de la familia de ejecuciones dado un tamaño y una
 	 * orientación.
 	 * 
-	 * @param size
-	 *            Altura del panel si la orientación es horizontal, o Anchura si
-	 *            es vertical.
 	 * @param orientacion
 	 *            Orientación del panel, Conf.PANEL_HORIZONTAL o
 	 *            Conf.PANEL_VERTICAL.

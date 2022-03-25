@@ -30,6 +30,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.jgraph.JGraph;
+import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultGraphModel;
@@ -43,6 +44,7 @@ import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
 import cuadros.CuadroInfoNodo;
+import datos.MetodoAlgoritmo;
 import datos.RegistroActivacion;
 import eventos.NavegacionListener;
 
@@ -319,7 +321,8 @@ MouseListener, MouseMotionListener {
 
 			this.cc = new ContenedorArbol(Ventana.thisventana.traza.getRaiz(),
 					this.graph, this.nyp, 1);
-
+		
+			
 			this.celdas = this.cc.getCeldas();
 
 			this.graph.getGraphLayoutCache().insert(this.celdas);
@@ -706,6 +709,7 @@ MouseListener, MouseMotionListener {
 			// Menú contextual: primera opción: etiqueta detallada
 			if (item == this.opcionesMenuContextual[0]) {
 				if (this.ra != null && this.haEntradoAhora) {
+					
 					new EtiquetaFlotante(this.ratonXAbs, this.ratonYAbs,
 							this.ra.getNombreMetodo(),
 							this.ra.getEntradaCompletaString(),
@@ -728,6 +732,7 @@ MouseListener, MouseMotionListener {
 			// Menú contextual: tercera opción: cuadro de inforamción sobre nodo
 			else if (item == this.opcionesMenuContextual[2]) {
 				new CuadroInfoNodo(Ventana.thisventana, this.ra);
+				
 			}
 			// Menú contextual: cuarta opción: seleccionar/no seleccionar
 			else if (item == this.opcionesMenuContextual[3]) {
@@ -850,7 +855,7 @@ MouseListener, MouseMotionListener {
 	 * @param valor
 	 *            Nuevo valor para el zoom.
 	 */
-	public void refrescarZoom(int valor) {
+	public void refrescarZoom(int valor) { 
 		if (valor == 0) {
 			this.graph.setScale(this.escalaOriginal);
 		} else if (valor > 0) {

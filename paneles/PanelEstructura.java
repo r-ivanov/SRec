@@ -82,8 +82,7 @@ class PanelEstructura extends JPanel implements MouseListener {
 
 		Conf.calcularDegradadosEstructura(
 				Ventana.thisventana.traza.getAltura(), false);
-
-		this.registro = Ventana.thisventana.traza.getRaiz().getNodoActual();
+			this.registro = Ventana.thisventana.traza.getRaiz().getNodoActual();
 
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,

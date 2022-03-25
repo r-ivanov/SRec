@@ -119,7 +119,7 @@ public class VisorAyuda extends Thread implements ActionListener,
 		int coord[] = Conf.ubicarCentro(this.anchoCuadro, this.altoCuadro);
 		this.frame.setLocation(coord[0], coord[1]);
 		this.frame.setSize(this.anchoCuadro, this.altoCuadro);
-		this.pane.addHyperlinkListener(this);
+		this.pane.addHyperlinkListener(this); 
 	}
 
 	@Override

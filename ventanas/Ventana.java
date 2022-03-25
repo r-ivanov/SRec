@@ -1,6 +1,9 @@
 package ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -22,8 +25,11 @@ import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import org.jgraph.JGraph;
+
 import opciones.GestorOpciones;
 import opciones.OpcionBorradoFicheros;
+import opciones.OpcionConfVisualizacion;
 import opciones.OpcionFicherosRecientes;
 import opciones.OpcionMVJava;
 import opciones.OpcionOpsVisualizacion;
@@ -47,6 +53,7 @@ import cuadros.CuadroGenerarAleatorio;
 import cuadros.CuadroGenerarGrafoDependencia;
 import cuadros.CuadroIdioma;
 import cuadros.CuadroInfoNodo;
+import cuadros.CuadroInfoRedundancia;
 import cuadros.CuadroInfoTraza;
 import cuadros.CuadroInformacion;
 import cuadros.CuadroIntro;
@@ -102,14 +109,16 @@ public class Ventana extends JFrame implements ActionListener {
 	// implementar antirrebotes en botones
 
 	private PanelVentana panelVentana;
+	
 
 	private Preprocesador p = null;
 
 	public Traza traza = null;
 	public Traza trazaCompleta = null;
 
-	private ClaseAlgoritmo claseAlgoritmo = null; // Nos ayuda a crear
+	public ClaseAlgoritmo claseAlgoritmo = null; // Nos ayuda a crear
 	// animaciones
+	
 	private boolean claseHabilitada = false; // A true si la clase cargada
 	// permite
 	// generar animaciones (correcta y con
@@ -161,6 +170,7 @@ public class Ventana extends JFrame implements ActionListener {
 	 * Crea una nueva instancia de la ventana de la aplicación.
 	 */
 	public Ventana() {
+		
 		if (thisventana == null) {
 			thisventana = this;
 		} else {
@@ -199,60 +209,69 @@ public class Ventana extends JFrame implements ActionListener {
 		// Cargamos estos textos ahora para no tener que hacer 30 cargados cada
 		// vez que pulsamos un botón de menú
 		String codigos2[] = {
-				"MENU_ARCH_00",
-				"MENU_ARCH_03",
-				"MENU_ARCH_02",
-				"MENU_ARCH_04",
-				"MENU_ARCH_05", // 0 a 4
-				"MENU_ARCH_06",
-				"MENU_ARCH_13",
-				"MENU_ARCH_07",
-				"MENU_ARCH_12",
-				"MENU_ARCH_09", // 5 a 9
-				"MENU_ARCH_11",
-				"MENU_ARCH_10",
-				"MENU_ARCH_08",
-				"MENU_INFO_01",
-				"MENU_INFO_02", // 10 a 14
-				"MENU_INFO_03",
-				"MENU_INFO_04",
-				"MENU_VISU_02",
-				"MENU_VISU_03",
-				"MENU_VISU_04", // 15 a 19
-				"MENU_VISU_05",
-				"MENU_VISU_06",
-				"MENU_VISU_07",
-				"MENU_VISU_08",
-				"MENU_VISU_09", // 20 a 24
-				"MENU_VISU_10",
-				"MENU_VISU_11",
-				"MENU_VISU_12",
-				"MENU_VISU_13",
-				"MENU_VISU_14", // 25 a 29
-				"MENU_VISU_15",
-				"MENU_VISU_16",
-				"MENU_CONF_01",
-				"MENU_CONF_02",
-				"MENU_CONF_03", // 30 a 34
-				"MENU_AYUD_01",
-				"MENU_AYUD_02",
-				"MENU_CONF_04",
-				"MENU_CONF_05",
-				"MENU_VISU_17", // 35 a 39
-				"MENU_ARCH_14", "MENU_ARCH_15",
-				"MENU_FILT_00",
-				"MENU_FILT_01",
-				"MENU_FILT_02", // 40 a 44
-				"MENU_FILT_03", "MENU_FILT_04", "MENU_FILT_05",
-				"MENU_ARBL_00",
-				"MENU_ARBL_01", // 45 a 49
-				"MENU_ARBL_02", "MENU_TRAZ_00", "MENU_VISU_19", "MENU_TRAZ_02",
-				"MENU_TRAZ_03", // 50 a 54
-				"MENU_TRAZ_04", "MENU_VISU_18", "MENU_ARBL_03", "MENU_ARBL_04", // 55
-				"MENU_ARCH_16"
-				// a 59
-				,"BARRA_HERR_TTT36_OPEN","BARRA_HERR_TTT36_CLOSE",
-				"BARRA_HERR_TTT35"
+				"MENU_ARCH_00",	//	0
+				"MENU_ARCH_03",	//	1
+				"MENU_ARCH_04",	//	2
+				"MENU_ARCH_02",	//	3
+				"MENU_ARCH_05", //	4
+				"MENU_ARCH_06", //	5
+				"MENU_ARCH_13",	//	6
+				"MENU_ARCH_07",	//	7
+				"MENU_ARCH_12",	//	8
+				"MENU_ARCH_09", //	9
+				"MENU_ARCH_11",	//	10
+				"MENU_ARCH_10",	//	11
+				"MENU_ARCH_08",	//	12
+				"MENU_INFO_01",	//	13
+				"MENU_INFO_02", // 	14
+				"MENU_INFO_03",	//	15
+				"MENU_INFO_04",	//	16
+				"MENU_VISU_02",	//	17
+				"MENU_VISU_03",	//	18
+				"MENU_VISU_04", //	19
+				"MENU_VISU_05",	//	20
+				"MENU_VISU_06",	//	21
+				"MENU_VISU_07",	//	22
+				"MENU_VISU_08",	//	23
+				"MENU_VISU_09", //	24
+				"MENU_VISU_10",	//	25
+				"MENU_VISU_11",	//	26
+				"MENU_VISU_12",	//	27
+				"MENU_VISU_13",	//	28
+				"MENU_VISU_14", // 	29
+				"MENU_VISU_15",	//	30
+				"MENU_VISU_16",	//	31
+				"MENU_CONF_01",	//	32
+				"MENU_CONF_02",	//	33
+				"MENU_CONF_03", //	34
+				"MENU_AYUD_01",	//	35
+				"MENU_AYUD_02",	//	36
+				"MENU_CONF_04",	//	37
+				"MENU_CONF_05",	//	38
+				"MENU_VISU_17", // 	39
+				"MENU_ARCH_14",	//	40
+				"MENU_ARCH_15",	//	41
+				"MENU_FILT_00",	//	42
+				"MENU_FILT_01",	//	43
+				"MENU_FILT_02", // 	44
+				"MENU_FILT_03",	//	45
+				"MENU_FILT_04",	//	46
+				"MENU_FILT_05",	//	47
+				"MENU_ARBL_00",	//	48
+				"MENU_ARBL_01", //	49
+				"MENU_ARBL_02",	//	50
+				"MENU_TRAZ_00",	//	51
+				"MENU_VISU_19",	//	52
+				"MENU_TRAZ_02",	//	53
+				"MENU_TRAZ_03", // 	54
+				"MENU_TRAZ_04",	//	55
+				"MENU_VISU_18",	//	56
+				"MENU_ARBL_03",	//	57
+				"MENU_ARBL_04", // 	58
+				"MENU_ARCH_16",	//	59
+				"BARRA_HERR_TTT36_OPEN",	//	60
+				"BARRA_HERR_TTT36_CLOSE",	//	61
+				"BARRA_HERR_TTT35"			//	62
 		};
 
 		this.codigos = codigos2;
@@ -285,8 +304,9 @@ public class Ventana extends JFrame implements ActionListener {
 		GestorVentanaSRec.crearMenu(this.menus);
 
 		this.setLayout(new BorderLayout());
-
+		
 		this.setTitle(this.getTituloGenerico());
+		
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		// Creamos la barra de herramientas
@@ -305,14 +325,14 @@ public class Ventana extends JFrame implements ActionListener {
 		pHerr.add(p, BorderLayout.WEST);
 
 		this.habilitarOpcionesDYV(false); // Deshabilitamos las opciones que
-		// dependen de si la clase cargada
-		// es DYV o no
+		// dependen de si la clase cargada es DYV o no
 
 		this.add(pHerr, BorderLayout.NORTH);
 
 		// Panel de la ventana, que contendrá otros paneles para
 		// visualizaciones, etc.
 		this.panelVentana = new PanelVentana();
+		
 		this.add(this.panelVentana, BorderLayout.CENTER);
 
 		// Ubicamos la ventana según la resolución de pantalla configurada
@@ -333,6 +353,7 @@ public class Ventana extends JFrame implements ActionListener {
 		// Cargamos opción de máquina virtual
 		OpcionMVJava omvj = (OpcionMVJava) this.gOpciones.getOpcion(
 				"OpcionMVJava", true);
+		
 		if (!omvj.getValida()) {
 			String maquinas[] = BuscadorMVJava.buscador(true,true);
 			int contadorMaquinas = 0;
@@ -371,7 +392,7 @@ public class Ventana extends JFrame implements ActionListener {
 			return;
 		}
 
-		if (fuente != this.botones[2] && fuente != this.botones[21]
+		if (fuente != this.botones[3] && fuente != this.botones[21]
 				&& fuente != this.botones[22] && fuente != this.botones[23]
 						&& fuente != this.botones[24] && fuente != this.botones[25]
 								&& fuente != this.botones[26] && !(fuente instanceof JMenuItem)) {
@@ -418,19 +439,8 @@ public class Ventana extends JFrame implements ActionListener {
 				}
 			}
 
-			// Archivo > Guardar clase...
-			else if (textoFuente.equals(this.textos[2])) {
-				if (Conf.fichero_log) {
-					this.log_write("Archivo > Guardar clase...");
-				}
-				if (this.getClase() != null) {
-					this.guardarClase();
-					this.clasePendienteProcesar = true;
-				}
-			}
-
 			// Archivo > Procesar clase...
-			else if (textoFuente.equals(this.textos[3])) {
+			else if (textoFuente.equals(this.textos[2])) {
 				if (Conf.fichero_log) {
 					this.log_write("Archivo > Procesar clase...");
 				}
@@ -441,18 +451,32 @@ public class Ventana extends JFrame implements ActionListener {
 						new Preprocesador(this.claseAlgoritmo.getPath(),
 								this.claseAlgoritmo.getNombre() + ".java");
 						this.clasePendienteProcesar = false;
+					
 					} else {
 						new CuadroPreguntaNuevaVisualizacion(this,
 								"procesar de nuevo");
 					}
+					
 				} else {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOARCHPROC", Conf.idioma));
 				}
 			}
+			
+			// Archivo > Guardar clase...
+			else if (textoFuente.equals(this.textos[3])) {
+				if (Conf.fichero_log) {
+					this.log_write("Archivo > Guardar clase...");
+				}
+				if (this.getClase() != null) {
+					this.guardarClase();
+					this.clasePendienteProcesar = true;
+				}
+			}
 
-			// Archivo > Seleccionar método
+			// Visualización > Seleccionar método
 			else if (textoFuente.equals(this.textos[40])) {
+				
 				if (Conf.fichero_log) {
 					this.log_write("Archivo > Seleccionar método...");
 				}
@@ -469,10 +493,10 @@ public class Ventana extends JFrame implements ActionListener {
 				}
 			}
 
-			// Archivo > Asignar parámetros y lanzar animación
+			// Visualización > Asignar parámetros y lanzar animación
 			else if (textoFuente.equals(this.textos[41])) {
 				if (Conf.fichero_log) {
-					this.log_write("Archivo > Asignar parámetros y lanzar animación.");
+					this.log_write("Visualizacion > Asignar parámetros y lanzar animación.");
 				}
 				if (this.claseAlgoritmo != null) {
 					if (this.clasePendienteGuardar
@@ -622,6 +646,7 @@ public class Ventana extends JFrame implements ActionListener {
 				OpcionOpsVisualizacion oov = (OpcionOpsVisualizacion) this.gOpciones
 						.getOpcion("OpcionOpsVisualizacion", false);
 				oov.setIdMetodoTraza(!oov.getIdMetodoTraza());
+			
 				this.gOpciones.setOpcion(oov, 1);
 				if (Conf.fichero_log) {
 					this.log_write("Visualización > Identificador de método: "
@@ -629,14 +654,14 @@ public class Ventana extends JFrame implements ActionListener {
 				}
 				if (oov.getIdMetodoTraza()) {
 					GestorVentanaSRec.iconoMenuItem(
-							this.menus[1],
+							this.menus[5],  
 							Texto.get("MENU_VISU_19", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
 							getClass().getClassLoader().getResource("imagenes/i_idMetodo.gif"));
 				} else {
 					GestorVentanaSRec.iconoMenuItem(
-							this.menus[1],
+							this.menus[5],
 							Texto.get("MENU_VISU_19", Conf.idioma)
 							.replace("_SubMenuItem_", "")
 							.replace("_CheckBoxMenuItem_", ""),
@@ -650,7 +675,10 @@ public class Ventana extends JFrame implements ActionListener {
 				if (Conf.fichero_log) {
 					this.log_write("Visualización > Formato de animación...");
 				}
-				new CuadroOpcionConfVisualizacion(this);
+				
+				 CuadroOpcionConfVisualizacion copv=	new CuadroOpcionConfVisualizacion(this);
+				
+				
 			}
 
 			// Visualización > Configuración de Zoom...
@@ -1051,6 +1079,13 @@ public class Ventana extends JFrame implements ActionListener {
 				new CuadroInfoNodo(Ventana.thisventana,
 						Ventana.thisventana.traza);
 			}
+			// Información > Información redundancia...
+			else if (textoFuente.equals(this.textos[15])) {
+				if (Conf.fichero_log) {
+					this.log_write("Información > Información redundancia...");
+				}
+				new CuadroInfoRedundancia(this, this.traza, this.trazaCompleta);
+			}
 
 			// Botones Menú Configuración
 
@@ -1174,7 +1209,7 @@ public class Ventana extends JFrame implements ActionListener {
 				if (Conf.fichero_log) {
 					this.log_write("Ayuda > Temas de ayuda...");
 				}
-				new VisorAyuda();
+				new VisorAyuda(); 
 			}
 
 			// Ayuda > Sobre SRec
@@ -1183,6 +1218,7 @@ public class Ventana extends JFrame implements ActionListener {
 					this.log_write("Ayuda > Sobre SRec");
 				}
 				new CuadroAcercade(this);
+				//Visualizacion -> abrir /cerrar terminal
 			}else if (textoFuente.equals(this.textos[60]) || textoFuente.equals(this.textos[61])) { 
 				if (Conf.fichero_log) {
 					this.log_write("Visualización > Abrir/Cerrar terminal");
@@ -1230,7 +1266,7 @@ public class Ventana extends JFrame implements ActionListener {
 				}
 			}
 
-			else if (fuente == this.botones[2]) // Archivo > Guardar clase
+			else if (fuente == this.botones[3]) // Archivo > Guardar clase
 			{
 				if (Conf.fichero_log) {
 					this.log_write("Botón: Guardar clase");
@@ -1241,7 +1277,7 @@ public class Ventana extends JFrame implements ActionListener {
 				}
 			}
 
-			else if (fuente == this.botones[3]) // Archivo > Procesar clase
+			else if (fuente == this.botones[2]) // Archivo > Procesar clase
 			{
 				if (Conf.fichero_log) {
 					this.log_write("Botón: Procesar clase");
@@ -1258,7 +1294,7 @@ public class Ventana extends JFrame implements ActionListener {
 					new CuadroPreguntaNuevaVisualizacion(this,
 							"procesar de nuevo");
 				}
-			} else if (fuente == this.botones[28]) // Archivo > Seleccionar
+			} else if (fuente == this.botones[28]) // Visualizacion > Seleccionar
 				// Método
 			{
 				if (Conf.fichero_log) {
@@ -1275,7 +1311,7 @@ public class Ventana extends JFrame implements ActionListener {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOARCHPROC", Conf.idioma));
 				}
-			} else if (fuente == this.botones[29]) // Archivo > Asignar
+			} else if (fuente == this.botones[29]) // Visualizacion > Asignar
 				// Parámetros y lanzar animación
 			{
 				if (Conf.fichero_log) {
@@ -1356,7 +1392,7 @@ public class Ventana extends JFrame implements ActionListener {
 			}
 
 			// NUEVOS GRUPOS
-			else if (fuente == this.botones[10]) // Visualización > Datos de
+	/*		else if (fuente == this.botones[10]) // Visualización > Datos de
 				// entrada y salida...
 			{
 				if (Conf.fichero_log) {
@@ -1364,7 +1400,7 @@ public class Ventana extends JFrame implements ActionListener {
 				}
 				new CuadroElegirES(this);
 			}
-
+	 		*/
 			else if (fuente == this.botones[11]) // Visualización > Visibilidad
 				// de métodos y parámetros
 			{
@@ -1509,14 +1545,28 @@ public class Ventana extends JFrame implements ActionListener {
 
 			// fin nuevos grupos
 
-			else if (fuente == this.botones[19]) // Configuración > Formato de
+			else if (fuente == this.botones[10]) // NUEVOS GRUPOS > Formato de
 				// animación
 			{
 				if (Conf.fichero_log) {
 					this.log_write("Botón: Formato de animación...");
 				}
-				new CuadroOpcionConfVisualizacion(this);
-			} else if (fuente == this.botones[20]) // Configuración > Zoom
+				
+				
+				CuadroOpcionConfVisualizacion c =new CuadroOpcionConfVisualizacion(this);
+				
+				
+			} else if (fuente == this.botones[19]) // Informacion > Informacion de redundancia
+			{
+				if (Conf.fichero_log) {
+					this.log_write("Botón:  Información redundancia...");
+				}
+				new CuadroInfoRedundancia(this, this.traza, this.trazaCompleta);
+			
+
+				
+			} 
+			else if (fuente == this.botones[20]) // Configuración > Zoom
 			{
 				if (Conf.fichero_log) {
 					this.log_write("Botón: Zoom...");
@@ -1536,10 +1586,35 @@ public class Ventana extends JFrame implements ActionListener {
 						this.log_write("Botón: Zoom+ (panel 1, vista "
 								+ Vista.codigos[vistasVisiblesAhora[0]] + ")");
 					}
-					if (vistasVisiblesAhora[0] != 2) {
+					if (vistasVisiblesAhora[0] != 2)/*2*/ {
 						CuadroZoom.zoomAjuste(this, this.panelVentana,
 								vistasVisiblesAhora[0], CuadroZoom.MAS5);
-					}
+						
+						
+						
+					}else {
+						if(this.botones[33].isEnabled())//anterior if es para comprobar que estan activadas las vista de DyV
+							{
+							CuadroZoom.zoomAjuste(this, this.panelVentana,
+									vistasVisiblesAhora[0], CuadroZoom.MAS5);
+							
+						}
+						else {
+							//Si es la traza texto aumentamos su tamaño de letra
+						OpcionConfVisualizacion ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+								"OpcionConfVisualizacion", false);
+						ocv.setFuenteTraza(ocv.getTamFuenteTraza()+2);
+						
+						this.gOpciones.setOpcion(ocv, 1);
+						
+						Conf.setValoresVisualizacion();
+						if (this.traza != null) {
+							Conf.setRedibujarGrafoArbol(true);
+							Conf.setRedibujarGrafoArbol(false);
+						}
+						// Debe ejecutarse tras la actualización de Conf
+						this.refrescarFormato();
+					}}
 				} else {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOVISZOOM", Conf.idioma));
@@ -1553,10 +1628,35 @@ public class Ventana extends JFrame implements ActionListener {
 						this.log_write("Botón: Zoom- (panel 1, vista "
 								+ Vista.codigos[vistasVisiblesAhora[0]] + ")");
 					}
-					if (vistasVisiblesAhora[0] != 2) {
+					if (vistasVisiblesAhora[0] != 2)/*2*/ {
 						CuadroZoom.zoomAjuste(this, this.panelVentana,
 								vistasVisiblesAhora[0], CuadroZoom.MENOS5);
-					}
+						
+						
+						
+					}else {
+						if(this.botones[33].isEnabled())//anterior if es para comprobar que estan activadas las vista de DyV
+							{
+							CuadroZoom.zoomAjuste(this, this.panelVentana,
+									vistasVisiblesAhora[0], CuadroZoom.MENOS5);
+							
+						}
+						else {
+							//Si es la traza texto aumentamos su tamaño de letra
+						OpcionConfVisualizacion ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+								"OpcionConfVisualizacion", false);
+						ocv.setFuenteTraza(ocv.getTamFuenteTraza()-2);
+						
+						this.gOpciones.setOpcion(ocv, 1);
+						
+						Conf.setValoresVisualizacion();
+						if (this.traza != null) {
+							Conf.setRedibujarGrafoArbol(true);
+							Conf.setRedibujarGrafoArbol(false);
+						}
+						// Debe ejecutarse tras la actualización de Conf
+						this.refrescarFormato();
+					}}
 				} else {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOVISZOOM", Conf.idioma));
@@ -1568,13 +1668,39 @@ public class Ventana extends JFrame implements ActionListener {
 					int[] vistasVisiblesAhora = this.panelVentana
 							.getCodigosVistasVisibles();
 					if (Conf.fichero_log) {
-						this.log_write("Botón: ZoomAjuste (panel 1, vista "
+						this.log_write("Botón: ZoomAjuste (panel 2, vista "
 								+ Vista.codigos[vistasVisiblesAhora[0]] + ")");
 					}
 					if (vistasVisiblesAhora[0] != 2) {
 						CuadroZoom.zoomAjuste(this, this.panelVentana,
 								vistasVisiblesAhora[0], CuadroZoom.AJUSTE);
 					}
+					if(this.botones[33].isEnabled())//anterior if es para comprobar que estan activadas las vista de DyV
+					{
+					CuadroZoom.zoomAjuste(this, this.panelVentana,
+							vistasVisiblesAhora[0], CuadroZoom.AJUSTE);
+					
+				}
+				else {
+						OpcionConfVisualizacion ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+								"OpcionConfVisualizacion", false);
+						ocv.setFuenteTraza(12);
+						
+						this.gOpciones.setOpcion(ocv, 1);
+						
+						Conf.setValoresVisualizacion();
+						if (this.traza != null) {
+							Conf.setRedibujarGrafoArbol(true);
+							Conf.setRedibujarGrafoArbol(false);
+						}
+						// Debe ejecutarse tras la actualización de Conf
+						this.refrescarFormato();
+					}
+					OpcionConfVisualizacion	ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+							"OpcionConfVisualizacion", false);
+					ocv.setFuenteTraza((String) "arial",
+							5);// ,(String)fuentesTraza.getSelectedItem() );
+					
 				} else {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOVISZOOM", Conf.idioma));
@@ -1589,10 +1715,35 @@ public class Ventana extends JFrame implements ActionListener {
 						this.log_write("Botón: Zoom+ (panel 2, vista "
 								+ Vista.codigos[vistasVisiblesAhora[1]] + ")");
 					}
-					if (vistasVisiblesAhora[1] != 2) {
+					if (vistasVisiblesAhora[1] != 2)/*2*/ {
 						CuadroZoom.zoomAjuste(this, this.panelVentana,
 								vistasVisiblesAhora[1], CuadroZoom.MAS5);
-					}
+						
+						
+						
+					}else {
+						if(this.botones[33].isEnabled())//anterior if es para comprobar que estan activadas las vista de DyV
+							{
+							CuadroZoom.zoomAjuste(this, this.panelVentana,
+									vistasVisiblesAhora[1], CuadroZoom.MAS5);
+							
+						}
+						else {
+							//Si es la traza texto aumentamos su tamaño de letra
+						OpcionConfVisualizacion ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+								"OpcionConfVisualizacion", false);
+						ocv.setFuenteTraza(ocv.getTamFuenteTraza()+2);
+						
+						this.gOpciones.setOpcion(ocv, 1);
+						
+						Conf.setValoresVisualizacion();
+						if (this.traza != null) {
+							Conf.setRedibujarGrafoArbol(true);
+							Conf.setRedibujarGrafoArbol(false);
+						}
+						// Debe ejecutarse tras la actualización de Conf
+						this.refrescarFormato();
+					}}
 				} else {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOVISZOOM", Conf.idioma));
@@ -1607,10 +1758,35 @@ public class Ventana extends JFrame implements ActionListener {
 						this.log_write("Botón: Zoom- (panel 2, vista "
 								+ Vista.codigos[vistasVisiblesAhora[1]] + ")");
 					}
-					if (vistasVisiblesAhora[1] != 2) {
+					if (vistasVisiblesAhora[1] != 2)/*2*/ {
 						CuadroZoom.zoomAjuste(this, this.panelVentana,
 								vistasVisiblesAhora[1], CuadroZoom.MENOS5);
-					}
+						
+						
+						
+					}else {
+						if(this.botones[33].isEnabled())//anterior if es para comprobar que estan activadas las vista de DyV
+							{
+							CuadroZoom.zoomAjuste(this, this.panelVentana,
+									vistasVisiblesAhora[1], CuadroZoom.MENOS5);
+							
+						}
+						else {
+							//Si es la traza texto aumentamos su tamaño de letra
+						OpcionConfVisualizacion ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+								"OpcionConfVisualizacion", false);
+						ocv.setFuenteTraza(ocv.getTamFuenteTraza()-2);
+						
+						this.gOpciones.setOpcion(ocv, 1);
+						
+						Conf.setValoresVisualizacion();
+						if (this.traza != null) {
+							Conf.setRedibujarGrafoArbol(true);
+							Conf.setRedibujarGrafoArbol(false);
+						}
+						// Debe ejecutarse tras la actualización de Conf
+						this.refrescarFormato();
+					}}
 				} else {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOVISZOOM", Conf.idioma));
@@ -1629,6 +1805,32 @@ public class Ventana extends JFrame implements ActionListener {
 						CuadroZoom.zoomAjuste(this, this.panelVentana,
 								vistasVisiblesAhora[1], CuadroZoom.AJUSTE);
 					}
+					if(this.botones[33].isEnabled())//anterior if es para comprobar que estan activadas las vista de DyV
+					{
+					CuadroZoom.zoomAjuste(this, this.panelVentana,
+							vistasVisiblesAhora[1], CuadroZoom.AJUSTE);
+					
+				}
+				else {
+						OpcionConfVisualizacion ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+								"OpcionConfVisualizacion", false);
+						ocv.setFuenteTraza(12);
+						
+						this.gOpciones.setOpcion(ocv, 1);
+						
+						Conf.setValoresVisualizacion();
+						if (this.traza != null) {
+							Conf.setRedibujarGrafoArbol(true);
+							Conf.setRedibujarGrafoArbol(false);
+						}
+						// Debe ejecutarse tras la actualización de Conf
+						this.refrescarFormato();
+					}
+					OpcionConfVisualizacion	ocv = (OpcionConfVisualizacion) this.gOpciones.getOpcion(
+							"OpcionConfVisualizacion", false);
+					ocv.setFuenteTraza((String) "arial",
+							5);// ,(String)fuentesTraza.getSelectedItem() );
+					
 				} else {
 					new CuadroError(this, Texto.get("ERROR_VISU", Conf.idioma),
 							Texto.get("ERROR_NOVISZOOM", Conf.idioma));
@@ -1879,7 +2081,16 @@ public class Ventana extends JFrame implements ActionListener {
 	public void actualizarZoomPila(int valor) {
 		this.panelVentana.refrescarZoomPila(valor);
 	}
-	
+	/**
+	 * Actualiza la información sobre el zoom y actualiza la visualización de la
+	 * traza.
+	 * 
+	 * @param valor
+	 *            Nuevo valor de zoom.
+	 */
+	public void actualizarZoomTraza(int valor) {
+		this.panelVentana.refrescarZoomTraza(valor);
+	}
 	/**
 	 * Actualiza la información sobre el zoom y actualiza la visualización de la
 	 * pila.
@@ -1899,9 +2110,11 @@ public class Ventana extends JFrame implements ActionListener {
 	 *            1 -> pila, 0 -> arbol, 3 -> crono, 4 -> estructura.
 	 * @param valor
 	 *            Nuevo valor de zoom.
+	 * @param tipo
+	 *            Necesario para realizar zoom en resultado Panel crono.
 	 */
-	public void actualizarZoom(int vista, int valor) {
-		this.panelVentana.refrescarZoom(vista, valor);
+	public void actualizarZoom(int vista, int valor,int tipo) {
+		this.panelVentana.refrescarZoom(vista, valor,tipo);
 	}
 
 	/**
@@ -1995,7 +2208,7 @@ public class Ventana extends JFrame implements ActionListener {
 			this.habilitarOpcionesAnimacion(true);
 			
 			panelVentana.mostrarEjecucionTraza();
-
+		
 		} catch (OutOfMemoryError oome) {
 			new CuadroError(this, Texto.get("ERROR_EJEC", Conf.idioma),
 					Texto.get("ERROR_NOMEMSUF", Conf.idioma));
@@ -2315,7 +2528,7 @@ public class Ventana extends JFrame implements ActionListener {
      */
     public void terminalAbrirCerrar() { 
     	boolean estaVisible = Ventana.this.getCuadroTerminal().terminalAbrirCerrar();
-    	JMenuItem item = this.menus[1].getItem(6);
+    	JMenuItem item = this.menus[1].getItem(5);
     	String textoClose = Texto.get("BARRA_HERR_TTT36_CLOSE",Conf.idioma);
     	String textoOpen = Texto.get("BARRA_HERR_TTT36_OPEN",Conf.idioma);
     	Icon iconClose = new ImageIcon(
@@ -2578,7 +2791,7 @@ public class Ventana extends JFrame implements ActionListener {
 	public void setClaseHabilitada(boolean valor) {
 		this.claseHabilitada = valor;
 
-		GestorVentanaSRec.habilitaMenuItem(this.menus[0],
+		GestorVentanaSRec.habilitaMenuItem(this.menus[1],
 				Texto.get("MENU_ARCH_14", Conf.idioma), valor);
 
 		this.setClaseCargada(valor);
@@ -2694,7 +2907,7 @@ public class Ventana extends JFrame implements ActionListener {
 	 *            contrario.
 	 */
 	public void setClaseHabilitadaAnimacion(boolean valor) {
-		GestorVentanaSRec.habilitaMenuItem(this.menus[0],
+		GestorVentanaSRec.habilitaMenuItem(this.menus[1],
 				Texto.get("MENU_ARCH_15", Conf.idioma), valor);
 		this.botones[29].setEnabled(valor);
 		this.cuadroLanzarEjec = null;
@@ -2733,7 +2946,7 @@ public class Ventana extends JFrame implements ActionListener {
 	public void setBotones(JButton[] botones) {
 		this.botones = botones;
 	}
-
+///..
 	/**
 	 * Habilita o deshabilita las opciones correspondientes a las ejecuciones
 	 * DYV.
@@ -2759,8 +2972,20 @@ public class Ventana extends JFrame implements ActionListener {
 				.replace("_SubMenuItem_", "")
 				.replace("_CheckBoxMenuItem_", ""), valor);
 	}
+	
+	/**
+	 * Habilita o deshabilita las opciones correspondientes a las ejecuciones
+	 * sobre árboles de búsqueda.
+	 * 
+	 * @param valor
+	 *            True para habilitar, false para deshabilitar.
+	 */
+	public void habilitarOpcionesAABB(boolean valor) {
+		//por hacer
+	}
 
 	public void habilitarOpcionesAnimacion(boolean valor) {
+	
 		this.botones[6].setEnabled(valor);
 
 		this.botones[7].setEnabled(valor);
@@ -2768,15 +2993,18 @@ public class Ventana extends JFrame implements ActionListener {
 		this.botones[9].setEnabled(valor);
 
 		this.botones[11].setEnabled(valor);
-
+		this.botones[19].setEnabled(valor);
 		this.botones[20].setEnabled(valor);
 		this.botones[21].setEnabled(valor);
 		this.botones[22].setEnabled(valor);
 		this.botones[23].setEnabled(valor);
 		
-		this.botones[24].setEnabled(!FamiliaEjecuciones.getInstance().estaHabilitado() && valor);
-		this.botones[25].setEnabled(!FamiliaEjecuciones.getInstance().estaHabilitado() && valor);
-		this.botones[26].setEnabled(!FamiliaEjecuciones.getInstance().estaHabilitado() && valor);
+		this.botones[24].setEnabled(
+				!FamiliaEjecuciones.getInstance().estaHabilitado() && valor);
+		this.botones[25].setEnabled(
+				!FamiliaEjecuciones.getInstance().estaHabilitado() && valor);
+		this.botones[26].setEnabled(
+				!FamiliaEjecuciones.getInstance().estaHabilitado() && valor);
 		
 		this.botones[27].setEnabled(valor);
 
@@ -2787,10 +3015,14 @@ public class Ventana extends JFrame implements ActionListener {
         this.botones[36].setEnabled(true);
         GestorVentanaSRec.habilitaMenuItem(this.menus[1],
 				Texto.get("BARRA_HERR_TTT35", Conf.idioma), valor);
+       
 		GestorVentanaSRec.habilitaMenuItem(this.menus[2],
 				Texto.get("MENU_INFO_01", Conf.idioma), valor);
-		GestorVentanaSRec.habilitaMenuItem(this.menus[2],
+		GestorVentanaSRec.habilitaMenuItem(this.menus[2],		
 				Texto.get("MENU_INFO_02", Conf.idioma), valor);
+		GestorVentanaSRec.habilitaMenuItem(this.menus[2],
+				Texto.get("MENU_INFO_03", Conf.idioma), valor);
+		
 		GestorVentanaSRec.habilitaMenuItem(this.menus[5],
 				Texto.get("MENU_FILT_04", Conf.idioma), valor);
 		GestorVentanaSRec.habilitaMenuItem(this.menus[5],
@@ -2801,6 +3033,8 @@ public class Ventana extends JFrame implements ActionListener {
 				Texto.get("MENU_VISU_03", Conf.idioma)
 				.replace("_SubMenuItem_", "")
 				.replace("_CheckBoxMenuItem_", ""), valor);
+		
+		
 		GestorVentanaSRec.habilitaMenuItem(
 				this.menus[5],
 				Texto.get("MENU_FILT_01", Conf.idioma)
@@ -3037,6 +3271,10 @@ public class Ventana extends JFrame implements ActionListener {
 		if (Conf.fichero_log) {
 			this.log_close();
 		}
+		OpcionOpsVisualizacion oov = (OpcionOpsVisualizacion) this.gOpciones
+				.getOpcion("OpcionOpsVisualizacion", false);
+		oov.setAnteriorVE(0);
+		this.gOpciones.setOpcion(oov, 1);
 		borrarArchivosInservibles();
 		System.exit(0);
 	}
@@ -3067,7 +3305,12 @@ public class Ventana extends JFrame implements ActionListener {
 
 		// Tooltip de la barra de animación
 		this.panelVentana.idioma();
-
+		//Si tenemos abierto el Grafo de dependencia cambiamos su idioma
+		if(this.panelVentana!=null && this.panelVentana.getPanelAlgoritmo()!=null &&this.panelVentana.getPanelAlgoritmo().getPanelGrafo()!=null && this.panelVentana.getPanelAlgoritmo().getPanelGrafo().grafoDependencia!=null) {
+		
+			this.panelVentana.getPanelAlgoritmo().getPanelGrafo().visualizar2(this.panelVentana.getPanelAlgoritmo().nyp);
+		
+		} 
 		// Reiniciar menús
 		GestorVentanaSRec.crearMenu(this.menus);
 
@@ -3077,6 +3320,7 @@ public class Ventana extends JFrame implements ActionListener {
 			String archivoTitulo = tituloVentana.substring(
 					tituloVentana.indexOf("[") + 1, tituloVentana.indexOf("]"));
 			this.setTitulo(archivoTitulo);
+			
 		} else {
 			this.setTitulo("");
 		}
@@ -3096,7 +3340,7 @@ public class Ventana extends JFrame implements ActionListener {
 	/**
 	 * Elimina ficheros residuales de sessiones anteriores "SRec_*"
 	 */
-	private static void borrarArchivosInservibles() {
+	public static void borrarArchivosInservibles() {
 		File directorioAplicacion = null;
 		try {
 			directorioAplicacion = new File(".");
@@ -3262,13 +3506,13 @@ public class Ventana extends JFrame implements ActionListener {
 		}
 		if (oov.getIdMetodoTraza()) {					//	idMetodo activado
 			GestorVentanaSRec.iconoMenuItem(
-					this.menus[1],
+					this.menus[5],
 					Texto.get("MENU_VISU_19", Conf.idioma)
 					.replace("_SubMenuItem_", "")
 					.replace("_CheckBoxMenuItem_", ""),
 					getClass().getClassLoader().getResource("imagenes/i_idMetodo.gif"));
 			GestorVentanaSRec.setPulsado(
-					this.menus[1],
+					this.menus[5],
 					Texto.get("MENU_VISU_19", Conf.idioma)
 					.replace("_SubMenuItem_", "")
 					.replace("_CheckBoxMenuItem_", ""),
@@ -3276,13 +3520,13 @@ public class Ventana extends JFrame implements ActionListener {
 					true);
 		} else {
 			GestorVentanaSRec.iconoMenuItem(			//	idMetodo NO activado
-					this.menus[1],
+					this.menus[5],
 					Texto.get("MENU_VISU_19", Conf.idioma)
 					.replace("_SubMenuItem_", "")
 					.replace("_CheckBoxMenuItem_", ""),
 					getClass().getClassLoader().getResource("imagenes/i_idMetodo_des.gif"));
 			GestorVentanaSRec.setPulsado(				
-					this.menus[1],
+					this.menus[5],
 					Texto.get("MENU_VISU_19", Conf.idioma)
 					.replace("_SubMenuItem_", "")
 					.replace("_CheckBoxMenuItem_", ""),

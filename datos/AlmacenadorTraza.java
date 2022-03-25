@@ -438,6 +438,8 @@ public class AlmacenadorTraza {
 				"" + Arrays.contiene(MetodoAlgoritmo.TECNICA_REC, tecnicas));
 		datosTraza.setAttribute("tecnicaDYV",
 				"" + Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV, tecnicas));
+		datosTraza.setAttribute("tecnicaAABB",
+				"" + Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB, tecnicas));
 
 		this.anadirRegistroActivacion(d, e, trazaParaGuardar.getRaiz());
 	}

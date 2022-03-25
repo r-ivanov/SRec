@@ -143,6 +143,7 @@ public class ContenedorEstructura // extends DefaultGraphCell
 						}
 						this.celdasMatriz[i][j] = new DefaultGraphCell(
 								new String(texto));
+								//new String("prueba"));
 						GraphConstants.setOpaque(
 								this.celdasMatriz[i][j].getAttributes(), true);
 						if (this.indices.length == 4 && i >= this.indices[0]
@@ -448,7 +449,7 @@ public class ContenedorEstructura // extends DefaultGraphCell
 						.getWidth());
 				this.altoCelda = (int) (GraphConstants
 						.getSize(this.celdasArray[0].getAttributes())
-						.getHeight());
+						.getHeight()); 
 
 				boolean colMarcadas[] = null;
 				colMarcadas = ubicarPosicionesLineasColIniciales(visitadas);

@@ -85,8 +85,10 @@ public class Traza {
 	 * traza.
 	 * 
 	 * @param tecnicas
-	 *            Lista de técnicas: MetodoAlgoritmo.TECNICA_REC y
-	 *            MetodoAlgoritmo.TECNICA_DYV
+	 *            Lista de técnicas: 
+	 *            	MetodoAlgoritmo.TECNICA_REC,
+	 *            	MetodoAlgoritmo.TECNICA_DYV y
+	 *            	MetodoAlgoritmo.TECNICA_AABB
 	 */
 	public void setTecnicas(int[] tecnicas) {
 		this.tecnicas = tecnicas;
@@ -95,8 +97,10 @@ public class Traza {
 	/**
 	 * Permite obtener las técnicas que se usan en la visualización de la traza.
 	 * 
-	 * @return Lista de técnicas: MetodoAlgoritmo.TECNICA_REC y
-	 *         MetodoAlgoritmo.TECNICA_DYV
+	 * @return Lista de técnicas: 
+	 *            MetodoAlgoritmo.TECNICA_REC,
+	 *            MetodoAlgoritmo.TECNICA_DYV y
+	 *            MetodoAlgoritmo.TECNICA_AABB
 	 */
 	public int[] getTecnicas() {
 		return this.tecnicas;
@@ -623,7 +627,7 @@ public class Traza {
 	 * Permite Iluminar todos los nodos que se corresponden con los valores de
 	 * entrada, y de salida de un método.
 	 * 
-	 * @param numeroMetodo
+	 * @param numMetodo
 	 *            Posición del método a iluminar.
 	 * @param valoresE
 	 *            Valores de entrada del método a iluminar.
@@ -637,6 +641,23 @@ public class Traza {
 	public int iluminar(int numMetodo, String valoresE[], String valoresS[],
 			boolean valor) {
 		return this.raiz.iluminar(numMetodo, valoresE, valoresS, valor);
+	}
+	/**
+	 * Permite obtener el numero de nodos que se corresponden con los valores de
+	 * entrada, y de salida de un método.
+	 * 
+	 * @param numMetodo
+	 *            Posición del método a iluminar.
+	 * @param valoresE
+	 *            Valores de entrada del método a iluminar.
+	 * @param valoresS
+	 *            Valores de salida del método a iluminar.
+	 
+	 * @return Número de nodos iluminados.
+	 */
+	public int getRedundantes(int numMetodo, String valoresE[], 
+			String valoresS[]) {
+		return this.raiz.getRedundantes(numMetodo, valoresE, valoresS);
 	}
 
 	/**

@@ -412,103 +412,91 @@ public class CargadorTraza extends Thread {
 				"Color")
 				&& componentes[Conf.numColoresMetodos + 0].getAttribute(
 						"destino").equals("flecha")
-						&& componentes[Conf.numColoresMetodos + 1].getNodeName()
-						.equals("Color")
-						&& componentes[Conf.numColoresMetodos + 1].getAttribute(
-								"destino").equals("panel")
-								&& componentes[Conf.numColoresMetodos + 2].getNodeName()
-								.equals("Color")
-								&& componentes[Conf.numColoresMetodos + 2].getAttribute(
-										"destino").equals("marcoActual")
-										&& componentes[Conf.numColoresMetodos + 3].getNodeName()
-										.equals("Color")
-										&& componentes[Conf.numColoresMetodos + 3].getAttribute(
-												"destino").equals("caminoActual")
-												&&
-
-												componentes[Conf.numColoresMetodos + 4].getNodeName().equals(
-														"Grosor")
-														&& componentes[Conf.numColoresMetodos + 4].getAttribute(
-																"destino").equals("flecha")
-																&& componentes[Conf.numColoresMetodos + 5].getNodeName()
-																.equals("Grosor")
-																&& componentes[Conf.numColoresMetodos + 5].getAttribute(
-																		"destino").equals("marcoActual")
-																		&& componentes[Conf.numColoresMetodos + 6].getNodeName()
-																		.equals("Distancia")
-																		&& componentes[Conf.numColoresMetodos + 6].getAttribute(
-																				"destino").equals("vertical")
-																				&& componentes[Conf.numColoresMetodos + 7].getNodeName()
-																				.equals("Distancia")
-																				&& componentes[Conf.numColoresMetodos + 7].getAttribute(
-																						"destino").equals("horizontal")
-																						&& componentes[Conf.numColoresMetodos + 8].getNodeName()
-																						.equals("Tipo")
-																						&& componentes[Conf.numColoresMetodos + 8].getAttribute(
-																								"destino").equals("bordeCelda")
-																								&& componentes[Conf.numColoresMetodos + 9].getNodeName()
-																								.equals("Tipo")
-																								&& componentes[Conf.numColoresMetodos + 9].getAttribute(
-																										"destino").equals("formaFlecha")
-																										&&
-
-																										componentes[Conf.numColoresMetodos + 10].getNodeName().equals(
-																												"Color")
-																												&& componentes[Conf.numColoresMetodos + 10].getAttribute(
-																														"destino").equals("codigoPR")
-																														&& componentes[Conf.numColoresMetodos + 11].getNodeName()
-																														.equals("Color")
-																														&& componentes[Conf.numColoresMetodos + 11].getAttribute(
-																																"destino").equals("codigoCo")
-																																&& componentes[Conf.numColoresMetodos + 12].getNodeName()
-																																.equals("Color")
-																																&& componentes[Conf.numColoresMetodos + 12].getAttribute(
-																																		"destino").equals("codigoMF")
-																																		&& componentes[Conf.numColoresMetodos + 13].getNodeName()
-																																		.equals("Color")
-																																		&& componentes[Conf.numColoresMetodos + 13].getAttribute(
-																																				"destino").equals("codigoMB")
-																																				&& componentes[Conf.numColoresMetodos + 14].getNodeName()
-																																				.equals("Color")
-																																				&& componentes[Conf.numColoresMetodos + 14].getAttribute(
-																																						"destino").equals("codigoRC")
-																																						&&
-
-																																						componentes[Conf.numColoresMetodos + 15].getNodeName().equals(
-																																								"modoColor")
-																																								&& componentes[Conf.numColoresMetodos + 15].getAttribute(
-																																										"destino").equals("modo")
-																																										&&
-
-																																										// No sacamos 16 y 17 por no ser enteros
-																																										componentes[Conf.numColoresMetodos + 18].getNodeName().equals(
-																																												"Fuente")
-																																												&& componentes[Conf.numColoresMetodos + 18].getAttribute(
-																																														"destino").equals("trazaE")
-																																														&& componentes[Conf.numColoresMetodos + 19].getNodeName()
-																																														.equals("Fuente")
-																																														&& componentes[Conf.numColoresMetodos + 19].getAttribute(
-																																																"destino").equals("trazaS")
-																																																&&
-
-																																																componentes[Conf.numColoresMetodos + 20].getNodeName().equals(
-																																																		"FuenteTam")
-																																																		&& componentes[Conf.numColoresMetodos + 20].getAttribute(
-																																																				"destino").equals("trazaE")
-																																																				&& componentes[Conf.numColoresMetodos + 21].getNodeName()
-																																																				.equals("FuenteTam")
-																																																				&& componentes[Conf.numColoresMetodos + 21].getAttribute(
-																																																						"destino").equals("trazaS")
-																																																						&&
-
-																																																						componentes[Conf.numColoresMetodos + 22].getNodeName().equals(
-																																																								"Zoom")
-																																																								&& componentes[Conf.numColoresMetodos + 22].getAttribute(
-																																																										"destino").equals("arbol")
-																																																										&& componentes[Conf.numColoresMetodos + 23].getNodeName()
-																																																										.equals("Zoom")
-																																																										&& componentes[Conf.numColoresMetodos + 23].getAttribute(
-																																																												"destino").equals("pila")) {
+				&& componentes[Conf.numColoresMetodos + 1].getNodeName().equals(
+						"Color")
+				&& componentes[Conf.numColoresMetodos + 1].getAttribute(
+						"destino").equals("panel")
+				&& componentes[Conf.numColoresMetodos + 2].getNodeName().equals(
+						"Color")
+				&& componentes[Conf.numColoresMetodos + 2].getAttribute(
+						"destino").equals("marcoActual")
+				&& componentes[Conf.numColoresMetodos + 3].getNodeName().equals(
+						"Color")
+				&& componentes[Conf.numColoresMetodos + 3].getAttribute(
+						"destino").equals("caminoActual")
+				&& componentes[Conf.numColoresMetodos + 4].getNodeName().equals(
+						"Grosor")
+				&& componentes[Conf.numColoresMetodos + 4].getAttribute(
+						"destino").equals("flecha")
+				&& componentes[Conf.numColoresMetodos + 5].getNodeName().equals(
+						"Grosor")
+				&& componentes[Conf.numColoresMetodos + 5].getAttribute(
+						"destino").equals("marcoActual")
+				&& componentes[Conf.numColoresMetodos + 6].getNodeName().equals(
+						"Distancia")
+				&& componentes[Conf.numColoresMetodos + 6].getAttribute(
+						"destino").equals("vertical")
+				&& componentes[Conf.numColoresMetodos + 7].getNodeName().equals(
+						"Distancia")
+				&& componentes[Conf.numColoresMetodos + 7].getAttribute(
+						"destino").equals("horizontal")
+				&& componentes[Conf.numColoresMetodos + 8].getNodeName().equals(
+						"Tipo")
+				&& componentes[Conf.numColoresMetodos + 8].getAttribute(
+						"destino").equals("bordeCelda")
+				&& componentes[Conf.numColoresMetodos + 9].getNodeName().equals(
+						"Tipo")
+				&& componentes[Conf.numColoresMetodos + 9].getAttribute(
+						"destino").equals("formaFlecha")
+				&& componentes[Conf.numColoresMetodos +10].getNodeName().equals(
+						"Color")
+				&& componentes[Conf.numColoresMetodos +10].getAttribute(
+						"destino").equals("codigoPR")
+				&& componentes[Conf.numColoresMetodos +11].getNodeName().equals(
+						"Color")
+				&& componentes[Conf.numColoresMetodos +11].getAttribute(
+						"destino").equals("codigoCo")
+				&& componentes[Conf.numColoresMetodos +12].getNodeName().equals(
+						"Color")
+				&& componentes[Conf.numColoresMetodos +12].getAttribute(
+						"destino").equals("codigoMF")
+				&& componentes[Conf.numColoresMetodos +13].getNodeName().equals(
+						"Color")
+				&& componentes[Conf.numColoresMetodos +13].getAttribute(
+						"destino").equals("codigoMB")
+				&& componentes[Conf.numColoresMetodos +14].getNodeName().equals(
+						"Color")
+				&& componentes[Conf.numColoresMetodos +14].getAttribute(
+						"destino").equals("codigoRC")
+				&& componentes[Conf.numColoresMetodos +15].getNodeName().equals(
+						"modoColor")
+				&& componentes[Conf.numColoresMetodos +15].getAttribute(
+						"destino").equals("modo")
+				// No sacamos 16 y 17 por no ser enteros
+				&& componentes[Conf.numColoresMetodos +18].getNodeName().equals(
+						"Fuente")
+				&& componentes[Conf.numColoresMetodos +18].getAttribute(
+						"destino").equals("trazaE")
+				&& componentes[Conf.numColoresMetodos +19].getNodeName().equals(
+						"Fuente")
+				&& componentes[Conf.numColoresMetodos +19].getAttribute(
+						"destino").equals("trazaS")
+				&& componentes[Conf.numColoresMetodos +20].getNodeName().equals(
+						"FuenteTam")
+				&& componentes[Conf.numColoresMetodos +20].getAttribute(
+						"destino").equals("trazaE")
+				&& componentes[Conf.numColoresMetodos +21].getNodeName().equals(
+						"FuenteTam")
+				&& componentes[Conf.numColoresMetodos +21].getAttribute(
+						"destino").equals("trazaS")
+				&& componentes[Conf.numColoresMetodos +22].getNodeName().equals(
+						"Zoom")
+				&& componentes[Conf.numColoresMetodos +22].getAttribute(
+						"destino").equals("arbol")
+				&& componentes[Conf.numColoresMetodos +23].getNodeName().equals(
+						"Zoom")
+				&& componentes[Conf.numColoresMetodos +23].getAttribute(
+						"destino").equals("pila")) {
 			// Colores
 			int valoresFlecha[] = this
 					.extraerRGB(componentes[Conf.numColoresMetodos + 0]);
@@ -730,10 +718,12 @@ public class CargadorTraza extends Thread {
 					.getAttribute("metodoEjecucion"));
 			traza.setTitulo(datosTrazaElement.getAttribute("nombre"));
 
-			boolean[] tecnicasXML = new boolean[2];
+			boolean[] tecnicasXML = new boolean[3];
 			tecnicasXML[0] = (datosTrazaElement.getAttribute("tecnicaREC")
 					.toLowerCase().equals("true"));
 			tecnicasXML[1] = (datosTrazaElement.getAttribute("tecnicaDYV")
+					.toLowerCase().equals("true"));
+			tecnicasXML[2] = (datosTrazaElement.getAttribute("tecnicaAABB")
 					.toLowerCase().equals("true"));
 
 			int tecnicas[] = null;
@@ -741,12 +731,19 @@ public class CargadorTraza extends Thread {
 				tecnicas = new int[2];
 				tecnicas[0] = MetodoAlgoritmo.TECNICA_REC;
 				tecnicas[1] = MetodoAlgoritmo.TECNICA_DYV;
+			} else if(tecnicasXML[0] && tecnicasXML[2]) {
+				tecnicas = new int[2];
+				tecnicas[0] = MetodoAlgoritmo.TECNICA_REC;
+				tecnicas[1] = MetodoAlgoritmo.TECNICA_AABB;
 			} else if (tecnicasXML[0]) {
 				tecnicas = new int[1];
 				tecnicas[0] = MetodoAlgoritmo.TECNICA_REC;
 			} else if (tecnicasXML[1]) {
 				tecnicas = new int[1];
 				tecnicas[0] = MetodoAlgoritmo.TECNICA_DYV;
+			}else if (tecnicasXML[2]) {
+				tecnicas = new int[1];
+				tecnicas[0] = MetodoAlgoritmo.TECNICA_AABB;
 			}
 
 			traza.setTecnicas(tecnicas);
@@ -807,32 +804,29 @@ public class CargadorTraza extends Thread {
 				&& nodos[0].hasAttribute("actual")
 				&& nodos[0].hasAttribute("caminoActual")
 				&& nodos[0].hasAttribute("entradaVisible")
-				&& (nodos[0].getAttribute("entradaVisible").equals("true") || nodos[0]
-						.getAttribute("entradaVisible").equals("false"))
-						&& nodos[0].hasAttribute("salidaVisible")
-						&& (nodos[0].getAttribute("salidaVisible").equals("true") || nodos[0]
-								.getAttribute("salidaVisible").equals("false"))
-								&&
-
-								nodos[1].getNodeName().equals("Param")
-								&& nodos[1].hasAttribute("numHijos")
-								&& nodos[1].hasAttribute("nID")
-								&& nodos[1].hasAttribute("hijoVisible")
-								&& nodos[1].hasAttribute("historico")
-								&& (nodos[1].getAttribute("historico").equals("true") || nodos[1]
-										.getAttribute("historico").equals("false"))
-										&& nodos[1].hasAttribute("contraido")
-										&& (nodos[1].getAttribute("contraido").equals("true") || nodos[1]
-												.getAttribute("contraido").equals("false"))
-												&& nodos[1].hasAttribute("inhibido")
-												&& (nodos[1].getAttribute("inhibido").equals("true") || nodos[1]
-														.getAttribute("inhibido").equals("false"))
-														&& nodos[1].hasAttribute("mostradoEntero")
-														&& (nodos[1].getAttribute("mostradoEntero").equals("true") || nodos[1]
-																.getAttribute("mostradoEntero").equals("false")) &&
-
-																nodos[2].getNodeName().equals("Metodo")
-																&& nodos[2].hasAttribute("nombreMetodo")) {
+				&& (nodos[0].getAttribute("entradaVisible").equals("true") 
+					|| nodos[0].getAttribute("entradaVisible").equals("false"))
+				&& nodos[0].hasAttribute("salidaVisible")
+				&& (nodos[0].getAttribute("salidaVisible").equals("true") 
+					|| nodos[0].getAttribute("salidaVisible").equals("false"))
+				&& nodos[1].getNodeName().equals("Param")
+				&& nodos[1].hasAttribute("numHijos")
+				&& nodos[1].hasAttribute("nID")
+				&& nodos[1].hasAttribute("hijoVisible")
+				&& nodos[1].hasAttribute("historico")
+				&& (nodos[1].getAttribute("historico").equals("true") 
+					|| nodos[1].getAttribute("historico").equals("false"))
+				&& nodos[1].hasAttribute("contraido")
+				&& (nodos[1].getAttribute("contraido").equals("true") 
+					|| nodos[1].getAttribute("contraido").equals("false"))
+				&& nodos[1].hasAttribute("inhibido")
+				&& (nodos[1].getAttribute("inhibido").equals("true") 
+					|| nodos[1].getAttribute("inhibido").equals("false"))
+				&& nodos[1].hasAttribute("mostradoEntero")
+				&& (nodos[1].getAttribute("mostradoEntero").equals("true") 
+					|| nodos[1].getAttribute("mostradoEntero").equals("false")) 
+				&& nodos[2].getNodeName().equals("Metodo")
+				&& nodos[2].hasAttribute("nombreMetodo")) {
 
 			int x = 0;
 			String param = new String("");

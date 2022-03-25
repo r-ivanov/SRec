@@ -59,7 +59,7 @@ public class ContenedorCronologica {
 	 */
 	public ContenedorCronologica(NombresYPrefijos nyp) {
 		contadorMatrices = 0;
-
+		String tipo= Ventana.thisventana.claseAlgoritmo.getMetodoPrincipal().getTipo();
 		this.ra = Ventana.thisventana.getTraza().getRaiz();
 		calcularMaximaLongitudContenidoCelda(this.ra);
 		int tipoEstrutura = Ventana.thisventana.getTraza().tipoEstructura();
@@ -67,6 +67,7 @@ public class ContenedorCronologica {
 		if (tipoEstrutura == 1)// Si la estructura que se emplea en la traza es
 			// un array
 		{
+			
 			if (Conf.mostrarSalidaLigadaEntrada) {
 				celdas = this.dameCeldasArrays(this.ra, this.nivelCelda);
 			} else {
@@ -142,6 +143,7 @@ public class ContenedorCronologica {
 	 */
 	private DefaultGraphCell celdaParametrosEnt(String texto,
 			RegistroActivacion r) {
+		
 		DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 		GraphConstants
 		.setBackground(celda.getAttributes(), Conf.colorC3Entrada);
@@ -191,6 +193,7 @@ public class ContenedorCronologica {
 	 */
 	private DefaultGraphCell celdaParametrosEntNoCrono(String texto,
 			RegistroActivacion r) {
+		//texto =  "194";
 		DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 		GraphConstants
 		.setBackground(celda.getAttributes(), Conf.colorC3Entrada);
@@ -242,6 +245,7 @@ public class ContenedorCronologica {
 	 */
 	private DefaultGraphCell celdaParametrosEntMatrices(String texto,
 			RegistroActivacion r, int[] dimensiones) {
+	
 		DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 		GraphConstants
 		.setBackground(celda.getAttributes(), Conf.colorC3Entrada);
@@ -292,6 +296,7 @@ public class ContenedorCronologica {
 	 */
 	private DefaultGraphCell celdaParametrosEntNoCronoMatrices(String texto,
 			RegistroActivacion r, int[] dimensiones) {
+		
 		DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 		GraphConstants
 		.setBackground(celda.getAttributes(), Conf.colorC3Entrada);
@@ -340,6 +345,7 @@ public class ContenedorCronologica {
 	 */
 	private DefaultGraphCell celdaParametrosSal(String texto,
 			RegistroActivacion r) {
+		
 		DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 		GraphConstants.setBackground(celda.getAttributes(), Conf.colorC3Salida);
 		GraphConstants.setGradientColor(celda.getAttributes(),
@@ -388,6 +394,7 @@ public class ContenedorCronologica {
 	 */
 	private DefaultGraphCell celdaParametrosSalNoCrono(String texto,
 			RegistroActivacion r) {
+		
 		DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 		GraphConstants.setBackground(celda.getAttributes(), Conf.colorC3Salida);
 		GraphConstants.setGradientColor(celda.getAttributes(),
@@ -444,6 +451,7 @@ public class ContenedorCronologica {
 	 */
 	private DefaultGraphCell celdaParametrosSalMatrices(String texto,
 			RegistroActivacion r, int[] dimensiones) {
+		
 		DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 		GraphConstants.setBackground(celda.getAttributes(), Conf.colorC3Salida);
 		GraphConstants.setGradientColor(celda.getAttributes(),
@@ -493,6 +501,7 @@ public class ContenedorCronologica {
 	 */
 	private DefaultGraphCell celdaParametrosSalNoCronoMatrices(String texto,
 			RegistroActivacion r, int[] dimensiones) {
+		
 		DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 		GraphConstants.setBackground(celda.getAttributes(), Conf.colorC3Salida);
 		GraphConstants.setGradientColor(celda.getAttributes(),
@@ -539,6 +548,7 @@ public class ContenedorCronologica {
 	 */
 	private ArrayList<DefaultGraphCell> dameCeldasArrays(RegistroActivacion r,
 			int nc) {
+		String tipo= Ventana.thisventana.claseAlgoritmo.getMetodoPrincipal().getTipo();
 		Estructura eE = null;
 		Estructura eS = null;
 		ArrayList<DefaultGraphCell> c = new ArrayList<DefaultGraphCell>(0);
@@ -576,7 +586,7 @@ public class ContenedorCronologica {
 				} else {
 					texto = this.esp + "ANoDef" + this.esp;
 				}
-
+				
 				DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 
 				if (i >= indices[0] && i <= indices[1]) {
@@ -641,6 +651,7 @@ public class ContenedorCronologica {
 														.getAttributes()).getWidth()),
 										(int) (GraphConstants.getSize(celda
 																.getAttributes()).getHeight())));
+				
 				c.add(celda);
 				this.separacionAuxiliar = (this.sepIni + (contador)
 						* (int) (GraphConstants.getSize(celda.getAttributes())
@@ -661,7 +672,8 @@ public class ContenedorCronologica {
 					}
 				}
 			}
-
+			
+			if(tipo.equals("void")) {
 			// Celdas de salida de este nodo
 			contador = 0;
 			for (int i = 0; i < eS.dimensiones()[0]; i++) {
@@ -682,7 +694,7 @@ public class ContenedorCronologica {
 				} else {
 					texto = this.esp + "ANoDef" + this.esp;
 				}
-
+					
 				DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 
 				if (i >= indices[0] && i <= indices[1]) {
@@ -770,7 +782,7 @@ public class ContenedorCronologica {
 					}
 				}
 			}
-
+			}
 			this.nivelCelda++;
 		}
 
@@ -799,7 +811,7 @@ public class ContenedorCronologica {
 		Estructura eE = null;
 		Estructura eS = null;
 		ArrayList<DefaultGraphCell> c = new ArrayList<DefaultGraphCell>(0);
-
+		String tipo= Ventana.thisventana.claseAlgoritmo.getMetodoPrincipal().getTipo();
 		int indices[] = r.getEntrada().getIndices();
 
 		eE = new Estructura(r.getEntrada().getEstructura());
@@ -838,7 +850,7 @@ public class ContenedorCronologica {
 					} else {
 						texto = this.esp + "ANoDef" + this.esp;
 					}
-
+//texto =  "842";
 					DefaultGraphCell celda = new DefaultGraphCell(new String(
 							texto));
 					if (i >= indices[0] && i <= indices[1]) {
@@ -935,7 +947,7 @@ public class ContenedorCronologica {
 						++this.nivelCelda));
 			}
 		}
-
+if(tipo.equals("void")) {
 		if (r != null
 				&& r.esDYV()
 				&& (Conf.VISUALIZAR_SALIDA == Conf.elementosVisualizar || (Conf.VISUALIZAR_TODO == Conf.elementosVisualizar))) {
@@ -961,6 +973,7 @@ public class ContenedorCronologica {
 				} else {
 					texto = this.esp + "ANoDef" + this.esp;
 				}
+				//texto =  "probando long 965";
 
 				DefaultGraphCell celda = new DefaultGraphCell(new String(texto));
 
@@ -1007,7 +1020,7 @@ public class ContenedorCronologica {
 						* (maximaLongitudContenidoCelda + 4),
 						this.altCelda));
 
-				GraphConstants.setResize(celda.getAttributes(), false);
+				GraphConstants.setResize(celda.getAttributes(), true);
 				GraphConstants.setBounds(
 						celda.getAttributes(),
 						new Rectangle(this.sepIni
@@ -1043,6 +1056,7 @@ public class ContenedorCronologica {
 					}
 				}
 			}
+			}
 			linea++;
 		}
 
@@ -1061,6 +1075,7 @@ public class ContenedorCronologica {
 	 */
 	private ArrayList<DefaultGraphCell> dameCeldasMatrices(
 			RegistroActivacion r, int nc) {
+		String tipo= Ventana.thisventana.claseAlgoritmo.getMetodoPrincipal().getTipo();
 		Estructura eE = null;
 		Estructura eS = null;
 		ArrayList<DefaultGraphCell> c = new ArrayList<DefaultGraphCell>(0);
@@ -1193,7 +1208,7 @@ public class ContenedorCronologica {
 					}
 				}
 			}
-
+			if(tipo.equals("void")) {
 			// Celdas de salida de este nodo
 			for (int i = 0; i < dimensiones[0]; i++) {
 				this.separacionAuxiliarMatricesNoCrono = this.separacionAuxiliarMatricesNoCrono2;
@@ -1319,7 +1334,7 @@ public class ContenedorCronologica {
 					}
 				}
 			}
-
+			}
 			contadorMatrices++;
 		}
 
@@ -1346,7 +1361,7 @@ public class ContenedorCronologica {
 	 */
 	private ArrayList<DefaultGraphCell> dameCeldasMatricesSalidaCronologica(
 			RegistroActivacion r, int nc) {
-
+		String tipo= Ventana.thisventana.claseAlgoritmo.getMetodoPrincipal().getTipo();
 		Estructura eE = null;
 		Estructura eS = null;
 		ArrayList<DefaultGraphCell> c = new ArrayList<DefaultGraphCell>(0);
@@ -1394,7 +1409,7 @@ public class ContenedorCronologica {
 					} else {
 						texto = this.esp + "ANoDef" + this.esp;
 					}
-
+				
 					DefaultGraphCell celda = new DefaultGraphCell(new String(
 							texto));
 
@@ -1493,7 +1508,7 @@ public class ContenedorCronologica {
 						++this.nivelCelda));
 			}
 		}
-
+		if(tipo.equals("void")) {
 		if (r != null && r.esDYV()) {
 			indices = r.getSalida().getIndices();
 
@@ -1525,7 +1540,7 @@ public class ContenedorCronologica {
 					} else {
 						texto = this.esp + "ANoDef" + this.esp;
 					}
-
+					
 					DefaultGraphCell celda = new DefaultGraphCell(new String(
 							texto));
 
@@ -1632,6 +1647,7 @@ public class ContenedorCronologica {
 				contadorMatrices++;
 			}
 		}
+	}
 
 		return c;
 	}

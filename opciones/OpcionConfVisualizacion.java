@@ -155,7 +155,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	private int zoomArbol = -35;
 	private int zoomPila = -20;
 	private int zoomGrafoDep = -20;
-
+	
 	private int zoomCrono = -20;
 	private int zoomEstructura = -20;
 
@@ -293,7 +293,8 @@ public class OpcionConfVisualizacion extends Opcion {
 	/**
 	 * Permite establecer si el color es degradado para el modo 1.
 	 * 
-	 * @param boolean true para degradado, false en caso contrario.
+	 * @param b
+	 * 			 true para degradado, false en caso contrario.
 	 */
 	public void setColorDegradadoModo1(boolean b) {
 		this.colorDegradadoModo1 = b;
@@ -302,7 +303,8 @@ public class OpcionConfVisualizacion extends Opcion {
 	/**
 	 * Permite establecer si el color es degradado para el modo 2.
 	 * 
-	 * @param boolean true para degradado, false en caso contrario.
+	 * @param b 
+	 * true para degradado, false en caso contrario.
 	 */
 	public void setColorDegradadoModo2(boolean b) {
 		this.colorDegradadoModo2 = b;
@@ -553,6 +555,10 @@ public class OpcionConfVisualizacion extends Opcion {
 	 */
 	public void setFuenteTraza(String nombre, int tam) {
 		this.fuenteTraza = nombre;
+		this.tamFuenteTraza = tam;
+	}
+	public void setFuenteTraza( int tam) {
+		
 		this.tamFuenteTraza = tam;
 	}
 
@@ -1042,7 +1048,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	/**
 	 * Establece el tema visual del editor de código
 	 * 
-	 * @param temaColorEditor
+	 * @param temaColorEditorP
 	 * 
 	 * 		Número del 0 al 6, temas disponibles:
 	 * 

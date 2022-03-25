@@ -40,7 +40,9 @@ public class Ejecutador {
 	 */
 	public static String ejecutar(String clase, String metodo,
 			Class cparametros[], Object parametros[]) {
+		for (int x = 0; x < cparametros.length; x++) {
 		
+		}
 		Class c = null;
 		ClassLoader cl = ClassLoader.getSystemClassLoader();
 
@@ -60,7 +62,7 @@ public class Ejecutador {
 				Class[] cp = mm[x].getParameterTypes();
 				if (cp.length == 0 || cp.length == cparametros.length) {
 					boolean todosIguales = true;
-
+					
 					int z = 0;
 					while (z < cp.length && todosIguales == true) {
 						if (!(cp[z].equals(cparametros[z]))) {
@@ -103,9 +105,10 @@ public class Ejecutador {
 						;
 						 
 						for(Object obj : parametros) {
+							
+							
 							cabecera = cabecera + ServiciosString.representacionObjeto(obj)+", ";
 						}								 
-						
 						cabecera = cabecera.substring(0, cabecera.length()-2);
 						
 						if(parametros.length > 0)
@@ -143,6 +146,7 @@ public class Ejecutador {
 							try {
 								o = cm.newInstance();
 								instanciacion = true;
+								
 							} catch (InstantiationException ie) {
 							} catch (IllegalAccessException iae) {
 							}
@@ -161,7 +165,9 @@ public class Ejecutador {
 								
 								if (instanciacion) {
 									// Esta es la correcta
+								
 									returnInvoke = mm[x].invoke(o, parametros);
+									
 								} else {
 									returnInvoke = mm[x].invoke(new Object(), parametros);
 								}								
@@ -214,7 +220,7 @@ public class Ejecutador {
 									error = Texto.get("ERROR_METEXP", Conf.idioma);
 								}
 								
-								terminalEscribir(terminalSalidaError,error+"\n"+ite.getCause()+"\n");
+								terminalEscribir(terminalSalidaError,error+"\n causa "+causa+ " mensaje "+ite.getMessage()+ "\n");
 								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								return error;
 							} catch (Exception e) {
@@ -276,13 +282,13 @@ public class Ejecutador {
 	    		}
 	        	
 	        	//	Comprobamos si hay que abrir o no terminal
-	        	
-	        	if(terminal.getSalidasTerminalAbrir()) {
+	        	//Silenciado para que no salte el terminal al ejecutar
+	        	/*if(terminal.getSalidasTerminalAbrir()) {
 	        		Ventana.thisventana.terminalAbrirCerrar();
 	        	}else {
 	        		terminal.terminalPrimerPlano();
 	        	}
-	        	
+	        	*/
 	        	terminal.setSalidasFin();
 	        }
 		});				

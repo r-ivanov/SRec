@@ -135,7 +135,7 @@ public class OpcionFicherosRecientes extends Opcion {
 	/**
 	 * Asigna el directorio del último fichero usado por parte de la aplicación
 	 * 
-	 * @param dir
+	 * @param dirXML
 	 *            directorio en el que se leyó el último fichero por parte de la
 	 *            aplicación
 	 */
@@ -147,7 +147,7 @@ public class OpcionFicherosRecientes extends Opcion {
 	 * Asigna el directorio del último fichero usado por parte de la aplicación
 	 * para exportar ficheros.
 	 * 
-	 * @param dir
+	 * @param dirExport
 	 *            directorio en el que se leyó el último fichero por parte de la
 	 *            aplicación
 	 */
@@ -159,7 +159,7 @@ public class OpcionFicherosRecientes extends Opcion {
 	 * Asigna el directorio del último fichero usado por parte de la aplicación
 	 * para guardar ficheros de configuración.
 	 * 
-	 * @param dir
+	 * @param dirConfig
 	 *            directorio en el que se leyó el último fichero de configuración por
 	 *            parte de la aplicación
 	 */

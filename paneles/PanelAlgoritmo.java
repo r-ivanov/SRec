@@ -55,7 +55,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	private static PanelCompilador pCompilador;
 	private static PanelGrafo pGrafo;
 	private static PanelCodigoBotones pCodigoBotones;
-
+	
+	
 	private static PanelTraza pTraza;
 	private static PanelPila pPila;
 	private static PanelArbol pArbol;
@@ -144,10 +145,12 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		dcha.setLayout(new BorderLayout());
 
 		try {
+			
 			pPila = new PanelPila(null);
 			pArbol = new PanelArbol(null);
 			pCrono = new PanelCrono(null);
 			pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
+		
 		} catch (OutOfMemoryError oome) {
 			pArbol = null;
 			throw oome;
@@ -161,12 +164,14 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.jspArbol = new JPanel();
 		this.jspArbol.setLayout(new BorderLayout());
 		this.jspArbol.add(pArbol, BorderLayout.CENTER);
-
+		
 		this.contenedorPila = new JPanel();
+		
 		this.contenedorArbol = new JPanel();
 		this.contenedorGrafo = new JPanel();
 		this.contenedorPila.setLayout(new BorderLayout());
 		this.contenedorPila.add(jspPila, BorderLayout.CENTER);
+		
 		this.contenedorArbol.setLayout(new BorderLayout());
 		this.contenedorArbol.add(this.jspArbol, BorderLayout.CENTER);
 		this.contenedorGrafo.setLayout(new BorderLayout());
@@ -402,6 +407,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				Ventana.thisventana.habilitarOpcionesDYV(true);
 				pCrono = new PanelCrono(nyp);
 				pEstructura = new PanelEstructura(nyp);
+				
 			} else {
 				pTraza = new PanelTraza();
 			}
@@ -446,6 +452,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				pPila = new PanelPila(null);
 				pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 				pTraza = new PanelTraza();
+				
 				pCrono = new PanelCrono(null);
 				pEstructura = new PanelEstructura(null);
 				pControl = new PanelControl("", this);
@@ -458,12 +465,14 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorTraza.removeAll();
 		this.contenedorCrono.removeAll();
 		this.contenedorEstructura.removeAll();
-		this.contenedorGrafo.removeAll();		
+		this.contenedorGrafo.removeAll();	
+		
 
 		this.jspArbol.removeAll();
 		jspPila.removeAll();
 		jspTraza.removeAll();
 		jspCrono.removeAll();
+		
 		jspEstructura.removeAll();
 		jspGrafo.removeAll();
 		
@@ -471,6 +480,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspPila = new JScrollPane(pPila);
 		jspTraza = new JScrollPane(pTraza);
 		jspCrono = new JScrollPane(pCrono);
+		
 		jspEstructura = new JScrollPane(pEstructura);
 		jspGrafo = new JScrollPane(pGrafo);
 		
@@ -478,6 +488,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorPila.add(jspPila);
 		this.contenedorTraza.add(jspTraza);
 		this.contenedorCrono.add(jspCrono);
+		
 		this.contenedorEstructura.add(jspEstructura);
 		this.contenedorGrafo.add(jspGrafo);
 
@@ -487,6 +498,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorPila.updateUI();
 		this.contenedorTraza.updateUI();
 		this.contenedorCrono.updateUI();
+		
 		this.contenedorEstructura.updateUI();
 		this.contenedorControl.updateUI();
 		this.contenedorGrafo.updateUI();		
@@ -589,6 +601,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorPila.removeAll();
 		this.contenedorTraza.removeAll();
 		this.contenedorCrono.removeAll();
+		
 		this.contenedorEstructura.removeAll();
 		if(this.contenedorGrafo != null)
 			this.contenedorGrafo.removeAll();
@@ -597,6 +610,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspPila.removeAll();
 		jspTraza.removeAll();
 		jspCrono.removeAll();
+		
 		jspEstructura.removeAll();
 		jspGrafo.removeAll();
 		
@@ -604,6 +618,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspPila = new JScrollPane(pPila);
 		jspTraza = new JScrollPane(pTraza);
 		jspCrono = new JScrollPane(pCrono);
+		
 		jspEstructura = new JScrollPane(pEstructura);
 		jspGrafo = new JScrollPane(pGrafo);
 		
@@ -611,6 +626,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorPila.add(jspPila);
 		this.contenedorTraza.add(jspTraza);
 		this.contenedorCrono.add(jspCrono);
+	
 		this.contenedorEstructura.add(jspEstructura);
 		this.contenedorGrafo.add(jspArbol);
 
@@ -720,7 +736,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					this.panel2.add(Texto.get(Vista.codigos[2], Conf.idioma),
 							this.contenedorCrono);
 				}
-
+				
 				// Vista de estructura
 				if (Conf.getVista(Vista.codigos[3]).getPanel() == 1 || familiaEjecucionesHabilitado) {
 					this.panel1.add(Texto.get(Vista.codigos[3], Conf.idioma),
@@ -729,6 +745,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					this.panel2.add(Texto.get(Vista.codigos[3], Conf.idioma),
 							this.contenedorEstructura);
 				}
+				
+				
 			} else {
 				
 				// Vista de traza				
@@ -883,7 +901,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					hemosActualizado[2] = true;
 				}
 			}
-			
+			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
+					Ventana.thisventana.getTraza().getTecnicas())) {
+				
+			}
 			//	Árbol
 
 			if (this.panel1.indexOfTab(this.nombresVistas[0]) == this.panel1
@@ -1006,6 +1027,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 							Ventana.thisventana.getTraza().getTecnicas())) {
 				pCrono.visualizar();
 				pEstructura.visualizar();
+			
 			} else {
 				pTraza.visualizar();
 			}
@@ -1069,7 +1091,19 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		}
 		this.updateUI();
 	}
-	
+	/**
+	 * Establece el valor de zoom para el panel de pila.
+	 * 
+	 * @param valor
+	 *            Valor de zoom.
+	 */
+	public void refrescarZoomTraza(int valor) {
+		if (pTraza != null) {
+			pTraza.refrescarZoom(valor);
+			pTraza.visualizar();
+		}
+		this.updateUI();
+	}
 	/**
 	 * Establece el valor de zoom para el panel de grafo
 	 * 
@@ -1092,8 +1126,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	 * 
 	 * @param valor
 	 *            Valor de zoom.
+	 * @param tipo
+	 *            Necesario para realizar zoom en resultado Panel crono.
 	 */
-	public void refrescarZoom(int vista, int valor) {
+	public void refrescarZoom(int vista, int valor,int tipo) {
 		switch (vista) {
 		case 1:
 			if (pPila != null) {
@@ -1111,7 +1147,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			break;
 		case 2:
 			if (pCrono != null) {
-				pCrono.refrescarZoom(valor);
+				pCrono.refrescarZoom(valor,tipo);
+				
 				pCrono.visualizar();
 				pCrono.updateUI();
 			}
@@ -1605,7 +1642,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	protected PanelCodigo getPanelCodigo() {
 		return pCodigo;
 	}
-
+public PanelGrafo getPanelGrafo() {
+	return pGrafo;
+}
 	/**
 	 * Permite cerrar todas las vistas abiertas.
 	 */
@@ -1635,6 +1674,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspTraza.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jspPila.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jspCrono.setBorder(new EmptyBorder(0, 0, 0, 0));
+		
 		jspEstructura.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jspGrafo.setBorder(new EmptyBorder(0, 0, 0, 0));
 	}

@@ -70,7 +70,7 @@ public class CuadroAcercade extends Thread implements ActionListener,
 		this.texto.setAlignmentY(0);
 		this.texto.setText("\r\n\r\n" + Texto.get("APLIC", Conf.idioma)
 				+ "\r\n" + Texto.get("URJC_SREC_02", Conf.idioma)
-				+ " 1.6\r\n\r\n2014\n\n\n\n");
+				+ " 1.7\r\n\r\n2020\n\n\n\n");
 		this.texto.setEditable(false);
 		this.texto.addKeyListener(this);
 

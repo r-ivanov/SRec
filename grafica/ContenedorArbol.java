@@ -1,9 +1,14 @@
 package grafica;
 
+import java.awt.Color; 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.swing.BorderFactory;
 
@@ -14,10 +19,16 @@ import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultPort;
 import org.jgraph.graph.GraphConstants;
 
+//import com.sun.javafx.geom.Line2D;
+
 import paneles.PanelArbol;
 import utilidades.NombresYPrefijos;
+import utilidades.ServiciosString;
+import ventanas.Ventana;
 import conf.Conf;
+import datos.ClaseAlgoritmo;
 import datos.Estructura;
+import datos.MetodoAlgoritmo;
 import datos.RegistroActivacion;
 
 /**
@@ -37,7 +48,8 @@ public class ContenedorArbol {
 	private DefaultGraphCell marcoEntrada;
 	private DefaultGraphCell marcoSalida;
 
-	private DefaultGraphCell celdasEstr[];
+	public DefaultGraphCell celdasEstr[];
+	private DefaultGraphCell celdasEstr2[];
 
 	private DefaultPort portEntrada;
 	private DefaultPort portSalida;
@@ -91,7 +103,8 @@ public class ContenedorArbol {
 	private static int[] dimEstr = null;
 
 	private static int tamFuente = 20;
-
+	private boolean esAlgoritmoPuntos=false;
+	private MetodoAlgoritmo ma =null;
 	// Valores para cada nivel
 	private static NivelGrafo objetoNivel = null; // Determina la posición
 
@@ -113,7 +126,8 @@ public class ContenedorArbol {
 	 */
 	public ContenedorArbol(RegistroActivacion ra, JGraph graph,
 			NombresYPrefijos nyp_, int nivel_) {
-
+		
+		
 		this.ra = ra;
 		this.nyp = nyp_;
 
@@ -147,7 +161,20 @@ public class ContenedorArbol {
 		// ***************************************************
 		// FASE DE CREACION DE CELDAS (no ubicamos)
 		// ***************************************************
-
+	
+		ArrayList<MetodoAlgoritmo> algoritmos = Ventana.thisventana.claseAlgoritmo.getMetodos();
+		for(MetodoAlgoritmo m :algoritmos) {
+			if(m.getTecnica()==MetodoAlgoritmo.TECNICA_DYV) {
+				this.ma=m;
+				
+				break;
+			}
+		}
+		if(ma!=null) { // TECNICA_DYV
+			this.esAlgoritmoPuntos=	this.esAlgortimoPuntos(ma);
+			
+		}
+		
 		this.generacionCelda(); // genera entrada y salida, y sus marcos
 		// (inicialmente transparentes)
 		this.generacionEstr(); // genera celdas estructura, si procede
@@ -192,7 +219,7 @@ public class ContenedorArbol {
 				this.tieneHijos = true;
 			}
 		}
-
+		
 		// ***************************************************
 		// FASE DE UBICACION DE NODOS (ubicamos)
 		// ***************************************************
@@ -246,6 +273,9 @@ public class ContenedorArbol {
 		if (this.celdasEstr != null) {
 			for (int i = 0; i < this.celdasEstr.length; i++) {
 				this.posicionarALaDerecha(numPixeles, this.celdasEstr[i]);
+				if(esAlgoritmoPuntos) {
+				this.posicionarALaDerecha(numPixeles, this.celdasEstr2[i]);
+				}
 			}
 		}
 
@@ -282,11 +312,15 @@ public class ContenedorArbol {
 	 * Genera la Estructura de DYV.
 	 */
 	private void generacionEstr() {
+		
+	
+	
 		if (this.ra.esDYV() && Conf.mostrarEstructuraEnArbol) {
 			int indices[] = this.ra.getEntrada().getIndices();
 
 			Estructura eAux = new Estructura(this.ra.getEntrada()
 					.getEstructura());
+			//Estructura eAux = new Estructura(ejex);
 			if (dimEstr == null) {
 				dimEstr = eAux.dimensiones();
 			}
@@ -325,6 +359,10 @@ public class ContenedorArbol {
 												.esHistorico() && Conf.historia != 2)) && (!this.ra
 														.inhibido() || (this.ra
 																.inhibido() && Conf.mostrarArbolSalto))));
+			
+			// this.celdasEstr2 = new DefaultGraphCell[this.celdasEstr.length];
+				
+				
 			} else {
 				this.celdasEstr = this
 						.extraerCeldasEstructura(
@@ -339,6 +377,10 @@ public class ContenedorArbol {
 												.esHistorico() && Conf.historia != 2)) && (!this.ra
 														.inhibido() || (this.ra
 																.inhibido() && Conf.mostrarArbolSalto))));
+				//this.celdasEstr2 = new DefaultGraphCell[this.celdasEstr.length];
+			
+			
+			
 			}
 		}
 	}
@@ -353,7 +395,7 @@ public class ContenedorArbol {
 		// Entrada, configuración de la misma y asignación de puerto
 		String cadenaEntrada = "";
 		if (Conf.idMetodoTraza) {
-			cadenaEntrada = this.ra.getNombreMetodo() + ": ";
+			cadenaEntrada =this.ra.getNombreMetodo() + ": ";
 			if (this.nyp != null) {
 				cadenaEntrada = this.nyp.getPrefijo(this.ra.getNombreMetodo())
 						+ ": ";
@@ -465,18 +507,17 @@ public class ContenedorArbol {
 			int puntoMedio = (ladoDerecho + ladoIzquierdo) / 2;
 
 			if (this.ra.esDYV() && Conf.mostrarEstructuraEnArbol) {
+				
 				int anchoNodo = (int) (GraphConstants.getSize(this.entrada
 						.getAttributes()).getWidth());
 				anchoNodo = anchoNodo + (anchoCeldaEstr * dimensiones[0]);
 
 				int posicAnchoInicial = puntoMedio - (anchoNodo / 2);
-
-				if (objetoNivel.getNivelExacto(this.nivel) > posicAnchoInicial) {
-					posicAnchoInicial = objetoNivel.getNivelExacto(this.nivel)
-							+ Conf.sepH + anchoCeldaEstr * dimensiones[0]
-									+ espacioInicial;
-				}
-
+			
+				posicAnchoInicial=  posicAnchoInicial
+						+ (dimensiones[0] * anchoCeldaEstr)+(int) (GraphConstants
+							.getSize(this.entrada.getAttributes()).getWidth())+4;
+				 
 				this.ubicacionNodo_EstrSiHijos(dimensiones, posicAnchoInicial);
 
 				maximoAltoUsado = Math.max(
@@ -484,7 +525,13 @@ public class ContenedorArbol {
 						(int) GraphConstants.getBounds(
 								this.celdasEstr[this.celdasEstr.length - 1]
 										.getAttributes()).getMaxY());
-
+				posicAnchoInicial = puntoMedio - (anchoNodo / 2);
+				
+				if (objetoNivel.getNivelExacto(this.nivel) > posicAnchoInicial) {
+					posicAnchoInicial = objetoNivel.getNivelExacto(this.nivel)
+							+ Conf.sepH + anchoCeldaEstr * dimensiones[0]
+									+ espacioInicial;
+				}
 				if (altoEstructura > 2)// Si estructura es más alta que celdas E
 					// y S
 				{
@@ -584,13 +631,29 @@ public class ContenedorArbol {
 		{
 			// Si las hay, situamos en el grafo las celdas de la estructura
 			if (this.ra.esDYV() && Conf.mostrarEstructuraEnArbol) {
-				this.ubicacionNodo_EstrNoHijos(dimensiones);
+				
+				/*	int ladoIzquierdo = this.contenedoresHijos[0].posicLadoIzquierdo();
+				int ladoDerecho = this.contenedoresHijos[this.contenedoresHijos.length - 1]
+						.posicLadoDerecho();
+				int puntoMedio = (ladoDerecho + ladoIzquierdo) / 2;*/
+				int anchoNodo = (int) (GraphConstants.getSize(this.entrada
+						.getAttributes()).getWidth());
+				anchoNodo = anchoNodo + (anchoCeldaEstr * dimensiones[0]);
+				int posicAnchoInicial = maximoAnchoUsado 
+						 - (anchoNodo / 2);
+				 posicAnchoInicial=  posicAnchoInicial
+						+ (dimensiones[0] * anchoCeldaEstr)+(int) (GraphConstants
+							.getSize(this.entrada.getAttributes()).getWidth());
+				 
+				
+				this.ubicacionNodo_EstrNoHijos(dimensiones,anchoNodo);
 
 				maximoAltoUsado = Math.max(
 						maximoAltoUsado,
 						(int) GraphConstants.getBounds(
 								this.celdasEstr[this.celdasEstr.length - 1]
-										.getAttributes()).getMaxY());
+										.getAttributes())
+											.getMaxY());
 
 				// Situamos las celdas E y S en función de las celdas de
 				// estructura
@@ -717,29 +780,75 @@ public class ContenedorArbol {
 	 */
 	private void ubicacionNodo_EstrSiHijos(int[] dimensiones,
 			int posicAnchoInicial) {
+		
+		/*for(int i =0;i<celdasEstr2.length;i++) {
+			AttributeMap y=celdasEstr2[i].getAttributes();
+			celdasEstr2[i] = new DefaultGraphCell
+					(""+ejey2[i]);
+			Exception th = new Exception("1659 -> longitud= "+celdasEstr2.length +"valor= "+ejey2[i]);
+			try {
+				throw (th);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			celdasEstr2[i].setAttributes(y);
+			
+		}
+*/
 		if (dimensiones.length == 2) {
 			for (int i = 0; i < dimensiones[0]; i++) {
 				for (int j = 0; j < dimensiones[1]; j++) {
+					 
 					GraphConstants
 					.setBounds(
 							this.celdasEstr[(dimensiones[0] * i) + j]
 									.getAttributes(),
 									new Rectangle(
-											posicAnchoInicial
+											
+											posicAnchoInicial 
 											+ (j * anchoCeldaEstr),
 											this.posic0Nivel()
 											+ (alturaCeldaEstr * (i + (altoEstructura - dimensiones[1]) / 2)),
 											anchoCeldaEstr, alturaCeldaEstr));
-
+					if(esAlgoritmoPuntos) {
+					GraphConstants
+					.setBounds(
+							this.celdasEstr2[(dimensiones[0] * i) + j]
+									.getAttributes(),
+									new Rectangle(
+											
+											posicAnchoInicial 
+											+ (j * anchoCeldaEstr),
+											this.posic0Nivel()+17
+											+ (alturaCeldaEstr * (i + (altoEstructura - dimensiones[1]) / 2)),
+											anchoCeldaEstr, alturaCeldaEstr));
+					
 				}
+					}
 			}
 		} else {
+			
 			for (int i = 0; i < dimensiones[0]; i++) {
 				GraphConstants.setBounds(this.celdasEstr[i].getAttributes(),
-						new Rectangle(posicAnchoInicial + (i * anchoCeldaEstr),
+					//	new Rectangle(posicAnchoInicial + (i * anchoCeldaEstr),
+								new Rectangle(posicAnchoInicial +   (i * anchoCeldaEstr),
 								this.posic0Nivel()
 								+ ((int) (alturaCeldaEstr * 1.5)),
 								anchoCeldaEstr, alturaCeldaEstr));
+			
+				//AttributeMap y=celdasEstr[i].getAttributes();
+			//	celdasEstr2[i] = new DefaultGraphCell
+				//		(""+ejey2[i]);
+				//celdasEstr2[i].setAttributes(y);
+				if(esAlgoritmoPuntos) {
+				GraphConstants.setBounds(this.celdasEstr2[i].getAttributes(),
+						//	new Rectangle(posicAnchoInicial + (i * anchoCeldaEstr),
+						new Rectangle(posicAnchoInicial +   (i * anchoCeldaEstr),
+								this.posic0Nivel()+17
+								+ ((int) (alturaCeldaEstr * 1.5)),
+								anchoCeldaEstr, alturaCeldaEstr));
+				}
 			}
 		}
 	}
@@ -750,7 +859,9 @@ public class ContenedorArbol {
 	 * @param dimensiones
 	 *            Dimensiones de la estructura (filas, columnas)
 	 */
-	private void ubicacionNodo_EstrNoHijos(int[] dimensiones) {
+	private void ubicacionNodo_EstrNoHijos(int[] dimensiones,int posAncho) {
+	
+		int posicAnchoInicial =posAncho;
 		if (dimensiones.length == 2) {
 			for (int i = 0; i < dimensiones[0]; i++) {
 				for (int j = 0; j < dimensiones[1]; j++) {
@@ -759,21 +870,36 @@ public class ContenedorArbol {
 							this.celdasEstr[(dimensiones[0] * i) + j]
 									.getAttributes(),
 									new Rectangle(
+											posicAnchoInicial +
 											maximoAnchoUsado + Conf.sepH
 											+ (j * anchoCeldaEstr),
 											this.posic0Nivel()
 											+ (alturaCeldaEstr * (i + (altoEstructura - dimensiones[1]) / 2)),
+						
 											anchoCeldaEstr, alturaCeldaEstr));
-
+					
 				}
 			}
 		} else {
 			for (int i = 0; i < dimensiones[0]; i++) {
 				GraphConstants.setBounds(this.celdasEstr[i].getAttributes(),
-						new Rectangle(maximoAnchoUsado + Conf.sepH
+						new Rectangle(posicAnchoInicial +maximoAnchoUsado + Conf.sepH
 								+ (i * anchoCeldaEstr), this.posic0Nivel()
 								+ ((int) (alturaCeldaEstr * 1.5)),
 								anchoCeldaEstr, alturaCeldaEstr));
+				
+				//AttributeMap y=celdasEstr[i].getAttributes();
+				//celdasEstr2[i] = new DefaultGraphCell
+				//		(""+ejey2[i]);
+				//celdasEstr2[i].setAttributes(y);
+				if(esAlgoritmoPuntos) {
+				GraphConstants.setBounds(this.celdasEstr2[i].getAttributes(),
+						//	new Rectangle(posicAnchoInicial + (i * anchoCeldaEstr),
+						new Rectangle(posicAnchoInicial +maximoAnchoUsado + Conf.sepH
+								+ (i * anchoCeldaEstr), this.posic0Nivel()+17
+								+ ((int) (alturaCeldaEstr * 1.5)),
+								anchoCeldaEstr, alturaCeldaEstr));
+				}
 			}
 		}
 	}
@@ -1141,6 +1267,7 @@ public class ContenedorArbol {
 	 *            Cadena de salida que mostrará la celda.
 	 */
 	private void asignarColoresSalida(String cadenaSalida) {
+		
 		AttributeMap amap = this.salida.getAttributes();
 
 		if ((Conf.VISUALIZAR_SALIDA == Conf.elementosVisualizar || Conf.VISUALIZAR_TODO == Conf.elementosVisualizar)
@@ -1161,6 +1288,7 @@ public class ContenedorArbol {
 			GraphConstants.setOpaque(this.salida.getAttributes(), true); // Normales
 			GraphConstants.setForeground(this.salida.getAttributes(),
 					Conf.colorFSalida);
+				//	Conf.colorFEntrada);
 			if (this.ra.estaIluminado()) {
 				GraphConstants.setBackground(this.salida.getAttributes(),
 						Conf.colorIluminado);
@@ -1337,6 +1465,7 @@ public class ContenedorArbol {
 
 				GraphConstants.setBackground(this.marcoSalida.getAttributes(),
 						Conf.colorMarcoActual);
+				
 				GraphConstants
 				.setOpaque(this.marcoSalida.getAttributes(), true);
 				GraphConstants.setMoveable(this.marcoSalida.getAttributes(),
@@ -1478,14 +1607,46 @@ public class ContenedorArbol {
 		}
 
 		Object celdasNodo[];
+		Object celdasNodo2[];
 		celdasNodo = new Object[4];
 		celdasNodo[0] = this.marcoEntrada;
 		celdasNodo[1] = this.marcoSalida;
 		celdasNodo[2] = this.entrada;
 		celdasNodo[3] = this.salida;
-
+		
+		
+		
+		//	this.celdasEstr2=this.celdasEstr;
+			//this.celdasEstr[0]= new DefaultGraphCell("Probando");
+		/*AttributeMap x =	this.celdasEstr[0].getAttributes();
+		Enumeration y =x.elements();
+		while(y.hasMoreElements()) {
+		Object u=	y.nextElement();
+		Exception th = new Exception("Atributo ="+ u.toString());
+		try {
+			throw(th);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		GraphConstants.setBounds(this.celdasEstr2[0].getAttributes(), new Rectangle(1900
+				, 100, 200, 200));
+		GraphConstants.setBounds(this.celdasEstr[1].getAttributes(), new Rectangle(1900
+				, 400, 40, 40));
+			
+		*/
+		
 		if (this.celdasEstr != null) {
-			celdasNodo = this.concatenarArrays(celdasNodo, this.celdasEstr);
+			celdasNodo = this.concatenarArrays(celdasNodo,this.celdasEstr);
+			//celdasNodo = this.concatenarArrays(celdasNodo,this.celdasEstr);
+			
+			
+		}if (this.celdasEstr2 != null) {
+			celdasNodo = this.concatenarArrays(celdasNodo,this.celdasEstr2);
+			//celdasNodo = this.concatenarArrays(celdasNodo,this.celdasEstr);
+			
+			
 		}
 
 		if (this.tieneHijos()) {
@@ -1508,7 +1669,6 @@ public class ContenedorArbol {
 
 		return celdasNodo;
 	}
-	
 	/**
 	 * Permite concatenar dos arrays.
 	 * 
@@ -1526,6 +1686,32 @@ public class ContenedorArbol {
 
 		for (int i = 0; i < b.length; i++) {
 			x[i + a.length] = b[i];
+		}
+		
+
+		return x;
+	}
+	/**
+	 * Permite concatenar dos arrays.
+	 * 
+	 * @param a primer array.
+	 * @param b segundo array.
+	 * @param c tercer array.
+	 * 
+	 * @return Array resultante de la concatenación de ambos arrays.
+	 */
+	private Object[] concatenarArrays2(Object a[], Object b[],Object c []) {
+		Object[] x = new Object[a.length + b.length+c.length];
+
+		for (int i = 0; i < a.length; i++) {
+			x[i] = a[i];
+		}
+
+		for (int i = 0; i < b.length; i++) {
+			x[i + a.length] = b[i];
+		}
+		for (int i = 0; i < c.length; i++) {
+			x[i + a.length+b.length] = c[i];
 		}
 
 		return x;
@@ -1635,11 +1821,18 @@ public class ContenedorArbol {
 			int indices[], String es, int nivel, boolean visible) {
 		DefaultGraphCell[] celdas = null;
 		int dimensiones[] = e.dimensiones();
-
+//dimensiones[-1]=0;
 		String clase = e.getTipo().getClass().getName();
 		String texto;
 
 		if (e.esMatriz()) {
+			Exception th = new Exception("es Matriz");
+			try {
+				throw(th);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			celdas = new DefaultGraphCell[dimensiones[0] * dimensiones[1]];
 			int posic = 0;
 
@@ -1691,37 +1884,36 @@ public class ContenedorArbol {
 					if (visible) {
 						this.marcoCelda(celdas[posic].getAttributes(), false);
 					}
-					if (es.equals("entrada")) {
-						GraphConstants.setForeground(
-								celdas[posic].getAttributes(),
-								Conf.colorFEntrada);
-						if (indices.length > 0 && i >= indices[0]
-								&& i <= indices[1] && j >= indices[2]
-										&& j <= indices[3]) {
-							GraphConstants.setBackground(
-									celdas[posic].getAttributes(),
-									Conf.colorC1Entrada);
-						} else {
-							GraphConstants.setBackground(
-									celdas[posic].getAttributes(),
-									Conf.colorC1AEntrada);
-						}
-					} else {
-						GraphConstants.setForeground(
-								celdas[posic].getAttributes(),
-								Conf.colorFSalida);
-						if (indices.length > 0 && i >= indices[0]
-								&& i <= indices[1] && j >= indices[2]
-										&& j <= indices[3]) {
-							GraphConstants.setBackground(
-									celdas[posic].getAttributes(),
-									Conf.colorC1Salida);
-						} else {
-							GraphConstants.setBackground(
-									celdas[posic].getAttributes(),
-									Conf.colorC1ASalida);
-						}
+					String tipo=Ventana.thisventana.claseAlgoritmo.getMetodoPrincipal().getTipo();
+					Color colores[]= new Color[3];	
+					if(tipo.equals("void")) {
+						colores[0]=Conf.colorFSalida;
+						colores[1]=Conf.colorC1Salida;
+						colores[2]=Conf.colorC1ASalida;
+						
+					}else 
+					{
+						colores[0]=Conf.colorFEntrada;
+						colores[1]=Conf.colorC1Entrada;
+						colores[2]=Conf.colorC1AEntrada;
+						
 					}
+					
+						GraphConstants.setForeground(
+								celdas[posic].getAttributes(),
+								colores[0]);
+						if (indices.length > 0 && i >= indices[0]
+								&& i <= indices[1] && j >= indices[2]
+										&& j <= indices[3]) {
+							GraphConstants.setBackground(
+									celdas[posic].getAttributes(),
+									colores[1]);
+						} else {
+							GraphConstants.setBackground(
+									celdas[posic].getAttributes(),
+									colores[2]);
+						}
+					
 					GraphConstants.setSize(celdas[posic].getAttributes(),
 							new Dimension(anchoCeldaEstr, alturaCeldaEstr));
 
@@ -1729,7 +1921,24 @@ public class ContenedorArbol {
 				}
 			}
 		} else {
+			
+		int [] ejey=null;
+		if(this.esAlgoritmoPuntos) {
+			
+			MetodoAlgoritmo maux=Ventana.thisventana.claseAlgoritmo.getUltimoMetodoSeleccionado();
+			String x2 =	maux.getParamValor(maux.getIndiceEstructura()+1);
+			
+			x2 =x2.replace("{"," " );
+			x2= x2.replace("}"," " );
+			ServiciosString ss = new ServiciosString();
+			
+			 ejey=ss.extraerValoresInt(x2, ',');
+			//int [] ejey2 =  {1,2,3,4};
+			
+			this.celdasEstr2=new DefaultGraphCell[dimensiones[0]];
+		}
 			celdas = new DefaultGraphCell[dimensiones[0]];
+			String texto2="";
 			int posic = 0;
 
 			for (int i = 0; i < dimensiones[0]; i++) {
@@ -1743,6 +1952,7 @@ public class ContenedorArbol {
 							&& !this.ra.esHistorico()) // Si no calculado
 					{
 						texto = "   ";
+						texto2 ="   ";
 					} else {
 						if (clase.contains("Integer")) {
 							texto = " " + e.posicArrayInt(i) + " ";
@@ -1759,11 +1969,16 @@ public class ContenedorArbol {
 						} else {
 							texto = "  " + "MNoDef" + "  ";
 						}
+						if(esAlgoritmoPuntos) {
+						texto2 = ""+ejey[i];}
 					}
 				} else {
 					texto = "  ";
+					texto2 = "  ";
 				}
 				celdas[posic] = new DefaultGraphCell(texto);
+				
+				
 				GraphConstants
 				.setOpaque(celdas[posic].getAttributes(), visible);
 				GraphConstants.setFont(celdas[posic].getAttributes(), new Font(
@@ -1774,34 +1989,94 @@ public class ContenedorArbol {
 				.setMoveable(celdas[posic].getAttributes(), false);
 				GraphConstants.setSelectable(celdas[posic].getAttributes(),
 						false);
+				if(esAlgoritmoPuntos) {
+					this.celdasEstr2[i] = new DefaultGraphCell
+							(""+texto2);
+					
+					GraphConstants
+					.setOpaque(this.celdasEstr2[i].getAttributes(), visible);
+					GraphConstants.setFont(this.celdasEstr2[i].getAttributes(), new Font(
+							"Arial", Font.BOLD, 12));
+					GraphConstants.setDisconnectable(this.celdasEstr2[i].getAttributes(),
+							false);
+					GraphConstants
+					.setMoveable(this.celdasEstr2[i].getAttributes(), false);
+					GraphConstants.setSelectable(this.celdasEstr2[i].getAttributes(),
+							false);
+					}
+					
 				if (visible) {
 					this.marcoCelda(celdas[posic].getAttributes(), false);
+					if(esAlgoritmoPuntos) {
+					this.marcoCelda(this.celdasEstr2[i].getAttributes(), false);
+					}
 				}
 				if (es.equals("entrada")) {
 					GraphConstants.setForeground(celdas[posic].getAttributes(),
 							Conf.colorFEntrada);
+					if(esAlgoritmoPuntos) {
+					GraphConstants.setForeground(this.celdasEstr2[i].getAttributes(),
+							Conf.colorFEntrada);
+					}
 					if (indices.length > 0 && i >= indices[0]
 							&& i <= indices[1]) {
 						GraphConstants.setBackground(
 								celdas[posic].getAttributes(),
 								Conf.colorC1Entrada);
+						if(esAlgoritmoPuntos) {
+						GraphConstants.setBackground(
+								this.celdasEstr2[i].getAttributes(),
+								Conf.colorC1Entrada);
+						}
 					} else {
 						GraphConstants.setBackground(
 								celdas[posic].getAttributes(),
 								Conf.colorC1AEntrada);
-					}
+						if(esAlgoritmoPuntos) {
+						GraphConstants.setBackground(
+								this.celdasEstr2[i].getAttributes(),
+								Conf.colorC1AEntrada);
+						}
+						}
 				} else {
-					GraphConstants.setForeground(celdas[posic].getAttributes(),
-							Conf.colorFSalida);
-					if (indices.length > 0 && i >= indices[0]
+				String tipo=Ventana.thisventana.claseAlgoritmo.getMetodoPrincipal().getTipo();
+				Color colores[]= new Color[3];	
+				if(tipo.equals("void")) {
+					colores[0]=Conf.colorFSalida;
+					colores[1]=Conf.colorC1Salida;
+					colores[2]=Conf.colorC1ASalida;
+					
+				}else 
+				{
+					colores[0]=Conf.colorFEntrada;
+					colores[1]=Conf.colorC1Entrada;
+					colores[2]=Conf.colorC1AEntrada;
+					
+				}
+				GraphConstants.setForeground(celdas[posic].getAttributes(),
+							colores[0]);
+				if(esAlgoritmoPuntos) {
+				GraphConstants.setForeground(this.celdasEstr2[i].getAttributes(),
+									colores[0]);
+				}
+				if (indices.length > 0 && i >= indices[0]
 							&& i <= indices[1]) {
 						GraphConstants.setBackground(
 								celdas[posic].getAttributes(),
-								Conf.colorC1Salida);
+								colores[1]);
+						if(esAlgoritmoPuntos) {
+						GraphConstants.setBackground(
+								this.celdasEstr2[i].getAttributes(),
+								colores[1]);
+						}
 					} else {
 						GraphConstants.setBackground(
 								celdas[posic].getAttributes(),
-								Conf.colorC1ASalida);
+								colores[2]);
+						if(esAlgoritmoPuntos) {
+						GraphConstants.setBackground(
+								this.celdasEstr2[i].getAttributes(),
+								colores[2]);}
 					}
 				}
 
@@ -2011,6 +2286,47 @@ public class ContenedorArbol {
 		}
 
 		return this.ra.getMaximaLongitudCeldaEstructura();
+	}
+	/**
+	 * Metodo auxiliar que establece la segunda estructura, solo para algoritmos de puntos
+	 * Se utiliza en Panel Arbol
+	 * 
+	 */
+	public void setEstr2(DefaultGraphCell[] celdasEstr22) {
+		// TODO Auto-generated method stub
+		this.celdasEstr2 =celdasEstr22;
+	}
+	public boolean esAlgortimoPuntos(MetodoAlgoritmo ma) {
+	//	String[] parametros = ma.getParamValores();
+		boolean estructurasok=false;
+		boolean indicesok=false;
+		String[] parametros = new String [ma.getDimParametros().length];
+		if(parametros.length>=4) {
+		for(int i =0;i<ma.getDimParametros().length;i++) {
+			parametros[i]= ma.getDimParametro(i) + " "+ma.getTipoParametro(i);
+			
+			//ma.getIndices();
+		} 
+		
+		for(int i =0;i<ma.getDimParametros().length;i++) {
+			if(i!=ma.getDimParametros().length-2) {
+				if(parametros[i].contains("2")){
+					estructurasok=false;
+					indicesok=false;
+					break;
+				}
+				if(parametros[i].contains("1")&&parametros[i].contains("int")&&parametros[i+1].contains("1")&&parametros[i+1].contains("int")) {
+					estructurasok=true;
+				}
+				if(parametros[i].contains("0")&&parametros[i].contains("int")&&parametros[i+1].contains("0")&&parametros[i+1].contains("int")) {
+					indicesok=true;
+				}
+			}
+			
+		}
+		}
+		return estructurasok && indicesok;
+		
 	}
 
 }

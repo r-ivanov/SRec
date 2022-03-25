@@ -58,6 +58,8 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.aceptar) {
+			
+			Ventana.borrarArchivosInservibles();
 			if (this.accion.equals("cargar")) {
 				new CargadorTraza(this.getVentana());
 			} else if (this.accion.equals("procesar")) {

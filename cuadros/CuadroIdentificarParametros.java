@@ -9,6 +9,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -108,11 +112,25 @@ public class CuadroIdentificarParametros extends Thread implements
 
 		this.panelIzqda = new JPanel();
 		this.panelIzqda.setLayout(new BorderLayout());
-
-		JLabel etiqParamEstructura = new JLabel(Texto.get("CIPDYV_PARAMESTR",
+		MetodoAlgoritmo ma=null;
+		boolean esAlgoritmoPuntos=false;
+		ma=this.metodo;
+	if(ma!=null) {
+		 esAlgoritmoPuntos=	this.esAlgortimoPuntos(ma);
+		
+	}
+	JLabel etiqParamEstructura=new JLabel();
+	if(!esAlgoritmoPuntos) {
+		 etiqParamEstructura = new JLabel(Texto.get("CIPDYV_PARAMESTR",
 				Conf.idioma)
 				+ " (0.."
 				+ (this.metodo.getNumeroParametros() - 1) + "):");
+	}else {
+		 etiqParamEstructura = new JLabel(Texto.get("CIPDYV_PARAMESTRX",
+				Conf.idioma)
+				+ " (0.."
+				+ (this.metodo.getNumeroParametros() - 1) + "):");
+	}
 		this.etiqParamsIndices1 = new JLabel(Texto.get("CIPDYV_PARAMINDI1",
 				Conf.idioma));
 		this.etiqParamsIndices2 = new JLabel(Texto.get("CIPDYV_PARAMINDI2",
@@ -121,7 +139,7 @@ public class CuadroIdentificarParametros extends Thread implements
 				+ (this.metodo.getNumeroParametros() - 1) + "):");
 
 		this.panelParamEstructura = new JPanel();
-		this.panelParamEstructura.setLayout(new BorderLayout());
+		this.panelParamEstructura.setLayout(new GridLayout(0,1));  
 
 		this.campoEstructura = new JTextField(LONGITUD_CAMPOS);
 		this.campoEstructura.setHorizontalAlignment(SwingConstants.CENTER);
@@ -131,10 +149,19 @@ public class CuadroIdentificarParametros extends Thread implements
 		panelCampoEstructura.setLayout(new BorderLayout());
 		panelCampoEstructura.add(this.campoEstructura, BorderLayout.WEST);
 
-		this.panelParamEstructura.add(etiqParamEstructura, BorderLayout.NORTH);
-		this.panelParamEstructura.add(panelCampoEstructura, BorderLayout.SOUTH);
-
+		this.panelParamEstructura.add(etiqParamEstructura);
+		this.panelParamEstructura.add(panelCampoEstructura);
+		
+		JPanel panelCampoEstructura2 = new JPanel();
+		if(esAlgoritmoPuntos) {
+		JLabel etiqParamEstructura2 = 
+				new JLabel(
+						"(El siguiente parámetro contiene la estructura del "
+						+ "eje Y)");
+		this.panelParamEstructura.add(etiqParamEstructura2);
+		}
 		this.panelIzqda.add(this.panelParamEstructura, BorderLayout.NORTH);
+		//this.panelIzqda.add(panelCampoEstructura2,BorderLayout.SOUTH);
 
 		// panel de la derecha: contiene el gráfico esquemático
 		this.panelImagen = new JPanel();
@@ -180,6 +207,12 @@ public class CuadroIdentificarParametros extends Thread implements
 
 		this.dialogo
 				.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		this.dialogo.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	accionCancelar();
+            }
+        });
 
 		pintarCampos();
 
@@ -216,7 +249,7 @@ public class CuadroIdentificarParametros extends Thread implements
 	 */
 	private void accionCancelar() {
 		this.csm.marcarMetodo(this.numMetodo, false);
-		this.dialogo.setVisible(false);
+		this.dialogo.setVisible(false);	
 	}
 
 	/**
@@ -246,7 +279,7 @@ public class CuadroIdentificarParametros extends Thread implements
 		}
 
 		for (int i = 0; i < this.numCampos; i++) {
-			if (this.camposIndices[i].getText().replace(" ", "").length() != 0) {
+			if (this.camposIndices[i].getText().replace(" ", "").length() != 0){
 				return false;
 			}
 		}
@@ -300,16 +333,18 @@ public class CuadroIdentificarParametros extends Thread implements
 		if (vacios == 0) {
 			for (int i = 0; i < this.numCampos; i++) {
 				for (int j = i + 1; j < this.numCampos; j++) {
-					if (Integer.parseInt(this.camposIndices[i].getText()) == Integer
-							.parseInt(this.camposIndices[j].getText())) {
+					if (Integer.parseInt(this.camposIndices[i].getText()) 
+								== 
+							Integer.parseInt(this.camposIndices[j].getText())) {
 						return 4;
 					}
 				}
 			}
 
 			for (int i = 0; i < this.numCampos; i++) {
-				if (Integer.parseInt(this.camposIndices[i].getText()) == Integer
-						.parseInt(this.campoEstructura.getText())) {
+				if (Integer.parseInt(this.camposIndices[i].getText()) 
+						== 
+						Integer.parseInt(this.campoEstructura.getText())) {
 					return 4;
 				}
 			}
@@ -335,9 +370,12 @@ public class CuadroIdentificarParametros extends Thread implements
 				if (this.camposIndices[i].getText().length() == 0) {
 
 				} else {
-					if ((dim[Integer.parseInt(this.camposIndices[i].getText())] != 0)
-							|| !tipos[Integer.parseInt(this.camposIndices[i]
-									.getText())].equals("int")) {
+					if ((dim[Integer.parseInt(
+							this.camposIndices[i].getText())] != 0) 
+							|| 
+							!tipos[Integer.parseInt(
+									this.camposIndices[i].getText())].equals(
+											"int")) {
 						return 2;
 					}
 				}
@@ -360,7 +398,7 @@ public class CuadroIdentificarParametros extends Thread implements
 
 		boolean vacios = true;
 		for (int i = 0; i < this.numCampos; i++) {
-			if (this.camposIndices[i].getText().replace(" ", "").length() != 0) {
+			if (this.camposIndices[i].getText().replace(" ", "").length() != 0){
 				vacios = false;
 			}
 		}
@@ -393,8 +431,7 @@ public class CuadroIdentificarParametros extends Thread implements
 		}
 
 		int dimCampo = -1;
-		if (ncampo != -1 && ncampo >= 0
-				&& ncampo < this.metodo.getNumeroParametros()) {
+		if (ncampo >= 0 && ncampo < this.metodo.getNumeroParametros()) {
 			// Miramos si el parámetro ncampo del método
 			dimCampo = this.metodo.getDimParametro(ncampo);
 			this.numCampos = dimCampo * 2;
@@ -434,8 +471,11 @@ public class CuadroIdentificarParametros extends Thread implements
 			}
 
 			this.panelIzqda.removeAll();
+			
 			this.panelIzqda.add(this.panelParamEstructura, BorderLayout.NORTH);
 
+			
+			
 			Icon imagen = new ImageIcon(getClass().getClassLoader().getResource(
 					this.numCampos == 2 ? "imagenes/esquema_array.png"
 							: "imagenes/esquema_matriz.png"));
@@ -445,11 +485,12 @@ public class CuadroIdentificarParametros extends Thread implements
 			this.panelImagen.removeAll();
 			this.panelImagen.add(etiquetaImagen, BorderLayout.CENTER);
 			this.panelIzqda.add(panelParamIndices, BorderLayout.SOUTH);
-
+			
 			if (this.metodo.getNumeroParametros() < 10) {
 				// Ponemos el cursor sobre el siguiente campo
 				this.camposIndices[0].requestFocus();
 			}
+			
 			this.avancePermitido = true;
 			break;
 		default:
@@ -657,4 +698,52 @@ public class CuadroIdentificarParametros extends Thread implements
 	public void mouseReleased(MouseEvent e) {
 
 	}
-}
+
+	/**
+	 * Metodo para comprobar si un metodo es Algoritmo de Puntos
+	 * 
+	 * @param ma
+	 *           Metodo Algoritmo
+	 */
+	
+	public boolean esAlgortimoPuntos(MetodoAlgoritmo ma) {
+		//	String[] parametros = ma.getParamValores();
+			boolean estructurasok=false;
+			boolean indicesok=false;
+			String[] parametros = new String [ma.getDimParametros().length];
+			if(parametros.length>=4) {
+			for(int i =0;i<ma.getDimParametros().length;i++) {
+				parametros[i]=ma.getDimParametro(i)+" "+ma.getTipoParametro(i);
+				
+				//ma.getIndices();
+			}
+			
+			for(int i =0;i<parametros.length;i++) {
+				if(i!=parametros.length-1) {
+					
+					if(parametros[i].contains("2")) {
+						
+						estructurasok=false;
+						indicesok=false;
+						break;
+					}
+					if(parametros[i].contains("1")
+							&&parametros[i].contains("int")
+							&&parametros[i+1].contains("1")
+							&&parametros[i+1].contains("int")) {
+						estructurasok=true;
+					}
+					if(parametros[i].contains("0")
+							&&parametros[i].contains("int")
+							&&parametros[i+1].contains("0")
+							&&parametros[i+1].contains("int")) {
+						indicesok=true;
+					}
+				}
+				
+			}
+			}
+			
+			return estructurasok && indicesok;
+			
+		}}

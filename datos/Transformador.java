@@ -104,6 +104,154 @@ public class Transformador {
 
 		return elem01;
 	}
+	
+	/**
+	 * Añade nodos al Document, en concreto, los de las líneas de traza
+	 * 
+	 * @param d
+	 *            Document al que se añadirán nodos
+	 * @param es
+	 *            Nombre del método que se va a signar a la línea
+	 * @param nombreArray
+	 *            Nombre del array que se pasa como parámetro al método es
+	 * @param RyP
+	 *            true = Recorta y Poda, false = Vuelta Atras.
+	 * @param nombreSolParcial
+	 *            Nombre de la variable que apunta a la solución parcial.
+	 * @param nombreMejorSolucion
+	 *            Nombre de la variable que apunta a la mejor solución encontrada.
+	 * @param nombreCota
+	 *            Nombre de la variable que apunta a la cota.
+	 * @param nombreMetodo
+	 *            Nombre del método que se ejecuta.                    
+	 * @return Element añadido
+	 */
+	private static Element elementoAnadirEntradaSalida(Document d, String es,
+			String nombreArray, boolean RyP, String nombreSolParcial, String nombreMejorSolucion, 
+			String nombreCota, String nombreMetodo) {	
+		
+// Codigo en xml	
+//    <send message="anadirEntrada">
+//        <target>
+//            <send message="singleton">
+//                <target>
+//                    <var-ref name="Traza"/>
+//                </target>
+//                <arguments/>
+//            </send>
+//        </target>
+//        <arguments>
+//            <new>
+//                <type name="Estado"/>
+//                <arguments>
+//                    <var-ref name="pppppp01"/>
+//                    <var-ref name="ssssss01"/>
+//                    <var-ref name="mmmmmm01"/>
+//                    <var-ref name="cccccc01"/>
+//                </arguments>
+//            </new>
+//            <literal-string value="buscar01a"/>
+//            <var-ref name="nnnnnn01"/>
+//        </arguments>
+//    </send>
+		
+// Codigo transformado de xml a java	
+// Traza.singleton().anadirEntrada(new Estado(pppppp01, RyP, ssssss01, mmmmmm01, cccccc01),"buscar01a",nnnnnn01);
+		
+		// Creamos nuevo elemento y lo añadimos como hijo a nodos[i]
+		// en el futuro habrá que hacer que quede por delante de nodo return
+
+		// 01. Creamos nodo send y añadimos al árbol
+		Element elem01 = d.createElement("send");
+		elem01.setAttribute("message", es);
+
+		// 02. Creamos nodo target y añadimos como hijo a elem01
+		Element elem02 = d.createElement("target");
+		elem01.appendChild(elem02);
+
+		// 03. Creamos nodo arguments y añadimos como hijo a elem01
+		Element elem10 = d.createElement("arguments");
+		elem01.appendChild(elem10);
+
+		// 04. (hecho)
+		// 05. Creamos nodo send y añadimos como hijo a elem02
+		Element elem03 = d.createElement("send");
+		elem03.setAttribute("message", "singleton");
+		elem02.appendChild(elem03);
+
+		// 06. Creamos nodo target y añadimos como hijo a elem03
+		Element elem04 = d.createElement("target");
+		elem03.appendChild(elem04);
+
+		// 07. Creamos nodo arguments y añadimos como hijo a elem03
+		Element elem07 = d.createElement("arguments");
+		elem03.appendChild(elem07);
+
+		// 08. Creamos nodo var-ref y añadimos como hijo a elem04
+		Element elem05 = d.createElement("var-ref");
+		elem05.setAttribute("name", "Traza");
+		elem04.appendChild(elem05);
+
+		// 09. Creamos nodo new y añadimos como hijo a elem10
+		Element elem11 = d.createElement("new");
+		elem10.appendChild(elem11);
+
+		//
+		Element elem15 = d.createElement("literal-string");
+		elem10.appendChild(elem15);
+		elem15.setAttribute("value", nombreMetodo);
+
+		//
+		Element elem16 = d.createElement("var-ref");
+		elem10.appendChild(elem16);
+		elem16.setAttribute("name", "nnnnnn01");
+
+		// 10. Creamos nodo type y añadimos como hijo a elem11
+		Element elem12 = d.createElement("type");
+		elem12.setAttribute("name", "Estado");
+		elem11.appendChild(elem12);
+
+		// 11. Creamos nodo arguments y añadimos como hijo a elem11
+		Element elem13 = d.createElement("arguments");
+		elem11.appendChild(elem13);
+
+		// 12. Creamos nodo var-ref y añadimos como hijo a elem13 (array de
+		// parámetros o valor de retorno)
+		Element elem14 = d.createElement("var-ref");
+		elem14.setAttribute("name", nombreArray);
+		elem13.appendChild(elem14);
+		
+		// 13. Creamos nodo var-ref y añadimos como hijo a elem13 (solucion parcial)
+		Element elem17 = d.createElement("literal-boolean");
+		elem17.setAttribute("value", "" + RyP);
+		elem13.appendChild(elem17);
+
+		// 14. Creamos nodo var-ref y añadimos como hijo a elem13 (solucion parcial)
+		Element elem18 = d.createElement("var-ref");
+		elem18.setAttribute("name", nombreSolParcial);
+		elem13.appendChild(elem18);
+		
+		// 15. Creamos nodo var-ref y añadimos como hijo a elem13 (mejor solucion)
+		Element elem19 = d.createElement("var-ref");
+		elem19.setAttribute("name", nombreMejorSolucion);
+		elem13.appendChild(elem19);
+
+		Element elem20;
+		if(RyP) {
+			// 16. Creamos nodo var-ref y añadimos como hijo a elem13 (cota)
+			elem20 = d.createElement("var-ref");
+			elem20.setAttribute("name", nombreCota);
+		}else {
+			// 16. Creamos nodo literal-number con valor "-1" y añadimos 
+			// como hijo a elem13 (cota)
+			elem20 = d.createElement("literal-number");
+			elem20.setAttribute("kind", "int");
+			elem20.setAttribute("value", "-1");
+		}
+		elem13.appendChild(elem20);
+		
+		return elem01;
+	}
 
 	/**
 	 * Añade nodos al Document, en conreto, los de las líneas de traza
@@ -116,7 +264,7 @@ public class Transformador {
 	 *            nmbre del array que se pasa como parámetro al método es
 	 * @param nombreEstr
 	 *            Nombre del parámetro de la estructura.
-	 * @param posicionEstructuraEnParam
+	 * @param posicEstructuraEnParam
 	 *            Posición de la estructura en los parámetros.
 	 * @param nombreMetodo
 	 *            Nombre del método que se ejecuta.
@@ -560,12 +708,9 @@ public class Transformador {
 						&& esMetodoEscogido(claseAlgoritmo.getMetodo(j),
 								metodos[i])) {
 					// El tratamiento de los métodos varía sólo en la generación
-					// de
-					// líneas de salida, por lo que en ambas opciones se generan
-					// de
-					// de la misma manera las líneas de entrada (mediante el
-					// método
-					// "generacionLineasEntrada")
+					// de líneas de salida, por lo que en ambas opciones se 
+					// generan de la misma manera las líneas de entrada 
+					// (mediante el método "generacionLineasEntrada")
 					if (claseAlgoritmo.getMetodo(j).getTecnica() == MetodoAlgoritmo.TECNICA_REC) {
 						if (tipoRetornoMetodo(metodos[i]).equals("void")) {
 							tratamientoMetodosVoidREC(d, metodos[i]);
@@ -583,6 +728,22 @@ public class Transformador {
 									claseAlgoritmo.getMetodo(j)
 											.getIndiceEstructura() - 1,
 									claseAlgoritmo.getMetodo(j).getIndices());
+						}
+					}else if (claseAlgoritmo.getMetodo(j).getTecnica() == MetodoAlgoritmo.TECNICA_AABB) {
+						if (tipoRetornoMetodo(metodos[i]).equals("void")) {
+							tratamientoMetodosVoidAABB(d, metodos[i], 
+									claseAlgoritmo.getMetodo(j).getMejorSol(), 
+									claseAlgoritmo.getMetodo(j).getSolParcial(), 
+									claseAlgoritmo.getMetodo(j).getRyP(),
+									claseAlgoritmo.getMetodo(j).getCota(), 
+									claseAlgoritmo.getMetodo(j).getMaximizacion());
+						} else {
+							tratamientoMetodosConValorAABB(d, metodos[i], 
+									claseAlgoritmo.getMetodo(j).getMejorSol(), 
+									claseAlgoritmo.getMetodo(j).getSolParcial(), 
+									claseAlgoritmo.getMetodo(j).getRyP(),
+									claseAlgoritmo.getMetodo(j).getCota(), 
+									claseAlgoritmo.getMetodo(j).getMaximizacion());
 						}
 					}
 				}
@@ -840,7 +1001,8 @@ public class Transformador {
 	 *            Método al que se añaden nodos adicionales para las líenas de
 	 *            traza
 	 */
-	private static void tratamientoMetodosConValorREC(Document d, Element metodo) {
+	private static void tratamientoMetodosConValorREC(Document d, 
+			Element metodo) {
 		// Recopilamos nodos interesantes y el tipo del Método
 		Object valores[] = recoleccionInformacion(metodo);
 
@@ -871,7 +1033,8 @@ public class Transformador {
 
 			Element nodoTipoRetornoMetodo = nodoTipoRetornoMetodo(metodo);
 			String stringTipoVariable = tipoMetodo;
-			if (nodoTipoRetornoMetodo.getAttribute("dimensions").length() > 0) // si
+			if (nodoTipoRetornoMetodo.getAttribute("dimensions").length() > 0) 
+			// si
 			// aparece
 			// atributo
 			// "dimensions"
@@ -1136,7 +1299,7 @@ public class Transformador {
 	 * @param paramIndices
 	 *            Índices que delimitan los límites de la estructura.
 	 */
-	private static void tratamientoMetodosConValorDYV(Document d,
+	private static void tratamientoMetodosConValorDYV(Document d, 
 			Element metodo, int paramEstructura, int paramIndices[]) {
 
 		// Recopilamos nodos interesantes y el tipo del Método
@@ -1274,6 +1437,277 @@ public class Transformador {
 			}
 		}
 	}
+	
+	/**
+	 * Método auxiliar que gestiona la inserción de líneas en el código original
+	 * Java
+	 * 
+	 * @param d
+	 *            Document al que se añadirán nodos
+	 * @param metodo
+	 *            Método al que se añaden nodos adicionales para las líenas de
+	 *            traza
+	 * @param mejorSol
+	 *            Indice del parametro que contiene la mejor solución encontrada.
+	 * @param solParcial
+	 *            Indice del parametro que contiene la solución parcial.
+	 * @param RyP
+	 *            true = Recorta y Poda, false = Vuelta Atras.
+	 * @param cota
+	 *            Indice del parametro que contiene la cota.
+	 * @param maximizacion
+	 *            true = maximizacion, false = minimizacion.
+	 */
+	private static void tratamientoMetodosVoidAABB(Document d, Element metodo, 
+			int mejorSol, int solParcial, boolean RyP, int cota, 
+			boolean maximizacion) {
+		Object valores[] = recoleccionInformacion(metodo);
+		// String tipoMetodo=(String)valores[0];// valores[0]=String tipoMetodo
+		Element returns[] = (Element[]) valores[1];
+		Element argumentos[] = (Element[]) valores[2];
+		Element bloqueMetodo = (Element) valores[3];
+
+		generacionLineasEntrada(d, bloqueMetodo, argumentos, RyP, solParcial, mejorSol, cota);
+
+		// Ahora nos ocupamos de las lineas de salida, basándonos en si hay o no
+		// nodos return
+		
+		if (depurar) {
+			System.out.println("MetodoVoidconReturn  01");
+		}
+		// 01. "Object rrrrrr01[]=new Object[numParam];"
+		Element sentenciaDeclObjectrrrrrr01 = elementoDeclaracion(d, "Object", 
+				"rrrrrr01", argumentos.length);
+
+		if (depurar) {
+			System.out.println("MetodoVoidconReturn  02");
+		}
+		// 02. "rrrrrr01[n]=parametroN;" (varias)
+		Element sentenciaAsigParam[] = new Element[argumentos.length];
+		for (int i = 0; i < argumentos.length; i++) {
+			sentenciaAsigParam[i] = elementosAsigParametros(d, i, 
+					argumentos[i].getAttribute("name"), "rrrrrr01");
+		}
+
+		if (depurar) {
+			System.out.println("MetodoVoidconReturn  03");
+		}
+		// 03. Linea de Traza para la salida
+		Element sentenciaAnadirSalida = Transformador.elementoAnadirSalida(d, 
+				"anadirSalida", "rrrrrr01", false);
+		
+		if (returns.length == 0) {
+			// Añadimos al bloque del método las lineas de salida generadas
+			bloqueMetodo.appendChild(sentenciaDeclObjectrrrrrr01);
+			for (int i = 0; i < argumentos.length; i++) {
+				bloqueMetodo.appendChild(sentenciaAsigParam[i]);
+			}
+			bloqueMetodo.appendChild(sentenciaAnadirSalida);
+
+			// Revisamos que no haya sentencia de throw (debe ser la última)
+			Element sentenciasBloqueMetodo[] = ManipulacionElement
+					.getChildElements(bloqueMetodo);
+			for (int i = 0; i < sentenciasBloqueMetodo.length; i++) {
+				if (sentenciasBloqueMetodo[i].getNodeName().equals("throw")) {
+					bloqueMetodo.removeChild(sentenciasBloqueMetodo[i]);
+					bloqueMetodo.appendChild(sentenciasBloqueMetodo[i]);
+				}
+			}
+		} else {
+			// Habrá que insertar tantos conjuntos de lineas de salida para cada
+			// return que haya así como para el final del método
+			int hayReturnFinal = -1; // -1 = No hay return al final del método
+			for (int i = 0; i < returns.length; i++) {
+				if (depurar) {
+					System.out.println("MetodoVoidconReturn  04");
+				}
+				Element padreReturn = (Element) returns[i].getParentNode();
+				recolocarReturn(d, returns[i], padreReturn);
+				if (returns[i].getParentNode() == bloqueMetodo) {
+					hayReturnFinal = i;
+				}
+
+				padreReturn = (Element) returns[i].getParentNode();
+				if (depurar) {
+					System.out.println("MetodoVoidconReturn  05 padreReturn="
+							+ padreReturn.getNodeName());
+				}
+				padreReturn.appendChild(sentenciaDeclObjectrrrrrr01
+						.cloneNode(true));
+				for (int j = 0; j < argumentos.length; j++) {
+					padreReturn.appendChild(sentenciaAsigParam[j]
+							.cloneNode(true));
+				}
+				padreReturn.appendChild(sentenciaAnadirSalida.cloneNode(true));
+
+				if (depurar) {
+					System.out.println("MetodoVoidconReturn  06");
+				}
+				padreReturn.removeChild(returns[i]);
+				padreReturn.appendChild(returns[i]);
+				if (depurar) {
+					System.out.println("MetodoVoidconReturn  07");
+				}
+			}
+
+			if (hayReturnFinal == -1) {
+				if (depurar) {
+					System.out.println("MetodoVoidconReturn  08");
+				}
+				// Añadimos al bloque del método las lineas de salida generadas
+				bloqueMetodo.appendChild(sentenciaDeclObjectrrrrrr01);
+				for (int i = 0; i < argumentos.length; i++) {
+					bloqueMetodo.appendChild(sentenciaAsigParam[i]);
+				}
+				bloqueMetodo.appendChild(sentenciaAnadirSalida);
+				if (depurar) {
+					System.out.println("MetodoVoidconReturn  09");
+				}
+			}
+		}
+	}
+
+	/**
+	 * Método auxiliar que gestiona la inserción de líneas en el código original
+	 * Java
+	 * 
+	 * @param d
+	 *            Document al que se añadirán nodos
+	 * @param metodo
+	 *            Método al que se añaden nodos adicionales para las líenas de
+	 *            traza
+	 * @param mejorSol
+	 *            Indice del parametro que contiene la mejor solución encontrada.
+	 * @param solParcial
+	 *            Indice del parametro que contiene la solución parcial.
+	 * @param RyP
+	 *            true = Recorta y Poda, false = Vuelta Atras.
+	 * @param cota
+	 *            Indice del parametro que contiene la cota.
+	 * @param maximizacion
+	 *            true = maximizacion, false = minimizacion.
+	 */
+	private static void tratamientoMetodosConValorAABB(Document d, 
+			Element metodo, int mejorSol, int solParcial, boolean RyP, int cota, 
+			boolean maximizacion) {
+		// Recopilamos nodos interesantes y el tipo del Método
+		Object valores[] = recoleccionInformacion(metodo);
+
+		String tipoMetodo = (String) valores[0];// valores[0]=String tipoMetodo
+		Element returns[] = (Element[]) valores[1];
+		Element argumentos[] = (Element[]) valores[2];
+		Element bloqueMetodo = (Element) valores[3];
+
+		// Insertamos todas las lineas de entrada, y nos guardamos la primera
+		generacionLineasEntrada(d, bloqueMetodo, argumentos, RyP, solParcial, mejorSol, cota);
+
+		// Ahora nos ocupamos de las lineas de salida, basándonos en los nodos
+		// return existentes
+		for (int j = 0; j < returns.length; j++) {
+			Element padreReturn = (Element) returns[j].getParentNode();
+
+			recolocarReturn(d, returns[j], padreReturn);
+
+			// Creamos todas las lineas de salida que necesitamos
+
+			// 01. "int zzzzzz01 = resultado;"
+			Element sentenciaVariableRet = d.createElement("local-variable");
+			sentenciaVariableRet.setAttribute("name", "zzzzzz01");
+
+			Element tipoRetorno = d.createElement("type"); // Nodo que expresará
+			// el tipo de la variable
+
+			Element nodoTipoRetornoMetodo = nodoTipoRetornoMetodo(metodo);
+			String stringTipoVariable = tipoMetodo;
+			if (nodoTipoRetornoMetodo.getAttribute("dimensions").length() > 0) 
+			// si aparece atributo "dimensions"
+			{
+				int dimensiones = Integer.parseInt(nodoTipoRetornoMetodo
+						.getAttribute("dimensions"));
+				// for (int k=0; k<dimensiones; k++)
+				// stringTipoVariable=stringTipoVariable+"[]"; // añadimos "[]"
+				// por cada dimension
+				stringTipoVariable = stringTipoVariable + ServiciosString
+						.cadenaDimensiones(dimensiones);
+			}
+
+			tipoRetorno.setAttribute("name", stringTipoVariable);
+			sentenciaVariableRet.appendChild(tipoRetorno);
+			Element hijosReturn[] = ManipulacionElement
+					.getChildElements(returns[j]);
+			sentenciaVariableRet.appendChild(hijosReturn[0].cloneNode(true));
+
+			// 02. "Object rrrrrr01[]=new Object[1];"
+			Element sentenciaDeclObjectrrrrrr01 = elementoDeclaracion(d, 
+					"Object", "rrrrrr01", 1);
+
+			// 03. "rrrrrr01[0]=zzzzzz01;"
+			Element asigParametros = elementosAsigParametros(d, 0, "zzzzzz01",
+					"rrrrrr01");
+
+			// 04. Linea de Traza para la salida
+			Element sentenciaAnadirSalida = Transformador.elementoAnadirSalida(
+					d, "anadirSalida", "rrrrrr01", true);
+
+			// 05. Cambiamos sentencia return para que devuelva siempre la
+			// variable zzzzzz01
+			Element var_ref = d.createElement("var-ref");
+			var_ref.setAttribute("name", "zzzzzz01");
+
+			while (returns[j].getFirstChild() != null) {
+				returns[j].removeChild(returns[j].getFirstChild());
+			}
+
+			returns[j].appendChild(var_ref);
+
+			// Ahora insertamos las lineas de salida
+
+			padreReturn = (Element) returns[j].getParentNode();
+			Element primeraSentenciaPadreReturn = ManipulacionElement
+					.getChildElements(padreReturn)[0];
+			if (depurar) {
+				System.out.println("  Return Paso01");
+			}
+
+			//
+			Element bmh[] = ManipulacionElement.getChildElements(padreReturn);
+			if (depurar) {
+				for (int i = 0; i < bmh.length; i++) {
+					System.out.println(" -" + bmh[i].getNodeName());
+				}
+			}
+
+			while (padreReturn.getFirstChild() != returns[j]) {
+				Node nodo_aux = padreReturn.getFirstChild();
+				padreReturn.removeChild(nodo_aux);
+				padreReturn.appendChild(nodo_aux);
+			}
+
+			padreReturn.appendChild(sentenciaVariableRet);
+			padreReturn.appendChild(sentenciaDeclObjectrrrrrr01);
+			padreReturn.appendChild(asigParametros);
+			padreReturn.appendChild(sentenciaAnadirSalida);
+
+			// Recolocamos las lineas para que las líneas recién añadidas estén
+			// al principio del método
+			while (padreReturn.getFirstChild() != primeraSentenciaPadreReturn) {
+				Node nodo_aux = padreReturn.getFirstChild();
+				padreReturn.removeChild(nodo_aux);
+				padreReturn.appendChild(nodo_aux);
+				if (depurar) {
+					System.out.println("buscando primeraSentenciaPadreReturn");
+				}
+			}
+			if (padreReturn.getFirstChild().getNodeName().equals("return")) {
+				Node nodo_aux = padreReturn.getFirstChild();
+				padreReturn.removeChild(nodo_aux);
+				padreReturn.appendChild(nodo_aux);
+				if (depurar) {
+					System.out.println("recolocando sentencia return");
+				}
+			}
+		}
+	}
 
 	private static Element elementoDeclaracionAsignacion(Document d,
 			int numParamestructura, String nombreVar, Element formalArguments) {
@@ -1299,7 +1733,32 @@ public class Transformador {
 
 		return elemento;
 	}
+	
+	private static Element elementoDeclaracionAsignacionNumerico(Document d,
+			int numParame, String nombreVar, Element formalArguments) {
+		Element argumentos[] = ManipulacionElement
+				.nodeListToElementArray(formalArguments
+						.getElementsByTagName("formal-argument"));
 
+		// Creamos elemento
+		Element elemento = d.createElement("local-variable");
+		elemento.setAttribute("name", nombreVar);
+
+		// Creamos nodo sobre el tipo
+		Element tipoElemento = d.createElement("type");
+		elemento.appendChild(tipoElemento);
+		// tipoElemento.setAttribute("dimensions","1");
+		tipoElemento.setAttribute("name", "Number");
+
+		// Creamos inicialización directa ("={a,b,c,d...};"
+		Element inicializador = d.createElement("var-ref");
+		elemento.appendChild(inicializador);
+		inicializador.setAttribute("name",
+				"" + argumentos[numParame].getAttribute("name"));
+
+		return elemento;
+	}
+	
 	/**
 	 * Si el nodo return no está en un bloque, hace que lo esté
 	 * 
@@ -1526,6 +1985,105 @@ public class Transformador {
 		// cuál debe ir en primer lugar
 		return sentenciaDeclObjectpppppp01;
 	}
+	
+	/**
+	 * Genera las líneas de traza que se sitúan al inicio de un método
+	 * 
+	 * @param d
+	 *            Documento al que pertenecen todos los nodos
+	 * @param bloqueMetodo
+	 *            nodo que representea el bloque de instrucciones del método
+	 * @param argumentos
+	 *            valores que se asignarán en las líneas de traza
+	 * @param paramEstructura
+	 *            numero de parametro que alberga la estructura sobre la que
+	 *            actua el algoritmo
+	 * @param paramIndices
+	 *            numeros de parámetros que delimitan la actuación del algoritmo
+	 *            en la estructura
+	 * @return primera sentencia que colocamos
+	 */
+	private static Element generacionLineasEntrada(Document d,
+			Element bloqueMetodo, Element argumentos[], boolean RyP, 
+			int solParcial, int mejorSolucion, int cota) {
+		// Creamos todas las lineas de entrada que necesitamos
+
+		// 01. "Object pppppp01[]=new Object[numParametros];"
+		Element sentenciaDeclObjectpppppp01 = elementoDeclaracion(d, "Object",
+				"pppppp01", argumentos.length);
+
+		// 01b.
+		// "String nnnnnn01[]={ nombreParam1, nombreParam2, nombreParam3, ... };"
+		Element sentenciaArrayNombreParam = elementoNombresParam(d,
+				(Element) (((Element) (bloqueMetodo.getParentNode()))
+						.getElementsByTagName("formal-arguments").item(0)));
+
+		// 01c. "Object ssssss01=nombreParam;"
+		Element sentenciaSolParcial = elementoDeclaracionAsignacionNumerico(d,
+				solParcial, "ssssss01",
+				(Element) (((Element) (bloqueMetodo.getParentNode()))
+						.getElementsByTagName("formal-arguments").item(0)));
+
+		// 01d. "Object mmmmmm01=nombreParam;"
+		Element sentenciaMejorSolucion = elementoDeclaracionAsignacionNumerico(d,
+				mejorSolucion, "mmmmmm01",
+				(Element) (((Element) (bloqueMetodo.getParentNode()))
+						.getElementsByTagName("formal-arguments").item(0)));
+		
+		// 01e. "int cccccc01=nombreParam;"
+		Element sentenciaCota = null;
+		if(RyP) {
+			sentenciaCota = elementoDeclaracionAsignacionNumerico(d, 
+					cota, "cccccc01",
+					(Element) (((Element) (bloqueMetodo.getParentNode()))
+							.getElementsByTagName("formal-arguments").item(0)));
+		}
+
+
+		// 02. "pppppp01[n]=parametroN;" (varias)
+		Element sentenciaAsigParam[] = new Element[argumentos.length];
+		for (int i = 0; i < argumentos.length; i++) {
+			sentenciaAsigParam[i] = elementosAsigParametros(d, i,
+					argumentos[i].getAttribute("name"), "pppppp01");
+		}
+
+		// 03. Linea de Traza para la entrada
+		Element sentenciaAnadirEntrada = Transformador
+				.elementoAnadirEntradaSalida(d, "anadirEntrada", "pppppp01",
+						RyP, "ssssss01", "mmmmmm01", "cccccc01", 
+						((Element) (bloqueMetodo.getParentNode()))
+							.getAttribute("name"));
+
+		// Ahora insertamos las lineas de entrada
+		// Element hijosBloqueMetodo[]=
+		// ManipulacionElement.nodeListToElementArray(
+		// bloqueMetodo.getChildNodes() );
+
+		bloqueMetodo.appendChild(sentenciaDeclObjectpppppp01);
+		bloqueMetodo.appendChild(sentenciaArrayNombreParam);
+		bloqueMetodo.appendChild(sentenciaSolParcial);
+		bloqueMetodo.appendChild(sentenciaMejorSolucion);
+		if(RyP) {
+			bloqueMetodo.appendChild(sentenciaCota);
+		}
+
+		for (int i = 0; i < argumentos.length; i++) {
+			bloqueMetodo.appendChild(sentenciaAsigParam[i]);
+		}
+		bloqueMetodo.appendChild(sentenciaAnadirEntrada);
+
+		// Recolocamos las lineas para que las líneas recién añadidas estén al
+		// principio del método
+		while (bloqueMetodo.getFirstChild() != sentenciaDeclObjectpppppp01) {
+			Node nodo_aux = bloqueMetodo.getFirstChild();
+			bloqueMetodo.removeChild(nodo_aux);
+			bloqueMetodo.appendChild(nodo_aux);
+		}
+
+		// Devolvemos primera sentencia que colocamos para que después sepamos
+		// cuál debe ir en primer lugar
+		return sentenciaDeclObjectpppppp01;
+	}
 
 	private static Element elementoNombresParam(Document d,
 			Element formalArguments) {
@@ -1616,7 +2174,7 @@ public class Transformador {
 	 *            nombre del fichero (el mismo que el de la clase)
 	 * @param inicioNombre
 	 *            Inicio del nombre que se usará para guardar el nuevo fichero.
-	 * @param codigoUnico
+	 * @param codigounico
 	 *            Código único que se sumará al nombre del nuevo fichero.
 	 */
 	public static void correccionNombres(Document d, String fichero,

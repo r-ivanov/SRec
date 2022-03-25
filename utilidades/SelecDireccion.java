@@ -19,7 +19,7 @@ import conf.Conf;
  * fichero
  */
 public class SelecDireccion {
-
+	
 	/**
 	 * Permite seleccionar un fichero.
 	 * 
@@ -218,7 +218,7 @@ public class SelecDireccion {
 	public static String[] cuadroAbrirFichero(Component padre, String path,
 			String titulo, String nombreFichero, String[][] extensiones,
 			String[] definiciones, int load, boolean soloDirectorio) {
-		String nombres[] = new String[2];
+		String nombres[] = new String[3];
 
 		final JFileChooser jfc = new JFileChooser(path);
 		jfc.setDialogTitle(titulo);
@@ -253,8 +253,9 @@ public class SelecDireccion {
         jfc.getActionMap().put("delAction",a);
         jfc.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DELETE"),"delAction");
 		
-		FileNameExtensionFilter filtros[] = new FileNameExtensionFilter[definiciones.length];
-
+	FileNameExtensionFilter filtros[] = new FileNameExtensionFilter[definiciones.length];
+		
+		
 		if (definiciones[0] != null && extensiones[0] != null
 				&& definiciones.length > 0 && extensiones[0].length > 0) {
 			for (int i = 0; i < filtros.length; i++) {
@@ -281,15 +282,18 @@ public class SelecDireccion {
 				jfc.setFileFilter(filtros[i]);
 			}
 		}
-
+		File fichero;
 		if (nombreFichero != null && !soloDirectorio) {
-			File fichero = new File(nombreFichero);
+			 fichero = new File(nombreFichero);
+		
 			jfc.setSelectedFile(fichero);
+			
 		} else {
-			File fichero = new File("");
+			 fichero = new File("");
 			jfc.setSelectedFile(fichero);
 		}
-
+		
+		
 		int returnVal = 0;
 		if (tipo == JFileChooser.SAVE_DIALOG) {
 			returnVal = jfc.showSaveDialog(padre);
@@ -302,11 +306,22 @@ public class SelecDireccion {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			nombres[0] = jfc.getSelectedFile().getParent() + File.separator;
 			nombres[1] = jfc.getSelectedFile().getName();
-
+			
+		
 			FileFilter fne = jfc.getFileFilter();
+			boolean text= fne.getDescription().toLowerCase().contains("txt");
+			if (text == true) {
+				nombres[2] = "true";
+			} else {
+				nombres[2] = "false";
+			}
 
 			if (tipo == JFileChooser.SAVE_DIALOG && !soloDirectorio) {
-				if (fne.getDescription().toLowerCase().contains("jpeg")
+				if (fne.getDescription().toLowerCase().contains("txt")
+						&& (!nombres[1].toLowerCase().contains(".txt") && !nombres[1]
+								.toLowerCase().contains(".txt"))) {
+					nombres[1] = nombres[1] + ".txt";
+				}if (fne.getDescription().toLowerCase().contains("jpeg")
 						&& (!nombres[1].toLowerCase().contains(".jpeg") && !nombres[1]
 								.toLowerCase().contains(".jpg"))) {
 					nombres[1] = nombres[1] + ".jpg";
@@ -319,12 +334,32 @@ public class SelecDireccion {
 				}
 			}
 		} else {
+			/*FileFilter fne = jfc.getFileFilter();
+			boolean text= jfc.getSelectedFile().getName().endsWith("txt");
+			if(text==true) {nombres[2]="true";
+			}
+			else {nombres[2]="false";
+			}
+			*/
 			nombres[0] = path;
 			nombres[1] = null;
+			FileFilter fne = jfc.getFileFilter();
+			boolean text= jfc.getSelectedFile().getName().endsWith("txt");
+			if (text == true) {
+				nombres[2] = "true";
+			} else {
+				nombres[2] = "false";
+			}
+
+			
+			
 		}
 
 		return nombres;
 
 	}
+
+	
+	
 
 }

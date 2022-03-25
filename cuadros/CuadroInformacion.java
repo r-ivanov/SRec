@@ -51,10 +51,8 @@ public class CuadroInformacion extends Thread implements ActionListener,
 	 *            título que llevará el cuadro de error
 	 * @param etiq
 	 *            mensaje que mostrará el cuadro de error
-	 * @param comando
-	 *            comando que ejecutará el cuadro
-	 * @param boton2
-	 *            texto que aparecerá en el segundo botón de acción
+	 
+	
 	 * @param anc
 	 *            ancho del cuadro
 	 * @param alt

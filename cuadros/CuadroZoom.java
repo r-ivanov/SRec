@@ -53,6 +53,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 
 	private static int zoomArbol;
 	private static int zoomPila;
+	private static int zoomTraza;
 	private static int zoomCrono;
 	private static int zoomEstructura;
 	private static int zoomGrafoDep;
@@ -124,7 +125,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 
 		dimensionesPaneles = pV.getTamanoPaneles();
 		dimensionesGrafos = pV.getTamanoGrafos();
-
+		
 		ocv = (OpcionConfVisualizacion) gOpciones.getOpcion(
 				"OpcionConfVisualizacion", false);
 	}
@@ -136,7 +137,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 	public void run() {
 		// Vista de traza no se maneja desde aquí, pero dejamos hueco en
 		// estructuras.
-		int numVistas = 5;
+		int numVistas = 6;
 		int numVistasVisibles = (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
 				ventana.getTraza().getTecnicas()) ? 5 : 3);
 
@@ -370,21 +371,27 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 			barras[i] = new JSlider(-100, 100, zoomArbol);
 		} else if (i == 1) {
 			barras[i] = new JSlider(-100, 100, zoomPila);
-		} else if (i == 3) {
+		}else if (i == 2) {
+			barras[i] = new JSlider(-100, 100, zoomCrono);
+		}
+		else if (i == 3) {
 //			barras[i] = new JSlider(-100, 100, zoomCrono);
 			barras[i] = new JSlider(-100, 100, zoomEstructura);
 		} else if (i == 4) {
 //			barras[i] = new JSlider(-100, 100, zoomEstructura);
 			barras[i] = new JSlider(-100, 100, zoomGrafoDep);
 		}
-
 		if (tipoVariacion == CuadroZoom.MAS5) {
-			zoomMas5(i);
+		zoomMas5(i);	
 		} else if (tipoVariacion == CuadroZoom.MENOS5) {
+			
+			
 			zoomMenos5(i);
 		} else if (tipoVariacion == CuadroZoom.AJUSTE) {
+			
 			zoomAjuste(i);
 		}
+		
 	}
 
 	/**
@@ -396,7 +403,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 	private static void zoomMas5(int i) {
 		barras[i].setValue(barras[i].getValue() + 5);
 		Conf.setPanelArbolReajustado(true);
-		peticionRefrescar(i);
+		peticionRefrescar(i,1);
 	}
 
 	/**
@@ -408,7 +415,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 	private static void zoomMenos5(int i) {
 		barras[i].setValue(barras[i].getValue() - 5);
 		Conf.setPanelArbolReajustado(true);
-		peticionRefrescar(i);
+		peticionRefrescar(i,-1);
 	}
 
 	/**
@@ -440,7 +447,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 			}
 			barras[i].setValue(Math.min(valorNuevoAncho, valorNuevoAlto));
 			Conf.setPanelArbolReajustado(true);
-			peticionRefrescar(i);
+			peticionRefrescar(i,0);
 		} else if (i == 1) {
 			// Pila
 			double propAncho = (double) dimPaneles[0] / (double) dimGrafos[0];
@@ -455,8 +462,8 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 			}
 
 			barras[i].setValue(valorNuevo);
-			peticionRefrescar(i);
-		} else if (i == 100) {
+			peticionRefrescar(i,0);
+		} else if (i == 2)/*100?*/ {
 			// Crono
 			Conf.setHaciendoAjuste(true);
 
@@ -476,7 +483,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 
 			barras[i].setValue(Math.min(valorNuevoAncho, valorNuevoAlto));
 			Conf.setPanelArbolReajustado(true);
-			peticionRefrescar(i);
+			peticionRefrescar(i,0);
 		} else if (i == 3) {
 			// Estructura
 			Conf.setHaciendoAjuste(true);
@@ -497,7 +504,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 
 			barras[i].setValue(Math.min(valorNuevoAncho, valorNuevoAlto));
 			Conf.setPanelArbolReajustado(true);
-			peticionRefrescar(i);
+			peticionRefrescar(i,0);
 		}else if (i == 4) {
 			// Grafo de dependencia
 			double propAncho = (double) dimPaneles[8] / (double) dimGrafos[8];
@@ -512,7 +519,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 			}
 
 			barras[i].setValue(valorNuevo);
-			peticionRefrescar(i);
+			peticionRefrescar(i,0);
 		}
 	}
 
@@ -548,7 +555,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 				.contains("JSlider")) {
 			for (int i = 0; i < barras.length; i++) {
 				if (barras[i] != null && barras[i] == e.getSource()) {
-					peticionRefrescar(i);
+					peticionRefrescar(i,0);
 				}
 			}
 		}
@@ -575,7 +582,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 								barras[i].setValue(Integer.parseInt(cuadros[i]
 										.getText()));
 
-								peticionRefrescar(i);
+								peticionRefrescar(i,0);
 							} catch (Exception exc) {
 							}
 						}
@@ -633,7 +640,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 				if (barras[i] != null) {
 					barras[i].setValue(0);
 					etiqPorcentaje[i].setText("0%");
-					peticionRefrescar(i);
+					peticionRefrescar(i,0);
 				}
 			}
 		}
@@ -650,7 +657,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 		if (e.getSource().getClass().getName().contains("JSlider")) {
 			for (int i = 0; i < barras.length; i++) {
 				if (barras[i] != null && barras[i] == e.getSource()) {
-					peticionRefrescar(i);
+					peticionRefrescar(i,0);
 				}
 			}
 		}
@@ -664,8 +671,10 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 	 * 
 	 * @param i
 	 *            Índice de la vista.
+	 * @param tipo
+	 *            Necesario para realizar zoom en resultado Panel crono.
 	 */
-	private static void peticionRefrescar(int i) {
+	private static void peticionRefrescar(int i,int tipo) {
 		ocv = (OpcionConfVisualizacion) gOpciones.getOpcion(
 				"OpcionConfVisualizacion", false);
 
@@ -682,13 +691,18 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 			// Si es barra de pila
 			ventana.actualizarZoomPila(valor);
 			ocv.setZoomPila(valor);
-		} else if (i == 3) {
+		} else if (i == 2) {
+			// Si es barra de traza
+			ventana.actualizarZoom(i, valor,tipo);
+			ocv.setZoomCrono(valor);
+		}  
+		else if (i == 3) {
 			// Si es barra de crono
 //				ventana.actualizarZoom(i, valor);
 //				ocv.setZoomCrono(valor);
 			
 			// Si es barra de estructura
-			ventana.actualizarZoom(i, valor);
+			ventana.actualizarZoom(i, valor,tipo);
 			ocv.setZoomEstructura(valor);
 		} else if (i == 4) {
 			// Si es barra de grafo dependencia

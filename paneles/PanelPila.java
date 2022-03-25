@@ -82,7 +82,7 @@ MouseListener, MouseMotionListener {
 			this.add(this.panel, BorderLayout.NORTH);
 
 			try {
-				this.visualizar();
+				//this.visualizar();
 				this.refrescarZoom(Conf.zoomPila);
 			} catch (OutOfMemoryError oome) {
 				this.graph = null;

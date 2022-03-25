@@ -16,6 +16,7 @@ import java.util.Queue;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.swing.tree.TreeNode;
 
 import org.jgraph.JGraph;
 import org.jgraph.event.GraphModelEvent;
@@ -98,7 +99,7 @@ public class GrafoDependencia {
 	private boolean esExpresionDeFila;					//	True - La expresión es de filas, False - Caso contrario
 	private List<Integer> parametrosComunes;			//	Lista de índices de parámetros comunes respecto al primer método
 	private List<String> parametrosComunesS;			//	Lista de nombres de los parámetros comunes respecto al primer método
-
+	public JGraph representacionGrafo;
 	/**
 	 * Devuelve una nueva instancia de un grafo. Solo un método.
 	 * 
@@ -666,7 +667,7 @@ public class GrafoDependencia {
 		DefaultGraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new DefaultCellViewFactory());
-		final JGraph representacionGrafo = new JGraph(model, view);
+		this.representacionGrafo = new JGraph(model, view);
 		representacionGrafo.setMarqueeHandler(null);
 
 		representacionGrafo.getModel().addGraphModelListener(
@@ -951,7 +952,7 @@ public class GrafoDependencia {
 	 * @param representacionGrafo 
 	 * 		Grafo donde vamos a insertarlo
 	 */
-	private void insertarEjesTabularGrafo(JGraph representacionGrafo){
+	public void insertarEjesTabularGrafo(JGraph representacionGrafo){
 		//	Líneas invisibles para unir los títulos de las etiquetas de filas y columnas
 	
 		DefaultGraphCell lineaX1 = new DefaultGraphCell("");
@@ -1058,7 +1059,24 @@ public class GrafoDependencia {
 		
 		//	Títulos para cada eje
 		
-		DefaultEdge edgeX = new DefaultEdge(new String(textoX));
+		DefaultEdge edgeX = new DefaultEdge(new String(" "));
+		
+		
+			edgeX.setSource(lineaX1.getChildAt(0));
+			edgeX.setTarget(lineaX2.getChildAt(0));
+			GraphConstants.setEndFill(edgeX.getAttributes(), true);
+			GraphConstants.setLabelAlongEdge(edgeX.getAttributes(), true);
+			GraphConstants.setMoveable(edgeX.getAttributes(), false);
+			GraphConstants.setLineEnd(edgeX.getAttributes(), GraphConstants.ARROW_TECHNICAL);
+			GraphConstants.setFont(edgeX.getAttributes(), new Font("Arial",
+					Font.BOLD, SsooValidator.isUnix()?TAM_FUENTE_LINUX:TAM_FUENTE));			
+			GraphConstants.setLineColor(edgeX.getAttributes(), Color.WHITE);
+			GraphConstants.setSelectable(edgeX.getAttributes(), false);
+			GraphConstants.setEditable(edgeX.getAttributes(), false);
+			GraphConstants.setForeground(edgeX.getAttributes(), Color.LIGHT_GRAY);
+	
+		 edgeX = new DefaultEdge(new String(textoX));
+			
 		edgeX.setSource(lineaX1.getChildAt(0));
 		edgeX.setTarget(lineaX2.getChildAt(0));
 		GraphConstants.setEndFill(edgeX.getAttributes(), true);
@@ -1071,6 +1089,7 @@ public class GrafoDependencia {
 		GraphConstants.setSelectable(edgeX.getAttributes(), false);
 		GraphConstants.setEditable(edgeX.getAttributes(), false);
 		GraphConstants.setForeground(edgeX.getAttributes(), Color.LIGHT_GRAY);
+		
 		
 		DefaultEdge edgeY = new DefaultEdge(textoY);
 		edgeY.setSource(lineaY1.getChildAt(0));

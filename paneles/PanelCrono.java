@@ -2,8 +2,13 @@ package paneles;
 
 import grafica.ContenedorCronologica;
 import grafica.EtiquetaFlotante;
+import opciones.GestorOpciones;
+import opciones.OpcionConfVisualizacion;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,8 +17,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JViewport;
 
 import org.jgraph.JGraph;
@@ -23,9 +30,11 @@ import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
 
 import utilidades.NombresYPrefijos;
+import utilidades.Texto;
 import ventanas.Ventana;
 import conf.Conf;
 import cuadros.CuadroInfoNodo;
+import datos.Estado;
 import datos.RegistroActivacion;
 import eventos.NavegacionListener;
 
@@ -37,11 +46,18 @@ import eventos.NavegacionListener;
  */
 public class PanelCrono extends JPanel implements ActionListener, KeyListener,
 MouseListener, MouseMotionListener {
-
+	
+	static GestorOpciones gOpciones = new GestorOpciones();
+	
+	private static OpcionConfVisualizacion ocv  = (OpcionConfVisualizacion) gOpciones.getOpcion(
+			"OpcionConfVisualizacion", false);
 	static final long serialVersionUID = 04;
 
 	private JGraph graph;
+	
+	
 
+	private int TamTrazaResult =ocv.getTamFuenteTraza();
 	private JViewport vp;
 	private ContenedorCronologica cc;
 
@@ -72,7 +88,30 @@ MouseListener, MouseMotionListener {
 	 *            Nombres y prefijos para mostrar.
 	 */
 	public PanelCrono(NombresYPrefijos nyp) throws Exception {
-
+		/*public void paint(Graphics g){
+	        super.paint(g);
+	        
+	        g.setColor(Color.BLUE);
+	        g.drawLine(0, 70, 100, 70);
+	        g.drawRect(150, 70, 50, 70);
+	        g.drawRoundRect(250, 70, 50, 70, 6, 6);
+	        g.drawOval(350, 70, 50, 70);
+	        
+	        int vectorX [] = {500, 550, 450};
+	        int vectory [] = {70, 120, 120};
+	        g.drawPolygon(vectorX, vectory, 3);
+	        
+	        g.setColor(Color.GREEN);
+	        g.fillRect(150, 270, 50, 70);
+	        g.fillRoundRect(250, 270, 50, 70, 6, 6);
+	        g.fillOval(350, 270, 50, 70);
+	        
+	        int[] vectorx2 = {500, 550, 450};
+	        int[] vectory2 = {270, 320, 320};
+	        g.fillPolygon(vectorx2, vectory2, 3);
+	        
+	    }*/
+		
 		this.nyp = nyp;
 		if (Ventana.thisventana.traza != null) {
 			GraphModel model = new DefaultGraphModel();
@@ -87,6 +126,8 @@ MouseListener, MouseMotionListener {
 				this.graph.getGraphLayoutCache().insert(this.cc.getCeldas());
 				this.celdas = this.cc.getCeldas();
 				this.graph.getGraphLayoutCache().insert(this.celdas);
+			
+				
 				this.graph.addMouseListener(this);
 				this.graph.addMouseMotionListener(this);
 				this.graph.setBackground(Conf.colorPanel);
@@ -145,20 +186,207 @@ MouseListener, MouseMotionListener {
 				this.graph.setBackground(Conf.colorPanel);
 
 				this.setBackground(Conf.colorPanel);
+//Codigo para añadir texto a vista de traza en DyV
+				BorderLayout bl2 = new BorderLayout();
+				this.setLayout(bl2);
+				String lineasTraza22[];
+				String  lineasTrazaSalLigEnt[];
+				 lineasTraza22 = Ventana.thisventana.traza.getLineasTraza();
+				
+				 lineasTrazaSalLigEnt = Ventana.thisventana.traza.getLineasTrazaSalidaLigadaEntrada();
+				 JLabel resultado = new JLabel ();
 
-				BorderLayout bl = new BorderLayout();
-				this.setLayout(bl);
 
+				 String tipo= Ventana.thisventana.claseAlgoritmo.getMetodoPrincipal().getTipo();
+		        JPanel panelTraza = new JPanel();
 				this.panel = new JPanel();
-				this.panel.add(this.graph);
+				this.panel.add(this.graph,BorderLayout.SOUTH);
+				
 				this.panel.setBackground(Conf.colorPanel);
 				this.removeAll();
-				this.add(this.panel, BorderLayout.NORTH);
+				this.add(this.panel, BorderLayout.SOUTH);
+				if(!tipo.equals("void")) {
+					String textoSalida = Texto.get("TR_S", Conf.idioma);
+					String textoEntrada = Texto.get("TR_E", Conf.idioma);
 
-				this.panel.updateUI();
+					Ventana.thisventana.trazaCompleta.todoVisible();
+					String lineasTraza[] = Ventana.thisventana.trazaCompleta
+							.getLineasTrazaSalidaLigadaEntrada();
+					String lineasTraza2[] = Ventana.thisventana.trazaCompleta
+							.getLineasTrazaSalidaLigadaEntrada();
+					String lineasTrazaParcial[] = Ventana.thisventana.traza
+							.getLineasTrazaSalidaLigadaEntrada();
+					String lineasTrazaParcial2[] = Ventana.thisventana.traza
+							.getLineasTrazaSalidaLigadaEntrada();
 
-				this.updateUI();
+					int numNoHistoricos = 0;
+					if (Conf.historia == 2) // Si nodos históricos son eliminados
+					{
+						for (int i = 0; i < lineasTraza.length; i++) {
+							if (!lineasTraza[i].contains("<hist>")) {
+								numNoHistoricos++;
+							}
+						}
 
+						String lineasTrazaNoHistoricas[] = new String[numNoHistoricos];
+
+						numNoHistoricos = 0;
+						for (int i = 0; i < lineasTraza.length; i++) {
+							if (!lineasTraza[i].contains("<hist>")) {
+								lineasTrazaNoHistoricas[numNoHistoricos] = lineasTraza[i];
+								numNoHistoricos++;
+							}
+						}
+						lineasTraza = lineasTrazaNoHistoricas;
+					}
+
+					BorderLayout bl = new BorderLayout();
+					GridLayout gl = new GridLayout(lineasTraza.length +1, 1);
+					JPanel panelEtiquetas = new JPanel();
+					panelEtiquetas.setLayout(gl);
+					JLabel etiquetas[] = new JLabel[lineasTraza.length];
+
+					boolean siguiente = true;
+					boolean visible = false;
+					String valor = "";
+					int iParcial = 1;
+					for (int i = 0; i < lineasTraza.length; i++) {
+						if (lineasTraza[i].contains("<hist>")) {
+							etiquetas[i] = new JLabel(lineasTraza[i].substring(0,
+									lineasTraza[i].indexOf("<hist>")));
+							lineasTraza2[i] = lineasTraza[i].substring(0,
+									lineasTraza[i].indexOf("<hist>") - 1);
+						} else {
+							etiquetas[i] = new JLabel(lineasTraza[i]);
+						}
+
+						if (lineasTraza2[i].contains("?")) {
+							lineasTraza2[i] = lineasTraza2[i].substring(0,
+									lineasTraza2[i].indexOf("?"));
+						}
+						if (lineasTraza2[i].equals(valor)) {
+							valor = "";
+							visible = true;
+							siguiente = true;
+							lineasTraza[i] = lineasTrazaParcial2[iParcial - 1];
+						} else {
+							visible = false;
+						}
+						if (i == 0) {
+							valor = "";
+							visible = true;
+							siguiente = true;
+						}
+						if (lineasTraza2[i].contains("?")) {
+							lineasTraza2[i] = lineasTraza[i].substring(0,
+									lineasTraza[i].indexOf("?"));
+						}
+						if ((iParcial < lineasTrazaParcial.length) && (siguiente)) {
+							if (lineasTrazaParcial[iParcial].contains("?")) {
+								lineasTrazaParcial[iParcial] = lineasTrazaParcial[iParcial]
+										.substring(0,
+												lineasTrazaParcial[iParcial].indexOf("?"));
+							}
+							if (lineasTrazaParcial[iParcial].contains("<hist>")) {
+								lineasTrazaParcial[iParcial] = lineasTrazaParcial[iParcial]
+										.substring(0, lineasTrazaParcial[iParcial]
+												.indexOf("<hist>") - 1);
+							}
+							valor = lineasTrazaParcial[iParcial];
+							siguiente = false;
+							iParcial++;
+						}
+
+						if (lineasTraza[i].contains("entra")) // Si son líneas de entrada
+						{
+							lineasTraza[i] = lineasTraza[i].replace("entra",
+									textoEntrada);
+
+							if (lineasTraza[i].contains("<ilum>")) // Si hay que iluminar
+							{
+								etiquetas[i].setForeground(Conf.colorIluminado);
+							} else if (lineasTraza[i].contains("<hist>")
+									&& Conf.historia == 1) // Si hay que atenuar
+							{
+								if (Conf.modoColor == 1) {
+									etiquetas[i].setForeground(Conf.colorC1AEntrada);
+								} else {
+									int numColor = Integer.parseInt(lineasTraza[i]
+											.substring(lineasTraza[i].indexOf("?") + 1,
+													lineasTraza[i].lastIndexOf("?")));
+									etiquetas[i].setForeground(Conf.coloresNodoA[numColor]);
+								}
+							} else {
+								if (Conf.modoColor == 1) {
+									etiquetas[i].setForeground(Conf.colorC1Entrada);
+								} else {
+									int numColor = Integer.parseInt(lineasTraza[i]
+											.substring(lineasTraza[i].indexOf("?") + 1,
+													lineasTraza[i].lastIndexOf("?")));
+									etiquetas[i].setForeground(Conf.coloresNodo[numColor]);
+								}
+							}
+						} else // Si son líneas de salida
+						{
+							lineasTraza[i] = lineasTraza[i].replace("sale",
+									textoSalida);
+							if (lineasTraza[i].contains("<ilum>")) // Si hay que iluminar
+							{
+								etiquetas[i].setForeground(Conf.colorIluminado);
+							} else if (lineasTraza[i].contains("<hist>")
+									&& Conf.historia == 1) // Si hay que atenuar
+							{
+								if (Conf.modoColor == 1) {
+									etiquetas[i].setForeground(Conf.colorC1ASalida);
+								} else {
+									int numColor = Integer.parseInt(lineasTraza[i]
+											.substring(lineasTraza[i].indexOf("?") + 1,
+													lineasTraza[i].lastIndexOf("?")));
+									etiquetas[i].setForeground(Conf.coloresNodoA[numColor]);
+								}
+							} else {
+								if (Conf.modoColor == 1) {
+									etiquetas[i].setForeground(Conf.colorC1Salida);
+								} else {
+									int numColor = Integer.parseInt(lineasTraza[i]
+											.substring(lineasTraza[i].indexOf("?") + 1,
+													lineasTraza[i].lastIndexOf("?")));
+									etiquetas[i].setForeground(Conf.coloresNodo[numColor]);
+								}
+							}
+						}
+						if (lineasTraza[i].contains("?")) {
+							lineasTraza[i] = lineasTraza[i].substring(0,
+									lineasTraza[i].lastIndexOf("?"));
+							lineasTraza[i] = lineasTraza[i].substring(0,
+									lineasTraza[i].lastIndexOf("?"));
+						}
+
+						lineasTraza[i] = lineasTraza[i].replace("<hist>", "");
+						lineasTraza[i] = lineasTraza[i].replace("<ilum>", "");
+						String nombreFuente = ocv.getFuenteTraza();
+						 
+						etiquetas[i].setText(lineasTraza[i]);
+						Font font = new Font(nombreFuente, Font.PLAIN, this.TamTrazaResult);
+						etiquetas[i].setFont(font);
+					//	etiquetas[i].setFont(Conf.fuenteTraza);
+						etiquetas[i].setVisible(visible);
+						visible = false;
+						panelEtiquetas.add(etiquetas[i]);
+					}
+					//End codigo para añadir traza de texto
+					GridLayout gl2 = new GridLayout(2, 1);
+					this.setLayout(bl);
+					this.add(panelEtiquetas, BorderLayout.NORTH);
+					this.add(graph,BorderLayout.CENTER);
+					
+
+					this.setBackground(Conf.colorPanel);
+					panelEtiquetas.setBackground(Conf.colorPanel);
+					this.panel.updateUI();
+					this.updateUI();
+				}
+					
 			} catch (OutOfMemoryError oome) {
 				this.cc = null;
 				this.graph = null;
@@ -327,21 +555,35 @@ MouseListener, MouseMotionListener {
 	 * 
 	 * @param valor
 	 *            Nuevo valor para el zoom.
+	 * @param tipo
+	 *            Necesario para realizar zoom en resultado Panel crono.
 	 */
-	public void refrescarZoom(int valor) {
+	public void refrescarZoom(int valor,int tipo) {
+		if(tipo==1) {
+			this.TamTrazaResult = this.TamTrazaResult+2;
+		}else if(tipo==0) {
+			this.TamTrazaResult = 12;
+		}else if(tipo==-1) {
+			this.TamTrazaResult = this.TamTrazaResult-2;
+		}
+		
 		if (valor == 0) {
+			
 			this.graph.setScale(this.escalaOriginal);
+			
 		} else if (valor > 0) {
 			double v = valor;
 			v = v / 100;
 			v = v + 1;
 			v = v * this.escalaOriginal;
+			
 			this.graph.setScale(v);
 		} else {
 			double v = (valor * (-1));
 			v = v / 100;
 			v = 1 - v;
 			v = v * this.escalaOriginal;
+		
 			this.graph.setScale(v);
 		}
 		this.escalaActual = this.graph.getScale();

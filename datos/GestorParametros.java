@@ -27,7 +27,7 @@ public class GestorParametros {
 	 */
 	public static Object asignarParam(String s, Class c) throws Exception {
 		Object o = null;
-
+		
 		if (depurar) {
 			System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 		}
@@ -37,14 +37,18 @@ public class GestorParametros {
 					|| c.getCanonicalName().contains("Integer")) // Si es
 				// integer
 			{
+				
 				int entero = Integer.parseInt(s);
+				
 				o = entero;
 				if (depurar) {
 					System.out.println("Asignamos integer:" + o);
 				}
+			
 			} else if (c.getCanonicalName().equals("char")
 					|| c.getCanonicalName().contains("Char")) // Si es char
 			{
+				
 				// Internamente, quitamos las comillas simples a los caracteres
 				s = s.replace("\'", "");
 
@@ -58,6 +62,7 @@ public class GestorParametros {
 				if (depurar) {
 					System.out.println("Asignamos char:" + o);
 				}
+				
 			} else if (c.getCanonicalName().equals("long")
 					|| c.getCanonicalName().contains("Long")) // Si es long
 			{
@@ -236,7 +241,10 @@ public class GestorParametros {
 				System.out.println("CuadroParam.asignarParam(): char[]");
 			}
 			if (c.getCanonicalName().contains("[][]")) {
+				
 				o = valoresArrayArray(s, 7);
+				
+				
 			} else {
 				char arrayCaracteres[] = valoresCharArray(s);
 				o = arrayCaracteres;
@@ -276,7 +284,7 @@ public class GestorParametros {
 				.println("CuadroParam.asignarParam NO va a devolver null");
 			}
 		}
-
+		
 		return o;
 	}
 
@@ -1027,7 +1035,7 @@ public class GestorParametros {
 		} else {
 			return null;
 		}
-
+	
 		return arrayCaracteres;
 	}
 
@@ -1213,6 +1221,7 @@ public class GestorParametros {
 				}
 				return arrayByte;
 			case 7:
+				
 				char arrayCaract[][] = new char[num_objetos][];
 				for (int i = 0; i < num_objetos; i++) {
 					arrayCaract[i] = valoresCharArray(arrays[i]);
@@ -1226,6 +1235,7 @@ public class GestorParametros {
 				for (int i = 0; i < num_objetos; i++) {
 					arrayCadenas[i] = valoresStringArray(arrays[i]);
 					if (arrayCadenas[i] == null) {
+						
 						return null;
 					}
 				}

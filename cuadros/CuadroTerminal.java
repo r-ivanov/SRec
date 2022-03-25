@@ -269,7 +269,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 	 */
 	public boolean terminalAbrirCerrar() {
 		if(!this.cuadroAbiertoPrimeraVez) {			
-			this.cuadroAbiertoPrimeraVez = true;
+			//this.cuadroAbiertoPrimeraVez = true;
 		}
 		
 		if(this.cuadroEstaVisible)
@@ -1616,7 +1616,7 @@ public class CuadroTerminal implements WindowListener, ActionListener, Printable
 		private boolean esSalidaNormal;
 		
 		
-		//********************************************************************************
+		//******************************************************************************
 		// 			CONSTRUCTOR
 		//********************************************************************************
 		

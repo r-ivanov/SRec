@@ -137,6 +137,7 @@ public class LlamadorSistema {
         
         retornoString = invertirTotalErrores(retornoString);
         listaRetorno.add(0, retornoString);
+        proceso.destroy();// para evitar que salga el .class
         return listaRetorno;
     } 
 	

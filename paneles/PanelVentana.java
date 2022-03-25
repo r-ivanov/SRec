@@ -75,7 +75,15 @@ public class PanelVentana extends JPanel {
 	public void refrescarZoomPila(int valor) {
 		this.pAlgoritmo.refrescarZoomPila(valor);
 	}
-	
+	/**
+	 * Actualiza el zoom de la visualización (vista de traza)
+	 * 
+	 * @param valor
+	 *            Nuevo valor de zoom.
+	 */
+	public void refrescarZoomTraza(int valor) {
+		this.pAlgoritmo.refrescarZoomTraza(valor);
+	}
 	/**
 	 * Actualiza el zoom de la visualización (vista de grafo de dependencia)
 	 * 
@@ -93,9 +101,11 @@ public class PanelVentana extends JPanel {
 	 *            1 -> pila, 0 -> arbol, 3 -> crono, 4 -> estructura, 5 -> grafo
 	 * @param valor
 	 *            nuevo valor de zoom.
+     * @param tipo
+	 *            Necesario para realizar zoom en resultado Panel crono.
 	 */
-	public void refrescarZoom(int vista, int valor) {
-		this.pAlgoritmo.refrescarZoom(vista, valor);
+	public void refrescarZoom(int vista, int valor,int tipo) {
+		this.pAlgoritmo.refrescarZoom(vista, valor,tipo);
 	}
 
 	/**
@@ -156,7 +166,7 @@ public class PanelVentana extends JPanel {
     public void mostrarEjecucionTraza() throws Exception
     {
         try {
-            pAlgoritmo.abrirVistas();
+        pAlgoritmo.abrirVistas();
         }
         catch (Exception e) {
             pAlgoritmo=null;
@@ -600,5 +610,4 @@ public class PanelVentana extends JPanel {
 		this.getPanelAlgoritmo().removeSelects();
 	}
 	
-
 }

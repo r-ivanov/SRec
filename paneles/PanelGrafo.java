@@ -56,7 +56,7 @@ MouseListener, MouseMotionListener {
 	private JToolBar[] barras;
 	private JButton[] botones;
 
-	private GrafoDependencia grafoDependencia;
+	public GrafoDependencia grafoDependencia;
 	private JGraph representacionGrafo;
 
 	private String ultimaExpresionParaFila;				//	Expresión filas si han tabulado 1 método
@@ -69,7 +69,7 @@ MouseListener, MouseMotionListener {
 	
 	private int zoom = 0;	
 	
-	private int tipoGrafo = -1;	// 	0 - Grafo normal
+	public int tipoGrafo = -1;	// 	0 - Grafo normal
 								//	1 - Grafo con matriz
 								//	2 - Grafo tabulado
 	
@@ -358,6 +358,10 @@ MouseListener, MouseMotionListener {
 	 */
 	public void visualizar2(NombresYPrefijos nyp){
 		if (Ventana.thisventana.traza != null) {
+			int filas =this.grafoDependencia.getInvertirFilasNormal() ;
+			int columnas= this.grafoDependencia.getInvertirColumnasNormal() ;
+				
+			
 			
 			//	Creamos grafo nuevo siempre, para que cargue la nueva traza
 			//		y/o las nuevas opciones de visualización
@@ -365,6 +369,14 @@ MouseListener, MouseMotionListener {
 				this.grafoDependencia = new GrafoDependencia(this.metodo,nyp);
 			else
 				this.grafoDependencia = new GrafoDependencia(this.metodos,nyp);
+			this.grafoDependencia.setInvertirFilasUsuario(filas);
+			
+			this.grafoDependencia.setInvertirColumnasUsuario(columnas);
+			this.grafoDependencia.nodosPosicionadosFalse();
+			
+			
+			this.actualizarIconosInvertir(0);
+			this.actualizarIconosInvertir(1);
 			
 			this.representacionGrafo = this.grafoDependencia
 					.obtenerRepresentacionGrafo(false,this.tipoGrafo==2);	

@@ -60,6 +60,8 @@ public class CuadroOpcionMVJavaEncontradas extends Thread implements ActionListe
 	private OpcionMVJava omvj = null;
 	
 	private GestorOpciones gOpciones = new GestorOpciones();
+	OpcionMVJava omvjAux = (OpcionMVJava) this.gOpciones.getOpcion(
+			"OpcionMVJava", true);
 	
 	/**
 	 * Inicializa la clase para seleccionar la ruta de las máquinas virtuales encontradas
@@ -99,10 +101,18 @@ public class CuadroOpcionMVJavaEncontradas extends Thread implements ActionListe
 		this.constraint.anchor = GridBagConstraints.WEST;
 		
 		this.panelRadioButtons.setLayout(new GridBagLayout());
-		
+		int x=0;
+		String maqActiva=omvjAux.getDir() + "javac.exe"; 
 		for(int i=0; i<this.maquinas.length; i++){
 			this.constraint.gridy = i;
+			if(!omvjAux.getDir().equals("")) {
+				if(maquinas[i].equals(maqActiva)){
+					x=i;
+				}
+			}
+			
 			this.listaRadioButtons.add(new JRadioButton(maquinas[i]));
+			
 			this.listaRadioButtons.get(i).addActionListener(this);
 			this.groupRadioButtons.add(this.listaRadioButtons.get(i));
 			this.panelRadioButtons.add(this.listaRadioButtons.get(i),this.constraint);
@@ -114,7 +124,9 @@ public class CuadroOpcionMVJavaEncontradas extends Thread implements ActionListe
 		this.groupRadioButtons.add(this.listaRadioButtons.get(maquinas.length));
 		this.panelRadioButtons.add(this.listaRadioButtons.get(maquinas.length),this.constraint);
 		
-		this.listaRadioButtons.get(0).setSelected(true);
+	
+			this.listaRadioButtons.get(x).setSelected(true);
+		
 		
 		//	Panel scroll
 		

@@ -491,6 +491,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 		Thread proceso = new Thread(new Runnable() {
 			@Override
 			public void run() {
+				
 				p.ejecutarAlgoritmo(new PreprocesadorEjecucionListener() {
 					@Override
 					public void ejecucionFinalizada(final List<Ejecucion> ejecuciones, final boolean satisfactoria) {					
@@ -511,6 +512,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 									Runnable accion = new Runnable() {								
 										@Override
 										public void run() {
+											
 											try {
 												if (ejecuciones.size() > 1) {
 													FamiliaEjecuciones.getInstance().habilitar();
@@ -544,6 +546,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 				});
 			}
 		});	
+		
 		proceso.setPriority(Thread.MIN_PRIORITY);
 		
 		cuadroProceso.setProceso(proceso);
@@ -609,15 +612,15 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 					this.cuadrosvalores[i].insertItemAt(this.valores[i], 0);
 					this.cuadrosvalores[i].setSelectedIndex(0);
 				}
-				if (recogerValores(false, true)) {
+				/*if (recogerValores(false, true)) {
 					this.aceptar.setEnabled(true);
 				} else {
 					this.aceptar.setEnabled(false);
-				}
+				}*/
 			} else {
 				if (this.almacenValores.getError().length() > 0) {
-					new CuadroError(this.dialogo, "3"
-							+ Texto.get("ERROR_ARCH", Conf.idioma),
+					new CuadroError(this.dialogo, 
+							 Texto.get("ERROR_ARCH", Conf.idioma),
 							this.almacenValores.getError());
 				}
 			}

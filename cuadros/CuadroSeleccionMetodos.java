@@ -25,6 +25,8 @@ import javax.swing.SwingConstants;
 
 import botones.*;
 import datos.*;
+import opciones.GestorOpciones;
+import opciones.OpcionOpsVisualizacion;
 import utilidades.*;
 import conf.*;
 import ventanas.*;
@@ -62,6 +64,8 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 
 	private ClaseAlgoritmo clase;
 
+	private OpcionOpsVisualizacion oov ;
+	private GestorOpciones gOpciones = new GestorOpciones();
 	// Listado de métodos seleccionados para ser procesados
 	private ArrayList<MetodoAlgoritmo> metodos;
 
@@ -302,9 +306,13 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 
 			panelSup.add(panelFilaSup, BorderLayout.NORTH);
 			panelSup.add(jsp, BorderLayout.CENTER);
-			jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-			panelSup.setBorder(new TitledBorder(this.numero + " "
-					+ Texto.get("CSM_METDISP", Conf.idioma) + " " + nombreClase));
+			jsp.setVerticalScrollBarPolicy(
+					ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			panelSup.setBorder(
+					new TitledBorder(
+							this.numero + " " 
+									+ Texto.get("CSM_METDISP", Conf.idioma) 
+									+ " " + nombreClase));
 
 			this.panel.add(panelSup, BorderLayout.NORTH);
 			this.panel.add(this.panelBoton, BorderLayout.SOUTH);
@@ -412,6 +420,15 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 			recogerMetodosSeleccionados();
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			oov.setAnteriorVE(0);
+			this.gOpciones.setOpcion(oov, 1);
+			//this.dialogo.setVisible(false);
+			if (Conf.fichero_log) {
+				Logger.log_write("Ninguna vista específica");
+			}
+			this.preprocesador.fase2(this.clase);
+
+			this.dialogo.setVisible(false);
 		} else if (e.getSource().getClass().getName().contains("JCheckBox")) {
 			for (int i = 0; i < this.numero; i++) {
 				if (this.botonesDYV[i] == e.getSource()) {
@@ -450,6 +467,15 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 		if (code == KeyEvent.VK_ENTER) {
 			recogerMetodosSeleccionados();
 		} else if (code == KeyEvent.VK_ESCAPE) {
+			this.dialogo.setVisible(false);
+			oov.setAnteriorVE(0);
+			this.gOpciones.setOpcion(oov, 1);
+			//this.dialogo.setVisible(false);
+			if (Conf.fichero_log) {
+				Logger.log_write("Ninguna vista específica");
+			}
+			this.preprocesador.fase2(this.clase);
+
 			this.dialogo.setVisible(false);
 		} else {
 			if (e.getSource() instanceof JTextField) {
@@ -529,6 +555,17 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 		if (e.getSource() == this.aceptar) {
 			recogerMetodosSeleccionados();
 		} else if (e.getSource() == this.cancelar) {
+			this.oov = (OpcionOpsVisualizacion) this.gOpciones
+					.getOpcion("OpcionOpsVisualizacion", false);
+			//this.dialogo.setVisible(false);
+			oov.setAnteriorVE(0);
+			this.gOpciones.setOpcion(oov, 1);
+			//this.dialogo.setVisible(false);
+			if (Conf.fichero_log) {
+				Logger.log_write("Ninguna vista específica");
+			}
+			this.preprocesador.fase2(this.clase);
+
 			this.dialogo.setVisible(false);
 		}
 	}

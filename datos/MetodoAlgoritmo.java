@@ -2,6 +2,7 @@ package datos;
 
 import java.util.ArrayList;
 
+
 import toxml.JavaParser;
 import utilidades.Arrays;
 import utilidades.ServiciosString;
@@ -36,6 +37,14 @@ public class MetodoAlgoritmo {
 	// sobre la que se actúa en cada llamada
 	// 3= Número del Parametro que alberga la col. máxima que determina la parte
 	// sobre la que se actúa en cada llamada
+	
+	// Para tecnica AABB (arboles de busqueda)
+	// Si no hay cota se asume vuelta atras, en caso contrario es RyP
+	private boolean RyP = false; // false = Vuelta Atras, true = RyP
+	private int solParcial = -1; // obligatorio 
+	private int mejorSol = -1;   // obligatorio
+	private int cota = -1;		 // Solo para tecnica de Ramificacion y Poda
+	private boolean maximizacion;// true = Maximizacion, false = Minimizacion
 
 	private String paramValor[]; // Almacenamos el último valor que se empleó
 	// con cada parámetro en la última
@@ -61,10 +70,11 @@ public class MetodoAlgoritmo {
 	// (ID)
 
 	private int tecnica = 0; // Tomará un valor en función de la técnica para la
-	// que ha sido procesado (REC o DYV)
+	// que ha sido procesado (REC, DYV o AABB)
 
 	public static final int TECNICA_REC = 1111;
 	public static final int TECNICA_DYV = 1112;
+	public static final int TECNICA_AABB = 1113;
 
 	/**
 	 * Permite construir una nueva instancia del objeto para la técina REC dada
@@ -425,7 +435,7 @@ public class MetodoAlgoritmo {
 	/**
 	 * Devuelve la técnica que se está utilizando.
 	 * 
-	 * @return TECNICA_REC o TECNICA_DYV
+	 * @return TECNICA_REC, TECNICA_DYV o TECNICA_AABB
 	 */
 	public int getTecnica() {
 		return this.tecnica;
@@ -501,6 +511,54 @@ public class MetodoAlgoritmo {
 		}
 		return contados;
 	}
+	
+	/**
+	 * Devuelve la medida asociada a la solucion parcial.
+	 * 
+	 * @return La medida asociada a la solucion parcial.
+	 */
+	public int getSolParcial() {
+		return this.solParcial;
+	}
+	
+	/**
+	 * Devuelve la medida asociada a la mejor solucion encontrada.
+	 * 
+	 * @return La medida asociada a la mejor solucion encontrada.
+	 */
+	public int getMejorSol() {
+		return this.mejorSol;
+	}
+	
+	/**
+	 * Devuelve si el metodo es de Vuelta Atras o de Ramificación y Poda
+	 * 
+	 * @return true = Ramificacón y Poda.
+	 *            false = Vuelta Atras.
+	 */
+	public boolean getRyP() {
+		return this.RyP;
+	}
+	
+	/**
+	 * Devuelve el valor de la cota para el metodo de Ramificacion y Poda
+	 * 
+	 * @param cota
+	 *            La estimacion de cota.
+	 */
+	public int getCota() {
+		return this.cota;
+	}
+	
+	/**
+	 * Devuelve si el metodo es de maximizacion o minimizacion
+	 * 
+	 * @param maximizacion
+	 *            true = Maximizacion, false = Minimizacion
+	 */
+	public boolean getMaximizacion() {
+		return this.maximizacion;
+	}
 
 	/**
 	 * Devuelve el identificador generado para el médoto.
@@ -557,7 +615,7 @@ public class MetodoAlgoritmo {
 	/**
 	 * Establece el tipo de retorno del método.
 	 * 
-	 * @param Tipo
+	 * @param tipo
 	 *            de retorno del método.
 	 */
 	public void setTipo(String tipo) {
@@ -567,7 +625,7 @@ public class MetodoAlgoritmo {
 	/**
 	 * Establece los nombres de los parámetros del método.
 	 * 
-	 * @param Nombres
+	 * @param paramNombre
 	 *            de los parámetros del método.
 	 */
 	public void setNombresParametros(String[] paramNombre) {
@@ -588,7 +646,7 @@ public class MetodoAlgoritmo {
 	 * Establece los valores de visibilidad para los parámetros de entrada del
 	 * método.
 	 * 
-	 * @param Visibilidad
+	 * @param visiblesEntrada
 	 *            de los parámetros de entrada del método.
 	 */
 	public void setVisibilidadEntrada(boolean[] visiblesEntrada) {
@@ -625,7 +683,7 @@ public class MetodoAlgoritmo {
 	 * Establece los valores de visibilidad para los parámetros de salida del
 	 * método.
 	 * 
-	 * @param Visibilidad
+	 * @param visiblesSalida
 	 *            de los parámetros de salida del método.
 	 */
 	public void setVisibilidadSalida(boolean[] visiblesSalida) {
@@ -688,7 +746,7 @@ public class MetodoAlgoritmo {
 	 * Establece la técnica de visualización del método.
 	 * 
 	 * @param tecnica
-	 *            TECNICA_REC o TECNICA_DYV
+	 *            TECNICA_REC, TECNICA_DYV o TECNICA_AABB
 	 */
 	public void setTecnica(int tecnica) {
 		this.tecnica = tecnica;
@@ -744,6 +802,92 @@ public class MetodoAlgoritmo {
 		this.paramIndice[1] = i2;
 		this.paramIndice[2] = i3;
 		this.paramIndice[3] = i4;
+	}
+	
+	/**
+	 * Establece los parametros de solucion parcial, mejor solucion encontrada y
+	 * la cota para el algoritmo de Ramificacion y Poda
+	 * 
+	 * @param solParcial
+	 *            La medida asociada a la solucion parcial.
+	 * @param mejorSol
+	 *            La medida asociada a la mejor solucion encontrada.
+	 * @param cota
+	 *            La estimacion de cota (solo tecnica de ramificacion y poda).
+	 */
+	public void setParametrosAABB(int solParcial, int mejorSol, int cota, boolean maximizacion) {
+		this.solParcial = solParcial;
+		this.mejorSol = mejorSol;
+		this.cota = cota;
+		this.RyP = true;
+		this.maximizacion = maximizacion;
+	}
+	
+	/**
+	 * Establece los parametros de solucion parcial y mejor solucion encontrada
+	 * para el algoritmo de Vuelta Atras
+	 * 
+	 * @param solParcial
+	 *            La medida asociada a la solucion parcial.
+	 * @param mejorSol
+	 *            La medida asociada a la mejor solucion encontrada.
+	 */
+	public void setParametrosAABB(int solParcial, int mejorSol, boolean maximizacion) {
+		this.solParcial = solParcial;
+		this.mejorSol = mejorSol;
+		this.RyP = false;
+		this.maximizacion = maximizacion;
+	}
+	
+	/**
+	 * Establece la medida asociada a la solucion parcial.
+	 * 
+	 * @param solParcial
+	 *            La medida asociada a la solucion parcial.
+	 */
+	public void setSolParcial(int solParcial) {
+		this.solParcial = solParcial;
+	}
+	
+	/**
+	 * Establece la medida asociada a la mejor solucion encontrada.
+	 * 
+	 * @param mejorSol
+	 *            La medida asociada a la mejor solucion encontrada.
+	 */
+	public void setMejorSol(int mejorSol) {
+		this.mejorSol = mejorSol;
+	}
+	
+	/**
+	 * Establece si el metodo es de Vuelta Atras o de Ramificación y Poda
+	 * 
+	 * @param RyP
+	 *            true = Ramificacón y Poda.
+	 *            false = Vuelta Atras.
+	 */
+	public void setRyP(boolean RyP) {
+		this.RyP = RyP;
+	}
+	
+	/**
+	 * Establece el valor de la cota para el metodo de Ramificacion y Poda
+	 * 
+	 * @param cota
+	 *            La estimacion de cota.
+	 */
+	public void setCota(int cota) {
+		this.cota = cota;
+	}
+	
+	/**
+	 * Establece si el metodo es de maximizacion o minimizacion
+	 * 
+	 * @param maximizacion
+	 *            true = Maximizacion, false = Minimizacion
+	 */
+	public void setMaximizacion(boolean maximizacion) {
+		this.maximizacion = maximizacion;
 	}
 
 	// Métodos de clase
@@ -813,12 +957,19 @@ public class MetodoAlgoritmo {
 			ret = new int[2];
 			ret[0] = TECNICA_REC;
 			ret[1] = TECNICA_DYV;
+		} else if (valorRetorno[0] == 1 && valorRetorno[2] == 1) {
+			ret = new int[2];
+			ret[0] = TECNICA_REC;
+			ret[1] = TECNICA_AABB;
 		} else if (valorRetorno[0] == 1) {
 			ret = new int[1];
 			ret[0] = TECNICA_REC;
 		} else if (valorRetorno[1] == 1) {
 			ret = new int[1];
 			ret[0] = TECNICA_DYV;
+		} else if (valorRetorno[2] == 1) {
+			ret = new int[1];
+			ret[0] = TECNICA_AABB;
 		}
 
 		return ret;
@@ -826,11 +977,12 @@ public class MetodoAlgoritmo {
 
 	private static int[] tecnicasEjecucion(ClaseAlgoritmo c, MetodoAlgoritmo m,
 			int[] metodosRecorridos) {
-		int[] retorno = new int[2]; // primer entero indica técnica REC, segundo
+		int[] retorno = new int[3]; // primer entero indica técnica REC, segundo
 		// indica técnica DYV // 0=NO, 1=SI
 
 		retorno[0] = (m.getTecnica() == TECNICA_REC ? 1 : 0);
 		retorno[1] = (m.getTecnica() == TECNICA_DYV ? 1 : 0);
+		retorno[2] = (m.getTecnica() == TECNICA_AABB ? 1 : 0);
 
 		if (!Arrays.contiene(m.getID(), metodosRecorridos)) {
 			int[] idMetodosLlamados = m.getMetodosLlamados();
@@ -839,8 +991,10 @@ public class MetodoAlgoritmo {
 				if (!Arrays.contiene(idMetodosLlamados[i], metodosRecorridos)) {
 					if (c.getMetodoID(idMetodosLlamados[i]).getTecnica() == TECNICA_REC) {
 						retorno[0] = 1;
-					} else {
+					} else if (c.getMetodoID(idMetodosLlamados[i]).getTecnica() == TECNICA_DYV){
 						retorno[1] = 1;
+					}else { // TECNICA_AABB
+						retorno[2] = 1;
 					}
 
 					metodosRecorridos = Arrays.insertar(idMetodosLlamados[i],
@@ -854,6 +1008,9 @@ public class MetodoAlgoritmo {
 				}
 				if (tecnicasHijos[1] == 1) {
 					retorno[1] = 1;
+				}
+				if(tecnicasHijos[2] == 1) {
+					retorno[2] = 1;
 				}
 			}
 		}
@@ -880,5 +1037,7 @@ public class MetodoAlgoritmo {
 		}
 		return contador;
 	}
+	
 
 }
+

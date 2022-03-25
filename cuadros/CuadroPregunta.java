@@ -102,6 +102,7 @@ public abstract class CuadroPregunta extends Thread implements ActionListener,
 		this.textoBotonCancelar = textoBotonCancelar;
 	}
 	
+	
 	/**
 	 * Devuelve el diálogo asociado.
 	 * 

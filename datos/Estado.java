@@ -25,6 +25,12 @@ public class Estado {
 	private int indiceEstructura = -1;
 	// valores finales, posiciones de la estructura, no numeros de parámetros
 	private int indices[] = null;
+	
+	// RyP o Vuelta Atras
+	private boolean RyP = false; // True = RyP, False = Vuelta Atras
+	private Number solParcial = null;
+	private Number mejorSolucion = null;
+	private Number cota = -1;
 
 	/**
 	 * Constructor: genera un nuevo estado vacío
@@ -121,6 +127,49 @@ public class Estado {
 			this.setEstructuraIndices(e, indEstructura, ind);
 		}
 	}
+	
+	/**
+	 * Constructor: genera un nuevo estado con una serie de valores, bien
+	 * parámetros, bien de salida
+	 * 
+	 * @param p
+	 *            Conjunto de valores.
+	 * @param RyP
+	 *            True = Ramificación y Poda, False = Vuelta Atras.
+	 * @param solParcial
+	 *            La medida asociada a la solución parcial.
+	 * @param mejorSolucion
+	 *            La medida asociada a la mejor solución encontrada.
+	 * @param cota
+	 *            La estimación de cota (sólo técnica de ramificación y poda).      
+	 */
+	public Estado(Object p[], boolean RyP, Number solParcial, 
+			Number mejorSolucion, Number cota) {
+		this(p);
+		this.RyP = RyP;
+//		int dimSol;
+		if(solParcial != null) {
+//			dimSol = ServiciosString.vecesQueContiene(solParcial.getClass().getCanonicalName(), "[]");
+//			if(dimSol == 0) {
+//				this.solParcial = solParcial;
+//			}else {
+//				this.solParcial = this.copiaArray(solParcial, solParcial.getClass());
+//			}
+			this.solParcial = solParcial;
+		}
+		if(mejorSolucion != null) {
+//			dimSol = ServiciosString.vecesQueContiene(mejorSolucion.getClass().getCanonicalName(), "[]");
+//			if(dimSol == 0) {
+//				this.mejorSolucion = mejorSolucion;
+//			}else {
+//				this.mejorSolucion = this.copiaArray(mejorSolucion, mejorSolucion.getClass());
+//			}
+			this.mejorSolucion = mejorSolucion;
+		}
+		if(RyP) {
+			this.cota = cota;
+		}
+	}
 
 	/**
 	 * Constructor: genera un nuevo estado dado un estado anterior.
@@ -151,6 +200,84 @@ public class Estado {
 	 */
 	public int[] getIndices() {
 		return this.indices;
+	}
+	
+	/**
+	 * Devuelve si el metodo usa la tecnica de Ramificación y Poda 
+	 * 	o de Vuelta Atras.
+	 * 
+	 * @return True = Ramificación y Poda, False = Vuelta Atras.
+	 */
+	public boolean getRyP() {
+		return this.RyP;
+	}
+	
+	/**
+	 * Devuelve la medida asociada a la solución parcial.
+	 * 
+	 * @return La medida asociada a la solución parcial.
+	 */
+	public Number getSolParcial() {
+		return this.solParcial;
+	}
+	
+	/**
+	 * Devuelve la medida asociada a la mejor solución encontrada.
+	 * 
+	 * @return  La medida asociada a la mejor solución encontrada.
+	 */
+	public Number getMejorSolucion() {
+		return this.mejorSolucion;
+	}
+	
+	/**
+	 * Devuelve la estimación de la cota.
+	 * 
+	 * @return La estimación de cota (sólo técnica de ramificación y poda).
+	 */
+	public Number getCota() {
+		return this.cota;
+	}
+	
+	/**
+	 * Establece si el metodo usa la tecnica de Ramificación y Poda 
+	 * 	o de Vuelta Atras.
+	 * 
+	 * @param RyP
+	 *            True = Ramificación y Poda, False = Vuelta Atras.
+	 */
+	public void setRyP(boolean RyP) {
+		this.RyP = RyP;
+	}
+	
+	/**
+	 * Establece la medida asociada a la solución parcial.
+	 * 
+	 * @param solParcial
+	 *            La medida asociada a la solución parcial.
+	 */
+	public void setSolParcial(Number solParcial) {
+		this.solParcial = solParcial;
+	}
+	
+	/**
+	 * Establece la medida asociada a la mejor solución encontrada.
+	 * 
+	 * @param mejorSolucion
+	 *            La medida asociada a la mejor solución encontrada.
+	 */
+	public void setMejorSolucion(Number mejorSolucion) {
+		this.mejorSolucion = mejorSolucion;
+	}
+	
+	/**
+	 * Establece la estimación de la cota.
+	 * 
+	 * @param cota
+	 *            La estimación de cota (sólo técnica de ramificación y poda).
+	 */
+	public void setCota(Number cota) {
+		this.cota = cota;
 	}
 
 	/**
@@ -506,6 +633,12 @@ public class Estado {
 		// Copiamos cosas de DYV
 		e.setEstructuraIndices(this.estructura, this.indiceEstructura,
 				this.indices);
+		
+		// Copiamos cosas de RyP (o Vuelta Atras)
+		e.setRyP(this.RyP);
+		e.setSolParcial(this.solParcial);
+		e.setMejorSolucion(this.mejorSolucion);
+		e.setCota(this.cota);
 
 		return e;
 	}

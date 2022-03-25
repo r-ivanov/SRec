@@ -183,6 +183,7 @@ public class ServiciosString {
 		Class clase = o.getClass();
 
 		if (clase.getCanonicalName().contains("[][]")) {
+			
 			Object objeto[] = (Object[]) o;
 
 			cadena = cadena + "{";
@@ -202,6 +203,8 @@ public class ServiciosString {
 				|| clase.getCanonicalName().contains("Integer")) // Si es
 		// integer
 		{
+			
+	
 			if (depurar) {
 				System.out.println("PanelEstado int");
 			}
@@ -223,6 +226,7 @@ public class ServiciosString {
 		else if (clase.getCanonicalName().contains("char")
 				|| clase.getCanonicalName().contains("Character")) // Si es char
 		{
+			
 			if (depurar) {
 				System.out.println("PanelEstado char");
 			}

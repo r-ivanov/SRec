@@ -3,6 +3,8 @@ package datos;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import paneles.PanelAlgoritmo;
 import utilidades.ServiciosString;
@@ -874,7 +876,7 @@ public class RegistroActivacion {
 	/**
 	 * Añade un nuevo valor para un parámetro de salida.
 	 * 
-	 * @param es
+	 * @param ss
 	 *            Valor para un nuevo parámetro de salida.
 	 */
 	public void setSalidaString(String ss) {
@@ -897,7 +899,7 @@ public class RegistroActivacion {
 	/**
 	 * Añade un nuevo tipo de dato para un parámetro de salida.
 	 * 
-	 * @param es
+	 * @param ss
 	 *            Tipo de dato para un nuevo parámetro de salida.
 	 */
 	public void setSalidaClase(String ss) {
@@ -917,7 +919,7 @@ public class RegistroActivacion {
 	/**
 	 * Añade un nuevo valor de dimension para un parámetro de salida.
 	 * 
-	 * @param es
+	 * @param ss
 	 *            Valor de dimensión para un nuevo parámetro de salida.
 	 */
 	public void setSalidaDim(int ss) {
@@ -1322,7 +1324,41 @@ public class RegistroActivacion {
 
 		return numHijosVisibles;
 	}
-
+	/**
+	 * Devuelve los hijos 
+	 * 
+	 
+	 * @return hijos
+	 */
+	public ArrayList<RegistroActivacion> getHijos() {
+		
+		return this.hijos;
+		
+	}
+	/**
+	 * Devuelve todos los nodos descendientes , dado un nodo 
+	 * 
+	 @param nodoInicial
+	 			nodo padre
+	 * @return hijos
+	 */
+	public ArrayList<RegistroActivacion> getHijosDescend(RegistroActivacion nodoInicial) {
+		ArrayList<RegistroActivacion> hijosTotal= new ArrayList <RegistroActivacion>();
+		ArrayList<RegistroActivacion> hijosActual= new ArrayList<RegistroActivacion>();
+		hijosActual.addAll(nodoInicial.getHijos());
+		while(hijosActual.size()!=0) {
+			RegistroActivacion nodo = hijosActual.remove(0);
+		
+			if(!hijosTotal.contains(nodo)) {
+				hijosTotal.add(nodo);
+					if(nodo.getHijos()!=null)
+				hijosActual.addAll(nodo.getHijos());
+			}
+		}
+		return hijosTotal;
+		
+		//return hijosActual;
+	}
 	/**
 	 * Devuelve el hijo i-ésimo
 	 * 
@@ -2683,7 +2719,7 @@ public class RegistroActivacion {
 	}
 
 	/**
-	 * Devuelve el tipo de estructura más alta (normal < array < matriz) que
+	 * Devuelve el tipo de estructura más alta (normal - array - matriz) que
 	 * contiene el nodo o sus hijos.
 	 * 
 	 * @return 1 si es array, 2 si es matriz, 0 en cualquier otro caso.
@@ -3237,6 +3273,63 @@ public class RegistroActivacion {
 			numNodosIluminados = numNodosIluminados
 					+ this.hijos.get(i).iluminar(numeroMetodo, valoresE,
 							valoresS, valor);
+		}
+
+		return numNodosIluminados;
+	}
+	/**
+	 * Permite devolver el numero de nodos que se corresponden con los valores de
+	 * entrada, y de salida de un método.
+	 * 
+	 * @param numeroMetodo
+	 *            Posición del método a iluminar.
+	 * @param valoresE
+	 *            Valores de entrada del método a iluminar.
+	 * @param valoresS
+	 *            Valores de salida del método a iluminar.
+	
+	 * @return Número de nodos iluminados.
+	 */
+	public int getRedundantes(int numeroMetodo, String valoresE[], String valoresS[]
+			) {
+		int numNodosIluminados = 0;
+		boolean candidatoValido = true;
+
+		if (valoresE != null || valoresS != null) {
+			if (this.numMetodo == numeroMetodo) {
+				String[] valoresParam = null;
+				if (valoresE != null) {
+					valoresParam = this.entrada.getParametros();
+					for (int i = 0; i < valoresParam.length; i++) {
+						if (!((valoresE[i] == null || valoresE[i].length() == 0) || valoresParam[i]
+								.equals(valoresE[i]))) {
+							candidatoValido = false;
+						}
+					}
+				}
+
+				if (valoresS != null) {
+					valoresParam = this.salida.getParametros();
+					for (int i = 0; i < valoresParam.length; i++) {
+						if (!((valoresS[i] == null || valoresS[i].length() == 0) || valoresParam[i]
+								.equals(valoresS[i]))) {
+							candidatoValido = false;
+						}
+					}
+				}
+				if (candidatoValido) {
+					
+					numNodosIluminados++;
+				}
+			}
+		} else {
+			
+			numNodosIluminados++;
+		}
+		for (int i = 0; i < this.numHijos(); i++) {
+			numNodosIluminados = numNodosIluminados
+					+ this.hijos.get(i).getRedundantes(numeroMetodo, valoresE,
+							valoresS);
 		}
 
 		return numNodosIluminados;

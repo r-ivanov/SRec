@@ -7,9 +7,10 @@ public class Vista {
 
 	public static final int TIPO_REC = 1;
 	public static final int TIPO_DYV = 2;
+	public static final int TIPO_AABB = 3;
 
 	public static final String codigos[] = { "V_ARBOL", "V_PILA", "V_TRAZA",
-			"V_ESTRUC", "V_GRAFO_DEP" };
+			"V_ESTRUC", "V_GRAFO_DEP", "V_GLOBAL_VAL", "V_RAMA_VAL" };
 	private String codigo;
 
 	private boolean activa = false;
@@ -62,7 +63,7 @@ public class Vista {
 	 * ejecución.
 	 * 
 	 * @param tipo
-	 *            TIPO_REC o TIPO_DYV
+	 *            TIPO_REC o TIPO_DYV o TIPO_AABB
 	 */
 	public void setTipo(int tipo) {
 		switch (tipo) {
@@ -72,6 +73,9 @@ public class Vista {
 		case Vista.TIPO_DYV:
 			this.tipo = TIPO_DYV;
 			break;
+		case Vista.TIPO_AABB:
+			this.tipo = TIPO_AABB;
+			break;
 		default:
 			this.tipo = TIPO_REC;
 		}
@@ -80,7 +84,7 @@ public class Vista {
 	/**
 	 * Devuelve el tipo de la vista.
 	 * 
-	 * @return TIPO_REC o TIPO_DYV
+	 * @return TIPO_REC, TIPO_DYV o TIPO_AABB
 	 */
 	public int getTipo() {
 		return this.tipo;

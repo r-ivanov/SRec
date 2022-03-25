@@ -35,6 +35,7 @@ import conf.Conf;
 import cuadros.CuadroError;
 import cuadros.CuadroErrorCompilacion;
 import cuadros.CuadroPreguntaSeleccMetodosDYV;
+import cuadros.CuadroPreguntaSeleccionVistasEspecificas;
 import cuadros.CuadroProgreso;
 import cuadros.ValoresParametros;
 
@@ -68,6 +69,7 @@ public class Preprocesador extends Thread {
 	private static String ahora;
 
 	private String codigoPrevio;
+	
 
 	// a true si reprocesamos la misma clase que ya estaba cargada, es para no
 	// borrar históricos de parámetros introducidos
@@ -92,6 +94,7 @@ public class Preprocesador extends Thread {
 	 */
 	public Preprocesador(String path, String nombre) {
 		String nombreModif = JavaParser.convReverse(nombre);
+	
 		if (path != null && nombreModif != null) {
 			if(!SsooValidator.isUnix()){
 				fichero[0] = path.substring(0, path.lastIndexOf("\\") + 1);
@@ -240,11 +243,11 @@ public class Preprocesador extends Thread {
 
 				// Borramos ficheros que puedan interferir en proceso de
 				// ejecución
-				File file = new File(fichero[0] + ficheroclass);
+				/* file = new File(fichero[0] + ficheroclass);
 				file.delete();
 				file = new File(ficheroclass);
-				file.delete();
-				file = new File(fichero[0] + ficheroxml);
+				file.delete();*/
+				File file = new File(fichero[0] + ficheroxml);
 				file.delete();
 				file = new File(ficheroxml);
 				file.delete();
@@ -454,7 +457,8 @@ public class Preprocesador extends Thread {
 
 						try {
 							this.claseAlgoritmo = Transformador
-									.crearObjetoClaseAlgoritmo(this.documento); // Sólo
+									.crearObjetoClaseAlgoritmo(this.documento); 
+							// Sólo
 							// contiene
 							// métodos
 							// visualizables
@@ -508,12 +512,19 @@ public class Preprocesador extends Thread {
 
 						Ventana.thisventana.habilitarOpcionesDYV(false);
 						if (this.claseAlgoritmo.potencialMetodoDYV()) {
-							new CuadroPreguntaSeleccMetodosDYV(
-									Ventana.thisventana, this.claseAlgoritmo,
-									this);
+							new CuadroPreguntaSeleccionVistasEspecificas(
+								this.claseAlgoritmo, Ventana.thisventana,
+								this,true);
 						} else { // Si no lo tiene, directamente procesamos
-							Ventana.thisventana.habilitarOpcionesDYV(false);
-							this.fase2(this.claseAlgoritmo);
+							if(this.claseAlgoritmo.getMetodos().size()!=0) {
+								new CuadroPreguntaSeleccionVistasEspecificas(
+									this.claseAlgoritmo, Ventana.thisventana,
+									this,false);
+							}
+							else {
+								Ventana.thisventana.habilitarOpcionesDYV(false);
+								this.fase2(this.claseAlgoritmo);
+							}
 						}
 					}
 				}
@@ -636,9 +647,9 @@ public class Preprocesador extends Thread {
 
 			file = new File("SRec_" + fich2);
 			file.delete();
-			file = new File(ficherosinex + ".class");
+			/*file = new File(ficherosinex + ".class");
 			file.delete();
-
+*/
 			if (!this.compilado) {
 				this.cuadroProgreso.cerrar();
 				if (Conf.fichero_log) {
@@ -727,9 +738,6 @@ public class Preprocesador extends Thread {
 
 		Type[] tipos = metodoEjecutar.getGenericParameterTypes();
 		Class[] clasesParametros = new Class[tipos.length];
-		for (int j = 0; j < tipos.length; j++) {
-			clasesParametros[j] = (Class) tipos[j];
-		}
 
 		for (int j = 0; j < tipos.length; j++)
 			clasesParametros[j] = (Class) tipos[j];

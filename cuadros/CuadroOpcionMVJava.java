@@ -1,6 +1,6 @@
 package cuadros;
 
-import java.awt.Dimension;
+import java.awt.Dimension; 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -24,7 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import conf.*;
-import javafx.scene.control.RadioButton;
+//import javafx.scene.control.RadioButton;
 import botones.*;
 import opciones.*;
 import utilidades.*;

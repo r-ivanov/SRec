@@ -296,7 +296,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 			} else {
 				// Si no, recorremos todas las posiciones menos la última, del
 				// valor de retorno
-				longitudRecorrido = parametros.length - 1;
+				longitudRecorrido = parametros.length ;//- 1;
 			}
 
 			for (int i = 0; i < longitudRecorrido; i++) {
@@ -314,6 +314,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 			// Si sólo uno, lo deshabilitamos para que no se pueda eliminar de
 			// la animación,
 			// Si no, habilitamos todos.
+			/*
 			if (paramSeleccionados == 1) {
 				for (int i = 0; i < longitudRecorrido; i++) {
 					if (parametros[i].isSelected()) {
@@ -324,6 +325,9 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 				for (int i = 0; i < longitudRecorrido; i++) {
 					parametros[i].setEnabled(true);
 				}
+			}^*/ //Prueba de fran
+			for (int i = 0; i < longitudRecorrido; i++) {
+				parametros[i].setEnabled(true);
 			}
 
 		} else {
@@ -389,7 +393,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 			ajustarChecks();
 		}
 
-		String metodoError = comprobarChecks();
+		String metodoError = null;//comprobarChecks();
 		if (metodoError != null) {
 			new CuadroError(this.dialogo,
 					Texto.get("ERROR_PARAM", Conf.idioma), Texto.get(

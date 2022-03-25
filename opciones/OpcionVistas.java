@@ -30,8 +30,14 @@ public class OpcionVistas extends Opcion {
 		if (this.vistas.size() == 0) {
 			for (int i = 0; i < Vista.codigos.length; i++) {
 				Vista v = new Vista(Vista.codigos[i]);
-				v.setTipo(i <= 2 ? Vista.TIPO_REC : Vista.TIPO_DYV);
-				if (i == 0) {
+				if(i <= 2) {
+					v.setTipo(Vista.TIPO_REC);
+				}else if(i <= 4) {
+					v.setTipo(Vista.TIPO_DYV);
+				}else {
+					v.setTipo(Vista.TIPO_AABB);
+				}
+				if (i == 0 || i == 5) {
 					v.setPanel(1);
 				} else {
 					v.setPanel(2);
@@ -47,7 +53,8 @@ public class OpcionVistas extends Opcion {
 	 * Permite obtener la vista correspondiente al código indicado.
 	 * 
 	 * @param codigo
-	 *            "V_ARBOL", "V_PILA", "V_TRAZA" o "V_ESTRUC"
+	 *            "V_ARBOL", "V_PILA", "V_TRAZA", "V_ESTRUC", "V_GRAFO_DEP", 
+	 *            "V_GLOBAL_VAL" o "V_RAMA_VAL"
 	 * 
 	 * @return Vista correspondiente o null si no existe ninguna con el código
 	 *         indicado.

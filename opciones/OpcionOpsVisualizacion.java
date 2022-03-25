@@ -28,6 +28,9 @@ public class OpcionOpsVisualizacion extends Opcion {
 	private int datosMostrar = OpcionOpsVisualizacion.DATOS_TODOS;
 	private boolean mostrarArbolSalto = true;
 
+	private int anteriorVE = 0;
+	
+
 	private boolean mostrarVisor = true;// Conf.mostrarVisor;
 
 	private boolean mostrarEstructuraEnArbol = true;
@@ -81,7 +84,25 @@ public class OpcionOpsVisualizacion extends Opcion {
 			this.setHistoria(ELIMINAR_HISTORIA);
 		}
 	}
-
+	/**
+	 * Permite conocer la ultima eleccion de vistas especificas
+	 * 
+	 * @return 0 = Vistas generales, 
+	 * 		   1 = Divide y Venceras, 
+	 * 		   2 = Arboles de busqueda
+	 */
+	public int getAnteriorVE() {
+		return anteriorVE;
+	}
+	/**
+	 * Permite establecer la ultima eleccion de vistas especificas
+	 * 
+	 * @param anteriorVE
+	 * 			  0 = Vistas generales, 1 = DyV , 2 = AABB
+	 */
+	public void setAnteriorVE(int anteriorVE) {
+		this.anteriorVE = anteriorVE;
+	}
 	/**
 	 * Permite establecer el valor para la opción de mostrar saltos de árboles.
 	 * 
@@ -466,6 +487,8 @@ public class OpcionOpsVisualizacion extends Opcion {
 		Element e14 = d.createElement("visualizacionDinamica");
 		e14.setAttribute("valor", "" + this.getVisualizacionDinamica());
 
+		Element e15 = d.createElement("anteriorVE");
+		e15.setAttribute("valor", "" + this.getAnteriorVE());
 		e.appendChild(e01);
 		e.appendChild(e02);
 		e.appendChild(e03);
@@ -480,6 +503,7 @@ public class OpcionOpsVisualizacion extends Opcion {
 		e.appendChild(e12);
 		e.appendChild(e13);
 		e.appendChild(e14);
+		e.appendChild(e15);
 
 		return e;
 	}
@@ -585,5 +609,21 @@ public class OpcionOpsVisualizacion extends Opcion {
 		} else {
 			this.setVisualizacionDinamica(false);
 		}
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("anteriorVE"));
+		
+//			this.setAnteriorVE(elements[0].getAttribute("valor")
+//					.equals("true"));
+		
+		if(elements[0].getAttribute("valor").equals("1")) {
+			this.setAnteriorVE(1);
+		}else if(elements[0].getAttribute("valor").equals("2")) {
+			this.setAnteriorVE(2);
+		}else {
+			this.setAnteriorVE(0);
+		}
+		
+		//this.setAnteriorDyV(false);
+		
 	}
 }
