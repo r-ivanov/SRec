@@ -3,5 +3,6 @@
 	<classpathentry excluding="bin/|release/|build_tmp/" kind="src" path=""/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/JFreeChart1dot0dot19"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

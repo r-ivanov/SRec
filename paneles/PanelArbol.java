@@ -27,10 +27,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import org.jgraph.JGraph;
-import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultGraphModel;
@@ -38,6 +38,7 @@ import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
 
+import utilidades.Arrays;
 import utilidades.NombresYPrefijos;
 import utilidades.ServiciosString;
 import utilidades.Texto;
@@ -114,11 +115,14 @@ MouseListener, MouseMotionListener {
 	private NavegacionListener nl = null;
 
 	private boolean haEntradoAhora = true;
-
 	// true: la proxima vez que se mueva dentro de un nodo, significará que
 	// acaba de entrar en él, mostrará información
 	// false: la proxima vez que se mueva dentro de un nodo, significará que ya
 	// estaba dentro de él, no hacemos nada
+	
+	// Para Vista de Rama de Valores
+	private PanelValoresRamaAABB pValRama;
+
 
 	/**
 	 * Constructor: crea un nuevo PanelArbol
@@ -126,8 +130,9 @@ MouseListener, MouseMotionListener {
 	 * @param nyp
 	 *            NombresYPrefijos para la visualización de métodos.
 	 */
-	public PanelArbol(NombresYPrefijos nyp) throws Exception {
+	public PanelArbol(NombresYPrefijos nyp, PanelValoresRamaAABB pValRama) throws Exception {
 		this.nyp = nyp;
+		this.pValRama = pValRama;
 
 		if (Ventana.thisventana.traza != null) {
 			GraphModel model = new DefaultGraphModel();
@@ -798,6 +803,31 @@ MouseListener, MouseMotionListener {
 			} else if (this.ra == null) {
 				this.haEntradoAhora = true;
 			}
+			
+			if(Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+					Ventana.thisventana.getTraza().getTecnicas()) 
+					&& this.ra != null) {
+				final RegistroActivacion nodoActual = this.ra;
+				new Thread() {
+					@Override
+					public synchronized void run() {
+						
+						try {
+							this.wait(20);
+						} catch (java.lang.InterruptedException ie) {
+						}
+						SwingUtilities.invokeLater(new Runnable() {							
+							@Override
+							public void run() {
+								if(pValRama != null) {
+									pValRama.setNodoActual(nodoActual);
+									pValRama.visualizar();
+								}
+							}
+						});
+					}
+				}.start();
+			}
 		} else if (e.getButton() == MouseEvent.BUTTON2) // Boton Centro
 		{
 
@@ -975,5 +1005,4 @@ MouseListener, MouseMotionListener {
 	public static void setMinY(int i) {
 		minY = i;
 	}
-
 }

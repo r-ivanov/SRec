@@ -63,6 +63,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 
 	private static PanelCrono pCrono;
 	private static PanelEstructura pEstructura;
+	
+	private static PanelValoresGlobalesAABB pValGlobal;
+	private static PanelValoresRamaAABB pValRama;
 
 	private static PanelControl pControl;
 
@@ -73,12 +76,12 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	public static NombresYPrefijos nyp = null;
 
 	private static JScrollPane jspCompilador, jspCodigo, jspTraza, jspPila,
-			jspCrono, jspEstructura, jspGrafo;
+			jspCrono, jspEstructura, jspGrafo, jspValGlobales, jspValRama;
 	private JPanel jspArbol;
 
 	private JPanel contenedorCompilador, contenedorCodigo, contenedorTraza,
 	contenedorPila, contenedorArbol, contenedorControl, contenedorGrafo,
-	contenedorCrono, contenedorEstructura;
+	contenedorCrono, contenedorEstructura, contenedorValGlobales, contenedorValRama;
 
 	private JTabbedPane panel1, panel2;
 
@@ -119,15 +122,17 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		// jspCodigo.setPreferredSize(new Dimension(250,250));
 
 		this.contenedorCodigo = new JPanel();
-		this.contenedorCompilador = new JPanel();
-		this.contenedorTraza = new JPanel();
 		this.contenedorCodigo.setLayout(new BorderLayout());
-		this.contenedorCompilador.setLayout(new BorderLayout());
-		this.contenedorTraza.setLayout(new BorderLayout());
 		this.contenedorCodigo.add(pCodigo.getPanel(), BorderLayout.CENTER);
 		this.contenedorCodigo.add(pCodigoBotones, BorderLayout.SOUTH);
+		
+		this.contenedorCompilador = new JPanel();
+		this.contenedorCompilador.setLayout(new BorderLayout());
 		this.contenedorCompilador.add(pCompilador.getPanel(),
 				BorderLayout.CENTER);
+		
+		this.contenedorTraza = new JPanel();
+		this.contenedorTraza.setLayout(new BorderLayout());
 		this.contenedorTraza.add(jspTraza);
 
 		jspCompilador = new JScrollPane(this.contenedorCompilador);
@@ -145,12 +150,13 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		dcha.setLayout(new BorderLayout());
 
 		try {
+			pValGlobal = new PanelValoresGlobalesAABB();
+			pValRama = new PanelValoresRamaAABB();
 			
 			pPila = new PanelPila(null);
-			pArbol = new PanelArbol(null);
+			pArbol = new PanelArbol(null, pValRama);
 			pCrono = new PanelCrono(null);
-			pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
-		
+			pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);		
 		} catch (OutOfMemoryError oome) {
 			pArbol = null;
 			throw oome;
@@ -158,22 +164,22 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			pArbol = null;
 			e.printStackTrace();
 			throw e;
-		}
+		}		
+		
 		jspPila = new JScrollPane(pPila);
-		jspGrafo = new JScrollPane(pGrafo);
-		this.jspArbol = new JPanel();
-		this.jspArbol.setLayout(new BorderLayout());
-		this.jspArbol.add(pArbol, BorderLayout.CENTER);
-		
 		this.contenedorPila = new JPanel();
-		
-		this.contenedorArbol = new JPanel();
-		this.contenedorGrafo = new JPanel();
 		this.contenedorPila.setLayout(new BorderLayout());
 		this.contenedorPila.add(jspPila, BorderLayout.CENTER);
 		
+		this.jspArbol = new JPanel();
+		this.jspArbol.setLayout(new BorderLayout());
+		this.jspArbol.add(pArbol, BorderLayout.CENTER);
+		this.contenedorArbol = new JPanel();
 		this.contenedorArbol.setLayout(new BorderLayout());
 		this.contenedorArbol.add(this.jspArbol, BorderLayout.CENTER);
+		
+		jspGrafo = new JScrollPane(pGrafo);
+		this.contenedorGrafo = new JPanel();
 		this.contenedorGrafo.setLayout(new BorderLayout());
 		this.contenedorGrafo.add(jspGrafo,BorderLayout.CENTER);
 
@@ -186,7 +192,15 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorEstructura = new JPanel();
 		this.contenedorEstructura.setLayout(new BorderLayout());
 		this.contenedorEstructura.add(jspEstructura, BorderLayout.CENTER);
-
+		
+		jspValGlobales = new JScrollPane(pValGlobal);
+		this.contenedorValGlobales = new JPanel(new BorderLayout());
+		this.contenedorValGlobales.add(jspValGlobales, BorderLayout.CENTER);	
+		
+		jspValRama = new JScrollPane(pValRama);
+		this.contenedorValRama = new JPanel(new BorderLayout());
+		this.contenedorValRama.add(jspValRama, BorderLayout.CENTER);
+		
 		this.quitarBordesJSP();
 
 		this.panel1 = new JTabbedPane();
@@ -398,7 +412,14 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		}
 
 		try {
-			pArbol = new PanelArbol(nyp);
+			if(Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+					Ventana.thisventana.getTraza().getTecnicas())) {
+				pValGlobal = new PanelValoresGlobalesAABB();
+				pValRama = new PanelValoresRamaAABB();
+				pArbol = new PanelArbol(nyp, pValRama);
+			}else {
+				pArbol = new PanelArbol(nyp, null);
+			}
 			pPila = new PanelPila(nyp);
 			if(grafoActivado)
 				pGrafo.visualizar2(nyp);
@@ -407,7 +428,6 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				Ventana.thisventana.habilitarOpcionesDYV(true);
 				pCrono = new PanelCrono(nyp);
 				pEstructura = new PanelEstructura(nyp);
-				
 			} else {
 				pTraza = new PanelTraza();
 			}
@@ -448,7 +468,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				e.printStackTrace();
 				System.out
 				.println("\n-Ha saltado una excepcion(PanelAlgoritmo)-\n");
-				pArbol = new PanelArbol(null);
+				pValGlobal = new PanelValoresGlobalesAABB();
+				pValRama = new PanelValoresRamaAABB();
+				
+				pArbol = new PanelArbol(null, pValRama);
 				pPila = new PanelPila(null);
 				pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 				pTraza = new PanelTraza();
@@ -456,6 +479,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				pCrono = new PanelCrono(null);
 				pEstructura = new PanelEstructura(null);
 				pControl = new PanelControl("", this);
+				
+
 			} catch (Exception e2) {
 			}
 		}
@@ -466,6 +491,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorCrono.removeAll();
 		this.contenedorEstructura.removeAll();
 		this.contenedorGrafo.removeAll();	
+		this.contenedorValGlobales.removeAll();
+		this.contenedorValRama.removeAll();
 		
 
 		this.jspArbol.removeAll();
@@ -476,6 +503,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspEstructura.removeAll();
 		jspGrafo.removeAll();
 		
+		jspValGlobales.removeAll();
+		jspValRama.removeAll();
+		
 		this.jspArbol.add(pArbol);
 		jspPila = new JScrollPane(pPila);
 		jspTraza = new JScrollPane(pTraza);
@@ -484,6 +514,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspEstructura = new JScrollPane(pEstructura);
 		jspGrafo = new JScrollPane(pGrafo);
 		
+		jspValGlobales = new JScrollPane(pValGlobal);
+		jspValRama = new JScrollPane(pValRama);
+		
 		this.contenedorArbol.add(this.jspArbol);
 		this.contenedorPila.add(jspPila);
 		this.contenedorTraza.add(jspTraza);
@@ -491,6 +524,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		
 		this.contenedorEstructura.add(jspEstructura);
 		this.contenedorGrafo.add(jspGrafo);
+		
+		this.contenedorValGlobales.add(jspValGlobales);
+		this.contenedorValRama.add(jspValRama);
 
 		this.quitarBordesJSP();
 
@@ -501,7 +537,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		
 		this.contenedorEstructura.updateUI();
 		this.contenedorControl.updateUI();
-		this.contenedorGrafo.updateUI();		
+		this.contenedorGrafo.updateUI();	
+		this.contenedorValGlobales.updateUI();
+		this.contenedorValRama.updateUI();
 		this.abriendoVistas = false;
 		
 		//	Recordamos pestaña seleccionada
@@ -537,7 +575,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			try {
 				e.printStackTrace();
 				System.out.println("\n-Ha saltado una excepcion-\n");
-				pArbol = new PanelArbol(null);
+				// Cambiar para AABB
+				pArbol = new PanelArbol(null, new PanelValoresRamaAABB());
 				pPila = new PanelPila(null);
 				pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 				pTraza = new PanelTraza();
@@ -586,12 +625,16 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			this.ocupado = false;
 			Ventana.thisventana.traza = null;
 			Ventana.thisventana.trazaCompleta = null;
-			pArbol = new PanelArbol(null);
+			
+			pValGlobal = new PanelValoresGlobalesAABB();
+			pValRama = new PanelValoresRamaAABB();
+			pArbol = new PanelArbol(null, pValRama);
 			pPila = new PanelPila(null);
 			pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 			pTraza = new PanelTraza();
 			pCrono = new PanelCrono(null);
 			pControl.setValores("", this);
+
 
 		} catch (Exception e) {
 
@@ -603,6 +646,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorCrono.removeAll();
 		
 		this.contenedorEstructura.removeAll();
+		
+		this.contenedorValGlobales.removeAll();
+		this.contenedorValRama.removeAll();
+		
 		if(this.contenedorGrafo != null)
 			this.contenedorGrafo.removeAll();
 		
@@ -614,6 +661,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspEstructura.removeAll();
 		jspGrafo.removeAll();
 		
+		jspValGlobales.removeAll();
+		jspValRama.removeAll();
+		
 		this.jspArbol.add(pArbol);
 		jspPila = new JScrollPane(pPila);
 		jspTraza = new JScrollPane(pTraza);
@@ -622,6 +672,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		jspEstructura = new JScrollPane(pEstructura);
 		jspGrafo = new JScrollPane(pGrafo);
 		
+		jspValGlobales = new JScrollPane(pValGlobal);
+		jspValRama = new JScrollPane(pValRama);
+		
 		this.contenedorArbol.add(this.jspArbol);
 		this.contenedorPila.add(jspPila);
 		this.contenedorTraza.add(jspTraza);
@@ -629,6 +682,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	
 		this.contenedorEstructura.add(jspEstructura);
 		this.contenedorGrafo.add(jspArbol);
+		this.contenedorValGlobales.add(jspValGlobales);
+		this.contenedorValRama.add(jspValRama);
 
 		this.quitarBordesJSP();
 
@@ -638,6 +693,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		this.contenedorCrono.updateUI();
 		this.contenedorEstructura.updateUI();
 		this.contenedorGrafo.updateUI();
+		this.contenedorValGlobales.updateUI();
+		this.contenedorValRama.updateUI();
 
 		this.contenedorControl.updateUI();
 
@@ -746,7 +803,36 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 							this.contenedorEstructura);
 				}
 				
+			} else if(Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+					Ventana.thisventana.getTraza().getTecnicas())){
+			
+				// Vista Global de Valores
+				if (Conf.getVista(Vista.codigos[5]).getPanel() == 1 || familiaEjecucionesHabilitado) {					
+					this.panel1.add(Texto.get(Vista.codigos[5], Conf.idioma),
+							this.contenedorValGlobales);
+				} else {					
+					this.panel2.add(Texto.get(Vista.codigos[5], Conf.idioma),
+							this.contenedorValGlobales);					
+				}
 				
+				// Vista de Rama de Valores
+				if (Conf.getVista(Vista.codigos[6]).getPanel() == 1 || familiaEjecucionesHabilitado) {					
+					this.panel1.add(Texto.get(Vista.codigos[6], Conf.idioma),
+							this.contenedorValRama);
+				} else {					
+					this.panel2.add(Texto.get(Vista.codigos[6], Conf.idioma),
+							this.contenedorValRama);					
+				}
+				
+				// Vista de traza				
+				if (Conf.getVista(Vista.codigos[2]).getPanel() == 1 || familiaEjecucionesHabilitado) {					
+					this.panel1.add(Texto.get(Vista.codigos[2], Conf.idioma),
+							this.contenedorTraza);
+				} else {					
+					this.panel2.add(Texto.get(Vista.codigos[2], Conf.idioma),
+							this.contenedorTraza);					
+				}
+	
 			} else {
 				
 				// Vista de traza				
@@ -901,10 +987,6 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 					hemosActualizado[2] = true;
 				}
 			}
-			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_DYV,
-					Ventana.thisventana.getTraza().getTecnicas())) {
-				
-			}
 			//	Árbol
 
 			if (this.panel1.indexOfTab(this.nombresVistas[0]) == this.panel1
@@ -991,6 +1073,48 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				}.start();
 				hemosActualizado[4] = true;
 			}
+			
+			// Valores Globales AABB
+			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+					Ventana.thisventana.getTraza().getTecnicas())) {
+				new Thread() {
+					@Override
+					public synchronized void run() {
+						try {
+							this.wait(20);
+						} catch (java.lang.InterruptedException ie) {
+						}
+						SwingUtilities.invokeLater(new Runnable() {							
+							@Override
+							public void run() {
+								pValGlobal.visualizar();
+							}
+						});
+					}
+				}.start();
+				hemosActualizado[5] = true;
+			}
+			
+			// Valores de Rama AABB
+			if (Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+					Ventana.thisventana.getTraza().getTecnicas())) {
+				new Thread() {
+					@Override
+					public synchronized void run() {
+						try {
+							this.wait(20);
+						} catch (java.lang.InterruptedException ie) {
+						}
+						SwingUtilities.invokeLater(new Runnable() {							
+							@Override
+							public void run() {
+								pValRama.visualizar();
+							}
+						});
+					}
+				}.start();
+				hemosActualizado[6] = true;
+			}
 		}
 		separadorVistas.setDividerLocation(anterior);
 	}
@@ -1031,7 +1155,10 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			} else {
 				pTraza.visualizar();
 			}
-
+			
+			pValGlobal.visualizar();
+			pValRama.visualizar();
+			
 			if (Ventana.thisventana.traza != null) {
 				pControl.visualizar();
 			}
@@ -1295,6 +1422,32 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 
 		return dim;
 	}
+	
+	/**
+	 * Devuelve las dimensiones del scroll panel de la vista de Valores Globales.
+	 * 
+	 * @return {anchura, altura}
+	 */
+	public static int[] dimPanelValoresGlobales() {
+		int[] dim = new int[2];
+		dim[0] = jspValGlobales.getWidth();
+		dim[1] = jspValGlobales.getHeight();
+
+		return dim;
+	}
+	
+	/**
+	 * Devuelve las dimensiones del scroll panel de la vista de Valores de Rama.
+	 * 
+	 * @return {anchura, altura}
+	 */
+	public static int[] dimPanelValoresGRama() {
+		int[] dim = new int[2];
+		dim[0] = jspValRama.getWidth();
+		dim[1] = jspValRama.getHeight();
+
+		return dim;
+	}
 
 	/**
 	 * Devuelve las dimensiones del scroll panel de la vista de traza.
@@ -1488,8 +1641,16 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			return pCrono;
 		} else if (nombre.equals(Texto.get(Vista.codigos[3], Conf.idioma))) {
 			return pEstructura;
-		}else if(nombre.equals(Texto.get(Vista.codigos[4], Conf.idioma))) {
-			return pGrafo;			
+		} else if (nombre.equals(Texto.get(Vista.codigos[4], Conf.idioma))) {
+			return pGrafo;	
+		} else if(nombre.equals(Texto.get(Vista.codigos[5], Conf.idioma)) 
+				&& (Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+						Ventana.thisventana.getTraza().getTecnicas()))){
+			return pValGlobal;
+		} else if(nombre.equals(Texto.get(Vista.codigos[6], Conf.idioma)) 
+				&& (Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+						Ventana.thisventana.getTraza().getTecnicas()))){
+			return pValRama;
 		} else {
 			return null;
 		}
@@ -1612,6 +1773,16 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		} else if (nombre.equals(Texto.get(Vista.codigos[4], Conf.idioma))) {
 			pos[0] = (int) jspGrafo.getLocationOnScreen().getX();
 			pos[1] = (int) jspGrafo.getLocationOnScreen().getY();
+		} else if (nombre.equals(Texto.get(Vista.codigos[5], Conf.idioma)) 
+				&& (Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+						Ventana.thisventana.getTraza().getTecnicas()))) {
+			pos[0] = (int) jspValGlobales.getLocationOnScreen().getX();
+			pos[1] = (int) jspValGlobales.getLocationOnScreen().getY();
+		} else if (nombre.equals(Texto.get(Vista.codigos[6], Conf.idioma)) 
+				&& (Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+						Ventana.thisventana.getTraza().getTecnicas()))) {
+			pos[0] = (int) jspValRama.getLocationOnScreen().getX();
+			pos[1] = (int) jspValRama.getLocationOnScreen().getY();
 		}
 
 		return pos;
@@ -1642,9 +1813,9 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	protected PanelCodigo getPanelCodigo() {
 		return pCodigo;
 	}
-public PanelGrafo getPanelGrafo() {
-	return pGrafo;
-}
+	public PanelGrafo getPanelGrafo() {
+		return pGrafo;
+	}
 	/**
 	 * Permite cerrar todas las vistas abiertas.
 	 */
@@ -1668,7 +1839,7 @@ public PanelGrafo getPanelGrafo() {
 	 * Elimina los bordes de todos los paneles.
 	 */
 	private void quitarBordesJSP() {
-		// jspCodigo.setBorder(new EmptyBorder(0,0,0,0));
+		// jspCodigo.setBorder(new EmptyBorder(0,0,0,0));	
 		jspCompilador.setBorder(new EmptyBorder(0, 0, 0, 0));
 		this.jspArbol.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jspTraza.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -1677,6 +1848,8 @@ public PanelGrafo getPanelGrafo() {
 		
 		jspEstructura.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jspGrafo.setBorder(new EmptyBorder(0, 0, 0, 0));
+		jspValGlobales.setBorder(new EmptyBorder(0, 0, 0, 0));
+		jspValRama.setBorder(new EmptyBorder(0, 0, 0, 0));
 	}
 
 	/**

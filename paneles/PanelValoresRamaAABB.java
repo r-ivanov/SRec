@@ -5,15 +5,14 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import conf.Conf;
 import datos.RegistroActivacion;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart.Data;
-import javafx.scene.chart.XYChart.Series;
 
 import utilidades.Texto;
 import ventanas.Ventana;
@@ -34,7 +33,7 @@ public class PanelValoresRamaAABB extends JPanel {
 	private RegistroActivacion nodoActual = null;
 	private JPanel panel = new JPanel();
 	private static int numNodo = 0;
-	private int margenDerecha = 1;
+	private boolean encontrado;
 	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para los 
@@ -48,15 +47,15 @@ public class PanelValoresRamaAABB extends JPanel {
 	 * Visualiza y redibuja la grafica en el panel
 	 */
 	public void visualizar() {
-		if (Ventana.thisventana.traza != null) {	
+		if (Ventana.thisventana.traza != null) {
 	        SwingUtilities.invokeLater(new Runnable() {
 	            @Override
 	            public void run() {
-	                initAndShow();
+	            	initAndShow();
 	            }
 	        });
 		}
-		
+
 		this.removeAll();
 		this.add(this.panel, BorderLayout.NORTH);
 		this.setBackground(Conf.colorPanel);
@@ -65,90 +64,134 @@ public class PanelValoresRamaAABB extends JPanel {
 	}
 	
 	private void initAndShow() {
-		final JFXPanel jfxPanel = new JFXPanel();
-		this.panel = new JPanel();
-		this.panel.add(jfxPanel);
+        JPanel chartPanel = createChartPanel();
 		
-		 Platform.runLater(new Runnable() {
-			 @Override
-			 public void run() {
-				 initFX(jfxPanel);
-			 }
-		 });
+		this.panel = new JPanel();
+		this.panel.add(chartPanel);
 	}
 	
-    private void initFX(JFXPanel panel){
-        Scene scene = createScene();
-        panel.setScene(scene);
-    }
-    
-    private Scene createScene(){
-        // Definir los ejes
-    	NumberAxis xAxis = new NumberAxis();
-        NumberAxis yAxis = new NumberAxis();
-        
-        xAxis.setLabel(Texto.get("PVG_NODOS", Conf.idioma));
+	private JPanel createChartPanel() {
+		XYSeriesCollection dataset = createDataset();
 
-        // Crear la grafica
-        LineChart<Number,Number> lineChart = 
-        		new LineChart<Number,Number>(xAxis, yAxis);
-        lineChart.setTitle(Texto.get("V_RAMA_VAL", Conf.idioma));
-        
-        // Definir las series
-        Series<Number,Number> seriesCota = new Series<Number,Number>();
-        seriesCota.setName(Texto.get("PVG_COTA", Conf.idioma));
-        Series<Number,Number> seriesSolActual = new Series<Number,Number>();
-        seriesSolActual.setName(Texto.get("PVG_SOLACTUAL", Conf.idioma));
-        Series<Number,Number> seriesSolMejor = new Series<Number,Number>();
-        seriesSolMejor.setName(Texto.get("PVG_SOLMEJOR", Conf.idioma));
+		String chartTitle = Texto.get("V_RAMA_VAL", Conf.idioma);
+	    String xAxisLabel = Texto.get("PVG_NODOS", Conf.idioma);
+	    String yAxisLabel = "Valores";
+
+	    JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
+	            xAxisLabel, yAxisLabel, dataset);
+	    
+	    ChartPanel chartPanel = new ChartPanel(chart);
+	 
+	    return chartPanel;
+	}
+	
+	private XYSeriesCollection createDataset() {	
+    	XYSeriesCollection dataset = new XYSeriesCollection();
+    	
+        XYSeries serieSolActual = new XYSeries(Texto.get("PVG_SOLACTUAL", Conf.idioma));
+        XYSeries serieSolMejor = new XYSeries(Texto.get("PVG_SOLMEJOR", Conf.idioma));
+        XYSeries serieCota = new XYSeries(Texto.get("PVG_COTA", Conf.idioma));
         
         // Llenar la grafica con los datos
         this.ra = Ventana.thisventana.traza.getRaiz();
-        //ra.getEsCaminoActual();
-        //this.nodoActual = this.ra.getNodoActual();
-        if(this.ra != null) {
-        	numNodo = 0;
-    		Number solParcial = ra.getEntrada().getSolParcial();
-    		Number solMejor = ra.getEntrada().getMejorSolucion();
+        if(this.ra != null && this.nodoActual != null) {
+        	numNodo=0;
+    		Number solParcial = this.ra.getEntrada().getSolParcial();
+    		Number solMejor = this.ra.getEntrada().getMejorSolucion();
     		Number cota = ra.getEntrada().getCota();
-    		if(solParcial == null && solMejor == null) {
-    			encontrarHijo(this.ra);
-    		}
-        	this.margenDerecha = numNodo + 1;
-        	if(this.ra == this.nodoActual && solParcial != null && solMejor != null && cota != null) {
-        		seriesSolActual.getData().add(new Data<Number,Number>(1, solParcial));
-            	seriesSolMejor.getData().add(new Data<Number,Number>(1, solMejor));
-            	lineChart.getData().add(seriesSolActual);
-                lineChart.getData().add(seriesSolMejor);
-            	if(this.ra.getEntrada().getRyP()) {
-            		seriesCota.getData().add(new Data<Number,Number>(1, cota));
-            		lineChart.getData().add(seriesCota);
+    		
+    		if((this.ra == this.nodoActual) && (solParcial == null || solMejor == null)) {
+    			// No mostramos nada
+    		}else {
+        		if(solParcial == null && solMejor == null) {
+        			encontrarHijo(this.ra);
+        			
+        			// Actualizamos los datos
+            		solParcial = this.ra.getEntrada().getSolParcial();
+            		solMejor = this.ra.getEntrada().getMejorSolucion();
+            		cota = ra.getEntrada().getCota();
+        		}
+        		
+            	if(this.ra == this.nodoActual && solParcial != null && solMejor != null) {
+            		// El nodo actual es la raiz por tanto no seguimos por el arbol    		
+            		serieSolActual.add(1, solParcial);
+                	serieSolMejor.add(1, solMejor);
+                	
+                	dataset.addSeries(serieSolActual);
+                	dataset.addSeries(serieSolMejor);
+                	
+                	if(this.ra.getEntrada().getRyP()) {
+                		serieCota.add(1, cota);
+                		
+                		dataset.addSeries(serieCota);
+                	}
+            	}else if(this.ra.getEntrada().getRyP()) {
+            		this.encontrado = false;
+            		crearGrafica(this.ra, dataset, serieSolActual, serieSolMejor, serieCota);
+            		
+            		dataset.addSeries(serieSolActual);
+            		dataset.addSeries(serieSolMejor);
+            		dataset.addSeries(serieCota);
+            	}else {
+            		this.encontrado = false;
+            		crearGrafica(this.ra, dataset, serieSolActual, serieSolMejor);
+            		
+            		dataset.addSeries(serieSolActual);
+            		dataset.addSeries(serieSolMejor);
             	}
-        	}else if(this.ra.getEntrada().getRyP()) {
-        		crearGrafica(this.ra, seriesCota, seriesSolActual, seriesSolMejor);
-        		lineChart.getData().add(seriesSolActual);
-                lineChart.getData().add(seriesSolMejor);
-        		lineChart.getData().add(seriesCota);
-        	}else {
-        		crearGrafica(this.ra, seriesSolActual, seriesSolMejor);
-        		lineChart.getData().add(seriesSolActual);
-                lineChart.getData().add(seriesSolMejor);
-        	}
+    		}
         }
         
-        xAxis.setAutoRanging(false);
-        xAxis.setLowerBound(0);
-        xAxis.setUpperBound(seriesSolActual.dataProperty().get().size()+this.margenDerecha);
-        xAxis.setTickLabelGap(1);
-        xAxis.setTickUnit(1);
-        xAxis.setMinorTickVisible(false);
-        
-        Scene scene  = new Scene(lineChart,this.getWidth()*0.9,this.getHeight()*0.9);
+        return dataset;
+	}
+	
+    private void crearGrafica(RegistroActivacion ra2, XYSeriesCollection dataset, 
+    		XYSeries serieSolActual, XYSeries serieSolMejor) {
+    	
+    	if(!ra2.inhibido() && !this.encontrado) {
+    		int id = numNodo;
+    		Number solParcial = ra2.getEntrada().getSolParcial();
+    		Number solMejor = ra2.getEntrada().getMejorSolucion();
+    		if(solParcial != null && solMejor != null) {
+    			numNodo++;
+    			serieSolActual.add(id, solParcial);
+    			serieSolMejor.add(id, solMejor);
+    		}
+    		if(ra2 != this.nodoActual) {
+            	for(RegistroActivacion raHijo: ra2.getHijos()) {
+            		crearGrafica(raHijo, dataset, serieSolActual, serieSolMejor);
+            	}
+    		}else {
+    			this.encontrado = true;
+    		}
+        }
+	}
 
-        return scene;
-    }
-    
-    private void encontrarHijo(RegistroActivacion ra) {
+	private void crearGrafica(RegistroActivacion ra2, XYSeriesCollection dataset, 
+			XYSeries serieSolActual, XYSeries serieSolMejor, XYSeries serieCota) {
+		
+    	if(!ra2.inhibido() && !this.encontrado) {
+    		int id = numNodo;
+    		Number solParcial = ra2.getEntrada().getSolParcial();
+    		Number solMejor = ra2.getEntrada().getMejorSolucion();
+    		Number cota = ra2.getEntrada().getCota();
+    		if(solParcial != null && solMejor != null && cota != null) {
+    			numNodo++;
+    			serieSolActual.add(id, solParcial);
+    			serieSolMejor.add(id, solMejor);
+    			serieCota.add(id, cota);
+    		}
+    		if(ra2 != this.nodoActual) {
+            	for(RegistroActivacion raHijo: ra2.getHijos()) {
+            		crearGrafica(raHijo, dataset, serieSolActual, serieSolMejor, serieCota);
+            	}
+    		}else {
+    			this.encontrado = true;
+    		}
+        }	
+	}
+	
+	private void encontrarHijo(RegistroActivacion ra) {
 		for(RegistroActivacion raHijo: ra.getHijos()) {
     		Number solParcial = raHijo.getEntrada().getSolParcial();
     		Number solMejor = raHijo.getEntrada().getMejorSolucion();
@@ -160,53 +203,8 @@ public class PanelValoresRamaAABB extends JPanel {
     		}
 		}
 	}
-    
-    private void crearGrafica(RegistroActivacion ra, 
-    		Series<Number,Number> seriesCota, 
-    		Series<Number,Number> seriesSolActual, 
-    		Series<Number,Number> seriesSolMejor) {
-    	
-    	if(!ra.inhibido()) {
-    		int id = numNodo;
-    		Number solParcial = ra.getEntrada().getSolParcial();
-    		Number solMejor = ra.getEntrada().getMejorSolucion();
-    		Number cota = ra.getEntrada().getCota();
-    		if(solParcial != null && solMejor != null && cota != null) {
-    			numNodo++;
-            	seriesSolActual.getData().add(new Data<Number,Number>(id, solParcial));
-            	seriesSolMejor.getData().add(new Data<Number,Number>(id, solMejor));
-            	seriesCota.getData().add(new Data<Number,Number>(id, cota));
-    		}
-    		if(ra != this.nodoActual) {
-    			for(RegistroActivacion raHijo: ra.getHijos()) {
-            		crearGrafica(raHijo, seriesCota, seriesSolActual, seriesSolMejor);
-            	}
-    		}
-        }
-    }
-    
-    private void crearGrafica(RegistroActivacion ra,
-    		Series<Number,Number> seriesSolActual, 
-    		Series<Number,Number> seriesSolMejor) {
-    	
-    	if(!ra.inhibido() && ra.getEsCaminoActual()) {
-    		int id = numNodo;
-    		Number solParcial = ra.getEntrada().getSolParcial();
-    		Number solMejor = ra.getEntrada().getMejorSolucion();
-    		if(solParcial != null && solMejor != null) {
-    			numNodo++;
-            	seriesSolActual.getData().add(new Data<Number,Number>(id, solParcial));
-            	seriesSolMejor.getData().add(new Data<Number,Number>(id, solMejor));
-    		}
-    		if(ra != this.nodoActual) {
-    			for(RegistroActivacion raHijo: ra.getHijos()) {
-            		crearGrafica(raHijo, seriesSolActual, seriesSolMejor);
-            	}
-    		}
-        }
-    }
 
-	public void setNodoActual(RegistroActivacion nodo) {
-		this.nodoActual = nodo;
+	public void setNodoActual(RegistroActivacion nodoActual) {
+		this.nodoActual = nodoActual;
 	}
 }
