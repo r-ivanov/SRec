@@ -4,13 +4,23 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.xy.XYDataset;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.io.File;
+import java.io.IOException;
+
 import conf.Conf;
 import datos.RegistroActivacion;
 import utilidades.Texto;
@@ -30,6 +40,18 @@ public class PanelValoresGlobalesAABB extends JPanel {
 	private RegistroActivacion ra;
 	private JPanel panel = new JPanel();
 	private static int numNodo = 0;
+	
+	private JFreeChart chart;
+	private JPanel chartPanel;
+	
+	// Color de las lineas
+	private Color solParcialColor = Color.RED;
+	private Color solMejorColor = Color.GREEN;
+	private Color cotaColor = Color.YELLOW;
+	// Grosor de las lineas
+	private BasicStroke solParcialStroke = new BasicStroke(1.0f);
+	private BasicStroke solMejorStroke = new BasicStroke(1.0f);
+	private BasicStroke cotaStroke = new BasicStroke(1.0f);
 	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para los 
@@ -52,18 +74,24 @@ public class PanelValoresGlobalesAABB extends JPanel {
 	        });
 		}
 
-		this.removeAll();
-		this.add(this.panel, BorderLayout.NORTH);
-		this.setBackground(Conf.colorPanel);
+		removeAll();
+		add(panel, BorderLayout.NORTH);
+		setBackground(Conf.colorPanel);
 
-		this.updateUI();
+		updateUI();
 	}
 
 	private void initAndShow() {
-        JPanel chartPanel = createChartPanel();
+        chartPanel = createChartPanel();
+        int width = (int) Math.round(getWidth()*0.9);
+        int height = (int) Math.round(getHeight()*0.9);
+        chartPanel.setPreferredSize(new Dimension(width, height));
+        chartPanel.updateUI();
 		
-		this.panel = new JPanel();
-		this.panel.add(chartPanel);
+        panel.removeAll();
+		panel.setLayout(new java.awt.BorderLayout());
+		panel.add(chartPanel, BorderLayout.CENTER);
+		panel.validate();
 	}
 
 	private JPanel createChartPanel() {
@@ -73,33 +101,62 @@ public class PanelValoresGlobalesAABB extends JPanel {
 	    String xAxisLabel = Texto.get("PVG_NODOS", Conf.idioma);
 	    String yAxisLabel = "Valores";
 
-	    JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
-	            xAxisLabel, yAxisLabel, dataset);
+	    chart = 
+    		ChartFactory.createXYLineChart(
+    				chartTitle, xAxisLabel, yAxisLabel, dataset, 
+    				PlotOrientation.VERTICAL, true, true, false);
+	    
+	    if(dataset.getSeries()!=null) {
+	    	XYPlot plot = chart.getXYPlot();
+	    	
+		    // Hacer que el eje X sea de numeros enteros
+		    NumberAxis xAxis = new NumberAxis();
+		    xAxis.setTickUnit(new NumberTickUnit(1));
+	    	plot.setDomainAxis(xAxis);
+	    	
+		    XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+		    // Asignar color a cada serie
+		    renderer.setSeriesPaint(0, solParcialColor);
+		    renderer.setSeriesPaint(1, solMejorColor);
+		    // Asignar grosor a cada serie
+		    renderer.setSeriesStroke(0, solParcialStroke);
+		    renderer.setSeriesStroke(1, solMejorStroke);
+		    if(dataset.getSeries().size() == 3){
+		    	renderer.setSeriesPaint(2, cotaColor);
+		    	
+		    	renderer.setSeriesStroke(2, cotaStroke);
+	    	}
+		    plot.setRenderer(renderer);
+	    }
+
+	    ChartPanel chartPanel = new ChartPanel(chart);
+	    chartPanel.removeAll();
+	    chartPanel.setMouseWheelEnabled(true);
 	 
 	    return new ChartPanel(chart);
 	}
 	
 	private XYSeriesCollection createDataset() {	
     	XYSeriesCollection dataset = new XYSeriesCollection();
-    	
-        XYSeries serieSolActual = new XYSeries(Texto.get("PVG_SOLACTUAL", Conf.idioma));
-        XYSeries serieSolMejor = new XYSeries(Texto.get("PVG_SOLMEJOR", Conf.idioma));
-        XYSeries serieCota = new XYSeries(Texto.get("PVG_COTA", Conf.idioma));
-        
+
         // Llenar la grafica con los datos
-        this.ra = Ventana.thisventana.traza.getRaiz();
-        if(this.ra != null) {
+        ra = Ventana.thisventana.traza.getRaiz();
+        if(ra != null) {
+            XYSeries serieSolActual = new XYSeries(Texto.get("PVG_SOLACTUAL", Conf.idioma));
+            XYSeries serieSolMejor = new XYSeries(Texto.get("PVG_SOLMEJOR", Conf.idioma));
+            XYSeries serieCota = new XYSeries(Texto.get("PVG_COTA", Conf.idioma));
+        	
         	numNodo=0;
-    		Number solParcial = this.ra.getEntrada().getSolParcial();
-    		Number solMejor = this.ra.getEntrada().getMejorSolucion();
+    		Number solParcial = ra.getEntrada().getSolParcial();
+    		Number solMejor = ra.getEntrada().getMejorSolucion();
     		if(solParcial == null && solMejor == null) {
-    			encontrarHijo(this.ra);
+    			encontrarHijo();
     		}
-        	if(this.ra.getEntrada().getRyP()) {
-        		crearGrafica(this.ra, dataset, serieSolActual, serieSolMejor, serieCota);
+        	if(ra.getEntrada().getRyP()) {
+        		crearGrafica(ra, dataset, serieSolActual, serieSolMejor, serieCota);
         		dataset.addSeries(serieCota);
         	}else {
-        		crearGrafica(this.ra, dataset, serieSolActual, serieSolMejor);
+        		crearGrafica(ra, dataset, serieSolActual, serieSolMejor);
         	}
             dataset.addSeries(serieSolActual);
             dataset.addSeries(serieSolMejor);
@@ -146,16 +203,33 @@ public class PanelValoresGlobalesAABB extends JPanel {
         }	
 	}
 	
-	private void encontrarHijo(RegistroActivacion ra) {
+	private void encontrarHijo() {
 		for(RegistroActivacion raHijo: ra.getHijos()) {
     		Number solParcial = raHijo.getEntrada().getSolParcial();
     		Number solMejor = raHijo.getEntrada().getMejorSolucion();
     		
     		if(solParcial != null && solMejor != null) {
-    			this.ra = raHijo;
+    			ra = raHijo;
     			numNodo++;
     			break;
     		}
 		}
+	}
+	
+	public File saveChartAs(String name, String type) {
+		File imageFile = new File(name + "." + type.toLowerCase());
+		int width = 640;
+		int height = 480;
+		 
+		try {
+			if(type.equalsIgnoreCase("png")) {
+				ChartUtilities.saveChartAsPNG(imageFile, chart, width, height);
+			}else if(type.equalsIgnoreCase("jpeg")) {
+				ChartUtilities.saveChartAsJPEG(imageFile, chart, width, height);
+			} 
+		} catch (IOException ex) {
+		    System.err.println(ex);
+		}
+		return imageFile;
 	}
 }
