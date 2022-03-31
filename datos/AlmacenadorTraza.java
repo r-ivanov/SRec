@@ -230,6 +230,9 @@ public class AlmacenadorTraza {
 
 		Element otros = d.createElement("Otros");
 		e.appendChild(otros);
+		
+		Element colorLinea = d.createElement("Lineas");
+		e.appendChild(colorLinea);
 
 		this.anadirColor(d, celda1, "fuente", this.ocv.getColorFEntrada());
 		this.anadirColor(d, celda1, "color1", this.ocv.getColorC1Entrada());
@@ -243,6 +246,10 @@ public class AlmacenadorTraza {
 		for (int i = 0; i < Conf.numColoresMetodos; i++) {
 			this.anadirColor(d, otros, "ecm2_" + i, this.ocv.getColorModo2(i));
 		}
+		
+		this.anadirColor(d, colorLinea, "SolParc", ocv.getColorSolParc());
+		this.anadirColor(d, colorLinea, "SolMej", ocv.getColorSolMej());
+		this.anadirColor(d, colorLinea, "Cota", ocv.getColorCota());
 
 		this.anadirColor(d, otros, "flecha", this.ocv.getColorFlecha());
 		this.anadirColor(d, otros, "panel", this.ocv.getColorPanel());

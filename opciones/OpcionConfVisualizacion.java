@@ -1,5 +1,7 @@
 package opciones;
 
+import java.awt.BasicStroke;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -14,6 +16,24 @@ public class OpcionConfVisualizacion extends Opcion {
 
 	private static final long serialVersionUID = 1006;
 
+	// Colores de lineas para vistas Global y de Rama
+	private int colorSolParcR = 255; // Valor R para color de linea para la solución parcial
+	private int colorSolParcG = 0; 	 // Valor G para color de linea para la solución parcial
+	private int colorSolParcB = 0; 	 // Valor B para color de linea para la solución parcial
+	
+	private int colorSolMejR = 0; 	 // Valor R para color de linea para la mejor solución
+	private int colorSolMejG = 255;  // Valor G para color de linea para la mejor solución
+	private int colorSolMejB = 0; 	 // Valor B para color de linea para la mejor solución
+	
+	private int colorCotaR = 255; 	 // Valor R para color de linea para la cota
+	private int colorCotaG = 255; 	 // Valor G para color de linea para la cota
+	private int colorCotaB = 0; 	 // Valor B para color de linea para la cota
+	
+	//Grosor de lineas para vistas Global y de Rama
+	private float grosorSolParc = 1.0f;
+	private float grosorSolMej = 1.0f;
+	private float grosorCota = 1.0f;
+	
 	// Colores de fuente
 	private int colorFEntradaR = 255; // Valor R para fuente en celdas de
 	// entrada
@@ -176,6 +196,114 @@ public class OpcionConfVisualizacion extends Opcion {
 		this.colorModo2_R = Conf.getRojoDefecto();
 		this.colorModo2_G = Conf.getVerdeDefecto();
 		this.colorModo2_B = Conf.getAzulDefecto();
+	}
+	
+	/**
+	 * Permite establecer el color de la fuente para las lineas de la solución actual.
+	 * 
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
+	 */
+	public void setColorSolParc(int r, int g, int b) {
+		colorSolParcR = r;
+		colorSolParcG = g;
+		colorSolParcB = b;
+	}
+	
+	/**
+	 * Permite establecer el color de la fuente para las lineas de la mejor solución.
+	 * 
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
+	 */
+	public void setColorSolMej(int r, int g, int b) {
+		colorSolMejR = r;
+		colorSolMejG = g;
+		colorSolMejB = b;
+	}
+	
+	/**
+	 * Permite establecer el color de la fuente para las lineas de la cota.
+	 * 
+	 * @param r
+	 *            componente R
+	 * @param g
+	 *            componente G
+	 * @param b
+	 *            componente B
+	 */
+	public void setColorCota(int r, int g, int b) {
+		colorCotaR = r;
+		colorCotaG = g;
+		colorCotaB = b;
+	}
+	
+	/**
+	 * Permite establecer el grosor para la linea de la solución actual.
+	 * 
+	 * @param g
+	 * 		Float que representa el nuevo grosor
+	 */
+	public void setGrosorSolParc(float g) {
+		grosorSolParc = g;
+	}
+	
+	/**
+	 * Permite establecer el grosor para la linea de la solución actual.
+	 * 
+	 * @param g
+	 * 		BasicStroke que representa el nuevo grosor
+	 */
+	public void setGrosorSolParc(BasicStroke g) {
+		grosorSolParc = g.getLineWidth();
+	}
+	
+	/**
+	 * Permite establecer el grosor para la linea de la solución actual.
+	 * 
+	 * @param g
+	 * 		Float que representa el nuevo grosor
+	 */
+	public void setGrosorSolMej(float g) {
+		grosorSolMej = g;
+	}
+	
+	/**
+	 * Permite establecer el grosor para la linea de la solución actual.
+	 * 
+	 * @param g
+	 * 		BasicStroke que representa el nuevo grosor
+	 */
+	public void setGrosorSolMej(BasicStroke g) {
+		grosorSolMej = g.getLineWidth();;
+	}
+	
+	/**
+	 * Permite establecer el grosor para la linea de la solución actual.
+	 * 
+	 * @param g
+	 * 		Float que representa el nuevo grosor
+	 */
+	public void setGrosorCota(float g) {
+		grosorCota = g;
+	}
+	
+	/**
+	 * Permite establecer el grosor para la linea de la solución actual.
+	 * 
+	 * @param g
+	 * 		BasicStroke que representa el nuevo grosor
+	 */
+	public void setGrosorCota(BasicStroke g) {
+		grosorCota = g.getLineWidth();;
 	}
 
 	/**
@@ -610,6 +738,72 @@ public class OpcionConfVisualizacion extends Opcion {
 	 */
 	public void setZoomEstructura(int zoom) {
 		this.zoomEstructura = zoom;
+	}
+	
+	/**
+	 * Devuelve el color de la linea para la solución parcial.
+	 * 
+	 * @return array de enteros con los componentes (R, G y B) respectivamente.
+	 */
+	public int[] getColorSolParc() {
+		int color[] = new int[3];
+		color[0] = colorSolParcR;
+		color[1] = colorSolParcG;
+		color[2] = colorSolParcB;
+		return color;
+	}
+	
+	/**
+	 * Devuelve el color de la linea para la mejor solución.
+	 * 
+	 * @return array de enteros con los componentes (R, G y B) respectivamente.
+	 */
+	public int[] getColorSolMej() {
+		int color[] = new int[3];
+		color[0] = colorSolMejR;
+		color[1] = colorSolMejG;
+		color[2] = colorSolMejB;
+		return color;
+	}
+	
+	/**
+	 * Devuelve el color de la linea para la cota.
+	 * 
+	 * @return array de enteros con los componentes (R, G y B) respectivamente.
+	 */
+	public int[] getColorCota() {
+		int color[] = new int[3];
+		color[0] = colorCotaR;
+		color[1] = colorCotaG;
+		color[2] = colorCotaB;
+		return color;
+	}
+	
+	/**
+	 * Devuelve el grosor de la linea para la solución parcial.
+	 * 
+	 * @return BasicStroke.
+	 */
+	public float getGrosorSolParc() {
+		return grosorSolParc;
+	}
+	
+	/**
+	 * Devuelve el grosor de la linea para la mejor solución.
+	 * 
+	 * @return BasicStroke.
+	 */
+	public float getGrosorSolMej() {
+		return grosorSolMej;
+	}
+	
+	/**
+	 * Devuelve el grosor de la linea para la cota.
+	 * 
+	 * @return BasicStroke.
+	 */
+	public float getGrosorCota() {
+		return grosorCota;
 	}
 
 	/**
@@ -1135,6 +1329,22 @@ public class OpcionConfVisualizacion extends Opcion {
 		e08.setAttribute("r", "" + this.colorCASalidaR);
 		e08.setAttribute("g", "" + this.colorCASalidaG);
 		e08.setAttribute("b", "" + this.colorCASalidaB);
+		
+		// Colores para lineas de las vistas de valores (Global y Rama)
+		Element e09 = d.createElement("colorSolParc");
+		e09.setAttribute("r", "" + colorSolParcR);
+		e09.setAttribute("g", "" + colorSolParcG);
+		e09.setAttribute("b", "" + colorSolParcB);
+		
+		Element e10 = d.createElement("colorSolMej");
+		e10.setAttribute("r", "" + colorSolMejR);
+		e10.setAttribute("g", "" + colorSolMejG);
+		e10.setAttribute("b", "" + colorSolMejB);
+		
+		Element e12 = d.createElement("colorCota");
+		e12.setAttribute("r", "" + colorCotaR);
+		e12.setAttribute("g", "" + colorCotaG);
+		e12.setAttribute("b", "" + colorCotaB);
 
 		// Colores no calculados para celdas de salida
 		Element e11 = d.createElement("colorC1NCSalida");
@@ -1175,6 +1385,9 @@ public class OpcionConfVisualizacion extends Opcion {
 		e19.setAttribute("grosorFlecha", "" + this.grosorFlecha);
 		e19.setAttribute("tipoFlecha", "" + this.formaFlecha);
 		e19.setAttribute("tipoBordeCelda", "" + this.tipoBordeCelda);
+		e19.setAttribute("grosorSolParc", "" + grosorSolParc);
+		e19.setAttribute("grosorSolMej", "" + grosorSolMej);
+		e19.setAttribute("grosorCota", "" + grosorCota);
 
 		// Color para vista código: nombre código
 		Element e25 = d.createElement("colorIluminado");
@@ -1244,7 +1457,10 @@ public class OpcionConfVisualizacion extends Opcion {
 		e.appendChild(e04);
 		e.appendChild(e07);
 		e.appendChild(e08);
+		e.appendChild(e09);
+		e.appendChild(e10);
 		e.appendChild(e11);
+		e.appendChild(e12);
 		e.appendChild(e13);
 		e.appendChild(e14);
 		e.appendChild(e15);
@@ -1278,6 +1494,24 @@ public class OpcionConfVisualizacion extends Opcion {
 	@Override
 	public void setValores(Element e) {
 		Element elements[];
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("colorSolParc"));
+		setColorSolParc(Integer.parseInt(elements[0].getAttribute("r")),
+				Integer.parseInt(elements[0].getAttribute("g")),
+				Integer.parseInt(elements[0].getAttribute("b")));
+		
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("colorSolMej"));
+		setColorSolMej(Integer.parseInt(elements[0].getAttribute("r")),
+				Integer.parseInt(elements[0].getAttribute("g")),
+				Integer.parseInt(elements[0].getAttribute("b")));
+		
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("colorCota"));
+		setColorCota(Integer.parseInt(elements[0].getAttribute("r")),
+				Integer.parseInt(elements[0].getAttribute("g")),
+				Integer.parseInt(elements[0].getAttribute("b")));
+		
 		elements = ManipulacionElement.nodeListToElementArray(e
 				.getElementsByTagName("colorFEntrada"));
 		this.setColorFEntrada(Integer.parseInt(elements[0].getAttribute("r")),
@@ -1374,6 +1608,12 @@ public class OpcionConfVisualizacion extends Opcion {
 				.getAttribute("tipoFlecha")));
 		this.setTipoBordeCelda(Integer.parseInt(elements[0]
 				.getAttribute("tipoBordeCelda")));
+		setGrosorSolParc(Float.parseFloat(elements[0]
+				.getAttribute("grosorSolParc")));
+		setGrosorSolMej(Float.parseFloat(elements[0]
+				.getAttribute("grosorSolMej")));
+		setGrosorCota(Float.parseFloat(elements[0]
+				.getAttribute("grosorCota")));
 
 		elements = ManipulacionElement.nodeListToElementArray(e
 				.getElementsByTagName("colorIluminado"));

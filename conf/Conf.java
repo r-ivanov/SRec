@@ -1,5 +1,6 @@
 package conf;
 
+import java.awt.BasicStroke;
 import java.awt.Color; 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -83,6 +84,15 @@ public class Conf {
 
 	// Color del fondo de los cuadros de diálogo y de la ventana
 	public static Color colorCuadroDialogo = new Color(236, 233, 216);
+	
+	// Visualizacion: Color para linea de solución parcial
+	public static Color colorSolParc = null;
+	
+	// Visualizacion: Color para linea de mejor solución
+	public static Color colorSolMej = null;
+	
+	// Visualizacion: Color para linea de cota
+	public static Color colorCota = null;
 
 	// Visualizacion: Color para valores de entrada
 	public static Color colorFEntrada = null;
@@ -282,6 +292,10 @@ public class Conf {
 	public static int formaFlechaGrafo;
 	public static int bordeCelda;
 	public static int grosorMarco;
+	
+	public static float grosorSolParc;
+	public static float grosorSolMej;
+	public static float grosorCota;
 
 	public static int sepH;
 	public static int sepV;
@@ -430,6 +444,15 @@ public class Conf {
 		int color[] = null;
 
 		// Colores
+		color = ocv.getColorSolParc();
+		colorSolParc = new Color(color[0], color[1], color[2]);
+		
+		color = ocv.getColorSolMej();
+		colorSolMej = new Color(color[0], color[1], color[2]);
+		
+		color = ocv.getColorCota();
+		colorCota = new Color(color[0], color[1], color[2]);
+		
 		color = ocv.getColorFEntrada();
 		colorFEntrada = new Color(color[0], color[1], color[2]);
 
@@ -502,6 +525,10 @@ public class Conf {
 
 		grosorFlecha = ocv.getGrosorFlecha();
 		grosorFlechaGrafo = ocv.getGrosorFlechaGrafo();
+		
+		grosorSolParc = ocv.getGrosorSolParc();
+		grosorSolMej = ocv.getGrosorSolMej();
+		grosorCota = ocv.getGrosorCota();
 
 		color = ocv.getColorPanel();
 		colorPanel = new Color(color[0], color[1], color[2]);

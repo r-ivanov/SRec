@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import conf.Conf;
 import datos.RegistroActivacion;
@@ -106,26 +107,81 @@ public class PanelValoresGlobalesAABB extends JPanel {
     				chartTitle, xAxisLabel, yAxisLabel, dataset, 
     				PlotOrientation.VERTICAL, true, true, false);
 	    
-	    if(dataset.getSeries()!=null) {
+	    List<XYSeries> series = dataset.getSeries();
+	    
+	    if(series != null && series.size() > 1) {
 	    	XYPlot plot = chart.getXYPlot();
 	    	
 		    // Hacer que el eje X sea de numeros enteros
-		    NumberAxis xAxis = new NumberAxis();
-		    xAxis.setTickUnit(new NumberTickUnit(1));
-	    	plot.setDomainAxis(xAxis);
+	    	NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
+	    	xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 	    	
 		    XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-		    // Asignar color a cada serie
-		    renderer.setSeriesPaint(0, solParcialColor);
-		    renderer.setSeriesPaint(1, solMejorColor);
-		    // Asignar grosor a cada serie
-		    renderer.setSeriesStroke(0, solParcialStroke);
-		    renderer.setSeriesStroke(1, solMejorStroke);
-		    if(dataset.getSeries().size() == 3){
-		    	renderer.setSeriesPaint(2, cotaColor);
-		    	
-		    	renderer.setSeriesStroke(2, cotaStroke);
+		    // Poner colores y grosor para las lineas
+	    	Comparable key0 = series.get(0).getKey();
+	    	Comparable key1 = series.get(1).getKey();
+	    	
+	    	if(Conf.colorSolParc != null) {
+	    		solParcialColor = Conf.colorSolParc;
 	    	}
+	    	
+	    	if(Conf.colorSolMej != null) {
+	    		solMejorColor = Conf.colorSolMej;
+	    	}
+	    	
+	    	if(Conf.colorCota != null) {
+	    		cotaColor = Conf.colorCota;
+	    	}
+	    	
+	    	if(Conf.grosorSolParc > 0) {
+	    		solParcialStroke = new BasicStroke(Conf.grosorSolParc);
+	    	}
+	    	
+	    	if(Conf.grosorSolMej > 0) {
+	    		solMejorStroke = new BasicStroke(Conf.grosorSolMej);
+	    	}
+	    	
+	    	if(Conf.grosorCota > 0) {
+	    		cotaStroke = new BasicStroke(Conf.grosorCota);
+	    	}
+	    	
+	    	if(key0.toString().equalsIgnoreCase(Texto.get("PVG_SOLACTUAL", Conf.idioma))) {
+	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key0), solParcialColor);
+	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key0), solParcialStroke);
+	    	}else if(key0.toString().equalsIgnoreCase(Texto.get("PVG_SOLMEJOR", Conf.idioma))) {
+	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key0), solMejorColor);
+	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key0), solMejorStroke);
+	    	}else {
+	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key0), cotaColor);
+	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key0), cotaStroke);
+	    	}
+	    	
+	    	if(key1.toString().equalsIgnoreCase(Texto.get("PVG_SOLACTUAL", Conf.idioma))) {
+	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key1), solParcialColor);
+	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key1), solParcialStroke);
+	    	}else if(key1.toString().equalsIgnoreCase(Texto.get("PVG_SOLMEJOR", Conf.idioma))) {
+	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key1), solMejorColor);
+	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key1), solMejorStroke);
+	    	}else {
+	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key1), cotaColor);
+	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key1), cotaStroke);
+	    	}
+	    	
+	    	if(series.size() == 3){
+	    		Comparable key2 = series.get(2).getKey();
+	    		
+	    		if(key2.toString().equalsIgnoreCase(Texto.get("PVG_SOLACTUAL", Conf.idioma))) {
+		    		renderer.setSeriesPaint(dataset.getSeriesIndex(key2), solParcialColor);
+		    		renderer.setSeriesStroke(dataset.getSeriesIndex(key2), solParcialStroke);
+		    	}else if(key2.toString().equalsIgnoreCase(Texto.get("PVG_SOLMEJOR", Conf.idioma))) {
+		    		renderer.setSeriesPaint(dataset.getSeriesIndex(key2), solMejorColor);
+		    		renderer.setSeriesStroke(dataset.getSeriesIndex(key2), solMejorStroke);
+		    	}else {
+		    		renderer.setSeriesPaint(dataset.getSeriesIndex(key2), cotaColor);
+		    		renderer.setSeriesStroke(dataset.getSeriesIndex(key2), cotaStroke);
+		    	}
+	    	}
+
 		    plot.setRenderer(renderer);
 	    }
 

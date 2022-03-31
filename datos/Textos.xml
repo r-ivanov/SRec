@@ -991,7 +991,6 @@
 		<T valor="Color" idioma="es" id="COCV_COLOR"/>
 		<T valor="Color" idioma="en" id="COCV_COLOR"/>
 		
-		
 		<T valor="Degradados de color" idioma="es" id="COCV_HABDEGR"/>
 		<T valor="Color degrades" idioma="en" id="COCV_HABDEGR"/>		
 		<T valor="Habilitar degradado en celdas" idioma="es" id="COCV_HABILDEGR"/>
@@ -1004,8 +1003,12 @@
 		<T valor="Diferenciar nodos de m[eacute]todos" idioma="es" id="COCV_MODO2"/>
 		<T valor="To differentiate methods nodes" idioma="en" id="COCV_MODO2"/>
 		
-		
-		
+		<T valor="L[iacute]nea de soluci[oacute]n parcial" idioma="es" id="COCV_SOL_PARC"/>
+		<T valor="Partial solution line" idioma="en" id="COCV_SOL_PARC"/>
+		<T valor="L[iacute]nea de mejor soluci[oacute]n" idioma="es" id="COCV_SOL_MEJ"/>
+		<T valor="Best solution line" idioma="en" id="COCV_SOL_MEJ"/>
+		<T valor="L[iacute]nea de cota" idioma="es" id="COCV_COTA"/>
+		<T valor="Threshold line" idioma="en" id="COCV_COTA"/>
 		
 		<!-- COCV_HABILDEGR  -->
 		
@@ -1019,6 +1022,8 @@
 		<T valor="Trees and stacks" idioma="en" id="COCV_ETIQ_4"/>
 		<T valor="Otros elementos" idioma="es" id="COCV_ETIQ_5"/>
 		<T valor="Other elements" idioma="en" id="COCV_ETIQ_5"/>
+		<T valor="Colores l[iacute]neas de valores" idioma="es" id="COCV_ETIQ_6"/>
+		<T valor="Value line colors" idioma="en" id="COCV_ETIQ_6"/>
 		
 		<T valor="Configuraci[oacute]n de los colores de los elementos de la animaci[oacute]n" idioma="es" id="COCV_ETIQ_ARBPILCODTRATTT"/>
 		<T valor="Configuration of the colours of the elements from the animation" idioma="en" id="COCV_ETIQ_ARBPILCODTRATTT"/>
@@ -1048,6 +1053,8 @@
 		<T valor="Visual Studio" idioma="es" id="COCV_COL_COD_THEME_VISUALSTUDIO"/>
 		<T valor="Visual Studio" idioma="en" id="COCV_COL_COD_THEME_VISUALSTUDIO"/>
 		
+		<T valor="Grosor de l[iacute]neas" idioma="es" id="COCV_LINEAS_GROSOR"/>
+		<T valor="Line thickness" idioma="en" id="COCV_LINEAS_GROSOR"/>
 		
 		<T valor="Vista Traza: l[iacute]neas de entrada" idioma="es" id="COCV_TREN"/>
 		<T valor="Trace panel: enter lines" idioma="en" id="COCV_TREN"/>			

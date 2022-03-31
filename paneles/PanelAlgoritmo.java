@@ -1155,9 +1155,13 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			} else {
 				pTraza.visualizar();
 			}
-			
-			pValGlobal.visualizar();
-			pValRama.visualizar();
+			if (Ventana.thisventana.getTraza() != null
+					&& Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
+							Ventana.thisventana.getTraza().getTecnicas())) {
+				pValGlobal.visualizar();
+				pValRama.visualizar();
+			}
+
 			
 			if (Ventana.thisventana.traza != null) {
 				pControl.visualizar();

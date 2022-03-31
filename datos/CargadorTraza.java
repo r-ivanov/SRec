@@ -156,6 +156,16 @@ public class CargadorTraza extends Thread {
 						ocv.setColorC1NCSalida(valoresOpFormato[9],
 								valoresOpFormato[10], valoresOpFormato[11]);
 
+//						valoresOpFormato = this
+//								.extraerDatosColorLinea(nodosOpFormato[2]);
+//						
+//						ocv.setColorSolParc(valoresOpFormato[0],
+//								valoresOpFormato[1], valoresOpFormato[2]);
+//						ocv.setColorSolMej(valoresOpFormato[3],
+//								valoresOpFormato[4], valoresOpFormato[5]);
+//						ocv.setColorCota(valoresOpFormato[6],
+//								valoresOpFormato[7], valoresOpFormato[8]);
+						
 						valoresOpFormato = this
 								.extraerDatosOtros(nodosOpFormato[2]);
 
