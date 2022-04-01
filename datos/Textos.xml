@@ -1213,8 +1213,8 @@
 		<T valor="Subnodes" idioma="en" id="CINFONODO_SUBNOD"/>
 		<T valor="N[uacute]mero de nodo" idioma="es" id="CINFONODO_SUBNUM"/>
 		<T valor="Node number" idioma="en" id="CINFONODO_SUBNUM"/>
-		<T valor="N[uacute]mero de nodo" idioma="es" id="CINFONODO_SUBNUM"/>
-		<T valor="Node number" idioma="en" id="CINFONODO_SUBNUM"/>
+		<T valor="N[uacute]mero de nodo visible" idioma="es" id="CINFONODO_SUBNUM_VIS"/>
+		<T valor="Visible node number" idioma="en" id="CINFONODO_SUBNUM_VIS"/>
 		<T valor="Ejecutado" idioma="es" id="CINFONODO_EJEC"/>
 		<T valor="Runned" idioma="en" id="CINFONODO_EJEC"/>
 		<T valor="Pendiente" idioma="es" id="CINFONODO_PEND"/>

@@ -224,7 +224,7 @@ public class Traza {
 	/**
 	 * Devuelve el número de nodos que componen la traza.
 	 * 
-	 * @return Número de nods que componen la traza.
+	 * @return Número de nodos que componen la traza.
 	 */
 	public int getNumNodos() {
 		return this.raiz.getNumNodos();
@@ -246,6 +246,15 @@ public class Traza {
 	 */
 	public int getNumNodosVisibles() {
 		return this.raiz.getNumNodosVisibles();
+	}
+	
+	/**
+	 * Devuelve el número de nodos visibles hasta el nodo argumento(incluido).
+	 * 
+	 * @return Número de nodos visibles.
+	 */
+	public int getNumNodosVisibles(RegistroActivacion ra) {
+		return this.raiz.getNumNodosVisibles(ra);
 	}
 
 	/**

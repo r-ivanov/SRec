@@ -27,7 +27,7 @@ public class CuadroInfoNodo extends Thread implements ActionListener,
 
 	private static final int ANCHO_COLUMNA_ANCHA = 350;
 	private static final int ALTO_FILA = 15;
-	private static final int FILAS_INFO = 7;
+	private static final int FILAS_INFO = 8;
 
 	private static final int ANCHO_CUADRO_NO_WINDOWS = 290; // No Windows
 	private static final int ALTO_CUADRO_NO_WINDOWS = 404; // No Windows
@@ -35,6 +35,7 @@ public class CuadroInfoNodo extends Thread implements ActionListener,
 	private Ventana ventana;
 	private JDialog dialogo;
 	private RegistroActivacion nodo;
+	private Traza traza;
 
 	private BotonAceptar aceptar = new BotonAceptar();
 
@@ -46,10 +47,11 @@ public class CuadroInfoNodo extends Thread implements ActionListener,
 	 * @param nodo
 	 *            Nodo para el que se solicita información.
 	 */
-	public CuadroInfoNodo(Ventana ventana, RegistroActivacion nodo) {
+	public CuadroInfoNodo(Ventana ventana, RegistroActivacion nodo) { 
 		this.nodo = nodo;
 		this.dialogo = new JDialog(ventana, true);
 		this.ventana = ventana;
+		traza = ventana.traza;
 		this.start();
 	}
 
@@ -65,6 +67,7 @@ public class CuadroInfoNodo extends Thread implements ActionListener,
 		this.nodo = traza.getRegistroActivo();
 		this.dialogo = new JDialog(ventana, true);
 		this.ventana = ventana;
+		traza = ventana.traza;
 		this.start();
 	}
 
@@ -106,16 +109,18 @@ public class CuadroInfoNodo extends Thread implements ActionListener,
 
 		infoGral1[2] = new JLabel(Texto.get("CINFONODO_SUBNUM", Conf.idioma)
 				+ ": " + (this.nodo.getID() + 1));
-		infoGral1[3] = new JLabel(Texto.get("CINFONODO_INHI", Conf.idioma)
+		infoGral1[3] = new JLabel(Texto.get("CINFONODO_SUBNUM_VIS", Conf.idioma)
+				+ ": " + (traza.getNumNodosVisibles(this.nodo))); 
+		infoGral1[4] = new JLabel(Texto.get("CINFONODO_INHI", Conf.idioma)
 				+ ": "
 				+ (this.nodo.inhibido() ? Texto.get("SI", Conf.idioma)
 						: Texto.get("NO", Conf.idioma)));
 
-		infoGral1[4] = new JLabel(Texto.get("CINFONODO_HIJ", Conf.idioma)
+		infoGral1[5] = new JLabel(Texto.get("CINFONODO_HIJ", Conf.idioma)
 				+ ": " + this.nodo.numHijos() + estado);
-		infoGral1[5] = new JLabel(Texto.get("CINFONODO_HIJTV", Conf.idioma)
+		infoGral1[6] = new JLabel(Texto.get("CINFONODO_HIJTV", Conf.idioma)
 				+ ": " + this.nodo.getNumHijosVisibles());
-		infoGral1[6] = new JLabel(Texto.get("CINFONODO_SUBNOD", Conf.idioma)
+		infoGral1[7] = new JLabel(Texto.get("CINFONODO_SUBNOD", Conf.idioma)
 				+ ": " + this.nodo.numHijosRec());
 
 		JPanel panelContGral1[] = new JPanel[FILAS_INFO];

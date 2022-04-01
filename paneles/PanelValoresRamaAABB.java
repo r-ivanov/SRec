@@ -4,8 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -22,10 +25,10 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.util.ShapeUtilities;
 
 import conf.Conf;
 import datos.RegistroActivacion;
-
 import utilidades.Texto;
 import ventanas.Ventana;
 
@@ -52,14 +55,34 @@ public class PanelValoresRamaAABB extends JPanel {
 	private JFreeChart chart;
 	private JPanel chartPanel;
 	
+	private static final Shape circle = new Ellipse2D.Double(-3, -3, 6, 6);
+	
 	// Color de las lineas
-	private Color solParcialColor = Color.RED;
+	private Color solParcialColor = Color.YELLOW;
 	private Color solMejorColor = Color.GREEN;
-	private Color cotaColor = Color.YELLOW;
+	private Color cotaColor = Color.RED;
 	// Grosor de las lineas
 	private BasicStroke solParcialStroke = new BasicStroke(1.0f);
 	private BasicStroke solMejorStroke = new BasicStroke(1.0f);
 	private BasicStroke cotaStroke = new BasicStroke(1.0f);
+	
+	private static List<Integer> hojas;
+	
+    private class MyRenderer extends XYLineAndShapeRenderer {
+		private static final long serialVersionUID = 1L;
+		
+		@Override
+	    public Shape getItemShape(int row, int column) {
+        	Shape shape;
+            if(PanelValoresRamaAABB.hojas.contains(column+1)) {
+            	shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc+4.0f, 1);
+            }else {
+            	shape = lookupSeriesShape(row);
+            }
+			
+	        return shape;
+	    }
+    }
 	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para los 
@@ -91,7 +114,7 @@ public class PanelValoresRamaAABB extends JPanel {
 	
 	private void initAndShow() {
         chartPanel = createChartPanel();
-        int width = (int) Math.round(getWidth()*0.9);
+        int width = (int) Math.round(getWidth()*0.8);
         int height = (int) Math.round(getHeight()*0.9);
         chartPanel.setPreferredSize(new Dimension(width, height));
         chartPanel.updateUI();
@@ -123,11 +146,11 @@ public class PanelValoresRamaAABB extends JPanel {
 	    	NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
 	    	xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 	    	
-		    XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-		    // Poner colores y grosor para las lineas
-	    	Comparable key0 = series.get(0).getKey();
-	    	Comparable key1 = series.get(1).getKey();
-	    	
+	    	MyRenderer renderer = new MyRenderer();
+			plot.setRenderer(renderer);
+			renderer.setUseFillPaint(true);
+			renderer.setUseOutlinePaint(true);
+			
 	    	if(Conf.colorSolParc != null) {
 	    		solParcialColor = Conf.colorSolParc;
 	    	}
@@ -152,41 +175,32 @@ public class PanelValoresRamaAABB extends JPanel {
 	    		cotaStroke = new BasicStroke(Conf.grosorCota);
 	    	}
 	    	
-	    	
-	    	if(key0.toString().equalsIgnoreCase(Texto.get("PVG_SOLACTUAL", Conf.idioma))) {
-	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key0), solParcialColor);
-	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key0), solParcialStroke);
-	    	}else if(key0.toString().equalsIgnoreCase(Texto.get("PVG_SOLMEJOR", Conf.idioma))) {
-	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key0), solMejorColor);
-	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key0), solMejorStroke);
-	    	}else {
-	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key0), cotaColor);
-	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key0), cotaStroke);
-	    	}
-	    	
-	    	if(key1.toString().equalsIgnoreCase(Texto.get("PVG_SOLACTUAL", Conf.idioma))) {
-	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key1), solParcialColor);
-	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key1), solParcialStroke);
-	    	}else if(key1.toString().equalsIgnoreCase(Texto.get("PVG_SOLMEJOR", Conf.idioma))) {
-	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key1), solMejorColor);
-	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key1), solMejorStroke);
-	    	}else {
-	    		renderer.setSeriesPaint(dataset.getSeriesIndex(key1), cotaColor);
-	    		renderer.setSeriesStroke(dataset.getSeriesIndex(key1), cotaStroke);
-	    	}
-	    	
-	    	if(series.size() == 3){
-	    		Comparable key2 = series.get(2).getKey();
-	    		
-	    		if(key2.toString().equalsIgnoreCase(Texto.get("PVG_SOLACTUAL", Conf.idioma))) {
-		    		renderer.setSeriesPaint(dataset.getSeriesIndex(key2), solParcialColor);
-		    		renderer.setSeriesStroke(dataset.getSeriesIndex(key2), solParcialStroke);
-		    	}else if(key2.toString().equalsIgnoreCase(Texto.get("PVG_SOLMEJOR", Conf.idioma))) {
-		    		renderer.setSeriesPaint(dataset.getSeriesIndex(key2), solMejorColor);
-		    		renderer.setSeriesStroke(dataset.getSeriesIndex(key2), solMejorStroke);
+			// Poner colores y grosor para las lineas
+	    	int index;
+	    	for(XYSeries serie: series) {
+	    		Comparable<?> key = serie.getKey();
+	    		index = dataset.getSeriesIndex(key);
+	    		if(key.toString().equalsIgnoreCase(Texto.get("PVG_SOLACTUAL", Conf.idioma))) {
+		    		renderer.setSeriesShape(index, circle);
+					renderer.setSeriesShapesFilled(index, true);
+					renderer.setSeriesShapesVisible(index, true);
+		    		renderer.setSeriesPaint(index, solParcialColor);
+		    		renderer.setSeriesStroke(index, solParcialStroke);
+		    		renderer.setSeriesOutlinePaint(index, solParcialColor);
+		    	}else if(key.toString().equalsIgnoreCase(Texto.get("PVG_SOLMEJOR", Conf.idioma))) {
+		    		renderer.setSeriesShape(index, circle);
+					renderer.setSeriesShapesFilled(index, true);
+					renderer.setSeriesShapesVisible(index, true);
+		    		renderer.setSeriesPaint(index, solMejorColor);
+		    		renderer.setSeriesStroke(index, solMejorStroke);
+		    		renderer.setSeriesOutlinePaint(index, solMejorColor);
 		    	}else {
-		    		renderer.setSeriesPaint(dataset.getSeriesIndex(key2), cotaColor);
-		    		renderer.setSeriesStroke(dataset.getSeriesIndex(key2), cotaStroke);
+		    		renderer.setSeriesShape(index, circle);
+					renderer.setSeriesShapesFilled(index, true);
+					renderer.setSeriesShapesVisible(index, true);
+		    		renderer.setSeriesPaint(index, cotaColor);
+		    		renderer.setSeriesStroke(index, cotaStroke);
+		    		renderer.setSeriesOutlinePaint(index, cotaColor);
 		    	}
 	    	}
 
@@ -210,7 +224,9 @@ public class PanelValoresRamaAABB extends JPanel {
             XYSeries serieSolMejor = new XYSeries(Texto.get("PVG_SOLMEJOR", Conf.idioma));
             XYSeries serieCota = new XYSeries(Texto.get("PVG_COTA", Conf.idioma));
         	
-        	numNodo=0;
+            hojas = new ArrayList<>();
+            
+        	numNodo = 1;
     		Number solParcial = ra.getEntrada().getSolParcial();
     		Number solMejor = ra.getEntrada().getMejorSolucion();
     		Number cota = ra.getEntrada().getCota();
@@ -231,6 +247,10 @@ public class PanelValoresRamaAABB extends JPanel {
             		// El nodo actual es la raiz por tanto no seguimos por el arbol    		
             		serieSolActual.add(1, solParcial);
                 	serieSolMejor.add(1, solMejor);
+                	
+            		if(ra.esHoja()) {
+            			hojas.add(0);
+            		}
                 	
                 	dataset.addSeries(serieSolActual);
                 	dataset.addSeries(serieSolMejor);
@@ -267,6 +287,11 @@ public class PanelValoresRamaAABB extends JPanel {
     		int id = numNodo;
     		Number solParcial = ra2.getEntrada().getSolParcial();
     		Number solMejor = ra2.getEntrada().getMejorSolucion();
+    		
+    		if(ra2.esHoja()) {
+    			hojas.add(id - 1);
+    		}
+    		
     		if(solParcial != null && solMejor != null) {
     			numNodo++;
     			serieSolActual.add(id, solParcial);
@@ -290,6 +315,11 @@ public class PanelValoresRamaAABB extends JPanel {
     		Number solParcial = ra2.getEntrada().getSolParcial();
     		Number solMejor = ra2.getEntrada().getMejorSolucion();
     		Number cota = ra2.getEntrada().getCota();
+    		
+    		if(ra2.esHoja()) {
+    			hojas.add(id - 1);
+    		}
+    		
     		if(solParcial != null && solMejor != null && cota != null) {
     			numNodo++;
     			serieSolActual.add(id, solParcial);

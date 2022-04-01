@@ -18,7 +18,7 @@ public class OpcionConfVisualizacion extends Opcion {
 
 	// Colores de lineas para vistas Global y de Rama
 	private int colorSolParcR = 255; // Valor R para color de linea para la solución parcial
-	private int colorSolParcG = 0; 	 // Valor G para color de linea para la solución parcial
+	private int colorSolParcG = 255; // Valor G para color de linea para la solución parcial
 	private int colorSolParcB = 0; 	 // Valor B para color de linea para la solución parcial
 	
 	private int colorSolMejR = 0; 	 // Valor R para color de linea para la mejor solución
@@ -26,7 +26,7 @@ public class OpcionConfVisualizacion extends Opcion {
 	private int colorSolMejB = 0; 	 // Valor B para color de linea para la mejor solución
 	
 	private int colorCotaR = 255; 	 // Valor R para color de linea para la cota
-	private int colorCotaG = 255; 	 // Valor G para color de linea para la cota
+	private int colorCotaG = 0; 	 // Valor G para color de linea para la cota
 	private int colorCotaB = 0; 	 // Valor B para color de linea para la cota
 	
 	//Grosor de lineas para vistas Global y de Rama

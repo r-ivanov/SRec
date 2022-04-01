@@ -25,8 +25,7 @@ public class RegistroActivacion {
 	private static final long serialVersionUID = 2L;
 
 	private static int nodoID = 0; // Va contando número de nodos que se crean,
-	// se reinicia al generar cada nueva
-	// animación
+	// se reinicia al generar cada nueva animación
 
 	private int nID = -1; // Número que identifica al nodo, ayuda a creación de
 	// traza gemela
@@ -75,6 +74,8 @@ public class RegistroActivacion {
 	// salto múltiple
 	private boolean inhibido = false; // Cuando sobre algún ancestro se hizo un
 	// salto múltiple
+	
+	private static boolean nodoEncontrado = false;
 
 	/**
 	 * Constructor: crea un nuevo registro de activación
@@ -2282,6 +2283,24 @@ public class RegistroActivacion {
 			return 0;
 		}
 	}
+	
+	/**
+	 * Devuelve el número de nodos visibles a partir de este nodo (incluido) 
+	 * hasta el nodo argumento (incluido).
+	 * 
+	 * @return Número de nodos visibles
+	 */
+	public int getNumNodosVisibles(RegistroActivacion ra) {
+		int numNodosVisibles = 0;
+		if (entradaVisible() || salidaVisible() && !nodoEncontrado) {
+			nodoEncontrado = getID() == ra.getID();
+			numNodosVisibles++;
+			for (int i = 0; i < numHijos() && !nodoEncontrado; i++) {
+				numNodosVisibles += hijos.get(i).getNumNodosVisibles(ra);
+			}
+		}
+		return numNodosVisibles;
+	}
 
 	/**
 	 * Devuelve el número de nodos históricos a partir de este nodo (incluido).
@@ -3378,6 +3397,26 @@ public class RegistroActivacion {
 			}
 		}
 	}
+	
+	/**
+	 * Devuelve si el nodo es nodo hoja o no.
+	 * Se considera nodo hoja aquiel que no tenga hijos
+	 * (no se tienen en cuenta los hijos que están inhibidos)
+	 * 
+	 * @return true si está resaltado, false en caso contrario.
+	 */
+	public boolean esHoja() {
+		ArrayList<RegistroActivacion> h = getHijos();
+		if(h == null) {
+			return false;
+		}
+		for(RegistroActivacion ra: h) {
+			if(!ra.inhibido()) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	private void verArbol(FileWriter fw, int margen) {
 		String c = "";
@@ -3436,5 +3475,4 @@ public class RegistroActivacion {
 			return "F";
 		}
 	}
-
 }
