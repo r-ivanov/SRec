@@ -8,6 +8,7 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -68,6 +69,9 @@ public class PanelValoresRamaAABB extends JPanel {
 	
 	private static Set<Integer> hojas;
 	private static Set<Integer> podas;
+	private static int numItem;
+
+	private HashMap<Integer, Integer> mapa;
 	
     private class MyRenderer extends XYLineAndShapeRenderer {
 		private static final long serialVersionUID = 1L;
@@ -75,9 +79,9 @@ public class PanelValoresRamaAABB extends JPanel {
 		@Override
 	    public Shape getItemShape(int row, int column) {
         	Shape shape;
-        	if(PanelValoresRamaAABB.podas.contains(column+1)) {
+        	if(PanelValoresRamaAABB.podas.contains(column-numItem+1)) {
             	shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc + 4.0f, 1);
-        	}else if(PanelValoresRamaAABB.hojas.contains(column+1)) {
+        	}else if(PanelValoresRamaAABB.hojas.contains(column-numItem+1)) {
             	//shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc+4.0f, 1);
             	shape = ShapeUtilities.createDiamond(Conf.grosorSolParc + 5.0f);
             }else {
@@ -231,120 +235,98 @@ public class PanelValoresRamaAABB extends JPanel {
             hojas = new HashSet<>();
             podas = new HashSet<>();
             
+            mapa = new HashMap<Integer, Integer>();
+            
         	numNodo = 1;
     		Number solParcial = ra.getEntrada().getSolParcial();
     		Number solMejor = ra.getEntrada().getMejorSolucion();
     		Number cota = ra.getEntrada().getCota();
     		
-    		if((ra == nodoActual) && (solParcial == null || solMejor == null)) {
-    			// No mostramos nada
-    		}else {
-        		if(solParcial == null && solMejor == null) {
-        			encontrarHijo();
+    		if(solParcial == null || solMejor == null) {
+    			encontrarHijo();	
+    		}	
+    		encontrado = false;
+    		mapGrafica(ra);
+    		
+    		boolean ryp = nodoActual.getEntrada().getRyP();
+			RegistroActivacion reg = nodoActual;
+			int llamada;
+			numItem = 0;
+			while(reg != ra) {
+        		solParcial = reg.getEntrada().getSolParcial();
+        		solMejor = reg.getEntrada().getMejorSolucion();
+        		cota = reg.getEntrada().getCota();
+        		llamada = mapa.get(reg.getID());
+        		
+        		if(solParcial != null && solMejor != null ) {
+        			numItem++;
+            		if(reg.esHoja()) {
+            			hojas.add(numItem - 1);
+            		}
         			
-        			// Actualizamos los datos
-            		solParcial = ra.getEntrada().getSolParcial();
-            		solMejor = ra.getEntrada().getMejorSolucion();
-            		cota = ra.getEntrada().getCota();
+            		serieSolActual.add(llamada, solParcial);
+            		serieSolMejor.add(llamada, solMejor);
+
+            		if(ryp && cota != null) {
+            			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+            				podas.add(numItem - 1);
+            			}
+            			serieCota.add(llamada, cota);
+            		}
         		}
         		
-            	if(ra == nodoActual && solParcial != null && solMejor != null) {
-            		// El nodo actual es la raiz por tanto no seguimos por el arbol    		
-            		serieSolActual.add(1, solParcial);
-                	serieSolMejor.add(1, solMejor);
-                	
-            		if(ra.esHoja()) {
-            			hojas.add(0);
-            		}
-                	
-                	dataset.addSeries(serieSolActual);
-                	dataset.addSeries(serieSolMejor);
-                	
-                	if(ra.getEntrada().getRyP()) {
-            			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
-            				podas.add(0);
-            			}
-                		serieCota.add(1, cota);
-                		
-                		dataset.addSeries(serieCota);
-                	}
-            	}else if(ra.getEntrada().getRyP()) {
-            		encontrado = false;
-            		crearGrafica(ra, dataset, serieSolActual, serieSolMejor, serieCota);
-            		
-            		dataset.addSeries(serieSolActual);
-            		dataset.addSeries(serieSolMejor);
-            		dataset.addSeries(serieCota);
-            	}else {
-            		encontrado = false;
-            		crearGrafica(ra, dataset, serieSolActual, serieSolMejor);
-            		
-            		dataset.addSeries(serieSolActual);
-            		dataset.addSeries(serieSolMejor);
-            	}
+				reg = reg.getPadre();
+			}
+			// Añadimos la raiz tambien
+    		solParcial = ra.getEntrada().getSolParcial();
+    		solMejor = ra.getEntrada().getMejorSolucion();
+    		cota = ra.getEntrada().getCota();
+    		llamada = mapa.get(ra.getID());
+			
+			if(solParcial != null && solMejor != null) {
+				numItem++;
+        		if(ra.esHoja()) {
+        			hojas.add(numItem - 1);
+        		}
+				
+        		serieSolActual.add(llamada, solParcial);
+        		serieSolMejor.add(llamada, solMejor);
+        		if(ryp && cota != null) {
+        			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+        				podas.add(numItem - 1);
+        			}
+        			serieCota.add(llamada, cota);
+        		}
+			}
+			
+    		dataset.addSeries(serieSolActual);
+    		dataset.addSeries(serieSolMejor);
+    		if(ryp && cota != null) {
+    			dataset.addSeries(serieCota);
     		}
         }
-        
         return dataset;
 	}
 	
-    private void crearGrafica(RegistroActivacion ra2, XYSeriesCollection dataset, 
-    		XYSeries serieSolActual, XYSeries serieSolMejor) {
-    	
-    	if(!ra2.inhibido() && !encontrado) {
-    		int id = numNodo;
-    		Number solParcial = ra2.getEntrada().getSolParcial();
-    		Number solMejor = ra2.getEntrada().getMejorSolucion();
-    		
-    		if(ra2.esHoja()) {
-    			hojas.add(id - 1);
-    		}
-    		
-    		if(solParcial != null && solMejor != null) {
-    			numNodo++;
-    			serieSolActual.add(id, solParcial);
-    			serieSolMejor.add(id, solMejor);
-    		}
-    		if(ra2 != nodoActual) {
-            	for(RegistroActivacion raHijo: ra2.getHijos()) {
-            		crearGrafica(raHijo, dataset, serieSolActual, serieSolMejor);
-            	}
-    		}else {
-    			encontrado = true;
-    		}
-        }
-	}
-
-	private void crearGrafica(RegistroActivacion ra2, XYSeriesCollection dataset, 
-			XYSeries serieSolActual, XYSeries serieSolMejor, XYSeries serieCota) {
-		
-    	if(!ra2.inhibido() && !encontrado) {
-    		int id = numNodo;
-    		Number solParcial = ra2.getEntrada().getSolParcial();
-    		Number solMejor = ra2.getEntrada().getMejorSolucion();
-    		Number cota = ra2.getEntrada().getCota();
-    		
-    		if(ra2.esHoja()) {
-    			hojas.add(id - 1);
-    		}
-    		
-    		if(solParcial != null && solMejor != null && cota != null) {
-    			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
-    				podas.add(id - 1);
-    			}
-    			numNodo++;
-    			serieSolActual.add(id, solParcial);
-    			serieSolMejor.add(id, solMejor);
-    			serieCota.add(id, cota);
-    		}
-    		if(ra2 != nodoActual) {
-            	for(RegistroActivacion raHijo: ra2.getHijos()) {
-            		crearGrafica(raHijo, dataset, serieSolActual, serieSolMejor, serieCota);
-            	}
-    		}else {
-    			encontrado = true;
-    		}
-        }	
+	private void mapGrafica(RegistroActivacion ra2) {
+	    if(!ra2.inhibido() && !encontrado) {
+			Number solParcial = ra2.getEntrada().getSolParcial();
+			Number solMejor = ra2.getEntrada().getMejorSolucion();
+			
+			if(solParcial != null && solMejor != null) {
+				int llamada = numNodo;
+				mapa.put(ra2.getID(), llamada);
+				
+				numNodo++;
+			}
+			if(ra2 != nodoActual) {
+	        	for(RegistroActivacion raHijo: ra2.getHijos()) {
+	        		mapGrafica(raHijo);
+	        	}
+			}else {
+				encontrado = true;
+			}
+	    }
 	}
 	
 	private void encontrarHijo() {
