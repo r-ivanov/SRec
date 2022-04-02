@@ -22,8 +22,9 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import conf.Conf;
 import datos.RegistroActivacion;
@@ -59,7 +60,8 @@ public class PanelValoresGlobalesAABB extends JPanel {
 	private BasicStroke solMejorStroke = new BasicStroke(1.0f);
 	private BasicStroke cotaStroke = new BasicStroke(1.0f);
 	
-	private static List<Integer> hojas;
+	private static Set<Integer> hojas;
+	private static Set<Integer> podas;
 	
     private class MyRenderer extends XYLineAndShapeRenderer {
 		private static final long serialVersionUID = 1L;
@@ -67,8 +69,11 @@ public class PanelValoresGlobalesAABB extends JPanel {
 		@Override
 	    public Shape getItemShape(int row, int column) {
         	Shape shape;
-            if(PanelValoresGlobalesAABB.hojas.contains(column+1)) {
-            	shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc+4.0f, 1);
+        	if(PanelValoresGlobalesAABB.podas.contains(column+1)) {
+            	shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc + 4.0f, 1);
+        	}else if(PanelValoresGlobalesAABB.hojas.contains(column+1)) {
+            	//shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc+4.0f, 1);
+            	shape = ShapeUtilities.createDiamond(Conf.grosorSolParc + 5.0f);
             }else {
             	shape = lookupSeriesShape(row);
             }
@@ -107,7 +112,7 @@ public class PanelValoresGlobalesAABB extends JPanel {
 
 	private void initAndShow() {
         chartPanel = createChartPanel();
-        int width = (int) Math.round(getWidth()*0.8);
+        int width = (int) Math.round(getWidth()*0.5);
         int height = (int) Math.round(getHeight()*0.9);
         chartPanel.setPreferredSize(new Dimension(width, height));
         chartPanel.updateUI();
@@ -138,7 +143,7 @@ public class PanelValoresGlobalesAABB extends JPanel {
 		    // Hacer que el eje X sea de numeros enteros
 	    	NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
 	    	xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-	    	
+
 	    	MyRenderer renderer = new MyRenderer();
 			plot.setRenderer(renderer);
 			renderer.setUseFillPaint(true);
@@ -217,7 +222,8 @@ public class PanelValoresGlobalesAABB extends JPanel {
             XYSeries serieSolMejor = new XYSeries(Texto.get("PVG_SOLMEJOR", Conf.idioma));
             XYSeries serieCota = new XYSeries(Texto.get("PVG_COTA", Conf.idioma));
         	
-            hojas = new ArrayList<>();
+            hojas = new HashSet<>();
+            podas = new HashSet<>();
             
         	numNodo = 1;
     		Number solParcial = ra.getEntrada().getSolParcial();
@@ -271,6 +277,9 @@ public class PanelValoresGlobalesAABB extends JPanel {
     			hojas.add(id - 1);
     		}
     		if(solParcial != null && solMejor != null && cota != null) {
+    			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+    				podas.add(id - 1);
+    			}
     			numNodo++;
     			serieSolActual.add(id, solParcial);
     			serieSolMejor.add(id, solMejor);

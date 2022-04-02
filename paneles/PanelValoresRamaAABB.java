@@ -8,8 +8,9 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -19,7 +20,6 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -66,7 +66,8 @@ public class PanelValoresRamaAABB extends JPanel {
 	private BasicStroke solMejorStroke = new BasicStroke(1.0f);
 	private BasicStroke cotaStroke = new BasicStroke(1.0f);
 	
-	private static List<Integer> hojas;
+	private static Set<Integer> hojas;
+	private static Set<Integer> podas;
 	
     private class MyRenderer extends XYLineAndShapeRenderer {
 		private static final long serialVersionUID = 1L;
@@ -74,8 +75,11 @@ public class PanelValoresRamaAABB extends JPanel {
 		@Override
 	    public Shape getItemShape(int row, int column) {
         	Shape shape;
-            if(PanelValoresRamaAABB.hojas.contains(column+1)) {
-            	shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc+4.0f, 1);
+        	if(PanelValoresRamaAABB.podas.contains(column+1)) {
+            	shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc + 4.0f, 1);
+        	}else if(PanelValoresRamaAABB.hojas.contains(column+1)) {
+            	//shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc+4.0f, 1);
+            	shape = ShapeUtilities.createDiamond(Conf.grosorSolParc + 5.0f);
             }else {
             	shape = lookupSeriesShape(row);
             }
@@ -114,7 +118,7 @@ public class PanelValoresRamaAABB extends JPanel {
 	
 	private void initAndShow() {
         chartPanel = createChartPanel();
-        int width = (int) Math.round(getWidth()*0.8);
+        int width = (int) Math.round(getWidth()*0.5);
         int height = (int) Math.round(getHeight()*0.9);
         chartPanel.setPreferredSize(new Dimension(width, height));
         chartPanel.updateUI();
@@ -224,7 +228,8 @@ public class PanelValoresRamaAABB extends JPanel {
             XYSeries serieSolMejor = new XYSeries(Texto.get("PVG_SOLMEJOR", Conf.idioma));
             XYSeries serieCota = new XYSeries(Texto.get("PVG_COTA", Conf.idioma));
         	
-            hojas = new ArrayList<>();
+            hojas = new HashSet<>();
+            podas = new HashSet<>();
             
         	numNodo = 1;
     		Number solParcial = ra.getEntrada().getSolParcial();
@@ -256,6 +261,9 @@ public class PanelValoresRamaAABB extends JPanel {
                 	dataset.addSeries(serieSolMejor);
                 	
                 	if(ra.getEntrada().getRyP()) {
+            			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+            				podas.add(0);
+            			}
                 		serieCota.add(1, cota);
                 		
                 		dataset.addSeries(serieCota);
@@ -321,6 +329,9 @@ public class PanelValoresRamaAABB extends JPanel {
     		}
     		
     		if(solParcial != null && solMejor != null && cota != null) {
+    			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+    				podas.add(id - 1);
+    			}
     			numNodo++;
     			serieSolActual.add(id, solParcial);
     			serieSolMejor.add(id, solMejor);
