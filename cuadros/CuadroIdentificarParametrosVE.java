@@ -330,32 +330,34 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		int[] dim = metodo.getDimParametros();
 		int param = -1;
 		for (int i = 0; i < camposVE.length; i++) {
-			param = Integer.parseInt(camposVE[i].getText());
-			
-			if (dim[param] > 0) {
-				return 2;
-			}
-			switch(tipos[param]) {
-			case "int": 
-			case "Integer":
-			case "double":
-			case "Double":
-			case "float":
-			case "Float":
-			case "long":
-			case "Long":
-			case "short":
-			case "Short":
-			case "BigInteger":
-			case "byte":
-			case "Byte":
-			case "Number":
-				break;
-			case "String":
-			case "char":
-			case "Char":
-			default:	// Si es String, char, Char o algun tipo no mencionado -> error
-				return 3;	
+			if((!vueltaAtras) || i < camposVE.length-1){
+				param = Integer.parseInt(camposVE[i].getText());
+				
+				if (dim[param] > 0) {
+					return 2;
+				}
+				switch(tipos[param]) {
+				case "int": 
+				case "Integer":
+				case "double":
+				case "Double":
+				case "float":
+				case "Float":
+				case "long":
+				case "Long":
+				case "short":
+				case "Short":
+				case "BigInteger":
+				case "byte":
+				case "Byte":
+				case "Number":
+					break;
+				case "String":
+				case "char":
+				case "Char":
+				default:	// Si es String, char, Char o algun tipo no mencionado -> error
+					return 3;	
+				}
 			}
 		}
 		
