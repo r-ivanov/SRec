@@ -272,7 +272,8 @@ public class PanelValoresGlobalesAABB extends JPanel {
     			numNodo++;
     			if(solParcial != null) {
     				serieSolActual.add(id, solParcial);
-    			} else {
+    			} 
+    			if(serieSolMejor != null){
     				serieSolMejor.add(id, solMejor);
     			}
     		}
