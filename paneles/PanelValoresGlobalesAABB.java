@@ -50,7 +50,7 @@ public class PanelValoresGlobalesAABB extends JPanel {
 	private JPanel chartPanel;
 	
 	private static final Shape circle = new Ellipse2D.Double(-3, -3, 6, 6);
-	
+
 	// Color de las lineas
 	private Color solParcialColor = Color.YELLOW;
 	private Color solMejorColor = Color.GREEN;
@@ -60,6 +60,7 @@ public class PanelValoresGlobalesAABB extends JPanel {
 	private BasicStroke solMejorStroke = new BasicStroke(1.0f);
 	private BasicStroke cotaStroke = new BasicStroke(1.0f);
 	
+	// Nodos hojas y nodos podados
 	private static Set<Integer> hojas;
 	private static Set<Integer> podas;
 	
@@ -137,7 +138,7 @@ public class PanelValoresGlobalesAABB extends JPanel {
 	    
 	    List<XYSeries> series = dataset.getSeries();
 	    
-	    if(series != null && series.size() > 1) {
+	    if(series != null && series.size() > 0) {
 	    	XYPlot plot = chart.getXYPlot();
 	    	
 		    // Hacer que el eje X sea de numeros enteros
@@ -228,17 +229,29 @@ public class PanelValoresGlobalesAABB extends JPanel {
         	numNodo = 1;
     		Number solParcial = ra.getEntrada().getSolParcial();
     		Number solMejor = ra.getEntrada().getMejorSolucion();
-    		if(solParcial == null && solMejor == null) {
-    			encontrarHijo();
+    		Number cota = ra.getEntrada().getCota();
+    		if(solParcial == null && solMejor == null && cota == null) {
+    			ra = encontrarHijo();	
+    			if(ra == null) {
+    				return dataset;
+    			}
     		}
+    		
         	if(ra.getEntrada().getRyP()) {
         		crearGrafica(ra, dataset, serieSolActual, serieSolMejor, serieCota);
-        		dataset.addSeries(serieCota);
+        		if(Conf.cotaVisible) {
+        			dataset.addSeries(serieCota);
+        		}
+        		
         	}else {
         		crearGrafica(ra, dataset, serieSolActual, serieSolMejor);
         	}
-            dataset.addSeries(serieSolActual);
-            dataset.addSeries(serieSolMejor);
+        	if(Conf.solActualVisible) {
+        		dataset.addSeries(serieSolActual);
+        	}
+            if(Conf.solMejorVisible) {
+            	dataset.addSeries(serieSolMejor);
+            }
         }
         
         return dataset;
@@ -251,13 +264,17 @@ public class PanelValoresGlobalesAABB extends JPanel {
     		int id = numNodo;
     		Number solParcial = ra2.getEntrada().getSolParcial();
     		Number solMejor = ra2.getEntrada().getMejorSolucion();
-    		if(ra2.esHoja()) {
-    			hojas.add(id - 1);
-    		}
-    		if(solParcial != null && solMejor != null) {
+
+    		if(solParcial != null || solMejor != null) {
+        		if(ra2.esHoja()) {
+        			hojas.add(id - 1);
+        		}
     			numNodo++;
-    			serieSolActual.add(id, solParcial);
-    			serieSolMejor.add(id, solMejor);
+    			if(solParcial != null) {
+    				serieSolActual.add(id, solParcial);
+    			} else {
+    				serieSolMejor.add(id, solMejor);
+    			}
     		}
         	for(RegistroActivacion raHijo: ra2.getHijos()) {
         		crearGrafica(raHijo, dataset, serieSolActual, serieSolMejor);
@@ -273,17 +290,27 @@ public class PanelValoresGlobalesAABB extends JPanel {
     		Number solParcial = ra2.getEntrada().getSolParcial();
     		Number solMejor = ra2.getEntrada().getMejorSolucion();
     		Number cota = ra2.getEntrada().getCota();
-    		if(ra2.esHoja()) {
-    			hojas.add(id - 1);
-    		}
-    		if(solParcial != null && solMejor != null && cota != null) {
-    			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
-    				podas.add(id - 1);
+
+    		if(solParcial != null || solMejor != null || cota != null) {
+        		if(ra2.esHoja()) {
+        			hojas.add(id - 1);
+        		}
+        		numNodo++;
+        		
+    			if(solParcial != null) {
+    				serieSolActual.add(id, solParcial);
     			}
-    			numNodo++;
-    			serieSolActual.add(id, solParcial);
-    			serieSolMejor.add(id, solMejor);
-    			serieCota.add(id, cota);
+    			if(solMejor != null) {
+    				serieSolMejor.add(id, solMejor);
+    				if(cota != null) {
+    	    			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+    	    				podas.add(id - 1);
+    	    			}
+    				}
+    			}
+    			if(cota != null) {
+    				serieCota.add(id, cota);
+    			}
     		}
         	for(RegistroActivacion raHijo: ra2.getHijos()) {
         		crearGrafica(raHijo, dataset, serieSolActual, serieSolMejor, serieCota);
@@ -291,17 +318,18 @@ public class PanelValoresGlobalesAABB extends JPanel {
         }	
 	}
 	
-	private void encontrarHijo() {
+	private RegistroActivacion encontrarHijo() {
 		for(RegistroActivacion raHijo: ra.getHijos()) {
     		Number solParcial = raHijo.getEntrada().getSolParcial();
     		Number solMejor = raHijo.getEntrada().getMejorSolucion();
+    		Number cota = raHijo.getEntrada().getCota();
     		
-    		if(solParcial != null && solMejor != null) {
-    			ra = raHijo;
+    		if(solParcial != null || solMejor != null || cota != null) {
     			numNodo++;
-    			break;
+    			return raHijo;
     		}
 		}
+		return null;
 	}
 	
 	public File saveChartAs(String name, String type) {

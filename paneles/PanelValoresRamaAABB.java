@@ -29,7 +29,9 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.util.ShapeUtilities;
 
 import conf.Conf;
+import datos.MetodoAlgoritmo;
 import datos.RegistroActivacion;
+import utilidades.Arrays;
 import utilidades.Texto;
 import ventanas.Ventana;
 
@@ -147,7 +149,7 @@ public class PanelValoresRamaAABB extends JPanel {
 
 	    List<XYSeries> series = dataset.getSeries();
 	    
-	    if(series != null && series.size() > 1) {
+	    if(series != null && series.size() > 0) {
 	    	XYPlot plot = chart.getXYPlot();
 	    	
 		    // Hacer que el eje X sea de numeros enteros
@@ -242,36 +244,56 @@ public class PanelValoresRamaAABB extends JPanel {
     		Number solMejor = ra.getEntrada().getMejorSolucion();
     		Number cota = ra.getEntrada().getCota();
     		
-    		if(solParcial == null || solMejor == null) {
-    			encontrarHijo();	
-    		}	
+    		Number solParcialAux = nodoActual.getEntrada().getSolParcial();
+    		Number solMejorAux = nodoActual.getEntrada().getMejorSolucion();
+    		Number cotaAux = nodoActual.getEntrada().getCota();
+    		
+    		if(solParcialAux == null && solMejorAux == null && cotaAux == null) {
+    			return dataset;
+    		}
+    		
+    		if(solParcial == null && solMejor == null && cota == null) {
+    			ra = encontrarHijo();	
+    		}
+
+    		if(ra == null) {
+    			// No hacemos nada y retornamos 
+    			return dataset;
+    		}
+    		
     		encontrado = false;
     		mapGrafica(ra);
     		
     		boolean ryp = nodoActual.getEntrada().getRyP();
 			RegistroActivacion reg = nodoActual;
-			int llamada;
+			Integer llamada;
 			numItem = 0;
-			while(reg != ra) {
+			while(reg != ra && reg.getID() != ra.getID()) {
         		solParcial = reg.getEntrada().getSolParcial();
         		solMejor = reg.getEntrada().getMejorSolucion();
         		cota = reg.getEntrada().getCota();
         		llamada = mapa.get(reg.getID());
         		
-        		if(solParcial != null && solMejor != null ) {
+        		if(solParcial != null || solMejor != null || cota != null) {
         			numItem++;
             		if(reg.esHoja()) {
             			hojas.add(numItem - 1);
             		}
         			
-            		serieSolActual.add(llamada, solParcial);
-            		serieSolMejor.add(llamada, solMejor);
-
-            		if(ryp && cota != null) {
-            			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
-            				podas.add(numItem - 1);
+            		if(llamada != null) {
+            			if(solParcial != null) {
+            				serieSolActual.add(llamada, solParcial);
             			}
-            			serieCota.add(llamada, cota);
+            			if(solMejor != null) {
+            				serieSolMejor.add(llamada, solMejor);
+            			}
+            			
+                		if(ryp && cota != null && solMejor != null) {
+                			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+                				podas.add(numItem - 1);
+                			}
+                			serieCota.add(llamada, cota);
+                		}
             		}
         		}
         		
@@ -283,26 +305,38 @@ public class PanelValoresRamaAABB extends JPanel {
     		cota = ra.getEntrada().getCota();
     		llamada = mapa.get(ra.getID());
 			
-			if(solParcial != null && solMejor != null) {
-				numItem++;
+    		if(solParcial != null || solMejor != null || cota != null) {
+    			numItem++;
         		if(ra.esHoja()) {
         			hojas.add(numItem - 1);
         		}
-				
-        		serieSolActual.add(llamada, solParcial);
-        		serieSolMejor.add(llamada, solMejor);
-        		if(ryp && cota != null) {
-        			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
-        				podas.add(numItem - 1);
+    			
+        		if(llamada != null) {
+        			if(solParcial != null) {
+        				serieSolActual.add(llamada, solParcial);
         			}
-        			serieCota.add(llamada, cota);
+        			if(solMejor != null) {
+        				serieSolMejor.add(llamada, solMejor);
+        			}
+        			
+            		if(ryp && cota != null && solMejor != null) {
+            			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+            				podas.add(numItem - 1);
+            			}
+            			serieCota.add(llamada, cota);
+            		}
         		}
+    		}
+			if(Conf.solActualVisible) {
+				dataset.addSeries(serieSolActual);
 			}
-			
-    		dataset.addSeries(serieSolActual);
-    		dataset.addSeries(serieSolMejor);
+			if(Conf.solMejorVisible) {
+				dataset.addSeries(serieSolMejor);
+			}
     		if(ryp && cota != null) {
-    			dataset.addSeries(serieCota);
+    			if(Conf.cotaVisible) {
+    				dataset.addSeries(serieCota);
+    			}
     		}
         }
         return dataset;
@@ -312,9 +346,10 @@ public class PanelValoresRamaAABB extends JPanel {
 	    if(!ra2.inhibido() && !encontrado) {
 			Number solParcial = ra2.getEntrada().getSolParcial();
 			Number solMejor = ra2.getEntrada().getMejorSolucion();
+			Number cota = ra2.getEntrada().getCota();
 			
-			if(solParcial != null && solMejor != null) {
-				int llamada = numNodo;
+			if(solParcial != null || solMejor != null || cota != null) {
+				Integer llamada = numNodo;
 				mapa.put(ra2.getID(), llamada);
 				
 				numNodo++;
@@ -329,17 +364,18 @@ public class PanelValoresRamaAABB extends JPanel {
 	    }
 	}
 	
-	private void encontrarHijo() {
+	private RegistroActivacion encontrarHijo() {
 		for(RegistroActivacion raHijo: ra.getHijos()) {
     		Number solParcial = raHijo.getEntrada().getSolParcial();
     		Number solMejor = raHijo.getEntrada().getMejorSolucion();
+    		Number cota = raHijo.getEntrada().getCota();
     		
-    		if(solParcial != null && solMejor != null) {
-    			ra = raHijo;
+    		if(solParcial != null || solMejor != null || cota != null) {
     			numNodo++;
-    			break;
+    			return raHijo;
     		}
 		}
+		return null;
 	}
 
 	public void setNodoActual(RegistroActivacion nodoActual2) {

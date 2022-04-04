@@ -524,14 +524,16 @@
 		<T valor="Hay valores repetidos en los datos introducidos." idioma="es" id="ERROR_INFOPARAM4"/>
 		<T valor="There are repeated values within the introduced data." idioma="en" id="ERROR_INFOPARAM4"/>
 		
-		<T valor="El n[uacute]mero de par[aacute]metro dado para la estructura no es v[aacute]lido." idioma="es" id="ERROR_INFOPARAMVE1"/>
-		<T valor="Given parameter number for data structure is not valid." idioma="en" id="ERROR_INFOPARAMVE1"/>
-		<T valor="Al menos uno de los n[uacute]meros de par[aacute]metro dados para los [iacute]ndices no es v[aacute]lido." idioma="es" id="ERROR_INFOPARAMVE2"/>
-		<T valor="At least a given parameter number for indexes is not valid." idioma="en" id="ERROR_INFOPARAMVE2"/>
-		<T valor="Los n[uacute]meros de par[aacute]metro para los [iacute]ndices son obligatorios exceptuando la estimaci[oacute]n de cota." idioma="es" id="ERROR_INFOPARAMVE3"/>
-		<T valor="All parameter numbers for indexes have to be full except for the estimated threshold." idioma="en" id="ERROR_INFOPARAMVE3"/>
-		<T valor="Hay valores repetidos en los datos introducidos." idioma="es" id="ERROR_INFOPARAMVE4"/>
-		<T valor="There are repeated values within the introduced data." idioma="en" id="ERROR_INFOPARAMVE4"/>
+		<T valor="Al menos uno de los n[uacute]meros de par[aacute]metro dados no es v[aacute]lido." idioma="es" id="ERROR_INFOPARAMVE1"/>
+		<T valor="At least one given parameter number is not valid." idioma="en" id="ERROR_INFOPARAMVE1"/>
+		<T valor="La dimensi[oacute]n de alguno de los n[uacute]meros de par[aacute]metro dados no es v[aacute]lida." idioma="es" id="ERROR_INFOPARAMVE2"/>
+		<T valor="The dimention of at least one given parameter number is not valid." idioma="en" id="ERROR_INFOPARAMVE2"/>
+		<T valor="El tipo de alguno de los n[uacute]meros de par[aacute]metro dados no es v[aacute]lido." idioma="es" id="ERROR_INFOPARAMVE3"/>
+		<T valor="The type of at least one given parameter number is not valid." idioma="en" id="ERROR_INFOPARAMVE3"/>
+		<T valor="Los n[uacute]meros de par[aacute]metro para los [iacute]ndices son obligatorios exceptuando la estimaci[oacute]n de cota." idioma="es" id="ERROR_INFOPARAMVE4"/>
+		<T valor="All parameter numbers for indexes have to be full except for the estimated threshold." idioma="en" id="ERROR_INFOPARAMVE4"/>
+		<T valor="Hay valores repetidos en los datos introducidos." idioma="es" id="ERROR_INFOPARAMVE5"/>
+		<T valor="There are repeated values within the introduced data." idioma="en" id="ERROR_INFOPARAMVE5"/>
 		
 		<T valor="Los m[eacute]todos seleccionados no tienen ning[uacute]n par[aacute]metro en com[uacute]n." idioma="es" id="ERROR_PARAM_GD_TXT"/>
 		<T valor="Selected methods have no common parameters." idioma="en" id="ERROR_PARAM_GD_TXT"/>

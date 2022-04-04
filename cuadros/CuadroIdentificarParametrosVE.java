@@ -71,18 +71,20 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 * @param cuadroSeleccionMetodosVE
 	 *            Cuadro de selección de métodos desde el que se invoca este
 	 *            cuadro.    
-	 * @param numMetodo
+	 * @param m
+	 *            Metodo del algoritmo.
+	 * @param numM
 	 *            Número de método seleccionado para la identificación de
 	 *            parámetros.
 	 */
 	public CuadroIdentificarParametrosVE(Ventana ventana, 
 			CuadroSeleccionMetodosVE cuadroSeleccionMetodosVE, 
-			MetodoAlgoritmo metodo, int numMetodo) {
-		this.metodo = metodo;
-		this.dialogo = new JDialog(ventana, true);
-		this.csm = cuadroSeleccionMetodosVE;
-		this.numMetodo = numMetodo;
-		this.start();
+			MetodoAlgoritmo m, int numM) {
+		metodo = m;
+		dialogo = new JDialog(ventana, true);
+		csm = cuadroSeleccionMetodosVE;
+		numMetodo = numM;
+		start();
 	}
 
 	/**
@@ -93,31 +95,31 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		JPanel panel = new JPanel(new BorderLayout());
 
 		// panel de la derecha: contiene el gráfico esquemático
-		this.panelImagen = new JPanel();
-		this.panelImagen.setPreferredSize(new Dimension(300, 162));
+		panelImagen = new JPanel();
+		panelImagen.setPreferredSize(new Dimension(300, 162));
 
 		// panel de botones
 
 		// Botón Aceptar
-		this.aceptar = new BotonAceptar();
-		this.aceptar.addActionListener(this);
-		this.aceptar.addKeyListener(this);
-		this.aceptar.addMouseListener(this);
+		aceptar = new BotonAceptar();
+		aceptar.addActionListener(this);
+		aceptar.addKeyListener(this);
+		aceptar.addMouseListener(this);
 
 		// Botón Cancelar
-		this.cancelar = new BotonCancelar();
-		this.cancelar.addActionListener(this);
-		this.cancelar.addKeyListener(this);
-		this.cancelar.addMouseListener(this);
+		cancelar = new BotonCancelar();
+		cancelar.addActionListener(this);
+		cancelar.addKeyListener(this);
+		cancelar.addMouseListener(this);
 
 		JPanel panelBoton = new JPanel();
-		panelBoton.add(this.aceptar);
-		panelBoton.add(this.cancelar);
+		panelBoton.add(aceptar);
+		panelBoton.add(cancelar);
 
 		// creación del panel general
-		this.panelCuadro = new JPanel(new BorderLayout());
-		this.panelBotones= new JPanel(new GridLayout(10, 1));
-		this.botonesSeleccion = new JRadioButton[2];
+		panelCuadro = new JPanel(new BorderLayout());
+		panelBotones= new JPanel(new GridLayout(10, 1));
+		botonesSeleccion = new JRadioButton[2];
 		
 		// Solo permite una seleccion para los "botonesSeleccion"
 		// Maximizacion o Minimizacion
@@ -128,39 +130,39 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		panelBotones.add(mensaje);
 		
 		// Se configuran los botones de seleccion
-		for(int i=0; i<this.botonesSeleccion.length ; i++) {		
-			if(i==0) {
-				this.botonesSeleccion[i] = 
+		for(int i = 0; i < botonesSeleccion.length ; i++) {		
+			if(i == 0) {
+				botonesSeleccion[i] = 
 						new JRadioButton(
 								Texto.get("BOTON_MAXVISTASESPECIFICAS", 
 										Conf.idioma));
-			}else if(i==1) {
-				this.botonesSeleccion[i] = 
+			}else if(i == 1) {
+				botonesSeleccion[i] = 
 						new JRadioButton(
 								Texto.get("BOTON_MINVISTASESPECIFICAS", 
 										Conf.idioma));
 			}
 			
-			panelBotones.add(this.botonesSeleccion[i], BorderLayout.NORTH);
+			panelBotones.add(botonesSeleccion[i], BorderLayout.NORTH);
 			
-			this.botonesSeleccion[i].addKeyListener(this);
-			this.botonesSeleccion[i].addActionListener(this);
-			grupoBotonesSeleccion.add(this.botonesSeleccion[i]);
+			botonesSeleccion[i].addKeyListener(this);
+			botonesSeleccion[i].addActionListener(this);
+			grupoBotonesSeleccion.add(botonesSeleccion[i]);
 		}
-		this.botonesSeleccion[0].setSelected(true); // Por defecto Maximizacion
+		botonesSeleccion[0].setSelected(true); // Por defecto Maximizacion
 		
 		JLabel mensaje2 = new JLabel(
 				Texto.get("INDICACION_VISTASESPECIFICAS", Conf.idioma) 
-					+ (this.metodo.getNumeroParametros() - 1) + "):");
+					+ (metodo.getNumeroParametros() - 1) + "):");
 		panelBotones.add(mensaje2);
 
 		// Campos de texto para introducir solucion parcial, mejor solucion 
 		// y estimacion de cota
-		this.camposVE = new JTextField[3];
+		camposVE = new JTextField[3];
 		for(int i=0; i<3 ; i++) {
 			JPanel panelIndices = new JPanel(new BorderLayout());
-			this.camposVE[i] = new JTextField(LONGITUD_CAMPOS);
-			this.camposVE[i].setBounds(10,10,200,30);
+			camposVE[i] = new JTextField(LONGITUD_CAMPOS);
+			camposVE[i].setBounds(10,10,200,30);
 
 			JLabel mensajes = new JLabel();
 			if (i == 0) {
@@ -174,9 +176,9 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 						Texto.get("ESTIM_VISTASESPECIFICAS", Conf.idioma));
 			}
 			
-			this.camposVE[i].setHorizontalAlignment(SwingConstants.CENTER);
+			camposVE[i].setHorizontalAlignment(SwingConstants.CENTER);
 			
-			panelIndices.add(this.camposVE[i], BorderLayout.WEST);
+			panelIndices.add(camposVE[i], BorderLayout.WEST);
 			panelIndices.add(mensajes, BorderLayout.CENTER);
 			
 			panelBotones.add(panelIndices);
@@ -184,31 +186,31 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		}
 		
 		
-		this.panelCuadro.add(this.panelBotones, BorderLayout.NORTH);
-		this.panelCuadro.setBorder(
+		panelCuadro.add(panelBotones, BorderLayout.NORTH);
+		panelCuadro.setBorder(
 				new TitledBorder(
 						Texto.get("CIPDYV_METODO", Conf.idioma) 
 						+ ": " 
-						+ this.metodo.getRepresentacionTotal()));
+						+ metodo.getRepresentacionTotal()));
 
-		panel.add(this.panelCuadro, BorderLayout.NORTH);
+		panel.add(panelCuadro, BorderLayout.NORTH);
 		panel.add(panelBoton, BorderLayout.SOUTH);
 		
 
-		this.dialogo.getContentPane().add(panel);
-		this.dialogo.setTitle(Texto.get("CIPDYV_TITULO", Conf.idioma));
+		dialogo.getContentPane().add(panel);
+		dialogo.setTitle(Texto.get("CIPDYV_TITULO", Conf.idioma));
 		
-		this.dialogo.setSize(
+		dialogo.setSize(
 				CuadroIdentificarParametrosVE.ANCHO_CUADRO, 
 				CuadroIdentificarParametrosVE.ALTO_CUADRO);
 		int coord[] = Conf.ubicarCentro(
 				CuadroIdentificarParametrosVE.ANCHO_CUADRO, 
 				CuadroIdentificarParametrosVE.ALTO_CUADRO);
-		this.dialogo.setLocation(coord[0], coord[1]);
+		dialogo.setLocation(coord[0], coord[1]);
 
-		this.dialogo.setDefaultCloseOperation(
+		dialogo.setDefaultCloseOperation(
 				WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.dialogo.addWindowListener(new WindowAdapter() {
+		dialogo.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
             	accionCancelar();
@@ -218,8 +220,8 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		
 		//pintarCampos();
 
-		this.dialogo.setResizable(false);
-		this.dialogo.setVisible(true);
+		dialogo.setResizable(false);
+		dialogo.setVisible(true);
 	}
 
 	/**
@@ -231,11 +233,11 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	private void accionAceptar(boolean maximizacion) {
 		int estado = valoresCorrectos();
 		if (estado == 0) {		
-			this.csm.setParametrosMetodo(this.numMetodo, valoresParametros(), this.vueltaAtras, maximizacion);
-			this.dialogo.setVisible(false);
+			csm.setParametrosMetodo(numMetodo, valoresParametros(), vueltaAtras, maximizacion);
+			dialogo.setVisible(false);
 		}else {
 			new CuadroError(
-					this.dialogo, 
+					dialogo, 
 					Texto.get("ERROR_VAL", Conf.idioma) + "estado: " + estado, 
 					Texto.get("ERROR_INFOPARAMVE" + estado, Conf.idioma));
 		}
@@ -245,8 +247,8 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 * Cierra el cuadro.
 	 */
 	private void accionCancelar() {
-		this.csm.marcarMetodo(this.numMetodo, false);
-		this.dialogo.setVisible(false);
+		csm.marcarMetodo(numMetodo, false);
+		dialogo.setVisible(false);
 	}
 
 	/**
@@ -257,15 +259,15 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.aceptar) {
-			if(this.botonesSeleccion[0].isSelected()) {
+		if (e.getSource() == aceptar) {
+			if(botonesSeleccion[0].isSelected()) {
 				accionAceptar(true);
-			}else if(this.botonesSeleccion[1].isSelected()) {
+			}else if(botonesSeleccion[1].isSelected()) {
 				accionAceptar(false);
 			}else {
 				accionCancelar();
 			}
-		} else if (e.getSource() == this.cancelar) {
+		} else if (e.getSource() == cancelar) {
 			accionCancelar();
 		}
 	}
@@ -275,52 +277,88 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 * error determinado.
 	 * 
 	 * @return 0 = todo correcto | 
-	 * 		   1 = núm. parámetro de estructura no es válido | 
-	 * 		   2 = núm. parámetro de índice no es válido | 
-	 * 		   3 = el primer y/o segundo núm.parámetro de índices están vacíos | 
-	 * 		   4 = valores repetidos |
+	 * 		   1 = núm. parámetro no es válido | 
+	 * 		   2 = núm. parámetro no es válido (dimension) | 
+	 * 		   3 = núm. parámetro no es válido (tipo)
+	 * 		   4 = el primer y/o segundo núm.parámetro de índices están vacíos | 
+	 * 		   5 = valores repetidos |
 	 */
 	private int valoresCorrectos() {
 		// false = ramificación y poda
 		// true = vuelta atras
-		this.vueltaAtras = false; 
-		for (int i = 0; i < this.camposVE.length; i++) {
+		vueltaAtras = false; 
+		for (int i = 0; i < camposVE.length; i++) {
 			// Comprobar que los indices sean validos
-			if (this.camposVE[i].getText().length() != 0) {
+			if (camposVE[i].getText().length() != 0) {
 				try {
-					int x = Integer.parseInt(this.camposVE[i].getText());
-					if (x < 0 || x >= this.metodo.getNumeroParametros()) {
-						return 2;
+					int x = Integer.parseInt(camposVE[i].getText());
+					if (x < 0 || x >= metodo.getNumeroParametros()) {
+						return 1;
 					}
 				}catch (Exception e) {
-					return 2;
+					return 1;
 				}
 			}else {
 				if(i < 2) {
-					return 3;
+					return 4;
 				}else {
 					// Si el campo para la estimacion de cota está vacio 
 					// se asume Vuelta Atras y en caso contrario se asume
 					// Ramificación y poda
-					this.vueltaAtras = true;
+					vueltaAtras = true;
 				}
 			}
 	
 		}
 
 		// Comprobamos que no haya ni un solo valor repetido
-		for (int i = 0; i < this.camposVE.length; i++) {
-			for (int j = i + 1; j < this.camposVE.length; j++) {
-				if(!this.vueltaAtras 
-						&& !(this.camposVE[i].getText().equalsIgnoreCase("")) 
-						&& (Integer.parseInt(this.camposVE[i].getText()) 
+		for (int i = 0; i < camposVE.length; i++) {
+			for (int j = i + 1; j < camposVE.length; j++) {
+				if(!vueltaAtras 
+						&& !(camposVE[i].getText().equalsIgnoreCase("")) 
+						&& (Integer.parseInt(camposVE[i].getText()) 
 								== 
-								Integer.parseInt(this.camposVE[j].getText()))) {
-					return 4;
+								Integer.parseInt(camposVE[j].getText()))) {
+					return 5;
 				}
 			}
 			// Comprobar tambien con this.e
 		}
+		
+		// Comprobamos los tipos de los parametros y su dimension
+		String[] tipos = metodo.getTiposParametros();
+		int[] dim = metodo.getDimParametros();
+		int param = -1;
+		for (int i = 0; i < camposVE.length; i++) {
+			param = Integer.parseInt(camposVE[i].getText());
+			
+			if (dim[param] > 0) {
+				return 2;
+			}
+			switch(tipos[param]) {
+			case "int": 
+			case "Integer":
+			case "double":
+			case "Double":
+			case "float":
+			case "Float":
+			case "long":
+			case "Long":
+			case "short":
+			case "Short":
+			case "BigInteger":
+			case "byte":
+			case "Byte":
+			case "Number":
+				break;
+			case "String":
+			case "char":
+			case "Char":
+			default:	// Si es String, char, Char o algun tipo no mencionado -> error
+				return 3;	
+			}
+		}
+		
 		return 0;
 	}
 
@@ -335,8 +373,8 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	private String valoresParametros() {
 		String resultado = "";
 
-		int num = this.camposVE.length;
-		if(this.vueltaAtras) {
+		int num = camposVE.length;
+		if(vueltaAtras) {
 			// En caso de vuelta atras no se tiene en cuenta el campo para la
 			// estimacion de cota
 			num--;
@@ -346,7 +384,7 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 			if (i != 0) {
 				resultado = resultado + ", ";
 			}
-			resultado = resultado + this.camposVE[i].getText();
+			resultado = resultado + camposVE[i].getText();
 		}
 		
 		return resultado;
@@ -371,18 +409,18 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_ENTER) {
-			if(this.botonesSeleccion[0].isSelected()) {
-				accionAceptar(true);
-			}else if(this.botonesSeleccion[1].isSelected()) {
-				accionAceptar(false);
-			}else {
-				accionCancelar();
-			}
-		} else if (code == KeyEvent.VK_ESCAPE) {
-			accionCancelar();
-		}
+//		int code = e.getKeyCode();
+//		if (code == KeyEvent.VK_ENTER) {
+//			if(botonesSeleccion[0].isSelected()) {
+//				accionAceptar(true);
+//			}else if(botonesSeleccion[1].isSelected()) {
+//				accionAceptar(false);
+//			}else {
+//				accionCancelar();
+//			}
+//		} else if (code == KeyEvent.VK_ESCAPE) {
+//			accionCancelar();
+//		}
 	}
 
 	/**
@@ -448,16 +486,16 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (e.getSource() == this.aceptar) {
-			if(this.botonesSeleccion[0].isSelected()) {
-				accionAceptar(true);
-			}else if(this.botonesSeleccion[1].isSelected()) {
-				accionAceptar(false);
-			}else {
-				accionCancelar();
-			}
-		} else if (e.getSource() == this.cancelar) {
-			accionCancelar();
-		}
+//		if (e.getSource() == aceptar) {
+//			if(botonesSeleccion[0].isSelected()) {
+//				accionAceptar(true);
+//			}else if(botonesSeleccion[1].isSelected()) {
+//				accionAceptar(false);
+//			}else {
+//				accionCancelar();
+//			}
+//		} else if (e.getSource() == cancelar) {
+//			accionCancelar();
+//		}
 	}
 }

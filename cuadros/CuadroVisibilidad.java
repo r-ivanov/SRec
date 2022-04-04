@@ -449,6 +449,18 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 						for (int indiceEntrada = 0; indiceEntrada < metodo.getNumParametrosE(); indiceEntrada++) {
 							metodoAlgoritmo.setVisibilidadEntrada(metodo.getVisibilidadE(indiceEntrada),
 											indiceEntrada);
+							if(metodoAlgoritmo.getTecnica() == MetodoAlgoritmo.TECNICA_AABB) {
+								int indiceSolActual = metodoAlgoritmo.getSolParcial();
+								int indiceSolMejor = metodoAlgoritmo.getMejorSol();
+								int indiceCota = metodoAlgoritmo.getCota();
+								if(indiceEntrada == indiceSolActual) {
+									Conf.solActualVisible = metodo.getVisibilidadE(indiceEntrada);
+								}else if(indiceEntrada == indiceSolMejor) {
+									Conf.solMejorVisible = metodo.getVisibilidadE(indiceEntrada);
+								}else if(indiceEntrada == indiceCota) {
+									Conf.cotaVisible = metodo.getVisibilidadE(indiceEntrada);
+								}
+							}
 						}
 						for (int indiceSalida = 0; indiceSalida < metodo.getNumParametrosS(); indiceSalida++) {
 							metodoAlgoritmo.setVisibilidadSalida(metodo.getVisibilidadS(indiceSalida),

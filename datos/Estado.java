@@ -30,7 +30,7 @@ public class Estado {
 	private boolean RyP = false; // True = RyP, False = Vuelta Atras
 	private Number solParcial = null;
 	private Number mejorSolucion = null;
-	private Number cota = -1;
+	private Number cota = null;  
 
 	/**
 	 * Constructor: genera un nuevo estado vacío

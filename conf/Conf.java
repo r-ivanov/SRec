@@ -67,6 +67,11 @@ public class Conf {
 	public static boolean ajustarVistaGlobal = true;
 
 	public static boolean visualizacionDinamica = true;
+	
+	// Opciones para mostrar o no las lineas de valores para metodos AABB
+	public static boolean solActualVisible = true;
+	public static boolean solMejorVisible = true;
+	public static boolean cotaVisible= true;
 
 	// *************************************************** Colores
 
