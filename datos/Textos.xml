@@ -567,6 +567,11 @@
 		<T valor="La exportaci[oacute]n de la visualizaci[oacute]n se ha realizado correctamente" idioma="es" id="INFO_EXPCORRECT"/>
 		<T valor="The exportation of the visualization finished correctly" idioma="en" id="INFO_EXPCORRECT"/>
 		
+		<T valor="Proceso realizado con errores" idioma="es" id="INFO_EXPINCORRECTT"/>
+		<T valor="Process finished with errors" idioma="en" id="INFO_EXPINCORRECTT"/>
+		<T valor="La exportaci[oacute]n de la visualizaci[oacute]n no se ha podido realizar correctamente" idioma="es" id="INFO_EXPINCORRECT"/>
+		<T valor="The exportation of the visualization finished with errors" idioma="en" id="INFO_EXPINCORRECT"/>
+		
 		<T valor="SRec ha cambiado el idioma correctamente." idioma="es" id="INFO_IDIOMA"/>
 		<T valor="SRec has changed the language successfully" idioma="en" id="INFO_IDIOMA"/>
 		

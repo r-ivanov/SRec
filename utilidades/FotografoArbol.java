@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import opciones.GestorOpciones;
 import opciones.OpcionFicherosRecientes;
 import opciones.OpcionTipoGrafico;
+import paneles.PanelValoresGlobalesAABB;
+import paneles.PanelValoresRamaAABB;
 
 import org.jgraph.JGraph;
 
@@ -259,12 +261,32 @@ public class FotografoArbol {
 			this.gOpciones.setOpcion(this.ofr, 2);
 
 			final String path = this.ficheroSalida[0] + this.ficheroSalida[1];
-
-			Fotografo.guardarFoto(c, Fotografo.numFormato(path), path);
-
-			new CuadroInformacion(jFrame, Texto.get("INFO_EXPCORRECTT",
-					Conf.idioma), Texto.get("INFO_EXPCORRECT", Conf.idioma),
-					550, 100);
+			File f = null;
+			String tipo = this.ficheroSalida[1].substring(this.ficheroSalida[1].indexOf('.')+1);
+			if(c instanceof PanelValoresGlobalesAABB) {
+				f = ((PanelValoresGlobalesAABB) c).saveChartAs(path, tipo);
+				if(f == null) {
+					new CuadroInformacion(
+							jFrame, 
+							Texto.get("INFO_EXPINCORRECTT", Conf.idioma), 
+							Texto.get("INFO_EXPINCORRECT", Conf.idioma),
+							550, 100);
+				}
+			}else if(c instanceof PanelValoresRamaAABB) {
+				f = ((PanelValoresRamaAABB) c).saveChartAs(path, tipo);
+				if(f == null) {
+					new CuadroInformacion(
+							jFrame, 
+							Texto.get("INFO_EXPINCORRECTT", Conf.idioma), 
+							Texto.get("INFO_EXPINCORRECT", Conf.idioma),
+							550, 100);
+				}
+			}else {
+				Fotografo.guardarFoto(c, Fotografo.numFormato(path), path);
+				new CuadroInformacion(jFrame, Texto.get("INFO_EXPCORRECTT",
+						Conf.idioma), Texto.get("INFO_EXPCORRECT", Conf.idioma),
+						550, 100);
+			}
 		}
 
 	}

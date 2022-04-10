@@ -383,16 +383,18 @@ public class PanelValoresRamaAABB extends JPanel {
 	}
 	
 	public File saveChartAs(String name, String type) {
-		File imageFile = new File(name + "." + type.toLowerCase());
+		File imageFile = new File(name);
 		int width = 640;
 		int height = 480;
 		 
 		try {
 			if(type.equalsIgnoreCase("png")) {
 				ChartUtilities.saveChartAsPNG(imageFile, chart, width, height);
-			}else if(type.equalsIgnoreCase("jpeg")) {
+			}else if(type.equalsIgnoreCase("jpeg") || type.equalsIgnoreCase("jpg")) {
 				ChartUtilities.saveChartAsJPEG(imageFile, chart, width, height);
-			} 
+			} else {
+				return null;
+			}
 		} catch (IOException ex) {
 		    System.err.println(ex);
 		}

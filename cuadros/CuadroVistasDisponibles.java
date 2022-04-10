@@ -54,6 +54,11 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 
 	private JGraph grafo;
 	private int numeroVista;
+	
+	private boolean vistaValoresGlob = false;
+	private boolean vistaValoresRama = false;
+	private PanelValoresGlobalesAABB panelValGlob;
+	private PanelValoresRamaAABB panelValRama;
 
 	/**
 	 * Constructor: genera un nuevo cuadro de opción que permite exportar el
@@ -166,8 +171,22 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 	private void getValores() {
 		for (int i = 0; i < this.botonesVistas.length; i++) {
 			if (this.botonesVistas[i].isSelected()) {
-                this.pv.setVistaActiva(botonesVistas[i].getText());
-                this.grafo = (JGraph) this.pv.getGrafoPorNombre(this.botonesVistas[i].getText());
+				String nombreVista = this.botonesVistas[i].getText();
+                this.pv.setVistaActiva(nombreVista);
+
+                // En caso de que la vista no sea un grafo
+                String vistaGlobalVal = Texto.get("V_GLOBAL_VAL", Conf.idioma);
+                String vistaRamaVal = Texto.get("V_RAMA_VAL", Conf.idioma);
+            	if(nombreVista.equalsIgnoreCase(vistaGlobalVal)) {
+            		panelValGlob = (PanelValoresGlobalesAABB) pv.getPanelAlgoritmo().getPanelPorNombre(nombreVista);
+            		vistaValoresGlob = true;
+            	}else if(nombreVista.equalsIgnoreCase(vistaRamaVal)){
+            		panelValRama = (PanelValoresRamaAABB) pv.getPanelAlgoritmo().getPanelPorNombre(nombreVista);
+            		vistaValoresRama = true;
+            	}else {
+                	this.grafo = (JGraph) this.pv.getGrafoPorNombre(nombreVista);
+                }
+                
 				this.numeroVista = i;				
 			}
 		}
@@ -178,26 +197,40 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 	 */
 	private void accion() {
 		getValores();
-		this.dialogo.setVisible(false);
+		dialogo.setVisible(false);
 		if (this.tipoExportacion == 1) {
 			if (Conf.fichero_log) {
 				Logger.log_write("Guardar GIF: capturarAnimacionGIF");
 			}
-			new FotografoArbol().capturarAnimacionGIF(this.grafo,
-					this.numeroVista);
-
+			if(vistaValoresGlob) {
+				//new FotografoArbol().capturarAnimacionGIF(panelValGlob, numeroVista);
+			}else if(vistaValoresRama) {
+				//new FotografoArbol().capturarAnimacionGIF(panelValRama, numeroVista);
+			}else {
+				new FotografoArbol().capturarAnimacionGIF(grafo, numeroVista);
+			}
 		} else if (this.tipoExportacion == 2) {
 			if (Conf.fichero_log) {
 				Logger.log_write("Guardar GIF: hacerCapturasPaso");
 			}
-			new FotografoArbol()
-					.hacerCapturasPaso(this.grafo, this.numeroVista);
+			if(vistaValoresGlob) {
+				//new FotografoArbol().hacerCapturasPaso(panelValGlob, numeroVista);
+			}else if(vistaValoresRama) {
+				//new FotografoArbol().hacerCapturasPaso(panelValRama, numeroVista);
+			}else {
+				new FotografoArbol().hacerCapturasPaso(grafo, numeroVista);
+			}
 		} else if (this.tipoExportacion == 3) {
 			if (Conf.fichero_log) {
 				Logger.log_write("Guardar GIF: hacerCapturaUnica");
 			}
-			new FotografoArbol()
-					.hacerCapturaUnica(this.grafo, this.numeroVista);
+			if(vistaValoresGlob) {
+				new FotografoArbol().hacerCapturaUnica(panelValGlob, numeroVista);
+			}else if(vistaValoresRama) {
+				new FotografoArbol().hacerCapturaUnica(panelValRama, numeroVista);
+			}else {
+				new FotografoArbol().hacerCapturaUnica(grafo, numeroVista);
+			}
 		}
 
 	}
