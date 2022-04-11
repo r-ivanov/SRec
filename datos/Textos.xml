@@ -749,14 +749,16 @@
 		<T valor="Load configuration" idioma="en" id="CA_CARCONF"/>				
 		<T valor="Guardar configuraci[oacute]n" idioma="es" id="CA_GUARCONF"/>
 		<T valor="Save configuration" idioma="en" id="CA_GUARCONF"/>
-		<T valor="Exportar animaci[oacute]n como GIF89" idioma="es" id="CA_GUARDEXPORTGIF"/>
-		<T valor="Export animation as GIF89" idioma="en" id="CA_GUARDEXPORTGIF"/>
+		<T valor="Exportar animaci[oacute]n como GIF" idioma="es" id="CA_GUARDEXPORTGIF"/>
+		<T valor="Export animation as GIF" idioma="en" id="CA_GUARDEXPORTGIF"/>
 		<T valor="Exportar animaci[oacute]n como cat[aacute]logo de im[aacute]genes" idioma="es" id="CA_GUARDEXPORTMULTGIF"/>
 		<T valor="Export animation as image catalogue" idioma="en" id="CA_GUARDEXPORTMULTGIF"/>
 		<T valor="Exportar Capturas de Ejecuciones" idioma="es" id="CA_GUARDEXPORTEJECUCIONES"/>
 		<T valor="Export Executions Captures" idioma="en" id="CA_GUARDEXPORTEJECUCIONES"/>
 		<T valor="Exportar captura del [aacute]rbol actual" idioma="es" id="CA_GUARDEXPORT1GIF"/>
-		<T valor="Export current tree capture" idioma="en" id="CA_GUARDEXPORT1GIF"/>		
+		<T valor="Export current tree capture" idioma="en" id="CA_GUARDEXPORT1GIF"/>	
+		<T valor="Exportar captura de vista" idioma="es" id="CA_GUARDEXPORTVISTA"/>
+		<T valor="Export current view as a capture" idioma="en" id="CA_GUARDEXPORTVISTA"/>		
 		<T valor="Guardar traza" idioma="es" id="CA_GUARTRAZA"/>
 		<T valor="Save trace" idioma="en" id="CA_GUARTRAZA"/>
 		<T valor="Guardar nueva clase" idioma="es" id="CA_GNUEVACLASE"/>

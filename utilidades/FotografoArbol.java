@@ -78,7 +78,7 @@ public class FotografoArbol {
 			this.ficheroSalida[0] = this.ofr.getDirExport();
 			this.ficheroSalida = SelecDireccion.cuadroAbrirFichero(
 					this.ficheroSalida[0],
-					Texto.get("CA_GUARDEXPORT1GIF", Conf.idioma), null,
+					Texto.get("CA_GUARDEXPORTVISTA", Conf.idioma), null,
 					extensionesImagen, definicionesArchivos, 0);
 
 			// *1* Comprobarmos que el fichero existe
