@@ -119,9 +119,9 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 			}
 		}
 
-		if ((this.vistasDisponibles.length >= 4) && (this.tipoExportacion < 3)) {
-			this.botonesVistas[3].setEnabled(false);
-		}
+//		if ((this.vistasDisponibles.length >= 4) && (this.tipoExportacion < 3)) {
+//			this.botonesVistas[3].setEnabled(false);
+//		}
 
 		panelVistas.setBorder(new TitledBorder(Texto.get("CVD_SELECVISTA",
 				Conf.idioma)));
@@ -203,9 +203,9 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 				Logger.log_write("Guardar GIF: capturarAnimacionGIF");
 			}
 			if(vistaValoresGlob) {
-				//new FotografoArbol().capturarAnimacionGIF(panelValGlob, numeroVista);
+				new FotografoArbol().capturarAnimacionGIF(panelValGlob, numeroVista);
 			}else if(vistaValoresRama) {
-				//new FotografoArbol().capturarAnimacionGIF(panelValRama, numeroVista);
+				new FotografoArbol().capturarAnimacionGIF(panelValRama, numeroVista);
 			}else {
 				new FotografoArbol().capturarAnimacionGIF(grafo, numeroVista);
 			}

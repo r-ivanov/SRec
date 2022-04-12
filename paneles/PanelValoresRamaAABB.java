@@ -32,6 +32,7 @@ import conf.Conf;
 import datos.MetodoAlgoritmo;
 import datos.RegistroActivacion;
 import utilidades.Arrays;
+import utilidades.Fotografo;
 import utilidades.Texto;
 import ventanas.Ventana;
 
@@ -57,6 +58,9 @@ public class PanelValoresRamaAABB extends JPanel {
 	
 	private JFreeChart chart;
 	private JPanel chartPanel;
+	private XYSeriesCollection dataset;
+	private int width;
+	private int height;
 	
 	private static final Shape circle = new Ellipse2D.Double(-3, -3, 6, 6);
 	
@@ -124,8 +128,8 @@ public class PanelValoresRamaAABB extends JPanel {
 	
 	private void initAndShow() {
         chartPanel = createChartPanel();
-        int width = (int) Math.round(getWidth()*0.5);
-        int height = (int) Math.round(getHeight()*0.9);
+        width = (int) Math.round(getWidth()*0.5);
+        height = (int) Math.round(getHeight()*0.9);
         chartPanel.setPreferredSize(new Dimension(width, height));
         chartPanel.updateUI();
 		
@@ -136,7 +140,7 @@ public class PanelValoresRamaAABB extends JPanel {
 	}
 	
 	private JPanel createChartPanel() {
-		XYSeriesCollection dataset = createDataset();
+		dataset = createDataset();
 
 		String chartTitle = Texto.get("V_RAMA_VAL", Conf.idioma);
 	    String xAxisLabel = Texto.get("PVG_NODOS", Conf.idioma);
@@ -384,20 +388,42 @@ public class PanelValoresRamaAABB extends JPanel {
 	
 	public File saveChartAs(String name, String type) {
 		File imageFile = new File(name);
-		int width = 640;
-		int height = 480;
 		 
 		try {
 			if(type.equalsIgnoreCase("png")) {
 				ChartUtilities.saveChartAsPNG(imageFile, chart, width, height);
 			}else if(type.equalsIgnoreCase("jpeg") || type.equalsIgnoreCase("jpg")) {
 				ChartUtilities.saveChartAsJPEG(imageFile, chart, width, height);
-			} else {
+			}else if(type.equalsIgnoreCase("gif")){
+				int[] dim = {width, height};
+				Fotografo.guardarFoto(chartPanel, 1, name, dim);
+			}else {
 				return null;
 			}
 		} catch (IOException ex) {
 		    System.err.println(ex);
 		}
 		return imageFile;
+	}
+	
+	public void saveChartAsGIF(String name) {
+		int numDataPoint = 0;
+		int numFotos = 0;
+		List<XYSeries> series = dataset.getSeries();
+		while(numDataPoint >= 0) {
+			if(series != null && series.size() > 0) {
+				numDataPoint = series.get(0).getItemCount() - 1;
+				Fotografo.guardarFoto(chartPanel, numDataPoint);
+				numFotos++;
+				for(XYSeries serie:series) {
+					serie.remove(numDataPoint);
+				}
+				numDataPoint--;
+			}else {
+				break;
+			}
+		}
+		
+		Fotografo.crearGIFAnimado(numFotos, name, false);
 	}
 }

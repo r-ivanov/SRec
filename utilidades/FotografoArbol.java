@@ -524,105 +524,112 @@ public class FotografoArbol {
 			this.ofr.setDirExport(this.ficheroSalida[0]);
 			this.gOpciones.setOpcion(this.ofr, 2);
 
-			Ventana.thisventana.deshabilitarOpcionesVentana();
+			//Ventana.thisventana.deshabilitarOpcionesVentana();
 
 			final String path = this.ficheroSalida[0] + this.ficheroSalida[1];
-			final int numeroVistaF = numeroVista;
+			
+			if(c instanceof PanelValoresGlobalesAABB) {
+				((PanelValoresGlobalesAABB) c).saveChartAsGIF(path);
+			}else if(c instanceof PanelValoresRamaAABB) {
+				((PanelValoresRamaAABB) c).saveChartAsGIF(path);
+			}else {
+				final int numeroVistaF = numeroVista;
 
-			new Thread() {
-				@Override
-				public synchronized void run() {
-					final boolean estabanArbolesColapsados = Conf.mostrarArbolColapsado;
+				new Thread() {
+					@Override
+					public synchronized void run() {
+						final boolean estabanArbolesColapsados = Conf.mostrarArbolColapsado;
 
-					Conf.mostrarArbolColapsado = false;
+						Conf.mostrarArbolColapsado = false;
 
-					GestorTrazaExportacion gte = new GestorTrazaExportacion(
-							Ventana.thisventana, numeroVistaF);
-					JGraph g = gte.grafoEstadoActual();
-					int[] dimGrafo = new int[2];
-					dimGrafo[0] = gte.getAncho();
-					dimGrafo[1] = gte.getAlto();
+						GestorTrazaExportacion gte = new GestorTrazaExportacion(
+								Ventana.thisventana, numeroVistaF);
+						JGraph g = gte.grafoEstadoActual();
+						int[] dimGrafo = new int[2];
+						dimGrafo[0] = gte.getAncho();
+						dimGrafo[1] = gte.getAlto();
 
-					Fotografo.guardarFoto(g, 0);
+						Fotografo.guardarFoto(g, 0);
 
-					int numFotos = 1;
+						int numFotos = 1;
 
-					int x = 0;
+						int x = 0;
 
-					final JFrame jf = new JFrame();
-					final JPanel panel = new JPanel();
-					jf.setSize(10, 10);
-					jf.setLocation(0, 0);
-					jf.setResizable(false);
+						final JFrame jf = new JFrame();
+						final JPanel panel = new JPanel();
+						jf.setSize(10, 10);
+						jf.setLocation(0, 0);
+						jf.setResizable(false);
 
-					final int numEstados = Ventana.thisventana.getTraza()
-							.getNumNodos() * 2;
+						final int numEstados = Ventana.thisventana.getTraza()
+								.getNumNodos() * 2;
 
-					final CuadroProgreso cp = new CuadroProgreso(
-							Ventana.thisventana, Texto.get("CP_ESPERE",
-									Conf.idioma), Texto.get("CP_PROCES",
-									Conf.idioma), 0);
+						final CuadroProgreso cp = new CuadroProgreso(
+								Ventana.thisventana, Texto.get("CP_ESPERE",
+										Conf.idioma), Texto.get("CP_PROCES",
+										Conf.idioma), 0);
 
-					while (!gte.finalTraza()) {
-						if (x != 0) {
-							gte.avanzarTraza();
-						}
-
-						g = gte.grafoEstadoActual();
-						g.repaint();
-						g.updateUI();
-						final JGraph gg = g;
-
-						new Thread() {
-							@Override
-							public void run() {
-								jf.setVisible(true);
-								panel.add(gg);
-								panel.updateUI();
-
-								jf.setContentPane(panel);
+						while (!gte.finalTraza()) {
+							if (x != 0) {
+								gte.avanzarTraza();
 							}
-						}.start();
 
-						try {
-							this.wait(1000);
-						} catch (java.lang.InterruptedException ie) {
-						}
-						System.gc();
-						Fotografo.guardarFoto(g, numFotos);
-						numFotos++;
+							g = gte.grafoEstadoActual();
+							g.repaint();
+							g.updateUI();
+							final JGraph gg = g;
 
-						final int xx = x;
-						new Thread() {
-							@Override
-							public void run() {
-								if (cp != null) {
-									cp.setValores(
-											Texto.get("CP_PROCES", Conf.idioma),
-											(int) (((xx + 1.0) / numEstados) * 100.0));
+							new Thread() {
+								@Override
+								public void run() {
+									jf.setVisible(true);
+									panel.add(gg);
+									panel.updateUI();
+
+									jf.setContentPane(panel);
 								}
+							}.start();
+
+							try {
+								this.wait(1000);
+							} catch (java.lang.InterruptedException ie) {
 							}
-						}.start();
+							System.gc();
+							Fotografo.guardarFoto(g, numFotos);
+							numFotos++;
 
-						x++;
+							final int xx = x;
+							new Thread() {
+								@Override
+								public void run() {
+									if (cp != null) {
+										cp.setValores(
+												Texto.get("CP_PROCES", Conf.idioma),
+												(int) (((xx + 1.0) / numEstados) * 100.0));
+									}
+								}
+							}.start();
 
+							x++;
+
+						}
+						if (cp != null) {
+							cp.cerrar();
+						}
+
+						jf.setVisible(false);
+
+						Conf.mostrarArbolColapsado = estabanArbolesColapsados;
+
+						Fotografo.crearGIFAnimado(numFotos, path, gifPila);
+						gifPila = false;
+						Ventana.thisventana.habilitarOpcionesVentana();
+						new CuadroInformacion(Ventana.thisventana, Texto.get(
+								"INFO_EXPCORRECTT", Conf.idioma), Texto.get(
+								"INFO_EXPCORRECT", Conf.idioma), 550, 100);
 					}
-					if (cp != null) {
-						cp.cerrar();
-					}
-
-					jf.setVisible(false);
-
-					Conf.mostrarArbolColapsado = estabanArbolesColapsados;
-
-					Fotografo.crearGIFAnimado(numFotos, path, gifPila);
-					gifPila = false;
-					Ventana.thisventana.habilitarOpcionesVentana();
-					new CuadroInformacion(Ventana.thisventana, Texto.get(
-							"INFO_EXPCORRECTT", Conf.idioma), Texto.get(
-							"INFO_EXPCORRECT", Conf.idioma), 550, 100);
-				}
-			}.start();
+				}.start();
+			}
 		}
 	}
 }
