@@ -214,9 +214,9 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 				Logger.log_write("Guardar GIF: hacerCapturasPaso");
 			}
 			if(vistaValoresGlob) {
-				//new FotografoArbol().hacerCapturasPaso(panelValGlob, numeroVista);
+				new FotografoArbol().hacerCapturasPaso(panelValGlob, numeroVista);
 			}else if(vistaValoresRama) {
-				//new FotografoArbol().hacerCapturasPaso(panelValRama, numeroVista);
+				new FotografoArbol().hacerCapturasPaso(panelValRama, numeroVista);
 			}else {
 				new FotografoArbol().hacerCapturasPaso(grafo, numeroVista);
 			}

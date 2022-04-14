@@ -29,6 +29,8 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.util.ShapeUtilities;
 
 import conf.Conf;
+import cuadros.CuadroInformacion;
+import cuadros.CuadroProgreso;
 import datos.MetodoAlgoritmo;
 import datos.RegistroActivacion;
 import utilidades.Arrays;
@@ -409,9 +411,27 @@ public class PanelValoresRamaAABB extends JPanel {
 	public void saveChartAsGIF(String name) {
 		int numDataPoint = 0;
 		int numFotos = 0;
-		List<XYSeries> series = dataset.getSeries();
+		List<XYSeries> series = null;
+		if(dataset != null) {
+			series = dataset.getSeries();
+		}
+		int total;
+		if(series != null && series.size() > 0) {
+			total = series.size();
+		}else {
+			total = 0;
+		}
+		CuadroProgreso cp = new CuadroProgreso(
+				Ventana.thisventana, Texto.get("CP_ESPERE",
+						Conf.idioma), Texto.get("CP_PROCES",
+						Conf.idioma), (numFotos*100)/total);
 		while(numDataPoint >= 0) {
 			if(series != null && series.size() > 0) {
+				cp.setValores(
+						Texto.get("CP_PROCES",
+								Conf.idioma),
+						(int) (numFotos*100)/total);
+				
 				numDataPoint = series.get(0).getItemCount() - 1;
 				Fotografo.guardarFoto(chartPanel, numDataPoint);
 				numFotos++;
@@ -423,7 +443,58 @@ public class PanelValoresRamaAABB extends JPanel {
 				break;
 			}
 		}
-		
+		visualizar();
 		Fotografo.crearGIFAnimado(numFotos, name, false);
+		if (cp != null) {
+			cp.cerrar();
+		}
+		new CuadroInformacion(Ventana.thisventana, Texto.get(
+				"INFO_EXPCORRECTT", Conf.idioma), Texto.get(
+				"INFO_EXPCORRECT", Conf.idioma), 550, 100);
+	}
+	
+	public void saveChartAsCapturasAnimacion(String name, int type) {
+		int numDataPoint = 0;
+		int numFotos = 0;
+		List<XYSeries> series = null;
+		if(dataset != null) {
+			series = dataset.getSeries();
+		}
+		int total;
+		if(series != null && series.size() > 0) {
+			total = series.size();
+		}else {
+			total = 0;
+		}
+		CuadroProgreso cp = new CuadroProgreso(
+				Ventana.thisventana, Texto.get("CP_ESPERE",
+						Conf.idioma), Texto.get("CP_PROCES",
+						Conf.idioma), (numFotos*100)/total);
+		
+		while(numDataPoint >= 0) {
+			if(series != null && series.size() > 0) {
+				cp.setValores(
+						Texto.get("CP_PROCES",
+								Conf.idioma),
+						(int) (numFotos*100)/total);
+				
+				numDataPoint = series.get(0).getItemCount() - 1;
+				Fotografo.guardarFoto(chartPanel, name, type, numDataPoint);
+				numFotos++;
+				for(XYSeries serie:series) {
+					serie.remove(numDataPoint);
+				}
+				numDataPoint--;
+			}else {
+				break;
+			}
+		}
+		visualizar();
+		if (cp != null) {
+			cp.cerrar();
+		}
+		new CuadroInformacion(Ventana.thisventana, Texto.get(
+				"INFO_EXPCORRECTT", Conf.idioma), Texto.get(
+				"INFO_EXPCORRECT", Conf.idioma), 550, 100);
 	}
 }
