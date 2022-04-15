@@ -177,14 +177,14 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 			}
 			
 			camposVE[i].setHorizontalAlignment(SwingConstants.CENTER);
+			camposVE[i].addKeyListener(this);
 			
 			panelIndices.add(camposVE[i], BorderLayout.WEST);
 			panelIndices.add(mensajes, BorderLayout.CENTER);
 			
 			panelBotones.add(panelIndices);
 			panelBotones.addKeyListener(this);
-		}
-		
+		}		
 		
 		panelCuadro.add(panelBotones, BorderLayout.NORTH);
 		panelCuadro.setBorder(
@@ -299,7 +299,7 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 					return 1;
 				}
 			}else {
-				if(i < 2) {
+				if(i < camposVE.length - 1) {
 					return 4;
 				}else {
 					// Si el campo para la estimacion de cota está vacio 
@@ -320,6 +320,13 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 								== 
 								Integer.parseInt(camposVE[j].getText()))) {
 					return 5;
+				}else {
+					if(i < camposVE.length - 1 && j < camposVE.length - 1) {
+						if(!camposVE[i].getText().equalsIgnoreCase("") 
+								&& Integer.parseInt(camposVE[i].getText()) == Integer.parseInt(camposVE[j].getText())) {
+							return 5;
+						}
+					}
 				}
 			}
 			// Comprobar tambien con this.e
@@ -402,7 +409,7 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	public void keyPressed(KeyEvent e) {
 
 	}
-
+	
 	/**
 	 * Gestiona los eventos de teclado
 	 * 
@@ -411,18 +418,108 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-//		int code = e.getKeyCode();
-//		if (code == KeyEvent.VK_ENTER) {
-//			if(botonesSeleccion[0].isSelected()) {
-//				accionAceptar(true);
-//			}else if(botonesSeleccion[1].isSelected()) {
-//				accionAceptar(false);
-//			}else {
-//				accionCancelar();
-//			}
-//		} else if (code == KeyEvent.VK_ESCAPE) {
-//			accionCancelar();
-//		}
+		Object fuente = e.getSource();
+		int code = e.getKeyCode();
+		int numParam = metodo.getNumeroParametros();
+		
+		switch(code) {
+		case KeyEvent.VK_ENTER:
+			if(botonesSeleccion[0].isSelected()) {
+				accionAceptar(true);
+			} else if(botonesSeleccion[1].isSelected()) {
+				accionAceptar(false);
+			} else {
+				accionCancelar();
+			}
+			break;
+		case KeyEvent.VK_ESCAPE:
+			accionCancelar();
+			break;
+		case KeyEvent.VK_DOWN:
+			if(fuente == botonesSeleccion[0]) {
+				botonesSeleccion[1].requestFocus();
+			}else if(fuente == botonesSeleccion[1]) {
+				camposVE[0].requestFocus();
+			}else if(fuente == camposVE[0]) {
+				camposVE[1].requestFocus();
+			}else if(fuente == camposVE[1]) {
+				camposVE[2].requestFocus();
+			}
+			break;
+		case KeyEvent.VK_UP:
+			if(fuente == botonesSeleccion[1]) {
+				botonesSeleccion[0].requestFocus();
+			}else if(fuente == camposVE[0]) {
+				botonesSeleccion[1].requestFocus();
+			}else if(fuente == camposVE[1]) {
+				camposVE[0].requestFocus();
+			}else if(fuente == camposVE[2]) {
+				camposVE[1].requestFocus();
+			}
+			break;
+		case KeyEvent.VK_RIGHT:
+		case KeyEvent.VK_LEFT:
+		case KeyEvent.VK_BACK_SPACE:
+			break;
+		default:
+			if(fuente == camposVE[0]) {
+				if(numParam > 9) {
+					// no hacemos nada
+				}else {
+					if (camposVE[0].getText().length() != 0) { 
+						try {
+							int x = Integer.parseInt(camposVE[0].getText());
+							
+							// Comprobar que los indices sean validos
+							if (x < 0 || x >= numParam) {
+								camposVE[0].requestFocus();
+							} else {
+								// Comprobar que la dimension es 0
+								int dim = -1;
+								dim = metodo.getDimParametro(x);
+								if(dim > 0) {
+									camposVE[0].requestFocus();
+								} else if(dim != -1){
+									camposVE[1].requestFocus();
+								}
+							}
+							
+						} catch (Exception ex) {
+							camposVE[0].requestFocus();
+						}
+					}
+				}
+
+			}else if(fuente == camposVE[1]) {
+				if(numParam > 9) {
+					// no hacemos nada
+				}else {
+					if (camposVE[1].getText().length() != 0) { 
+						try {
+							int x = Integer.parseInt(camposVE[1].getText());
+							
+							// Comprobar que los indices sean validos
+							if (x < 0 || x >= numParam) {
+								camposVE[1].requestFocus();
+							} else {
+								// Comprobar que la dimension es 0
+								int dim = -1;
+								dim = metodo.getDimParametro(x);
+								if(dim > 0) {
+									camposVE[1].requestFocus();
+								} else if(dim != -1){
+									camposVE[2].requestFocus();
+								}
+							}
+							
+						} catch (Exception ex) {
+							camposVE[1].requestFocus();
+						}
+					}
+				}
+			}
+		}
+
 	}
 
 	/**
