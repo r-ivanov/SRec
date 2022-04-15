@@ -464,7 +464,8 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		default:
 			if(fuente == camposVE[0]) {
 				if(numParam > 9) {
-					// no hacemos nada
+					// No hacemos nada ya que se genera ambiguedad
+					// ¿se se ha puesto el digito 1 y este es un parametro valido se procede o esperas al segundo digito?
 				}else {
 					if (camposVE[0].getText().length() != 0) { 
 						try {
@@ -492,7 +493,8 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 
 			}else if(fuente == camposVE[1]) {
 				if(numParam > 9) {
-					// no hacemos nada
+					// No hacemos nada ya que se genera ambiguedad
+					// ¿se se ha puesto el digito 1 y este es un parametro valido se procede o esperas al segundo digito?
 				}else {
 					if (camposVE[1].getText().length() != 0) { 
 						try {
