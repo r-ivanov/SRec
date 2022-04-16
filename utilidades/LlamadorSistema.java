@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import conf.Conf;
 
@@ -76,10 +77,17 @@ public class LlamadorSistema {
 	 * 				se comprueba aquí que son números
 	 * 
 	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public static List<String> getErrorDetallado(String[] comando) throws IOException { 
+	public static List<String> getErrorDetallado(String[] comando) throws IOException, InterruptedException { 
 		Process proceso = Runtime.getRuntime().exec(comando);
-		String retornoString = "";		
+		
+		String retornoString = "";
+        if (!proceso.waitFor(30, TimeUnit.SECONDS)) {
+        	proceso.destroy();
+            //retornoString += "Compile Timeout Occurred";
+        }
+				
 		List<String> listaRetorno = new ArrayList<String>();
 		int contador = 0;
 		

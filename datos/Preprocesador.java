@@ -298,6 +298,10 @@ public class Preprocesador extends Thread {
 					
 				} catch (IOException e1) {	
 					salidaCompletaCompilador = new ArrayList<String>();
+				} catch (InterruptedException e) {
+					// Se ha interumpido el compilado porque ha tardado demasiado, 
+					// posiblemente un loop infinito
+					salidaCompletaCompilador = new ArrayList<String>();
 				}
 
 				this.compilado = salidaCompilador.length() < 4;
