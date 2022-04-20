@@ -14,6 +14,8 @@ import conf.Conf;
  * Clase de utilidad que permite la ejecución de comandos del sistema.
  */
 public class LlamadorSistema {
+	
+	private static boolean procesoInterrumpido = false;
 
 	/**
 	 * Ejecuta el comando especificado. En Java 7, la llamada a Runtime.exec
@@ -81,21 +83,16 @@ public class LlamadorSistema {
 	 */
 	public static List<String> getErrorDetallado(String[] comando) throws IOException, InterruptedException { 
 		Process proceso = Runtime.getRuntime().exec(comando);
-		
+		procesoInterrumpido = false;
 		String retornoString = "";
-        if (!proceso.waitFor(30, TimeUnit.SECONDS)) {
+        if (!proceso.waitFor(15, TimeUnit.SECONDS)) {
         	proceso.destroy();
             //retornoString += "Compile Timeout Occurred";
+        	procesoInterrumpido = true;
         }
 				
 		List<String> listaRetorno = new ArrayList<String>();
 		int contador = 0;
-		
-        try {
-            proceso.waitFor();
-        }catch (InterruptedException ex) {
-        	
-        }
         
         BufferedReader br = new BufferedReader(new InputStreamReader(proceso.getInputStream()));
         while (br.ready()){
@@ -146,9 +143,19 @@ public class LlamadorSistema {
         retornoString = invertirTotalErrores(retornoString);
         listaRetorno.add(0, retornoString);
         proceso.destroy();// para evitar que salga el .class
+        
         return listaRetorno;
     } 
 	
+	/**
+	 * @return 
+	 * 		True = proceso interrumpido debido a que ha tardado mas de 15 segundos.
+	 * 		False = el proceso no se ha interrumpido
+	 */
+	public static boolean isProcesoInterrumpido() {
+		return procesoInterrumpido;
+	}
+
 	/**
 	 * Parsea una línea de la salida de errores
 	 * 
@@ -174,9 +181,15 @@ public class LlamadorSistema {
 			return array;
 		}else{		
 			if(auxLinea%3 == 0){
-				array = new String[3];
-				array = ParsearTipo0(aux);		
-				return array;
+				if(aux.contains("java:")) {
+					array = new String[3];
+					array = ParsearTipo0(aux);		
+					return array;
+				}else {
+					array = new String[2];
+					array = ParsearTipo0(aux);		
+					return array;
+				}
 			}else if(auxLinea%3 == 1){
 				array = new String[1];
 				array[0] = aux;
@@ -200,14 +213,23 @@ public class LlamadorSistema {
 	 * 		array = {fichero, linea, error}
 	 */
 	private static String[] ParsearTipo0(String aux){ 
-		int finRuta = aux.indexOf(".java") + 5;
-		String fichero = aux.substring(0,finRuta);
-		int finLinea = aux.indexOf(": ");
-		
-		String linea = aux.substring(finRuta+1,finLinea);
-		String error = aux.substring(finLinea+1, aux.length());
-		
-		String[] array = {fichero, linea, error};
+		String[] array;
+		if(aux.contains("java:")) {
+			int finRuta = aux.indexOf(".java") + 5;
+			String fichero = aux.substring(0,finRuta);
+			int finLinea = aux.indexOf(": ");
+			
+			String linea = aux.substring(finRuta+1,finLinea);
+			String error = aux.substring(finLinea+1, aux.length());
+			array = new String[3];
+			array[0] = fichero;
+			array[1] = linea;
+			array[2] = error;
+		}else {
+			array = new String[1];
+			array[0] = aux;
+		}
+
 		return array;
 	}
 	

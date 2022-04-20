@@ -463,60 +463,50 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 			break;
 		default:
 			if(fuente == camposVE[0]) {
-				if(numParam > 9) {
-					// No hacemos nada ya que se genera ambiguedad
-					// ¿se se ha puesto el digito 1 y este es un parametro valido se procede o esperas al segundo digito?
-				}else {
-					if (camposVE[0].getText().length() != 0) { 
-						try {
-							int x = Integer.parseInt(camposVE[0].getText());
-							
-							// Comprobar que los indices sean validos
-							if (x < 0 || x >= numParam) {
-								camposVE[0].requestFocus();
-							} else {
-								// Comprobar que la dimension es 0
-								int dim = -1;
-								dim = metodo.getDimParametro(x);
-								if(dim > 0) {
-									camposVE[0].requestFocus();
-								} else if(dim != -1){
-									camposVE[1].requestFocus();
-								}
-							}
-							
-						} catch (Exception ex) {
+				if (camposVE[0].getText().length() != 0) { 
+					try {
+						int x = Integer.parseInt(camposVE[0].getText());
+						
+						// Comprobar que los indices sean validos
+						if (x < 0 || x >= numParam) {
 							camposVE[0].requestFocus();
+						} else {
+							// Comprobar que la dimension es 0
+							int dim = -1;
+							dim = metodo.getDimParametro(x);
+							if(dim > 0) {
+								camposVE[0].requestFocus();
+							} else if(dim != -1){
+								camposVE[1].requestFocus();
+							}
 						}
+						
+					} catch (Exception ex) {
+						camposVE[0].requestFocus();
 					}
 				}
 
 			}else if(fuente == camposVE[1]) {
-				if(numParam > 9) {
-					// No hacemos nada ya que se genera ambiguedad
-					// ¿se se ha puesto el digito 1 y este es un parametro valido se procede o esperas al segundo digito?
-				}else {
-					if (camposVE[1].getText().length() != 0) { 
-						try {
-							int x = Integer.parseInt(camposVE[1].getText());
-							
-							// Comprobar que los indices sean validos
-							if (x < 0 || x >= numParam) {
-								camposVE[1].requestFocus();
-							} else {
-								// Comprobar que la dimension es 0
-								int dim = -1;
-								dim = metodo.getDimParametro(x);
-								if(dim > 0) {
-									camposVE[1].requestFocus();
-								} else if(dim != -1){
-									camposVE[2].requestFocus();
-								}
-							}
-							
-						} catch (Exception ex) {
+				if (camposVE[1].getText().length() != 0) { 
+					try {
+						int x = Integer.parseInt(camposVE[1].getText());
+						
+						// Comprobar que los indices sean validos
+						if (x < 0 || x >= numParam) {
 							camposVE[1].requestFocus();
+						} else {
+							// Comprobar que la dimension es 0
+							int dim = -1;
+							dim = metodo.getDimParametro(x);
+							if(dim > 0) {
+								camposVE[1].requestFocus();
+							} else if(dim != -1){
+								camposVE[2].requestFocus();
+							}
 						}
+						
+					} catch (Exception ex) {
+						camposVE[1].requestFocus();
 					}
 				}
 			}

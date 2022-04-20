@@ -1,15 +1,22 @@
 package datos;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 
 import opciones.GestorOpciones;
@@ -18,6 +25,8 @@ import opciones.OpcionFicherosRecientes;
 import opciones.OpcionMVJava;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import paneles.PanelCompilador;
 import toxml.Java2XML;
@@ -34,7 +43,6 @@ import ventanas.Ventana;
 import conf.Conf;
 import cuadros.CuadroError;
 import cuadros.CuadroErrorCompilacion;
-import cuadros.CuadroPreguntaSeleccMetodosDYV;
 import cuadros.CuadroPreguntaSeleccionVistasEspecificas;
 import cuadros.CuadroProgreso;
 import cuadros.ValoresParametros;
@@ -299,9 +307,153 @@ public class Preprocesador extends Thread {
 				} catch (IOException e1) {	
 					salidaCompletaCompilador = new ArrayList<String>();
 				} catch (InterruptedException e) {
-					// Se ha interumpido el compilado porque ha tardado demasiado, 
-					// posiblemente un loop infinito
 					salidaCompletaCompilador = new ArrayList<String>();
+				}
+				
+				boolean copiado = false;
+				HashSet<String> imports = null;
+				if(LlamadorSistema.isProcesoInterrumpido()) {
+					// Se ha interumpido el compilado porque ha tardado demasiado, 
+					// posiblemente un bucle infinito
+					
+					// Hacemos una copia del fichero, sobre el cual añadimos imports
+					
+					// Cambiar por otro XML parser
+					Java2XML.main(fichero[0] + fichero[1]);
+					documento = ManipulacionElement
+							.getDocumento(fichero[0] + ficheroxml);
+					// Cambiar por otro XML parser
+					
+					
+					if (documento == null) {
+						new CuadroError(vv, Texto.get("ERROR_ARCH",
+								Conf.idioma), Texto.get("ERROR_ANTIESCRIT",
+								Conf.idioma));
+						return;
+					}
+					
+					// Encontrar imports para añadir
+					imports = encontrarPosiblesImports(salidaCompilador);
+					if(imports != null) {
+						for(String imp: imports) {
+							//Intentar copiar archivo con ese nombre si existe a la carpeta imports
+							Path from = Paths.get(fichero[0], imp + ".java");
+							Path to = Paths.get(".\\imports\\");
+							Path dest = null;
+							if(Files.exists(from)) {
+								// Si el archivo existe lo copiamos a la carpeta imports
+								File f = new File(fichero[0], imp + ".java");
+								
+								if (!Files.exists(to)) {
+									// Si la carpeta imports no existe se crea
+								   try {
+								      Files.createDirectories(to);
+								   } catch (IOException ioe) {
+								      ioe.printStackTrace();
+								   }
+								}
+								dest = Paths.get(to.toString() + "\\" + f.getName());
+								
+								if(dest != null) {
+									// Añadir "package imports;" a la clase importada y escribir en la carpeta imports
+									String xml = from.toString().replace(".java", ".xml");
+									
+									
+									// Cambiar por otro XML parser
+									Java2XML.main(from.toString());
+									Document documentoImport = ManipulacionElement
+											.getDocumento(xml);
+									// Cambiar por otro XML parser
+									
+									
+									Element elemento = documentoImport.getDocumentElement();
+									Element elementoImport = documentoImport.createElement("package-decl");
+									elementoImport.setAttribute("name", "imports");
+									
+									elemento.appendChild(elementoImport);
+
+									// Poner la declaración "package" al principio
+									while (elemento.getFirstChild() != elementoImport) {
+										Node nodeAux = elemento.getFirstChild();
+										elemento.removeChild(nodeAux);
+										elemento.appendChild(nodeAux);
+									}
+									
+									// Cambiar por otro XML parser
+									GeneradorJava.writeJavaFile(documentoImport, dest.toString());
+									// Cambiar por otro XML parser
+									
+									
+									copiado = true;
+								}
+							}	
+							
+							// Añadir imports
+							Element elemento = documento.getDocumentElement();
+							Element elementoImport = documento.createElement("import");
+							if(copiado) {
+								elementoImport.setAttribute("module", "imports."+imp);
+							}else {
+								elementoImport.setAttribute("module", imp);
+							}
+							
+							elemento.appendChild(elementoImport);
+
+							// Poner los imports al principio de todo
+							while (elemento.getFirstChild() != elementoImport) {
+								Node nodeAux = elemento.getFirstChild();
+								elemento.removeChild(nodeAux);
+								elemento.appendChild(nodeAux);
+							}
+						}
+						
+						// Creamos un nuevo archivo java con los nuevos imports
+						Calendar c = new GregorianCalendar();
+						this.codigoPrevio = this.generarCodigoUnico(
+								"" + c.get(Calendar.DAY_OF_MONTH),
+								"" + (c.get(Calendar.MONTH) + 1),
+								"" + c.get(Calendar.YEAR),
+								"" + c.get(Calendar.HOUR_OF_DAY),
+								"" + c.get(Calendar.MINUTE),
+								"" + c.get(Calendar.SECOND));
+						Transformador.correccionNombres(
+								documento,
+								fichero[1].replace(".java", codigoPrevio + ".java"), "", codigoPrevio);
+						GeneradorJava.writeJavaFile(
+								documento,
+								fichero[1].replace(".java", codigoPrevio + ".java"));
+						
+						// Intentamos compilar de nuevo	
+						String aux2[] = new String[6];
+						if(!SsooValidator.isUnix()){	//	No Linux
+							aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
+							aux2[2] = ".\\";
+							aux2[3] = "\"" + fichero[1].replace(".java", codigoPrevio + ".java") + "\"";
+						}else{							//	Si linux
+							aux2[0] = this.omvj.getDir() + "javac";
+							aux2[2] = "./";
+							aux2[3] = fichero[1].replace(".java", codigoPrevio + ".java");
+						}
+						aux2[1] = "-d";
+						aux2[4] = "-classpath";
+						aux2[5] = getRunningPath();
+						try {
+							salidaCompletaCompilador = LlamadorSistema.getErrorDetallado(aux2);
+							if(salidaCompletaCompilador.size()>0)
+								//	Salida que se mostrará en el compilador
+								salidaCompilador = salidaCompletaCompilador.get(0);
+						} catch (IOException e1) {	
+							salidaCompletaCompilador = new ArrayList<String>();
+						} catch (InterruptedException e) {
+							salidaCompletaCompilador = new ArrayList<String>();
+						}
+					}
+
+					// Si el usuario no está interesado en XML original, lo borramos
+					if (obf.getfXml()) {
+						file = new File(fichero[0] + ficheroxml);
+						file.delete();
+					}
 				}
 
 				this.compilado = salidaCompilador.length() < 4;
@@ -310,6 +462,7 @@ public class Preprocesador extends Thread {
 				if (!this.compilado) {
 					this.cuadroProgreso.cerrar();
 					//this.vv.getPanelVentana().cerrarPanelCodigo();
+					
 					int posicExtensionNombre = fichero[1].toLowerCase()
 							.indexOf(".java");
 					String nombreClase = fichero[1].substring(0,
@@ -341,8 +494,14 @@ public class Preprocesador extends Thread {
 					}
 
 					//	Subrayar	
-					this.subrayarLineas(salidaCompletaCompilador);					
-					
+					if(copiado) {
+						new CuadroErrorCompilacion(vv, fichero[1].replace(
+								".java", codigoPrevio + ".java"),
+								salidaCompilador.substring(4,
+										salidaCompilador.length() - 1));
+					}else {
+						subrayarLineas(salidaCompletaCompilador, imports);	
+					}			
 				} else {
 					// Actualizamos opción de ficheros recientes (para mantener
 					// último directorio)
@@ -537,6 +696,61 @@ public class Preprocesador extends Thread {
 			new CuadroError(this.vv, Texto.get("ERROR_ARCH", Conf.idioma),
 					Texto.get("ERROR_ARCHNE", Conf.idioma));
 		}
+	}
+
+	private HashSet<String> encontrarPosiblesImports(String salidaCompilador) {
+		Reader inputString = new StringReader(salidaCompilador);
+		BufferedReader reader = new BufferedReader(inputString);
+		
+		String oldLine;
+		String newLine;
+		char anterior;
+		int start = -1;
+		int end = -1;
+		String strImport;
+		
+		HashSet<String> imports = new HashSet<>();
+		
+		try {
+			oldLine = reader.readLine();
+			newLine = reader.readLine();
+			while(newLine != null) {
+				if(newLine.contains("^")) {
+					start = newLine.indexOf('^');
+					
+					anterior = oldLine.charAt(start - 1);
+					if(anterior == ' ') {
+						end = oldLine.indexOf(anterior, start);
+					}else if(anterior == '<') {
+						end = oldLine.indexOf('>', start);
+					}
+					if(start > -1 && end > -1) {
+						strImport = oldLine.substring(start, end);
+						imports.add(strImport);
+					}
+				}
+
+				oldLine = newLine;
+				newLine = reader.readLine();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			reader.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			inputString.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return imports;
 	}
 
 	/**
@@ -959,7 +1173,7 @@ public class Preprocesador extends Thread {
 	 * 				se comprueba aquí que son números
 	 * 		
 	 */
-	private void subrayarLineas(List<String> salidaCompletaCompilador){
+	private void subrayarLineas(List<String> salidaCompletaCompilador, HashSet<String> imports){
 		if(salidaCompletaCompilador.size()>0){	
 			
 			vv.getPanelVentana().removeSelects();
@@ -967,9 +1181,16 @@ public class Preprocesador extends Thread {
 			//	Subrayamos líneas
 			int lineaASubrayar = 1;
 			while(lineaASubrayar<salidaCompletaCompilador.size()){
-				vv.getPanelVentana().subrayarLineaEditor(
-						Integer.parseInt(salidaCompletaCompilador.get(lineaASubrayar))
-				);
+				if(imports != null) {
+					vv.getPanelVentana().subrayarLineaEditor(
+							imports.size() + Integer.parseInt(salidaCompletaCompilador.get(lineaASubrayar))
+					);
+				}else {
+					vv.getPanelVentana().subrayarLineaEditor(
+							Integer.parseInt(salidaCompletaCompilador.get(lineaASubrayar))
+					);
+				}
+
 				lineaASubrayar++;
 			}
 		}
