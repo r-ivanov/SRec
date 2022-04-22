@@ -59,7 +59,7 @@ public class Ejecutador {
 		// Recorrer métodos que hay en esa clase
 		for (int x = 0; x < mm.length; x++) {
 			if (metodo.equals((mm[x].getName()))) {
-				Class[] cp = mm[x].getParameterTypes();
+				Class[] cp = mm[x].getParameterTypes();			
 				if (cp.length == 0 || cp.length == cparametros.length) {
 					boolean todosIguales = true;
 					
@@ -101,12 +101,9 @@ public class Ejecutador {
 						
 						String claseReal = Ventana.thisventana.getPreprocesador().getClaseProcesada()[1];
 						
-						 String cabecera = claseReal.replaceAll(".java", "")+"."+mm[x].getName()+"("
-						;
+						String cabecera = claseReal.replaceAll(".java", "")+"."+mm[x].getName()+"(";
 						 
 						for(Object obj : parametros) {
-							
-							
 							cabecera = cabecera + ServiciosString.representacionObjeto(obj)+", ";
 						}								 
 						cabecera = cabecera.substring(0, cabecera.length()-2);
@@ -209,6 +206,7 @@ public class Ejecutador {
 								traza.vaciarTraza();
 								String causa = ite.getCause().toString();
 								String error = "";
+								String mensaje = ite.getMessage();
 								
 								if (causa.contains("emory")
 										|| causa.contains("heap space")) {
@@ -220,7 +218,7 @@ public class Ejecutador {
 									error = Texto.get("ERROR_METEXP", Conf.idioma);
 								}
 								
-								terminalEscribir(terminalSalidaError,error+"\n causa "+causa+ " mensaje "+ite.getMessage()+ "\n");
+								terminalEscribir(terminalSalidaError,error+"\n causa "+causa+ " mensaje "+ mensaje + "\n");
 								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								return error;
 							} catch (Exception e) {

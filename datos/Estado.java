@@ -706,51 +706,51 @@ public class Estado {
 				}
 			} else if (c.getCanonicalName().contains("short")) {
 				o = new short[((short[][]) p).length][];
-				for (int i = 0; i < ((int[][]) p).length; i++) {
+				for (int i = 0; i < ((short[][]) p).length; i++) {
 					((short[][]) o)[i] = (short[]) this.copiaArray(
 							((short[][]) p)[i], ((short[][]) p)[i].getClass());
 				}
 			} else if (c.getCanonicalName().contains("byte")) {
 				o = new byte[((byte[][]) p).length][];
-				for (int i = 0; i < ((int[][]) p).length; i++) {
+				for (int i = 0; i < ((byte[][]) p).length; i++) {
 					((byte[][]) o)[i] = (byte[]) this.copiaArray(
 							((byte[][]) p)[i], ((byte[][]) p)[i].getClass());
 				}
 			} else if (c.getCanonicalName().contains("long")) {
 				o = new long[((long[][]) p).length][];
-				for (int i = 0; i < ((int[][]) p).length; i++) {
+				for (int i = 0; i < ((long[][]) p).length; i++) {
 					((long[][]) o)[i] = (long[]) this.copiaArray(
 							((long[][]) p)[i], ((long[][]) p)[i].getClass());
 				}
 			} else if (c.getCanonicalName().contains("float")) {
 				o = new float[((float[][]) p).length][];
-				for (int i = 0; i < ((int[][]) p).length; i++) {
+				for (int i = 0; i < ((float[][]) p).length; i++) {
 					((float[][]) o)[i] = (float[]) this.copiaArray(
 							((float[][]) p)[i], ((float[][]) p)[i].getClass());
 				}
 			} else if (c.getCanonicalName().contains("double")) {
 				o = new double[((double[][]) p).length][];
-				for (int i = 0; i < ((int[][]) p).length; i++) {
+				for (int i = 0; i < ((double[][]) p).length; i++) {
 					((double[][]) o)[i] = (double[]) this
 							.copiaArray(((double[][]) p)[i],
 									((double[][]) p)[i].getClass());
 				}
 			} else if (c.getCanonicalName().contains("boolean")) {
 				o = new boolean[((boolean[][]) p).length][];
-				for (int i = 0; i < ((int[][]) p).length; i++) {
+				for (int i = 0; i < ((boolean[][]) p).length; i++) {
 					((boolean[][]) o)[i] = (boolean[]) this.copiaArray(
 							((boolean[][]) p)[i],
 							((boolean[][]) p)[i].getClass());
 				}
 			} else if (c.getCanonicalName().contains("char")) {
 				o = new char[((char[][]) p).length][];
-				for (int i = 0; i < ((int[][]) p).length; i++) {
+				for (int i = 0; i < ((char[][]) p).length; i++) {
 					((char[][]) o)[i] = (char[]) this.copiaArray(
 							((char[][]) p)[i], ((char[][]) p)[i].getClass());
 				}
 			} else if (c.getCanonicalName().contains("java.lang.String")) {
 				o = new String[((String[][]) p).length][];
-				for (int i = 0; i < ((int[][]) p).length; i++) {
+				for (int i = 0; i < ((String[][]) p).length; i++) {
 					((String[][]) o)[i] = (String[]) this
 							.copiaArray(((String[][]) p)[i],
 									((String[][]) p)[i].getClass());

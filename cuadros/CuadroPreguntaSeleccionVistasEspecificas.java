@@ -292,7 +292,7 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 					Logger.log_write("Habilitar vistas basadas en arboles");
 				}
 				oov.setAnteriorVE(2);
-				this.gOpciones.setOpcion(oov, 1); // Probando si hay que ponerlo
+				this.gOpciones.setOpcion(oov, 1);
 				new CuadroSeleccionMetodosVE(
 						this.clase, this.ventana, this.preprocesador);
 				this.dialogo.setVisible(false);
