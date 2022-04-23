@@ -6,9 +6,12 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextAttribute;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
 
@@ -16,6 +19,7 @@ import org.jgraph.JGraph;
 import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;
+import org.jgraph.graph.DefaultGraphCellEditor;
 import org.jgraph.graph.DefaultPort;
 import org.jgraph.graph.GraphConstants;
 
@@ -62,8 +66,6 @@ public class ContenedorArbol {
 
 	private boolean tieneHijos = false;
 
-	private float anchoPixelCaracter = (float) 12;
-
 	private int minimoIzquierda = -1; // valor mínimo que un nodo y sus subnodos
 	// pueden
 	// emplear horizontalmente, sirve para que no se
@@ -103,6 +105,10 @@ public class ContenedorArbol {
 	private static int[] dimEstr = null;
 
 	private static int tamFuente = 20;
+	private Font fuente = new Font("Arial", Font.BOLD, tamFuente);
+	private Font fuenteEstr = new Font("Arial", Font.BOLD, 12);
+	private float anchoPixelCaracter = (float) 9;
+	private FontRenderContext contexto;
 	private boolean esAlgoritmoPuntos=false;
 	private MetodoAlgoritmo ma =null;
 	// Valores para cada nivel
@@ -125,9 +131,8 @@ public class ContenedorArbol {
 	 *            Nivel del árbol para este nodo.
 	 */
 	public ContenedorArbol(RegistroActivacion ra, JGraph graph,
-			NombresYPrefijos nyp_, int nivel_) {
-		
-		
+			NombresYPrefijos nyp_, int nivel_, FontRenderContext context) {
+		contexto = context;
 		this.ra = ra;
 		this.nyp = nyp_;
 
@@ -193,7 +198,7 @@ public class ContenedorArbol {
 			{
 				for (int i = 0; i < this.contenedoresHijos.length; i++) {
 					this.contenedoresHijos[i] = new ContenedorArbol(
-							ra.getHijo(i), graph, this.nyp, this.nivel + 1);
+							ra.getHijo(i), graph, this.nyp, this.nivel + 1, context);
 					this.tieneHijos = true;
 
 				}
@@ -206,7 +211,7 @@ public class ContenedorArbol {
 					if (!ra.getHijo(i).esHistorico()
 							&& !ra.getHijo(i).vacioVisible()) {
 						this.contenedoresHijos[x] = new ContenedorArbol(
-								ra.getHijo(i), graph, this.nyp, this.nivel + 1);
+								ra.getHijo(i), graph, this.nyp, this.nivel + 1, context);
 						x++;
 						this.tieneHijos = true;
 					}
@@ -215,7 +220,7 @@ public class ContenedorArbol {
 		} else {
 			for (int i = 0; i < numHijos; i++) {
 				this.contenedoresHijos[i] = new ContenedorArbol(ra.getHijo(i),
-						graph, this.nyp, this.nivel + 1);
+						graph, this.nyp, this.nivel + 1, context);
 				this.tieneHijos = true;
 			}
 		}
@@ -411,8 +416,7 @@ public class ContenedorArbol {
 
 		this.asignarColoresEntrada(cadenaEntrada);
 
-		GraphConstants.setFont(this.entrada.getAttributes(), new Font("Arial",
-				Font.BOLD, tamFuente));
+		GraphConstants.setFont(this.entrada.getAttributes(), fuente);
 		GraphConstants.setDisconnectable(this.entrada.getAttributes(), false);
 		GraphConstants.setMoveable(this.entrada.getAttributes(), false);
 		GraphConstants.setSelectable(this.entrada.getAttributes(), false);
@@ -426,8 +430,7 @@ public class ContenedorArbol {
 
 		this.asignarColoresSalida(cadenaSalida);
 
-		GraphConstants.setFont(this.salida.getAttributes(), new Font("Arial",
-				Font.BOLD, tamFuente));
+		GraphConstants.setFont(this.salida.getAttributes(), fuente);
 		GraphConstants.setDisconnectable(this.salida.getAttributes(), false);
 		GraphConstants.setMoveable(this.salida.getAttributes(), false);
 		GraphConstants.setSelectable(this.salida.getAttributes(), false);
@@ -438,42 +441,49 @@ public class ContenedorArbol {
 		// Tamaños
 		int maximaCadena = Math.max(cadenaEntrada.length(),
 				cadenaSalida.length());
+		int anchoPixelCaracteres = (int) (anchoPixelCaracter * (maximaCadena));
+		if(contexto != null) {
+			if(cadenaEntrada.length() > cadenaSalida.length()) {
+				anchoPixelCaracteres = (int) fuente.getStringBounds(cadenaEntrada, contexto).getWidth() + 10;
+			}else {
+				anchoPixelCaracteres = (int) fuente.getStringBounds(cadenaSalida, contexto).getWidth() + 10;
+			}
+		}
+	
 		GraphConstants.setSize(this.entrada.getAttributes(), new Dimension(
-				(int) this.anchoPixelCaracter * maximaCadena, alturaCelda));
+				anchoPixelCaracteres, alturaCelda));
 		GraphConstants.setSize(this.salida.getAttributes(), new Dimension(
-				(int) this.anchoPixelCaracter * maximaCadena, alturaCelda));
+				anchoPixelCaracteres, alturaCelda));
+
 
 		// Marco Entrada
 		this.marcoEntrada = new DefaultGraphCell(" ");
-		GraphConstants.setFont(this.marcoEntrada.getAttributes(), new Font(
-				"Arial", Font.BOLD, tamFuente));
+		GraphConstants.setFont(this.marcoEntrada.getAttributes(), fuente);
 		GraphConstants.setDisconnectable(this.marcoEntrada.getAttributes(),
 				false);
 		GraphConstants.setMoveable(this.marcoEntrada.getAttributes(), false);
 		GraphConstants.setSelectable(this.marcoEntrada.getAttributes(), false);
 		GraphConstants.setOpaque(this.marcoEntrada.getAttributes(), false);
 		GraphConstants.setSize(this.marcoEntrada.getAttributes(),
-				new Dimension(((int) this.anchoPixelCaracter * maximaCadena)
+				new Dimension(((int) anchoPixelCaracteres)
 						+ Conf.grosorMarco, alturaCelda + Conf.grosorMarco));
+
 
 		// Marco Salida
 		this.marcoSalida = new DefaultGraphCell(" ");
-		GraphConstants.setFont(this.marcoSalida.getAttributes(), new Font(
-				"Arial", Font.BOLD, tamFuente));
+		GraphConstants.setFont(this.marcoSalida.getAttributes(), fuente);
 		GraphConstants.setDisconnectable(this.marcoSalida.getAttributes(),
 				false);
 		GraphConstants.setMoveable(this.marcoSalida.getAttributes(), false);
 		GraphConstants.setSelectable(this.marcoSalida.getAttributes(), false);
 		GraphConstants.setOpaque(this.marcoSalida.getAttributes(), false);
 		GraphConstants.setSize(this.marcoSalida.getAttributes(), new Dimension(
-				((int) this.anchoPixelCaracter * maximaCadena)
-				+ Conf.grosorMarco, alturaCelda + Conf.grosorMarco));
+				anchoPixelCaracteres + Conf.grosorMarco, alturaCelda + Conf.grosorMarco));
 
 		GraphConstants.setSize(this.marcoEntrada.getAttributes(),
-				new Dimension((int) this.anchoPixelCaracter * maximaCadena,
-						alturaCelda));
-		GraphConstants.setSize(this.marcoSalida.getAttributes(), new Dimension(
-				(int) this.anchoPixelCaracter * maximaCadena, alturaCelda));
+				new Dimension(anchoPixelCaracteres, alturaCelda));
+		GraphConstants.setSize(this.marcoSalida.getAttributes(), 
+				new Dimension(anchoPixelCaracteres, alturaCelda));
 	}
 
 	/**
@@ -1874,7 +1884,7 @@ public class ContenedorArbol {
 					GraphConstants.setOpaque(celdas[posic].getAttributes(),
 							visible);
 					GraphConstants.setFont(celdas[posic].getAttributes(),
-							new Font("Arial", Font.BOLD, 12));
+							fuenteEstr);
 					GraphConstants.setDisconnectable(
 							celdas[posic].getAttributes(), false);
 					GraphConstants.setMoveable(celdas[posic].getAttributes(),
@@ -1981,8 +1991,7 @@ public class ContenedorArbol {
 				
 				GraphConstants
 				.setOpaque(celdas[posic].getAttributes(), visible);
-				GraphConstants.setFont(celdas[posic].getAttributes(), new Font(
-						"Arial", Font.BOLD, 12));
+				GraphConstants.setFont(celdas[posic].getAttributes(), fuenteEstr);
 				GraphConstants.setDisconnectable(celdas[posic].getAttributes(),
 						false);
 				GraphConstants
@@ -1995,8 +2004,7 @@ public class ContenedorArbol {
 					
 					GraphConstants
 					.setOpaque(this.celdasEstr2[i].getAttributes(), visible);
-					GraphConstants.setFont(this.celdasEstr2[i].getAttributes(), new Font(
-							"Arial", Font.BOLD, 12));
+					GraphConstants.setFont(this.celdasEstr2[i].getAttributes(), fuenteEstr);
 					GraphConstants.setDisconnectable(this.celdasEstr2[i].getAttributes(),
 							false);
 					GraphConstants

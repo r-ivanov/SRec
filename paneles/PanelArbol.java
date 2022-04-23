@@ -145,7 +145,7 @@ MouseListener, MouseMotionListener {
 
 				this.cc = new ContenedorArbol(
 						Ventana.thisventana.traza.getRaiz(), this.graph,
-						this.nyp, 1);
+						this.nyp, 1, getFontMetrics(getFont()).getFontRenderContext());
 				anchoGraph = this.cc.maximoAncho(); // Sólo es necesario hacerlo
 				// una vez
 				altoGraph = this.cc.maximoAlto(); // Sólo es necesario hacerlo
@@ -325,7 +325,7 @@ MouseListener, MouseMotionListener {
 			}
 
 			this.cc = new ContenedorArbol(Ventana.thisventana.traza.getRaiz(),
-					this.graph, this.nyp, 1);
+					this.graph, this.nyp, 1, getFontMetrics(getFont()).getFontRenderContext());
 		
 			
 			this.celdas = this.cc.getCeldas();

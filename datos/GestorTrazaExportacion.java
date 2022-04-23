@@ -112,7 +112,7 @@ public class GestorTrazaExportacion {
 			this.graph = new JGraph(model, view);
 			this.graph.getModel().addGraphModelListener(null);
 			ContenedorArbol c = new ContenedorArbol(this.t.getRaiz(),
-					this.graph, this.nyp, 1);
+					this.graph, this.nyp, 1, null);
 			celdas = c.getCeldas();
 			this.graph.setBackground(Conf.colorPanel);
 			this.graph.getGraphLayoutCache().insert(celdas);

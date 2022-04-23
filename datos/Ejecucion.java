@@ -143,7 +143,7 @@ public class Ejecucion {
 			}
 		}
 
-		ContenedorArbol c = new ContenedorArbol(traza.getRaiz(), grafo, nyp, 1);
+		ContenedorArbol c = new ContenedorArbol(traza.getRaiz(), grafo, nyp, 1, null);
 		grafo.setBackground(Conf.colorPanel);
 		grafo.getGraphLayoutCache().insert(c.getCeldas());
 
