@@ -3,23 +3,16 @@ package grafica;
 import java.awt.Color; 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
-import java.awt.font.TextAttribute;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Map.Entry;
-
 import javax.swing.BorderFactory;
 
 import org.jgraph.JGraph;
 import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;
-import org.jgraph.graph.DefaultGraphCellEditor;
 import org.jgraph.graph.DefaultPort;
 import org.jgraph.graph.GraphConstants;
 
@@ -30,7 +23,6 @@ import utilidades.NombresYPrefijos;
 import utilidades.ServiciosString;
 import ventanas.Ventana;
 import conf.Conf;
-import datos.ClaseAlgoritmo;
 import datos.Estructura;
 import datos.MetodoAlgoritmo;
 import datos.RegistroActivacion;
@@ -104,11 +96,13 @@ public class ContenedorArbol {
 
 	private static int[] dimEstr = null;
 
+	// Propiedades del texto dentro de los nodos
 	private static int tamFuente = 20;
 	private Font fuente = new Font("Arial", Font.BOLD, tamFuente);
-	private Font fuenteEstr = new Font("Arial", Font.BOLD, 12);
+	private Font fuenteEstr = new Font("Arial", Font.BOLD, tamFuente-8);
 	private float anchoPixelCaracter = (float) 9;
 	private FontRenderContext contexto;
+	
 	private boolean esAlgoritmoPuntos=false;
 	private MetodoAlgoritmo ma =null;
 	// Valores para cada nivel
@@ -317,9 +311,6 @@ public class ContenedorArbol {
 	 * Genera la Estructura de DYV.
 	 */
 	private void generacionEstr() {
-		
-	
-	
 		if (this.ra.esDYV() && Conf.mostrarEstructuraEnArbol) {
 			int indices[] = this.ra.getEntrada().getIndices();
 
@@ -406,11 +397,11 @@ public class ContenedorArbol {
 						+ ": ";
 			}
 		}
-		cadenaEntrada = cadenaEntrada + repEntrada;
+		cadenaEntrada = "  " + cadenaEntrada + repEntrada + "  ";
 
-		if (repEntrada.length() < 3) {
-			cadenaEntrada = "  " + cadenaEntrada + "  ";
-		}
+//		if (repEntrada.length() < 3) {
+//			cadenaEntrada = "  " + cadenaEntrada + "  ";
+//		}
 
 		this.entrada = new DefaultGraphCell(new String(cadenaEntrada));
 
@@ -424,7 +415,7 @@ public class ContenedorArbol {
 		this.entrada.add(this.portEntrada);
 
 		// Salida, configuración de la misma y asignación de puerto
-		String cadenaSalida = this.generaCadenaSalida();
+		String cadenaSalida = "  " + this.generaCadenaSalida() + "  ";
 
 		this.salida = new DefaultGraphCell(new String(cadenaSalida));
 
@@ -515,7 +506,7 @@ public class ContenedorArbol {
 			int ladoDerecho = this.contenedoresHijos[this.contenedoresHijos.length - 1]
 					.posicLadoDerecho();
 			int puntoMedio = (ladoDerecho + ladoIzquierdo) / 2;
-
+			
 			if (this.ra.esDYV() && Conf.mostrarEstructuraEnArbol) {
 				
 				int anchoNodo = (int) (GraphConstants.getSize(this.entrada
@@ -1836,13 +1827,13 @@ public class ContenedorArbol {
 		String texto;
 
 		if (e.esMatriz()) {
-			Exception th = new Exception("es Matriz");
-			try {
-				throw(th);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			Exception th = new Exception("es Matriz");
+//			try {
+//				throw(th);
+//			} catch (Exception e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			celdas = new DefaultGraphCell[dimensiones[0] * dimensiones[1]];
 			int posic = 0;
 
