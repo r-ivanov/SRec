@@ -316,144 +316,14 @@ public class Preprocesador extends Thread {
 					// Se ha interumpido el compilado porque ha tardado demasiado, 
 					// posiblemente un bucle infinito
 					
-					// Hacemos una copia del fichero, sobre el cual añadimos imports
+					/*
+					 * De momento no funciona correctamente hasta que el proceso de Java2XML y
+					 * GeneradorJava.writeJavaFile sean capaces de incluir tipos genericos
+					 * "<ClaseGenerica>". Ahora los transforma en tipo Object lo cual hace que
+					 * añadir imports sobre estos genericos sea inutil.
+					 */
 					
-					// Cambiar por otro XML parser
-					Java2XML.main(fichero[0] + fichero[1]);
-					documento = ManipulacionElement
-							.getDocumento(fichero[0] + ficheroxml);
-					// Cambiar por otro XML parser
-					
-					
-					if (documento == null) {
-						new CuadroError(vv, Texto.get("ERROR_ARCH",
-								Conf.idioma), Texto.get("ERROR_ANTIESCRIT",
-								Conf.idioma));
-						return;
-					}
-					
-					// Encontrar imports para añadir
-					imports = encontrarPosiblesImports(salidaCompilador);
-					if(imports != null) {
-						for(String imp: imports) {
-							//Intentar copiar archivo con ese nombre si existe a la carpeta imports
-							Path from = Paths.get(fichero[0], imp + ".java");
-							Path to = Paths.get(".\\imports\\");
-							Path dest = null;
-							if(Files.exists(from)) {
-								// Si el archivo existe lo copiamos a la carpeta imports
-								File f = new File(fichero[0], imp + ".java");
-								
-								if (!Files.exists(to)) {
-									// Si la carpeta imports no existe se crea
-								   try {
-								      Files.createDirectories(to);
-								   } catch (IOException ioe) {
-								      ioe.printStackTrace();
-								   }
-								}
-								dest = Paths.get(to.toString() + "\\" + f.getName());
-								
-								if(dest != null) {
-									// Añadir "package imports;" a la clase importada y escribir en la carpeta imports
-									String xml = from.toString().replace(".java", ".xml");
-									
-									
-									// Cambiar por otro XML parser
-									Java2XML.main(from.toString());
-									Document documentoImport = ManipulacionElement
-											.getDocumento(xml);
-									// Cambiar por otro XML parser
-									
-									
-									Element elemento = documentoImport.getDocumentElement();
-									Element elementoImport = documentoImport.createElement("package-decl");
-									elementoImport.setAttribute("name", "imports");
-									
-									elemento.appendChild(elementoImport);
-
-									// Poner la declaración "package" al principio
-									while (elemento.getFirstChild() != elementoImport) {
-										Node nodeAux = elemento.getFirstChild();
-										elemento.removeChild(nodeAux);
-										elemento.appendChild(nodeAux);
-									}
-									
-									// Cambiar por otro XML parser
-									GeneradorJava.writeJavaFile(documentoImport, dest.toString());
-									// Cambiar por otro XML parser
-									
-									
-									copiado = true;
-								}
-							}	
-							
-							// Añadir imports
-							Element elemento = documento.getDocumentElement();
-							Element elementoImport = documento.createElement("import");
-							if(copiado) {
-								elementoImport.setAttribute("module", "imports."+imp);
-							}else {
-								elementoImport.setAttribute("module", imp);
-							}
-							
-							elemento.appendChild(elementoImport);
-
-							// Poner los imports al principio de todo
-							while (elemento.getFirstChild() != elementoImport) {
-								Node nodeAux = elemento.getFirstChild();
-								elemento.removeChild(nodeAux);
-								elemento.appendChild(nodeAux);
-							}
-						}
-						
-						// Creamos un nuevo archivo java con los nuevos imports
-						Calendar c = new GregorianCalendar();
-						this.codigoPrevio = this.generarCodigoUnico(
-								"" + c.get(Calendar.DAY_OF_MONTH),
-								"" + (c.get(Calendar.MONTH) + 1),
-								"" + c.get(Calendar.YEAR),
-								"" + c.get(Calendar.HOUR_OF_DAY),
-								"" + c.get(Calendar.MINUTE),
-								"" + c.get(Calendar.SECOND));
-						Transformador.correccionNombres(
-								documento,
-								fichero[1].replace(".java", codigoPrevio + ".java"), "", codigoPrevio);
-						GeneradorJava.writeJavaFile(
-								documento,
-								fichero[1].replace(".java", codigoPrevio + ".java"));
-						
-						// Intentamos compilar de nuevo	
-						String aux2[] = new String[6];
-						if(!SsooValidator.isUnix()){	//	No Linux
-							aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
-							aux2[2] = ".\\";
-							aux2[3] = "\"" + fichero[1].replace(".java", codigoPrevio + ".java") + "\"";
-						}else{							//	Si linux
-							aux2[0] = this.omvj.getDir() + "javac";
-							aux2[2] = "./";
-							aux2[3] = fichero[1].replace(".java", codigoPrevio + ".java");
-						}
-						aux2[1] = "-d";
-						aux2[4] = "-classpath";
-						aux2[5] = getRunningPath();
-						try {
-							salidaCompletaCompilador = LlamadorSistema.getErrorDetallado(aux2);
-							if(salidaCompletaCompilador.size()>0)
-								//	Salida que se mostrará en el compilador
-								salidaCompilador = salidaCompletaCompilador.get(0);
-						} catch (IOException e1) {	
-							salidaCompletaCompilador = new ArrayList<String>();
-						} catch (InterruptedException e) {
-							salidaCompletaCompilador = new ArrayList<String>();
-						}
-					}
-
-					// Si el usuario no está interesado en XML original, lo borramos
-					if (obf.getfXml()) {
-						file = new File(fichero[0] + ficheroxml);
-						file.delete();
-					}
+					//añadirImports(imports, copiado, salidaCompilador, salidaCompletaCompilador);
 				}
 
 				this.compilado = salidaCompilador.length() < 4;
@@ -696,6 +566,144 @@ public class Preprocesador extends Thread {
 			new CuadroError(this.vv, Texto.get("ERROR_ARCH", Conf.idioma),
 					Texto.get("ERROR_ARCHNE", Conf.idioma));
 		}
+	}
+
+	private boolean añadirImports(HashSet<String> imports, boolean copiado, String salidaCompilador, List<String> salidaCompletaCompilador) {
+		Java2XML.main(fichero[0] + fichero[1]);
+		documento = ManipulacionElement
+				.getDocumento(fichero[0] + ficheroxml);
+		if (documento == null) {
+			new CuadroError(vv, Texto.get("ERROR_ARCH",
+					Conf.idioma), Texto.get("ERROR_ANTIESCRIT",
+					Conf.idioma));
+			return false;
+		}
+		
+		// Encontrar imports para añadir
+		imports = encontrarPosiblesImports(salidaCompilador);
+		if(imports != null) {
+			for(String imp: imports) {
+				//Intentar copiar archivo con ese nombre si existe a la carpeta imports
+				Path from = Paths.get(fichero[0], imp + ".java");
+				Path to = Paths.get(".\\imports\\");
+				Path dest = null;
+				if(Files.exists(from)) {
+					// Si el archivo existe lo copiamos a la carpeta imports
+					File f = new File(fichero[0], imp + ".java");
+					
+					if (!Files.exists(to)) {
+						// Si la carpeta imports no existe se crea
+					   try {
+					      Files.createDirectories(to);
+					   } catch (IOException ioe) {
+					      ioe.printStackTrace();
+					   }
+					}
+					dest = Paths.get(to.toString() + "\\" + f.getName());
+					
+					if(dest != null) {
+						// Añadir "package imports;" a la clase importada y escribir en la carpeta imports
+						String xml = from.toString().replace(".java", ".xml");
+						
+						
+						// Cambiar por otro XML parser
+						Java2XML.main(from.toString());
+						Document documentoImport = ManipulacionElement
+								.getDocumento(xml);
+						// Cambiar por otro XML parser
+						
+						
+						Element elemento = documentoImport.getDocumentElement();
+						Element elementoImport = documentoImport.createElement("package-decl");
+						elementoImport.setAttribute("name", "imports");
+						
+						elemento.appendChild(elementoImport);
+
+						// Poner la declaración "package" al principio
+						while (elemento.getFirstChild() != elementoImport) {
+							Node nodeAux = elemento.getFirstChild();
+							elemento.removeChild(nodeAux);
+							elemento.appendChild(nodeAux);
+						}
+						
+						// Cambiar por otro XML parser
+						GeneradorJava.writeJavaFile(documentoImport, dest.toString());
+						// Cambiar por otro XML parser
+						
+						
+						copiado = true;
+					}
+				}	
+				
+				// Añadir imports
+				Element elemento = documento.getDocumentElement();
+				Element elementoImport = documento.createElement("import");
+				if(copiado) {
+					elementoImport.setAttribute("module", "imports."+imp);
+				}else {
+					elementoImport.setAttribute("module", imp);
+				}
+				
+				elemento.appendChild(elementoImport);
+
+				// Poner los imports al principio de todo
+				while (elemento.getFirstChild() != elementoImport) {
+					Node nodeAux = elemento.getFirstChild();
+					elemento.removeChild(nodeAux);
+					elemento.appendChild(nodeAux);
+				}
+			}
+			
+			// Creamos un nuevo archivo java con los nuevos imports
+			Calendar c = new GregorianCalendar();
+			this.codigoPrevio = this.generarCodigoUnico(
+					"" + c.get(Calendar.DAY_OF_MONTH),
+					"" + (c.get(Calendar.MONTH) + 1),
+					"" + c.get(Calendar.YEAR),
+					"" + c.get(Calendar.HOUR_OF_DAY),
+					"" + c.get(Calendar.MINUTE),
+					"" + c.get(Calendar.SECOND));
+			Transformador.correccionNombres(
+					documento,
+					fichero[1].replace(".java", codigoPrevio + ".java"), "", codigoPrevio);
+			GeneradorJava.writeJavaFile(
+					documento,
+					fichero[1].replace(".java", codigoPrevio + ".java"));
+			
+			// Intentamos compilar de nuevo	
+			String aux2[] = new String[6];
+			if(!SsooValidator.isUnix()){	//	No Linux
+				aux2[0] = "\"" + this.omvj.getDir() + "javac\"";
+				aux2[2] = ".\\";
+				aux2[3] = "\"" + fichero[1].replace(".java", codigoPrevio + ".java") + "\"";
+			}else{							//	Si linux
+				aux2[0] = this.omvj.getDir() + "javac";
+				aux2[2] = "./";
+				aux2[3] = fichero[1].replace(".java", codigoPrevio + ".java");
+			}
+			aux2[1] = "-d";
+			aux2[4] = "-classpath";
+			aux2[5] = getRunningPath();
+			try {
+				salidaCompletaCompilador = LlamadorSistema.getErrorDetallado(aux2);
+				if(salidaCompletaCompilador.size()>0)
+					//	Salida que se mostrará en el compilador
+					salidaCompilador = salidaCompletaCompilador.get(0);
+			} catch (IOException e1) {	
+				salidaCompletaCompilador = new ArrayList<String>();
+			} catch (InterruptedException e) {
+				salidaCompletaCompilador = new ArrayList<String>();
+			}
+		}
+
+		// Si el usuario no está interesado en XML original, lo borramos
+		File file;
+		if (obf.getfXml()) {
+			file = new File(fichero[0] + ficheroxml);
+			file.delete();
+		}
+		
+		return copiado;
 	}
 
 	private HashSet<String> encontrarPosiblesImports(String salidaCompilador) {

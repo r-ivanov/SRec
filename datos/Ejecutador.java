@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import javax.swing.SwingUtilities;
 
@@ -40,9 +41,6 @@ public class Ejecutador {
 	 */
 	public static String ejecutar(String clase, String metodo,
 			Class cparametros[], Object parametros[]) {
-		for (int x = 0; x < cparametros.length; x++) {
-		
-		}
 		Class c = null;
 		ClassLoader cl = ClassLoader.getSystemClassLoader();
 
@@ -174,10 +172,61 @@ public class Ejecutador {
 								System.setOut(psOut);
 								System.setErr(psErr);
 								
-								if(returnInvoke != null)
-									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString() + " "+returnInvoke.toString());
-								else
-									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().toString());
+								if(returnInvoke != null) {
+									String s;
+									String sAux;
+									if(returnInvoke.getClass().isArray()) {
+										s = mm[x].getReturnType().getTypeName()
+												+ "\n";
+										for(Object obj : (Object[])returnInvoke) {
+											if(obj != null && obj.getClass().isArray()) {
+												if(obj instanceof int[]) {
+													sAux = Arrays.toString((int[]) obj);
+												}else if(obj instanceof char[]) {
+													sAux = Arrays.toString((char[]) obj);
+												}else if(obj instanceof long[]) {
+													sAux = Arrays.toString((long[]) obj);
+												}else if(obj instanceof float[]) {
+													sAux = Arrays.toString((float[]) obj);
+												}else if(obj instanceof double[]) {
+													sAux = Arrays.toString((double[]) obj);
+												}else if(obj instanceof byte[]) {
+													sAux = Arrays.toString((byte[]) obj);
+												}else if(obj instanceof String[]) {
+													sAux = Arrays.toString((String[]) obj);
+												}else if(obj instanceof Integer[]) {
+													sAux = Arrays.toString((Integer[]) obj);
+												}else if(obj instanceof Character[]) {
+													sAux = Arrays.toString((Character[]) obj);
+												}else if(obj instanceof Long[]) {
+													sAux = Arrays.toString((Long[]) obj);
+												}else if(obj instanceof Float[]) {
+													sAux = Arrays.toString((Float[]) obj);
+												}else if(obj instanceof Double[]) {
+													sAux = Arrays.toString((Double[]) obj);
+												}else if(obj instanceof Byte[]) {
+													sAux = Arrays.toString((Byte[]) obj);
+												}else {
+													sAux = Arrays.deepToString((Object[]) returnInvoke);
+													s += sAux;
+													break;
+												}
+												s += sAux + "\n";
+											}else {
+												sAux = Arrays.deepToString((Object[]) returnInvoke);
+												s += sAux;
+												break;
+											}
+											
+										}	
+									}else {
+										s = mm[x].getReturnType().getTypeName()
+												+ "\n" + returnInvoke.toString();
+									}
+									terminal.setSalidaResultadoMetodo(s);
+								} else {
+									terminal.setSalidaResultadoMetodo(mm[x].getReturnType().getName());
+								}
 								
 								setSalidasFin(terminalSalidaError,terminalSalidaNormal,terminalSalidaErrorWriter,terminalSalidaNormalWriter,terminal);
 								

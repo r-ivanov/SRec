@@ -85,7 +85,7 @@ public class LlamadorSistema {
 		Process proceso = Runtime.getRuntime().exec(comando);
 		procesoInterrumpido = false;
 		String retornoString = "";
-        if (!proceso.waitFor(15, TimeUnit.SECONDS)) {
+        if (!proceso.waitFor(10, TimeUnit.SECONDS)) {
         	proceso.destroy();
             //retornoString += "Compile Timeout Occurred";
         	procesoInterrumpido = true;
