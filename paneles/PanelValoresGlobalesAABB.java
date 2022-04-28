@@ -243,7 +243,7 @@ public class PanelValoresGlobalesAABB extends JPanel {
     			}
     		}
     		
-        	if(ra.getEntrada().getRyP()) {
+        	if(ra.getEntrada().esRyP()) {
         		crearGrafica(ra, dataset, serieSolActual, serieSolMejor, serieCota);
         		if(Conf.cotaVisible) {
         			dataset.addSeries(serieCota);
@@ -310,9 +310,16 @@ public class PanelValoresGlobalesAABB extends JPanel {
     			if(solMejor != null) {
     				serieSolMejor.add(id, solMejor);
     				if(cota != null) {
-    	    			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
-    	    				podas.add(id - 1);
-    	    			}
+    					if(ra2.getEntrada().esMaximizacion()) {
+    						if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+        	    				podas.add(id - 1);
+        	    			}
+    					}else {
+    						if(Double.parseDouble(cota.toString()) > Double.parseDouble(solMejor.toString())) {
+        	    				podas.add(id - 1);
+        	    			}
+    					}
+    	    			
     				}
     			}
     			if(cota != null) {

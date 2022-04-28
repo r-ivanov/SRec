@@ -27,7 +27,8 @@ public class Estado {
 	private int indices[] = null;
 	
 	// RyP o Vuelta Atras
-	private boolean RyP = false; // True = RyP, False = Vuelta Atras
+	private boolean maximizacion;
+	private boolean RyP; // True = RyP, False = Vuelta Atras
 	private Number solParcial = null;
 	private Number mejorSolucion = null;
 	private Number cota = null;  
@@ -134,40 +135,30 @@ public class Estado {
 	 * 
 	 * @param p
 	 *            Conjunto de valores.
-	 * @param RyP
+	 * @param RyP_
 	 *            True = Ramificación y Poda, False = Vuelta Atras.
-	 * @param solParcial
+	 * @param maximizacion_
+	 *            True = maximizacion, False = minimizacion.
+	 * @param solParcial_
 	 *            La medida asociada a la solución parcial.
-	 * @param mejorSolucion
+	 * @param mejorSolucion_
 	 *            La medida asociada a la mejor solución encontrada.
-	 * @param cota
+	 * @param cota_
 	 *            La estimación de cota (sólo técnica de ramificación y poda).      
 	 */
-	public Estado(Object p[], boolean RyP, Number solParcial, 
-			Number mejorSolucion, Number cota) {
+	public Estado(Object p[], boolean RyP_, boolean maximizacion_, Number solParcial_, 
+			Number mejorSolucion_, Number cota_) {
 		this(p);
-		this.RyP = RyP;
-//		int dimSol;
-		if(solParcial != null) {
-//			dimSol = ServiciosString.vecesQueContiene(solParcial.getClass().getCanonicalName(), "[]");
-//			if(dimSol == 0) {
-//				this.solParcial = solParcial;
-//			}else {
-//				this.solParcial = this.copiaArray(solParcial, solParcial.getClass());
-//			}
-			this.solParcial = solParcial;
+		RyP = RyP_;
+		maximizacion = maximizacion_;
+		if(solParcial_ != null) {
+			solParcial = solParcial_;
 		}
-		if(mejorSolucion != null) {
-//			dimSol = ServiciosString.vecesQueContiene(mejorSolucion.getClass().getCanonicalName(), "[]");
-//			if(dimSol == 0) {
-//				this.mejorSolucion = mejorSolucion;
-//			}else {
-//				this.mejorSolucion = this.copiaArray(mejorSolucion, mejorSolucion.getClass());
-//			}
-			this.mejorSolucion = mejorSolucion;
+		if(mejorSolucion_ != null) {
+			mejorSolucion = mejorSolucion_;
 		}
-		if(RyP) {
-			this.cota = cota;
+		if(RyP_) {
+			cota = cota_;
 		}
 	}
 
@@ -208,17 +199,26 @@ public class Estado {
 	 * 
 	 * @return True = Ramificación y Poda, False = Vuelta Atras.
 	 */
-	public boolean getRyP() {
-		return this.RyP;
+	public boolean esRyP() {
+		return RyP;
 	}
 	
+	/**
+	 * Devuelve si el problema es de maximizacion o de minimizacion
+	 * 
+	 * @return true = maximizacion, false = minimizacion
+	 */
+	public boolean esMaximizacion() {
+		return maximizacion;
+	}
+
 	/**
 	 * Devuelve la medida asociada a la solución parcial.
 	 * 
 	 * @return La medida asociada a la solución parcial.
 	 */
 	public Number getSolParcial() {
-		return this.solParcial;
+		return solParcial;
 	}
 	
 	/**
@@ -227,7 +227,7 @@ public class Estado {
 	 * @return  La medida asociada a la mejor solución encontrada.
 	 */
 	public Number getMejorSolucion() {
-		return this.mejorSolucion;
+		return mejorSolucion;
 	}
 	
 	/**
@@ -236,48 +236,57 @@ public class Estado {
 	 * @return La estimación de cota (sólo técnica de ramificación y poda).
 	 */
 	public Number getCota() {
-		return this.cota;
+		return cota;
 	}
 	
 	/**
 	 * Establece si el metodo usa la tecnica de Ramificación y Poda 
 	 * 	o de Vuelta Atras.
 	 * 
-	 * @param RyP
+	 * @param RyP_
 	 *            True = Ramificación y Poda, False = Vuelta Atras.
 	 */
-	public void setRyP(boolean RyP) {
-		this.RyP = RyP;
+	public void setRyP(boolean RyP_) {
+		RyP = RyP_;
 	}
 	
 	/**
+	 * Establece si el problema es de maximizacion on de minimizacion
+	 * 
+	 * @param maximizacion_ true = maximizacion, false = minimizacion
+	 */
+	public void setMaximizacion(boolean maximizacion_) {
+		maximizacion = maximizacion_;
+	}
+
+	/**
 	 * Establece la medida asociada a la solución parcial.
 	 * 
-	 * @param solParcial
+	 * @param solParcial_
 	 *            La medida asociada a la solución parcial.
 	 */
-	public void setSolParcial(Number solParcial) {
-		this.solParcial = solParcial;
+	public void setSolParcial(Number solParcial_) {
+		solParcial = solParcial_;
 	}
 	
 	/**
 	 * Establece la medida asociada a la mejor solución encontrada.
 	 * 
-	 * @param mejorSolucion
+	 * @param mejorSolucion_
 	 *            La medida asociada a la mejor solución encontrada.
 	 */
-	public void setMejorSolucion(Number mejorSolucion) {
-		this.mejorSolucion = mejorSolucion;
+	public void setMejorSolucion(Number mejorSolucion_) {
+		mejorSolucion = mejorSolucion_;
 	}
 	
 	/**
 	 * Establece la estimación de la cota.
 	 * 
-	 * @param cota
+	 * @param cota_
 	 *            La estimación de cota (sólo técnica de ramificación y poda).
 	 */
-	public void setCota(Number cota) {
-		this.cota = cota;
+	public void setCota(Number cota_) {
+		cota = cota_;
 	}
 
 	/**
@@ -635,10 +644,11 @@ public class Estado {
 				this.indices);
 		
 		// Copiamos cosas de RyP (o Vuelta Atras)
-		e.setRyP(this.RyP);
-		e.setSolParcial(this.solParcial);
-		e.setMejorSolucion(this.mejorSolucion);
-		e.setCota(this.cota);
+		e.setRyP(RyP);
+		e.setMaximizacion(maximizacion);
+		e.setSolParcial(solParcial);
+		e.setMejorSolucion(mejorSolucion);
+		e.setCota(cota);
 
 		return e;
 	}

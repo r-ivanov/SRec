@@ -127,7 +127,7 @@ public class Transformador {
 	 * @return Element añadido
 	 */
 	private static Element elementoAnadirEntradaSalida(Document d, String es,
-			String nombreArray, boolean RyP, String nombreSolParcial, String nombreMejorSolucion, 
+			String nombreArray, boolean RyP, boolean maximizacion, String nombreSolParcial, String nombreMejorSolucion, 
 			String nombreCota, String nombreMetodo) {	
 		
 // Codigo en xml	
@@ -145,6 +145,8 @@ public class Transformador {
 //                <type name="Estado"/>
 //                <arguments>
 //                    <var-ref name="pppppp01"/>
+//					  <literal-boolean value ="true">
+//					  <literal-boolean value ="true">
 //                    <var-ref name="ssssss01"/>
 //                    <var-ref name="mmmmmm01"/>
 //                    <var-ref name="cccccc01"/>
@@ -156,7 +158,7 @@ public class Transformador {
 //    </send>
 		
 // Codigo transformado de xml a java	
-// Traza.singleton().anadirEntrada(new Estado(pppppp01, RyP, ssssss01, mmmmmm01, cccccc01),"buscar01a",nnnnnn01);
+// Traza.singleton().anadirEntrada(new Estado(pppppp01, RyP, maximizacion, ssssss01, mmmmmm01, cccccc01),"buscar01a",nnnnnn01);
 		
 		// Creamos nuevo elemento y lo añadimos como hijo a nodos[i]
 		// en el futuro habrá que hacer que quede por delante de nodo return
@@ -221,34 +223,39 @@ public class Transformador {
 		elem14.setAttribute("name", nombreArray);
 		elem13.appendChild(elem14);
 		
-		// 13. Creamos nodo var-ref y añadimos como hijo a elem13 (solucion parcial)
+		// 13. Creamos nodo literal-boolean y añadimos como hijo a elem13 (RyP)
 		Element elem17 = d.createElement("literal-boolean");
 		elem17.setAttribute("value", "" + RyP);
 		elem13.appendChild(elem17);
+		
+		// 13. Creamos nodo literal-boolean y añadimos como hijo a elem13 (maximizacion)
+		Element elem18 = d.createElement("literal-boolean");
+		elem18.setAttribute("value", "" + maximizacion);
+		elem13.appendChild(elem18);
 
 		// 14. Creamos nodo var-ref y añadimos como hijo a elem13 (solucion parcial)
-		Element elem18 = d.createElement("var-ref");
-		elem18.setAttribute("name", nombreSolParcial);
-		elem13.appendChild(elem18);
+		Element elem19 = d.createElement("var-ref");
+		elem19.setAttribute("name", nombreSolParcial);
+		elem13.appendChild(elem19);
 		
 		// 15. Creamos nodo var-ref y añadimos como hijo a elem13 (mejor solucion)
-		Element elem19 = d.createElement("var-ref");
-		elem19.setAttribute("name", nombreMejorSolucion);
-		elem13.appendChild(elem19);
+		Element elem20 = d.createElement("var-ref");
+		elem20.setAttribute("name", nombreMejorSolucion);
+		elem13.appendChild(elem20);
 
-		Element elem20;
+		Element elem21;
 		if(RyP) {
 			// 16. Creamos nodo var-ref y añadimos como hijo a elem13 (cota)
-			elem20 = d.createElement("var-ref");
-			elem20.setAttribute("name", nombreCota);
+			elem21 = d.createElement("var-ref");
+			elem21.setAttribute("name", nombreCota);
 		}else {
 			// 16. Creamos nodo literal-number con valor "-1" y añadimos 
 			// como hijo a elem13 (cota)
-			elem20 = d.createElement("literal-number");
-			elem20.setAttribute("kind", "int");
-			elem20.setAttribute("value", "-1");
+			elem21 = d.createElement("literal-number");
+			elem21.setAttribute("kind", "int");
+			elem21.setAttribute("value", "-1");
 		}
-		elem13.appendChild(elem20);
+		elem13.appendChild(elem21);
 		
 		return elem01;
 	}
@@ -1467,7 +1474,7 @@ public class Transformador {
 		Element argumentos[] = (Element[]) valores[2];
 		Element bloqueMetodo = (Element) valores[3];
 
-		generacionLineasEntrada(d, bloqueMetodo, argumentos, RyP, solParcial, mejorSol, cota);
+		generacionLineasEntrada(d, bloqueMetodo, argumentos, RyP, maximizacion, solParcial, mejorSol, cota);
 
 		// Ahora nos ocupamos de las lineas de salida, basándonos en si hay o no
 		// nodos return
@@ -1599,7 +1606,7 @@ public class Transformador {
 		Element bloqueMetodo = (Element) valores[3];
 
 		// Insertamos todas las lineas de entrada, y nos guardamos la primera
-		generacionLineasEntrada(d, bloqueMetodo, argumentos, RyP, solParcial, mejorSol, cota);
+		generacionLineasEntrada(d, bloqueMetodo, argumentos, RyP, maximizacion, solParcial, mejorSol, cota);
 
 		// Ahora nos ocupamos de las lineas de salida, basándonos en los nodos
 		// return existentes
@@ -2004,7 +2011,7 @@ public class Transformador {
 	 * @return primera sentencia que colocamos
 	 */
 	private static Element generacionLineasEntrada(Document d,
-			Element bloqueMetodo, Element argumentos[], boolean RyP, 
+			Element bloqueMetodo, Element argumentos[], boolean RyP, boolean maximizacion, 
 			int solParcial, int mejorSolucion, int cota) {
 		// Creamos todas las lineas de entrada que necesitamos
 
@@ -2050,7 +2057,7 @@ public class Transformador {
 		// 03. Linea de Traza para la entrada
 		Element sentenciaAnadirEntrada = Transformador
 				.elementoAnadirEntradaSalida(d, "anadirEntrada", "pppppp01",
-						RyP, "ssssss01", "mmmmmm01", "cccccc01", 
+						RyP, maximizacion, "ssssss01", "mmmmmm01", "cccccc01", 
 						((Element) (bloqueMetodo.getParentNode()))
 							.getAttribute("name"));
 

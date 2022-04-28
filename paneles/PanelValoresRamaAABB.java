@@ -270,7 +270,7 @@ public class PanelValoresRamaAABB extends JPanel {
     		encontrado = false;
     		mapGrafica(ra);
     		
-    		boolean ryp = nodoActual.getEntrada().getRyP();
+    		boolean ryp = nodoActual.getEntrada().esRyP();
 			RegistroActivacion reg = nodoActual;
 			Integer llamada;
 			numItem = 0;
@@ -295,9 +295,15 @@ public class PanelValoresRamaAABB extends JPanel {
             			}
             			
                 		if(ryp && cota != null && solMejor != null) {
-                			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
-                				podas.add(numItem - 1);
-                			}
+                			if(reg.getEntrada().esMaximizacion()) {
+        						if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+            	    				podas.add(numItem - 1);
+            	    			}
+        					}else {
+        						if(Double.parseDouble(cota.toString()) > Double.parseDouble(solMejor.toString())) {
+            	    				podas.add(numItem - 1);
+            	    			}
+        					}
                 			serieCota.add(llamada, cota);
                 		}
             		}
@@ -326,9 +332,15 @@ public class PanelValoresRamaAABB extends JPanel {
         			}
         			
             		if(ryp && cota != null && solMejor != null) {
-            			if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
-            				podas.add(numItem - 1);
-            			}
+            			if(ra.getEntrada().esMaximizacion()) {
+    						if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
+        	    				podas.add(numItem - 1);
+        	    			}
+    					}else {
+    						if(Double.parseDouble(cota.toString()) > Double.parseDouble(solMejor.toString())) {
+        	    				podas.add(numItem - 1);
+        	    			}
+    					}
             			serieCota.add(llamada, cota);
             		}
         		}
