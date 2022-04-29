@@ -28,6 +28,8 @@ import conf.Conf;
 import botones.BotonAceptar;
 import botones.BotonCancelar;
 import datos.MetodoAlgoritmo;
+import opciones.GestorOpciones;
+import opciones.OpcionOpsVisualizacion;
 import utilidades.Logger;
 import utilidades.Texto;
 import ventanas.Ventana;
@@ -44,6 +46,9 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	private static final int LONGITUD_CAMPOS = 4;
 
 	private JDialog dialogo;
+	
+	private OpcionOpsVisualizacion oov;
+	private GestorOpciones gOpciones = new GestorOpciones();
 
 	private BotonAceptar aceptar;
 	private BotonCancelar cancelar;
@@ -130,6 +135,9 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		panelBotones.add(mensaje);
 		
 		// Se configuran los botones de seleccion
+		oov = (OpcionOpsVisualizacion) gOpciones
+				.getOpcion("OpcionOpsVisualizacion", false);
+		boolean anteriorMaximizacion = oov.getAnteriorMaximizacion();
 		for(int i = 0; i < botonesSeleccion.length ; i++) {		
 			if(i == 0) {
 				botonesSeleccion[i] = 
@@ -149,7 +157,12 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 			botonesSeleccion[i].addActionListener(this);
 			grupoBotonesSeleccion.add(botonesSeleccion[i]);
 		}
-		botonesSeleccion[0].setSelected(true); // Por defecto Maximizacion
+		if(anteriorMaximizacion) {
+			botonesSeleccion[0].setSelected(true);
+		}else {
+			botonesSeleccion[1].setSelected(true);
+		}
+		
 		
 		JLabel mensaje2 = new JLabel(
 				Texto.get("INDICACION_VISTASESPECIFICAS", Conf.idioma) 
@@ -262,8 +275,18 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		if (e.getSource() == aceptar) {
 			if(botonesSeleccion[0].isSelected()) {
 				accionAceptar(true);
+				oov.setAnteriorMaximizacion(true);
+				gOpciones.setOpcion(oov, 1);
+				if (Conf.fichero_log) {
+					Logger.log_write("Tipo de problema: Maximización");
+				}
 			}else if(botonesSeleccion[1].isSelected()) {
 				accionAceptar(false);
+				oov.setAnteriorMaximizacion(false);
+				gOpciones.setOpcion(oov, 1);
+				if (Conf.fichero_log) {
+					Logger.log_write("Tipo de problema: Minimización");
+				}
 			}else {
 				accionCancelar();
 			}
@@ -426,8 +449,18 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		case KeyEvent.VK_ENTER:
 			if(botonesSeleccion[0].isSelected()) {
 				accionAceptar(true);
+				oov.setAnteriorMaximizacion(true);
+				gOpciones.setOpcion(oov, 1);
+				if (Conf.fichero_log) {
+					Logger.log_write("Tipo de problema: Maximización");
+				}
 			} else if(botonesSeleccion[1].isSelected()) {
 				accionAceptar(false);
+				oov.setAnteriorMaximizacion(false);
+				gOpciones.setOpcion(oov, 1);
+				if (Conf.fichero_log) {
+					Logger.log_write("Tipo de problema: Minimización");
+				}
 			} else {
 				accionCancelar();
 			}
@@ -577,16 +610,6 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-//		if (e.getSource() == aceptar) {
-//			if(botonesSeleccion[0].isSelected()) {
-//				accionAceptar(true);
-//			}else if(botonesSeleccion[1].isSelected()) {
-//				accionAceptar(false);
-//			}else {
-//				accionCancelar();
-//			}
-//		} else if (e.getSource() == cancelar) {
-//			accionCancelar();
-//		}
+
 	}
 }

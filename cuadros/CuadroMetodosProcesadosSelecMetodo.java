@@ -100,7 +100,7 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 
 			// Estudiamos si debemos marcar o no checkTodos
 			boolean valorCheckTodos = true;
-			for (int i = 0; i < this.numero; i++) {
+			for (int i = 0; i < this.numero && valorCheckTodos; i++) {
 				if (!this.metodos.get(i).getMarcadoVisualizar()) {
 					valorCheckTodos = false;
 				}

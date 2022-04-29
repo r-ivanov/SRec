@@ -29,6 +29,7 @@ public class OpcionOpsVisualizacion extends Opcion {
 	private boolean mostrarArbolSalto = true;
 
 	private int anteriorVE = 0;
+	private boolean anteriorMaximizacion = true;
 	
 
 	private boolean mostrarVisor = true;// Conf.mostrarVisor;
@@ -97,11 +98,29 @@ public class OpcionOpsVisualizacion extends Opcion {
 	/**
 	 * Permite establecer la ultima eleccion de vistas especificas
 	 * 
-	 * @param anteriorVE
+	 * @param anterior
 	 * 			  0 = Vistas generales, 1 = DyV , 2 = AABB
 	 */
-	public void setAnteriorVE(int anteriorVE) {
-		this.anteriorVE = anteriorVE;
+	public void setAnteriorVE(int anterior) {
+		anteriorVE = anterior;
+	}
+	
+	/**
+	 * Permite conocer la ultima eleccion para el tipo de problema
+	 * 
+	 * @return true = maximización, false = minimización
+	 */
+	public boolean getAnteriorMaximizacion() {
+		return anteriorMaximizacion;
+	}
+	/**
+	 * Permite establecer la ultima eleccion para el tipo de problema
+	 * 
+	 * @param anterior
+	 * 			  true = Maximización, false = Minimización
+	 */
+	public void setAnteriorMaximizacion(boolean anterior) {
+		anteriorMaximizacion = anterior;
 	}
 	/**
 	 * Permite establecer el valor para la opción de mostrar saltos de árboles.
@@ -488,7 +507,11 @@ public class OpcionOpsVisualizacion extends Opcion {
 		e14.setAttribute("valor", "" + this.getVisualizacionDinamica());
 
 		Element e15 = d.createElement("anteriorVE");
-		e15.setAttribute("valor", "" + this.getAnteriorVE());
+		e15.setAttribute("valor", "" + getAnteriorVE());
+		
+		Element e16 = d.createElement("anteriorMaximizacion");
+		e16.setAttribute("valor", "" + getAnteriorMaximizacion());
+		
 		e.appendChild(e01);
 		e.appendChild(e02);
 		e.appendChild(e03);
@@ -504,6 +527,7 @@ public class OpcionOpsVisualizacion extends Opcion {
 		e.appendChild(e13);
 		e.appendChild(e14);
 		e.appendChild(e15);
+		e.appendChild(e16);
 
 		return e;
 	}
@@ -611,19 +635,19 @@ public class OpcionOpsVisualizacion extends Opcion {
 		}
 		elements = ManipulacionElement.nodeListToElementArray(e
 				.getElementsByTagName("anteriorVE"));
-		
-//			this.setAnteriorVE(elements[0].getAttribute("valor")
-//					.equals("true"));
-		
 		if(elements[0].getAttribute("valor").equals("1")) {
-			this.setAnteriorVE(1);
+			setAnteriorVE(1);
 		}else if(elements[0].getAttribute("valor").equals("2")) {
-			this.setAnteriorVE(2);
+			setAnteriorVE(2);
 		}else {
-			this.setAnteriorVE(0);
+			setAnteriorVE(0);
 		}
 		
-		//this.setAnteriorDyV(false);
+		
+		elements = ManipulacionElement.nodeListToElementArray(e
+				.getElementsByTagName("anteriorMaximizacion"));
+		setAnteriorMaximizacion(
+				elements[0].getAttribute("valor").equalsIgnoreCase("true"));
 		
 	}
 }

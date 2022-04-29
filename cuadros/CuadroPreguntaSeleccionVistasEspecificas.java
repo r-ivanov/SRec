@@ -41,7 +41,7 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 	private static final int ANCHO_CUADRO = 390;//420
 	private static final int ALTO_CUADRO = 190;//220
 	
-	private OpcionOpsVisualizacion oov ;
+	private OpcionOpsVisualizacion oov;
 	private BotonAceptar aceptar;
 	private BotonCancelar cancelar;
 	private JPanel panel, panelBoton, panelBotones;
