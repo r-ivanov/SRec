@@ -22,6 +22,7 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,7 @@ import java.util.Set;
 import conf.Conf;
 import cuadros.CuadroInformacion;
 import cuadros.CuadroProgreso;
+import datos.MetodoAlgoritmo;
 import datos.RegistroActivacion;
 import utilidades.Fotografo;
 import utilidades.Texto;
@@ -310,17 +312,9 @@ public class PanelValoresGlobalesAABB extends JPanel {
     			if(solMejor != null) {
     				serieSolMejor.add(id, solMejor);
     				if(cota != null) {
-    					if(ra2.getEntrada().esMaximizacion()) {
-    						if(Double.parseDouble(cota.toString()) < Double.parseDouble(solMejor.toString())) {
-        	    				podas.add(id - 1);
-        	    			}
-    					}else {
-    						if(Double.parseDouble(cota.toString()) > Double.parseDouble(solMejor.toString())) {
-        	    				podas.add(id - 1);
-        	    			}
-    					}
-    	    			
+    					podar(ra2, cota, solMejor, id);
     				}
+    				
     			}
     			if(cota != null) {
     				serieCota.add(id, cota);
@@ -332,6 +326,121 @@ public class PanelValoresGlobalesAABB extends JPanel {
         }	
 	}
 	
+	private void podar(RegistroActivacion ra2, Number cota, Number solMejor, int id) {
+		ArrayList<MetodoAlgoritmo> metodos = Ventana.thisventana.claseAlgoritmo.getMetodos();
+		MetodoAlgoritmo metodo = null;
+		
+		for(MetodoAlgoritmo m : metodos) {
+			if(m.getTecnica() == MetodoAlgoritmo.TECNICA_AABB) {
+				metodo = m;
+				break;
+			}
+		}
+		
+		if(metodo != null) {
+			int indiceCotaParam = metodo.getCota();
+			if(indiceCotaParam > 0) {
+				String tipoCota = metodo.getTiposParametros()[indiceCotaParam];
+				
+				// Tenemos que tener mucho cuidado con la comprobación de igualdad en float y double.
+				switch(tipoCota) {
+				case "int":
+				case "Integer":
+					if(ra2.getEntrada().esMaximizacion()) {
+						if(Integer.parseInt(cota.toString()) <= Integer.parseInt(solMejor.toString())) {
+    	    				podas.add(id - 1);
+    	    			}
+					}else {
+						if(Integer.parseInt(cota.toString()) >= Integer.parseInt(solMejor.toString())) {
+    	    				podas.add(id - 1);
+    	    			}
+					}
+					break;
+				case "double":
+				case "Double":
+					Double cotaD = Double.parseDouble(cota.toString());
+					Double solMejorD = Double.parseDouble(solMejor.toString());
+					Double epsilonD = 0.000001d; // umbral para comparar double
+					
+					if (Math.abs(Math.abs(cotaD) - Math.abs(solMejorD)) < epsilonD) {
+						// casi iguales
+						podas.add(id - 1);
+					}else {
+    					if(ra2.getEntrada().esMaximizacion()) {
+    						if(cotaD < solMejorD) {
+        	    				podas.add(id - 1);
+        	    			}
+    					}else {
+    						if(cotaD > solMejorD) {
+        	    				podas.add(id - 1);
+        	    			}
+    					}
+					}
+					break;
+				case "float":
+				case "Float":
+					Float cotaF = Float.parseFloat(cota.toString());
+					Float solMejorF = Float.parseFloat(solMejor.toString());
+					Float epsilonF = 0.000001f; // umbral para comparar float
+					
+					if (Math.abs(Math.abs(cotaF) - Math.abs(solMejorF)) < epsilonF) {
+						// casi iguales
+						podas.add(id - 1);
+					}else {
+    					if(ra2.getEntrada().esMaximizacion()) {
+    						if(cotaF < solMejorF) {
+        	    				podas.add(id - 1);
+        	    			}
+    					}else {
+    						if(cotaF > solMejorF) {
+        	    				podas.add(id - 1);
+        	    			}
+    					}
+					}
+					break;
+				case "long":
+				case "Long":
+					if(ra2.getEntrada().esMaximizacion()) {
+						if(Long.parseLong(cota.toString()) <= Long.parseLong(solMejor.toString())) {
+    	    				podas.add(id - 1);
+    	    			}
+					}else {
+						if(Long.parseLong(cota.toString()) >= Long.parseLong(solMejor.toString())) {
+    	    				podas.add(id - 1);
+    	    			}
+					}
+					break;
+				case "byte":
+				case "Byte":
+					if(ra2.getEntrada().esMaximizacion()) {
+						if(Byte.parseByte(cota.toString()) <= Byte.parseByte(solMejor.toString())) {
+    	    				podas.add(id - 1);
+    	    			}
+					}else {
+						if(Byte.parseByte(cota.toString()) >= Byte.parseByte(solMejor.toString())) {
+    	    				podas.add(id - 1);
+    	    			}
+					}
+					break;
+				case "short":
+				case "Short":
+					if(ra2.getEntrada().esMaximizacion()) {
+						if(Short.parseShort(cota.toString()) <= Short.parseShort(solMejor.toString())) {
+    	    				podas.add(id - 1);
+    	    			}
+					}else {
+						if(Short.parseShort(cota.toString()) >= Short.parseShort(solMejor.toString())) {
+    	    				podas.add(id - 1);
+    	    			}
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+
 	private RegistroActivacion encontrarHijo() {
 		for(RegistroActivacion raHijo: ra.getHijos()) {
     		Number solParcial = raHijo.getEntrada().getSolParcial();
