@@ -64,8 +64,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 	private static PanelCrono pCrono;
 	private static PanelEstructura pEstructura;
 	
-	private static PanelValoresGlobalesAABB pValGlobal;
-	private static PanelValoresRamaAABB pValRama;
+	private static PanelValoresGlobales pValGlobal;
+	private static PanelValoresRama pValRama;
 
 	private static PanelControl pControl;
 
@@ -150,8 +150,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		dcha.setLayout(new BorderLayout());
 
 		try {
-			pValGlobal = new PanelValoresGlobalesAABB();
-			pValRama = new PanelValoresRamaAABB();
+			pValGlobal = new PanelValoresGlobales();
+			pValRama = new PanelValoresRama();
 			
 			pPila = new PanelPila(null);
 			pArbol = new PanelArbol(null, pValRama);
@@ -414,8 +414,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 		try {
 			if(Arrays.contiene(MetodoAlgoritmo.TECNICA_AABB,
 					Ventana.thisventana.getTraza().getTecnicas())) {
-				pValGlobal = new PanelValoresGlobalesAABB();
-				pValRama = new PanelValoresRamaAABB();
+				pValGlobal = new PanelValoresGlobales();
+				pValRama = new PanelValoresRama();
 				pArbol = new PanelArbol(nyp, pValRama);
 			}else {
 				pArbol = new PanelArbol(nyp, null);
@@ -468,8 +468,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				e.printStackTrace();
 				System.out
 				.println("\n-Ha saltado una excepcion(PanelAlgoritmo)-\n");
-				pValGlobal = new PanelValoresGlobalesAABB();
-				pValRama = new PanelValoresRamaAABB();
+				pValGlobal = new PanelValoresGlobales();
+				pValRama = new PanelValoresRama();
 				
 				pArbol = new PanelArbol(null, pValRama);
 				pPila = new PanelPila(null);
@@ -576,7 +576,7 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 				e.printStackTrace();
 				System.out.println("\n-Ha saltado una excepcion-\n");
 				// Cambiar para AABB
-				pArbol = new PanelArbol(null, new PanelValoresRamaAABB());
+				pArbol = new PanelArbol(null, new PanelValoresRama());
 				pPila = new PanelPila(null);
 				pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);
 				pTraza = new PanelTraza();
@@ -626,8 +626,8 @@ public class PanelAlgoritmo extends JPanel implements ChangeListener, ComponentL
 			Ventana.thisventana.traza = null;
 			Ventana.thisventana.trazaCompleta = null;
 			
-			pValGlobal = new PanelValoresGlobalesAABB();
-			pValRama = new PanelValoresRamaAABB();
+			pValGlobal = new PanelValoresGlobales();
+			pValRama = new PanelValoresRama();
 			pArbol = new PanelArbol(null, pValRama);
 			pPila = new PanelPila(null);
 			pGrafo = new PanelGrafo((DatosMetodoBasicos) null,null,null);

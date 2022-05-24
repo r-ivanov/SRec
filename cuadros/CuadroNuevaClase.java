@@ -152,6 +152,7 @@ public class CuadroNuevaClase extends Thread implements KeyListener,
 
 		GeneradorJava.crearClase(path);
 		this.dialogo.setVisible(false);
+		dialogo.dispose();
 
 		String carpeta = path
 				.substring(0, path.lastIndexOf(File.separator) + 1);
@@ -178,6 +179,7 @@ public class CuadroNuevaClase extends Thread implements KeyListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (code == KeyEvent.VK_ENTER) {
 			File f = new File(this.fichero[0] + this.fichero[1]);
 			if (f.exists()) {
@@ -259,6 +261,7 @@ public class CuadroNuevaClase extends Thread implements KeyListener,
 
 		else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() == this.examinar) {
 			String[] f = SelecDireccion.cuadroAbrirFichero(this.fichero[0],
 					Texto.get("CA_GNUEVACLASE", Conf.idioma), null, "java",

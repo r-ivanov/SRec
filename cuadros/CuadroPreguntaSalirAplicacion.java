@@ -53,6 +53,7 @@ public class CuadroPreguntaSalirAplicacion extends CuadroPregunta implements
 		if (e.getSource() == this.aceptar) {
 			this.getVentana().cerrar();
 		}
+		d.dispose();
 	}
 
 }

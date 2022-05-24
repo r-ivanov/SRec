@@ -218,6 +218,7 @@ public class CuadroOpcionMVJavaEncontradas extends Thread implements ActionListe
 					new CuadroInformacion(this.ventana, Texto.get("INFO_MVJOK",
 							Conf.idioma), Texto.get("INFO_MVJAVA", Conf.idioma),
 							550, 100);
+					dialogo.dispose();
 				}
 				return true;
 			} else {
@@ -233,6 +234,7 @@ public class CuadroOpcionMVJavaEncontradas extends Thread implements ActionListe
 		}else if(opcion.equals(Texto.get("CSMVE_MANUAL",Conf.idioma))){
 			new CuadroOpcionMVJava(this.ventana, true);
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 			return false;
 		}else{
 			return false;
@@ -278,6 +280,7 @@ public class CuadroOpcionMVJavaEncontradas extends Thread implements ActionListe
 			valorarSeleccion(true);
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}		
 	}
 
@@ -299,6 +302,7 @@ public class CuadroOpcionMVJavaEncontradas extends Thread implements ActionListe
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (code == KeyEvent.VK_ENTER && this.aceptar.isFocusOwner()) {			
 			valorarSeleccion(true);			
 		}

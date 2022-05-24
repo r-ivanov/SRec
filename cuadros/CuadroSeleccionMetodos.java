@@ -38,8 +38,8 @@ import ventanas.*;
  * @author Antonio Pérez Carrasco
  * @version 2006-2007
  */
-public class CuadroSeleccionMetodos extends Thread implements ActionListener,
-		KeyListener, MouseListener {
+public class CuadroSeleccionMetodos extends Thread implements 
+		ActionListener, KeyListener, MouseListener {
 
 	private static final int ANCHO_CUADRO = 720;
 	private static final int ALTO_CUADRO = 420;
@@ -51,7 +51,7 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 	// Numero total de métodos visualizables
 	private int numero;
 
-	private JCheckBox botonesDYV[];
+	private JCheckBox botones[];
 
 	private int[] posicBotones;
 
@@ -75,30 +75,32 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 	private Ventana ventana;
 	private Preprocesador preprocesador;
 	private JDialog dialogo;
+	
+	private boolean DyV; // true = Divide y Venceras, false = Arboles de busqueda
+	private boolean maximizacion;
 
 	/**
 	 * Contructor: genera un nuevo cuadro de diálogo que permite al usuario
 	 * elegir qué método de una determinada clase se quiere ejecutar
 	 * 
-	 * @param clase
+	 * @param claseAlgoritmo
 	 *            clase a la que pertenece el método que se quiere ejecutar
 	 * @param ventana
 	 *            ventana a la que se asociará el cuadro de diálogo
-	 * @param gestorEjecucion
+	 * @param preprocesador
 	 *            gestor que realizará los pasos necesarios para ejecutar el
 	 *            método seleccionado
-	 * @param codigounico
-	 *            código único que identifica a la clase y la da nombre
 	 */
 	public CuadroSeleccionMetodos(ClaseAlgoritmo claseAlgoritmo,
-			Ventana ventana, Preprocesador preprocesador) {
-		this.dialogo = new JDialog(ventana, true);
-		this.ventana = ventana;
-		this.clase = claseAlgoritmo;
-		this.metodos = claseAlgoritmo.getMetodos();
-		this.numero = this.metodos.size();
-		this.preprocesador = preprocesador;
-		this.start();
+			Ventana ventana_, Preprocesador preprocesador_, boolean DyV_) {
+		dialogo = new JDialog(ventana, true);
+		ventana = ventana_;
+		clase = claseAlgoritmo;
+		metodos = claseAlgoritmo.getMetodos();
+		numero = metodos.size();
+		preprocesador = preprocesador_;
+		DyV = DyV_;
+		start();
 	}
 
 	/**
@@ -107,27 +109,27 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 	@Override
 	public void run() {
 
-		if (this.numero > 0) {
-			String nombreClase = this.clase.getNombre();
+		if (numero > 0) {
+			String nombreClase = clase.getNombre();
 
 			int llamadasRepresentar = 0;
 
-			for (MetodoAlgoritmo m : this.metodos) {
+			for (MetodoAlgoritmo m : metodos) {
 				llamadasRepresentar = llamadasRepresentar
 						+ m.getMetodosLlamados().length;
 			}
 
 			// Panel de Botones
-			this.gl = new GridLayout(this.numero + llamadasRepresentar, 1);
-			this.panelBotones = new JPanel();
-			this.panelBotones.setLayout(this.gl);
+			gl = new GridLayout(numero + llamadasRepresentar, 1);
+			panelBotones = new JPanel();
+			panelBotones.setLayout(gl);
 
-			this.posicBotones = new int[this.numero];
+			posicBotones = new int[numero];
 
-			this.estructura = new JTextField[this.numero];
-			this.indices = new JTextField[this.numero];
+			estructura = new JTextField[numero];
+			indices = new JTextField[numero];
 
-			this.botonesDYV = new JCheckBox[this.numero];
+			botones = new JCheckBox[numero];
 
 			JPanel panelFilaSup = new JPanel();
 			panelFilaSup.setLayout(new BorderLayout());
@@ -140,16 +142,20 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 			int alturaFilaSuperior = 20;
 
 			JPanel panelEtiqEstructura = new JPanel();
-			panelEtiqEstructura.setPreferredSize(new Dimension(70,
-					alturaFilaSuperior));
-			panelEtiqEstructura.add(new JLabel(Texto.get("CSM_FILASUPESTR",
-					Conf.idioma)));
+			panelEtiqEstructura.setPreferredSize(
+					new Dimension(70, alturaFilaSuperior));
+			if(DyV) {
+				panelEtiqEstructura.add(
+						new JLabel(Texto.get("CSM_FILASUPESTR", Conf.idioma)));
+			}else {
+				panelEtiqEstructura.add(
+						new JLabel(Texto.get("CSM_FILASUPTIPO", Conf.idioma)));
+			}
+			
 
 			JPanel panelEtiqIndices = new JPanel();
-			panelEtiqIndices.setPreferredSize(new Dimension(70,
-					alturaFilaSuperior));
-			panelEtiqIndices.add(new JLabel(Texto.get("CSM_FILASUPINDIC",
-					Conf.idioma)));
+			panelEtiqIndices.setPreferredSize(new Dimension(70, alturaFilaSuperior));
+			panelEtiqIndices.add(new JLabel(Texto.get("CSM_FILASUPINDIC", Conf.idioma)));
 
 			JPanel panelEtiqVacia = new JPanel();
 			panelEtiqVacia
@@ -163,55 +169,61 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 			panelFilaSup.add(etiqSignatura, BorderLayout.WEST);
 			panelFilaSup.add(panelDerechaSuperior, BorderLayout.EAST);
 
-			String toolTipEstr = Texto.get("CSM_INDICAESTR", Conf.idioma);
-			String toolTipInd = Texto.get("CSM_INDICAPARAM", Conf.idioma);
+			String toolTipEstr, toolTipInd, toolTipsi, toolTipno;
+			if(DyV) {
+				toolTipEstr = Texto.get("CSM_INDICAESTR", Conf.idioma);
 
-			String toolTipDYVsi = Texto.get("CSM_MARCPROC", Conf.idioma);
-			String toolTipDYVno = Texto.get("CSM_MARCPROCNO", Conf.idioma);
+				toolTipsi = Texto.get("CSM_MARCPROC", Conf.idioma);
+				toolTipno = Texto.get("CSM_MARCPROCNO", Conf.idioma);
+			}else {
+				toolTipEstr = Texto.get("CSM_INDICATIPO", Conf.idioma);
+
+				toolTipsi = Texto.get("CSM_MARCPROC1", Conf.idioma);
+				toolTipno = Texto.get("CSM_MARCPROC1NO", Conf.idioma);
+			}
+			toolTipInd = Texto.get("CSM_INDICAPARAM", Conf.idioma);
+
 
 			int y = 0;
-			for (int x = 0; x < this.numero; x++) {
-				JPanel panelFila = new JPanel();
-				panelFila.setLayout(new BorderLayout());
+			for (int x = 0; x < numero; x++) {
+				JPanel panelFila = new JPanel(new BorderLayout());
 
 				// Parte derecha
-				JPanel panelFilaParteDerecha = new JPanel();
-				panelFilaParteDerecha.setLayout(new BorderLayout());
+				JPanel panelFilaParteDerecha = new JPanel(new BorderLayout());
 
-				this.estructura[x] = new JTextField(8);
-				this.indices[x] = new JTextField(8);
+				estructura[x] = new JTextField(8);
+				indices[x] = new JTextField(8);
 
-				this.estructura[x].addKeyListener(this);
-				this.indices[x].addKeyListener(this);
+				estructura[x].addKeyListener(this);
+				indices[x].addKeyListener(this);
 
-				this.estructura[x].setEnabled(false);
-				this.indices[x].setEnabled(false);
+				estructura[x].setEnabled(false);
+				indices[x].setEnabled(false);
 
-				this.estructura[x]
-						.setHorizontalAlignment(SwingConstants.CENTER);
-				this.indices[x].setHorizontalAlignment(SwingConstants.CENTER);
+				estructura[x].setHorizontalAlignment(SwingConstants.CENTER);
+				indices[x].setHorizontalAlignment(SwingConstants.CENTER);
 
-				this.estructura[x].setToolTipText(toolTipEstr);
-				this.indices[x].setToolTipText(toolTipInd);
+				estructura[x].setToolTipText(toolTipEstr);
+				indices[x].setToolTipText(toolTipInd);
 
 				JPanel panelContenedorEstructura = new JPanel();
-				panelContenedorEstructura.add(this.estructura[x]);
+				panelContenedorEstructura.add(estructura[x]);
 				panelContenedorEstructura
 						.setPreferredSize(new Dimension(70, 24));
 				JPanel panelContenedorIndices = new JPanel();
-				panelContenedorIndices.add(this.indices[x]);
+				panelContenedorIndices.add(indices[x]);
 				panelContenedorIndices.setPreferredSize(new Dimension(70, 24));
 
-				panelFilaParteDerecha.add(panelContenedorEstructura,
-						BorderLayout.WEST);
-				panelFilaParteDerecha.add(panelContenedorIndices,
-						BorderLayout.CENTER);
+				panelFilaParteDerecha.add(
+						panelContenedorEstructura, BorderLayout.WEST);
+				panelFilaParteDerecha.add(
+						panelContenedorIndices, BorderLayout.CENTER);
 
 				// Parte izquierda
 				JPanel panelFilaParteIzquierda = new JPanel();
 
-				String representacion = this.metodos.get(x).getRepresentacion();
-				int[] dimParametros = this.metodos.get(x).getDimParametros();
+				String representacion = metodos.get(x).getRepresentacion();
+				int[] dimParametros = metodos.get(x).getDimParametros();
 				boolean hayArrayOMatriz = false;
 				for (int i = 0; i < dimParametros.length; i++) {
 					if (dimParametros[i] > 0) {
@@ -219,32 +231,32 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 					}
 				}
 
-				this.botonesDYV[x] = new JCheckBox(representacion);
-				this.botonesDYV[x].setName(representacion);
+				botones[x] = new JCheckBox(representacion);
+				botones[x].setName(representacion);
 
-				this.posicBotones[x] = y;
+				posicBotones[x] = y;
 
 				if (hayArrayOMatriz) {
-					this.botonesDYV[x].setToolTipText(toolTipDYVsi);
+					botones[x].setToolTipText(toolTipsi);
 				} else {
-					this.botonesDYV[x].setToolTipText(toolTipDYVno);
-					this.botonesDYV[x].setEnabled(false);
+					botones[x].setToolTipText(toolTipno);
+					botones[x].setEnabled(false);
 				}
 
 				// panelBotones.add(botones[x],x);
-				panelFilaParteIzquierda.add(this.botonesDYV[x]);
-				this.botonesDYV[x].addKeyListener(this);
-				this.botonesDYV[x].addActionListener(this);
+				panelFilaParteIzquierda.add(botones[x]);
+				botones[x].addKeyListener(this);
+				botones[x].addActionListener(this);
 
 				panelFila.add(panelFilaParteIzquierda, BorderLayout.WEST);
 				panelFila.add(panelFilaParteDerecha, BorderLayout.EAST);
 
 				panelFila.setPreferredSize(new Dimension(550, 25));
 
-				this.panelBotones.add(panelFila, y);
+				panelBotones.add(panelFila, y);
 				y++;
 
-				int[] llamadas = this.metodos.get(x).getMetodosLlamados();
+				int[] llamadas = metodos.get(x).getMetodosLlamados();
 				for (int i = 0; i < llamadas.length; i++) {
 					panelFila = new JPanel();
 					panelFila.setLayout(new BorderLayout());
@@ -252,7 +264,7 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 					JPanel izqdaLlamada = new JPanel();
 					JLabel etiquetaSignaturaLlamado = new JLabel(
 							"            - "
-									+ this.clase.getMetodoID(llamadas[i])
+									+ clase.getMetodoID(llamadas[i])
 											.getRepresentacion());
 					if (!hayArrayOMatriz) {
 						etiquetaSignaturaLlamado.setEnabled(false);
@@ -263,7 +275,7 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 
 					panelFila.add(izqdaLlamada, BorderLayout.WEST);
 
-					this.panelBotones.add(panelFila, y);
+					panelBotones.add(panelFila, y);
 
 					y++;
 				}
@@ -271,28 +283,28 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 			}
 
 			// Botón Aceptar
-			this.aceptar = new BotonAceptar();
-			this.aceptar.addKeyListener(this);
-			this.aceptar.addMouseListener(this);
+			aceptar = new BotonAceptar();
+			aceptar.addKeyListener(this);
+			aceptar.addMouseListener(this);
 
 			// Botón Cancelar
-			this.cancelar = new BotonCancelar();
-			this.cancelar.addKeyListener(this);
-			this.cancelar.addMouseListener(this);
+			cancelar = new BotonCancelar();
+			cancelar.addKeyListener(this);
+			cancelar.addMouseListener(this);
 
 			// Panel para el botón
-			this.panelBoton = new JPanel();
-			this.panelBoton.add(this.aceptar);
-			this.panelBoton.add(this.cancelar);
+			panelBoton = new JPanel();
+			panelBoton.add(aceptar);
+			panelBoton.add(cancelar);
 
 			// Panel general
-			this.bl = new BorderLayout();
-			this.panel = new JPanel();
-			this.panel.setLayout(this.bl);
+			bl = new BorderLayout();
+			panel = new JPanel();
+			panel.setLayout(bl);
 
 			JPanel panelContenedorBotones = new JPanel();
 			panelContenedorBotones.setLayout(new BorderLayout());
-			panelContenedorBotones.add(this.panelBotones, BorderLayout.NORTH);
+			panelContenedorBotones.add(panelBotones, BorderLayout.NORTH);
 
 			JScrollPane jsp = new JScrollPane(panelContenedorBotones);
 
@@ -310,26 +322,30 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 					ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			panelSup.setBorder(
 					new TitledBorder(
-							this.numero + " " 
-									+ Texto.get("CSM_METDISP", Conf.idioma) 
-									+ " " + nombreClase));
+							numero + " " 
+							+ Texto.get("CSM_METDISP", Conf.idioma) 
+							+ " " + nombreClase));
 
-			this.panel.add(panelSup, BorderLayout.NORTH);
-			this.panel.add(this.panelBoton, BorderLayout.SOUTH);
+			panel.add(panelSup, BorderLayout.NORTH);
+			panel.add(panelBoton, BorderLayout.SOUTH);
 
 			// Preparamos y mostramos cuadro
-			this.dialogo.getContentPane().add(this.panel);
-			this.dialogo.setTitle(Texto.get("CSM_ESCMET", Conf.idioma));
-
+			dialogo.getContentPane().add(panel);
+			if(DyV) {
+				dialogo.setTitle(Texto.get("CSM_ESCMET", Conf.idioma));
+			}else {
+				dialogo.setTitle(Texto.get("CSM_ESCMET2", Conf.idioma));
+			}
+			
 			// dialogo.setSize(anchoCuadro,altoCuadro+(alto*numero));
-			this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
+			dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO);
 			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
-			this.dialogo.setLocation(coord[0], coord[1]);
-			this.dialogo.setResizable(false);
-			this.dialogo.setVisible(true);
+			dialogo.setLocation(coord[0], coord[1]);
+			dialogo.setResizable(false);
+			dialogo.setVisible(true);
 
 		} else {
-			new CuadroError(this.ventana,
+			new CuadroError(ventana,
 					Texto.get("ERROR_CLASE", Conf.idioma), Texto.get(
 							"CSM_NOVISMET", Conf.idioma));
 		}
@@ -342,44 +358,60 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 	private void recogerMetodosSeleccionados() {
 		boolean huboError = false;
 
-		for (int i = 0; i < this.clase.getNumMetodos(); i++) {
-			if ((this.botonesDYV[i].isSelected() || !(this.botonesDYV[i]
-					.isSelected()))) {
-				this.clase.getMetodo(i).setMarcadoProcesar(true);
+		for (int i = 0; i < clase.getNumMetodos(); i++) {
+			if ((botones[i].isSelected() || !(botones[i].isSelected()))) {
+				clase.getMetodo(i).setMarcadoProcesar(true);
 
-				if (this.botonesDYV[i].isSelected()) {
-					this.clase.getMetodo(i).setTecnica(
-							MetodoAlgoritmo.TECNICA_DYV);
-					Ventana.thisventana.habilitarOpcionesDYV(true);
-					this.clase.getMetodo(i).setIndices(
-							Integer.parseInt(this.estructura[i].getText()
-									.replace(" ", "")));
+				if (botones[i].isSelected()) {
+					if(DyV) {
+						clase.getMetodo(i).setTecnica(MetodoAlgoritmo.TECNICA_DYV);
+						Ventana.thisventana.habilitarOpcionesDYV(true);
+						
+						clase.getMetodo(i).setIndices(
+								Integer.parseInt(estructura[i].getText().replace(" ", "")));
 
-					int parametrosIndice[] = ServiciosString.extraerValoresInt(
-							this.indices[i].getText(), ',');
+						int parametrosIndice[] = ServiciosString.extraerValoresInt(indices[i].getText(), ',');
 
-					if (parametrosIndice == null) {
-						this.clase.getMetodo(i).setIndices(
-								Integer.parseInt(this.estructura[i].getText()
-										.replace(" ", "")) + 1);
-					} else if (parametrosIndice.length == 2) {
-						this.clase.getMetodo(i).setIndices(
-								Integer.parseInt(this.estructura[i].getText()
-										.replace(" ", "")) + 1,
-								parametrosIndice[0] + 1,
-								parametrosIndice[1] + 1);
-					} else {
-						this.clase.getMetodo(i).setIndices(
-								Integer.parseInt(this.estructura[i].getText()
-										.replace(" ", "")) + 1,
-								parametrosIndice[0] + 1,
-								parametrosIndice[1] + 1,
-								parametrosIndice[2] + 1,
-								parametrosIndice[3] + 1);
+						if (parametrosIndice == null) {
+							clase.getMetodo(i).setIndices(
+									Integer.parseInt(estructura[i].getText().replace(" ", "")) + 1);
+						} else if (parametrosIndice.length == 2) {
+							clase.getMetodo(i).setIndices(
+									Integer.parseInt(estructura[i].getText().replace(" ", "")) + 1,
+									parametrosIndice[0] + 1,
+									parametrosIndice[1] + 1);
+						} else {
+							clase.getMetodo(i).setIndices(
+									Integer.parseInt(estructura[i].getText().replace(" ", "")) + 1,
+									parametrosIndice[0] + 1,
+									parametrosIndice[1] + 1,
+									parametrosIndice[2] + 1,
+									parametrosIndice[3] + 1);
+						}
+					}else {
+						clase.getMetodo(i).setTecnica(MetodoAlgoritmo.TECNICA_AABB); 
+						
+						int parametrosIndice[] = ServiciosString.extraerValoresInt(indices[i].getText(), ',');
+						
+						if (parametrosIndice == null) {
+							huboError = true;
+						} else if(parametrosIndice.length == 2) { // Vuelta Atras	
+							clase.getMetodo(i).setSolParcial(parametrosIndice[0]);
+							clase.getMetodo(i).setMejorSol(parametrosIndice[1]);
+							clase.getMetodo(i).setMaximizacion(maximizacion);
+							clase.getMetodo(i).setRyP(false);
+						} else if(parametrosIndice.length == 3) { // RyP
+							clase.getMetodo(i).setSolParcial(parametrosIndice[0]);
+							clase.getMetodo(i).setMejorSol(parametrosIndice[1]);
+							clase.getMetodo(i).setCota(parametrosIndice[2]);
+							clase.getMetodo(i).setMaximizacion(maximizacion);	
+							clase.getMetodo(i).setRyP(true);
+						}else {
+							huboError = true;
+						}
 					}
 				} else {
-					this.clase.getMetodo(i).setTecnica(
-							MetodoAlgoritmo.TECNICA_REC);
+					clase.getMetodo(i).setTecnica(MetodoAlgoritmo.TECNICA_REC);
 				}
 			} else {
 				huboError = true;
@@ -387,10 +419,11 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 		}
 
 		if (!huboError) {
-			this.dialogo.setVisible(false);
-			this.preprocesador.fase2(this.clase);
+			dialogo.setVisible(false);
+			preprocesador.fase2(clase);
+			dialogo.dispose();
 		} else {
-			new CuadroError(this.dialogo, Texto.get("ERROR_VAL", Conf.idioma),
+			new CuadroError(dialogo, Texto.get("ERROR_VAL", Conf.idioma),
 					Texto.get("ERROR_VALESCR", Conf.idioma));
 		}
 
@@ -405,7 +438,7 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 	 *            true para marcar, false para desmarcar.
 	 */
 	public void marcarMetodo(int numMetodo, boolean valor) {
-		this.botonesDYV[numMetodo].setSelected(valor);
+		botones[numMetodo].setSelected(valor);
 	}
 
 	/**
@@ -416,27 +449,31 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.aceptar) {
+		if (e.getSource() == aceptar) {
 			recogerMetodosSeleccionados();
-		} else if (e.getSource() == this.cancelar) {
-			this.dialogo.setVisible(false);
+		} else if (e.getSource() == cancelar) {
+			dialogo.setVisible(false);
 			oov.setAnteriorVE(0);
-			this.gOpciones.setOpcion(oov, 1);
-			//this.dialogo.setVisible(false);
+			gOpciones.setOpcion(oov, 1);
 			if (Conf.fichero_log) {
 				Logger.log_write("Ninguna vista específica");
 			}
-			this.preprocesador.fase2(this.clase);
+			preprocesador.fase2(clase);
 
-			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource().getClass().getName().contains("JCheckBox")) {
-			for (int i = 0; i < this.numero; i++) {
-				if (this.botonesDYV[i] == e.getSource()) {
-					if (this.botonesDYV[i].isSelected()) {
-						new CuadroIdentificarParametros(Ventana.thisventana,
-								this, this.metodos.get(i), i,
-								this.estructura[i].getText(),
-								this.indices[i].getText());
+			for (int i = 0; i < numero; i++) {
+				if (botones[i] == e.getSource()) {
+					if (botones[i].isSelected()) {
+						if(DyV) {
+							new CuadroIdentificarParametrosDyV(Ventana.thisventana,
+									this, metodos.get(i), i,
+									estructura[i].getText(),
+									indices[i].getText());
+						}else {
+							new CuadroIdentificarParametrosAABB(Ventana.thisventana,
+									this, metodos.get(i), i);
+						}
 					}
 				}
 			}
@@ -467,22 +504,20 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 		if (code == KeyEvent.VK_ENTER) {
 			recogerMetodosSeleccionados();
 		} else if (code == KeyEvent.VK_ESCAPE) {
-			this.dialogo.setVisible(false);
 			oov.setAnteriorVE(0);
-			this.gOpciones.setOpcion(oov, 1);
-			//this.dialogo.setVisible(false);
+			gOpciones.setOpcion(oov, 1);
+			dialogo.setVisible(false);
 			if (Conf.fichero_log) {
 				Logger.log_write("Ninguna vista específica");
 			}
-			this.preprocesador.fase2(this.clase);
-
-			this.dialogo.setVisible(false);
+			preprocesador.fase2(clase);
+			dialogo.dispose();
 		} else {
 			if (e.getSource() instanceof JTextField) {
-				for (int i = 0; i < this.estructura.length; i++) {
-					if (e.getSource() == this.estructura[i]
-							|| e.getSource() == this.indices[i]) {
-						this.botonesDYV[i].setSelected(true);
+				for (int i = 0; i < estructura.length; i++) {
+					if (e.getSource() == estructura[i]
+							|| e.getSource() == indices[i]) {
+						botones[i].setSelected(true);
 					}
 				}
 			}
@@ -552,27 +587,38 @@ public class CuadroSeleccionMetodos extends Thread implements ActionListener,
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (e.getSource() == this.aceptar) {
+		if (e.getSource() == aceptar) {
 			recogerMetodosSeleccionados();
-		} else if (e.getSource() == this.cancelar) {
-			this.oov = (OpcionOpsVisualizacion) this.gOpciones
-					.getOpcion("OpcionOpsVisualizacion", false);
-			//this.dialogo.setVisible(false);
+		} else if (e.getSource() == cancelar) {
+			oov = (OpcionOpsVisualizacion) gOpciones.getOpcion("OpcionOpsVisualizacion", false);
 			oov.setAnteriorVE(0);
-			this.gOpciones.setOpcion(oov, 1);
-			//this.dialogo.setVisible(false);
+			gOpciones.setOpcion(oov, 1);
+			dialogo.setVisible(false);
 			if (Conf.fichero_log) {
 				Logger.log_write("Ninguna vista específica");
 			}
-			this.preprocesador.fase2(this.clase);
-
-			this.dialogo.setVisible(false);
+			preprocesador.fase2(clase);
+			dialogo.dispose();
 		}
 	}
 
+	/**
+	 * Permite asignar el parámetro del método que contiene la estructura divide
+	 * y vencerás para un determinado algoritmo.
+	 */
 	public void setParametrosMetodo(int i, String paramE, String paramI) {
-		this.estructura[i].setText(paramE);
-		this.indices[i].setText(paramI);
+		estructura[i].setText(paramE);
+		indices[i].setText(paramI);
+	}
+	/**
+	 * Permite asignar los parámetros del método que contienen 
+	 * la solucion parcial, la mejor solución y la cota 
+	 * para un determinado algoritmo basado en árboles de búsqueda.
+	 */
+	public void setParametrosMetodo(int i, String paramI, boolean vueltaAtras, boolean maximizacion_) {
+		maximizacion  = maximizacion_;
+		estructura[i].setText(vueltaAtras ? "Vuelta Atras" : "RyP");
+		indices[i].setText(paramI);
 	}
 
 }

@@ -149,6 +149,7 @@ public class CuadroProceso extends Thread implements ActionListener,
 	public void cerrar() {
 		this.animacion.stop();
 		this.dialogo.setVisible(false);
+		dialogo.dispose();
 	}
 
 	/**

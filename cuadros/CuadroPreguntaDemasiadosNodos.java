@@ -62,6 +62,7 @@ public class CuadroPreguntaDemasiadosNodos extends CuadroPregunta implements
 		if (e.getSource() == this.aceptar) {
 			SwingUtilities.invokeLater(this.accionPositiva);
 		}
+		d.dispose();
 	}
 
 	/**

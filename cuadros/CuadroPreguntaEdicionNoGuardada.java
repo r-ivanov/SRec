@@ -92,6 +92,7 @@ public class CuadroPreguntaEdicionNoGuardada extends CuadroPregunta implements
 		} else if (this.accion.equals("cierreVentana")) {
 			this.getVentana().activarCierre();
 		}
+		d.dispose();
 	}
 
 }

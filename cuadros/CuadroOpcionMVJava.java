@@ -218,6 +218,7 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener,
 				new CuadroInformacion(this.ventana, Texto.get("INFO_MVJOK",
 						Conf.idioma), Texto.get("INFO_MVJAVA", Conf.idioma),
 						550, 100);
+				dialogo.dispose();
 			}
 			return true;
 		} else {
@@ -264,6 +265,7 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (code == KeyEvent.VK_ENTER) {
 			if ((this.aceptar.isFocusOwner()
 					|| this.campoDireccion.isFocusOwner()) && this.aceptar.isEnabled()) {
@@ -335,6 +337,7 @@ public class CuadroOpcionMVJava extends Thread implements ActionListener,
 			valorarSeleccion(true);
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() == this.examinar) {
 			String autorellenado = "";
 			String definicion = null;

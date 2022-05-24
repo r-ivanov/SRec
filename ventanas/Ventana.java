@@ -2972,17 +2972,6 @@ public class Ventana extends JFrame implements ActionListener {
 				.replace("_SubMenuItem_", "")
 				.replace("_CheckBoxMenuItem_", ""), valor);
 	}
-	
-	/**
-	 * Habilita o deshabilita las opciones correspondientes a las ejecuciones
-	 * sobre árboles de búsqueda.
-	 * 
-	 * @param valor
-	 *            True para habilitar, false para deshabilitar.
-	 */
-	public void habilitarOpcionesAABB(boolean valor) {
-		//por hacer
-	}
 
 	public void habilitarOpcionesAnimacion(boolean valor) {
 	

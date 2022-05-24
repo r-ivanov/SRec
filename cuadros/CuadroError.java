@@ -202,6 +202,7 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.d.setVisible(false);
+		d.dispose();
 	}
 
 	/**
@@ -226,6 +227,7 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
 			this.d.setVisible(false);
+			d.dispose();
 		}
 	}
 
@@ -240,6 +242,7 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ENTER) {
 			this.d.setVisible(false);
+			d.dispose();
 		}
 	}
 
@@ -286,6 +289,7 @@ public class CuadroError extends Thread implements ActionListener, KeyListener,
 	public void mousePressed(MouseEvent e) {
 		if (e.getComponent().equals(this.aceptar)) {
 			this.d.setVisible(false);
+			d.dispose();
 		}
 	}
 

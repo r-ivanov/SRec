@@ -112,6 +112,7 @@ public class CuadroAcercade extends Thread implements ActionListener,
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.aceptar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -126,6 +127,7 @@ public class CuadroAcercade extends Thread implements ActionListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -140,6 +142,7 @@ public class CuadroAcercade extends Thread implements ActionListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -154,6 +157,7 @@ public class CuadroAcercade extends Thread implements ActionListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -200,6 +204,7 @@ public class CuadroAcercade extends Thread implements ActionListener,
 	public void mousePressed(MouseEvent e) {
 		if (e.getSource() == this.aceptar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 

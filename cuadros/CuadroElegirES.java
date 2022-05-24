@@ -191,6 +191,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 		} else if (e.getSource() instanceof JButton) {
 			if (e.getSource() == this.aceptar) {
 				this.dialogo.setVisible(false);
+				dialogo.dispose();
 			}
 		}
 	}
@@ -217,6 +218,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 
 		if (e.getSource().getClass().getName().contains("JRadioButton")) {
@@ -300,6 +302,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	public void mousePressed(MouseEvent e) {
 		if (e.getSource() == this.aceptar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -313,6 +316,7 @@ public class CuadroElegirES extends Thread implements ActionListener,
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 }

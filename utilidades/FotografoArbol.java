@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 import opciones.GestorOpciones;
 import opciones.OpcionFicherosRecientes;
 import opciones.OpcionTipoGrafico;
-import paneles.PanelValoresGlobalesAABB;
-import paneles.PanelValoresRamaAABB;
+import paneles.PanelValoresGlobales;
+import paneles.PanelValoresRama;
 
 import org.jgraph.JGraph;
 
@@ -263,8 +263,8 @@ public class FotografoArbol {
 			final String path = this.ficheroSalida[0] + this.ficheroSalida[1];
 			File f = null;
 			String tipo = this.ficheroSalida[1].substring(this.ficheroSalida[1].indexOf('.')+1);
-			if(c instanceof PanelValoresGlobalesAABB) {
-				f = ((PanelValoresGlobalesAABB) c).saveChartAs(path, tipo);
+			if(c instanceof PanelValoresGlobales) {
+				f = ((PanelValoresGlobales) c).saveChartAs(path, tipo);
 				if(f == null) {
 					new CuadroInformacion(
 							jFrame, 
@@ -272,8 +272,8 @@ public class FotografoArbol {
 							Texto.get("INFO_EXPINCORRECT", Conf.idioma),
 							550, 100);
 				}
-			}else if(c instanceof PanelValoresRamaAABB) {
-				f = ((PanelValoresRamaAABB) c).saveChartAs(path, tipo);
+			}else if(c instanceof PanelValoresRama) {
+				f = ((PanelValoresRama) c).saveChartAs(path, tipo);
 				if(f == null) {
 					new CuadroInformacion(
 							jFrame, 
@@ -361,11 +361,11 @@ public class FotografoArbol {
 				final int numeroVistaF = numeroVista;
 				String tipoS = ficheroSalida[1].substring(ficheroSalida[1].lastIndexOf("."));
 				
-				if(c instanceof PanelValoresGlobalesAABB) {
-					((PanelValoresGlobalesAABB) c).saveChartAsCapturasAnimacion(path, Fotografo.numFormato(tipoS));
+				if(c instanceof PanelValoresGlobales) {
+					((PanelValoresGlobales) c).saveChartAsCapturasAnimacion(path, Fotografo.numFormato(tipoS));
 					Ventana.thisventana.habilitarOpcionesVentana();
-				}else if(c instanceof PanelValoresRamaAABB) {
-					((PanelValoresRamaAABB) c).saveChartAsCapturasAnimacion(path, Fotografo.numFormato(tipoS));
+				}else if(c instanceof PanelValoresRama) {
+					((PanelValoresRama) c).saveChartAsCapturasAnimacion(path, Fotografo.numFormato(tipoS));
 					Ventana.thisventana.habilitarOpcionesVentana();
 				}else {
 					new Thread() {
@@ -538,11 +538,11 @@ public class FotografoArbol {
 
 			final String path = this.ficheroSalida[0] + this.ficheroSalida[1];
 			
-			if(c instanceof PanelValoresGlobalesAABB) {
-				((PanelValoresGlobalesAABB) c).saveChartAsGIF(path);
+			if(c instanceof PanelValoresGlobales) {
+				((PanelValoresGlobales) c).saveChartAsGIF(path);
 				Ventana.thisventana.habilitarOpcionesVentana();
-			}else if(c instanceof PanelValoresRamaAABB) {
-				((PanelValoresRamaAABB) c).saveChartAsGIF(path);
+			}else if(c instanceof PanelValoresRama) {
+				((PanelValoresRama) c).saveChartAsGIF(path);
 				Ventana.thisventana.habilitarOpcionesVentana();
 			}else {
 				final int numeroVistaF = numeroVista;

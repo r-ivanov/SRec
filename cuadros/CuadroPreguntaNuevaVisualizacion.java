@@ -80,5 +80,6 @@ public class CuadroPreguntaNuevaVisualizacion extends CuadroPregunta implements
 		}
 
 		this.d.setVisible(false);
+		d.dispose();
 	}
 }

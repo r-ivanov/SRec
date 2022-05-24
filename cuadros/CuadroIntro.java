@@ -75,6 +75,7 @@ public class CuadroIntro extends Thread {
 				} catch (InterruptedException ie) {
 				}
 				dialogoF.setVisible(false);
+				dialogoF.dispose();
 			}
 		}.start();
 

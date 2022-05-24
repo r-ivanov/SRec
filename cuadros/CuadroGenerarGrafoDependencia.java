@@ -158,9 +158,11 @@ ActionListener, KeyListener {
 			else if(posicionMetodo.size() > 1){
 				this.ventana.abrirPestanaGrafoDependencia(this.dtb.getMetodo(posicionMetodo));
 			}
+			dialogo.dispose();
 			
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -185,9 +187,11 @@ ActionListener, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			// Procesar grafo de dependencia
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 

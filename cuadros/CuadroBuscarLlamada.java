@@ -263,8 +263,10 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 			this.ventana.getTraza().iluminar(this.numMetodo, null, null, false);
 			this.ventana.refrescarFormato();
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -278,6 +280,7 @@ public class CuadroBuscarLlamada extends Thread implements ActionListener,
 		if (valoresCorrectos()) {
 			activarBusqueda();
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else {
 			new CuadroError(Ventana.thisventana, Texto.get("ERROR_PARAM",
 					Conf.idioma),

@@ -225,9 +225,11 @@ KeyListener, MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}else if(e.getSource() == this.aceptar) {
 			this.panelJava.focusLinea((Integer)this.numeroEntrada.getValue());	
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -256,9 +258,11 @@ KeyListener, MouseListener {
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}else if(code == KeyEvent.VK_ENTER) {
 			this.panelJava.focusLinea((Integer)this.numeroEntrada.getValue());
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}		
 	}
 

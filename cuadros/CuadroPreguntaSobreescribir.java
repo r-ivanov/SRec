@@ -109,6 +109,7 @@ public class CuadroPreguntaSobreescribir extends CuadroPregunta implements
 		}
 
 		this.d.setVisible(false);
+		d.dispose();
 	}
 
 }

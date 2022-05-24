@@ -190,9 +190,10 @@ public class CuadroIdioma extends Thread implements ActionListener, KeyListener 
 				this.gOpciones.setOpcion(this.oi, 2);
 				this.dialogo.setVisible(false);
 				this.ventana.reiniciarIdioma();
-
+				dialogo.dispose();
 			} else {
 				this.dialogo.setVisible(false);
+				dialogo.dispose();
 			}
 		}
 	}
@@ -219,11 +220,13 @@ public class CuadroIdioma extends Thread implements ActionListener, KeyListener 
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (code == KeyEvent.VK_ENTER) {
 			getValores();
 			this.gOpciones.setOpcion(this.oi, 2);
 			this.dialogo.setVisible(false);
 			this.ventana.reiniciarIdioma();
+			dialogo.dispose();
 		}
 
 	}

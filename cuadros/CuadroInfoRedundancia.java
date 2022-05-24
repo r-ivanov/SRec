@@ -335,6 +335,7 @@ public class CuadroInfoRedundancia extends Thread implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.dialogo.setVisible(false);
+		dialogo.dispose();
 	}
 
 	/**
@@ -359,6 +360,7 @@ public class CuadroInfoRedundancia extends Thread implements ActionListener,
 		if (e.getKeyCode() == KeyEvent.VK_ENTER
 				|| e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 

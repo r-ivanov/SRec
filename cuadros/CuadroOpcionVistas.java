@@ -298,9 +298,11 @@ KeyListener {
 
 		if (e.getSource() == this.aceptar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() instanceof JRadioButton) {			
 			this.actualizarInterfazRadioButton();
 
@@ -367,6 +369,7 @@ KeyListener {
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 

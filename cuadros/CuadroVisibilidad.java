@@ -404,6 +404,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 			actuar();
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 
 	}
@@ -479,6 +480,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 		Conf.setRedibujarGrafoArbol(false);
 
 		this.dialogo.setVisible(false);
+		dialogo.dispose();
 	}
 
 	/**
@@ -502,6 +504,7 @@ public class CuadroVisibilidad extends Thread implements ActionListener,
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {

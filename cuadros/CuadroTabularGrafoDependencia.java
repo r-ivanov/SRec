@@ -186,6 +186,7 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 	private void gestionEventoBotones(AWTEvent e) {
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() == this.aceptar) {
 			this.accionTabulado();
 		}
@@ -217,6 +218,7 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 			//	Solo si es correcto cambiamos tipo grafo y flechas
 			this.pg.setTipoGrafo(2);
 			this.pg.setEliminarFilasColumnas(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -255,6 +257,7 @@ public class CuadroTabularGrafoDependencia extends Thread implements
 			this.gestionEventoBotones(e);
 		} else if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (code == KeyEvent.VK_UP) {
 			if (this.aceptar.hasFocus() || this.cancelar.hasFocus()) {
 				this.textColumnas.requestFocus();

@@ -110,7 +110,7 @@ public class CuadroInfoNodo extends Thread implements ActionListener,
 		infoGral1[2] = new JLabel(Texto.get("CINFONODO_SUBNUM", Conf.idioma)
 				+ ": " + (this.nodo.getID() + 1));
 		infoGral1[3] = new JLabel(Texto.get("CINFONODO_SUBNUM_VIS", Conf.idioma)
-				+ ": " + (traza.getNumNodosVisibles(this.nodo))); 
+				+ ": " + (traza.getNumNodosVisibles(nodo))); 
 		infoGral1[4] = new JLabel(Texto.get("CINFONODO_INHI", Conf.idioma)
 				+ ": "
 				+ (this.nodo.inhibido() ? Texto.get("SI", Conf.idioma)
@@ -222,6 +222,7 @@ public class CuadroInfoNodo extends Thread implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.dialogo.setVisible(false);
+		dialogo.dispose();
 	}
 
 	/**
@@ -246,6 +247,7 @@ public class CuadroInfoNodo extends Thread implements ActionListener,
 		if (e.getKeyCode() == KeyEvent.VK_ENTER
 				|| e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 

@@ -2026,6 +2026,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 
 		if (e.getComponent() == aceptar) {
 			dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getComponent() == asignar1) {
 			accionAsignar1();
 		} else if (e.getComponent() == asignar2) {
@@ -2069,9 +2070,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE) {
 			dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (code == KeyEvent.VK_ENTER) {
 			guardadoRecarga();
 			dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 
 	}
@@ -2222,9 +2225,11 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 				.contains("BotonAceptar")) {
 			dialogo.setVisible(false);
 			guardadoRecarga();
+			dialogo.dispose();
 		} else if (e.getComponent() instanceof JButton) {
 			if (e.getComponent() == aceptar) {
 				dialogo.setVisible(false);
+				dialogo.dispose();
 			}
 
 			if (e.getComponent() == asignar1) {
@@ -2433,6 +2438,7 @@ public class CuadroOpcionConfVisualizacion extends Thread implements
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == cancelar) {
 			dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 	

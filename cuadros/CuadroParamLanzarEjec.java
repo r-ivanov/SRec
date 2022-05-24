@@ -484,6 +484,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 		}
 		Ventana.thisventana.setClase(this.clase);
 		this.dialogo.setVisible(false);
+		dialogo.dispose();
 		
 		final CuadroProceso cuadroProceso = new CuadroProceso(Ventana.thisventana,
 				Texto.get("CP_ESPERE", Conf.idioma), Texto.get("CP_EJECUTANDO", Conf.idioma));
@@ -595,6 +596,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 			}
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() == this.generar) {
 			if (this.cga == null) {
 				this.cga = new CuadroGenerarAleatorio(Ventana.thisventana,
@@ -730,6 +732,7 @@ public class CuadroParamLanzarEjec extends Thread implements ActionListener,
 
 		else if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() instanceof JCheckBox) {
 			comprobarVisibilidadCorrecta();
 		}

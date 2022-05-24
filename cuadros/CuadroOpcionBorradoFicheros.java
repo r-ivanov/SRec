@@ -150,6 +150,7 @@ public class CuadroOpcionBorradoFicheros extends Thread implements
 		this.obf.setfClasszv(!this.botones[4].isSelected());
 
 		this.dialogo.setVisible(false);
+		dialogo.dispose();
 
 		this.gOpciones.setOpcion(this.obf, 2);
 	}
@@ -195,6 +196,7 @@ public class CuadroOpcionBorradoFicheros extends Thread implements
 		}
 		if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -254,6 +256,7 @@ public class CuadroOpcionBorradoFicheros extends Thread implements
 			almacenarValoresYOcultar();
 		} else if (((e.getSource())) == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 

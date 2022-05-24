@@ -359,7 +359,8 @@ KeyListener, MouseListener, WindowListener {
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() == this.cancelar) {
 			this.panelJava.removeSelects();
-			this.dialogo.setVisible(false);			
+			this.dialogo.setVisible(false);	
+			dialogo.dispose();
 		}else if(e.getSource() == this.buscar) {
 			this.searchOcurrences();
 		}
@@ -390,7 +391,8 @@ KeyListener, MouseListener, WindowListener {
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE) {
 			this.panelJava.removeSelects();
-			this.dialogo.setVisible(false);			
+			this.dialogo.setVisible(false);	
+			dialogo.dispose();
 		}else if(code == KeyEvent.VK_ENTER) {
 			this.searchOcurrences();
 		}		

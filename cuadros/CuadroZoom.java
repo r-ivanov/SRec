@@ -551,6 +551,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource().getClass().getCanonicalName()
 				.contains("JSlider")) {
 			for (int i = 0; i < barras.length; i++) {
@@ -635,6 +636,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 	public void mousePressed(MouseEvent e) {
 		if (e.getSource() == this.aceptar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() == this.inicializar) {
 			for (int i = 0; i < barras.length; i++) {
 				if (barras[i] != null) {
@@ -663,6 +665,7 @@ public class CuadroZoom extends Thread implements ActionListener, KeyListener,
 		}
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 

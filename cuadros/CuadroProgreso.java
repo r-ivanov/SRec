@@ -154,5 +154,6 @@ public class CuadroProgreso extends Thread {
 	 */
 	public void cerrar() {
 		this.dialogo.setVisible(false);
+		dialogo.dispose();
 	}
 }

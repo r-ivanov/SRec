@@ -971,6 +971,7 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (code == KeyEvent.VK_ENTER) {
 			if (comprobarValores()) {
 				for (int i = 0; i < this.marcadores.length; i++) {
@@ -979,6 +980,7 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener,
 					}
 				}
 				this.dialogo.setVisible(false);
+				dialogo.dispose();
 			} else {
 				new CuadroError(this.dialogo, Texto.get("ERROR_VAL",
 						Conf.idioma), Texto.get("ERROR_VALESCR", Conf.idioma));
@@ -1082,12 +1084,14 @@ public class CuadroGenerarAleatorio extends Thread implements ActionListener,
 					}
 				}
 				this.dialogo.setVisible(false);
+				dialogo.dispose();
 			} else {
 				new CuadroError(this.dialogo, Texto.get("ERROR_VAL",
 						Conf.idioma), Texto.get("ERROR_VALESCR", Conf.idioma));
 			}
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 

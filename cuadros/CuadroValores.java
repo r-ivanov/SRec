@@ -183,6 +183,7 @@ public class CuadroValores extends Thread implements ActionListener,
 	private void gestionEventoBotones(AWTEvent e) {
 		if (e.getSource() == this.cerrar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -221,6 +222,7 @@ public class CuadroValores extends Thread implements ActionListener,
 			this.gestionEventoBotones(e);
 		} else if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 

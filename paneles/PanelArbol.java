@@ -121,7 +121,7 @@ MouseListener, MouseMotionListener {
 	// estaba dentro de él, no hacemos nada
 	
 	// Para Vista de Rama de Valores
-	private PanelValoresRamaAABB pValRama;
+	private PanelValoresRama pValRama;
 
 
 	/**
@@ -130,7 +130,7 @@ MouseListener, MouseMotionListener {
 	 * @param nyp
 	 *            NombresYPrefijos para la visualización de métodos.
 	 */
-	public PanelArbol(NombresYPrefijos nyp, PanelValoresRamaAABB pValRama) throws Exception {
+	public PanelArbol(NombresYPrefijos nyp, PanelValoresRama pValRama) throws Exception {
 		this.nyp = nyp;
 		this.pValRama = pValRama;
 

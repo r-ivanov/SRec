@@ -155,6 +155,7 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 	private void gestionEventoBotones(AWTEvent e) {
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() == this.aceptar) {
 			accionDibujarTabla();
 		}
@@ -204,6 +205,7 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 		} else {		
 			pg.dibujarTabla(filas, columnas);
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -242,6 +244,7 @@ public class CuadroDibujarTablaGrafoDependencia extends Thread implements Action
 			gestionEventoBotones(e);
 		} else if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (code == KeyEvent.VK_UP) {
 			if (this.aceptar.hasFocus() || this.cancelar.hasFocus()) {
 				this.textColumnas.requestFocus();

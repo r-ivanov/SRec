@@ -122,6 +122,7 @@ public class CuadroErrorCompilacion extends Thread implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.d.setVisible(false);
+		d.dispose();
 	}
 
 	/**
@@ -146,6 +147,7 @@ public class CuadroErrorCompilacion extends Thread implements ActionListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_ENTER) {
 			this.d.setVisible(false);
+			d.dispose();
 		}
 	}
 
@@ -160,6 +162,7 @@ public class CuadroErrorCompilacion extends Thread implements ActionListener,
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_ENTER) {
 			this.d.setVisible(false);
+			d.dispose();
 		}
 	}
 
@@ -206,6 +209,7 @@ public class CuadroErrorCompilacion extends Thread implements ActionListener,
 	public void mousePressed(MouseEvent e) {
 		if (e.getComponent().equals(this.aceptar)) {
 			this.d.setVisible(false);
+			d.dispose();
 		}
 	}
 

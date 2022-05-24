@@ -1,22 +1,7 @@
 package paneles;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
@@ -29,35 +14,42 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.util.ShapeUtilities;
 
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import conf.Conf;
 import cuadros.CuadroInformacion;
 import cuadros.CuadroProgreso;
 import datos.MetodoAlgoritmo;
 import datos.RegistroActivacion;
-import utilidades.Arrays;
 import utilidades.Fotografo;
 import utilidades.Texto;
 import ventanas.Ventana;
 
 /**
- * Panel que contendrá la visualización de la vista de valores de la rama
- * a la que pertenece el nodo seleccionado. 
- * La vista es para algoritmos de optimización basados en ramificación y poda.
+ * Panel que contendrá la visualización de la vista global de valores para 
+ * algoritmos de optimización basados en ramificación y poda.
  * 
  * @author Roumen Ivanov Andreev
  * @version 2021-2022
  */
-public class PanelValoresRamaAABB extends JPanel {
-	
-	private static final long serialVersionUID = 1L;
+public class PanelValoresGlobales extends JPanel {
 
+	private static final long serialVersionUID = 1L;
+	
 	private RegistroActivacion ra;
-	private RegistroActivacion nodoActual = null;
 	private JPanel panel = new JPanel();
 	private static int numNodo = 0;
-	
-	// nodoActual encontrado -> paramos busqueda recursiva
-	private boolean encontrado; 
 	
 	private JFreeChart chart;
 	private JPanel chartPanel;
@@ -66,7 +58,7 @@ public class PanelValoresRamaAABB extends JPanel {
 	private int height;
 	
 	private static final Shape circle = new Ellipse2D.Double(-3, -3, 6, 6);
-	
+
 	// Color de las lineas
 	private Color solParcialColor = Color.YELLOW;
 	private Color solMejorColor = Color.GREEN;
@@ -76,11 +68,9 @@ public class PanelValoresRamaAABB extends JPanel {
 	private BasicStroke solMejorStroke = new BasicStroke(1.0f);
 	private BasicStroke cotaStroke = new BasicStroke(1.0f);
 	
+	// Nodos hojas y nodos podados
 	private static Set<Integer> hojas;
 	private static Set<Integer> podas;
-	private static int numItem;
-
-	private HashMap<Integer, Integer> mapa;
 	
     private class MyRenderer extends XYLineAndShapeRenderer {
 		private static final long serialVersionUID = 1L;
@@ -88,9 +78,9 @@ public class PanelValoresRamaAABB extends JPanel {
 		@Override
 	    public Shape getItemShape(int row, int column) {
         	Shape shape;
-        	if(PanelValoresRamaAABB.podas.contains(column-numItem+1)) {
+        	if(PanelValoresGlobales.podas.contains(column+1)) {
             	shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc + 4.0f, 1);
-        	}else if(PanelValoresRamaAABB.hojas.contains(column-numItem+1)) {
+        	}else if(PanelValoresGlobales.hojas.contains(column+1)) {
             	//shape = ShapeUtilities.createDiagonalCross(Conf.grosorSolParc+4.0f, 1);
             	shape = ShapeUtilities.createDiamond(Conf.grosorSolParc + 5.0f);
             }else {
@@ -103,12 +93,12 @@ public class PanelValoresRamaAABB extends JPanel {
 	
 	/**
 	 * Constructor: crea un nuevo panel de visualización para los 
-	 * Valores de rama.
+	 * Valores Globales.
 	 */
-	public PanelValoresRamaAABB() {
+	public PanelValoresGlobales() {
 		visualizar();
 	}
-
+	
 	/**
 	 * Visualiza y redibuja la grafica en el panel
 	 */
@@ -128,7 +118,7 @@ public class PanelValoresRamaAABB extends JPanel {
 
 		updateUI();
 	}
-	
+
 	private void initAndShow() {
         chartPanel = createChartPanel();
         width = (int) Math.round(getWidth()*0.5);
@@ -136,16 +126,16 @@ public class PanelValoresRamaAABB extends JPanel {
         chartPanel.setPreferredSize(new Dimension(width, height));
         chartPanel.updateUI();
 		
-		panel.removeAll();
+        panel.removeAll();
 		panel.setLayout(new java.awt.BorderLayout());
 		panel.add(chartPanel, BorderLayout.CENTER);
-		panel.updateUI();
+		panel.validate();
 	}
-	
+
 	private JPanel createChartPanel() {
 		dataset = createDataset();
 
-		String chartTitle = Texto.get("V_RAMA_VAL", Conf.idioma);
+		String chartTitle = Texto.get("V_GLOBAL_VAL", Conf.idioma);
 	    String xAxisLabel = Texto.get("PVG_NODOS", Conf.idioma);
 	    String yAxisLabel = "Valores";
 
@@ -153,7 +143,7 @@ public class PanelValoresRamaAABB extends JPanel {
     		ChartFactory.createXYLineChart(
     				chartTitle, xAxisLabel, yAxisLabel, dataset, 
     				PlotOrientation.VERTICAL, true, true, false);
-
+	    
 	    List<XYSeries> series = dataset.getSeries();
 	    
 	    if(series != null && series.size() > 0) {
@@ -162,12 +152,12 @@ public class PanelValoresRamaAABB extends JPanel {
 		    // Hacer que el eje X sea de numeros enteros
 	    	NumberAxis xAxis = (NumberAxis) plot.getDomainAxis();
 	    	xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-	    	
+
 	    	MyRenderer renderer = new MyRenderer();
 			plot.setRenderer(renderer);
 			renderer.setUseFillPaint(true);
 			renderer.setUseOutlinePaint(true);
-			
+	    	
 	    	if(Conf.colorSolParc != null) {
 	    		solParcialColor = Conf.colorSolParc;
 	    	}
@@ -191,8 +181,8 @@ public class PanelValoresRamaAABB extends JPanel {
 	    	if(Conf.grosorCota > 0) {
 	    		cotaStroke = new BasicStroke(Conf.grosorCota);
 	    	}
-	    	
-			// Poner colores y grosor para las lineas
+
+	    	// Poner colores y grosor para las lineas
 	    	int index;
 	    	for(XYSeries serie: series) {
 	    		Comparable<?> key = serie.getKey();
@@ -228,15 +218,15 @@ public class PanelValoresRamaAABB extends JPanel {
 	    chartPanel.removeAll();
 	    chartPanel.setMouseWheelEnabled(true);
 	 
-	    return chartPanel;
+	    return new ChartPanel(chart);
 	}
 	
 	private XYSeriesCollection createDataset() {	
     	XYSeriesCollection dataset = new XYSeriesCollection();
-        
+
         // Llenar la grafica con los datos
         ra = Ventana.thisventana.traza.getRaiz();
-        if(ra != null && nodoActual != null) {
+        if(ra != null) {
             XYSeries serieSolActual = new XYSeries(Texto.get("PVG_SOLACTUAL", Conf.idioma));
             XYSeries serieSolMejor = new XYSeries(Texto.get("PVG_SOLMEJOR", Conf.idioma));
             XYSeries serieCota = new XYSeries(Texto.get("PVG_COTA", Conf.idioma));
@@ -244,105 +234,96 @@ public class PanelValoresRamaAABB extends JPanel {
             hojas = new HashSet<>();
             podas = new HashSet<>();
             
-            mapa = new HashMap<Integer, Integer>();
-            
         	numNodo = 1;
     		Number solParcial = ra.getEntrada().getSolParcial();
     		Number solMejor = ra.getEntrada().getMejorSolucion();
     		Number cota = ra.getEntrada().getCota();
-    		
-    		Number solParcialAux = nodoActual.getEntrada().getSolParcial();
-    		Number solMejorAux = nodoActual.getEntrada().getMejorSolucion();
-    		Number cotaAux = nodoActual.getEntrada().getCota();
-    		
-    		if(solParcialAux == null && solMejorAux == null && cotaAux == null) {
-    			return dataset;
-    		}
-    		
     		if(solParcial == null && solMejor == null && cota == null) {
     			ra = encontrarHijo();	
-    		}
-
-    		if(ra == null) {
-    			// No hacemos nada y retornamos 
-    			return dataset;
-    		}
-    		
-    		encontrado = false;
-    		mapGrafica(ra);
-    		
-    		boolean ryp = nodoActual.getEntrada().esRyP();
-			RegistroActivacion reg = nodoActual;
-			Integer llamada;
-			numItem = 0;
-			while(reg != ra && reg.getID() != ra.getID()) {
-        		solParcial = reg.getEntrada().getSolParcial();
-        		solMejor = reg.getEntrada().getMejorSolucion();
-        		cota = reg.getEntrada().getCota();
-        		llamada = mapa.get(reg.getID());
-        		
-        		if(solParcial != null || solMejor != null || cota != null) {
-        			numItem++;
-            		if(reg.esHoja()) {
-            			hojas.add(numItem - 1);
-            		}
-        			
-            		if(llamada != null) {
-            			if(solParcial != null) {
-            				serieSolActual.add(llamada, solParcial);
-            			}
-            			if(solMejor != null) {
-            				serieSolMejor.add(llamada, solMejor);
-            			}
-            			
-                		if(ryp && cota != null && solMejor != null) {
-                			podar(reg, cota, solMejor, numItem);
-                			serieCota.add(llamada, cota);
-                		}
-            		}
-        		}
-        		
-				reg = reg.getPadre();
-			}
-			// Añadimos la raiz tambien
-    		solParcial = ra.getEntrada().getSolParcial();
-    		solMejor = ra.getEntrada().getMejorSolucion();
-    		cota = ra.getEntrada().getCota();
-    		llamada = mapa.get(ra.getID());
-			
-    		if(solParcial != null || solMejor != null || cota != null) {
-    			numItem++;
-        		if(ra.esHoja()) {
-        			hojas.add(numItem - 1);
-        		}
-    			
-        		if(llamada != null) {
-        			if(solParcial != null) {
-        				serieSolActual.add(llamada, solParcial);
-        			}
-        			if(solMejor != null) {
-        				serieSolMejor.add(llamada, solMejor);
-        			}
-        			
-            		if(ryp && cota != null && solMejor != null) {
-            			podar(ra, cota, solMejor, numItem);
-            			serieCota.add(llamada, cota);
-            		}
-        		}
-    		}
-			if(Conf.solActualVisible) {
-				dataset.addSeries(serieSolActual);
-			}
-			if(Conf.solMejorVisible) {
-				dataset.addSeries(serieSolMejor);
-			}
-    		if(ryp && cota != null) {
-    			if(Conf.cotaVisible) {
-    				dataset.addSeries(serieCota);
+    			if(ra == null) {
+    				return dataset;
     			}
     		}
+    		
+        	if(ra.getEntrada().esRyP()) {
+        		crearGrafica(ra, dataset, serieSolActual, serieSolMejor, serieCota);
+        		if(Conf.cotaVisible) {
+        			dataset.addSeries(serieCota);
+        		}
+        		
+        	}else {
+        		crearGrafica(ra, dataset, serieSolActual, serieSolMejor);
+        	}
+        	if(Conf.solActualVisible) {
+        		dataset.addSeries(serieSolActual);
+        	}
+            if(Conf.solMejorVisible) {
+            	dataset.addSeries(serieSolMejor);
+            }
         }
+        
         return dataset;
+	}
+	
+    private void crearGrafica(RegistroActivacion ra2, XYSeriesCollection dataset, 
+    		XYSeries serieSolActual, XYSeries serieSolMejor) {
+    	
+    	if(!ra2.inhibido()) {
+    		int id = numNodo;
+    		Number solParcial = ra2.getEntrada().getSolParcial();
+    		Number solMejor = ra2.getEntrada().getMejorSolucion();
+
+    		if(solParcial != null || solMejor != null) {
+        		if(ra2.esHoja()) {
+        			hojas.add(id - 1);
+        		}
+    			numNodo++;
+    			if(solParcial != null) {
+    				serieSolActual.add(id, solParcial);
+    			} 
+    			if(serieSolMejor != null){
+    				serieSolMejor.add(id, solMejor);
+    			}
+    		}
+        	for(RegistroActivacion raHijo: ra2.getHijos()) {
+        		crearGrafica(raHijo, dataset, serieSolActual, serieSolMejor);
+        	}
+        }
+	}
+
+	private void crearGrafica(RegistroActivacion ra2, XYSeriesCollection dataset, 
+			XYSeries serieSolActual, XYSeries serieSolMejor, XYSeries serieCota) {
+		
+    	if(!ra2.inhibido()) {
+    		int id = numNodo;
+    		Number solParcial = ra2.getEntrada().getSolParcial();
+    		Number solMejor = ra2.getEntrada().getMejorSolucion();
+    		Number cota = ra2.getEntrada().getCota();
+
+    		if(solParcial != null || solMejor != null || cota != null) {
+        		if(ra2.esHoja()) {
+        			hojas.add(id - 1);
+        		}
+        		numNodo++;
+        		
+    			if(solParcial != null) {
+    				serieSolActual.add(id, solParcial);
+    			}
+    			if(solMejor != null) {
+    				serieSolMejor.add(id, solMejor);
+    				if(cota != null) {
+    					podar(ra2, cota, solMejor, id);
+    				}
+    				
+    			}
+    			if(cota != null) {
+    				serieCota.add(id, cota);
+    			}
+    		}
+        	for(RegistroActivacion raHijo: ra2.getHijos()) {
+        		crearGrafica(raHijo, dataset, serieSolActual, serieSolMejor, serieCota);
+        	}
+        }	
 	}
 	
 	private void podar(RegistroActivacion ra2, Number cota, Number solMejor, int id) {
@@ -459,29 +440,7 @@ public class PanelValoresRamaAABB extends JPanel {
 			}
 		}
 	}
-	
-	private void mapGrafica(RegistroActivacion ra2) {
-	    if(!ra2.inhibido() && !encontrado) {
-			Number solParcial = ra2.getEntrada().getSolParcial();
-			Number solMejor = ra2.getEntrada().getMejorSolucion();
-			Number cota = ra2.getEntrada().getCota();
-			
-			if(solParcial != null || solMejor != null || cota != null) {
-				Integer llamada = numNodo;
-				mapa.put(ra2.getID(), llamada);
-				
-				numNodo++;
-			}
-			if(ra2 != nodoActual) {
-	        	for(RegistroActivacion raHijo: ra2.getHijos()) {
-	        		mapGrafica(raHijo);
-	        	}
-			}else {
-				encontrado = true;
-			}
-	    }
-	}
-	
+
 	private RegistroActivacion encontrarHijo() {
 		for(RegistroActivacion raHijo: ra.getHijos()) {
     		Number solParcial = raHijo.getEntrada().getSolParcial();
@@ -495,10 +454,6 @@ public class PanelValoresRamaAABB extends JPanel {
 		}
 		return null;
 	}
-
-	public void setNodoActual(RegistroActivacion nodoActual2) {
-		nodoActual = nodoActual2;
-	}
 	
 	public File saveChartAs(String name, String type) {
 		File imageFile = new File(name);
@@ -510,7 +465,7 @@ public class PanelValoresRamaAABB extends JPanel {
 				ChartUtilities.saveChartAsJPEG(imageFile, chart, width, height);
 			}else if(type.equalsIgnoreCase("gif")){
 				int[] dim = {width, height};
-				Fotografo.guardarFoto(chartPanel, 1, name, dim);
+				Fotografo.guardarFoto(chartPanel, 1, name, dim);		
 			}else {
 				return null;
 			}

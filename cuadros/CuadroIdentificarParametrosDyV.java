@@ -34,7 +34,7 @@ import ventanas.Ventana;
  * Permite seleccionar el parámetro del método que contiene la estructura divide
  * y vencerás para un determinado algoritmo.
  */
-public class CuadroIdentificarParametros extends Thread implements
+public class CuadroIdentificarParametrosDyV extends Thread implements
 		ActionListener, KeyListener, MouseListener {
 
 	private static final int ANCHO_CUADRO = 590;
@@ -88,7 +88,7 @@ public class CuadroIdentificarParametros extends Thread implements
 	 *            número de parámetros con el formato (n,m,...), donde n y m
 	 *            representan índices que delimitan la estructura DYV.
 	 */
-	public CuadroIdentificarParametros(Ventana ventana,
+	public CuadroIdentificarParametrosDyV(Ventana ventana,
 			CuadroSeleccionMetodos csm, MetodoAlgoritmo metodo, int numMetodo,
 			String e, String ind) {
 		this.metodo = metodo;
@@ -198,11 +198,11 @@ public class CuadroIdentificarParametros extends Thread implements
 
 		this.dialogo.getContentPane().add(panel);
 		this.dialogo.setTitle(Texto.get("CIPDYV_TITULO", Conf.idioma));
-		this.dialogo.setSize(CuadroIdentificarParametros.ANCHO_CUADRO,
-				CuadroIdentificarParametros.ALTO_CUADRO);
+		this.dialogo.setSize(CuadroIdentificarParametrosDyV.ANCHO_CUADRO,
+				CuadroIdentificarParametrosDyV.ALTO_CUADRO);
 		int coord[] = Conf.ubicarCentro(
-				CuadroIdentificarParametros.ANCHO_CUADRO,
-				CuadroIdentificarParametros.ALTO_CUADRO);
+				CuadroIdentificarParametrosDyV.ANCHO_CUADRO,
+				CuadroIdentificarParametrosDyV.ALTO_CUADRO);
 		this.dialogo.setLocation(coord[0], coord[1]);
 
 		this.dialogo
@@ -232,12 +232,14 @@ public class CuadroIdentificarParametros extends Thread implements
 			this.csm.setParametrosMetodo(this.numMetodo,
 					this.campoEstructura.getText(), valoresParametrosIndices());
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 		if (estado != 0 && valoresVacios()) {
 			this.csm.marcarMetodo(this.numMetodo, false);
 			this.csm.setParametrosMetodo(this.numMetodo,
 					this.campoEstructura.getText(), valoresParametrosIndices());
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (estado != 0) {
 			new CuadroError(this.dialogo, Texto.get("ERROR_VAL", Conf.idioma),
 					Texto.get("ERROR_INFOPARAM" + estado, Conf.idioma));
@@ -250,6 +252,7 @@ public class CuadroIdentificarParametros extends Thread implements
 	private void accionCancelar() {
 		this.csm.marcarMetodo(this.numMetodo, false);
 		this.dialogo.setVisible(false);	
+		dialogo.dispose();
 	}
 
 	/**
@@ -452,7 +455,7 @@ public class CuadroIdentificarParametros extends Thread implements
 
 			for (int i = 0; i < this.numCampos; i++) {
 				this.camposIndices[i] = new JTextField(
-						CuadroIdentificarParametros.LONGITUD_CAMPOS);
+						CuadroIdentificarParametrosDyV.LONGITUD_CAMPOS);
 				etiqIndices[i] = new JLabel("  "
 						+ Texto.get("CIPDYV_PARAMINDICE" + this.numCampos + i,
 								Conf.idioma));

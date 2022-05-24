@@ -245,6 +245,7 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 		}
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} 
 	}
 
@@ -278,6 +279,7 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 					Logger.log_write("Ninguna vista específica");
 				}
 				this.preprocesador.fase2(this.clase);
+				dialogo.dispose();
 			}else if(this.botonesSeleccion[1].isSelected()) {
 				if (Conf.fichero_log) {
 					Logger.log_write("¿Habilitar vistas para DYV? Sí");
@@ -285,20 +287,23 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 				oov.setAnteriorVE(1);
 				this.gOpciones.setOpcion(oov, 1);
 				new CuadroSeleccionMetodos(
-						this.clase, this.ventana, this.preprocesador);
+						this.clase, this.ventana, this.preprocesador, true);
 				this.dialogo.setVisible(false);
+				dialogo.dispose();
 			}else if(this.botonesSeleccion[2].isSelected()) {
 				if (Conf.fichero_log) {
 					Logger.log_write("Habilitar vistas basadas en arboles");
 				}
 				oov.setAnteriorVE(2);
 				this.gOpciones.setOpcion(oov, 1);
-				new CuadroSeleccionMetodosVE(
-						this.clase, this.ventana, this.preprocesador);
+				new CuadroSeleccionMetodos(
+						this.clase, this.ventana, this.preprocesador, false);
 				this.dialogo.setVisible(false);
+				dialogo.dispose();
 			}
 		}else if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} 
 	}
 
@@ -374,6 +379,7 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 					Logger.log_write("Ninguna vista específica");
 				}
 				this.preprocesador.fase2(this.clase);
+				dialogo.dispose();
 			}else if(this.botonesSeleccion[1].isSelected()) {
 				if (Conf.fichero_log) {
 					Logger.log_write("¿Habilitar vistas para DYV? Sí");
@@ -383,35 +389,22 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 
 				this.dialogo.setVisible(false);
 				new CuadroSeleccionMetodos(this.clase, this.ventana, 
-						this.preprocesador);
+						this.preprocesador, true);
+				dialogo.dispose();
 			}else if(this.botonesSeleccion[2].isSelected()) {
 				if (Conf.fichero_log) {
-					Logger.log_write("Habilitar vistas basadas en arboles");
+					Logger.log_write("¿Habilitar vistas basadas en árboles de búsqueda? Sí");
 				}
 				oov.setAnteriorVE(2);
 				this.gOpciones.setOpcion(oov, 1); // Probando si hay que ponerlo
 				this.dialogo.setVisible(false);
-				new CuadroSeleccionMetodosVE(
-						this.clase, this.ventana, this.preprocesador);
+				new CuadroSeleccionMetodos(
+						this.clase, this.ventana, this.preprocesador, false);
+				dialogo.dispose();
 			}
 		}else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} 
 	}
-
-	
-		
-	/*
-		if (e.getSource() == this.aceptar) {
-			recogerMetodosSeleccionados();
-		} else if (e.getSource() == this.cancelar) {
-			this.dialogo.setVisible(false);
-		}
-	}*/
-
-//	public void setParametrosMetodo(int i, String paramE, String paramI) {
-//		this.estructura[i].setText(paramE);
-//		this.indices[i].setText(paramI);
-//	}
-
 }

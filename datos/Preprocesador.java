@@ -323,7 +323,7 @@ public class Preprocesador extends Thread {
 					 * añadir imports sobre estos genericos sea inutil.
 					 */
 					
-					//añadirImports(imports, copiado, salidaCompilador, salidaCompletaCompilador);
+					//addImports(imports, copiado, salidaCompilador, salidaCompletaCompilador);
 				}
 
 				this.compilado = salidaCompilador.length() < 4;
@@ -568,7 +568,7 @@ public class Preprocesador extends Thread {
 		}
 	}
 
-	private boolean añadirImports(HashSet<String> imports, boolean copiado, String salidaCompilador, List<String> salidaCompletaCompilador) {
+	private boolean addImports(HashSet<String> imports, boolean copiado, String salidaCompilador, List<String> salidaCompletaCompilador) {
 		Java2XML.main(fichero[0] + fichero[1]);
 		documento = ManipulacionElement
 				.getDocumento(fichero[0] + ficheroxml);

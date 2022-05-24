@@ -35,10 +35,11 @@ import utilidades.Texto;
 import ventanas.Ventana;
 
 /**
- * Permite seleccionar el parámetro del método que contiene la estructura 
- * basada en arboles para un determinado algoritmo.
+ * Permite seleccionar los parámetros del método que contienen 
+ * la solucion parcial, la mejor solución y la cota 
+ * para un determinado algoritmo basado en árboles de búsqueda.
  */
-public class CuadroIdentificarParametrosVE extends Thread implements 
+public class CuadroIdentificarParametrosAABB extends Thread implements 
 		ActionListener, KeyListener, MouseListener {
 
 	private static final int ANCHO_CUADRO = 590;
@@ -59,7 +60,7 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	private JRadioButton botonesSeleccion[];
 
 	private int numMetodo = -1;
-	private CuadroSeleccionMetodosVE csm;
+	private CuadroSeleccionMetodos csm;
 
 	private JPanel panelImagen;
 	private JPanel panelCuadro;
@@ -82,8 +83,8 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 *            Número de método seleccionado para la identificación de
 	 *            parámetros.
 	 */
-	public CuadroIdentificarParametrosVE(Ventana ventana, 
-			CuadroSeleccionMetodosVE cuadroSeleccionMetodosVE, 
+	public CuadroIdentificarParametrosAABB(Ventana ventana, 
+			CuadroSeleccionMetodos cuadroSeleccionMetodosVE, 
 			MetodoAlgoritmo m, int numM) {
 		metodo = m;
 		dialogo = new JDialog(ventana, true);
@@ -214,11 +215,11 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 		dialogo.setTitle(Texto.get("CIPDYV_TITULO", Conf.idioma));
 		
 		dialogo.setSize(
-				CuadroIdentificarParametrosVE.ANCHO_CUADRO, 
-				CuadroIdentificarParametrosVE.ALTO_CUADRO);
+				CuadroIdentificarParametrosAABB.ANCHO_CUADRO, 
+				CuadroIdentificarParametrosAABB.ALTO_CUADRO);
 		int coord[] = Conf.ubicarCentro(
-				CuadroIdentificarParametrosVE.ANCHO_CUADRO, 
-				CuadroIdentificarParametrosVE.ALTO_CUADRO);
+				CuadroIdentificarParametrosAABB.ANCHO_CUADRO, 
+				CuadroIdentificarParametrosAABB.ALTO_CUADRO);
 		dialogo.setLocation(coord[0], coord[1]);
 
 		dialogo.setDefaultCloseOperation(
@@ -245,9 +246,10 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	 */
 	private void accionAceptar(boolean maximizacion) {
 		int estado = valoresCorrectos();
-		if (estado == 0) {		
+		if (estado == 0) {		 
 			csm.setParametrosMetodo(numMetodo, valoresParametros(), vueltaAtras, maximizacion);
 			dialogo.setVisible(false);
+			dialogo.dispose();
 		}else {
 			new CuadroError(
 					dialogo, 
@@ -262,6 +264,7 @@ public class CuadroIdentificarParametrosVE extends Thread implements
 	private void accionCancelar() {
 		csm.marcarMetodo(numMetodo, false);
 		dialogo.setVisible(false);
+		dialogo.dispose();
 	}
 
 	/**

@@ -57,8 +57,8 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 	
 	private boolean vistaValoresGlob = false;
 	private boolean vistaValoresRama = false;
-	private PanelValoresGlobalesAABB panelValGlob;
-	private PanelValoresRamaAABB panelValRama;
+	private PanelValoresGlobales panelValGlob;
+	private PanelValoresRama panelValRama;
 
 	/**
 	 * Constructor: genera un nuevo cuadro de opción que permite exportar el
@@ -178,10 +178,10 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
                 String vistaGlobalVal = Texto.get("V_GLOBAL_VAL", Conf.idioma);
                 String vistaRamaVal = Texto.get("V_RAMA_VAL", Conf.idioma);
             	if(nombreVista.equalsIgnoreCase(vistaGlobalVal)) {
-            		panelValGlob = (PanelValoresGlobalesAABB) pv.getPanelAlgoritmo().getPanelPorNombre(nombreVista);
+            		panelValGlob = (PanelValoresGlobales) pv.getPanelAlgoritmo().getPanelPorNombre(nombreVista);
             		vistaValoresGlob = true;
             	}else if(nombreVista.equalsIgnoreCase(vistaRamaVal)){
-            		panelValRama = (PanelValoresRamaAABB) pv.getPanelAlgoritmo().getPanelPorNombre(nombreVista);
+            		panelValRama = (PanelValoresRama) pv.getPanelAlgoritmo().getPanelPorNombre(nombreVista);
             		vistaValoresRama = true;
             	}else {
                 	this.grafo = (JGraph) this.pv.getGrafoPorNombre(nombreVista);
@@ -232,7 +232,7 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 				new FotografoArbol().hacerCapturaUnica(grafo, numeroVista);
 			}
 		}
-
+		dialogo.dispose();
 	}
 
 	/**
@@ -285,6 +285,7 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 			accion();
 		} else if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 
@@ -356,6 +357,7 @@ public class CuadroVistasDisponibles extends Thread implements ActionListener,
 		}
 		if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		}
 	}
 }

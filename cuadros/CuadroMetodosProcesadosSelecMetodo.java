@@ -316,6 +316,7 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			}
 			this.ventana.setClase(this.clase);
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 
 			// Cerramos la visualización actual.
 			this.ventana.cerrarVistas();
@@ -386,6 +387,7 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			}
 		} else if (code == KeyEvent.VK_ESCAPE) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else {
 			if (!(e.getSource().getClass().getName().contains("Boton"))) {
 				for (int i = 0; i < this.botonesRadio.length; i++) {
@@ -461,6 +463,7 @@ public class CuadroMetodosProcesadosSelecMetodo extends Thread implements
 			recogerMetodoSeleccionado();
 		} else if (e.getSource() == this.cancelar) {
 			this.dialogo.setVisible(false);
+			dialogo.dispose();
 		} else if (e.getSource() == this.checkTodos) {
 			for (int i = 0; i < this.botonesCheck.length; i++) {
 				this.botonesCheck[i].setSelected(this.checkTodos.isSelected()

@@ -70,7 +70,7 @@ public class CuadroPreguntaSeleccMetodosDYV extends CuadroPregunta implements
 			if (Conf.fichero_log) {
 				Logger.log_write("¿Habilitar vistas para DYV? Sí");
 			}
-			new CuadroSeleccionMetodos(this.clase, this.getVentana(), this.p);
+			new CuadroSeleccionMetodos(this.clase, this.getVentana(), this.p, true);
 		} else {
 			this.p.fase2(this.clase);
 		}
