@@ -89,7 +89,7 @@ public class GeneradorJava {
 			else if (e.getNodeName().equals("package-decl")) {
 				// La comentamos porque es mejor que no escriba nada de
 				// paquetes, la clase SRec_ no compilará
-				esc(fw, conv("package " + e.getAttribute("name") + ";\r\n"));
+				//esc(fw, conv("package " + e.getAttribute("name") + ";\r\n"));
 			}
 
 			// ***************************************** NODO class

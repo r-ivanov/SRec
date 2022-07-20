@@ -511,7 +511,7 @@ public class Preprocesador extends Thread {
 
 						this.cuadroProgreso.setValores(
 								Texto.get("CP_PROCES", Conf.idioma), 88);
-						Class clase = null;
+						Class<?> clase = null;
 						try {
 							clase = Class.forName(ficherosinex
 									+ this.codigoPrevio);
@@ -526,15 +526,6 @@ public class Preprocesador extends Thread {
 						}
 						this.cuadroProgreso.setValores(
 								Texto.get("CP_PROCES", Conf.idioma), 95);
-
-						c = new GregorianCalendar();
-						ahora = this.generarCodigoUnico(
-								"" + c.get(Calendar.DAY_OF_MONTH),
-								"" + (c.get(Calendar.MONTH) + 1),
-								"" + c.get(Calendar.YEAR),
-								"" + c.get(Calendar.HOUR_OF_DAY),
-								"" + c.get(Calendar.MINUTE),
-								"" + c.get(Calendar.SECOND));
 
 						this.claseAlgoritmo.setId2("SRec_"
 								+ this.claseAlgoritmo.getId() + ahora);
@@ -569,6 +560,9 @@ public class Preprocesador extends Thread {
 	}
 
 	private boolean addImports(HashSet<String> imports, boolean copiado, String salidaCompilador, List<String> salidaCompletaCompilador) {
+		// De momento no se usa
+		// Para que pueda funcionar correctamente necesita que la librería Java2XML
+		// pueda soportar genericos. Ej: ArrayList<BandaEdif>
 		Java2XML.main(fichero[0] + fichero[1]);
 		documento = ManipulacionElement
 				.getDocumento(fichero[0] + ficheroxml);

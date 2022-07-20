@@ -54,10 +54,8 @@ MouseListener, MouseMotionListener {
 	static final long serialVersionUID = 04;
 
 	private JGraph graph;
-	
-	
 
-	private int TamTrazaResult =ocv.getTamFuenteTraza();
+	private int TamTrazaResult = ocv.getTamFuenteTraza();
 	private JViewport vp;
 	private ContenedorCronologica cc;
 

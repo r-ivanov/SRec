@@ -10,8 +10,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.ArrayList;
-
 import javax.swing.border.EmptyBorder;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import botones.*;
 import datos.*;
 import opciones.GestorOpciones;
@@ -46,15 +43,9 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 	private BotonCancelar cancelar;
 	private JPanel panel, panelBoton, panelBotones;
 
-	// Numero total de métodos visualizables
-	private int numero;
-
 	private JRadioButton botonesSeleccion[];
 
 	private ClaseAlgoritmo clase;
-
-	// Listado de métodos seleccionados para ser procesados
-	private ArrayList<MetodoAlgoritmo> metodos;
 
 	private BorderLayout bl;
 	private boolean DYV;
@@ -68,26 +59,24 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 	 * elegir qué método de una determinada clase se quiere ejecutar
 	 * 
 	 * @param clase
-	 *            clase a la que pertenece el método que se quiere ejecutar
-	 * @param ventana
-	 *            ventana a la que se asociará el cuadro de diálogo
-	 * @param gestorEjecucion
-	 *            gestor que realizará los pasos necesarios para ejecutar el
+	 *            Clase a la que pertenece el método que se quiere ejecutar
+	 * @param ventana_
+	 *            Ventana a la que se asociará el cuadro de diálogo
+	 * @param preprocesador_
+	 *            Gestor que realizará los pasos necesarios para ejecutar el
 	 *            método seleccionado
-	 * @param codigounico
-	 *            código único que identifica a la clase y la da nombre
+	 * @param DYV_
+	 *            true significa que tiene metodos que pueden ser de tipo DyV, false significa lo contrario
 	 */
 	public CuadroPreguntaSeleccionVistasEspecificas(
-			ClaseAlgoritmo claseAlgoritmo, Ventana ventana, 
-			Preprocesador preprocesador,boolean DYV) {
-		this.dialogo = new JDialog(ventana, true);
-		this.ventana = ventana;
-		this.clase = claseAlgoritmo;
-		this.metodos = claseAlgoritmo.getMetodos();
-		this.numero = this.metodos.size();
-		this.preprocesador = preprocesador;
-		this.DYV=DYV;
-		this.start();
+			ClaseAlgoritmo claseAlgoritmo, Ventana ventana_, 
+			Preprocesador preprocesador_,boolean DYV_) {
+		dialogo = new JDialog(ventana, true);
+		ventana = ventana_;
+		clase = claseAlgoritmo;
+		preprocesador = preprocesador_;
+		DYV=DYV_;
+		start();
 	}
 	
 
@@ -96,9 +85,12 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 	 */
 	@Override
 	public void run() {
-
-		if (this.numero > 0) {
-			// String nombreClase = this.clase.getNombre();
+		int numeroMetodos = 0;
+		if(clase != null) {
+			numeroMetodos = clase.getMetodos().size();
+		}
+		
+		if (numeroMetodos > 0) {
 
 			JPanel panelFilaSup = new JPanel();
 			panelFilaSup.setLayout(new BorderLayout());
@@ -112,94 +104,85 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 			panelFilaSup.add(panelDerechaSuperior, BorderLayout.EAST);
 
 			// Botón Aceptar
-			this.aceptar = new BotonAceptar();
-			this.aceptar.addKeyListener(this);
-			this.aceptar.addMouseListener(this);
+			aceptar = new BotonAceptar();
+			aceptar.addKeyListener(this);
+			aceptar.addMouseListener(this);
 
 			// Botón Cancelar
-			this.cancelar = new BotonCancelar();
-			this.cancelar.addKeyListener(this);
-			this.cancelar.addMouseListener(this);
+			cancelar = new BotonCancelar();
+			cancelar.addKeyListener(this);
+			cancelar.addMouseListener(this);
 
 			// Panel para el botón
-			this.panelBoton = new JPanel();
-			this.panelBoton.add(this.aceptar);
-			this.panelBoton.add(this.cancelar);
+			panelBoton = new JPanel();
+			panelBoton.add(aceptar);
+			panelBoton.add(cancelar);
 			GridLayout layoutGrid = new GridLayout(3, 1);
-			this.panelBotones= new JPanel(layoutGrid);
+			panelBotones= new JPanel(layoutGrid);
 			
-			this.oov = (OpcionOpsVisualizacion) this.gOpciones
-				.getOpcion("OpcionOpsVisualizacion", false);
+			oov = (OpcionOpsVisualizacion) gOpciones.getOpcion("OpcionOpsVisualizacion", false);
 			int anterior = oov.getAnteriorVE();
 
-			this.botonesSeleccion= new JRadioButton[3];
+			botonesSeleccion= new JRadioButton[3];
 			ButtonGroup grupoBotones = new ButtonGroup();
 			
-			for(int i = 0; i < this.botonesSeleccion.length; i++) {
-				this.botonesSeleccion[i] = new JRadioButton();
-				this.botonesSeleccion[i].setText("  "+Texto.get(
-						"BOTON"+Integer.toString(i+1)
-						+"_SELECCVISTASESPECIFICAS", Conf.idioma));
-				this.botonesSeleccion[i].addKeyListener(this);
-				this.botonesSeleccion[i].addActionListener(this);
+			for(int i = 0; i < botonesSeleccion.length; i++) {
+				botonesSeleccion[i] = new JRadioButton();
+				botonesSeleccion[i].setText("  "+Texto.get(
+						"BOTON"+Integer.toString(i + 1)
+						+ "_SELECCVISTASESPECIFICAS", Conf.idioma));
+				botonesSeleccion[i].addKeyListener(this);
+				botonesSeleccion[i].addActionListener(this);
 				grupoBotones.add(botonesSeleccion[i]);
-				panelBotones.add(this.botonesSeleccion[i]);
+				panelBotones.add(botonesSeleccion[i]);
 			}			
 			
 			// Deshabilitar boton de DyV en caso de no tener metodos compatibles
-			this.botonesSeleccion[1].setEnabled(DYV);
+			botonesSeleccion[1].setEnabled(DYV);
 			
 			// Marcar ultima vista seleccionada
 			if(anterior == 0) { // 0 = vistas generales
-				this.botonesSeleccion[0].setSelected(true);
+				botonesSeleccion[0].setSelected(true);
 			}else if(anterior == 1){  // 1 = DyV
-				this.botonesSeleccion[1].setSelected(true);
+				botonesSeleccion[1].setSelected(true);
 			}else {
-				this.botonesSeleccion[2].setSelected(true);
+				botonesSeleccion[2].setSelected(true);
 			}
 			
 			// Panel general
-			this.bl = new BorderLayout();
-			this.panel = new JPanel();
-			this.panel.setLayout(this.bl);
+			bl = new BorderLayout();
+			panel = new JPanel();
+			panel.setLayout(bl);
 
 			JPanel panelContenedorBotones = new JPanel();
 			panelContenedorBotones.setLayout(new BorderLayout());
-			panelContenedorBotones.add(this.panelBotones, BorderLayout.NORTH);
+			panelContenedorBotones.add(panelBotones, BorderLayout.NORTH);
 
 			JScrollPane jsp = new JScrollPane(panelContenedorBotones);
 
 			jsp.add(panelBotones);
 			jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
-			jsp.setPreferredSize(
-					new Dimension(ANCHO_CUADRO - 10, ALTO_CUADRO - 120));
+			jsp.setPreferredSize(new Dimension(ANCHO_CUADRO - 10, ALTO_CUADRO - 120));
 
 			JPanel panelSup = new JPanel();
 			
 			JLabel texto = new JLabel();
-			texto.setText(" "
-					+Texto.get("PREGMEN_SELECCVISTASESPECIFICAS", Conf.idioma));
-			//panelSup.add(panelFilaSup, BorderLayout.NORTH);
-			//panelSup.add(panelContenedorBotones, BorderLayout.CENTER);
-			
+			texto.setText(" " + Texto.get("PREGMEN_SELECCVISTASESPECIFICAS", Conf.idioma));
 			
 			panelSup.add(texto);
-			//this.panel.add(panelSup, BorderLayout.NORTH);
-			this.panel.add(texto, BorderLayout.NORTH);
-			this.panel.add(panelBotones, BorderLayout.CENTER);
-			this.panel.add(this.panelBoton, BorderLayout.SOUTH);
+			panel.add(texto, BorderLayout.NORTH);
+			panel.add(panelBotones, BorderLayout.CENTER);
+			panel.add(panelBoton, BorderLayout.SOUTH);
 
 			// Preparamos y mostramos cuadro
-			this.dialogo.getContentPane().add(this.panel);
-			this.dialogo.setTitle(" "
-					+Texto.get("PREG_SELECCVISTASESPECIFICAS", Conf.idioma));
+			dialogo.getContentPane().add(panel);
+			dialogo.setTitle(" " + Texto.get("PREG_SELECCVISTASESPECIFICAS", Conf.idioma));
 
-			// dialogo.setSize(anchoCuadro,altoCuadro+(alto*numero));
-			this.dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO-60);
+			dialogo.setSize(ANCHO_CUADRO, ALTO_CUADRO-60);
 			int coord[] = Conf.ubicarCentro(ANCHO_CUADRO, ALTO_CUADRO);
-			this.dialogo.setLocation(coord[0], coord[1]);
-			this.dialogo.setResizable(false);
-			this.dialogo.setVisible(true);
+			dialogo.setLocation(coord[0], coord[1]);
+			dialogo.setResizable(false);
+			dialogo.setVisible(true);
 			
 			// Eliminamos archivos inservibles 
 			// (Todos los creados menos el necesario para lanzar la ejecución)
@@ -217,7 +200,7 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 			}
 		} else {
 			new CuadroError(
-					this.ventana, Texto.get("ERROR_CLASE", Conf.idioma), 
+					ventana, Texto.get("ERROR_CLASE", Conf.idioma), 
 					Texto.get("CSM_NOVISMET", Conf.idioma));
 		}
 	}
@@ -231,20 +214,20 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(this.botonesSeleccion[0]==e.getSource()) {
-			this.botonesSeleccion[1].setSelected(false);
-			this.botonesSeleccion[2].setSelected(false);
+		if(botonesSeleccion[0]==e.getSource()) {
+			botonesSeleccion[1].setSelected(false);
+			botonesSeleccion[2].setSelected(false);
 		}
-		if(this.botonesSeleccion[1]==e.getSource()) {
-			this.botonesSeleccion[0].setSelected(false);
-			this.botonesSeleccion[2].setSelected(false);
+		if(botonesSeleccion[1]==e.getSource()) {
+			botonesSeleccion[0].setSelected(false);
+			botonesSeleccion[2].setSelected(false);
 		}
-		if(this.botonesSeleccion[2]==e.getSource()) {
-			this.botonesSeleccion[0].setSelected(false);
-			this.botonesSeleccion[1].setSelected(false);
+		if(botonesSeleccion[2]==e.getSource()) {
+			botonesSeleccion[0].setSelected(false);
+			botonesSeleccion[1].setSelected(false);
 		}
-		if (e.getSource() == this.cancelar) {
-			this.dialogo.setVisible(false);
+		if (e.getSource() == cancelar) {
+			dialogo.setVisible(false);
 			dialogo.dispose();
 		} 
 	}
@@ -271,38 +254,36 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 		int code = e.getKeyCode();
 
 		if (code == KeyEvent.VK_ENTER) {
-			if(this.botonesSeleccion[0].isSelected()) {
+			if(botonesSeleccion[0].isSelected()) {
 				oov.setAnteriorVE(0);
-				this.gOpciones.setOpcion(oov, 1);
-				this.dialogo.setVisible(false);
+				gOpciones.setOpcion(oov, 1);
+				dialogo.setVisible(false);
 				if (Conf.fichero_log) {
 					Logger.log_write("Ninguna vista específica");
 				}
-				this.preprocesador.fase2(this.clase);
+				preprocesador.fase2(clase);
 				dialogo.dispose();
-			}else if(this.botonesSeleccion[1].isSelected()) {
+			}else if(botonesSeleccion[1].isSelected()) {
 				if (Conf.fichero_log) {
 					Logger.log_write("¿Habilitar vistas para DYV? Sí");
 				}
 				oov.setAnteriorVE(1);
-				this.gOpciones.setOpcion(oov, 1);
-				new CuadroSeleccionMetodos(
-						this.clase, this.ventana, this.preprocesador, true);
-				this.dialogo.setVisible(false);
+				gOpciones.setOpcion(oov, 1);
+				new CuadroSeleccionMetodos(clase, ventana, preprocesador, true);
+				dialogo.setVisible(false);
 				dialogo.dispose();
-			}else if(this.botonesSeleccion[2].isSelected()) {
+			}else if(botonesSeleccion[2].isSelected()) {
 				if (Conf.fichero_log) {
 					Logger.log_write("Habilitar vistas basadas en arboles");
 				}
 				oov.setAnteriorVE(2);
-				this.gOpciones.setOpcion(oov, 1);
-				new CuadroSeleccionMetodos(
-						this.clase, this.ventana, this.preprocesador, false);
-				this.dialogo.setVisible(false);
+				gOpciones.setOpcion(oov, 1);
+				new CuadroSeleccionMetodos(clase, ventana, preprocesador, false);
+				dialogo.setVisible(false);
 				dialogo.dispose();
 			}
 		}else if (code == KeyEvent.VK_ESCAPE) {
-			this.dialogo.setVisible(false);
+			dialogo.setVisible(false);
 			dialogo.dispose();
 		} 
 	}
@@ -370,40 +351,38 @@ public class CuadroPreguntaSeleccionVistasEspecificas
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (e.getSource() == this.aceptar) {
-			if(this.botonesSeleccion[0].isSelected()) {
+		if (e.getSource() == aceptar) {
+			if(botonesSeleccion[0].isSelected()) {
 				oov.setAnteriorVE(0);
-				this.gOpciones.setOpcion(oov, 1);
-				this.dialogo.setVisible(false);
+				gOpciones.setOpcion(oov, 1);
+				dialogo.setVisible(false);
 				if (Conf.fichero_log) {
 					Logger.log_write("Ninguna vista específica");
 				}
-				this.preprocesador.fase2(this.clase);
+				preprocesador.fase2(clase);
 				dialogo.dispose();
-			}else if(this.botonesSeleccion[1].isSelected()) {
+			}else if(botonesSeleccion[1].isSelected()) {
 				if (Conf.fichero_log) {
 					Logger.log_write("¿Habilitar vistas para DYV? Sí");
 				}
 				oov.setAnteriorVE(1);
-				this.gOpciones.setOpcion(oov, 1);
+				gOpciones.setOpcion(oov, 1);
 
-				this.dialogo.setVisible(false);
-				new CuadroSeleccionMetodos(this.clase, this.ventana, 
-						this.preprocesador, true);
+				dialogo.setVisible(false);
+				new CuadroSeleccionMetodos(clase, ventana, preprocesador, true);
 				dialogo.dispose();
-			}else if(this.botonesSeleccion[2].isSelected()) {
+			}else if(botonesSeleccion[2].isSelected()) {
 				if (Conf.fichero_log) {
 					Logger.log_write("¿Habilitar vistas basadas en árboles de búsqueda? Sí");
 				}
 				oov.setAnteriorVE(2);
-				this.gOpciones.setOpcion(oov, 1); // Probando si hay que ponerlo
-				this.dialogo.setVisible(false);
-				new CuadroSeleccionMetodos(
-						this.clase, this.ventana, this.preprocesador, false);
+				gOpciones.setOpcion(oov, 1);
+				dialogo.setVisible(false);
+				new CuadroSeleccionMetodos(clase, ventana, preprocesador, false);
 				dialogo.dispose();
 			}
-		}else if (e.getSource() == this.cancelar) {
-			this.dialogo.setVisible(false);
+		}else if (e.getSource() == cancelar) {
+			dialogo.setVisible(false);
 			dialogo.dispose();
 		} 
 	}

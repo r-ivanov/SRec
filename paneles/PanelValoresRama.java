@@ -42,7 +42,7 @@ import ventanas.Ventana;
 /**
  * Panel que contendrá la visualización de la vista de valores de la rama
  * a la que pertenece el nodo seleccionado. 
- * La vista es para algoritmos de optimización basados en ramificación y poda.
+ * La vista es para algoritmos de optimización basados en árboles de búsqueda.
  * 
  * @author Roumen Ivanov Andreev
  * @version 2021-2022

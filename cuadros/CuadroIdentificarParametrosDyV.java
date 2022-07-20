@@ -711,19 +711,16 @@ public class CuadroIdentificarParametrosDyV extends Thread implements
 	
 	public boolean esAlgortimoPuntos(MetodoAlgoritmo ma) {
 		//	String[] parametros = ma.getParamValores();
-			boolean estructurasok=false;
-			boolean indicesok=false;
-			String[] parametros = new String [ma.getDimParametros().length];
-			if(parametros.length>=4) {
+		boolean estructurasok=false;
+		boolean indicesok=false;
+		String[] parametros = new String [ma.getDimParametros().length];
+		if(parametros.length>=4) {
 			for(int i =0;i<ma.getDimParametros().length;i++) {
 				parametros[i]=ma.getDimParametro(i)+" "+ma.getTipoParametro(i);
-				
 				//ma.getIndices();
 			}
-			
 			for(int i =0;i<parametros.length;i++) {
 				if(i!=parametros.length-1) {
-					
 					if(parametros[i].contains("2")) {
 						
 						estructurasok=false;
@@ -743,10 +740,8 @@ public class CuadroIdentificarParametrosDyV extends Thread implements
 						indicesok=true;
 					}
 				}
-				
 			}
-			}
-			
-			return estructurasok && indicesok;
-			
-		}}
+		}
+		return estructurasok && indicesok;
+	}
+}

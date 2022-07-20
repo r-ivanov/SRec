@@ -25,6 +25,7 @@ import cuadros.CuadroError;
  */
 class PanelTraza extends JPanel {
 	static final long serialVersionUID = 04;
+	
 	private JLabel etiqueta; 
 	private String textoEntrada;
 	private String textoSalida;
@@ -32,7 +33,8 @@ class PanelTraza extends JPanel {
 	private double escalaActual;
 	private JGraph graph;	
 	private int zoom = 0;	
- static	String lineasTraza[];
+	static	String lineasTraza[];
+	
 	/**
 	 * Constructor: crea un nuevo panel de traza.
 	 */

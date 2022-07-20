@@ -66,7 +66,7 @@ MouseListener, MouseMotionListener {
 	private JGraph g; // Grafo visor
 
 	private JViewport vp;
-	private ContenedorArbol cc;
+	private ContenedorArbol ca;
 
 	private Object[] celdas = new Object[0];
 	private Object[] celdasV;
@@ -143,14 +143,14 @@ MouseListener, MouseMotionListener {
 			this.graph.getModel().addGraphModelListener(null);
 			try {
 
-				this.cc = new ContenedorArbol(
+				this.ca = new ContenedorArbol(
 						Ventana.thisventana.traza.getRaiz(), this.graph,
 						this.nyp, 1, getFontMetrics(getFont()).getFontRenderContext());
-				anchoGraph = this.cc.maximoAncho(); // Sólo es necesario hacerlo
+				anchoGraph = this.ca.maximoAncho(); // Sólo es necesario hacerlo
 				// una vez
-				altoGraph = this.cc.maximoAlto(); // Sólo es necesario hacerlo
+				altoGraph = this.ca.maximoAlto(); // Sólo es necesario hacerlo
 				// una vez
-				this.celdas = this.cc.getCeldas();
+				this.celdas = this.ca.getCeldas();
 				this.graph.getGraphLayoutCache().insert(this.celdas);
 				this.graph.addMouseListener(this);
 				this.graph.addMouseMotionListener(this);
@@ -171,7 +171,7 @@ MouseListener, MouseMotionListener {
 
 				this.add(this.jspArbol, BorderLayout.CENTER);
 
-				this.visor = this.crearVisor(this.cc.getCeldas(), this.graph);
+				this.visor = this.crearVisor(this.ca.getCeldas(), this.graph);
 				escala = this.calculaEscalaMiniatura();
 				this.visor.setPreferredSize(new Dimension(
 						(int) (anchoGraph * escala),
@@ -202,11 +202,11 @@ MouseListener, MouseMotionListener {
 				this.refrescarZoom(Conf.zoomArbol);
 
 			} catch (OutOfMemoryError oome) {
-				this.cc = null;
+				this.ca = null;
 				this.graph = null;
 				throw oome;
 			} catch (Exception e) {
-				this.cc = null;
+				this.ca = null;
 				throw e;
 			}
 		} else {
@@ -269,7 +269,7 @@ MouseListener, MouseMotionListener {
 			this.add(this.jspArbol, BorderLayout.CENTER);
 
 		} catch (Exception e) {
-			this.cc = null;
+			this.ca = null;
 			throw e;
 		}
 
@@ -324,11 +324,11 @@ MouseListener, MouseMotionListener {
 				}
 			}
 
-			this.cc = new ContenedorArbol(Ventana.thisventana.traza.getRaiz(),
+			this.ca = new ContenedorArbol(Ventana.thisventana.traza.getRaiz(),
 					this.graph, this.nyp, 1, getFontMetrics(getFont()).getFontRenderContext());
 		
 			
-			this.celdas = this.cc.getCeldas();
+			this.celdas = this.ca.getCeldas();
 
 			this.graph.getGraphLayoutCache().insert(this.celdas);
 
@@ -341,9 +341,9 @@ MouseListener, MouseMotionListener {
 
 			Point puntoMinimo = this.vp.getViewPosition();
 
-			if (this.cc != null) {
-				anchoGraph = this.cc.maximoAncho();
-				altoGraph = this.cc.maximoAlto();
+			if (this.ca != null) {
+				anchoGraph = this.ca.maximoAncho();
+				altoGraph = this.ca.maximoAlto();
 			}
 
 			this.vp.setBackground(Conf.colorPanel);
@@ -655,8 +655,8 @@ MouseListener, MouseMotionListener {
 	 */
 	public int[] dimGrafo() {
 		int valores[] = new int[2];
-		valores[0] = this.cc.maximoAncho();
-		valores[1] = this.cc.maximoAlto();
+		valores[0] = this.ca.maximoAncho();
+		valores[1] = this.ca.maximoAlto();
 		return valores;
 	}
 
@@ -667,8 +667,8 @@ MouseListener, MouseMotionListener {
 	 */
 	public int[] dimGrafoVisible() {
 		int valores[] = new int[2];
-		valores[0] = this.cc.maximoAnchoVisible() + 10;
-		valores[1] = this.cc.maximoAltoVisible() + 20;
+		valores[0] = this.ca.maximoAnchoVisible() + 10;
+		valores[1] = this.ca.maximoAltoVisible() + 20;
 		new Thread() {
 			@Override
 			public synchronized void run() {
@@ -787,7 +787,7 @@ MouseListener, MouseMotionListener {
 		this.ratonXAbs = e.getXOnScreen();
 		this.ratonYAbs = e.getYOnScreen();
 
-		this.ra = this.cc.getRegistroPosicion(
+		this.ra = this.ca.getRegistroPosicion(
 				(int) (this.ratonX / this.graph.getScale()),
 				(int) (this.ratonY / this.graph.getScale()));
 

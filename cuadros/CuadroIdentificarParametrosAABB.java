@@ -1,6 +1,7 @@
 package cuadros;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -11,10 +12,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -43,7 +43,7 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 		ActionListener, KeyListener, MouseListener {
 
 	private static final int ANCHO_CUADRO = 590;
-	private static final int ALTO_CUADRO = 450;
+	private static final int ALTO_CUADRO = 260;
 	private static final int LONGITUD_CAMPOS = 4;
 
 	private JDialog dialogo;
@@ -62,7 +62,6 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 	private int numMetodo = -1;
 	private CuadroSeleccionMetodos csm;
 
-	private JPanel panelImagen;
 	private JPanel panelCuadro;
 
 	private boolean vueltaAtras;
@@ -100,10 +99,6 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 	public void run() {
 		JPanel panel = new JPanel(new BorderLayout());
 
-		// panel de la derecha: contiene el gráfico esquemático
-		panelImagen = new JPanel();
-		panelImagen.setPreferredSize(new Dimension(300, 162));
-
 		// panel de botones
 
 		// Botón Aceptar
@@ -124,7 +119,7 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 
 		// creación del panel general
 		panelCuadro = new JPanel(new BorderLayout());
-		panelBotones= new JPanel(new GridLayout(10, 1));
+		panelBotones= new JPanel(new GridLayout(7, 1));
 		botonesSeleccion = new JRadioButton[2];
 		
 		// Solo permite una seleccion para los "botonesSeleccion"
@@ -158,6 +153,7 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 			botonesSeleccion[i].addActionListener(this);
 			grupoBotonesSeleccion.add(botonesSeleccion[i]);
 		}
+		// Establecer el boton seleccionado por defecto
 		if(anteriorMaximizacion) {
 			botonesSeleccion[0].setSelected(true);
 		}else {
@@ -176,7 +172,7 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 		for(int i=0; i<3 ; i++) {
 			JPanel panelIndices = new JPanel(new BorderLayout());
 			camposVE[i] = new JTextField(LONGITUD_CAMPOS);
-			camposVE[i].setBounds(10,10,200,30);
+			//camposVE[i].setBounds(10,10,200,30);
 
 			JLabel mensajes = new JLabel();
 			if (i == 0) {
@@ -198,7 +194,7 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 			
 			panelBotones.add(panelIndices);
 			panelBotones.addKeyListener(this);
-		}		
+		}
 		
 		panelCuadro.add(panelBotones, BorderLayout.NORTH);
 		panelCuadro.setBorder(
@@ -230,10 +226,11 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
             	accionCancelar();
             }
         });
-		
-		
-		//pintarCampos();
-
+		dialogo.addWindowFocusListener(new WindowAdapter() {
+		    public void windowGainedFocus(WindowEvent e) {
+		    	camposVE[0].requestFocusInWindow();
+		    }
+		});
 		dialogo.setResizable(false);
 		dialogo.setVisible(true);
 	}
@@ -472,25 +469,17 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 			accionCancelar();
 			break;
 		case KeyEvent.VK_DOWN:
-			if(fuente == botonesSeleccion[0]) {
-				botonesSeleccion[1].requestFocus();
-			}else if(fuente == botonesSeleccion[1]) {
-				camposVE[0].requestFocus();
-			}else if(fuente == camposVE[0]) {
-				camposVE[1].requestFocus();
+			if(fuente == camposVE[0]) {
+				camposVE[1].requestFocusInWindow();
 			}else if(fuente == camposVE[1]) {
-				camposVE[2].requestFocus();
+				camposVE[2].requestFocusInWindow();
 			}
 			break;
 		case KeyEvent.VK_UP:
-			if(fuente == botonesSeleccion[1]) {
-				botonesSeleccion[0].requestFocus();
-			}else if(fuente == camposVE[0]) {
-				botonesSeleccion[1].requestFocus();
-			}else if(fuente == camposVE[1]) {
-				camposVE[0].requestFocus();
+			if(fuente == camposVE[1]) {
+				camposVE[0].requestFocusInWindow();
 			}else if(fuente == camposVE[2]) {
-				camposVE[1].requestFocus();
+				camposVE[1].requestFocusInWindow();
 			}
 			break;
 		case KeyEvent.VK_RIGHT:
@@ -505,20 +494,20 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 						
 						// Comprobar que los indices sean validos
 						if (x < 0 || x >= numParam) {
-							camposVE[0].requestFocus();
+							camposVE[0].requestFocusInWindow();
 						} else {
 							// Comprobar que la dimension es 0
 							int dim = -1;
 							dim = metodo.getDimParametro(x);
 							if(dim > 0) {
-								camposVE[0].requestFocus();
+								camposVE[0].requestFocusInWindow();
 							} else if(dim != -1){
-								camposVE[1].requestFocus();
+								camposVE[1].requestFocusInWindow();
 							}
 						}
 						
 					} catch (Exception ex) {
-						camposVE[0].requestFocus();
+						camposVE[0].requestFocusInWindow();
 					}
 				}
 
@@ -529,20 +518,20 @@ public class CuadroIdentificarParametrosAABB extends Thread implements
 						
 						// Comprobar que los indices sean validos
 						if (x < 0 || x >= numParam) {
-							camposVE[1].requestFocus();
+							camposVE[1].requestFocusInWindow();
 						} else {
 							// Comprobar que la dimension es 0
 							int dim = -1;
 							dim = metodo.getDimParametro(x);
 							if(dim > 0) {
-								camposVE[1].requestFocus();
+								camposVE[1].requestFocusInWindow();
 							} else if(dim != -1){
-								camposVE[2].requestFocus();
+								camposVE[2].requestFocusInWindow();
 							}
 						}
 						
 					} catch (Exception ex) {
-						camposVE[1].requestFocus();
+						camposVE[1].requestFocusInWindow();
 					}
 				}
 			}

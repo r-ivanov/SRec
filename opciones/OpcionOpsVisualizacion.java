@@ -24,8 +24,8 @@ public class OpcionOpsVisualizacion extends Opcion {
 	public static final int DATOS_SALIDA = 32;
 
 	// Atributos (asignamos valores por defecto)
-	private int historia = OpcionOpsVisualizacion.MANTENER_HISTORIA;
-	private int datosMostrar = OpcionOpsVisualizacion.DATOS_TODOS;
+	private int historia = MANTENER_HISTORIA;
+	private int datosMostrar = DATOS_TODOS;
 	private boolean mostrarArbolSalto = true;
 
 	private int anteriorVE = 0;

@@ -38,7 +38,7 @@ import ventanas.Ventana;
 
 /**
  * Panel que contendrá la visualización de la vista global de valores para 
- * algoritmos de optimización basados en ramificación y poda.
+ * algoritmos de optimización basados en árboles de búsqueda.
  * 
  * @author Roumen Ivanov Andreev
  * @version 2021-2022

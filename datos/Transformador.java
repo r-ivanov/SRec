@@ -130,35 +130,35 @@ public class Transformador {
 			String nombreArray, boolean RyP, boolean maximizacion, String nombreSolParcial, String nombreMejorSolucion, 
 			String nombreCota, String nombreMetodo) {	
 		
-// Codigo en xml	
-//    <send message="anadirEntrada">
-//        <target>
-//            <send message="singleton">
-//                <target>
-//                    <var-ref name="Traza"/>
-//                </target>
-//                <arguments/>
-//            </send>
-//        </target>
-//        <arguments>
-//            <new>
-//                <type name="Estado"/>
-//                <arguments>
-//                    <var-ref name="pppppp01"/>
-//					  <literal-boolean value ="true">
-//					  <literal-boolean value ="true">
-//                    <var-ref name="ssssss01"/>
-//                    <var-ref name="mmmmmm01"/>
-//                    <var-ref name="cccccc01"/>
-//                </arguments>
-//            </new>
-//            <literal-string value="buscar01a"/>
-//            <var-ref name="nnnnnn01"/>
-//        </arguments>
-//    </send>
+		// Codigo en xml	
+		//    <send message="anadirEntrada">
+		//        <target>
+		//            <send message="singleton">
+		//                <target>
+		//                    <var-ref name="Traza"/>
+		//                </target>
+		//                <arguments/>
+		//            </send>
+		//        </target>
+		//        <arguments>
+		//            <new>
+		//                <type name="Estado"/>
+		//                <arguments>
+		//                    <var-ref name="pppppp01"/>
+		//					  <literal-boolean value ="true">
+		//					  <literal-boolean value ="true">
+		//                    <var-ref name="ssssss01"/>
+		//                    <var-ref name="mmmmmm01"/>
+		//                    <var-ref name="cccccc01"/>
+		//                </arguments>
+		//            </new>
+		//            <literal-string value="buscar01a"/>
+		//            <var-ref name="nnnnnn01"/>
+		//        </arguments>
+		//    </send>
 		
-// Codigo transformado de xml a java	
-// Traza.singleton().anadirEntrada(new Estado(pppppp01, RyP, maximizacion, ssssss01, mmmmmm01, cccccc01),"buscar01a",nnnnnn01);
+		// Codigo transformado de xml a java	
+		// Traza.singleton().anadirEntrada(new Estado(pppppp01, RyP, maximizacion, ssssss01, mmmmmm01, cccccc01),"buscar01a",nnnnnn01);
 		
 		// Creamos nuevo elemento y lo añadimos como hijo a nodos[i]
 		// en el futuro habrá que hacer que quede por delante de nodo return

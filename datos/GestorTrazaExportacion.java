@@ -25,7 +25,7 @@ public class GestorTrazaExportacion {
 
 	// traza para la exportacion, así no tenemos que rebobinar la traza que se
 	// usa en vistas
-	private Traza t;
+	private Traza traza;
 	private JGraph graph;
 	private int numeroVista;
 
@@ -42,8 +42,8 @@ public class GestorTrazaExportacion {
 	 *            árbol, 1 para pila, 2 para cronológica y 3 para estructura)
 	 */
 	public GestorTrazaExportacion(Ventana ventana, int numeroVista) {
-		this.t = ventana.getTraza().copiar();
-		this.t.nadaVisible();
+		this.traza = ventana.getTraza().copiar();
+		this.traza.nadaVisible();
 		this.numeroVista = numeroVista;
 
 		boolean mostrarNombreMetodos = ventana.getTraza().getNumMetodos() != 1;
@@ -65,14 +65,14 @@ public class GestorTrazaExportacion {
 	 *         contrario.
 	 */
 	public boolean finalTraza() {
-		return this.t.enteroVisible();
+		return this.traza.enteroVisible();
 	}
 
 	/**
 	 * Avanza la traza al siguiente estado.
 	 */
 	public void avanzarTraza() {
-		this.t.siguienteVisible();
+		this.traza.siguienteVisible();
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class GestorTrazaExportacion {
 
 			this.graph = new JGraph(model, view);
 			this.graph.getModel().addGraphModelListener(null);
-			ContenedorArbol c = new ContenedorArbol(this.t.getRaiz(),
+			ContenedorArbol c = new ContenedorArbol(this.traza.getRaiz(),
 					this.graph, this.nyp, 1, null);
 			celdas = c.getCeldas();
 			this.graph.setBackground(Conf.colorPanel);
@@ -128,8 +128,8 @@ public class GestorTrazaExportacion {
 
 			this.graph = new JGraph(model, view);
 			this.graph.getModel().addGraphModelListener(null);
-			ContenedorPila cp = new ContenedorPila(this.t.getRaiz(),
-					this.t.copiar(), this.nyp, 1);
+			ContenedorPila cp = new ContenedorPila(this.traza.getRaiz(),
+					this.traza.copiar(), this.nyp, 1);
 			celdas = cp.getCeldas();
 			this.graph.setBackground(Conf.colorPanel);
 			this.graph.getGraphLayoutCache().insert(celdas);
@@ -145,7 +145,7 @@ public class GestorTrazaExportacion {
 			this.graph = new JGraph(model, view);
 			this.graph.getModel().addGraphModelListener(null);
 			ContenedorCronologica cc = new ContenedorCronologica(this.nyp,
-					this.t.getRaiz());
+					this.traza.getRaiz());
 			celdas = cc.getCeldas();
 			this.graph.setBackground(Conf.colorPanel);
 			this.graph.getGraphLayoutCache().insert(celdas);
@@ -163,7 +163,7 @@ public class GestorTrazaExportacion {
 			this.graph = new JGraph(model, view);
 			this.graph.getModel().addGraphModelListener(null);
 			ContenedorEstructura ce = new ContenedorEstructura(
-					this.t.getRaiz());
+					this.traza.getRaiz());
 			celdas = ce.getCeldas();
 			this.graph.setBackground(Conf.colorPanel);
 			this.graph.getGraphLayoutCache().insert(celdas);

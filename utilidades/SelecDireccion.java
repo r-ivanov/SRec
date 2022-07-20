@@ -343,15 +343,15 @@ public class SelecDireccion {
 			*/
 			nombres[0] = path;
 			nombres[1] = null;
-			FileFilter fne = jfc.getFileFilter();
-			boolean text= jfc.getSelectedFile().getName().endsWith("txt");
-			if (text == true) {
-				nombres[2] = "true";
-			} else {
-				nombres[2] = "false";
-			}
 
-			
+			if(jfc.getSelectedFile() != null) {
+				boolean text= jfc.getSelectedFile().getName().endsWith("txt");
+				if (text == true) {
+					nombres[2] = "true";
+				} else {
+					nombres[2] = "false";
+				}
+			}
 			
 		}
 

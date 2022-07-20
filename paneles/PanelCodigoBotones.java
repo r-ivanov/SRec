@@ -46,7 +46,7 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 	private static final Map<botonesNombre,String> traduccionesBotones = 
 			new HashMap<botonesNombre, String>();
 	
-	private PanelCodigo panelCodigo;	
+	private PanelCodigo pCodigo;	
 	
 	//********************************************************************************
     // 			CONSTRUCTORES
@@ -59,7 +59,7 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 	 * 		Panel código asociado a este panel
 	 */
 	public PanelCodigoBotones(PanelCodigo pc) {
-		this.panelCodigo = pc;	
+		this.pCodigo = pc;	
 		this.crearBarraBotones();
 	}
 	
@@ -242,21 +242,21 @@ public class PanelCodigoBotones extends JPanel implements ActionListener{
 			String buttonName = button.getName();
 			
 			if(buttonName.equals(botonesNombre.EDITOR_DESHACER.toString())){
-				this.panelCodigo.doUndo();
+				this.pCodigo.doUndo();
 			}else if(buttonName.equals(botonesNombre.EDITOR_REHACER.toString())){
-				this.panelCodigo.doRedo();
+				this.pCodigo.doRedo();
 			}else if(buttonName.equals(botonesNombre.EDITOR_CORTAR.toString())){
-				this.panelCodigo.doCut();
+				this.pCodigo.doCut();
 			}else if(buttonName.equals(botonesNombre.EDITOR_COPIAR.toString())){
-				this.panelCodigo.doCopy();
+				this.pCodigo.doCopy();
 			}else if(buttonName.equals(botonesNombre.EDITOR_PEGAR.toString())){
-				this.panelCodigo.doPaste();
+				this.pCodigo.doPaste();
 			}else if(buttonName.equals(botonesNombre.EDITOR_IR_A_LINEA.toString())){
-				this.panelCodigo.doSelectLine();
+				this.pCodigo.doSelectLine();
 			}else if(buttonName.equals(botonesNombre.EDITOR_BUSCAR.toString())){
-				this.panelCodigo.doSearch();
+				this.pCodigo.doSearch();
 			}else if(buttonName.equals(botonesNombre.EDITOR_SELECCIONAR_TODO.toString())){
-				this.panelCodigo.doSelectAll();
+				this.pCodigo.doSelectAll();
 			}
 		}
 		
